@@ -352,9 +352,16 @@ export default function OptimizerPage() {
                                                                       <GraduationCap className="h-4 w-4" />
                                                                  </div>
                                                                  <div>
-                                                                      <span className="text-xs font-bold block">{prog.fieldOfStudy}</span>
+                                                                      <div className="flex items-center gap-2 flex-wrap">
+                                                                           <span className="text-xs font-bold block">{prog.fieldOfStudy}</span>
+                                                                           {prog.admissionThreshold !== undefined && prog.admissionThreshold !== null && (
+                                                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-200 text-[10px] font-black">
+                                                                                     סף: {prog.admissionThreshold}
+                                                                                </span>
+                                                                           )}
+                                                                      </div>
                                                                       <span className="inline-block mt-1 px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-md">
-                                                                           {prog.degreeLevel}
+                                                                           {prog.degreeLevel} {prog.programId ? `(קוד: ${prog.programId})` : ''}
                                                                       </span>
                                                                       {prog.description && (
                                                                            <p className="text-[10px] text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
@@ -371,27 +378,37 @@ export default function OptimizerPage() {
                                    </div>
                               </div>
 
-                              <div className="p-4 sm:p-6 rounded-2xl bg-blue-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-900 shadow-md">
-                                   <div>
-                                        <div className="flex items-center gap-2 text-sky-300 text-xs font-medium">
-                                             <Info className="h-4 w-4 text-cyan-400" />
-                                             <span>סף קבלה משוקלל משוער למועד 2026:</span>
+                              {/* Threshold Preview Box */}
+                              {(() => {
+                                   const activeProg = currentInstitution?.programs.find(p => p.fieldOfStudy === targetDegree);
+                                   const activeSekem = activeProg?.admissionThreshold !== undefined && activeProg?.admissionThreshold !== null
+                                        ? activeProg.admissionThreshold
+                                        : thresholdData.sekem;
+
+                                   return (
+                                        <div className="p-4 sm:p-6 rounded-2xl bg-blue-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-900 shadow-md">
+                                             <div>
+                                                  <div className="flex items-center gap-2 text-sky-300 text-xs font-medium">
+                                                       <Info className="h-4 w-4 text-cyan-400" />
+                                                       <span>סף קבלה משוקלל רשמי / משוער למועד 2026:</span>
+                                                  </div>
+                                                  <p className="text-2xl font-black mt-1">
+                                                       {targetUniversity} - {targetDegree}
+                                                  </p>
+                                                  <p className="text-sm text-sky-200 font-bold mt-0.5">
+                                                       סכם יעד: <span className="text-cyan-400 text-lg font-black">{activeSekem}</span> | דרישת מתמטיקה: <span className="text-white font-bold">{thresholdData.reqMath} יח״ל</span>
+                                                  </p>
+                                             </div>
+                                             <button
+                                                  onClick={() => setActiveStep(2)}
+                                                  className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-md shrink-0"
+                                             >
+                                                  <span>המשך להזנת ציונים</span>
+                                                  <ArrowLeft className="h-4 w-4" />
+                                             </button>
                                         </div>
-                                        <p className="text-2xl font-black mt-1">
-                                             {targetUniversity} - {targetDegree}
-                                        </p>
-                                        <p className="text-sm text-sky-200 font-bold mt-0.5">
-                                             סכם יעד: <span className="text-cyan-400 text-lg font-black">{thresholdData.sekem}</span> | דרישת מתמטיקה: <span className="text-white font-bold">{thresholdData.reqMath} יח״ל</span>
-                                        </p>
-                                   </div>
-                                   <button
-                                        onClick={() => setActiveStep(2)}
-                                        className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-md shrink-0"
-                                   >
-                                        <span>המשך להזנת ציונים</span>
-                                        <ArrowLeft className="h-4 w-4" />
-                                   </button>
-                              </div>
+                                   );
+                              })()}
 
                          </div>
                     )}
