@@ -247,10 +247,23 @@ export default function BguCalculatorPage() {
                                         </button>
                                    </div>
                               </div>
+
+                              {/* Calculate Action Button */}
+                              <button
+                                   onClick={() => {
+                                        const resultsElem = document.getElementById('results-section');
+                                        resultsElem?.scrollIntoView({ behavior: 'smooth' });
+                                   }}
+                                   className="w-full py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-cyan-500/20 transition flex items-center justify-center gap-2 group"
+                              >
+                                   <Zap className="h-5 w-5 text-yellow-300 group-hover:scale-110 transition-transform" />
+                                   <span>חשב / עדכן סכם בן-גוריון עכשיו</span>
+                              </button>
+
                          </div>
 
                          {/* Right Column: Calculations & Results (5 cols) */}
-                         <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-8">
+                         <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-8" id="results-section">
 
                               {/* Results Summary Box */}
                               <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/80 rounded-3xl p-6 border border-cyan-500/30 shadow-2xl space-y-6">
