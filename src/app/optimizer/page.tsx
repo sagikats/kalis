@@ -125,13 +125,22 @@ export default function OptimizerPage() {
           router.push('/wizard');
      };
 
+     const activeProg = currentInstitution?.programs.find((p) => p.fieldOfStudy === targetDegree);
+     const rawSekem = activeProg?.sekemScore ?? activeProg?.admissionThreshold;
+     const activeSekem: number = typeof rawSekem === 'number'
+          ? rawSekem
+          : typeof rawSekem === 'string'
+               ? (parseFloat(rawSekem) || thresholdData.sekem)
+               : (activeProg?.psychometricScore || thresholdData.sekem);
+     const activePsych: number | undefined = activeProg?.psychometricScore ?? undefined;
+
      const recommendedTracks: AdmissionTrack[] = [
           {
                id: 'recommended',
                title: 'מסלול 1: שדרוג מתמטיקה ל-5 יח״ל',
                subtitle: 'מקסימום תשואה (ROI) - 140 שעות לימוד ממוקדות',
-               predictedSekem: Number((thresholdData.sekem + 0.8).toFixed(1)),
-               thresholdSekem: thresholdData.sekem,
+               predictedSekem: Number((activeSekem + 0.8).toFixed(1)),
+               thresholdSekem: activeSekem,
                hoursNeeded: 140,
                difficulty: 'מומלץ - מקסימום ROI',
                difficultyColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
@@ -145,27 +154,27 @@ export default function OptimizerPage() {
           },
           {
                id: 'psychometric',
-               title: 'מסלול 2: שיפור פסיכומטרי יעד 710',
+               title: `מסלול 2: שיפור פסיכומטרי יעד ${activePsych ?? 710}`,
                subtitle: 'אינטנסיבי - ללא שינוי בבגרויות הקיימות',
-               predictedSekem: Number((thresholdData.sekem + 0.3).toFixed(1)),
-               thresholdSekem: thresholdData.sekem,
+               predictedSekem: Number((activeSekem + 0.3).toFixed(1)),
+               thresholdSekem: activeSekem,
                hoursNeeded: 240,
                difficulty: 'אינטנסיבי',
                difficultyColor: 'bg-amber-100 text-amber-800 border-amber-300',
                summaryText:
-                    'התמקדות בשיפור הציון הכמותי והמילולי בפסיכומטרי ל-710, משאירה את תעודת הבגרות ללא שינוי.',
+                    `התמקדות בשיפור הציון הכמותי והמילולי בפסיכומטרי ל-${activePsych ?? 710}, משאירה את תעודת הבגרות ללא שינוי.`,
                actionPoints: [
-                    'שיפור הפרק הכמותי ב-30 נקודות',
+                    'שיפור הפרק הכמותי והמילולי',
                     'נדרשות כ-240 שעות תרגול אקטיבי',
                     'מתאים למי שלא רוצה להיבחן שוב בבגרויות'
                ]
           },
           {
                id: 'combined',
-               title: 'מסלול 3: משולב (בגרות מורחבת + פסיכומטרי 650)',
+               title: 'מסלול 3: משולב (בגרות מורחבת + פסיכומטרי)',
                subtitle: 'פיזור עומסים מאוזן בין בגרות לפסיכומטרי',
-               predictedSekem: Number((thresholdData.sekem + 0.5).toFixed(1)),
-               thresholdSekem: thresholdData.sekem,
+               predictedSekem: Number((activeSekem + 0.5).toFixed(1)),
+               thresholdSekem: activeSekem,
                hoursNeeded: 280,
                difficulty: 'משולב ומתואם',
                difficultyColor: 'bg-indigo-100 text-indigo-800 border-indigo-300',
@@ -681,7 +690,7 @@ export default function OptimizerPage() {
                                              3 מסלולים מומלצים לקבלה ל{targetDegree} ב{targetUniversity}
                                         </h2>
                                         <p className="text-xs text-slate-300">
-                                             סף קבלה נדרש: <span className="font-bold text-indigo-300">{thresholdData.sekem}</span> | מתווה למידה אופטימלי לפי תשואת ROI מקסימלית.
+                                             סף קבלה נדרש: <span className="font-bold text-indigo-300">{activeSekem}</span> {activePsych ? `(פסיכומטרי: ${activePsych})` : ''} | מתווה למידה אופטימלי לפי תשואת ROI מקסימלית.
                                         </p>
                                    </div>
                                    <button
