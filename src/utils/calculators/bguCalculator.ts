@@ -31,6 +31,7 @@ export interface BguCalculationResult {
 
 /**
  * Calculates BGU Optimal Bagrut Average with official bonuses:
+ * Bonuses are only granted for passing grades (grade >= 60):
  * - 5 units Math: +25 points
  * - 4 units Math: +12.5 points
  * - 5 units English: +25 points
@@ -47,21 +48,24 @@ export function calculateBguBagrutAverage(subjects: SubjectInput[]): number {
           let bonus = 0;
           const subName = sub.name.trim();
 
-          if (subName.includes('מתמטיקה')) {
-               if (sub.units === 5) bonus = 25;
-               else if (sub.units === 4) bonus = 12.5;
-          } else if (subName.includes('אנגלית')) {
-               if (sub.units === 5) bonus = 25;
-               else if (sub.units === 4) bonus = 12.5;
-          } else if (sub.units === 5) {
-               if (subName.includes('פיזיקה') || subName.includes('מדעי המחשב') || subName.includes('כימיה') || subName.includes('ביולוגיה') || subName.includes('סייבר')) {
-                    bonus = 25;
-               } else {
-                    bonus = 20;
+          // Bonus is only applied if student passed the subject (grade >= 60)
+          if (sub.grade >= 60) {
+               if (subName.includes('מתמטיקה')) {
+                    if (sub.units === 5) bonus = 25;
+                    else if (sub.units === 4) bonus = 12.5;
+               } else if (subName.includes('אנגלית')) {
+                    if (sub.units === 5) bonus = 25;
+                    else if (sub.units === 4) bonus = 12.5;
+               } else if (sub.units === 5) {
+                    if (subName.includes('פיזיקה') || subName.includes('מדעי המחשב') || subName.includes('כימיה') || subName.includes('ביולוגיה') || subName.includes('סייבר')) {
+                         bonus = 25;
+                    } else {
+                         bonus = 20;
+                    }
                }
           }
 
-          const adjustedGrade = sub.grade + bonus;
+          const adjustedGrade = sub.grade > 0 ? sub.grade + bonus : 0;
           totalWeightedGrades += adjustedGrade * sub.units;
           totalUnits += sub.units;
      }
@@ -77,7 +81,7 @@ export function calculateBguBagrutAverage(subjects: SubjectInput[]): number {
  * Scale: 200 - 800
  */
 export function calculateBguGeneralSekem(bagrutAverage: number, psychometricGeneral: number): number {
-     if (bagrutAverage <= 0 || psychometricGeneral <= 0) return 0;
+     if (bagrutAverage <= 0 && psychometricGeneral <= 0) return 0;
      const rawSekem = 0.5 * psychometricGeneral + 5 * bagrutAverage;
      return Math.min(800, Math.max(200, Math.round(rawSekem * 10) / 10));
 }
@@ -96,18 +100,20 @@ export function calculateBguEngineeringSekem(
      physicsGrade: number = 0,
      physicsUnits: number = 0
 ): number {
-     if (psychometricGeneral <= 0 && psychometricQuant <= 0) return 0;
+     if (psychometricGeneral <= 0 && psychometricQuant <= 0 && mathGrade <= 0) return 0;
 
      // Calculate Math component (converted to 200-800 scale)
      let mathBonus = 0;
-     if (mathUnits === 5) mathBonus = 25;
-     else if (mathUnits === 4) mathBonus = 12.5;
+     if (mathGrade >= 60) {
+          if (mathUnits === 5) mathBonus = 25;
+          else if (mathUnits === 4) mathBonus = 12.5;
+     }
 
-     const mathFinal = Math.min(125, mathGrade + mathBonus);
+     const mathFinal = mathGrade > 0 ? Math.min(125, mathGrade + mathBonus) : 0;
      // Scale 100-125 Bagrut to 500-800 equivalent:
-     const mathScaled = (mathFinal / 125) * 800;
+     const mathScaled = mathGrade > 0 ? (mathFinal / 125) * 800 : 0;
 
-     // Physics bonus contribution if 5 units
+     // Physics bonus contribution if 5 units and passing grade
      let physicsFactor = 0;
      if (physicsUnits === 5 && physicsGrade >= 70) {
           physicsFactor = (physicsGrade / 100) * 20; // Up to 20 bonus points on Engineering Sekem
@@ -116,6 +122,7 @@ export function calculateBguEngineeringSekem(
      const quantWeight = psychometricQuant > 0 ? psychometricQuant : psychometricGeneral;
      const rawSekem = (0.45 * quantWeight) + (0.25 * psychometricGeneral) + (0.30 * mathScaled) + physicsFactor;
 
+     if (rawSekem <= 0) return 0;
      return Math.min(800, Math.max(200, Math.round(rawSekem * 10) / 10));
 }
 
