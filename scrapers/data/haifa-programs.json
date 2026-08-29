@@ -1,0 +1,59 @@
+[
+     {
+          "programId": "cs-haifa",
+          "degreeName": "מדעי המחשב",
+          "psychometricScore": 660,
+          "admissionThreshold": 660,
+          "mathRequirement": "5 יחידות בציון 80+ / 4 יחידות 90+"
+     },
+     {
+          "programId": "is-haifa",
+          "degreeName": "מערכות מידע",
+          "psychometricScore": 630,
+          "admissionThreshold": 630,
+          "mathRequirement": "4 יחידות בציון 80+"
+     },
+     {
+          "programId": "law-haifa",
+          "degreeName": "משפטים",
+          "psychometricScore": 660,
+          "admissionThreshold": 660,
+          "comments": "אפיק בגרות בלבד: ממוצע 108+"
+     },
+     {
+          "programId": "psych-haifa",
+          "degreeName": "פסיכולוגיה",
+          "psychometricScore": 670,
+          "admissionThreshold": 670
+     },
+     {
+          "programId": "nursing-haifa",
+          "degreeName": "סיעוד",
+          "psychometricScore": 580,
+          "admissionThreshold": 580
+     },
+     {
+          "programId": "econ-haifa",
+          "degreeName": "כלכלה",
+          "psychometricScore": 620,
+          "admissionThreshold": 620
+     },
+     {
+          "programId": "ot-haifa",
+          "degreeName": "ריפוי בעיסוק",
+          "psychometricScore": 650,
+          "admissionThreshold": 650
+     },
+     {
+          "programId": "sw-haifa",
+          "degreeName": "עבודה סוציאלית",
+          "psychometricScore": 615,
+          "admissionThreshold": 615
+     },
+     {
+          "programId": "comm-haifa",
+          "degreeName": "תקשורת",
+          "psychometricScore": 580,
+          "admissionThreshold": 580
+     }
+]

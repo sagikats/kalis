@@ -396,6 +396,108 @@ async function fetchAndNormalizeData() {
           }
      }
 
+     // Enrich Haifa University with admissions dataset
+     const haifaScrapedPath = path.join(__dirname, '../scrapers/data/haifa-programs.json');
+     if (fs.existsSync(haifaScrapedPath)) {
+          console.log('Enriching Haifa University admissions dataset from scrapers/data/haifa-programs.json...');
+          const haifaScraped = JSON.parse(fs.readFileSync(haifaScrapedPath, 'utf-8'));
+          let haifaInst = resultInstitutions.find(i => i.name.includes('אוניברסיטת חיפה'));
+
+          if (haifaInst) {
+               haifaScraped.forEach((item, index) => {
+                    const existing = haifaInst.programs.find(p => p.fieldOfStudy.includes(item.degreeName) || item.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = item.admissionThreshold;
+                         existing.psychometricScore = item.psychometricScore;
+                         existing.mathRequirement = item.mathRequirement;
+                         existing.comments = item.comments;
+                    } else {
+                         haifaInst.programs.push({
+                              id: `prog-haifa-${index + 1}`,
+                              fieldOfStudy: item.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: item.admissionThreshold,
+                              psychometricScore: item.psychometricScore,
+                              mathRequirement: item.mathRequirement,
+                              comments: item.comments
+                         });
+                    }
+               });
+               haifaInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+               console.log(`Haifa University enriched: ${haifaInst.programs.length} total tracks.`);
+          }
+     }
+
+     // Enrich Open University with admissions dataset
+     const openuScrapedPath = path.join(__dirname, '../scrapers/data/openu-programs.json');
+     if (fs.existsSync(openuScrapedPath)) {
+          console.log('Enriching Open University admissions dataset from scrapers/data/openu-programs.json...');
+          const openuScraped = JSON.parse(fs.readFileSync(openuScrapedPath, 'utf-8'));
+          let openuInst = resultInstitutions.find(i => i.name.includes('האוניברסיטה הפתוחה'));
+
+          if (openuInst) {
+               openuScraped.forEach((item, index) => {
+                    const existing = openuInst.programs.find(p => p.fieldOfStudy.includes(item.degreeName) || item.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = 0;
+                         existing.psychometricScore = 0;
+                         existing.comments = item.comments;
+                    } else {
+                         openuInst.programs.push({
+                              id: `prog-openu-${index + 1}`,
+                              fieldOfStudy: item.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: 0,
+                              psychometricScore: 0,
+                              comments: item.comments
+                         });
+                    }
+               });
+               openuInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+               console.log(`Open University enriched: ${openuInst.programs.length} total tracks.`);
+          }
+     }
+
+     // Helper for enriching collection of colleges
+     const enrichCollegesBatch = (filePath) => {
+          if (!fs.existsSync(filePath)) return;
+          const collegesData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+          collegesData.forEach(college => {
+               let inst = resultInstitutions.find(i => i.name.includes(college.institutionName) || college.institutionName.includes(i.name));
+               if (!inst) {
+                    inst = {
+                         id: `inst-col-${resultInstitutions.length + 1}`,
+                         name: college.institutionName,
+                         programs: []
+                    };
+                    resultInstitutions.push(inst);
+               }
+               college.programs.forEach((prog, idx) => {
+                    const existing = inst.programs.find(p => p.fieldOfStudy.includes(prog.degreeName) || prog.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = prog.admissionThreshold;
+                         existing.psychometricScore = prog.psychometricScore;
+                         if (prog.mathRequirement) existing.mathRequirement = prog.mathRequirement;
+                         if (prog.comments) existing.comments = prog.comments;
+                    } else {
+                         inst.programs.push({
+                              id: `prog-${inst.id}-${idx + 1}`,
+                              fieldOfStudy: prog.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: prog.admissionThreshold,
+                              psychometricScore: prog.psychometricScore,
+                              mathRequirement: prog.mathRequirement,
+                              comments: prog.comments
+                         });
+                    }
+               });
+               inst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+          });
+     };
+
+     enrichCollegesBatch(path.join(__dirname, '../scrapers/data/engineering-colleges.json'));
+     enrichCollegesBatch(path.join(__dirname, '../scrapers/data/leading-colleges.json'));
+
      const totalPrograms = resultInstitutions.reduce((sum, inst) => sum + inst.programs.length, 0);
      console.log(`Ingested ${resultInstitutions.length} canonical institutions with ${totalPrograms} unique undergraduate degree programs.`);
 

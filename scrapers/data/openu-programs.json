@@ -1,0 +1,51 @@
+[
+     {
+          "programId": "cs-openu",
+          "degreeName": "מדעי המחשב",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף פסיכומטרי או בגרות. קיימים אפיקי מעבר לטכניון, העברית, תל אביב ובן גוריון."
+     },
+     {
+          "programId": "math-openu",
+          "degreeName": "מתמטיקה",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף"
+     },
+     {
+          "programId": "ds-openu",
+          "degreeName": "מדע הנתונים",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף"
+     },
+     {
+          "programId": "psych-openu",
+          "degreeName": "פסיכולוגיה",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף"
+     },
+     {
+          "programId": "econ-openu",
+          "degreeName": "כלכלה",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף"
+     },
+     {
+          "programId": "biz-openu",
+          "degreeName": "ניהול / מנהל עסקים",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף"
+     },
+     {
+          "programId": "is-openu",
+          "degreeName": "מערכות מידע",
+          "psychometricScore": 0,
+          "admissionThreshold": 0,
+          "comments": "קבלה פתוחה ללא תנאי סף"
+     }
+]
