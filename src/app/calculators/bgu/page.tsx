@@ -24,14 +24,14 @@ import {
 import academicData from '@/data/academicData.json';
 
 const DEFAULT_SUBJECTS: SubjectInput[] = [
-     { name: 'תנ"ך', units: 2, grade: 85 },
-     { name: 'ספרות', units: 2, grade: 85 },
-     { name: 'אזרחות', units: 2, grade: 88 },
-     { name: 'היסטוריה', units: 2, grade: 86 },
-     { name: 'עברית / הבעה', units: 2, grade: 84 },
-     { name: 'אנגלית', units: 5, grade: 92 },
-     { name: 'מתמטיקה', units: 5, grade: 88 },
-     { name: 'פיזיקה', units: 5, grade: 90 }
+     { name: 'תנ"ך', units: 2, grade: 0 },
+     { name: 'ספרות', units: 2, grade: 0 },
+     { name: 'אזרחות', units: 2, grade: 0 },
+     { name: 'היסטוריה', units: 2, grade: 0 },
+     { name: 'עברית / הבעה', units: 2, grade: 0 },
+     { name: 'אנגלית', units: 5, grade: 0 },
+     { name: 'מתמטיקה', units: 5, grade: 0 },
+     { name: 'פיזיקה', units: 5, grade: 0 }
 ];
 
 /** Clean helper to parse number inputs preventing leading zeros (e.g. "085" -> 85) */
@@ -46,18 +46,18 @@ function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 1
 
 export default function BguCalculatorPage() {
      const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
-     const [psychGeneral, setPsychGeneral] = useState<number | ''>(680);
-     const [psychQuant, setPsychQuant] = useState<number | ''>(138);
+     const [psychGeneral, setPsychGeneral] = useState<number | ''>(0);
+     const [psychQuant, setPsychQuant] = useState<number | ''>(0);
 
      // New subject state
      const [newSubName, setNewSubName] = useState('');
      const [newSubUnits, setNewSubUnits] = useState(5);
-     const [newSubGrade, setNewSubGrade] = useState<number | ''>(90);
+     const [newSubGrade, setNewSubGrade] = useState<number | ''>(0);
 
-     const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 88 }, [subjects]);
+     const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 }, [subjects]);
      const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
 
-     // Convert psychometric quantitative subscore (100-150 to 200-800 equivalent if entered as 100-150)
+     // Quantitative psychometric subscore (50-150) normalized for engineering formula (200-800 scale if needed)
      const normalizedQuant = useMemo(() => {
           const quantNum = Number(psychQuant) || 0;
           if (quantNum <= 150 && quantNum >= 50) {
@@ -88,7 +88,7 @@ export default function BguCalculatorPage() {
           const validGrade = typeof newSubGrade === 'number' ? newSubGrade : 0;
           setSubjects([...subjects, { name: newSubName.trim(), units: newSubUnits, grade: validGrade }]);
           setNewSubName('');
-          setNewSubGrade(90);
+          setNewSubGrade(0);
      };
 
      const handleRemoveSubject = (index: number) => {
@@ -167,7 +167,7 @@ export default function BguCalculatorPage() {
                                                   value={psychGeneral}
                                                   onChange={(e) => handleNumberInputChange(e, setPsychGeneral, 0, 800)}
                                                   onBlur={(e) => {
-                                                       const cleaned = cleanNumberInput(e.target.value, 200, 800);
+                                                       const cleaned = cleanNumberInput(e.target.value, 0, 800);
                                                        e.target.value = String(cleaned);
                                                        setPsychGeneral(cleaned);
                                                   }}
@@ -177,16 +177,16 @@ export default function BguCalculatorPage() {
 
                                         <div className="space-y-2">
                                              <label className="block text-xs font-bold text-slate-300">
-                                                  ציון פרק כמותי (50-150 או 200-800):
+                                                  ציון פרק כמותי (50-150):
                                              </label>
                                              <input
                                                   type="number"
                                                   min={50}
-                                                  max={800}
+                                                  max={150}
                                                   value={psychQuant}
-                                                  onChange={(e) => handleNumberInputChange(e, setPsychQuant, 0, 800)}
+                                                  onChange={(e) => handleNumberInputChange(e, setPsychQuant, 0, 150)}
                                                   onBlur={(e) => {
-                                                       const cleaned = cleanNumberInput(e.target.value, 50, 800);
+                                                       const cleaned = cleanNumberInput(e.target.value, 50, 150);
                                                        e.target.value = String(cleaned);
                                                        setPsychQuant(cleaned);
                                                   }}
@@ -392,7 +392,7 @@ export default function BguCalculatorPage() {
                                         </p>
                                         <p>
                                              <strong className="text-slate-200 block mb-0.5">2. סכם הנדסה וכמותי (200-800):</strong>
-                                             ניתן משקל מוגבר לפרק הכמותי ולציון הבגרות במתמטיקה ובפיזיקה (5 יח"ל):
+                                             ניתן משקל מוגבר לפרק הכמותי (50-150) ולציון הבגרות במתמטיקה ובפיזיקה (5 יח"ל):
                                              <br />
                                              <code className="text-indigo-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 font-mono text-[11px] block mt-1">
                                                   Sekem_Eng = (0.45×כמותי) + (0.25×פסיכומטרי) + (0.30×מתמטיקה) + בונוס פיזיקה
