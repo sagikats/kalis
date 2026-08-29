@@ -2,9 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Calculator, GraduationCap, ChevronLeft, Sparkles, Building, CheckCircle2 } from 'lucide-react';
+import { Calculator, GraduationCap, ChevronLeft, Sparkles, Building2, CheckCircle2, Layers } from 'lucide-react';
 
 const UNIVERSITIES = [
+     {
+          id: 'unified',
+          name: 'מחשבון אחוד לאוניברסיטאות בישראל',
+          href: '/calculators/bgu',
+          status: 'active',
+          description: 'הזנת ציונים חד-פעמית וחישוב השוואתי מדויק לבן-גוריון, תל אביב, העברית, הטכניון, אריאל וחיפה.',
+          badge: 'אחוד ופעיל'
+     },
      {
           id: 'bgu',
           name: 'אוניברסיטת בן-גוריון בנגב (BGU)',
@@ -16,26 +24,26 @@ const UNIVERSITIES = [
      {
           id: 'tau',
           name: 'אוניברסיטת תל אביב (TAU)',
-          href: '/calculators/tau',
-          status: 'coming_soon',
-          description: 'מחשבון סכם כמותי ורב-תחומי של אוניברסיטת תל אביב.',
-          badge: 'בקרוב'
+          href: '/calculators/bgu',
+          status: 'active',
+          description: 'מחשבון סכם כמותי ורב-תחומי של אוניברסיטת תל אביב במחשבון האחוד.',
+          badge: 'כלול במחשבון האחוד'
      },
      {
           id: 'huji',
           name: 'האוניברסיטה העברית בירושלים (HUJI)',
-          href: '/calculators/huji',
-          status: 'coming_soon',
-          description: 'חישוב ציון קבלה משוקלל וסכמי קבלה לפקולטות השונות בעברית.',
-          badge: 'בקרוב'
+          href: '/calculators/bgu',
+          status: 'active',
+          description: 'חישוב ציון קבלה משוקלל וסכמי קבלה לפקולטות השונות בעברית במחשבון האחוד.',
+          badge: 'כלול במחשבון האחוד'
      },
      {
           id: 'technion',
           name: 'הטכניון - מכון טכנולוגי לישראל',
-          href: '/calculators/technion',
-          status: 'coming_soon',
-          description: 'מחשבון סכם טכניוני (סכם הנדסה ומדעים מדויקים).',
-          badge: 'בקרוב'
+          href: '/calculators/bgu',
+          status: 'active',
+          description: 'מחשבון סכם טכניוני (סכם הנדסה ומדעים מדויקים) במחשבון האחוד.',
+          badge: 'כלול במחשבון האחוד'
      }
 ];
 
@@ -51,10 +59,10 @@ export default function CalculatorsHubPage() {
                               <span>מחשבוני סכם רשמיים לאוניברסיטאות בישראל</span>
                          </div>
                          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-                              בחר את <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">אוניברסיטת היעד</span> שלך
+                              מחשבון סכם <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-500">אחוד והשוואתי</span>
                          </h1>
                          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-                              לכל אוניברסיטה נוסחת סכם וכללי בונוסים ייחודיים. בחר אוניברסיטה לקבלת חישוב סכם מדויק המותאם לכללי הקבלה העדכניים ל-2026.
+                              הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד וקבל חישוב השוואתי מיידי של ציוני הסכם בכל אוניברסיטאות היעד בישראל.
                          </p>
                     </div>
 
@@ -62,23 +70,26 @@ export default function CalculatorsHubPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                          {UNIVERSITIES.map((univ) => {
                               const isActive = univ.status === 'active';
+                              const isUnifiedHeader = univ.id === 'unified';
                               return (
                                    <div
                                         key={univ.id}
-                                        className={`rounded-3xl p-6 sm:p-8 border transition-all duration-300 flex flex-col justify-between space-y-6 ${isActive
-                                             ? 'bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950/60 border-blue-500/40 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/10'
-                                             : 'bg-slate-900/40 border-slate-800/80 opacity-70'
+                                        className={`rounded-3xl p-6 sm:p-8 border transition-all duration-300 flex flex-col justify-between space-y-6 ${isUnifiedHeader
+                                             ? 'md:col-span-2 bg-gradient-to-r from-blue-950/80 via-slate-900 to-cyan-950/80 border-cyan-500/40 hover:border-cyan-400 shadow-2xl shadow-cyan-500/10'
+                                             : isActive
+                                                  ? 'bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950/60 border-blue-500/40 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/10'
+                                                  : 'bg-slate-900/40 border-slate-800/80 opacity-70'
                                              }`}
                                    >
                                         <div className="space-y-4">
                                              <div className="flex items-center justify-between">
-                                                  <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                                                       <Building className="h-6 w-6" />
+                                                  <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                                                       {isUnifiedHeader ? <Layers className="h-7 w-7" /> : <Building2 className="h-6 w-6" />}
                                                   </div>
                                                   <span
-                                                       className={`text-xs font-bold px-3 py-1 rounded-full border ${isActive
-                                                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                                                            : 'bg-slate-800 text-slate-400 border-slate-700'
+                                                       className={`text-xs font-bold px-3 py-1 rounded-full border ${isUnifiedHeader
+                                                            ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+                                                            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                                                             }`}
                                                   >
                                                        {univ.badge}
@@ -91,22 +102,13 @@ export default function CalculatorsHubPage() {
                                              </div>
                                         </div>
 
-                                        {isActive ? (
-                                             <Link
-                                                  href={univ.href}
-                                                  className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs rounded-2xl transition flex items-center justify-center gap-2 shadow-lg"
-                                             >
-                                                  <span>כנס למחשבון הסכם של בן-גוריון</span>
-                                                  <ChevronLeft className="h-4 w-4" />
-                                             </Link>
-                                        ) : (
-                                             <button
-                                                  disabled
-                                                  className="w-full py-3.5 bg-slate-800 text-slate-500 font-bold text-xs rounded-2xl cursor-not-allowed text-center"
-                                             >
-                                                  מחשבון זה בשלבי פיתוח
-                                             </button>
-                                        )}
+                                        <Link
+                                             href={univ.href}
+                                             className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs rounded-2xl transition flex items-center justify-center gap-2 shadow-lg"
+                                        >
+                                             <span>פתח את המחשבון האחוד</span>
+                                             <ChevronLeft className="h-4 w-4" />
+                                        </Link>
                                    </div>
                               );
                          })}

@@ -11,17 +11,25 @@ import {
      Trash2,
      Info,
      CheckCircle2,
-     HelpCircle,
-     ArrowRight,
+     Building2,
      ChevronLeft,
      Award,
-     BookOpen
+     BookOpen,
+     Check,
+     Sparkles
 } from 'lucide-react';
-import {
-     calculateBguAdmission,
-     SubjectInput
-} from '@/utils/calculators/bguCalculator';
+import { SubjectInput } from '@/utils/calculators/bguCalculator';
+import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import academicData from '@/data/academicData.json';
+
+const AVAILABLE_INSTITUTIONS = [
+     { id: 'bgu', name: 'בן-גוריון', fullName: 'אוניברסיטת בן-גוריון בנגב', badge: 'ב"ג' },
+     { id: 'tau', name: 'תל אביב', fullName: 'אוניברסיטת תל אביב', badge: 'TAU' },
+     { id: 'huji', name: 'העברית', fullName: 'האוניברסיטה העברית בירושלים', badge: 'HUJI' },
+     { id: 'technion', name: 'הטכניון', fullName: 'הטכניון - מכון טכנולוגי לישראל', badge: 'IIT' },
+     { id: 'ariel', name: 'אריאל', fullName: 'אוניברסיטת אריאל בשומרון', badge: 'AU' },
+     { id: 'haifa', name: 'חיפה', fullName: 'אוניברסיטת חיפה', badge: 'UOH' }
+];
 
 const DEFAULT_SUBJECTS: SubjectInput[] = [
      { name: 'תנ"ך', units: 2, grade: 0 },
@@ -37,17 +45,19 @@ const DEFAULT_SUBJECTS: SubjectInput[] = [
 /** Clean helper to parse number inputs preventing leading zeros (e.g. "085" -> 85) */
 function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 100): number | '' {
      if (rawVal === '') return '';
-     // Strip all leading zeros followed by another digit (e.g. "085" -> "85", "005" -> "5")
      const sanitized = rawVal.replace(/^0+(?=\d)/, '');
      const num = parseInt(sanitized, 10);
      if (isNaN(num)) return '';
      return Math.min(maxVal, Math.max(minVal, num));
 }
 
-export default function BguCalculatorPage() {
+export default function UnifiedCalculatorPage() {
      const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
      const [psychGeneral, setPsychGeneral] = useState<number | ''>(0);
      const [psychQuant, setPsychQuant] = useState<number | ''>(0);
+
+     // Selected institutions to compare (defaulting to BGU, TAU, HUJI, Technion)
+     const [selectedInstIds, setSelectedInstIds] = useState<string[]>(['bgu', 'tau', 'huji', 'technion']);
 
      // New subject state
      const [newSubName, setNewSubName] = useState('');
@@ -57,7 +67,7 @@ export default function BguCalculatorPage() {
      const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 }, [subjects]);
      const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
 
-     // Quantitative psychometric subscore (50-150) normalized for engineering formula (200-800 scale if needed)
+     // Quantitative psychometric subscore (50-150) normalized for engineering formula
      const normalizedQuant = useMemo(() => {
           const quantNum = Number(psychQuant) || 0;
           if (quantNum <= 150 && quantNum >= 50) {
@@ -66,22 +76,34 @@ export default function BguCalculatorPage() {
           return quantNum;
      }, [psychQuant]);
 
-     const results = useMemo(() => {
-          return calculateBguAdmission({
-               bagrutSubjects: subjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
-               psychometricGeneral: Number(psychGeneral) || 0,
-               psychometricQuant: normalizedQuant,
-               mathGrade: Number(mathSubject.grade) || 0,
-               mathUnits: mathSubject.units,
-               physicsGrade: Number(physicsSubject?.grade) || 0,
-               physicsUnits: physicsSubject?.units || 0
-          });
-     }, [subjects, psychGeneral, normalizedQuant, mathSubject, physicsSubject]);
+     // Multi-institution calculations
+     const institutionResults = useMemo(() => {
+          return calculateMultiInstitutionSekem(
+               {
+                    bagrutSubjects: subjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
+                    psychometricGeneral: Number(psychGeneral) || 0,
+                    psychometricQuant: normalizedQuant,
+                    mathGrade: Number(mathSubject.grade) || 0,
+                    mathUnits: mathSubject.units,
+                    physicsGrade: Number(physicsSubject?.grade) || 0,
+                    physicsUnits: physicsSubject?.units || 0
+               },
+               selectedInstIds
+          );
+     }, [subjects, psychGeneral, normalizedQuant, mathSubject, physicsSubject, selectedInstIds]);
 
-     // BGU Programs matching
-     const bguData = useMemo(() => {
-          return academicData.find(i => i.name.includes('בן גוריון') || i.name.includes('באר שבע'));
-     }, []);
+     const toggleInstitution = (id: string) => {
+          if (selectedInstIds.includes(id)) {
+               if (selectedInstIds.length === 1) return; // Keep at least one selected
+               setSelectedInstIds(selectedInstIds.filter(i => i !== id));
+          } else {
+               setSelectedInstIds([...selectedInstIds, id]);
+          }
+     };
+
+     const selectAllInstitutions = () => {
+          setSelectedInstIds(AVAILABLE_INSTITUTIONS.map(i => i.id));
+     };
 
      const handleAddSubject = () => {
           if (!newSubName.trim()) return;
@@ -121,27 +143,66 @@ export default function BguCalculatorPage() {
 
      return (
           <div className="min-h-screen bg-slate-950 text-slate-100 font-sans dir-rtl">
-               <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+               <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
 
                     {/* Header */}
                     <div className="space-y-4 text-center max-w-3xl mx-auto">
                          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold">
-                              <GraduationCap className="h-4 w-4" />
-                              <span>מחשבון הסכם הרשמי - אוניברסיטת בן-גוריון בנגב (BGU)</span>
+                              <Calculator className="h-4 w-4" />
+                              <span>מחשבון סכם וקבלה אחוד לאוניברסיטאות בישראל</span>
                          </div>
                          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-                              חישוב סכם כללי וסכם הנדסה <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">בן-גוריון</span>
+                              מחשבון סכם <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">כלל-אוניברסיטאי</span>
                          </h1>
                          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-                              חשב בצורה מדויקת את ממוצע הבגרות המשוקלל, סכם הנדסה וסכם כללי לקבלה למחלקות השונות באוניברסיטת בן-גוריון בנגב.
+                              הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד, בחר מוסדות לימוד, וקבל חישוב השוואתי מדויק של ציוני הסכם והתאמה ישירה לחוגים.
                          </p>
+                    </div>
+
+                    {/* Institution Multi-Select Chips Bar */}
+                    <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-4">
+                         <div className="flex items-center justify-between flex-wrap gap-3 border-b border-slate-800 pb-3">
+                              <div className="flex items-center gap-2.5">
+                                   <Building2 className="h-5 w-5 text-cyan-400" />
+                                   <h3 className="text-base sm:text-lg font-bold text-white">
+                                        בחר מוסדות לימוד לחישוב והשוואה:
+                                   </h3>
+                              </div>
+                              <button
+                                   onClick={selectAllInstitutions}
+                                   className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition underline"
+                              >
+                                   בחר את כל המוסדות
+                              </button>
+                         </div>
+
+                         <div className="flex items-center gap-2.5 flex-wrap">
+                              {AVAILABLE_INSTITUTIONS.map((inst) => {
+                                   const isSelected = selectedInstIds.includes(inst.id);
+                                   return (
+                                        <button
+                                             key={inst.id}
+                                             onClick={() => toggleInstitution(inst.id)}
+                                             className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 border shadow-sm ${isSelected
+                                                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-400 text-white shadow-cyan-500/20'
+                                                  : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                                                  }`}
+                                        >
+                                             <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${isSelected ? 'bg-white text-blue-700 font-black' : 'bg-slate-800 text-slate-400'}`}>
+                                                  {isSelected ? '✓' : '+'}
+                                             </span>
+                                             <span>{inst.fullName}</span>
+                                        </button>
+                                   );
+                              })}
+                         </div>
                     </div>
 
                     {/* Main Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-                         {/* Left Column: Inputs (7 cols) */}
-                         <div className="lg:col-span-7 space-y-6">
+                         {/* Left Column: Inputs (6 cols) */}
+                         <div className="lg:col-span-6 space-y-6">
 
                               {/* Card 1: Psychometric Scores */}
                               <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-5">
@@ -205,7 +266,7 @@ export default function BguCalculatorPage() {
                                              </div>
                                              <div>
                                                   <h3 className="text-lg font-bold text-white">2. ציוני תעודת בגרות (0-100)</h3>
-                                                  <p className="text-xs text-slate-400">בונוסים מחושבים אוטומטית לפי כללי בן-גוריון (טווח ציונים: 0 עד 100)</p>
+                                                  <p className="text-xs text-slate-400">בונוסים מחושבים אוטומטית לפי כללי האוניברסיטאות</p>
                                              </div>
                                         </div>
                                         <span className="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
@@ -309,145 +370,85 @@ export default function BguCalculatorPage() {
                                    className="w-full py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-cyan-500/20 transition flex items-center justify-center gap-2 group"
                               >
                                    <Zap className="h-5 w-5 text-yellow-300 group-hover:scale-110 transition-transform" />
-                                   <span>חשב / עדכן סכם בן-גוריון עכשיו</span>
+                                   <span>חשב ועדכן תוצאות לכל המוסדות הנבחרים</span>
                               </button>
 
                          </div>
 
-                         {/* Right Column: Calculations & Results (5 cols) */}
-                         <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-8" id="results-section">
+                         {/* Right Column: Multi-Institution Comparison Results (6 cols) */}
+                         <div className="lg:col-span-6 space-y-6 lg:sticky lg:top-8" id="results-section">
 
-                              {/* Results Summary Box */}
-                              <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/80 rounded-3xl p-6 border border-cyan-500/30 shadow-2xl space-y-6">
-
-                                   <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                                        <h3 className="text-lg font-black text-white flex items-center gap-2">
-                                             <Award className="h-5 w-5 text-cyan-400" />
-                                             תוצאות חישוב סכם בן-גוריון
-                                        </h3>
-                                        <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/20 px-2.5 py-1 rounded-full border border-cyan-500/30">
-                                             מעודכן ל-2026
-                                        </span>
-                                   </div>
-
-                                   {/* Score Cards */}
-                                   <div className="space-y-4">
-                                        {/* Bagrut Avg */}
-                                        <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">
-                                             <div>
-                                                  <span className="text-xs text-slate-400 font-bold block">ממוצע בגרות משוקלל (עם בונוסים):</span>
-                                                  <span className="text-2xl font-black text-white mt-0.5 block">{results.bagrutAverage}</span>
-                                             </div>
-                                             {results.directBagrutEligible && (
-                                                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                                                       אפיק קבלה ישיר זמין!
-                                                  </span>
-                                             )}
-                                        </div>
-
-                                        {/* General Sekem */}
-                                        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-950/80 to-slate-950 border border-blue-800/80 flex items-center justify-between">
-                                             <div>
-                                                  <span className="text-xs text-blue-300 font-bold block">סכם כללי (200-800):</span>
-                                                  <span className="text-3xl font-black text-cyan-300 mt-0.5 block">{results.generalSekem}</span>
-                                             </div>
-                                             <Zap className="h-6 w-6 text-cyan-400" />
-                                        </div>
-
-                                        {/* Engineering Sekem */}
-                                        <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-950/90 to-slate-950 border border-indigo-700/80 flex items-center justify-between">
-                                             <div>
-                                                  <span className="text-xs text-indigo-300 font-bold block">סכם הנדסה / כמותי (200-800):</span>
-                                                  <span className="text-3xl font-black text-indigo-300 mt-0.5 block">{results.engineeringSekem}</span>
-                                             </div>
-                                             <Brain className="h-6 w-6 text-indigo-400" />
-                                        </div>
-                                   </div>
-
-                                   {/* Quick Action to Optimizer */}
-                                   <Link
-                                        href="/optimizer?university=אוניברסיטת בן גוריון בנגב"
-                                        className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs rounded-2xl transition flex items-center justify-center gap-2 shadow-lg"
-                                   >
-                                        <span>מצא חוגים מתאימים באוניברסיטת בן-גוריון</span>
-                                        <ChevronLeft className="h-4 w-4" />
-                                   </Link>
-
+                              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                                   <h3 className="text-xl font-black text-white flex items-center gap-2">
+                                        <Award className="h-6 w-6 text-cyan-400" />
+                                        תוצאות סכם לפי מוסד לימודים
+                                   </h3>
+                                   <span className="text-xs text-cyan-300 font-extrabold bg-cyan-500/20 px-3 py-1 rounded-full border border-cyan-500/30">
+                                        {institutionResults.length} מוסדות מוצגים
+                                   </span>
                               </div>
 
-                              {/* Formula Breakdown Info Box */}
-                              <div className="bg-slate-900/80 rounded-3xl p-6 border border-slate-800 space-y-4">
-                                   <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                                        <Info className="h-4 w-4 text-cyan-400" />
-                                        איך מחושב הסכם באוניברסיטת בן-גוריון?
-                                   </h4>
-                                   <div className="space-y-3 text-xs text-slate-400 leading-relaxed">
-                                        <p>
-                                             <strong className="text-slate-200 block mb-0.5">1. סכם כללי (200-800):</strong>
-                                             משלב את הציון הפסיכומטרי הרב-תחומי וממוצע הבגרות המשוקלל:
-                                             <br />
-                                             <code className="text-cyan-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 font-mono text-[11px] block mt-1">
-                                                  Sekem = 0.5 × פסיכומטרי + 5 × ממוצע בגרות
-                                             </code>
-                                        </p>
-                                        <p>
-                                             <strong className="text-slate-200 block mb-0.5">2. סכם הנדסה וכמותי (200-800):</strong>
-                                             ניתן משקל מוגבר לפרק הכמותי (50-150) ולציון הבגרות במתמטיקה ובפיזיקה (5 יח"ל):
-                                             <br />
-                                             <code className="text-indigo-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 font-mono text-[11px] block mt-1">
-                                                  Sekem_Eng = (0.45×כמותי) + (0.25×פסיכומטרי) + (0.30×מתמטיקה) + בונוס פיזיקה
-                                             </code>
-                                        </p>
-                                        <p>
-                                             <strong className="text-slate-200 block mb-0.5">3. בונוסים בבגרות בן-גוריון:</strong>
-                                             5 יח"ל מתמטיקה/אנגלית/פיזיקה/מדעי המחשב מקבלים בונוס של +25 נקודות. 4 יח"ל מתמטיקה/אנגלית מקבלים +12.5 נקודות.
-                                        </p>
-                                   </div>
+                              {/* Dynamic Grid of Cards per Selected Institution */}
+                              <div className="space-y-4 max-h-[680px] overflow-y-auto pr-1">
+                                   {institutionResults.map((res) => (
+                                        <div
+                                             key={res.institutionId}
+                                             className="bg-slate-900/90 rounded-3xl p-5 border border-slate-800 hover:border-slate-700 shadow-xl transition space-y-4"
+                                        >
+                                             <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                                                  <div className="flex items-center gap-3">
+                                                       <div className={`w-9 h-9 rounded-2xl bg-gradient-to-br ${res.badgeColor} flex items-center justify-center text-white font-black text-xs shadow-md`}>
+                                                            {res.logoText}
+                                                       </div>
+                                                       <div>
+                                                            <h4 className="text-base font-bold text-white">{res.institutionName}</h4>
+                                                            {res.notes && <p className="text-[11px] text-slate-400">{res.notes}</p>}
+                                                       </div>
+                                                  </div>
+                                                  {res.directBagrutEligible && (
+                                                       <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                                                            אפיק קבלה ישיר!
+                                                       </span>
+                                                  )}
+                                             </div>
+
+                                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                  {/* Bagrut Avg */}
+                                                  <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
+                                                       <span className="text-[11px] text-slate-400 block font-bold">ממוצע בגרות</span>
+                                                       <span className="text-xl font-black text-white mt-1 block">{res.bagrutAverage}</span>
+                                                  </div>
+
+                                                  {/* General Sekem */}
+                                                  <div className="p-3 rounded-2xl bg-blue-950/40 border border-blue-800/50 text-center">
+                                                       <span className="text-[11px] text-blue-300 block font-bold">סכם כללי</span>
+                                                       <span className="text-xl font-black text-cyan-300 mt-1 block">{res.generalSekem}</span>
+                                                  </div>
+
+                                                  {/* Engineering Sekem */}
+                                                  {res.engineeringSekem !== undefined && (
+                                                       <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-center col-span-2 sm:col-span-1">
+                                                            <span className="text-[11px] text-indigo-300 block font-bold">סכם כמותי/הנדסה</span>
+                                                            <span className="text-xl font-black text-indigo-300 mt-1 block">{res.engineeringSekem}</span>
+                                                       </div>
+                                                  )}
+                                             </div>
+
+                                             {/* Direct Optimizer Link per Institution */}
+                                             <Link
+                                                  href={`/optimizer?university=${encodeURIComponent(res.institutionName)}`}
+                                                  className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5"
+                                             >
+                                                  <span>הצג חוגים מתאימים ב{res.institutionName}</span>
+                                                  <ChevronLeft className="h-4 w-4" />
+                                             </Link>
+                                        </div>
+                                   ))}
                               </div>
 
                          </div>
 
                     </div>
-
-                    {/* Sample Programs matching section */}
-                    {bguData && bguData.programs && (
-                         <div className="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6">
-                              <div className="flex items-center justify-between">
-                                   <div>
-                                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                                             <GraduationCap className="h-5 w-5 text-cyan-400" />
-                                             סיכויי קבלה למסלולים בולטים בבן-גוריון לפי הנתונים שלך
-                                        </h3>
-                                        <p className="text-xs text-slate-400 mt-1">
-                                             השוואה מול ספי הקבלה הרשמיים שנשאבו מהאוניברסיטה למועד 2026
-                                        </p>
-                                   </div>
-                              </div>
-
-                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                   {bguData.programs.slice(0, 9).map((prog, idx) => {
-                                        const requiredSekem = (prog as any).sekemScore || prog.admissionThreshold || 600;
-                                        const userSekem = prog.fieldOfStudy.includes('הנדס') || prog.fieldOfStudy.includes('מחשב') ? results.engineeringSekem : results.generalSekem;
-                                        const isEligible = userSekem >= requiredSekem;
-
-                                        return (
-                                             <div key={idx} className={`p-4 rounded-2xl border transition space-y-3 ${isEligible ? 'bg-emerald-950/20 border-emerald-500/30' : 'bg-slate-950/80 border-slate-800'}`}>
-                                                  <div className="flex items-start justify-between gap-2">
-                                                       <span className="text-sm font-bold text-white block">{prog.fieldOfStudy}</span>
-                                                       <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border ${isEligible ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border-amber-500/40'}`}>
-                                                            {isEligible ? 'סיכוי קבלה גבוה' : 'נדרש שיפור'}
-                                                       </span>
-                                                  </div>
-                                                  <div className="flex items-center justify-between text-xs text-slate-400 pt-1 border-t border-slate-800/80">
-                                                       <span>סף נדרש: <strong className="text-cyan-400 font-black">{requiredSekem}</strong></span>
-                                                       <span>הסכם שלך: <strong className="text-white font-black">{userSekem}</strong></span>
-                                                  </div>
-                                             </div>
-                                        );
-                                   })}
-                              </div>
-                         </div>
-                    )}
 
                </main>
           </div>
