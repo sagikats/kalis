@@ -364,15 +364,28 @@ export default function OptimizerPage() {
                                                                       <div className="flex items-center justify-between gap-2 flex-wrap">
                                                                            <span className="text-xs font-bold block text-slate-900">{prog.fieldOfStudy}</span>
                                                                            <div className="flex items-center gap-1.5 flex-wrap">
-                                                                                {prog.sekemScore !== undefined && prog.sekemScore !== null && (
-                                                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-200 text-[10px] font-black">
-                                                                                          סכם: {prog.sekemScore}
+                                                                                {prog.psychometricScore === 0 || prog.admissionThreshold === 0 ? (
+                                                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 text-[10px] font-black">
+                                                                                          אין סף קבלה (קבלה פתוחה)
                                                                                      </span>
-                                                                                )}
-                                                                                {prog.psychometricScore !== undefined && prog.psychometricScore !== null && (
-                                                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-900 border border-indigo-200 text-[10px] font-black">
-                                                                                          פסיכומטרי: {prog.psychometricScore}
-                                                                                     </span>
+                                                                                ) : (
+                                                                                     <>
+                                                                                          {prog.sekemScore !== undefined && prog.sekemScore !== null && (
+                                                                                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-200 text-[10px] font-black">
+                                                                                                    סכם: {prog.sekemScore}
+                                                                                               </span>
+                                                                                          )}
+                                                                                          {prog.psychometricScore !== undefined && prog.psychometricScore !== null && (
+                                                                                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-900 border border-indigo-200 text-[10px] font-black">
+                                                                                                    פסיכומטרי: {prog.psychometricScore}
+                                                                                               </span>
+                                                                                          )}
+                                                                                          {prog.sekemScore === undefined && prog.psychometricScore === undefined && prog.admissionThreshold === undefined && (
+                                                                                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">
+                                                                                                    אין נתונים זמינים
+                                                                                               </span>
+                                                                                          )}
+                                                                                     </>
                                                                                 )}
                                                                                 {prog.registrationStatus && (
                                                                                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${prog.registrationStatus.includes('פתוחה')
@@ -399,8 +412,13 @@ export default function OptimizerPage() {
                                                                                 </span>
                                                                            )}
                                                                       </div>
+                                                                      {prog.comments && (
+                                                                           <p className="text-[10px] text-amber-700 font-medium mt-1 line-clamp-2">
+                                                                                ℹ️ {prog.comments}
+                                                                           </p>
+                                                                      )}
                                                                       {prog.description && (
-                                                                           <p className="text-[10px] text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+                                                                           <p className="text-[10px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                                                                                 {prog.description}
                                                                            </p>
                                                                       )}
@@ -420,6 +438,9 @@ export default function OptimizerPage() {
                                    const activeSekem = activeProg?.sekemScore ?? activeProg?.admissionThreshold ?? thresholdData.sekem;
                                    const activePsych = activeProg?.psychometricScore;
 
+                                   const isOpenAdmission = activeSekem === 0 || activeProg?.admissionThreshold === 0 || activeProg?.psychometricScore === 0;
+                                   const hasSpecificData = activeProg?.sekemScore !== undefined || activeProg?.psychometricScore !== undefined || activeProg?.admissionThreshold !== undefined;
+
                                    return (
                                         <div className="p-4 sm:p-6 rounded-2xl bg-blue-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-900 shadow-md">
                                              <div className="space-y-1">
@@ -431,9 +452,21 @@ export default function OptimizerPage() {
                                                        {targetUniversity} - {targetDegree}
                                                   </p>
                                                   <div className="flex items-center gap-3 text-xs sm:text-sm text-sky-200 font-bold flex-wrap pt-1">
-                                                       <span>סכם יעד: <span className="text-cyan-400 text-lg font-black">{activeSekem}</span></span>
-                                                       {activePsych && (
-                                                            <span>| סף פסיכומטרי: <span className="text-indigo-300 text-base font-black">{activePsych}</span></span>
+                                                       {isOpenAdmission ? (
+                                                            <span className="text-emerald-400 text-lg font-black bg-emerald-950/60 px-3 py-1 rounded-lg border border-emerald-700">
+                                                                 אין סף קבלה (קבלה פתוחה)
+                                                            </span>
+                                                       ) : hasSpecificData ? (
+                                                            <>
+                                                                 <span>סכם יעד: <span className="text-cyan-400 text-lg font-black">{activeSekem}</span></span>
+                                                                 {activePsych && activePsych > 0 && (
+                                                                      <span>| סף פסיכומטרי: <span className="text-indigo-300 text-base font-black">{activePsych}</span></span>
+                                                                 )}
+                                                            </>
+                                                       ) : (
+                                                            <span className="text-amber-300 text-sm font-bold bg-amber-950/60 px-3 py-1 rounded-lg border border-amber-800">
+                                                                 אין נתונים זמינים ספציפיים
+                                                            </span>
                                                        )}
                                                        {activeProg?.mathRequirement && (
                                                             <span>| דרישת מתמטיקה: <span className="text-amber-300 font-bold">{activeProg.mathRequirement}</span></span>
@@ -690,7 +723,13 @@ export default function OptimizerPage() {
                                              3 מסלולים מומלצים לקבלה ל{targetDegree} ב{targetUniversity}
                                         </h2>
                                         <p className="text-xs text-slate-300">
-                                             סף קבלה נדרש: <span className="font-bold text-indigo-300">{activeSekem}</span> {activePsych ? `(פסיכומטרי: ${activePsych})` : ''} | מתווה למידה אופטימלי לפי תשואת ROI מקסימלית.
+                                             סף קבלה נדרש: {activeSekem === 0 || activeProg?.admissionThreshold === 0 ? (
+                                                  <span className="font-bold text-emerald-300">אין סף קבלה (קבלה פתוחה)</span>
+                                             ) : activeProg?.sekemScore !== undefined || activeProg?.psychometricScore !== undefined || activeProg?.admissionThreshold !== undefined ? (
+                                                  <span className="font-bold text-indigo-300">{activeSekem} {activePsych && activePsych > 0 ? `(פסיכומטרי: ${activePsych})` : ''}</span>
+                                             ) : (
+                                                  <span className="font-bold text-amber-300">אין נתונים זמינים ספציפיים</span>
+                                             )} | מתווה למידה אופטימלי לפי תשואת ROI מקסימלית.
                                         </p>
                                    </div>
                                    <button
