@@ -75,7 +75,8 @@ export default function BguCalculatorPage() {
 
      const handleAddSubject = () => {
           if (!newSubName.trim()) return;
-          setSubjects([...subjects, { name: newSubName.trim(), units: newSubUnits, grade: newSubGrade }]);
+          const validGrade = Math.min(100, Math.max(0, Number(newSubGrade) || 0));
+          setSubjects([...subjects, { name: newSubName.trim(), units: newSubUnits, grade: validGrade }]);
           setNewSubName('');
      };
 
@@ -85,7 +86,12 @@ export default function BguCalculatorPage() {
 
      const handleUpdateSubject = (index: number, field: keyof SubjectInput, value: any) => {
           const updated = [...subjects];
-          updated[index] = { ...updated[index], [field]: value };
+          let val = value;
+          if (field === 'grade') {
+               const numVal = Number(value);
+               val = isNaN(numVal) ? 0 : Math.min(100, Math.max(0, numVal));
+          }
+          updated[index] = { ...updated[index], [field]: val };
           setSubjects(updated);
      };
 
@@ -110,7 +116,7 @@ export default function BguCalculatorPage() {
                     {/* Main Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-                         {/* Left Column: Inputs (8 cols) */}
+                         {/* Left Column: Inputs (7 cols) */}
                          <div className="lg:col-span-7 space-y-6">
 
                               {/* Card 1: Psychometric Scores */}
@@ -135,7 +141,7 @@ export default function BguCalculatorPage() {
                                                   min={200}
                                                   max={800}
                                                   value={psychGeneral}
-                                                  onChange={(e) => setPsychGeneral(Number(e.target.value))}
+                                                  onChange={(e) => setPsychGeneral(Math.min(800, Math.max(200, Number(e.target.value) || 200)))}
                                                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                                              />
                                         </div>
@@ -149,7 +155,7 @@ export default function BguCalculatorPage() {
                                                   min={50}
                                                   max={800}
                                                   value={psychQuant}
-                                                  onChange={(e) => setPsychQuant(Number(e.target.value))}
+                                                  onChange={(e) => setPsychQuant(Math.min(800, Math.max(50, Number(e.target.value) || 50)))}
                                                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                                              />
                                         </div>
@@ -164,8 +170,8 @@ export default function BguCalculatorPage() {
                                                   <BookOpen className="h-5 w-5" />
                                              </div>
                                              <div>
-                                                  <h3 className="text-lg font-bold text-white">2. ציוני תעודת בגרות</h3>
-                                                  <p className="text-xs text-slate-400">בונוסים מחושבים אוטומטית לפי כללי בן-גוריון</p>
+                                                  <h3 className="text-lg font-bold text-white">2. ציוני תעודת בגרות (0-100)</h3>
+                                                  <p className="text-xs text-slate-400">בונוסים מחושבים אוטומטית לפי כללי בן-גוריון (טווח ציונים: 0 עד 100)</p>
                                              </div>
                                         </div>
                                         <span className="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
@@ -196,7 +202,7 @@ export default function BguCalculatorPage() {
                                                        </select>
                                                        <input
                                                             type="number"
-                                                            min={40}
+                                                            min={0}
                                                             max={100}
                                                             value={sub.grade}
                                                             onChange={(e) => handleUpdateSubject(idx, 'grade', Number(e.target.value))}
@@ -234,6 +240,8 @@ export default function BguCalculatorPage() {
                                         </select>
                                         <input
                                              type="number"
+                                             min={0}
+                                             max={100}
                                              value={newSubGrade}
                                              onChange={(e) => setNewSubGrade(Number(e.target.value))}
                                              className="w-16 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-cyan-300 text-center py-2"
