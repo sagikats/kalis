@@ -261,6 +261,141 @@ async function fetchAndNormalizeData() {
           console.log(`Technion dataset cleaned: Exactly ${technionInst.programs.length} official Technion degree tracks.`);
      }
 
+     // Enrich Hebrew University of Jerusalem with admissions dataset
+     const hujiScrapedPath = path.join(__dirname, '../scrapers/huji-programs.json');
+     if (fs.existsSync(hujiScrapedPath)) {
+          console.log('Enriching Hebrew University admissions dataset from scrapers/huji-programs.json...');
+          const hujiScraped = JSON.parse(fs.readFileSync(hujiScrapedPath, 'utf-8'));
+          let hujiInst = resultInstitutions.find(i => i.name.includes('העברית'));
+
+          if (hujiInst) {
+               hujiScraped.forEach((item, index) => {
+                    const existing = hujiInst.programs.find(p => p.fieldOfStudy.includes(item.degreeName) || item.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = item.admissionThreshold;
+                         existing.psychometricScore = item.psychometricScore;
+                         existing.mathRequirement = item.mathRequirement;
+                         existing.englishRequirement = item.englishRequirement;
+                         existing.comments = item.comments;
+                    } else {
+                         hujiInst.programs.push({
+                              id: `prog-huji-${index + 1}`,
+                              fieldOfStudy: item.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: item.admissionThreshold,
+                              psychometricScore: item.psychometricScore,
+                              mathRequirement: item.mathRequirement,
+                              englishRequirement: item.englishRequirement,
+                              comments: item.comments
+                         });
+                    }
+               });
+               hujiInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+               console.log(`Hebrew University enriched: ${hujiInst.programs.length} total tracks.`);
+          }
+     }
+
+     // Enrich Bar-Ilan University with admissions dataset
+     const biuScrapedPath = path.join(__dirname, '../scrapers/biu-programs.json');
+     if (fs.existsSync(biuScrapedPath)) {
+          console.log('Enriching Bar-Ilan University admissions dataset from scrapers/biu-programs.json...');
+          const biuScraped = JSON.parse(fs.readFileSync(biuScrapedPath, 'utf-8'));
+          let biuInst = resultInstitutions.find(i => i.name.includes('בר אילן') || i.name.includes('בר-אילן'));
+
+          if (biuInst) {
+               biuScraped.forEach((item, index) => {
+                    const existing = biuInst.programs.find(p => p.fieldOfStudy.includes(item.degreeName) || item.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = item.admissionThreshold;
+                         existing.psychometricScore = item.psychometricScore;
+                         existing.mathRequirement = item.mathRequirement;
+                         existing.sekemScore = item.sekemScore;
+                         existing.comments = item.comments;
+                    } else {
+                         biuInst.programs.push({
+                              id: `prog-biu-${index + 1}`,
+                              fieldOfStudy: item.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: item.admissionThreshold,
+                              psychometricScore: item.psychometricScore,
+                              mathRequirement: item.mathRequirement,
+                              sekemScore: item.sekemScore,
+                              comments: item.comments
+                         });
+                    }
+               });
+               biuInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+               console.log(`Bar-Ilan University enriched: ${biuInst.programs.length} total tracks.`);
+          }
+     }
+
+     // Enrich Ariel University with admissions dataset
+     const arielScrapedPath = path.join(__dirname, '../scrapers/ariel-programs.json');
+     if (fs.existsSync(arielScrapedPath)) {
+          console.log('Enriching Ariel University admissions dataset from scrapers/ariel-programs.json...');
+          const arielScraped = JSON.parse(fs.readFileSync(arielScrapedPath, 'utf-8'));
+          let arielInst = resultInstitutions.find(i => i.name.includes('אריאל'));
+
+          if (arielInst) {
+               arielScraped.forEach((item, index) => {
+                    const existing = arielInst.programs.find(p => p.fieldOfStudy.includes(item.degreeName) || item.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = item.admissionThreshold;
+                         existing.psychometricScore = item.psychometricScore;
+                         existing.mathRequirement = item.mathRequirement;
+                         existing.sekemScore = item.sekemScore;
+                         existing.comments = item.comments;
+                    } else {
+                         arielInst.programs.push({
+                              id: `prog-ariel-${index + 1}`,
+                              fieldOfStudy: item.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: item.admissionThreshold,
+                              psychometricScore: item.psychometricScore,
+                              mathRequirement: item.mathRequirement,
+                              sekemScore: item.sekemScore,
+                              comments: item.comments
+                         });
+                    }
+               });
+               arielInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+               console.log(`Ariel University enriched: ${arielInst.programs.length} total tracks.`);
+          }
+     }
+
+     // Enrich Reichman University with admissions dataset
+     const reichmanScrapedPath = path.join(__dirname, '../scrapers/reichman-programs.json');
+     if (fs.existsSync(reichmanScrapedPath)) {
+          console.log('Enriching Reichman University admissions dataset from scrapers/reichman-programs.json...');
+          const reichmanScraped = JSON.parse(fs.readFileSync(reichmanScrapedPath, 'utf-8'));
+          let reichmanInst = resultInstitutions.find(i => i.name.includes('רייכמן') || i.name.includes('הבינתחומי'));
+
+          if (reichmanInst) {
+               reichmanInst.name = 'אוניברסיטת רייכמן (הבינתחומי הרצליה)';
+               reichmanScraped.forEach((item, index) => {
+                    const existing = reichmanInst.programs.find(p => p.fieldOfStudy.includes(item.degreeName) || item.degreeName.includes(p.fieldOfStudy));
+                    if (existing) {
+                         existing.admissionThreshold = item.admissionThreshold;
+                         existing.psychometricScore = item.psychometricScore;
+                         existing.mathRequirement = item.mathRequirement;
+                         existing.comments = item.comments;
+                    } else {
+                         reichmanInst.programs.push({
+                              id: `prog-reichman-${index + 1}`,
+                              fieldOfStudy: item.degreeName,
+                              degreeLevel: 'תואר ראשון',
+                              admissionThreshold: item.admissionThreshold,
+                              psychometricScore: item.psychometricScore,
+                              mathRequirement: item.mathRequirement,
+                              comments: item.comments
+                         });
+                    }
+               });
+               reichmanInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+               console.log(`Reichman University enriched: ${reichmanInst.programs.length} total tracks.`);
+          }
+     }
+
      const totalPrograms = resultInstitutions.reduce((sum, inst) => sum + inst.programs.length, 0);
      console.log(`Ingested ${resultInstitutions.length} canonical institutions with ${totalPrograms} unique undergraduate degree programs.`);
 
