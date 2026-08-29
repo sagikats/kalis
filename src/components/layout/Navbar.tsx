@@ -15,7 +15,8 @@ import {
      ChevronDown,
      RefreshCw,
      X,
-     AlertTriangle
+     AlertTriangle,
+     Calculator
 } from 'lucide-react';
 import { usePlanner } from '../../context/PlannerContext';
 
@@ -30,6 +31,7 @@ export default function Navbar() {
      const navLinks = [
           { href: '/', label: 'דף הבית', icon: Compass },
           { href: '/optimizer', label: 'סיכויי קבלה', icon: Sliders },
+          { href: '/calculators', label: 'מחשבון סכם', icon: Calculator },
           { href: '/wizard', label: 'בניית תוכנית', icon: Sparkles },
           { href: '/dashboard', label: 'קוקפיט למידה', icon: CheckSquare },
           { href: '/schedule', label: 'לו״ז וסילבוס', icon: Calendar }
