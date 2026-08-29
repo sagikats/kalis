@@ -34,36 +34,46 @@ const DEFAULT_SUBJECTS: SubjectInput[] = [
      { name: 'פיזיקה', units: 5, grade: 90 }
 ];
 
+/** Clean helper to parse number inputs preventing leading zeros (e.g. "085" -> 85) */
+function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 100): number | '' {
+     if (rawVal === '') return '';
+     // Strip all leading zeros followed by another digit (e.g. "085" -> "85", "005" -> "5")
+     const sanitized = rawVal.replace(/^0+(?=\d)/, '');
+     const num = parseInt(sanitized, 10);
+     if (isNaN(num)) return '';
+     return Math.min(maxVal, Math.max(minVal, num));
+}
+
 export default function BguCalculatorPage() {
      const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
-     const [psychGeneral, setPsychGeneral] = useState<number>(680);
-     const [psychQuant, setPsychQuant] = useState<number>(138); // Standard quant subscore or 200-800 scale
+     const [psychGeneral, setPsychGeneral] = useState<number | ''>(680);
+     const [psychQuant, setPsychQuant] = useState<number | ''>(138);
 
      // New subject state
      const [newSubName, setNewSubName] = useState('');
      const [newSubUnits, setNewSubUnits] = useState(5);
-     const [newSubGrade, setNewSubGrade] = useState(90);
+     const [newSubGrade, setNewSubGrade] = useState<number | ''>(90);
 
      const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 88 }, [subjects]);
      const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
 
      // Convert psychometric quantitative subscore (100-150 to 200-800 equivalent if entered as 100-150)
      const normalizedQuant = useMemo(() => {
-          if (psychQuant <= 150) {
-               // 100-150 scale conversion to 200-800
-               return Math.round(200 + ((psychQuant - 50) / 100) * 600);
+          const quantNum = Number(psychQuant) || 0;
+          if (quantNum <= 150 && quantNum >= 50) {
+               return Math.round(200 + ((quantNum - 50) / 100) * 600);
           }
-          return psychQuant;
+          return quantNum;
      }, [psychQuant]);
 
      const results = useMemo(() => {
           return calculateBguAdmission({
-               bagrutSubjects: subjects,
-               psychometricGeneral: psychGeneral,
+               bagrutSubjects: subjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
+               psychometricGeneral: Number(psychGeneral) || 0,
                psychometricQuant: normalizedQuant,
-               mathGrade: mathSubject.grade,
+               mathGrade: Number(mathSubject.grade) || 0,
                mathUnits: mathSubject.units,
-               physicsGrade: physicsSubject?.grade || 0,
+               physicsGrade: Number(physicsSubject?.grade) || 0,
                physicsUnits: physicsSubject?.units || 0
           });
      }, [subjects, psychGeneral, normalizedQuant, mathSubject, physicsSubject]);
@@ -75,24 +85,38 @@ export default function BguCalculatorPage() {
 
      const handleAddSubject = () => {
           if (!newSubName.trim()) return;
-          const validGrade = Math.min(100, Math.max(0, Number(newSubGrade) || 0));
+          const validGrade = typeof newSubGrade === 'number' ? newSubGrade : 0;
           setSubjects([...subjects, { name: newSubName.trim(), units: newSubUnits, grade: validGrade }]);
           setNewSubName('');
+          setNewSubGrade(90);
      };
 
      const handleRemoveSubject = (index: number) => {
           setSubjects(subjects.filter((_, i) => i !== index));
      };
 
-     const handleUpdateSubject = (index: number, field: keyof SubjectInput, value: any) => {
+     const handleUpdateSubject = (index: number, field: keyof SubjectInput, value: any, event?: React.ChangeEvent<HTMLInputElement>) => {
           const updated = [...subjects];
           let val = value;
           if (field === 'grade') {
-               const numVal = Number(value);
-               val = isNaN(numVal) ? 0 : Math.min(100, Math.max(0, numVal));
+               val = cleanNumberInput(String(value), 0, 100);
+               if (event && event.target) {
+                    event.target.value = String(val);
+               }
           }
           updated[index] = { ...updated[index], [field]: val };
           setSubjects(updated);
+     };
+
+     const handleNumberInputChange = (
+          e: React.ChangeEvent<HTMLInputElement>,
+          setter: (val: number | '') => void,
+          minVal: number,
+          maxVal: number
+     ) => {
+          const cleaned = cleanNumberInput(e.target.value, minVal, maxVal);
+          e.target.value = String(cleaned);
+          setter(cleaned);
      };
 
      return (
@@ -141,7 +165,12 @@ export default function BguCalculatorPage() {
                                                   min={200}
                                                   max={800}
                                                   value={psychGeneral}
-                                                  onChange={(e) => setPsychGeneral(Math.min(800, Math.max(200, Number(e.target.value) || 200)))}
+                                                  onChange={(e) => handleNumberInputChange(e, setPsychGeneral, 0, 800)}
+                                                  onBlur={(e) => {
+                                                       const cleaned = cleanNumberInput(e.target.value, 200, 800);
+                                                       e.target.value = String(cleaned);
+                                                       setPsychGeneral(cleaned);
+                                                  }}
                                                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                                              />
                                         </div>
@@ -155,7 +184,12 @@ export default function BguCalculatorPage() {
                                                   min={50}
                                                   max={800}
                                                   value={psychQuant}
-                                                  onChange={(e) => setPsychQuant(Math.min(800, Math.max(50, Number(e.target.value) || 50)))}
+                                                  onChange={(e) => handleNumberInputChange(e, setPsychQuant, 0, 800)}
+                                                  onBlur={(e) => {
+                                                       const cleaned = cleanNumberInput(e.target.value, 50, 800);
+                                                       e.target.value = String(cleaned);
+                                                       setPsychQuant(cleaned);
+                                                  }}
                                                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                                              />
                                         </div>
@@ -205,7 +239,12 @@ export default function BguCalculatorPage() {
                                                             min={0}
                                                             max={100}
                                                             value={sub.grade}
-                                                            onChange={(e) => handleUpdateSubject(idx, 'grade', Number(e.target.value))}
+                                                            onChange={(e) => handleUpdateSubject(idx, 'grade', e.target.value, e)}
+                                                            onBlur={(e) => {
+                                                                 const cleaned = cleanNumberInput(e.target.value, 0, 100);
+                                                                 e.target.value = String(cleaned);
+                                                                 handleUpdateSubject(idx, 'grade', cleaned);
+                                                            }}
                                                             className="w-16 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-cyan-400 text-center py-1"
                                                        />
                                                        <button
@@ -243,7 +282,12 @@ export default function BguCalculatorPage() {
                                              min={0}
                                              max={100}
                                              value={newSubGrade}
-                                             onChange={(e) => setNewSubGrade(Number(e.target.value))}
+                                             onChange={(e) => handleNumberInputChange(e, setNewSubGrade, 0, 100)}
+                                             onBlur={(e) => {
+                                                  const cleaned = cleanNumberInput(e.target.value, 0, 100);
+                                                  e.target.value = String(cleaned);
+                                                  setNewSubGrade(cleaned);
+                                             }}
                                              className="w-16 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-cyan-300 text-center py-2"
                                         />
                                         <button
