@@ -142,69 +142,37 @@ function cleanTitle(title) {
      return title
           .replace(/^תואר ראשון (ב|לימודי |תוכנית |בחוג ל|דו-חוגי ב|חד-חוגי ב|כפול ב)?/, '')
           .replace(/^לימודי /, '')
+          .replace(/[,"'״-]/g, ' ')
           .replace(/\s+/g, ' ')
           .trim();
 }
 
-function runEnrichment() {
+function enrichTauInstitution(tauInst) {
+     if (!tauInst) return;
      const scrapedProfiles = parseScrapedProfiles();
-     console.log(`Parsed ${scrapedProfiles.length} TAU scraped profiles.`);
 
+     // Use scraped profiles as official basis for TAU
+     tauInst.programs = scrapedProfiles.map((sp, idx) => ({
+          id: `prog-tau-${sp.programId}-${idx + 1}`,
+          fieldOfStudy: sp.title,
+          degreeLevel: 'תואר ראשון',
+          description: `מזהה תוכנית: ${sp.programId}`,
+          admissionThreshold: sp.threshold,
+          sekemScore: typeof sp.threshold === 'number' ? sp.threshold : undefined,
+          programId: sp.programId
+     })).sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+
+     console.log(`TAU dataset cleaned & enriched: Exactly ${tauInst.programs.length} official TAU degree tracks.`);
+}
+
+if (require.main === module) {
      const dataPath = path.join(__dirname, '../src/data/academicData.json');
      const institutions = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-
      const tauInst = institutions.find(i => i.name === 'אוניברסיטת תל אביב');
-     if (!tauInst) {
-          console.error('Tel Aviv University not found in dataset!');
-          process.exit(1);
-     }
-
-     let matchedCount = 0;
-
-     tauInst.programs.forEach(prog => {
-          const openDataName = prog.fieldOfStudy;
-          const cleanOpenData = cleanTitle(openDataName);
-
-          // Try matching by exact title or key tokens
-          const match = scrapedProfiles.find(sp => {
-               const spClean = cleanTitle(sp.title);
-               if (spClean === cleanOpenData || sp.title === openDataName) return true;
-               if (spClean.includes(cleanOpenData) || cleanOpenData.includes(spClean)) return true;
-               return false;
-          });
-
-          if (match) {
-               prog.admissionThreshold = match.threshold;
-               prog.programId = match.programId;
-               matchedCount++;
-          }
-     });
-
-     console.log(`Successfully matched ${matchedCount} / ${tauInst.programs.length} TAU degree programs with official thresholds.`);
-
-     // Also add any unmatched scraped TAU programs if they are not yet in TAU programs!
-     let addedCount = 0;
-     scrapedProfiles.forEach(sp => {
-          const exists = tauInst.programs.some(p => p.programId === sp.programId || p.fieldOfStudy === sp.title);
-          if (!exists) {
-               tauInst.programs.push({
-                    id: `prog-tau-${sp.programId}-${tauInst.programs.length + 1}`,
-                    fieldOfStudy: sp.title,
-                    degreeLevel: 'תואר ראשון',
-                    description: `מזהה תוכנית: ${sp.programId}`,
-                    admissionThreshold: sp.threshold,
-                    programId: sp.programId
-               });
-               addedCount++;
-          }
-     });
-
-     console.log(`Added ${addedCount} new TAU degree programs from scraped catalog.`);
-
-     tauInst.programs.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
-
+     enrichTauInstitution(tauInst);
      fs.writeFileSync(dataPath, JSON.stringify(institutions, null, 2), 'utf-8');
      console.log(`Saved updated dataset to ${dataPath}`);
 }
 
-runEnrichment();
+module.exports = { enrichTauInstitution, parseScrapedProfiles };
+

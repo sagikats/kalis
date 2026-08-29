@@ -335,11 +335,11 @@ export default function OptimizerPage() {
                                              />
                                         </div>
                                         <div className="max-h-80 overflow-y-auto space-y-2 pr-1 border border-slate-100 rounded-2xl p-2 bg-slate-50/50">
-                                             {filteredPrograms.map((prog) => {
+                                             {filteredPrograms.map((prog, idx) => {
                                                   const isSelected = targetDegree === prog.fieldOfStudy;
                                                   return (
                                                        <button
-                                                            key={prog.id}
+                                                            key={`${prog.id}-${idx}`}
                                                             type="button"
                                                             onClick={() => setTargetDegree(prog.fieldOfStudy as Degree)}
                                                             className={`w-full flex items-start justify-between p-3.5 rounded-xl border text-right transition-all ${isSelected
@@ -347,22 +347,49 @@ export default function OptimizerPage() {
                                                                  : 'border-slate-200/80 hover:border-sky-300 text-slate-700 bg-white'
                                                                  }`}
                                                        >
-                                                            <div className="flex items-start gap-3">
-                                                                 <div className={`p-2 rounded-lg mt-0.5 ${isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                                                            <div className="flex items-start gap-3 w-full">
+                                                                 <div className={`p-2 rounded-lg mt-0.5 shrink-0 ${isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
                                                                       <GraduationCap className="h-4 w-4" />
                                                                  </div>
-                                                                 <div>
-                                                                      <div className="flex items-center gap-2 flex-wrap">
-                                                                           <span className="text-xs font-bold block">{prog.fieldOfStudy}</span>
-                                                                           {prog.admissionThreshold !== undefined && prog.admissionThreshold !== null && (
-                                                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-200 text-[10px] font-black">
-                                                                                     סף: {prog.admissionThreshold}
+                                                                 <div className="flex-1 min-w-0">
+                                                                      <div className="flex items-center justify-between gap-2 flex-wrap">
+                                                                           <span className="text-xs font-bold block text-slate-900">{prog.fieldOfStudy}</span>
+                                                                           <div className="flex items-center gap-1.5 flex-wrap">
+                                                                                {prog.sekemScore !== undefined && prog.sekemScore !== null && (
+                                                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-200 text-[10px] font-black">
+                                                                                          סכם: {prog.sekemScore}
+                                                                                     </span>
+                                                                                )}
+                                                                                {prog.psychometricScore !== undefined && prog.psychometricScore !== null && (
+                                                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-900 border border-indigo-200 text-[10px] font-black">
+                                                                                          פסיכומטרי: {prog.psychometricScore}
+                                                                                     </span>
+                                                                                )}
+                                                                                {prog.registrationStatus && (
+                                                                                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${prog.registrationStatus.includes('פתוחה')
+                                                                                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                                                          : 'bg-rose-50 text-rose-700 border-rose-200'
+                                                                                          }`}>
+                                                                                          {prog.registrationStatus}
+                                                                                     </span>
+                                                                                )}
+                                                                           </div>
+                                                                      </div>
+                                                                      <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                                                                           <span className="inline-block px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-md">
+                                                                                {prog.degreeLevel} {prog.programId ? `(קוד: ${prog.programId})` : ''}
+                                                                           </span>
+                                                                           {prog.mathRequirement && (
+                                                                                <span className="inline-block px-2 py-0.5 bg-amber-50 text-amber-800 border border-amber-200/60 text-[10px] font-semibold rounded-md">
+                                                                                     מתמטיקה: {prog.mathRequirement}
+                                                                                </span>
+                                                                           )}
+                                                                           {prog.englishRequirement && (
+                                                                                <span className="inline-block px-2 py-0.5 bg-sky-50 text-sky-800 border border-sky-200/60 text-[10px] font-semibold rounded-md">
+                                                                                     אנגלית: {prog.englishRequirement}
                                                                                 </span>
                                                                            )}
                                                                       </div>
-                                                                      <span className="inline-block mt-1 px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-md">
-                                                                           {prog.degreeLevel} {prog.programId ? `(קוד: ${prog.programId})` : ''}
-                                                                      </span>
                                                                       {prog.description && (
                                                                            <p className="text-[10px] text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
                                                                                 {prog.description}
@@ -370,7 +397,7 @@ export default function OptimizerPage() {
                                                                       )}
                                                                  </div>
                                                             </div>
-                                                            {isSelected && <CheckCircle2 className="h-5 w-5 text-sky-600 shrink-0 mt-0.5" />}
+                                                            {isSelected && <CheckCircle2 className="h-5 w-5 text-sky-600 shrink-0 mt-0.5 mr-2" />}
                                                        </button>
                                                   );
                                              })}
@@ -381,13 +408,12 @@ export default function OptimizerPage() {
                               {/* Threshold Preview Box */}
                               {(() => {
                                    const activeProg = currentInstitution?.programs.find(p => p.fieldOfStudy === targetDegree);
-                                   const activeSekem = activeProg?.admissionThreshold !== undefined && activeProg?.admissionThreshold !== null
-                                        ? activeProg.admissionThreshold
-                                        : thresholdData.sekem;
+                                   const activeSekem = activeProg?.sekemScore ?? activeProg?.admissionThreshold ?? thresholdData.sekem;
+                                   const activePsych = activeProg?.psychometricScore;
 
                                    return (
                                         <div className="p-4 sm:p-6 rounded-2xl bg-blue-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-900 shadow-md">
-                                             <div>
+                                             <div className="space-y-1">
                                                   <div className="flex items-center gap-2 text-sky-300 text-xs font-medium">
                                                        <Info className="h-4 w-4 text-cyan-400" />
                                                        <span>סף קבלה משוקלל רשמי / משוער למועד 2026:</span>
@@ -395,9 +421,23 @@ export default function OptimizerPage() {
                                                   <p className="text-2xl font-black mt-1">
                                                        {targetUniversity} - {targetDegree}
                                                   </p>
-                                                  <p className="text-sm text-sky-200 font-bold mt-0.5">
-                                                       סכם יעד: <span className="text-cyan-400 text-lg font-black">{activeSekem}</span> | דרישת מתמטיקה: <span className="text-white font-bold">{thresholdData.reqMath} יח״ל</span>
-                                                  </p>
+                                                  <div className="flex items-center gap-3 text-xs sm:text-sm text-sky-200 font-bold flex-wrap pt-1">
+                                                       <span>סכם יעד: <span className="text-cyan-400 text-lg font-black">{activeSekem}</span></span>
+                                                       {activePsych && (
+                                                            <span>| סף פסיכומטרי: <span className="text-indigo-300 text-base font-black">{activePsych}</span></span>
+                                                       )}
+                                                       {activeProg?.mathRequirement && (
+                                                            <span>| דרישת מתמטיקה: <span className="text-amber-300 font-bold">{activeProg.mathRequirement}</span></span>
+                                                       )}
+                                                       {activeProg?.englishRequirement && (
+                                                            <span>| אנגלית: <span className="text-sky-300 font-bold">{activeProg.englishRequirement}</span></span>
+                                                       )}
+                                                  </div>
+                                                  {activeProg?.additionalConditions && (
+                                                       <p className="text-[11px] text-sky-200/80 pt-1 line-clamp-2 leading-snug">
+                                                            תנאים נוספים: {activeProg.additionalConditions}
+                                                       </p>
+                                                  )}
                                              </div>
                                              <button
                                                   onClick={() => setActiveStep(2)}

@@ -1,0 +1,284 @@
+[
+     {
+          "programId": "82",
+          "degreeName": "אדריכלות נוף",
+          "sekemScore": 82,
+          "excellenceSekemScore": 91,
+          "comments": "נדרש מבחן מיון פנימי בארכיטקטורה/אדריכלות נוף"
+     },
+     {
+          "programId": "85",
+          "degreeName": "ארכיטקטורה",
+          "sekemScore": 85,
+          "excellenceSekemScore": 91,
+          "comments": "נדרש מבחן מיון פנימי בארכיטקטורה"
+     },
+     {
+          "programId": "83",
+          "degreeName": "ביולוגיה",
+          "sekemScore": 83,
+          "excellenceSekemScore": 96
+     },
+     {
+          "programId": "83-chem",
+          "degreeName": "דו-חוגי בביולוגיה ובכימיה",
+          "sekemScore": 83,
+          "excellenceSekemScore": 96
+     },
+     {
+          "programId": "88-civ",
+          "degreeName": "הנדסה אזרחית",
+          "sekemScore": 88,
+          "excellenceSekemScore": 91,
+          "registrationStatus": "ההרשמה סגורה, קבלה על בסיס מקום פנוי בלבד"
+     },
+     {
+          "programId": "87-bio",
+          "degreeName": "הנדסה ביו-רפואית",
+          "sekemScore": 87,
+          "excellenceSekemScore": 94
+     },
+     {
+          "programId": "88-biophys",
+          "degreeName": "הנדסה ביו-רפואית ופיזיקה",
+          "sekemScore": 88,
+          "excellenceSekemScore": 96
+     },
+     {
+          "programId": "85-biochem",
+          "degreeName": "הנדסה ביוכימית",
+          "sekemScore": 85,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "85-chemeng",
+          "degreeName": "הנדסה כימית",
+          "sekemScore": 85,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "85-chemeng-chem",
+          "degreeName": "הנדסה כימית - מגמת כימיה",
+          "sekemScore": 85,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "87-aero",
+          "degreeName": "הנדסת אוירונוטיקה וחלל",
+          "sekemScore": 87,
+          "excellenceSekemScore": 94,
+          "registrationStatus": "ההרשמה סגורה"
+     },
+     {
+          "programId": "87-aerophys",
+          "degreeName": "הנדסת אוירונוטיקה וחלל ופיזיקה",
+          "sekemScore": 87,
+          "excellenceSekemScore": 96,
+          "registrationStatus": "ההרשמה סגורה"
+     },
+     {
+          "programId": "84-biotech",
+          "degreeName": "הנדסת ביוטכנולוגיה ומזון",
+          "sekemScore": 84,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "83-env",
+          "degreeName": "הנדסת הסביבה",
+          "sekemScore": 83,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "86-mat",
+          "degreeName": "הנדסת חומרים",
+          "sekemScore": 86,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "86-matbio",
+          "degreeName": "הנדסת חומרים - ביולוגיה",
+          "sekemScore": 86,
+          "excellenceSekemScore": 96
+     },
+     {
+          "programId": "86-matchem",
+          "degreeName": "הנדסת חומרים - כימיה",
+          "sekemScore": 86,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "86-matphys",
+          "degreeName": "הנדסת חומרים - פיזיקה",
+          "sekemScore": 86,
+          "excellenceSekemScore": 96
+     },
+     {
+          "programId": "94-ee",
+          "degreeName": "הנדסת חשמל",
+          "sekemScore": 94,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "94-eemath",
+          "degreeName": "הנדסת חשמל ומתמטיקה",
+          "sekemScore": 94,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "94-eephys",
+          "degreeName": "הנדסת חשמל ופיזיקה",
+          "sekemScore": 94,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "94-ce",
+          "degreeName": "הנדסת מחשבים",
+          "sekemScore": 94,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "83-geo",
+          "degreeName": "הנדסת מיפוי וגיאו-אינפורמציה",
+          "sekemScore": 83,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "92-mech",
+          "degreeName": "הנדסת מכונות",
+          "sekemScore": 92,
+          "excellenceSekemScore": 94,
+          "registrationStatus": "קבלה על בסיס מקום פנוי בלבד"
+     },
+     {
+          "programId": "89-is",
+          "degreeName": "הנדסת מערכות מידע",
+          "sekemScore": 89,
+          "excellenceSekemScore": 94
+     },
+     {
+          "programId": "91-data",
+          "degreeName": "הנדסת נתונים ומידע",
+          "sekemScore": 91,
+          "excellenceSekemScore": 95
+     },
+     {
+          "programId": "91-datamath",
+          "degreeName": "הנדסת נתונים ומידע ומתמטיקה",
+          "sekemScore": 91,
+          "excellenceSekemScore": 95
+     },
+     {
+          "programId": "91-se",
+          "degreeName": "הנדסת תוכנה",
+          "sekemScore": 91,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "89-ie",
+          "degreeName": "הנדסת תעשיה וניהול",
+          "sekemScore": 89,
+          "excellenceSekemScore": 94
+     },
+     {
+          "programId": "84-edu",
+          "degreeName": "חינוך למדע וטכנולוגיה",
+          "sekemScore": 84,
+          "excellenceSekemScore": 91,
+          "comments": "נדרש מעבר מבחן מסילה"
+     },
+     {
+          "programId": "87-educs",
+          "degreeName": "חינוך למדע וטכנולוגיה - מדעי המחשב",
+          "sekemScore": 87,
+          "excellenceSekemScore": 91,
+          "comments": "נדרש מעבר מבחן מסילה"
+     },
+     {
+          "programId": "83-chem-main",
+          "degreeName": "כימיה",
+          "sekemScore": 83,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "91-cs",
+          "degreeName": "מדעי המחשב",
+          "sekemScore": 91,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "91-csmath",
+          "degreeName": "מדעי המחשב ומתמטיקה",
+          "sekemScore": 91,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "91-csphys",
+          "degreeName": "מדעי המחשב ופיזיקה",
+          "sekemScore": 91,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "92-med",
+          "degreeName": "מדעי הרפואה - מגמת רפואה",
+          "sekemScore": 92.0,
+          "excellenceSekemScore": 229,
+          "comments": "סף זימון משוער למבחן מו\"ר: 207 | סכם: 92.000"
+     },
+     {
+          "programId": "92-medbio",
+          "degreeName": "מדעי הרפואה והנדסה ביו-רפואית (מסלול כפול)",
+          "sekemScore": 92.0,
+          "excellenceSekemScore": 229,
+          "comments": "סף זימון משוער למבחן מו\"ר: 207"
+     },
+     {
+          "programId": "92-meddata",
+          "degreeName": "מדעי הרפואה והנדסת נתונים ומידע (מסלול כפול)",
+          "sekemScore": 92.0,
+          "excellenceSekemScore": 229,
+          "comments": "סף זימון משוער למבחן מו\"ר: 207"
+     },
+     {
+          "programId": "92-medcs",
+          "degreeName": "מדעי הרפואה ומדעי המחשב (מסלול כפול)",
+          "sekemScore": 92.0,
+          "excellenceSekemScore": 229,
+          "comments": "סף זימון משוער למבחן מו\"ר: 207"
+     },
+     {
+          "programId": "87-math",
+          "degreeName": "מתמטיקה",
+          "sekemScore": 87,
+          "excellenceSekemScore": 94
+     },
+     {
+          "programId": "87-mathphys",
+          "degreeName": "מתמטיקה-פיזיקה",
+          "sekemScore": 87,
+          "excellenceSekemScore": 94
+     },
+     {
+          "programId": "87-appmath",
+          "degreeName": "מתמטיקה יישומית",
+          "sekemScore": 87,
+          "excellenceSekemScore": 91
+     },
+     {
+          "programId": "87-mathcs",
+          "degreeName": "מתמטיקה עם מדעי המחשב",
+          "sekemScore": 87,
+          "excellenceSekemScore": 92
+     },
+     {
+          "programId": "94-appmathee",
+          "degreeName": "מתמטיקה שימושית במגמת חשמל",
+          "sekemScore": 94,
+          "excellenceSekemScore": 97
+     },
+     {
+          "programId": "86-phys",
+          "degreeName": "פיזיקה",
+          "sekemScore": 86,
+          "excellenceSekemScore": 94
+     }
+]

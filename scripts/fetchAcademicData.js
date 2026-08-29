@@ -177,6 +177,90 @@ async function fetchAndNormalizeData() {
           programs: Array.from(inst.programsMap.values()).sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'))
      })).sort((a, b) => b.programs.length - a.programs.length);
 
+     // Enrich/Replace Ben-Gurion University with official scraped APEX admissions dataset
+     const bguScrapedPath = path.join(__dirname, '../scrapers/bgu-programs.json');
+     if (fs.existsSync(bguScrapedPath)) {
+          console.log('Replacing generic BGU records with official BGU admissions dataset from scrapers/bgu-programs.json...');
+          const bguScraped = JSON.parse(fs.readFileSync(bguScrapedPath, 'utf-8'));
+          let bguInst = resultInstitutions.find(i => i.name === 'אוניברסיטת בן גוריון בנגב');
+
+          if (!bguInst) {
+               bguInst = {
+                    id: `inst-bgu`,
+                    name: 'אוניברסיטת בן גוריון בנגב',
+                    programs: []
+               };
+               resultInstitutions.push(bguInst);
+          }
+
+          const officialBguPrograms = bguScraped.map((item, index) => {
+               const fieldName = item.pathName && item.pathName !== item.departmentName
+                    ? `${item.departmentName} (${item.pathName})`
+                    : item.degreeName || item.departmentName;
+
+               return {
+                    id: `prog-bgu-${index + 1}`,
+                    fieldOfStudy: fieldName,
+                    degreeLevel: 'תואר ראשון',
+                    description: item.pathDescription || undefined,
+                    admissionThreshold: item.sekemScore !== null ? item.sekemScore : (item.psychometricScore !== null ? item.psychometricScore : null),
+                    sekemScore: item.sekemScore,
+                    psychometricScore: item.psychometricScore,
+                    mathRequirement: item.mathRequirement,
+                    englishRequirement: item.englishRequirement,
+                    hebrewRequirement: item.hebrewRequirement,
+                    additionalConditions: item.additionalConditionsText,
+                    comments: item.commentsText,
+                    registrationStatus: item.registrationStatus,
+                    url: item.url
+               };
+          });
+
+          bguInst.programs = officialBguPrograms.sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+          console.log(`BGU dataset cleaned: Exactly ${bguInst.programs.length} official BGU degree tracks.`);
+     }
+
+     // Enrich Tel Aviv University with scraped admission thresholds
+     const tauInst = resultInstitutions.find(i => i.name === 'אוניברסיטת תל אביב');
+     if (tauInst) {
+          const enrichTauScriptPath = path.join(__dirname, 'enrichTauThresholds.js');
+          if (fs.existsSync(enrichTauScriptPath)) {
+               console.log('Enriching Tel Aviv University admission thresholds...');
+               const { enrichTauInstitution } = require('./enrichTauThresholds.js');
+               enrichTauInstitution(tauInst);
+          }
+     }
+
+     // Enrich/Replace Technion - Israel Institute of Technology with official scraped admissions dataset
+     const technionScrapedPath = path.join(__dirname, '../scrapers/technion-programs.json');
+     if (fs.existsSync(technionScrapedPath)) {
+          console.log('Replacing generic Technion records with official Technion admissions dataset from scrapers/technion-programs.json...');
+          const technionScraped = JSON.parse(fs.readFileSync(technionScrapedPath, 'utf-8'));
+          let technionInst = resultInstitutions.find(i => i.name.includes('טכניון'));
+
+          if (!technionInst) {
+               technionInst = {
+                    id: `inst-technion`,
+                    name: 'הטכניון - מכון טכנולוגי לישראל',
+                    programs: []
+               };
+               resultInstitutions.push(technionInst);
+          }
+
+          technionInst.programs = technionScraped.map((item, index) => ({
+               id: `prog-technion-${index + 1}`,
+               fieldOfStudy: item.degreeName,
+               degreeLevel: 'תואר ראשון',
+               description: item.excellenceSekemScore ? `סכם מצטיינים: ${item.excellenceSekemScore}` : undefined,
+               admissionThreshold: item.sekemScore,
+               sekemScore: item.sekemScore,
+               comments: item.comments,
+               registrationStatus: item.registrationStatus
+          })).sort((a, b) => a.fieldOfStudy.localeCompare(b.fieldOfStudy, 'he'));
+
+          console.log(`Technion dataset cleaned: Exactly ${technionInst.programs.length} official Technion degree tracks.`);
+     }
+
      const totalPrograms = resultInstitutions.reduce((sum, inst) => sum + inst.programs.length, 0);
      console.log(`Ingested ${resultInstitutions.length} canonical institutions with ${totalPrograms} unique undergraduate degree programs.`);
 
