@@ -102,7 +102,9 @@ export async function runArielScraper(): Promise<ArielProgramAdmissionData[]> {
           }
      ];
 
-     const outputPath = path.join(__dirname, 'ariel-programs.json');
+     const outputDir = path.join(__dirname, 'data');
+     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+     const outputPath = path.join(outputDir, 'ariel-programs.json');
      fs.writeFileSync(outputPath, JSON.stringify(programsData, null, 2), 'utf-8');
      console.log(`[2] Saved ${programsData.length} Ariel degree programs to ${outputPath}`);
 

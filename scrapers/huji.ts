@@ -147,7 +147,9 @@ export async function runHujiScraper(): Promise<HujiProgramAdmissionData[]> {
           }
      ];
 
-     const outputPath = path.join(__dirname, 'huji-programs.json');
+     const outputDir = path.join(__dirname, 'data');
+     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+     const outputPath = path.join(outputDir, 'huji-programs.json');
      fs.writeFileSync(outputPath, JSON.stringify(programsData, null, 2), 'utf-8');
      console.log(`[2] Saved ${programsData.length} HUJI degree programs to ${outputPath}`);
 

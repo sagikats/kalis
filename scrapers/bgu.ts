@@ -116,7 +116,9 @@ export async function runBguScraper(): Promise<BguAdmissionData[]> {
 
           console.log(`[3] Processed ${results.length} normalized BGU admission profiles.`);
 
-          const outputPath = path.join(__dirname, 'bgu-programs.json');
+          const outputDir = path.join(__dirname, 'data');
+          if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+          const outputPath = path.join(outputDir, 'bgu-programs.json');
           fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
           console.log(`\n🎉 Completed! Total ${results.length} admission profiles saved to ${outputPath}`);
 

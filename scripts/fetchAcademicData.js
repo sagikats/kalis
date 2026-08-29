@@ -178,9 +178,9 @@ async function fetchAndNormalizeData() {
      })).sort((a, b) => b.programs.length - a.programs.length);
 
      // Enrich/Replace Ben-Gurion University with official scraped APEX admissions dataset
-     const bguScrapedPath = path.join(__dirname, '../scrapers/bgu-programs.json');
+     const bguScrapedPath = path.join(__dirname, '../scrapers/data/bgu-programs.json');
      if (fs.existsSync(bguScrapedPath)) {
-          console.log('Replacing generic BGU records with official BGU admissions dataset from scrapers/bgu-programs.json...');
+          console.log('Replacing generic BGU records with official BGU admissions dataset from scrapers/data/bgu-programs.json...');
           const bguScraped = JSON.parse(fs.readFileSync(bguScrapedPath, 'utf-8'));
           let bguInst = resultInstitutions.find(i => i.name === 'אוניברסיטת בן גוריון בנגב');
 
@@ -232,9 +232,9 @@ async function fetchAndNormalizeData() {
      }
 
      // Enrich/Replace Technion - Israel Institute of Technology with official scraped admissions dataset
-     const technionScrapedPath = path.join(__dirname, '../scrapers/technion-programs.json');
+     const technionScrapedPath = path.join(__dirname, '../scrapers/data/technion-programs.json');
      if (fs.existsSync(technionScrapedPath)) {
-          console.log('Replacing generic Technion records with official Technion admissions dataset from scrapers/technion-programs.json...');
+          console.log('Replacing generic Technion records with official Technion admissions dataset from scrapers/data/technion-programs.json...');
           const technionScraped = JSON.parse(fs.readFileSync(technionScrapedPath, 'utf-8'));
           let technionInst = resultInstitutions.find(i => i.name.includes('טכניון'));
 
@@ -262,9 +262,9 @@ async function fetchAndNormalizeData() {
      }
 
      // Enrich Hebrew University of Jerusalem with admissions dataset
-     const hujiScrapedPath = path.join(__dirname, '../scrapers/huji-programs.json');
+     const hujiScrapedPath = path.join(__dirname, '../scrapers/data/huji-programs.json');
      if (fs.existsSync(hujiScrapedPath)) {
-          console.log('Enriching Hebrew University admissions dataset from scrapers/huji-programs.json...');
+          console.log('Enriching Hebrew University admissions dataset from scrapers/data/huji-programs.json...');
           const hujiScraped = JSON.parse(fs.readFileSync(hujiScrapedPath, 'utf-8'));
           let hujiInst = resultInstitutions.find(i => i.name.includes('העברית'));
 
@@ -296,9 +296,9 @@ async function fetchAndNormalizeData() {
      }
 
      // Enrich Bar-Ilan University with admissions dataset
-     const biuScrapedPath = path.join(__dirname, '../scrapers/biu-programs.json');
+     const biuScrapedPath = path.join(__dirname, '../scrapers/data/biu-programs.json');
      if (fs.existsSync(biuScrapedPath)) {
-          console.log('Enriching Bar-Ilan University admissions dataset from scrapers/biu-programs.json...');
+          console.log('Enriching Bar-Ilan University admissions dataset from scrapers/data/biu-programs.json...');
           const biuScraped = JSON.parse(fs.readFileSync(biuScrapedPath, 'utf-8'));
           let biuInst = resultInstitutions.find(i => i.name.includes('בר אילן') || i.name.includes('בר-אילן'));
 
@@ -330,9 +330,9 @@ async function fetchAndNormalizeData() {
      }
 
      // Enrich Ariel University with admissions dataset
-     const arielScrapedPath = path.join(__dirname, '../scrapers/ariel-programs.json');
+     const arielScrapedPath = path.join(__dirname, '../scrapers/data/ariel-programs.json');
      if (fs.existsSync(arielScrapedPath)) {
-          console.log('Enriching Ariel University admissions dataset from scrapers/ariel-programs.json...');
+          console.log('Enriching Ariel University admissions dataset from scrapers/data/ariel-programs.json...');
           const arielScraped = JSON.parse(fs.readFileSync(arielScrapedPath, 'utf-8'));
           let arielInst = resultInstitutions.find(i => i.name.includes('אריאל'));
 
@@ -364,9 +364,9 @@ async function fetchAndNormalizeData() {
      }
 
      // Enrich Reichman University with admissions dataset
-     const reichmanScrapedPath = path.join(__dirname, '../scrapers/reichman-programs.json');
+     const reichmanScrapedPath = path.join(__dirname, '../scrapers/data/reichman-programs.json');
      if (fs.existsSync(reichmanScrapedPath)) {
-          console.log('Enriching Reichman University admissions dataset from scrapers/reichman-programs.json...');
+          console.log('Enriching Reichman University admissions dataset from scrapers/data/reichman-programs.json...');
           const reichmanScraped = JSON.parse(fs.readFileSync(reichmanScrapedPath, 'utf-8'));
           let reichmanInst = resultInstitutions.find(i => i.name.includes('רייכמן') || i.name.includes('הבינתחומי'));
 

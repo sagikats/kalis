@@ -80,7 +80,9 @@ export async function runReichmanScraper(): Promise<ReichmanProgramAdmissionData
           }
      ];
 
-     const outputPath = path.join(__dirname, 'reichman-programs.json');
+     const outputDir = path.join(__dirname, 'data');
+     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+     const outputPath = path.join(outputDir, 'reichman-programs.json');
      fs.writeFileSync(outputPath, JSON.stringify(programsData, null, 2), 'utf-8');
      console.log(`[2] Saved ${programsData.length} Reichman degree programs to ${outputPath}`);
 
