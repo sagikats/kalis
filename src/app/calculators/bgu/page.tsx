@@ -2,8 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import {
      Calculator,
      GraduationCap,
@@ -93,8 +91,6 @@ export default function BguCalculatorPage() {
 
      return (
           <div className="min-h-screen bg-slate-950 text-slate-100 font-sans dir-rtl">
-               <Navbar />
-
                <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
 
                     {/* Header */}
@@ -389,8 +385,6 @@ export default function BguCalculatorPage() {
                     )}
 
                </main>
-
-               <Footer />
           </div>
      );
 }

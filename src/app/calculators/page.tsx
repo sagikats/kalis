@@ -2,8 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import { Calculator, GraduationCap, ChevronLeft, Sparkles, Building, CheckCircle2 } from 'lucide-react';
 
 const UNIVERSITIES = [
@@ -44,8 +42,6 @@ const UNIVERSITIES = [
 export default function CalculatorsHubPage() {
      return (
           <div className="min-h-screen bg-slate-950 text-slate-100 font-sans dir-rtl">
-               <Navbar />
-
                <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
 
                     {/* Header */}
@@ -117,8 +113,6 @@ export default function CalculatorsHubPage() {
                     </div>
 
                </main>
-
-               <Footer />
           </div>
      );
 }
