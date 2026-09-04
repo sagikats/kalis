@@ -88,7 +88,7 @@ export function isHaifaMandatorySubject(name: string): boolean {
 	if (n.includes('מתמטיקה')) return true;
 	if (n.includes('אנגלית')) return true;
 	if (n.includes('אזרחות')) return true;
-	if (n.includes('הבעה') || n.includes('עברית') || n.includes('לשון')) return true;
+	if (n.includes('הבעה') || n.includes('לשון') || (n.includes('עברית') && !n.includes('ספרות'))) return true;
 	if (
 		n.includes('היסטוריה') ||
 		n.includes('תע"י') ||

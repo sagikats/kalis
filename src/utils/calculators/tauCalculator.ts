@@ -93,7 +93,7 @@ export function isTauMandatorySubject(name: string): boolean {
      if (n.includes('מתמטיקה')) return true;
      if (n.includes('אנגלית')) return true;
      if (n.includes('אזרחות')) return true;
-     if (n.includes('הבעה') || n.includes('עברית')) return true;
+     if (n.includes('הבעה') || n.includes('לשון') || (n.includes('עברית') && !n.includes('ספרות'))) return true;
      if (n.includes('היסטוריה') || n.includes('תע"י') || n.includes('תולדות עם ישראל') || n.includes('ידע העם והמדינה')) return true;
      return false;
 }
