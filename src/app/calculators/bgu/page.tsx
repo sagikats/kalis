@@ -58,6 +58,8 @@ export default function UnifiedCalculatorPage() {
      const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
      const [psychGeneral, setPsychGeneral] = useState<number | ''>(0);
      const [psychQuant, setPsychQuant] = useState<number | ''>(0);
+     const [psychVerbal, setPsychVerbal] = useState<number | ''>(0);
+     const [psychEnglish, setPsychEnglish] = useState<number | ''>(0);
 
      // Selected institutions to compare (defaulting to BGU, TAU, HUJI, Technion)
      const [selectedInstIds, setSelectedInstIds] = useState<string[]>(['bgu', 'tau', 'huji', 'technion']);
@@ -78,6 +80,40 @@ export default function UnifiedCalculatorPage() {
           return quantNum;
      }, [psychQuant]);
 
+     // Academic English level classification according to Council for Higher Education (מל"ג) standards
+     const englishLevelBadge = useMemo(() => {
+          const eng = Number(psychEnglish);
+          if (!eng || eng < 50) return null;
+          if (eng >= 134) {
+               return {
+                    label: 'פטור מאנגלית (134-150)',
+                    color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30'
+               };
+          }
+          if (eng >= 120) {
+               return {
+                    label: 'מתקדמים ב׳ (120-133)',
+                    color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/30'
+               };
+          }
+          if (eng >= 100) {
+               return {
+                    label: 'מתקדמים א׳ (100-119)',
+                    color: 'text-blue-400 bg-blue-500/10 border-blue-500/30'
+               };
+          }
+          if (eng >= 85) {
+               return {
+                    label: 'בסיסי (85-99)',
+                    color: 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+               };
+          }
+          return {
+               label: 'טרום-בסיסי (<85)',
+               color: 'text-rose-400 bg-rose-500/10 border-rose-500/30'
+          };
+     }, [psychEnglish]);
+
      // Multi-institution calculations
      const institutionResults = useMemo(() => {
           return calculateMultiInstitutionSekem(
@@ -85,6 +121,8 @@ export default function UnifiedCalculatorPage() {
                     bagrutSubjects: subjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
                     psychometricGeneral: Number(psychGeneral) || 0,
                     psychometricQuant: normalizedQuant,
+                    psychometricVerbal: Number(psychVerbal) || 0,
+                    psychometricEnglish: Number(psychEnglish) || 0,
                     mathGrade: Number(mathSubject.grade) || 0,
                     mathUnits: mathSubject.units,
                     physicsGrade: Number(physicsSubject?.grade) || 0,
@@ -92,7 +130,7 @@ export default function UnifiedCalculatorPage() {
                },
                selectedInstIds
           );
-     }, [subjects, psychGeneral, normalizedQuant, mathSubject, physicsSubject, selectedInstIds]);
+     }, [subjects, psychGeneral, normalizedQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject, selectedInstIds]);
 
      const toggleInstitution = (id: string) => {
           if (selectedInstIds.includes(id)) {
@@ -236,17 +274,25 @@ export default function UnifiedCalculatorPage() {
 
                               {/* Card 1: Psychometric Scores */}
                               <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-5">
-                                   <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-                                        <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400">
-                                             <Brain className="h-5 w-5" />
+                                   <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                                        <div className="flex items-center gap-3">
+                                             <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400">
+                                                  <Brain className="h-5 w-5" />
+                                             </div>
+                                             <div>
+                                                  <h3 className="text-lg font-bold text-white">1. ציוני בחינה פסיכומטרית</h3>
+                                                  <p className="text-xs text-slate-400">הזן ציון רב-תחומי וציוני הפרקים (כמותי, מילולי ואנגלית)</p>
+                                             </div>
                                         </div>
-                                        <div>
-                                             <h3 className="text-lg font-bold text-white">1. ציוני בחינה פסיכומטרית</h3>
-                                             <p className="text-xs text-slate-400">הזן את הציון הרב-תחומי והציון הפרקי הכמותי</p>
-                                        </div>
+                                        {englishLevelBadge && (
+                                             <span className={`text-[11px] font-bold px-3 py-1 rounded-full border ${englishLevelBadge.color} hidden sm:inline-block`}>
+                                                  {englishLevelBadge.label}
+                                             </span>
+                                        )}
                                    </div>
 
                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        {/* General Psychometric */}
                                         <div className="space-y-2">
                                              <label className="block text-xs font-bold text-slate-300">
                                                   ציון פסיכומטרי רב-תחומי (200-800):
@@ -262,13 +308,15 @@ export default function UnifiedCalculatorPage() {
                                                        e.target.value = String(cleaned);
                                                        setPsychGeneral(cleaned);
                                                   }}
+                                                  placeholder="200-800"
                                                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                                              />
                                         </div>
 
+                                        {/* Quantitative */}
                                         <div className="space-y-2">
                                              <label className="block text-xs font-bold text-slate-300">
-                                                  ציון פרק כמותי (50-150):
+                                                  חשיבה כמותית (50-150):
                                              </label>
                                              <input
                                                   type="number"
@@ -281,8 +329,60 @@ export default function UnifiedCalculatorPage() {
                                                        e.target.value = String(cleaned);
                                                        setPsychQuant(cleaned);
                                                   }}
+                                                  placeholder="50-150"
                                                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                                              />
+                                        </div>
+
+                                        {/* Verbal */}
+                                        <div className="space-y-2">
+                                             <label className="block text-xs font-bold text-slate-300">
+                                                  חשיבה מילולית (50-150):
+                                             </label>
+                                             <input
+                                                  type="number"
+                                                  min={50}
+                                                  max={150}
+                                                  value={psychVerbal}
+                                                  onChange={(e) => handleNumberInputChange(e, setPsychVerbal, 0, 150)}
+                                                  onBlur={(e) => {
+                                                       const cleaned = cleanNumberInput(e.target.value, 50, 150);
+                                                       e.target.value = String(cleaned);
+                                                       setPsychVerbal(cleaned);
+                                                  }}
+                                                  placeholder="50-150"
+                                                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                                             />
+                                        </div>
+
+                                        {/* English */}
+                                        <div className="space-y-2">
+                                             <div className="flex items-center justify-between">
+                                                  <label className="block text-xs font-bold text-slate-300">
+                                                       אנגלית בפסיכומטרי / אמי"ר (50-150):
+                                                  </label>
+                                             </div>
+                                             <input
+                                                  type="number"
+                                                  min={50}
+                                                  max={150}
+                                                  value={psychEnglish}
+                                                  onChange={(e) => handleNumberInputChange(e, setPsychEnglish, 0, 150)}
+                                                  onBlur={(e) => {
+                                                       const cleaned = cleanNumberInput(e.target.value, 50, 150);
+                                                       e.target.value = String(cleaned);
+                                                       setPsychEnglish(cleaned);
+                                                  }}
+                                                  placeholder="50-150"
+                                                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+                                             />
+                                             {englishLevelBadge && (
+                                                  <div className="sm:hidden pt-1">
+                                                       <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${englishLevelBadge.color}`}>
+                                                            {englishLevelBadge.label}
+                                                       </span>
+                                                  </div>
+                                             )}
                                         </div>
                                    </div>
                               </div>

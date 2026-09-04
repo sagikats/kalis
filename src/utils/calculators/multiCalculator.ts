@@ -88,6 +88,8 @@ export function calculateMultiInstitutionSekem(
 		bagrutSubjects: input.bagrutSubjects,
 		psychometricGeneral: psych,
 		psychometricQuant: quant,
+		psychometricVerbal: input.psychometricVerbal,
+		psychometricEnglish: input.psychometricEnglish,
 		mathGrade: input.mathGrade,
 		mathUnits: input.mathUnits,
 		physicsGrade: input.physicsGrade,

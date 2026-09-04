@@ -4,6 +4,8 @@ export interface HaifaCalculatorInput {
 	bagrutSubjects: SubjectInput[];
 	psychometricGeneral: number;
 	psychometricQuant?: number;
+	psychometricVerbal?: number;
+	psychometricEnglish?: number;
 	mathGrade: number;
 	mathUnits: number;
 	physicsGrade?: number;
