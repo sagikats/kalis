@@ -24,6 +24,7 @@ import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/
 import academicData from '@/data/academicData.json';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
+import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
 
 const AVAILABLE_INSTITUTIONS = [
      { id: 'bgu', name: 'בן-גוריון', fullName: 'אוניברסיטת בן-גוריון בנגב', badge: 'ב"ג' },
@@ -71,48 +72,22 @@ export default function UnifiedCalculatorPage() {
      const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 }, [subjects]);
      const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
 
-     // Quantitative psychometric subscore (50-150) normalized for engineering formula
-     const normalizedQuant = useMemo(() => {
-          const quantNum = Number(psychQuant) || 0;
-          if (quantNum <= 150 && quantNum >= 50) {
-               return Math.round(200 + ((quantNum - 50) / 100) * 600);
-          }
-          return quantNum;
-     }, [psychQuant]);
+     // Resolved NITE psychometric composite scores and emphasis channels
+     const psychResolution = useMemo(() => {
+          return resolvePsychometricScores({
+               general: psychGeneral,
+               quant: psychQuant,
+               verbal: psychVerbal,
+               english: psychEnglish
+          });
+     }, [psychGeneral, psychQuant, psychVerbal, psychEnglish]);
 
      // Academic English level classification according to Council for Higher Education (מל"ג) standards
      const englishLevelBadge = useMemo(() => {
-          const eng = Number(psychEnglish);
-          if (!eng || eng < 50) return null;
-          if (eng >= 134) {
-               return {
-                    label: 'פטור מאנגלית (134-150)',
-                    color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30'
-               };
-          }
-          if (eng >= 120) {
-               return {
-                    label: 'מתקדמים ב׳ (120-133)',
-                    color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/30'
-               };
-          }
-          if (eng >= 100) {
-               return {
-                    label: 'מתקדמים א׳ (100-119)',
-                    color: 'text-blue-400 bg-blue-500/10 border-blue-500/30'
-               };
-          }
-          if (eng >= 85) {
-               return {
-                    label: 'בסיסי (85-99)',
-                    color: 'text-amber-400 bg-amber-500/10 border-amber-500/30'
-               };
-          }
-          return {
-               label: 'טרום-בסיסי (<85)',
-               color: 'text-rose-400 bg-rose-500/10 border-rose-500/30'
-          };
-     }, [psychEnglish]);
+          return psychResolution.englishClassification.level !== 'unknown'
+               ? psychResolution.englishClassification
+               : null;
+     }, [psychResolution]);
 
      // Multi-institution calculations
      const institutionResults = useMemo(() => {
@@ -120,7 +95,7 @@ export default function UnifiedCalculatorPage() {
                {
                     bagrutSubjects: subjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
                     psychometricGeneral: Number(psychGeneral) || 0,
-                    psychometricQuant: normalizedQuant,
+                    psychometricQuant: Number(psychQuant) || 0,
                     psychometricVerbal: Number(psychVerbal) || 0,
                     psychometricEnglish: Number(psychEnglish) || 0,
                     mathGrade: Number(mathSubject.grade) || 0,
@@ -130,7 +105,7 @@ export default function UnifiedCalculatorPage() {
                },
                selectedInstIds
           );
-     }, [subjects, psychGeneral, normalizedQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject, selectedInstIds]);
+     }, [subjects, psychGeneral, psychQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject, selectedInstIds]);
 
      const toggleInstitution = (id: string) => {
           if (selectedInstIds.includes(id)) {
@@ -385,6 +360,39 @@ export default function UnifiedCalculatorPage() {
                                              )}
                                         </div>
                                    </div>
+
+                                   {/* Live NITE composite calculation indicator */}
+                                   {(psychResolution.effectiveQuantEmphasis > 0 || psychResolution.effectiveVerbalEmphasis > 0) && (
+                                        <div className="pt-2 border-t border-slate-800/80">
+                                             <div className="p-3.5 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-blue-950/40 border border-indigo-500/20 text-xs space-y-2">
+                                                  <div className="flex flex-wrap items-center justify-between gap-1">
+                                                       <div className="flex items-center gap-2">
+                                                            <Sparkles className="h-4 w-4 text-indigo-400 shrink-0" />
+                                                            <span className="font-bold text-slate-200">
+                                                                 שקלול מאל"ו רשמי לפי תחומי הבחינה:
+                                                            </span>
+                                                       </div>
+                                                       <span className="text-[10px] text-slate-400 font-semibold">
+                                                            משקלים: כמותי 60/20/20 | מילולי 60/20/20 | רב-תחומי 40/40/20
+                                                       </span>
+                                                  </div>
+                                                  <div className="grid grid-cols-3 gap-2 text-center pt-1">
+                                                       <div className="p-2 rounded-xl bg-slate-900/80 border border-slate-800">
+                                                            <span className="text-[10px] text-cyan-300 block font-bold">רב-תחומי</span>
+                                                            <span className="text-base font-black text-white">{psychResolution.effectiveGeneral || '-'}</span>
+                                                       </div>
+                                                       <div className="p-2 rounded-xl bg-slate-900/80 border border-indigo-500/30">
+                                                            <span className="text-[10px] text-indigo-300 block font-bold">דגש כמותי (הנדסה/טכניון)</span>
+                                                            <span className="text-base font-black text-indigo-300">{psychResolution.effectiveQuantEmphasis || '-'}</span>
+                                                       </div>
+                                                       <div className="p-2 rounded-xl bg-slate-900/80 border border-purple-500/30">
+                                                            <span className="text-[10px] text-purple-300 block font-bold">דגש מילולי (רוח/משפטים)</span>
+                                                            <span className="text-base font-black text-purple-300">{psychResolution.effectiveVerbalEmphasis || '-'}</span>
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   )}
                               </div>
 
                               {/* Card 2: Bagrut Subjects */}

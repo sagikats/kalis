@@ -4,6 +4,7 @@ import { calculateTechnionAdmission } from './technionCalculator';
 import { calculateHujiAdmission } from './hujiCalculator';
 import { calculateHaifaAdmission } from './haifaCalculator';
 import { calculateArielAdmission } from './arielCalculator';
+import { resolvePsychometricScores } from './psychometricHelper';
 
 export interface UnifiedCalculationInput {
 	bagrutSubjects: SubjectInput[];
@@ -81,14 +82,22 @@ export function calculateMultiInstitutionSekem(
 	input: UnifiedCalculationInput,
 	selectedInstitutionIds: string[]
 ): InstitutionSekemResult[] {
-	const psych = input.psychometricGeneral;
-	const quant = input.psychometricQuant || psych;
+	const psychResolution = resolvePsychometricScores({
+		general: input.psychometricGeneral,
+		quant: input.psychometricQuant,
+		verbal: input.psychometricVerbal,
+		english: input.psychometricEnglish
+	});
+
+	const psych = psychResolution.effectiveGeneral;
+	const quant = psychResolution.effectiveQuantEmphasis;
+	const verbal = psychResolution.effectiveVerbalEmphasis;
 
 	const commonCalcInput = {
 		bagrutSubjects: input.bagrutSubjects,
 		psychometricGeneral: psych,
 		psychometricQuant: quant,
-		psychometricVerbal: input.psychometricVerbal,
+		psychometricVerbal: verbal,
 		psychometricEnglish: input.psychometricEnglish,
 		mathGrade: input.mathGrade,
 		mathUnits: input.mathUnits,
