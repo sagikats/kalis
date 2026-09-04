@@ -16,11 +16,14 @@ import {
      Award,
      BookOpen,
      Check,
-     Sparkles
+     Sparkles,
+     Search
 } from 'lucide-react';
 import { SubjectInput } from '@/utils/calculators/bguCalculator';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import academicData from '@/data/academicData.json';
+import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
+import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 
 const AVAILABLE_INSTITUTIONS = [
      { id: 'bgu', name: 'בן-גוריון', fullName: 'אוניברסיטת בן-גוריון בנגב', badge: 'ב"ג' },
@@ -33,10 +36,10 @@ const AVAILABLE_INSTITUTIONS = [
 
 const DEFAULT_SUBJECTS: SubjectInput[] = [
      { name: 'תנ"ך', units: 2, grade: 0 },
-     { name: 'ספרות', units: 2, grade: 0 },
+     { name: 'ספרות עברית', units: 2, grade: 0 },
      { name: 'אזרחות', units: 2, grade: 0 },
-     { name: 'היסטוריה', units: 2, grade: 0 },
-     { name: 'עברית / הבעה', units: 2, grade: 0 },
+     { name: 'היסטוריה / תע"י', units: 2, grade: 0 },
+     { name: 'הבעה עברית', units: 2, grade: 0 },
      { name: 'אנגלית', units: 5, grade: 0 },
      { name: 'מתמטיקה', units: 5, grade: 0 },
      { name: 'פיזיקה', units: 5, grade: 0 }
@@ -59,10 +62,9 @@ export default function UnifiedCalculatorPage() {
      // Selected institutions to compare (defaulting to BGU, TAU, HUJI, Technion)
      const [selectedInstIds, setSelectedInstIds] = useState<string[]>(['bgu', 'tau', 'huji', 'technion']);
 
-     // New subject state
-     const [newSubName, setNewSubName] = useState('');
-     const [newSubUnits, setNewSubUnits] = useState(5);
-     const [newSubGrade, setNewSubGrade] = useState<number | ''>(0);
+     // Subject catalog modal state
+     const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+     const [editingSubjectIndex, setEditingSubjectIndex] = useState<number | null>(null);
 
      const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 }, [subjects]);
      const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
@@ -105,12 +107,40 @@ export default function UnifiedCalculatorPage() {
           setSelectedInstIds(AVAILABLE_INSTITUTIONS.map(i => i.id));
      };
 
-     const handleAddSubject = () => {
-          if (!newSubName.trim()) return;
-          const validGrade = typeof newSubGrade === 'number' ? newSubGrade : 0;
-          setSubjects([...subjects, { name: newSubName.trim(), units: newSubUnits, grade: validGrade }]);
-          setNewSubName('');
-          setNewSubGrade(0);
+     const handleOpenAddModal = () => {
+          setEditingSubjectIndex(null);
+          setIsSelectModalOpen(true);
+     };
+
+     const handleOpenChangeModal = (index: number) => {
+          setEditingSubjectIndex(index);
+          setIsSelectModalOpen(true);
+     };
+
+     const handleSelectSubjectFromCatalog = (subject: BagrutSubjectOption) => {
+          if (editingSubjectIndex !== null) {
+               const updated = [...subjects];
+               updated[editingSubjectIndex] = {
+                    ...updated[editingSubjectIndex],
+                    name: subject.name,
+                    units: subject.defaultUnits
+               };
+               setSubjects(updated);
+          } else {
+               const exists = subjects.some(s => s.name === subject.name);
+               if (!exists) {
+                    setSubjects([
+                         ...subjects,
+                         {
+                              name: subject.name,
+                              units: subject.defaultUnits,
+                              grade: 0
+                         }
+                    ]);
+               }
+          }
+          setIsSelectModalOpen(false);
+          setEditingSubjectIndex(null);
      };
 
      const handleRemoveSubject = (index: number) => {
@@ -278,18 +308,24 @@ export default function UnifiedCalculatorPage() {
                                    <div className="space-y-2.5 max-h-96 overflow-y-auto pr-1">
                                         {subjects.map((sub, idx) => (
                                              <div key={idx} className="flex items-center justify-between gap-3 p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-slate-700 transition">
-                                                  <input
-                                                       type="text"
-                                                       value={sub.name}
-                                                       onChange={(e) => handleUpdateSubject(idx, 'name', e.target.value)}
-                                                       className="bg-transparent border-none text-xs font-bold text-slate-200 focus:outline-none flex-1"
-                                                  />
-                                                  <div className="flex items-center gap-2">
+                                                  <button
+                                                       type="button"
+                                                       onClick={() => handleOpenChangeModal(idx)}
+                                                       className="flex items-center gap-2 text-right bg-slate-900/70 hover:bg-slate-800/90 px-3 py-1.5 rounded-xl border border-slate-700/60 hover:border-cyan-500/50 transition group flex-1 min-w-0"
+                                                       title="לחץ כדי להחליף מקצוע מתוך הרשימה"
+                                                  >
+                                                       <Search className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-400 shrink-0 transition" />
+                                                       <span className="text-xs font-bold text-slate-100 group-hover:text-cyan-200 truncate transition">
+                                                            {sub.name}
+                                                       </span>
+                                                  </button>
+                                                  <div className="flex items-center gap-2 shrink-0">
                                                        <select
                                                             value={sub.units}
                                                             onChange={(e) => handleUpdateSubject(idx, 'units', Number(e.target.value))}
-                                                            className="bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 font-bold px-2 py-1"
+                                                            className="bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 font-bold px-2 py-1.5 focus:ring-1 focus:ring-cyan-500"
                                                        >
+                                                            <option value={1}>1 יח"ל</option>
                                                             <option value={2}>2 יח"ל</option>
                                                             <option value={3}>3 יח"ל</option>
                                                             <option value={4}>4 יח"ל</option>
@@ -306,11 +342,13 @@ export default function UnifiedCalculatorPage() {
                                                                  e.target.value = String(cleaned);
                                                                  handleUpdateSubject(idx, 'grade', cleaned);
                                                             }}
-                                                            className="w-16 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-cyan-400 text-center py-1"
+                                                            placeholder="0"
+                                                            className="w-16 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-cyan-400 text-center py-1.5 focus:ring-1 focus:ring-cyan-500"
                                                        />
                                                        <button
                                                             onClick={() => handleRemoveSubject(idx)}
-                                                            className="text-slate-500 hover:text-rose-400 p-1 transition"
+                                                            className="text-slate-500 hover:text-rose-400 p-1.5 rounded-lg hover:bg-rose-500/10 transition"
+                                                            title="הסר מקצוע"
                                                        >
                                                             <Trash2 className="h-4 w-4" />
                                                        </button>
@@ -319,44 +357,18 @@ export default function UnifiedCalculatorPage() {
                                         ))}
                                    </div>
 
-                                   {/* Add Subject row */}
-                                   <div className="pt-2 border-t border-slate-800/80 flex items-center gap-2">
-                                        <input
-                                             type="text"
-                                             placeholder="שם מקצוע בגרות נוסף..."
-                                             value={newSubName}
-                                             onChange={(e) => setNewSubName(e.target.value)}
-                                             className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-200 focus:ring-1 focus:ring-cyan-500"
-                                        />
-                                        <select
-                                             value={newSubUnits}
-                                             onChange={(e) => setNewSubUnits(Number(e.target.value))}
-                                             className="bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-300 font-bold px-2 py-2"
-                                        >
-                                             <option value={5}>5 יח"ל</option>
-                                             <option value={4}>4 יח"ל</option>
-                                             <option value={3}>3 יח"ל</option>
-                                             <option value={2}>2 יח"ל</option>
-                                        </select>
-                                        <input
-                                             type="number"
-                                             min={0}
-                                             max={100}
-                                             value={newSubGrade}
-                                             onChange={(e) => handleNumberInputChange(e, setNewSubGrade, 0, 100)}
-                                             onBlur={(e) => {
-                                                  const cleaned = cleanNumberInput(e.target.value, 0, 100);
-                                                  e.target.value = String(cleaned);
-                                                  setNewSubGrade(cleaned);
-                                             }}
-                                             className="w-16 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-cyan-300 text-center py-2"
-                                        />
+                                   {/* Add Subject Action Bar */}
+                                   <div className="pt-2 border-t border-slate-800/80">
                                         <button
-                                             onClick={handleAddSubject}
-                                             className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shrink-0"
+                                             type="button"
+                                             onClick={handleOpenAddModal}
+                                             className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-cyan-950/50 to-blue-950/50 hover:from-cyan-900/60 hover:to-blue-900/60 border border-cyan-500/30 hover:border-cyan-400/60 text-cyan-300 hover:text-cyan-100 font-bold text-xs flex items-center justify-center gap-2.5 transition shadow-lg group cursor-pointer"
                                         >
-                                             <Plus className="h-4 w-4" />
-                                             <span>הוסף</span>
+                                             <div className="p-1 rounded-lg bg-cyan-500/20 group-hover:bg-cyan-500/30 transition">
+                                                  <Plus className="h-4 w-4 text-cyan-400" />
+                                             </div>
+                                             <span>בחר והוסף מקצוע מתוך רשימת הבגרויות וההגברות (חיפוש מהיר)</span>
+                                             <Search className="h-3.5 w-3.5 text-cyan-400/70 mr-auto group-hover:translate-x-[-2px] transition" />
                                         </button>
                                    </div>
                               </div>
@@ -461,6 +473,18 @@ export default function UnifiedCalculatorPage() {
                     </div>
 
                </main>
+
+               {/* Subject Search and Select Modal */}
+               <SubjectSelectModal
+                    isOpen={isSelectModalOpen}
+                    onClose={() => {
+                         setIsSelectModalOpen(false);
+                         setEditingSubjectIndex(null);
+                    }}
+                    onSelectSubject={handleSelectSubjectFromCatalog}
+                    existingSubjectNames={subjects.map(s => s.name)}
+                    title={editingSubjectIndex !== null ? 'החלפת מקצוע בגרות' : 'הוספת מקצוע בגרות או הגברה'}
+               />
           </div>
      );
 }
