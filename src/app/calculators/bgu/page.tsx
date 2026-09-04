@@ -403,6 +403,11 @@ export default function UnifiedCalculatorPage() {
                                                        <div>
                                                             <h4 className="text-base font-bold text-white">{res.institutionName}</h4>
                                                             {res.notes && <p className="text-[11px] text-slate-400">{res.notes}</p>}
+                                                            {res.droppedSubjects && res.droppedSubjects.length > 0 && (
+                                                                  <p className="text-[10px] text-amber-400/90 font-medium mt-0.5">
+                                                                       הושמטו למיקסום הממוצע: {res.droppedSubjects.join(', ')}
+                                                                  </p>
+                                                             )}
                                                        </div>
                                                   </div>
                                                   {res.directBagrutEligible && (
@@ -417,6 +422,11 @@ export default function UnifiedCalculatorPage() {
                                                   <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
                                                        <span className="text-[11px] text-slate-400 block font-bold">ממוצע בגרות</span>
                                                        <span className="text-xl font-black text-white mt-1 block">{res.bagrutAverage}</span>
+                                                       {res.optimalUnits && (
+                                                            <span className="text-[10px] text-purple-400 font-semibold block mt-0.5">
+                                                                 {res.optimalUnits} יח"ל (אופטימלי)
+                                                            </span>
+                                                       )}
                                                   </div>
 
                                                   {/* General Sekem */}

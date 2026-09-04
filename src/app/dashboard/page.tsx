@@ -28,7 +28,7 @@ import {
 import { usePlanner } from '../../context/PlannerContext';
 import { DailyTask, TaskType } from '../../types/planner';
 
-export default function DashboardPage() {
+export default function DashboardPage() { 
      const {
           subjectName,
           examDate,

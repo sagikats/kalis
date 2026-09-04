@@ -44,6 +44,22 @@ const UNIVERSITIES = [
           status: 'active',
           description: 'מחשבון סכם טכניוני (סכם הנדסה ומדעים מדויקים) במחשבון האחוד.',
           badge: 'כלול במחשבון האחוד'
+     },
+     {
+          id: 'haifa',
+          name: 'אוניברסיטת חיפה (UOH)',
+          href: '/calculators/bgu',
+          status: 'active',
+          description: 'מחשבון סכם לפי נוסחת תקן רשמית (BT) וציון פסיכומטרי במחשבון האחוד.',
+          badge: 'כלול במחשבון האחוד'
+     },
+     {
+          id: 'ariel',
+          name: 'אוניברסיטת אריאל בשומרון (AU)',
+          href: '/calculators/bgu',
+          status: 'active',
+          description: 'מחשבון ציון קבלה משולב לפי נוסחת אריאל הרשמית במחשבון האחוד.',
+          badge: 'כלול במחשבון האחוד'
      }
 ];
 
