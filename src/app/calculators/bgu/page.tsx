@@ -13,6 +13,7 @@ import {
      CheckCircle2,
      Building2,
      ChevronLeft,
+     ArrowLeft,
      Award,
      BookOpen,
      Check,
@@ -204,6 +205,16 @@ export default function UnifiedCalculatorPage() {
                          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
                               הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד, בחר מוסדות לימוד, וקבל חישוב השוואתי מדויק של ציוני הסכם והתאמה ישירה לחוגים.
                          </p>
+                         <div className="flex justify-center pt-1">
+                              <Link
+                                   href="/flow"
+                                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/10 transition hover:scale-[1.02] active:scale-[0.98]"
+                              >
+                                   <Sparkles className="h-4 w-4" />
+                                   <span>מעבר לפלואו בדיקת קבלה וניתוח פערים לפי תארים מבוקשים</span>
+                                   <ArrowLeft className="h-3.5 w-3.5" />
+                              </Link>
+                         </div>
                     </div>
 
                     {/* Institution Multi-Select Chips Bar */}

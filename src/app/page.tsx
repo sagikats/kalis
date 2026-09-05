@@ -39,7 +39,7 @@ export default function LandingPage() {
   const handleStartOptimizer = () => {
     setTargetUniversity(teaserUniv);
     setTargetDegree(teaserDegree);
-    router.push('/optimizer');
+    router.push('/flow');
   };
 
   const handleStartWizard = () => {

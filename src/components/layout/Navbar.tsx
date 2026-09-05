@@ -30,7 +30,7 @@ export default function Navbar() {
 
      const navLinks = [
           { href: '/', label: 'דף הבית', icon: Compass },
-          { href: '/optimizer', label: 'סיכויי קבלה', icon: Sliders },
+          { href: '/flow', label: 'בדיקת קבלה ופערים', icon: Sliders },
           { href: '/calculators', label: 'מחשבון סכם', icon: Calculator },
           { href: '/wizard', label: 'בניית תוכנית', icon: Sparkles },
           { href: '/dashboard', label: 'קוקפיט למידה', icon: CheckSquare },
