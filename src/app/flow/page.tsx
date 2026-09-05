@@ -746,8 +746,11 @@ export default function AdmissionFlowPage() {
 						{currentFocusedAnalysis ? (
 							<GapAnalysisCard
 								analysis={currentFocusedAnalysis}
+								userProfile={userProfile}
+								institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
 								onBackToReport={() => setActiveStep(3)}
 								onPlanTrackCTA={handlePlanTrackCTA}
+								onApplyScenario={() => setActiveStep(5)}
 							/>
 						) : (
 							<div className="text-center py-16 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 space-y-4">
@@ -824,6 +827,8 @@ export default function AdmissionFlowPage() {
 								<RecommendedTracksView
 									analysis={currentFocusedAnalysis}
 									tracks={recommendedTracks}
+									userProfile={userProfile}
+									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
 									onEditPreferences={() => setQuestionnaireAnswers(null)}
 									onBackToAnalysis={() => setActiveStep(4)}
 								/>

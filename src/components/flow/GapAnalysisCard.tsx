@@ -18,21 +18,30 @@ import {
 	ExternalLink,
 	Building2
 } from 'lucide-react';
-import { ProgramGapAnalysis, ImprovementOption } from '../../utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, ImprovementOption, UserAcademicProfile } from '../../utils/analysis/gapAnalyzer';
 import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
+import { InstitutionSekemResult } from '../../utils/calculators/multiCalculator';
+import { SubjectInput } from '../../utils/calculators/bguCalculator';
+import WhatIfSimulator from './WhatIfSimulator';
 
 interface GapAnalysisCardProps {
 	analysis: ProgramGapAnalysis;
+	userProfile?: UserAcademicProfile;
+	institutionResult?: InstitutionSekemResult;
 	onBackToReport: () => void;
 	onSelectNextProgram?: () => void;
 	onPlanTrackCTA?: (programTitle: string) => void;
+	onApplyScenario?: (customPsych: number, customSubjects: SubjectInput[], simulatedSekem: number) => void;
 }
 
 export default function GapAnalysisCard({
 	analysis,
+	userProfile,
+	institutionResult,
 	onBackToReport,
 	onSelectNextProgram,
-	onPlanTrackCTA
+	onPlanTrackCTA,
+	onApplyScenario
 }: GapAnalysisCardProps) {
 	const isAccepted = analysis.status === 'accepted';
 	const isBorderline = analysis.status === 'borderline';
@@ -207,6 +216,22 @@ export default function GapAnalysisCard({
 						))}
 					</div>
 				</div>
+			)}
+
+			{/* Interactive What-If Simulator */}
+			{!isAccepted && userProfile && institutionResult && (
+				<WhatIfSimulator
+					analysis={analysis}
+					userProfile={userProfile}
+					institutionResult={institutionResult}
+					onApplyScenario={(psych, subs, sekem) => {
+						if (onApplyScenario) {
+							onApplyScenario(psych, subs, sekem);
+						} else if (onPlanTrackCTA) {
+							onPlanTrackCTA(analysis.target.program.fieldOfStudy);
+						}
+					}}
+				/>
 			)}
 
 			{/* Section 3: Next Step CTA / University Registration if Accepted */}

@@ -17,14 +17,21 @@ import {
 	ChevronLeft,
 	HelpCircle,
 	AlertTriangle,
-	Award
+	Award,
+	Sliders,
+	ChevronDown,
+	ChevronUp
 } from 'lucide-react';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
-import { ProgramGapAnalysis } from '@/utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
+import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
+import WhatIfSimulator from './WhatIfSimulator';
 
 interface RecommendedTracksViewProps {
 	analysis: ProgramGapAnalysis;
 	tracks: RecommendedTrack[];
+	userProfile?: UserAcademicProfile;
+	institutionResult?: InstitutionSekemResult;
 	onEditPreferences: () => void;
 	onBackToAnalysis: () => void;
 }
@@ -32,11 +39,14 @@ interface RecommendedTracksViewProps {
 export default function RecommendedTracksView({
 	analysis,
 	tracks,
+	userProfile,
+	institutionResult,
 	onEditPreferences,
 	onBackToAnalysis
 }: RecommendedTracksViewProps) {
 	const [selectedTrackId, setSelectedTrackId] = useState<string>(tracks[1]?.id || tracks[0]?.id || '');
 	const [isPrintMode, setIsPrintMode] = useState(false);
+	const [showSimulator, setShowSimulator] = useState(false);
 
 	const handlePrint = () => {
 		window.print();
@@ -284,6 +294,38 @@ export default function RecommendedTracksView({
 					);
 				})}
 			</div>
+
+			{/* ========================================================================= */}
+			{/* WHAT-IF LIVE SIMULATOR DRAWER */}
+			{/* ========================================================================= */}
+			{userProfile && institutionResult && (
+				<div className="space-y-4">
+					<button
+						type="button"
+						onClick={() => setShowSimulator(!showSimulator)}
+						className="w-full py-4 px-6 rounded-3xl bg-slate-900/90 hover:bg-slate-900 border-2 border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white font-black text-xs sm:text-sm transition flex items-center justify-between shadow-xl shadow-cyan-500/10 group"
+					>
+						<div className="flex items-center gap-3">
+							<div className="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+								<Sliders className="h-4 w-4" />
+							</div>
+							<span>רוצה לכייל את יעדי הציונים בעצמך? פתח סימולטור ״מה אם״ אינטראקטיבי 🎛️</span>
+						</div>
+						<div className="flex items-center gap-2 text-xs text-slate-400">
+							<span className="font-bold">{showSimulator ? 'סגור סימולטור' : 'פתח סליידרים חיים'}</span>
+							{showSimulator ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+						</div>
+					</button>
+
+					{showSimulator && (
+						<WhatIfSimulator
+							analysis={analysis}
+							userProfile={userProfile}
+							institutionResult={institutionResult}
+						/>
+					)}
+				</div>
+			)}
 
 			{/* ========================================================================= */}
 			{/* DETAILED ROADMAP FOR SELECTED TRACK */}
