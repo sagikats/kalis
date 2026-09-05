@@ -234,27 +234,21 @@ export function calculateTauAdmission(input: TauCalculatorInput): TauCalculatorR
           (input.physicsUnits === 5) &&
           ((input.physicsGrade || 0) >= 55);
 
-     // Normalize quant psychometric if user entered subscore (50-150)
-     const quant200 = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
-     let normalizedQuant = quant200;
-     if (normalizedQuant >= 50 && normalizedQuant <= 150) {
-          normalizedQuant = Math.round(200 + ((normalizedQuant - 50) / 100) * 600);
-     }
-     const effectivePsych = Math.max(psych, normalizedQuant || 0);
-
-     // TAU General Fit Score (ציון התאמה רב-תחומי)
-     // Official TAU: +10 ריאלית bonus also applies to the general sekem (confirmed from official calculator output)
+     // TAU General Fit Score (ציון התאמה רב-תחומי / ללא מור)
+     // Uses psychometricGeneral. No reali bonus applied to the general channel.
      let generalSekem = 0;
      if (psych > 0 && bagrutAverage > 0) {
           const rawGeneral = (step2 + psych) * 0.52 - 43.10;
-          generalSekem = Math.min(800, Math.max(200, Math.round(rawGeneral + (hasRealitBonus ? 10 : 0))));
+          generalSekem = Math.min(800, Math.max(200, Math.round(rawGeneral)));
      }
 
-     // TAU Quantitative / Engineering Fit Score (ציון התאמה כמותי / הנדסה ומדעים מדויקים)
+     // TAU Engineering / Exact Sciences Fit Score (ציון התאמה הנדסה ומדעים מדויקים)
+     // SAME formula as general sekem — only difference is +10 ריאלית bonus.
+     // Confirmed from official TAU calculator: both general and engineering use psychometricGeneral.
+     // The quantitative subscore (50-150) does NOT replace the general score in TAU's formula.
      let quantitativeSekem = 0;
-
-     if (effectivePsych > 0 && bagrutAverage > 0) {
-          const rawQuant = (step2 + effectivePsych) * 0.52 - 43.10;
+     if (psych > 0 && bagrutAverage > 0) {
+          const rawQuant = (step2 + psych) * 0.52 - 43.10;
           quantitativeSekem = Math.min(800, Math.max(200, Math.round(rawQuant + (hasRealitBonus ? 10 : 0))));
      }
 
