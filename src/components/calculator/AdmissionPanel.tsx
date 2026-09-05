@@ -93,7 +93,7 @@ export default function AdmissionPanel({
 
   const sorted = useMemo(() => {
     const order: Record<AdmissionStatus, number> = {
-      accepted: 0, borderline: 1, not_accepted: 2, no_threshold: 3,
+      accepted: 0, borderline: 1, no_threshold: 2, not_accepted: 3,
     };
     return [...programs].sort((a, b) => {
       const orderDiff = order[a.status] - order[b.status];
@@ -116,6 +116,7 @@ export default function AdmissionPanel({
 
   const acceptedCount = programs.filter(p => p.status === 'accepted').length;
   const borderlineCount = programs.filter(p => p.status === 'borderline').length;
+  const auditionCount = programs.filter(p => p.status === 'no_threshold').length;
 
   return (
     <>
@@ -163,7 +164,7 @@ export default function AdmissionPanel({
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-4 px-5 py-2.5 bg-slate-900/50 border-b border-slate-800/60">
+        <div className="flex items-center gap-4 px-5 py-2.5 bg-slate-900/50 border-b border-slate-800/60 flex-wrap">
           <div className="flex items-center gap-1.5 text-emerald-400">
             <CheckCircle2 className="h-3.5 w-3.5" />
             <span className="text-xs font-bold">{acceptedCount} התקבלת</span>
@@ -172,6 +173,12 @@ export default function AdmissionPanel({
             <AlertCircle className="h-3.5 w-3.5" />
             <span className="text-xs font-bold">{borderlineCount} על הגבול</span>
           </div>
+          {auditionCount > 0 && (
+            <div className="flex items-center gap-1.5 text-purple-400">
+              <GraduationCap className="h-3.5 w-3.5" />
+              <span className="text-xs font-bold">{auditionCount} קבלה נפרדת</span>
+            </div>
+          )}
           <span className="text-[11px] text-slate-600 mr-auto">{sorted.length} חוגים סה&quot;כ</span>
         </div>
 
@@ -210,12 +217,12 @@ export default function AdmissionPanel({
                 gapCls: 'text-rose-400/60',
               },
               no_threshold: {
-                icon: <GraduationCap className="h-4 w-4 text-slate-600 shrink-0" />,
-                rowCls: 'border-slate-800/40 bg-transparent',
-                nameCls: 'text-slate-500',
-                barCls: 'bg-slate-700',
-                gapLabel: '?',
-                gapCls: 'text-slate-600',
+                icon: <GraduationCap className="h-4 w-4 text-purple-400 shrink-0" />,
+                rowCls: 'border-purple-500/20 bg-purple-500/5',
+                nameCls: 'text-slate-300',
+                barCls: 'bg-purple-500/50',
+                gapLabel: 'אודישן',
+                gapCls: 'text-purple-400',
               },
             }[status];
 
