@@ -70,11 +70,10 @@ export default function AdmissionPanel({
   }, [isOpen]);
 
   const isTechnion = institutionId === 'technion';
-  const effectiveSekem = isTechnion
-    ? (bagrutAverage ?? userGeneralSekem)
-    : (userEngineeringSekem && userEngineeringSekem > userGeneralSekem
-        ? userEngineeringSekem
-        : userGeneralSekem);
+  const effectiveSekem =
+    userEngineeringSekem && userEngineeringSekem > userGeneralSekem
+      ? userEngineeringSekem
+      : userGeneralSekem;
 
   const programs: ProgramResult[] = useMemo(() => {
     const dataKey = INST_ID_MAP[institutionId];
@@ -144,7 +143,7 @@ export default function AdmissionPanel({
             <div>
               <h2 className="text-sm font-black text-white">{institutionName}</h2>
               <p className="text-[11px] text-slate-400">
-                {isTechnion ? 'ממוצע בגרות' : 'סכם קבלה'}:{' '}
+                {isTechnion ? 'סכם טכניוני' : 'סכם קבלה'}:{' '}
                 <span className="text-cyan-300 font-bold">{effectiveSekem}</span>
                 {!isTechnion && userEngineeringSekem && userEngineeringSekem !== userGeneralSekem && (
                   <span className="mr-2">
