@@ -38,6 +38,7 @@ interface AdmissionPanelProps {
   institutionName: string;
   userGeneralSekem: number;
   userEngineeringSekem?: number;
+  userManagementSekem?: number;
   bagrutAverage?: number;
 }
 
@@ -62,6 +63,7 @@ export default function AdmissionPanel({
   institutionName,
   userGeneralSekem,
   userEngineeringSekem,
+  userManagementSekem,
   bagrutAverage,
 }: AdmissionPanelProps) {
   useEffect(() => {
@@ -70,7 +72,7 @@ export default function AdmissionPanel({
   }, [isOpen]);
 
   const isTechnion = institutionId === 'technion';
-  const effectiveSekem =
+  const defaultEffectiveSekem =
     userEngineeringSekem && userEngineeringSekem > userGeneralSekem
       ? userEngineeringSekem
       : userGeneralSekem;
@@ -84,11 +86,28 @@ export default function AdmissionPanel({
 
     return institution.programs.map((prog): ProgramResult => {
       const threshold = parseThreshold(prog.admissionThreshold);
-      const gap = threshold !== null ? effectiveSekem - threshold : null;
+
+      // Select matching Sekem per discipline (especially for TAU with distinct General, Engineering, and Management channels)
+      let programSekem = defaultEffectiveSekem;
+      if (institutionId === 'tau') {
+        const title = prog.fieldOfStudy;
+        const isManagement = (title.includes('ניהול') || title.includes('חשבונאות') || title.includes('מנהל עסקים')) && !title.includes('הנדס');
+        const isEngineering = title.includes('הנדס') || title.includes('מדעי המחשב') || title.includes('פיזיקה') || title.includes('כימיה') || title.includes('מתמטיקה') || title.includes('מדעים מדויקים');
+
+        if (isManagement && userManagementSekem) {
+          programSekem = userManagementSekem;
+        } else if (isEngineering && userEngineeringSekem) {
+          programSekem = userEngineeringSekem;
+        } else {
+          programSekem = userGeneralSekem;
+        }
+      }
+
+      const gap = threshold !== null ? programSekem - threshold : null;
       const status = classifyStatus(gap, isTechnion ? 2 : 20);
       return { program: prog, status, threshold, gap: gap ?? 0 };
     });
-  }, [institutionId, effectiveSekem, isTechnion]);
+  }, [institutionId, defaultEffectiveSekem, userGeneralSekem, userEngineeringSekem, userManagementSekem, isTechnion]);
 
   const sorted = useMemo(() => {
     const order: Record<AdmissionStatus, number> = {
@@ -143,11 +162,16 @@ export default function AdmissionPanel({
             <div>
               <h2 className="text-sm font-black text-white">{institutionName}</h2>
               <p className="text-[11px] text-slate-400">
-                {isTechnion ? 'סכם טכניוני' : 'סכם קבלה'}:{' '}
-                <span className="text-cyan-300 font-bold">{effectiveSekem}</span>
+                {isTechnion ? 'סכם טכניוני' : 'סכם כללי'}:{' '}
+                <span className="text-cyan-300 font-bold">{userGeneralSekem}</span>
                 {!isTechnion && userEngineeringSekem && userEngineeringSekem !== userGeneralSekem && (
                   <span className="mr-2">
                     · הנדסה: <span className="text-indigo-300 font-bold">{userEngineeringSekem}</span>
+                  </span>
+                )}
+                {userManagementSekem && (
+                  <span className="mr-2">
+                    · ניהול: <span className="text-amber-300 font-bold">{userManagementSekem}</span>
                   </span>
                 )}
               </p>

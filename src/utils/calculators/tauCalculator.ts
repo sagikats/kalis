@@ -14,8 +14,9 @@ export interface TauCalculatorInput {
 
 export interface TauCalculatorResult {
      bagrutAverage: number;
-     generalSekem: number; // ציון התאמה רב-תחומי
-     quantitativeSekem: number; // ציון התאמה כמותי / הנדסה
+     generalSekem: number; // ציון התאמה רב-תחומי / כללי
+     quantitativeSekem: number; // ציון התאמה כמותי / הנדסה ומדעים מדויקים
+     managementSekem?: number; // ציון התאמה לניהול
      directBagrutEligible: boolean;
      optimalUnits?: number;
      droppedSubjects?: string[];
@@ -252,12 +253,21 @@ export function calculateTauAdmission(input: TauCalculatorInput): TauCalculatorR
           quantitativeSekem = Math.min(800, Math.max(200, Math.round(rawQuant + (hasRealitBonus ? 10 : 0))));
      }
 
+     // TAU Management Fit Score (ציון התאמה לניהול - הפקולטה לניהול ע"ש קולר)
+     // Verified formula: round(0.3 * step2 + 0.7 * psych - 11.5)
+     let managementSekem = 0;
+     if (psych > 0 && bagrutAverage > 0) {
+          const rawNihul = 0.3 * step2 + 0.7 * psych - 11.5;
+          managementSekem = Math.min(800, Math.max(200, Math.round(rawNihul)));
+     }
+
      const directBagrutEligible = bagrutAverage >= 105;
 
      return {
           bagrutAverage,
           generalSekem,
           quantitativeSekem,
+          managementSekem,
           directBagrutEligible,
           optimalUnits: optimal.optimalUnits,
           droppedSubjects: optimal.droppedSubjects.map(s => s.name),

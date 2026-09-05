@@ -26,6 +26,7 @@ export interface InstitutionSekemResult {
 	bagrutAverage: number;
 	generalSekem: number;
 	engineeringSekem?: number;
+	managementSekem?: number;
 	directBagrutEligible: boolean;
 	notes?: string;
 	droppedSubjects?: string[];
@@ -148,13 +149,14 @@ export function calculateMultiInstitutionSekem(
 			bagrutAverage: tauRes.bagrutAverage,
 			generalSekem: tauRes.generalSekem,
 			engineeringSekem: tauRes.quantitativeSekem,
+			managementSekem: tauRes.managementSekem,
 			directBagrutEligible: tauRes.directBagrutEligible,
 			droppedSubjects: tauRes.droppedSubjects,
 			optimalUnits: tauRes.optimalUnits,
 			notes:
 				tauRes.droppedSubjects && tauRes.droppedSubjects.length > 0
 					? `ממוצע אופטימלי (הושמטו: ${tauRes.droppedSubjects.join(', ')})`
-					: 'ציון התאמה רב-תחומי והנדסי רשמי (בונוס +35 למתמטיקה)'
+					: 'ציון התאמה רב-תחומי, הנדסי (בונוס +10 ל-5 יח״ל מתמטיקה ופיזיקה) ולניהול'
 		},
 		technion: {
 			institutionId: 'technion',

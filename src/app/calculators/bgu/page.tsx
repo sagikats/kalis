@@ -541,7 +541,7 @@ export default function UnifiedCalculatorPage() {
                                                   )}
                                              </div>
 
-                                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                             <div className={`grid grid-cols-2 ${res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3`}>
                                                   {/* Bagrut Avg */}
                                                   <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
                                                        <span className="text-[11px] text-slate-400 block font-bold">ממוצע בגרות</span>
@@ -561,9 +561,17 @@ export default function UnifiedCalculatorPage() {
 
                                                   {/* Engineering Sekem */}
                                                   {res.engineeringSekem !== undefined && (
-                                                       <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-center col-span-2 sm:col-span-1">
+                                                       <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-center">
                                                             <span className="text-[11px] text-indigo-300 block font-bold">סכם כמותי/הנדסה</span>
                                                             <span className="text-xl font-black text-indigo-300 mt-1 block">{res.engineeringSekem}</span>
+                                                       </div>
+                                                  )}
+
+                                                  {/* Management Sekem */}
+                                                  {res.managementSekem !== undefined && (
+                                                       <div className="p-3 rounded-2xl bg-amber-950/30 border border-amber-800/50 text-center">
+                                                            <span className="text-[11px] text-amber-300 block font-bold">התאמה לניהול</span>
+                                                            <span className="text-xl font-black text-amber-300 mt-1 block">{res.managementSekem}</span>
                                                        </div>
                                                   )}
                                              </div>
@@ -619,6 +627,7 @@ export default function UnifiedCalculatorPage() {
                               institutionName={res.institutionName}
                               userGeneralSekem={res.generalSekem}
                               userEngineeringSekem={res.engineeringSekem}
+                              userManagementSekem={res.managementSekem}
                               bagrutAverage={res.bagrutAverage}
                          />
                     );
