@@ -33,6 +33,7 @@ import PersonalAdmissionReport from '@/components/flow/PersonalAdmissionReport';
 import GapAnalysisCard from '@/components/flow/GapAnalysisCard';
 import PreferenceQuestionnaire from '@/components/flow/PreferenceQuestionnaire';
 import RecommendedTracksView from '@/components/flow/RecommendedTracksView';
+import AcceptedRegistrationCard from '@/components/flow/AcceptedRegistrationCard';
 import {
 	TargetProgramSelection,
 	ProgramGapAnalysis,
@@ -766,11 +767,53 @@ export default function AdmissionFlowPage() {
 					</div>
 				)}
 
-				{/* STEP 5: תכנון 3 מסלולי שיפור מותאמים אישית */}
+				{/* STEP 5: תכנון מסלול אישי ושיפור ציונים / מעבר להרשמה */}
 				{activeStep === 5 && (
 					<div className="space-y-6">
+						{/* Step 5 Header with Quick Degree Switcher */}
+						{gapAnalyses.length > 0 && (
+							<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
+								<div>
+									<h2 className="text-2xl font-black text-white">שלב 5: תכנון מסלול אישי והרשמה</h2>
+									<p className="text-sm text-slate-400">
+										{currentFocusedAnalysis?.status === 'accepted'
+											? 'התקבלת לחוג זה! נתוניך עוברים את הסף ובאפשרותך להירשם ישירות'
+											: 'בניית 3 מסלולי שיפור מותאמים אישית ומבוססי ריאליות בהתאם להעדפותיך'}
+									</p>
+								</div>
+
+								{gapAnalyses.length > 1 && (
+									<div className="flex items-center gap-2">
+										<span className="text-xs text-slate-400 font-bold hidden sm:inline">החלף תואר:</span>
+										<select
+											value={currentFocusedAnalysis?.target.program.id || ''}
+											onChange={(e) => setFocusedProgramId(e.target.value)}
+											className="bg-slate-900 border border-slate-700 text-xs font-bold text-white rounded-xl px-3 py-2 focus:outline-none"
+										>
+											{gapAnalyses.map((a) => {
+												const statusIcon =
+													a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
+												return (
+													<option key={a.target.program.id} value={a.target.program.id}>
+														{statusIcon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
+													</option>
+												);
+											})}
+										</select>
+									</div>
+								)}
+							</div>
+						)}
+
 						{currentFocusedAnalysis ? (
-							!questionnaireAnswers || !recommendedTracks ? (
+							currentFocusedAnalysis.status === 'accepted' ? (
+								<AcceptedRegistrationCard
+									analysis={currentFocusedAnalysis}
+									otherAnalyses={gapAnalyses}
+									onSelectOtherProgram={(programId) => setFocusedProgramId(programId)}
+									onBackToReport={() => setActiveStep(3)}
+								/>
+							) : !questionnaireAnswers || !recommendedTracks ? (
 								<PreferenceQuestionnaire
 									analysis={currentFocusedAnalysis}
 									initialAnswers={questionnaireAnswers || undefined}

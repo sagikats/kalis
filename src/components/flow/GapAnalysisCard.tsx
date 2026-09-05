@@ -14,9 +14,12 @@ import {
 	ArrowLeft,
 	ArrowRight,
 	Check,
-	Sliders
+	Sliders,
+	ExternalLink,
+	Building2
 } from 'lucide-react';
 import { ProgramGapAnalysis, ImprovementOption } from '../../utils/analysis/gapAnalyzer';
+import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
 
 interface GapAnalysisCardProps {
 	analysis: ProgramGapAnalysis;
@@ -206,8 +209,39 @@ export default function GapAnalysisCard({
 				</div>
 			)}
 
-			{/* Section 3: Next Step CTA (Step 5 teaser) */}
-			{!isAccepted && (
+			{/* Section 3: Next Step CTA / University Registration if Accepted */}
+			{isAccepted ? (
+				<div className="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-teal-950/80 border-2 border-emerald-500/40 rounded-3xl p-6 shadow-2xl space-y-4 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-6">
+					<div className="space-y-1.5 max-w-xl">
+						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
+							<CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+							<span>סטטוס: קבלה מובטחת לחוג זה!</span>
+						</div>
+						<h3 className="text-lg sm:text-xl font-black text-white">
+							עובר את סף הקבלה — אין צורך בשיפור ציונים 🎉
+						</h3>
+						<p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+							הסכם שלך עובר את הרף הנדרש. באפשרותך להתקדם ישירות לעמוד ההרשמה הרשמי של האוניברסיטה ולהבטיח את מקומך לשנת הלימודים.
+						</p>
+					</div>
+
+					<a
+						href={
+							getUniversityRegistrationInfo(
+								analysis.target.institutionName,
+								analysis.target.calculatorId,
+								analysis.target.program.url
+							).registrationUrl
+						}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="px-6 py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm rounded-2xl shadow-xl shadow-emerald-500/20 transition hover:scale-[1.02] active:scale-[0.98] shrink-0 flex items-center gap-2"
+					>
+						<span>מעבר להרשמה ב{analysis.target.institutionName}</span>
+						<ExternalLink className="h-4 w-4" />
+					</a>
+				</div>
+			) : (
 				<div className="bg-gradient-to-r from-blue-950/80 via-slate-900 to-indigo-950/80 border border-cyan-500/30 rounded-3xl p-6 shadow-2xl space-y-4 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-6">
 					<div className="space-y-1.5 max-w-xl">
 						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-bold">

@@ -10,9 +10,11 @@ import {
 	Sparkles,
 	Sliders,
 	Award,
-	HelpCircle
+	HelpCircle,
+	ExternalLink
 } from 'lucide-react';
 import { ProgramGapAnalysis, AdmissionStatus } from '../../utils/analysis/gapAnalyzer';
+import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
 
 interface PersonalAdmissionReportProps {
 	analyses: ProgramGapAnalysis[];
@@ -264,18 +266,47 @@ function ProgramReportCard({
 			</div>
 
 			{/* Action Button */}
-			<button
-				onClick={() => onViewGap(item.target.program.id)}
-				className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
-					!isAccepted && !isNoThreshold
-						? 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-md shadow-blue-500/10'
-						: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
-				}`}
-			>
-				<Sliders className="h-3.5 w-3.5" />
-				<span>{!isAccepted && !isNoThreshold ? 'צפה בניתוח פערים ופתרונות שיפור' : 'פרטי קבלה מלאים'}</span>
-				<ArrowLeft className="h-3.5 w-3.5" />
-			</button>
+			<div className="flex items-center gap-2">
+				{isAccepted ? (
+					<>
+						<a
+							href={
+								getUniversityRegistrationInfo(
+									item.target.institutionName,
+									item.target.calculatorId,
+									item.target.program.url
+								).registrationUrl
+							}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black shadow-md shadow-emerald-500/10"
+						>
+							<span>הרשמה לאוניברסיטה</span>
+							<ExternalLink className="h-3.5 w-3.5" />
+						</a>
+						<button
+							onClick={() => onViewGap(item.target.program.id)}
+							className="py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 shrink-0"
+							title="צפה בפרטי הקבלה המלאים"
+						>
+							<span>פרטים</span>
+						</button>
+					</>
+				) : (
+					<button
+						onClick={() => onViewGap(item.target.program.id)}
+						className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+							!isNoThreshold
+								? 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-md shadow-blue-500/10'
+								: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+						}`}
+					>
+						<Sliders className="h-3.5 w-3.5" />
+						<span>{!isNoThreshold ? 'צפה בניתוח פערים ופתרונות שיפור' : 'פרטי קבלה מלאים'}</span>
+						<ArrowLeft className="h-3.5 w-3.5" />
+					</button>
+				)}
+			</div>
 		</div>
 	);
 }
