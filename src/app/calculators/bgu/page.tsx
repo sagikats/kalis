@@ -23,6 +23,7 @@ import { SubjectInput } from '@/utils/calculators/bguCalculator';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import academicData from '@/data/academicData.json';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
+import AdmissionPanel from '@/components/calculator/AdmissionPanel';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
 
@@ -64,6 +65,9 @@ export default function UnifiedCalculatorPage() {
 
      // Selected institutions to compare (defaulting to BGU, TAU, HUJI, Technion)
      const [selectedInstIds, setSelectedInstIds] = useState<string[]>(['bgu', 'tau', 'huji', 'technion']);
+
+     // Admission panel state
+     const [panelInstitutionId, setPanelInstitutionId] = useState<string | null>(null);
 
      // Subject catalog modal state
      const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
@@ -564,14 +568,23 @@ export default function UnifiedCalculatorPage() {
                                                   )}
                                              </div>
 
-                                             {/* Direct Optimizer Link per Institution */}
-                                             <Link
-                                                  href={`/optimizer?university=${encodeURIComponent(res.institutionName)}`}
-                                                  className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5"
-                                             >
-                                                  <span>הצג חוגים מתאימים ב{res.institutionName}</span>
-                                                  <ChevronLeft className="h-4 w-4" />
-                                             </Link>
+                                             {/* Action buttons row */}
+                                             <div className="flex gap-2">
+                                                  <button
+                                                       onClick={() => setPanelInstitutionId(res.institutionId)}
+                                                       className="flex-1 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10"
+                                                  >
+                                                       <GraduationCap className="h-3.5 w-3.5" />
+                                                       <span>מה הסיכויים שלי?</span>
+                                                  </button>
+                                                  <Link
+                                                       href={`/optimizer?university=${encodeURIComponent(res.institutionName)}`}
+                                                       className="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
+                                                       title={`כל החוגים ב${res.institutionName}`}
+                                                  >
+                                                       <ChevronLeft className="h-4 w-4" />
+                                                  </Link>
+                                             </div>
                                         </div>
                                    ))}
                               </div>
@@ -593,6 +606,23 @@ export default function UnifiedCalculatorPage() {
                     existingSubjectNames={subjects.map(s => s.name)}
                     title={editingSubjectIndex !== null ? 'החלפת מקצוע בגרות' : 'הוספת מקצוע בגרות או הגברה'}
                />
+
+               {/* Admission Panel — slides in from right */}
+               {panelInstitutionId && (() => {
+                    const res = institutionResults.find(r => r.institutionId === panelInstitutionId);
+                    if (!res) return null;
+                    return (
+                         <AdmissionPanel
+                              isOpen={panelInstitutionId !== null}
+                              onClose={() => setPanelInstitutionId(null)}
+                              institutionId={panelInstitutionId}
+                              institutionName={res.institutionName}
+                              userGeneralSekem={res.generalSekem}
+                              userEngineeringSekem={res.engineeringSekem}
+                              bagrutAverage={res.bagrutAverage}
+                         />
+                    );
+               })()}
           </div>
      );
 }
