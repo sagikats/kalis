@@ -302,7 +302,7 @@ function ProgramReportCard({
 						}`}
 					>
 						<Sliders className="h-3.5 w-3.5" />
-						<span>{!isNoThreshold ? 'צפה בניתוח פערים ופתרונות שיפור' : 'פרטי קבלה מלאים'}</span>
+						<span>{!isNoThreshold ? 'תכנון מסלול קבלה לתואר זה' : 'פרטי קבלה מלאים'}</span>
 						<ArrowLeft className="h-3.5 w-3.5" />
 					</button>
 				)}

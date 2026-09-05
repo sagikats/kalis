@@ -694,11 +694,11 @@ export default function PreferenceQuestionnaire({
 							className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-2 border border-slate-700"
 						>
 							<ArrowRight className="h-4 w-4" />
-							<span>חזור לניתוח פערים</span>
+							<span>חזור לדוח הקבלה</span>
 						</button>
 					)}
 
-					<div className="mr-auto">
+					<div className="mr-auto flex items-center gap-3 flex-wrap">
 						<button
 							type="submit"
 							className="px-8 py-4 bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-sm rounded-2xl shadow-xl shadow-cyan-500/20 transition flex items-center gap-3 transform hover:scale-[1.02] active:scale-[0.98]"

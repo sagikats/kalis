@@ -30,7 +30,6 @@ import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 
 import DegreeSearchSelector from '@/components/flow/DegreeSearchSelector';
 import PersonalAdmissionReport from '@/components/flow/PersonalAdmissionReport';
-import GapAnalysisCard from '@/components/flow/GapAnalysisCard';
 import PreferenceQuestionnaire from '@/components/flow/PreferenceQuestionnaire';
 import RecommendedTracksView from '@/components/flow/RecommendedTracksView';
 import AcceptedRegistrationCard from '@/components/flow/AcceptedRegistrationCard';
@@ -76,7 +75,7 @@ function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 1
 
 export default function AdmissionFlowPage() {
 	const router = useRouter();
-	const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+	const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
 
 	// Step 1: Grades State
 	const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
@@ -285,7 +284,7 @@ export default function AdmissionFlowPage() {
 		if (found) {
 			setFocusedProgramId(found.target.program.id);
 		}
-		setActiveStep(5);
+		setActiveStep(4);
 	};
 
 	// Generate the 3 tailored, realistic tracks for Step 5
@@ -306,7 +305,7 @@ export default function AdmissionFlowPage() {
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 				{/* Top Stepper Navigation */}
 				<div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl">
-					<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+					<div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
 						<button
 							onClick={() => setActiveStep(1)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
@@ -396,31 +395,8 @@ export default function AdmissionFlowPage() {
 								4
 							</div>
 							<div className="overflow-hidden">
-								<span className="text-xs font-black block truncate">ניתוח פערים</span>
-								<span className="text-[10px] text-slate-400 block truncate">מנופי שיפור מתמטיים</span>
-							</div>
-						</button>
-
-						<button
-							onClick={() => setActiveStep(5)}
-							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
-								activeStep === 5
-									? 'bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-									: 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
-							}`}
-						>
-							<div
-								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-									activeStep === 5
-										? 'bg-cyan-400 text-slate-950 shadow-sm'
-										: 'bg-slate-800 text-slate-300'
-								}`}
-							>
-								5
-							</div>
-							<div className="overflow-hidden">
-								<span className="text-xs font-black block truncate">תכנון 3 מסלולים</span>
-								<span className="text-[10px] text-slate-400 block truncate">שיפור מותאם וריאלי</span>
+								<span className="text-xs font-black block truncate">תכנון מסלולי פעולה</span>
+								<span className="text-[10px] text-slate-400 block truncate">3 מסלולים + מסלול אישי</span>
 							</div>
 						</button>
 					</div>
@@ -689,7 +665,7 @@ export default function AdmissionFlowPage() {
 									onClick={() => setActiveStep(4)}
 									className="px-6 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-500/10 transition flex items-center gap-2"
 								>
-									<span>לניתוח פערים מעמיק</span>
+									<span>לתכנון מסלולי פעולה</span>
 									<ArrowLeft className="h-4 w-4" />
 								</button>
 							</div>
@@ -703,85 +679,18 @@ export default function AdmissionFlowPage() {
 					</div>
 				)}
 
-				{/* STEP 4: ניתוח פערים ופתרונות שיפור */}
+				{/* STEP 4: תכנון מסלולי פעולה ובניית מסלול אישי */}
 				{activeStep === 4 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
-							<div>
-								<h2 className="text-2xl font-black text-white">שלב 4: ניתוח פערים ופתרונות שיפור</h2>
-								<p className="text-sm text-slate-400">
-									פירוק מתמטי מדויק של הפער בין הנתונים שלך לספי הקבלה, ובדיקת חלופות לסגירתו
-								</p>
-							</div>
-
-							<div className="flex items-center gap-3 flex-wrap">
-								{/* Quick selector between unaccepted programs if user has multiple */}
-								{gapAnalyses.length > 1 && (
-									<div className="flex items-center gap-2">
-										<span className="text-xs text-slate-400 font-bold hidden sm:inline">החלף תואר:</span>
-										<select
-											value={currentFocusedAnalysis?.target.program.id || ''}
-											onChange={(e) => setFocusedProgramId(e.target.value)}
-											className="bg-slate-900 border border-slate-700 text-xs font-bold text-white rounded-xl px-3 py-2 focus:outline-none"
-										>
-											{gapAnalyses.map((a) => (
-												<option key={a.target.program.id} value={a.target.program.id}>
-													{a.target.program.fieldOfStudy} ({a.target.institutionName})
-												</option>
-											))}
-										</select>
-									</div>
-								)}
-
-								<button
-									onClick={() => setActiveStep(5)}
-									className="px-5 py-2.5 bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-xs rounded-xl shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
-								>
-									<span>לתכנון 3 מסלולים מומלצים</span>
-									<ArrowLeft className="h-4 w-4" />
-								</button>
-							</div>
-						</div>
-
-						{currentFocusedAnalysis ? (
-							<GapAnalysisCard
-								analysis={currentFocusedAnalysis}
-								userProfile={userProfile}
-								institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
-								onBackToReport={() => setActiveStep(3)}
-								onPlanTrackCTA={handlePlanTrackCTA}
-								onApplyScenario={() => setActiveStep(5)}
-							/>
-						) : (
-							<div className="text-center py-16 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 space-y-4">
-								<Target className="h-12 w-12 text-slate-500 mx-auto" />
-								<h3 className="text-lg font-bold text-white">טרם נבחר תואר לניתוח</h3>
-								<p className="text-sm text-slate-400">
-									בחר תואר בשלב 2 או מדוח הקבלה כדי לבצע ניתוח פערים מדויק.
-								</p>
-								<button
-									onClick={() => setActiveStep(2)}
-									className="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs rounded-xl transition"
-								>
-									בחר תארים עכשיו
-								</button>
-							</div>
-						)}
-					</div>
-				)}
-
-				{/* STEP 5: תכנון מסלול אישי ושיפור ציונים / מעבר להרשמה */}
-				{activeStep === 5 && (
-					<div className="space-y-6">
-						{/* Step 5 Header with Quick Degree Switcher */}
+						{/* Step 4 Header with Quick Degree Switcher */}
 						{gapAnalyses.length > 0 && (
 							<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
 								<div>
-									<h2 className="text-2xl font-black text-white">שלב 5: תכנון מסלול אישי והרשמה</h2>
+									<h2 className="text-2xl font-black text-white">שלב 4: תכנון מסלולי פעולה והרשמה</h2>
 									<p className="text-sm text-slate-400">
 										{currentFocusedAnalysis?.status === 'accepted'
 											? 'התקבלת לחוג זה! נתוניך עוברים את הסף ובאפשרותך להירשם ישירות'
-											: 'בניית 3 מסלולי שיפור מותאמים אישית ומבוססי ריאליות בהתאם להעדפותיך'}
+											: 'בחירה מבין 3 מסלולי שיפור מומלצים או הרכבת מסלול אישי מותאם'}
 									</p>
 								</div>
 
@@ -821,16 +730,18 @@ export default function AdmissionFlowPage() {
 									analysis={currentFocusedAnalysis}
 									initialAnswers={questionnaireAnswers || undefined}
 									onSubmit={(answers) => setQuestionnaireAnswers(answers)}
-									onCancel={() => setActiveStep(4)}
+									onCancel={() => setActiveStep(3)}
 								/>
 							) : (
 								<RecommendedTracksView
 									analysis={currentFocusedAnalysis}
+									allAnalyses={gapAnalyses}
 									tracks={recommendedTracks}
 									userProfile={userProfile}
 									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
+									onSelectProgram={(programId) => setFocusedProgramId(programId)}
 									onEditPreferences={() => setQuestionnaireAnswers(null)}
-									onBackToAnalysis={() => setActiveStep(4)}
+									onBackToReport={() => setActiveStep(3)}
 								/>
 							)
 						) : (
