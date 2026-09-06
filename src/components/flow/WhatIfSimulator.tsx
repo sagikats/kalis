@@ -31,6 +31,7 @@ import { SubjectInput } from '@/utils/calculators/bguCalculator';
 import { getRealisticPsychometricCeiling } from '@/utils/analysis/trackGenerator';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
+import MultiUniversityAdmissionGrid, { InstitutionSimulatedState } from '@/components/flow/MultiUniversityAdmissionGrid';
 
 export interface SimulatedSubjectItem {
 	id: string;
@@ -639,96 +640,37 @@ export default function WhatIfSimulator({
 				</div>
 
 				{showAllUniversities && (
-					<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
-						{simulatedSekemResult.allInstitutions.map((inst) => {
-							const baseInst = baselineAllInstitutions.find(
-								(b) => b.institutionId === inst.institutionId
-							);
-							const isTarget = inst.institutionId === analysis.target.calculatorId;
-							const isTech = inst.institutionId === 'technion';
-							const isEng = analysis.relevantSekemType === 'engineering';
-
-							const currentScore =
-								isEng && inst.engineeringSekem ? inst.engineeringSekem : inst.generalSekem;
-							const baseScore =
-								isEng && baseInst?.engineeringSekem
-									? baseInst.engineeringSekem
-									: baseInst?.generalSekem || 0;
-							const delta = Math.round((currentScore - baseScore) * 10) / 10;
-							const bagrutDelta =
-								Math.round((inst.bagrutAverage - (baseInst?.bagrutAverage || 0)) * 100) / 100;
-
-							return (
-								<div
-									key={inst.institutionId}
-									className={`p-3.5 rounded-2xl border transition flex flex-col justify-between relative overflow-hidden ${
-										isTarget
-											? 'bg-cyan-950/40 border-cyan-500/50 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/30'
-											: 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
-									}`}
-								>
-									{isTarget && (
-										<div className="absolute top-1.5 left-1.5">
-											<span className="px-1.5 py-0.5 bg-cyan-500 text-slate-950 text-[9px] font-black rounded">
-												נבחר
-											</span>
-										</div>
-									)}
-
-									<div className="space-y-1.5">
-										<div className="flex items-center gap-1.5">
-											<span
-												className={`w-6 h-6 rounded-lg bg-gradient-to-br ${inst.badgeColor} flex items-center justify-center text-[10px] font-black text-white shrink-0 shadow-sm`}
-											>
-												{inst.logoText}
-											</span>
-											<span
-												className="text-xs font-bold text-slate-200 line-clamp-1"
-												title={inst.institutionName}
-											>
-												{inst.institutionName.replace('אוניברסיטת ', '')}
-											</span>
-										</div>
-
-										<div className="pt-1 text-left dir-ltr">
-											<div className="text-lg font-black text-white">
-												{currentScore.toFixed(isTech ? 2 : 1)}
-											</div>
-											<div className="flex items-center gap-1 text-[11px]">
-												{delta > 0 ? (
-													<span className="text-emerald-400 font-bold flex items-center">
-														<TrendingUp className="h-3 w-3 mr-0.5 inline" />
-														+{delta.toFixed(isTech ? 2 : 1)}
-													</span>
-												) : (
-													<span className="text-slate-500">ללא שינוי</span>
-												)}
-												<span className="text-slate-600 text-[10px]">
-													(בסיס: {baseScore.toFixed(isTech ? 1 : 0)})
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<div className="mt-2.5 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 space-y-0.5">
-										<div className="flex justify-between items-center">
-											<span>בגרות:</span>
-											<span className="font-bold text-slate-200 dir-ltr">
-												{inst.bagrutAverage.toFixed(2)}
-												{bagrutDelta > 0 && (
-													<span className="text-emerald-400 text-[9px] ml-1">
-														(+{bagrutDelta.toFixed(1)})
-													</span>
-												)}
-											</span>
-										</div>
-										<div className="text-[9px] text-slate-500 truncate">
-											{isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי'}
-										</div>
-									</div>
-								</div>
-							);
-						})}
+					<div className="pt-1">
+						<MultiUniversityAdmissionGrid
+							selectedInstitutionId={analysis.target.calculatorId}
+							institutions={simulatedSekemResult.allInstitutions.map((inst): InstitutionSimulatedState => {
+								const baseInst = baselineAllInstitutions.find(
+									(b) => b.institutionId === inst.institutionId
+								);
+								const isEng = analysis.relevantSekemType === 'engineering';
+								const currentScore =
+									isEng && inst.engineeringSekem ? inst.engineeringSekem : inst.generalSekem;
+								const baseScore =
+									isEng && baseInst?.engineeringSekem
+										? baseInst.engineeringSekem
+										: baseInst?.generalSekem || 0;
+								return {
+									institutionId: inst.institutionId,
+									institutionName: inst.institutionName,
+									logoText: inst.logoText,
+									badgeColor: inst.badgeColor,
+									currentScore,
+									baseScore,
+									delta: Math.round((currentScore - baseScore) * 10) / 10,
+									bagrutAverage: inst.bagrutAverage,
+									bagrutDelta: Math.round((inst.bagrutAverage - (baseInst?.bagrutAverage || 0)) * 100) / 100,
+									isTarget: inst.institutionId === analysis.target.calculatorId,
+									isTechnion: inst.institutionId === 'technion',
+									isDirectBagrutEligible: inst.directBagrutEligible,
+									sekemTypeLabel: isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי',
+								};
+							})}
+						/>
 					</div>
 				)}
 			</div>
