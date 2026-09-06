@@ -79,6 +79,7 @@ export default function AdmissionFlowPage() {
 
 	// Step 1: Grades State
 	const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
+	const [hasTakenPsychometric, setHasTakenPsychometric] = useState<boolean>(true);
 	const [psychGeneral, setPsychGeneral] = useState<number | ''>(INITIAL_PSYCH.general);
 	const [psychQuant, setPsychQuant] = useState<number | ''>(INITIAL_PSYCH.quant);
 	const [psychVerbal, setPsychVerbal] = useState<number | ''>(INITIAL_PSYCH.verbal);
@@ -104,6 +105,7 @@ export default function AdmissionFlowPage() {
 			if (saved) {
 				const parsed = JSON.parse(saved);
 				if (parsed.subjects && parsed.subjects.length > 0) setSubjects(parsed.subjects);
+				if (parsed.hasTakenPsychometric !== undefined) setHasTakenPsychometric(parsed.hasTakenPsychometric);
 				if (parsed.psychGeneral !== undefined) setPsychGeneral(parsed.psychGeneral);
 				if (parsed.psychQuant !== undefined) setPsychQuant(parsed.psychQuant);
 				if (parsed.psychVerbal !== undefined) setPsychVerbal(parsed.psychVerbal);
@@ -123,6 +125,7 @@ export default function AdmissionFlowPage() {
 		try {
 			const toSave = {
 				subjects,
+				hasTakenPsychometric,
 				psychGeneral,
 				psychQuant,
 				psychVerbal,
@@ -135,7 +138,7 @@ export default function AdmissionFlowPage() {
 		} catch (e) {
 			console.error('Failed to persist admission flow data', e);
 		}
-	}, [subjects, psychGeneral, psychQuant, psychVerbal, psychEnglish, selectedTargets, questionnaireAnswers, activeStep]);
+	}, [subjects, hasTakenPsychometric, psychGeneral, psychQuant, psychVerbal, psychEnglish, selectedTargets, questionnaireAnswers, activeStep]);
 
 	// Extract Math & Physics for university engines
 	const mathSubject = useMemo(() => {
@@ -164,26 +167,28 @@ export default function AdmissionFlowPage() {
 
 	// User Academic Profile object
 	const userProfile: UserAcademicProfile = useMemo(() => {
+		const isPsych = hasTakenPsychometric;
 		return {
 			bagrutSubjects: subjects.map((s) => ({ ...s, grade: Number(s.grade) || 0 })),
-			psychometricGeneral: Number(psychGeneral) || 0,
-			psychometricQuant: Number(psychQuant) || 0,
-			psychometricVerbal: Number(psychVerbal) || 0,
-			psychometricEnglish: Number(psychEnglish) || 0,
+			psychometricGeneral: isPsych ? Number(psychGeneral) || 0 : 0,
+			psychometricQuant: isPsych ? Number(psychQuant) || 0 : 0,
+			psychometricVerbal: isPsych ? Number(psychVerbal) || 0 : 0,
+			psychometricEnglish: isPsych ? Number(psychEnglish) || 0 : 0,
 			mathGrade: Number(mathSubject.grade) || 0,
 			mathUnits: mathSubject.units,
 			physicsGrade: Number(physicsSubject?.grade) || 0,
 			physicsUnits: physicsSubject?.units || 0
 		};
-	}, [subjects, psychGeneral, psychQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject]);
+	}, [subjects, hasTakenPsychometric, psychGeneral, psychQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject]);
 
 	// Multi-institution calculations (all 6 universities)
 	const institutionResultsMap = useMemo(() => {
+		const isPsych = hasTakenPsychometric;
 		const resList = calculateMultiInstitutionSekem(
 			{
 				...userProfile,
-				psychometricGeneral: Number(psychGeneral) || 0,
-				psychometricQuant: Number(psychQuant) || 0
+				psychometricGeneral: isPsych ? Number(psychGeneral) || 0 : 0,
+				psychometricQuant: isPsych ? Number(psychQuant) || 0 : 0
 			},
 			['bgu', 'tau', 'huji', 'technion', 'ariel', 'haifa']
 		);
@@ -193,7 +198,7 @@ export default function AdmissionFlowPage() {
 			map[r.institutionId] = r;
 		});
 		return map;
-	}, [userProfile, psychGeneral, psychQuant]);
+	}, [userProfile, hasTakenPsychometric, psychGeneral, psychQuant]);
 
 	// Gap Analyses for all selected programs
 	const gapAnalyses: ProgramGapAnalysis[] = useMemo(() => {
@@ -434,99 +439,155 @@ export default function AdmissionFlowPage() {
 									</div>
 								</div>
 
-								<div className="space-y-4">
-									<div className="space-y-1.5">
-										<label className="block text-xs font-bold text-slate-300">
-											ציון רב-תחומי (200–800):
-										</label>
+								{/* Option: Haven't taken psychometric yet */}
+								<div
+									onClick={() => {
+										const nextVal = !hasTakenPsychometric;
+										setHasTakenPsychometric(nextVal);
+										if (!nextVal) {
+											setPsychGeneral(0);
+											setPsychQuant(0);
+											setPsychVerbal(0);
+											setPsychEnglish(0);
+										} else {
+											setPsychGeneral(INITIAL_PSYCH.general);
+											setPsychQuant(INITIAL_PSYCH.quant);
+											setPsychVerbal(INITIAL_PSYCH.verbal);
+											setPsychEnglish(INITIAL_PSYCH.english);
+										}
+									}}
+									className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
+										!hasTakenPsychometric
+											? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
+											: 'bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
+									}`}
+								>
+									<div className="flex items-center gap-3">
 										<input
-											type="number"
-											min={200}
-											max={800}
-											value={psychGeneral}
-											onChange={(e) =>
-												setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
-											}
-											placeholder="200-800"
-											className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+											type="checkbox"
+											checked={!hasTakenPsychometric}
+											onChange={() => {}}
+											className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-900 cursor-pointer"
 										/>
-									</div>
-
-									<div className="grid grid-cols-3 gap-2.5">
-										<div className="space-y-1.5">
-											<label className="block text-[11px] font-bold text-slate-300">כמותי:</label>
-											<input
-												type="number"
-												min={50}
-												max={150}
-												value={psychQuant}
-												onChange={(e) =>
-													setPsychQuant(cleanNumberInput(e.target.value, 0, 150) as number)
-												}
-												placeholder="50-150"
-												className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-											/>
-										</div>
-
-										<div className="space-y-1.5">
-											<label className="block text-[11px] font-bold text-slate-300">מילולי:</label>
-											<input
-												type="number"
-												min={50}
-												max={150}
-												value={psychVerbal}
-												onChange={(e) =>
-													setPsychVerbal(cleanNumberInput(e.target.value, 0, 150) as number)
-												}
-												placeholder="50-150"
-												className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-											/>
-										</div>
-
-										<div className="space-y-1.5">
-											<label className="block text-[11px] font-bold text-slate-300">אנגלית:</label>
-											<input
-												type="number"
-												min={50}
-												max={150}
-												value={psychEnglish}
-												onChange={(e) =>
-													setPsychEnglish(cleanNumberInput(e.target.value, 0, 150) as number)
-												}
-												placeholder="50-150"
-												className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
-											/>
-										</div>
-									</div>
-
-									{/* English Classification */}
-									{psychResolution.englishClassification.level !== 'unknown' && (
-										<div className="p-3 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center justify-between text-xs">
-											<span className="text-slate-400 font-medium">רמת אנגלית אקדמית:</span>
-											<span
-												className={`font-bold px-2 py-0.5 rounded border ${psychResolution.englishClassification.color}`}
-											>
-												{psychResolution.englishClassification.label}
+										<div>
+											<span className="text-xs font-black block">עדיין לא עשיתי פסיכומטרי</span>
+											<span className="text-[11px] text-slate-400 block mt-0.5">
+												טרם ניגשתי לבחינה / מעוניין לבדוק קבלה על סמך בגרות בלבד
 											</span>
 										</div>
+									</div>
+									{!hasTakenPsychometric && (
+										<span className="px-2 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/30">
+											פעיל
+										</span>
 									)}
+								</div>
 
-									{/* Calculated Weights info */}
-									<div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-										<div className="flex justify-between">
-											<span>שקלול מאל״ו בדגש כמותי:</span>
-											<span className="font-bold text-indigo-300">
-												{psychResolution.effectiveQuantEmphasis}
-											</span>
+								{!hasTakenPsychometric ? (
+									<div className="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-2">
+										<div className="flex items-center gap-2 text-cyan-300 text-xs font-bold">
+											<Sparkles className="h-4 w-4 text-cyan-400 shrink-0" />
+											<span>נבדוק קבלה ישירה ונחשב עבורך ציוני יעד!</span>
 										</div>
-										<div className="flex justify-between">
-											<span>שקלול מאל״ו בדגש מילולי:</span>
-											<span className="font-bold text-purple-300">
-												{psychResolution.effectiveVerbalEmphasis}
-											</span>
+										<p className="text-[11px] text-slate-300 leading-relaxed">
+											המערכת תבדוק אילו תארים מאפשרים קבלה ישירה על סמך ממוצע בגרות בלבד, ובשלב התכנון תחשב בדיוק איזה ציון פסיכומטרי יעד יידרש ממך בבחינה הראשונה לכל תואר מבוקש.
+										</p>
+									</div>
+								) : (
+									<div className="space-y-4">
+										<div className="space-y-1.5">
+											<label className="block text-xs font-bold text-slate-300">
+												ציון רב-תחומי (200–800):
+											</label>
+											<input
+												type="number"
+												min={200}
+												max={800}
+												value={psychGeneral}
+												onChange={(e) =>
+													setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
+												}
+												placeholder="200-800"
+												className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+											/>
+										</div>
+
+										<div className="grid grid-cols-3 gap-2.5">
+											<div className="space-y-1.5">
+												<label className="block text-[11px] font-bold text-slate-300">כמותי:</label>
+												<input
+													type="number"
+													min={50}
+													max={150}
+													value={psychQuant}
+													onChange={(e) =>
+														setPsychQuant(cleanNumberInput(e.target.value, 0, 150) as number)
+													}
+													placeholder="50-150"
+													className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+												/>
+											</div>
+
+											<div className="space-y-1.5">
+												<label className="block text-[11px] font-bold text-slate-300">מילולי:</label>
+												<input
+													type="number"
+													min={50}
+													max={150}
+													value={psychVerbal}
+													onChange={(e) =>
+														setPsychVerbal(cleanNumberInput(e.target.value, 0, 150) as number)
+													}
+													placeholder="50-150"
+													className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+												/>
+											</div>
+
+											<div className="space-y-1.5">
+												<label className="block text-[11px] font-bold text-slate-300">אנגלית:</label>
+												<input
+													type="number"
+													min={50}
+													max={150}
+													value={psychEnglish}
+													onChange={(e) =>
+														setPsychEnglish(cleanNumberInput(e.target.value, 0, 150) as number)
+													}
+													placeholder="50-150"
+													className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+												/>
+											</div>
+										</div>
+
+										{/* English Classification */}
+										{psychResolution.englishClassification.level !== 'unknown' && (
+											<div className="p-3 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center justify-between text-xs">
+												<span className="text-slate-400 font-medium">רמת אנגלית אקדמית:</span>
+												<span
+													className={`font-bold px-2 py-0.5 rounded border ${psychResolution.englishClassification.color}`}
+												>
+													{psychResolution.englishClassification.label}
+												</span>
+											</div>
+										)}
+
+										{/* Calculated Weights info */}
+										<div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+											<div className="flex justify-between">
+												<span>שקלול מאל״ו בדגש כמותי:</span>
+												<span className="font-bold text-indigo-300">
+													{psychResolution.effectiveQuantEmphasis}
+												</span>
+											</div>
+											<div className="flex justify-between">
+												<span>שקלול מאל״ו בדגש מילולי:</span>
+												<span className="font-bold text-purple-300">
+													{psychResolution.effectiveVerbalEmphasis}
+												</span>
+											</div>
 										</div>
 									</div>
-								</div>
+								)}
 							</div>
 
 							{/* Bagrut Input (7 cols) */}
@@ -682,41 +743,6 @@ export default function AdmissionFlowPage() {
 				{/* STEP 4: תכנון מסלולי פעולה ובניית מסלול אישי */}
 				{activeStep === 4 && (
 					<div className="space-y-6">
-						{/* Step 4 Header with Quick Degree Switcher */}
-						{gapAnalyses.length > 0 && (
-							<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
-								<div>
-									<h2 className="text-2xl font-black text-white">שלב 4: תכנון מסלולי פעולה והרשמה</h2>
-									<p className="text-sm text-slate-400">
-										{currentFocusedAnalysis?.status === 'accepted'
-											? 'התקבלת לחוג זה! נתוניך עוברים את הסף ובאפשרותך להירשם ישירות'
-											: 'בחירה מבין 3 מסלולי שיפור מומלצים או הרכבת מסלול אישי מותאם'}
-									</p>
-								</div>
-
-								{gapAnalyses.length > 1 && (
-									<div className="flex items-center gap-2">
-										<span className="text-xs text-slate-400 font-bold hidden sm:inline">החלף תואר:</span>
-										<select
-											value={currentFocusedAnalysis?.target.program.id || ''}
-											onChange={(e) => setFocusedProgramId(e.target.value)}
-											className="bg-slate-900 border border-slate-700 text-xs font-bold text-white rounded-xl px-3 py-2 focus:outline-none"
-										>
-											{gapAnalyses.map((a) => {
-												const statusIcon =
-													a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
-												return (
-													<option key={a.target.program.id} value={a.target.program.id}>
-														{statusIcon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
-													</option>
-												);
-											})}
-										</select>
-									</div>
-								)}
-							</div>
-						)}
-
 						{currentFocusedAnalysis ? (
 							currentFocusedAnalysis.status === 'accepted' ? (
 								<AcceptedRegistrationCard

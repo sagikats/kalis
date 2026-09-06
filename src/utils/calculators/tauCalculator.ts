@@ -228,15 +228,23 @@ export function calculateTauAdmission(input: TauCalculatorInput): TauCalculatorR
      const step1 = cappedBagrut * 9.62 - 349.9;
      const step2 = Math.round(step1 * 100) / 100;
 
-     // ריאלית bonus: +10 when Math 5u (≥55) AND Physics 5u (≥55) — applies to BOTH general and quantitative sekem
+     // Resolve math and physics from either input fields or bagrutSubjects
+     const mathSub = input.bagrutSubjects.find(s => s.name.includes('מתמטיקה'));
+     const effMathUnits = input.mathUnits || (mathSub ? mathSub.units : 0);
+     const effMathGrade = input.mathGrade || (mathSub ? mathSub.grade : 0);
+
+     const physSub = input.bagrutSubjects.find(s => s.name.includes('פיזיקה'));
+     const effPhysUnits = input.physicsUnits !== undefined ? input.physicsUnits : (physSub ? physSub.units : 0);
+     const effPhysGrade = input.physicsGrade !== undefined ? input.physicsGrade : (physSub ? physSub.grade : 0);
+
+     // ריאלית bonus: +10 when Math 5u (≥55) AND Physics 5u (≥55) — applies to quantitative and engineering sekem
      const hasRealitBonus =
-          input.mathUnits === 5 &&
-          input.mathGrade >= 55 &&
-          (input.physicsUnits === 5) &&
-          ((input.physicsGrade || 0) >= 55);
+          effMathUnits === 5 &&
+          effMathGrade >= 55 &&
+          effPhysUnits === 5 &&
+          effPhysGrade >= 55;
 
      // TAU General Fit Score (ציון התאמה רב-תחומי / ללא מור)
-     // Uses psychometricGeneral. No reali bonus applied to the general channel.
      let generalSekem = 0;
      if (psych > 0 && bagrutAverage > 0) {
           const rawGeneral = (step2 + psych) * 0.52 - 43.10;
@@ -244,12 +252,11 @@ export function calculateTauAdmission(input: TauCalculatorInput): TauCalculatorR
      }
 
      // TAU Engineering / Exact Sciences Fit Score (ציון התאמה הנדסה ומדעים מדויקים)
-     // SAME formula as general sekem — only difference is +10 ריאלית bonus.
-     // Confirmed from official TAU calculator: both general and engineering use psychometricGeneral.
-     // The quantitative subscore (50-150) does NOT replace the general score in TAU's formula.
+     // Uses quantitative emphasis psychometric composite if higher, plus +10 ריאלית bonus
      let quantitativeSekem = 0;
      if (psych > 0 && bagrutAverage > 0) {
-          const rawQuant = (step2 + psych) * 0.52 - 43.10;
+          const effPsychForQuant = quant > psych ? quant : psych;
+          const rawQuant = (step2 + effPsychForQuant) * 0.52 - 43.10;
           quantitativeSekem = Math.min(800, Math.max(200, Math.round(rawQuant + (hasRealitBonus ? 10 : 0))));
      }
 

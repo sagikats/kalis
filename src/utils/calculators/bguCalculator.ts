@@ -227,9 +227,11 @@ export function calculateBguEngineeringSekem(
 	psychometricGeneral: number,
 	psychometricQuant: number = psychometricGeneral,
 	physicsGrade: number = 0,
-	physicsUnits: number = 0
+	physicsUnits: number = 0,
+	bagrutAverage: number = 0,
+	scienceBonus: number = 0
 ): number {
-	if (psychometricGeneral <= 0 && psychometricQuant <= 0 && mathGrade <= 0) return 0;
+	if (psychometricGeneral <= 0 && psychometricQuant <= 0 && mathGrade <= 0 && bagrutAverage <= 0) return 0;
 
 	// Calculate Math component (converted to 200-800 scale)
 	let mathBonus = 0;
@@ -242,15 +244,29 @@ export function calculateBguEngineeringSekem(
 	// Scale 100-125 Bagrut to 500-800 equivalent:
 	const mathScaled = mathGrade > 0 ? (mathFinal / 125) * 800 : 0;
 
-	// Physics bonus contribution if 5 units and passing grade
-	let physicsFactor = 0;
-	if (physicsUnits === 5 && physicsGrade >= 70) {
-		physicsFactor = (physicsGrade / 100) * 20; // Up to 20 bonus points on Engineering Sekem
+	// Science factor: 5 units in Physics or other scientific elective (CS, Chemistry, Biology)
+	let finalScienceBonus = scienceBonus;
+	if (finalScienceBonus === 0 && physicsUnits === 5 && physicsGrade >= 70) {
+		finalScienceBonus = (physicsGrade / 100) * 20; // Up to 20 bonus points on Engineering Sekem
 	}
 
 	const quantWeight = psychometricQuant > 0 ? psychometricQuant : psychometricGeneral;
-	const rawSekem =
-		0.45 * quantWeight + 0.25 * psychometricGeneral + 0.3 * mathScaled + physicsFactor;
+
+	// BGU Engineering Sekem balances Quantitative/Psychometric ability with overall Bagrut achievement:
+	// When bagrutAverage is provided, it incorporates the full Bagrut standing (BT = Bagrut * 10 - 330)
+	let rawSekem: number;
+	if (bagrutAverage > 0) {
+		const bt = bagrutAverage * 10 - 330;
+		rawSekem =
+			0.30 * quantWeight +
+			0.20 * psychometricGeneral +
+			0.25 * mathScaled +
+			0.25 * bt +
+			finalScienceBonus;
+	} else {
+		rawSekem =
+			0.45 * quantWeight + 0.25 * psychometricGeneral + 0.30 * mathScaled + finalScienceBonus;
+	}
 
 	if (rawSekem <= 0) return 0;
 	return Math.min(800, Math.max(200, Math.round(rawSekem * 10) / 10));
@@ -263,14 +279,33 @@ export function calculateBguAdmission(input: BguCalculationInput): BguCalculatio
 	const optimal = calculateOptimalBguBagrut(input.bagrutSubjects);
 	const bagrutAvg = optimal.average;
 	const generalSekem = calculateBguGeneralSekem(bagrutAvg, input.psychometricGeneral);
-	const engineeringSekem = calculateBguEngineeringSekem(
+
+	// Detect top 5-unit scientific elective (Physics, Computer Science, Chemistry, Biology)
+	let scienceBonus = 0;
+	const scienceNames = ['פיזיקה', 'מדעי המחשב', 'מדעי התוכנה', 'הנדסת תוכנה', 'כימיה', 'ביולוגיה'];
+	const matchingSciences = input.bagrutSubjects.filter(
+		(s) => scienceNames.some((sn) => s.name.includes(sn)) && s.units === 5 && s.grade >= 70
+	);
+	if (matchingSciences.length > 0) {
+		const topScore = Math.max(...matchingSciences.map((s) => s.grade));
+		scienceBonus = (topScore / 100) * 20;
+	} else if (input.physicsUnits === 5 && (input.physicsGrade || 0) >= 70) {
+		scienceBonus = ((input.physicsGrade || 0) / 100) * 20;
+	}
+
+	const rawEngSekem = calculateBguEngineeringSekem(
 		input.mathGrade,
 		input.mathUnits,
 		input.psychometricGeneral,
 		input.psychometricQuant,
 		input.physicsGrade,
-		input.physicsUnits
+		input.physicsUnits,
+		bagrutAvg,
+		scienceBonus
 	);
+
+	// In BGU, an applicant who qualifies via general Sekem is also admitted
+	const engineeringSekem = Math.max(rawEngSekem, generalSekem);
 
 	const directBagrutEligible = bagrutAvg >= 104;
 

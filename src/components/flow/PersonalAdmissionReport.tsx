@@ -108,6 +108,20 @@ export default function PersonalAdmissionReport({
 						<span className="text-[10px] text-purple-400/80">אודישן / ראיון</span>
 					</div>
 				</div>
+
+				{analyses.length > 0 && analyses.every((a) => a.userSekem === 0) && (
+					<div className="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 flex items-start gap-3">
+						<Sparkles className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
+						<div className="space-y-1">
+							<span className="text-xs font-black text-cyan-300 block">
+								דוח קבלה ראשוני ללא ציון פסיכומטרי
+							</span>
+							<p className="text-[11px] text-slate-300 leading-relaxed">
+								סימנת שטרם נבחנת בפסיכומטרי. עבור חוגים שבהם נדרש פסיכומטרי, בשלב 4 (תכנון מסלולים) המערכת תחשב במדויק מהו ציון הפסיכומטרי הנדרש ממך בבחינה הראשונה כדי לסגור את הקבלה!
+							</p>
+						</div>
+					</div>
+				)}
 			</div>
 
 			{/* 1. Accepted Programs */}

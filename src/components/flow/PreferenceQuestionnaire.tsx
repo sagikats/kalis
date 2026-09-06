@@ -87,7 +87,7 @@ export default function PreferenceQuestionnaire({
 					<div className="space-y-1.5">
 						<div className="flex items-center gap-2">
 							<span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black rounded-lg">
-								שלב 5: התאמת מסלול אישי
+								שלב 4: שאלון התאמת מסלול אישי
 							</span>
 							<span className="text-xs text-slate-400 font-medium">
 								{analysis.target.institutionName}

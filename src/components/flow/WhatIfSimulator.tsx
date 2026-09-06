@@ -68,7 +68,8 @@ export default function WhatIfSimulator({
 	onApplyScenario
 }: WhatIfSimulatorProps) {
 	// Baseline values
-	const initialPsych = userProfile.psychometricGeneral > 0 ? userProfile.psychometricGeneral : 600;
+	const hasOriginalPsych = (userProfile.psychometricGeneral || 0) > 0;
+	const initialPsych = hasOriginalPsych ? userProfile.psychometricGeneral : 600;
 	const threshold = analysis.threshold || 700;
 	const isTechnion = analysis.target.calculatorId === 'technion';
 
@@ -107,6 +108,7 @@ export default function WhatIfSimulator({
 	// Modal State for picking any subject from catalog
 	const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
 	const [selectedExistingToAdd, setSelectedExistingToAdd] = useState<string>('');
+	const [showAllUniversities, setShowAllUniversities] = useState<boolean>(true);
 
 	// Reset state when analysis target changes
 	useEffect(() => {
@@ -133,7 +135,7 @@ export default function WhatIfSimulator({
 		psych: number,
 		isMath5: boolean,
 		mathGradeVal: number
-	): { sekem: number; bagrutAverage: number } => {
+	): { sekem: number; bagrutAverage: number; allInstitutions: InstitutionSekemResult[] } => {
 		const updatedSubjects = subjects.map((s) => {
 			if (s.name.includes('מתמטיקה')) {
 				return {
@@ -165,7 +167,8 @@ export default function WhatIfSimulator({
 			physicsGrade: effectivePhysicsGrade
 		};
 
-		const multiRes = calculateMultiInstitutionSekem(calcInput, [analysis.target.calculatorId]);
+		const allInstitutionIds = ['bgu', 'tau', 'technion', 'huji', 'haifa', 'ariel'];
+		const multiRes = calculateMultiInstitutionSekem(calcInput, allInstitutionIds);
 		const targetInst =
 			multiRes.find((r) => r.institutionId === analysis.target.calculatorId) || multiRes[0] || institutionResult;
 
@@ -178,9 +181,26 @@ export default function WhatIfSimulator({
 
 		return {
 			sekem,
-			bagrutAverage: targetInst.bagrutAverage
+			bagrutAverage: targetInst.bagrutAverage,
+			allInstitutions: multiRes
 		};
 	};
+
+	// Baseline results across ALL 6 institutions
+	const baselineAllInstitutions = useMemo(() => {
+		const originalSubjects = (userProfile.bagrutSubjects || []).map((s) => ({
+			name: s.name,
+			units: s.units,
+			grade: s.grade
+		}));
+		const baseRes = calculateSekemForSubjectList(
+			originalSubjects,
+			initialPsych,
+			userProfile.mathUnits === 5,
+			userProfile.mathGrade || 80
+		);
+		return baseRes.allInstitutions;
+	}, [userProfile, initialPsych]);
 
 	// Active Subjects for current simulation
 	const activeEffectiveSubjects = useMemo(() => {
@@ -256,7 +276,7 @@ export default function WhatIfSimulator({
 		const testRes = calculateSekemForSubjectList(
 			activeEffectiveSubjects,
 			simulatedPsych,
-			false,
+			userProfile.mathUnits === 5,
 			userProfile.mathGrade || 80
 		);
 		return Math.max(0, Math.round((currentSekem - testRes.sekem) * 10) / 10);
@@ -282,12 +302,12 @@ export default function WhatIfSimulator({
 	const totalPsychSekemDelta = useMemo(() => {
 		const resWithOrigPsych = calculateSekemForSubjectList(
 			activeEffectiveSubjects,
-			initialPsych,
+			hasOriginalPsych ? initialPsych : 0,
 			isMathUpgradedTo5,
 			simulatedMathGrade
 		);
 		return Math.max(0, Math.round((currentSekem - resWithOrigPsych.sekem) * 10) / 10);
-	}, [currentSekem, activeEffectiveSubjects, initialPsych, isMathUpgradedTo5, simulatedMathGrade]);
+	}, [currentSekem, activeEffectiveSubjects, initialPsych, hasOriginalPsych, isMathUpgradedTo5, simulatedMathGrade]);
 
 	// Change units of a simulated subject (e.g. 2 -> 5 or 4 -> 5 units)
 	const handleUnitsChange = (id: string, newUnits: number) => {
@@ -586,6 +606,134 @@ export default function WhatIfSimulator({
 			</div>
 
 			{/* ========================================================================= */}
+			{/* MULTI-UNIVERSITY LIVE IMPACT MATRIX */}
+			{/* ========================================================================= */}
+			<div className="bg-slate-950/90 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-4">
+				<div className="flex items-center justify-between flex-wrap gap-2">
+					<div className="flex items-center gap-2.5">
+						<span className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+							<TrendingUp className="h-4 w-4" />
+						</span>
+						<div>
+							<h4 className="text-sm sm:text-base font-black text-white flex items-center gap-2">
+								<span>השפעה רב-אוניברסיטאית בזמן אמת</span>
+								<span className="hidden sm:inline-block text-[11px] font-normal text-slate-400">
+									(כל שינוי בבגרות או בפסיכומטרי מתעדכן מיד בכל 6 האוניברסיטאות)
+								</span>
+							</h4>
+						</div>
+					</div>
+
+					<button
+						type="button"
+						onClick={() => setShowAllUniversities(!showAllUniversities)}
+						className="text-xs font-bold text-slate-400 hover:text-cyan-300 transition flex items-center gap-1"
+					>
+						<span>{showAllUniversities ? 'כווץ תצוגה' : 'הצג את כל 6 האוניברסיטאות'}</span>
+						{showAllUniversities ? (
+							<ChevronUp className="h-4 w-4" />
+						) : (
+							<ChevronDown className="h-4 w-4" />
+						)}
+					</button>
+				</div>
+
+				{showAllUniversities && (
+					<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
+						{simulatedSekemResult.allInstitutions.map((inst) => {
+							const baseInst = baselineAllInstitutions.find(
+								(b) => b.institutionId === inst.institutionId
+							);
+							const isTarget = inst.institutionId === analysis.target.calculatorId;
+							const isTech = inst.institutionId === 'technion';
+							const isEng = analysis.relevantSekemType === 'engineering';
+
+							const currentScore =
+								isEng && inst.engineeringSekem ? inst.engineeringSekem : inst.generalSekem;
+							const baseScore =
+								isEng && baseInst?.engineeringSekem
+									? baseInst.engineeringSekem
+									: baseInst?.generalSekem || 0;
+							const delta = Math.round((currentScore - baseScore) * 10) / 10;
+							const bagrutDelta =
+								Math.round((inst.bagrutAverage - (baseInst?.bagrutAverage || 0)) * 100) / 100;
+
+							return (
+								<div
+									key={inst.institutionId}
+									className={`p-3.5 rounded-2xl border transition flex flex-col justify-between relative overflow-hidden ${
+										isTarget
+											? 'bg-cyan-950/40 border-cyan-500/50 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/30'
+											: 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
+									}`}
+								>
+									{isTarget && (
+										<div className="absolute top-1.5 left-1.5">
+											<span className="px-1.5 py-0.5 bg-cyan-500 text-slate-950 text-[9px] font-black rounded">
+												נבחר
+											</span>
+										</div>
+									)}
+
+									<div className="space-y-1.5">
+										<div className="flex items-center gap-1.5">
+											<span
+												className={`w-6 h-6 rounded-lg bg-gradient-to-br ${inst.badgeColor} flex items-center justify-center text-[10px] font-black text-white shrink-0 shadow-sm`}
+											>
+												{inst.logoText}
+											</span>
+											<span
+												className="text-xs font-bold text-slate-200 line-clamp-1"
+												title={inst.institutionName}
+											>
+												{inst.institutionName.replace('אוניברסיטת ', '')}
+											</span>
+										</div>
+
+										<div className="pt-1 text-left dir-ltr">
+											<div className="text-lg font-black text-white">
+												{currentScore.toFixed(isTech ? 2 : 1)}
+											</div>
+											<div className="flex items-center gap-1 text-[11px]">
+												{delta > 0 ? (
+													<span className="text-emerald-400 font-bold flex items-center">
+														<TrendingUp className="h-3 w-3 mr-0.5 inline" />
+														+{delta.toFixed(isTech ? 2 : 1)}
+													</span>
+												) : (
+													<span className="text-slate-500">ללא שינוי</span>
+												)}
+												<span className="text-slate-600 text-[10px]">
+													(בסיס: {baseScore.toFixed(isTech ? 1 : 0)})
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div className="mt-2.5 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 space-y-0.5">
+										<div className="flex justify-between items-center">
+											<span>בגרות:</span>
+											<span className="font-bold text-slate-200 dir-ltr">
+												{inst.bagrutAverage.toFixed(2)}
+												{bagrutDelta > 0 && (
+													<span className="text-emerald-400 text-[9px] ml-1">
+														(+{bagrutDelta.toFixed(1)})
+													</span>
+												)}
+											</span>
+										</div>
+										<div className="text-[9px] text-slate-500 truncate">
+											{isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי'}
+										</div>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				)}
+			</div>
+
+			{/* ========================================================================= */}
 			{/* CONTROLS: PSYCHOMETRIC & BAGRUT LAB */}
 			{/* ========================================================================= */}
 			<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -595,11 +743,18 @@ export default function WhatIfSimulator({
 						<div className="flex items-center justify-between border-b border-slate-800 pb-3">
 							<div className="flex items-center gap-2">
 								<Brain className="h-5 w-5 text-cyan-400" />
-								<span className="text-sm font-black text-white">ציון פסיכומטרי</span>
+								<div>
+									<span className="text-sm font-black text-white block">ציון פסיכומטרי</span>
+									{!hasOriginalPsych && (
+										<span className="text-[10px] text-amber-400 font-bold block">
+											(טרם נבחנת — סימולציית יעד ראשון)
+										</span>
+									)}
+								</div>
 							</div>
 							<div className="text-left dir-ltr">
 								<span className="text-xl font-black text-cyan-300">{simulatedPsych}</span>
-								{simulatedPsych > initialPsych && (
+								{hasOriginalPsych && simulatedPsych > initialPsych && (
 									<span className="text-xs text-emerald-400 font-bold ml-1.5">
 										(+{simulatedPsych - initialPsych})
 									</span>
@@ -618,7 +773,7 @@ export default function WhatIfSimulator({
 								className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
 							/>
 							<div className="flex items-center justify-between text-[11px] text-slate-500 font-medium">
-								<span>קיים: {initialPsych}</span>
+								<span>{hasOriginalPsych ? `קיים: ${initialPsych}` : 'התחלה: 450'}</span>
 								<span className="text-cyan-400 font-bold">תקרה מומלצת: {realisticCeiling}</span>
 								<span>800</span>
 							</div>
@@ -654,28 +809,28 @@ export default function WhatIfSimulator({
 							</span>
 						</div>
 
-						{isMathUpgradedTo5 && (
-							<div className="space-y-2 pt-2 border-t border-slate-800/80">
-								<div className="flex items-center justify-between text-xs text-slate-300">
-									<span>ציון צפוי ב-5 יח״ל:</span>
-									<span className="font-black text-white dir-ltr">{simulatedMathGrade}</span>
-								</div>
-								<input
-									type="range"
-									min={70}
-									max={100}
-									step={1}
-									value={simulatedMathGrade}
-									onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
-									className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-								/>
-								{/* Math Marginal Impact Badge */}
+						<div className="space-y-2 pt-2 border-t border-slate-800/80">
+							<div className="flex items-center justify-between text-xs text-slate-300">
+								<span>ציון מתמטיקה ({isMathUpgradedTo5 ? '5 יח״ל' : `${userProfile.mathUnits || 4} יח״ל`}):</span>
+								<span className="font-black text-white dir-ltr">{simulatedMathGrade}</span>
+							</div>
+							<input
+								type="range"
+								min={60}
+								max={100}
+								step={1}
+								value={simulatedMathGrade}
+								onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
+								className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+							/>
+							{/* Math Marginal Impact Badge */}
+							{mathUpgradeImpact > 0 && (
 								<div className="flex items-center justify-between text-[11px] bg-emerald-950/40 border border-emerald-500/30 rounded-xl px-2.5 py-1 text-emerald-300 font-bold">
-									<span>השפעת שדרוג מתמטיקה על הסכם:</span>
+									<span>השפעת שיפור מתמטיקה על הסכם:</span>
 									<span className="font-black dir-ltr">+{mathUpgradeImpact} נק׳</span>
 								</div>
-							</div>
-						)}
+							)}
+						</div>
 					</div>
 				</div>
 

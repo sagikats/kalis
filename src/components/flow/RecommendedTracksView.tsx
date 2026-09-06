@@ -67,39 +67,35 @@ export default function RecommendedTracksView({
 	};
 
 	const selectedTrack = tracks.find((t) => t.id === selectedTrackId) || tracks[0];
+	const isTechnion = analysis.target.calculatorId === 'technion';
 
 	return (
 		<div className="space-y-8 dir-rtl text-right">
 			{/* Top Header Card */}
-			<div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+			<div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden space-y-6">
 				<div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
 
-				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-					<div className="space-y-2">
-						<div className="flex items-center gap-2 flex-wrap">
-							<span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black rounded-lg">
-								שלב 4: תכנון מסלולי פעולה ובניית מסלול אישי
-							</span>
-							<span className="text-xs font-bold text-slate-400">
-								{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}
-							</span>
-						</div>
-						<h2 className="text-2xl sm:text-3xl font-black text-white">
-							תוכנית פעולה לקבלה לתואר המבוקש
-						</h2>
-						<p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-							בחר באחד מ-3 המסלולים הריאליים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.
-						</p>
+				{/* Top Meta & Action Toolbar Row */}
+				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+					<div className="flex items-center gap-2 flex-wrap">
+						<span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black rounded-lg flex items-center gap-1.5">
+							<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+							<span>שלב 4: תכנון מסלולי פעולה ובניית מסלול אישי</span>
+						</span>
+						<span className="px-3 py-1 bg-slate-950/80 border border-slate-800 text-xs font-bold text-slate-300 rounded-lg flex items-center gap-1.5">
+							<GraduationCap className="h-3.5 w-3.5 text-slate-400" />
+							<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+						</span>
 					</div>
 
-					<div className="flex items-center gap-3 shrink-0 flex-wrap">
+					<div className="flex items-center gap-2.5 flex-wrap">
 						{allAnalyses && allAnalyses.length > 1 && (
 							<div className="flex items-center gap-2 bg-slate-950/80 border border-slate-700 px-3 py-1.5 rounded-xl">
 								<span className="text-xs font-bold text-slate-400">החלף תואר:</span>
 								<select
 									value={analysis.target.program.id}
 									onChange={(e) => onSelectProgram?.(e.target.value)}
-									className="bg-transparent text-xs font-bold text-cyan-300 focus:outline-none"
+									className="bg-transparent text-xs font-bold text-cyan-300 focus:outline-none cursor-pointer"
 								>
 									{allAnalyses.map((a) => {
 										const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
@@ -115,32 +111,70 @@ export default function RecommendedTracksView({
 
 						<button
 							onClick={onEditPreferences}
-							className="px-4 py-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-2 border border-slate-700"
+							className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
 						>
-							<Sparkles className="h-4 w-4 text-cyan-400" />
+							<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
 							<span>ערוך שאלון העדפות</span>
 						</button>
 						<button
 							onClick={handlePrint}
-							className="px-4 py-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-2 border border-slate-700"
+							className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
 							title="הדפס או שמור כ-PDF"
 						>
-							<Printer className="h-4 w-4 text-slate-400" />
-							<span>שמור / הדפס</span>
+							<Printer className="h-3.5 w-3.5 text-slate-400" />
+							<span>הדפס</span>
 						</button>
 						<button
 							onClick={onBackToReport}
-							className="px-4 py-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-2 border border-slate-700"
+							className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
 						>
-							<ArrowRight className="h-4 w-4" />
+							<ArrowRight className="h-3.5 w-3.5" />
 							<span>חזור לדוח הקבלה</span>
 						</button>
 					</div>
 				</div>
 
+				{/* Main Hero Content & Gap Summary Widget */}
+				<div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+					<div className="flex-1 min-w-0 space-y-2">
+						<h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-snug">
+							תוכנית פעולה לקבלה לתואר המבוקש
+						</h2>
+						<p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+							בחר באחד מ-{tracks.length} המסלולים הריאליים המותאמים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.
+						</p>
+					</div>
+
+					{/* Target & Gap Metrics Box */}
+					<div className="flex items-center gap-4 bg-slate-950/80 border border-slate-800/90 rounded-2xl p-4 shrink-0 shadow-lg">
+						<div className="text-center px-2 min-w-[75px]">
+							<span className="text-[11px] font-bold text-slate-400 block">סכם קיים</span>
+							<span className="text-xl font-black text-white dir-ltr">{analysis.userSekem}</span>
+							<span className="text-[10px] text-slate-500 block truncate max-w-[110px]">{analysis.relevantSekemLabel}</span>
+						</div>
+						<div className="h-10 w-px bg-slate-800" />
+						<div className="text-center px-2 min-w-[75px]">
+							<span className="text-[11px] font-bold text-slate-400 block">סף יעד</span>
+							<span className="text-xl font-black text-amber-300 dir-ltr">{analysis.threshold || '—'}</span>
+							<span className="text-[10px] text-slate-500 block truncate max-w-[110px]">סף קבלה רשמי</span>
+						</div>
+						{analysis.threshold && (
+							<>
+								<div className="h-10 w-px bg-slate-800" />
+								<div className="text-center px-3 py-1 bg-amber-500/10 rounded-xl border border-amber-500/20">
+									<span className="text-[10px] font-black text-amber-400 block uppercase tracking-wider">פער לסגירה</span>
+									<span className="text-lg font-black text-amber-300 dir-ltr">
+										{analysis.gap > 0 ? `+${analysis.gap}` : analysis.gap}
+									</span>
+								</div>
+							</>
+						)}
+					</div>
+				</div>
+
 				{/* Prerequisites Warning if applicable */}
 				{analysis.missingPrerequisites && analysis.missingPrerequisites.length > 0 && (
-					<div className="mt-4 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
+					<div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
 						<AlertTriangle className="h-4 w-4 shrink-0 text-amber-400" />
 						<span>
 							<strong>תנאי סף נדרשים לתואר זה:</strong> {analysis.missingPrerequisites.map((p) => p.name).join(' | ')}. מומלץ לשלב את השלמתם במסלול העבודה שלך.
@@ -149,7 +183,7 @@ export default function RecommendedTracksView({
 				)}
 
 				{/* Realism Badge Guarantee */}
-				<div className="mt-4 pt-4 border-t border-slate-800/80 flex items-center gap-3 text-xs text-slate-300 bg-slate-950/40 rounded-2xl p-3 border border-slate-800">
+				<div className="pt-4 border-t border-slate-800/80 flex items-center gap-3 text-xs text-slate-300 bg-slate-950/40 rounded-2xl p-3 border border-slate-800">
 					<ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
 					<div>
 						<strong className="text-white font-black">אלגוריתם מבוסס מודל ריאליות קפדני:</strong>{' '}
@@ -159,9 +193,9 @@ export default function RecommendedTracksView({
 			</div>
 
 			{/* ========================================================================= */}
-			{/* 3 TRACKS CARDS DISPLAY */}
+			{/* TRACKS CARDS DISPLAY */}
 			{/* ========================================================================= */}
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+			<div className={`grid grid-cols-1 ${tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
 				{tracks.map((track) => {
 					const isSelected = track.id === selectedTrackId;
 					const isBalanced = track.id === 'track-balanced';
@@ -221,6 +255,26 @@ export default function RecommendedTracksView({
 
 								{/* Metric Target Boxes */}
 								<div className="space-y-2 pt-2 border-t border-slate-800">
+									{/* Target Sekem if exists */}
+									{track.targetSekem !== undefined && (
+										<div className="bg-emerald-950/40 border border-emerald-500/30 rounded-2xl p-3 flex items-center justify-between shadow-sm">
+											<div className="flex items-center gap-2">
+												<Sparkles className="h-4 w-4 text-emerald-400" />
+												<span className="text-xs font-bold text-emerald-300">סכם מחושב מובטח:</span>
+											</div>
+											<div className="text-left dir-ltr">
+												<span className="text-sm font-black text-emerald-400">
+													{track.targetSekem.toFixed(isTechnion ? 2 : 1)}
+												</span>
+												{analysis.threshold && (
+													<span className="text-[10px] text-emerald-400/80 ml-1.5 font-medium">
+														(סף: {analysis.threshold})
+													</span>
+												)}
+											</div>
+										</div>
+									)}
+
 									{/* Psychometric target if exists */}
 									{track.targetPsychometric && (
 										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
@@ -229,15 +283,25 @@ export default function RecommendedTracksView({
 												<span className="text-xs font-bold text-slate-300">יעד פסיכומטרי:</span>
 											</div>
 											<div className="text-left dir-ltr">
-												<span className="text-xs text-slate-500 line-through mr-2">
-													{track.currentPsychometric}
-												</span>
-												<span className="text-sm font-black text-cyan-400">
-													{track.targetPsychometric}
-												</span>
-												{track.targetPsychometric > (track.currentPsychometric || 0) && (
-													<span className="text-[10px] text-emerald-400 ml-1 font-bold">
-														(+{track.targetPsychometric - (track.currentPsychometric || 0)})
+												{track.targetPsychometric > (track.currentPsychometric || 0) ? (
+													<>
+														{(track.currentPsychometric || 0) > 0 && (
+															<span className="text-xs text-slate-500 line-through mr-2">
+																{track.currentPsychometric}
+															</span>
+														)}
+														<span className="text-sm font-black text-cyan-400">
+															{track.targetPsychometric}
+														</span>
+														{(track.currentPsychometric || 0) > 0 && (
+															<span className="text-[10px] text-emerald-400 ml-1 font-bold">
+																(+{track.targetPsychometric - (track.currentPsychometric || 0)})
+															</span>
+														)}
+													</>
+												) : (
+													<span className="text-xs text-slate-400 font-bold">
+														{track.targetPsychometric} (שומר על הקיים)
 													</span>
 												)}
 											</div>
@@ -245,7 +309,7 @@ export default function RecommendedTracksView({
 									)}
 
 									{/* Bagrut target if exists */}
-									{track.targetBagrutAverage && track.targetBagrutAverage > (track.currentBagrutAverage || 0) && (
+									{track.targetBagrutAverage && track.targetBagrutAverage > (track.currentBagrutAverage || 0) ? (
 										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
 											<div className="flex items-center gap-2">
 												<BookOpen className="h-4 w-4 text-indigo-400" />
@@ -263,27 +327,112 @@ export default function RecommendedTracksView({
 												</span>
 											</div>
 										</div>
-									)}
-
-									{/* Subject improvement details */}
-									{track.recommendedSubjectImprovements.length > 0 && (
-										<div className="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3 space-y-1.5">
-											<span className="text-[11px] font-bold text-slate-400 block">
-												מקצועות מומלצים לשיפור:
-											</span>
-											{track.recommendedSubjectImprovements.map((s, idx) => (
-												<div key={idx} className="text-xs flex items-center justify-between gap-2">
-													<span className="text-slate-200 font-medium truncate">
-														{s.subjectName} ({s.targetUnits} יח״ל):
-													</span>
-													<span className="text-cyan-300 font-bold shrink-0 dir-ltr">
-														{s.currentGrade > 0 ? `${s.currentGrade} ➔ ` : ''}
-														{s.targetGrade}
-													</span>
-												</div>
-											))}
+									) : (
+										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+											<div className="flex items-center gap-2">
+												<BookOpen className="h-4 w-4 text-slate-500" />
+												<span className="text-xs font-bold text-slate-400">ממוצע בגרות:</span>
+											</div>
+											<div className="text-left dir-ltr">
+												<span className="text-xs font-bold text-slate-400">
+													{track.currentBagrutAverage?.toFixed(1)} (ללא צורך בשיפור)
+												</span>
+											</div>
 										</div>
 									)}
+
+									{/* Subject and psychometric improvement details */}
+									{(() => {
+										const needsPsychImprovement = Boolean(
+											track.targetPsychometric && (
+												(track.currentPsychometric || 0) === 0
+													? track.targetPsychometric > 0
+													: track.targetPsychometric > (track.currentPsychometric || 0)
+											)
+										);
+										const hasSubjectImprovements = Boolean(
+											track.recommendedSubjectImprovements && track.recommendedSubjectImprovements.length > 0
+										);
+
+										if (!needsPsychImprovement && !hasSubjectImprovements) return null;
+
+										return (
+											<div className="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3 space-y-2">
+												<div className="flex items-center justify-between">
+													<span className="text-[11px] font-bold text-slate-400 block">
+														{needsPsychImprovement && hasSubjectImprovements
+															? 'מקצועות ומרכיבים מומלצים לשיפור:'
+															: needsPsychImprovement
+															? 'מרכיב מומלץ לשיפור:'
+															: 'מקצועות מומלצים לשיפור:'}
+													</span>
+													<span className="text-[10px] text-cyan-400/90 font-bold">
+														{[
+															needsPsychImprovement ? 'פסיכומטרי' : null,
+															hasSubjectImprovements ? `${track.recommendedSubjectImprovements.length} בגרויות` : null
+														].filter(Boolean).join(' + ')}
+													</span>
+												</div>
+
+												<div className="space-y-1.5">
+													{/* Psychometric improvement row */}
+													{needsPsychImprovement && (
+														<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/25">
+															<div className="flex items-center gap-1.5 truncate">
+																<Brain className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
+																<span className="text-cyan-200 font-bold truncate">
+																	בחינה פסיכומטרית:
+																</span>
+															</div>
+															<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
+																{(track.currentPsychometric || 0) > 0 ? (
+																	<>
+																		<span className="text-slate-400 font-normal">{track.currentPsychometric}</span>
+																		<span className="text-slate-500 font-normal">➔</span>
+																		<span className="text-white font-black">{track.targetPsychometric}</span>
+																		<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
+																			(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
+																		</span>
+																	</>
+																) : (
+																	<>
+																		<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
+																		<span className="text-white font-black">{track.targetPsychometric}</span>
+																	</>
+																)}
+															</span>
+														</div>
+													)}
+
+													{/* Bagrut subjects improvement rows */}
+													{track.recommendedSubjectImprovements.map((s, idx) => (
+														<div key={idx} className="text-xs flex items-center justify-between gap-2 px-1">
+															<span className="text-slate-200 font-medium truncate">
+																{s.subjectName} ({s.targetUnits} יח״ל):
+															</span>
+															<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
+																{s.currentGrade > 0 ? (
+																	<>
+																		<span className="text-slate-400 font-normal">{s.currentGrade}</span>
+																		<span className="text-slate-500 font-normal">➔</span>
+																		<span className="text-white font-black">{s.targetGrade}</span>
+																		<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
+																			(+{s.targetGrade - s.currentGrade})
+																		</span>
+																	</>
+																) : (
+																	<>
+																		<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
+																		<span className="text-white font-black">{s.targetGrade}</span>
+																	</>
+																)}
+															</span>
+														</div>
+													))}
+												</div>
+											</div>
+										);
+									})()}
 								</div>
 
 								{/* Feasibility pill */}
@@ -364,6 +513,47 @@ export default function RecommendedTracksView({
 						</div>
 					</div>
 				</div>
+
+				{/* Roadmap components summary bar */}
+				{(() => {
+					const needsPsych = Boolean(
+						selectedTrack.targetPsychometric && (
+							(selectedTrack.currentPsychometric || 0) === 0
+								? selectedTrack.targetPsychometric > 0
+								: selectedTrack.targetPsychometric > (selectedTrack.currentPsychometric || 0)
+						)
+					);
+					const hasSubs = Boolean(
+						selectedTrack.recommendedSubjectImprovements && selectedTrack.recommendedSubjectImprovements.length > 0
+					);
+					if (!needsPsych && !hasSubs) return null;
+
+					return (
+						<div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center justify-between flex-wrap gap-2 text-xs">
+							<span className="font-bold text-slate-400">
+								יעדי שיפור במסלול זה:
+							</span>
+							<div className="flex items-center gap-2 flex-wrap">
+								{needsPsych && (
+									<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
+										<Brain className="h-3.5 w-3.5 text-cyan-400" />
+										<span>
+											פסיכומטרי: {(selectedTrack.currentPsychometric || 0) > 0 ? `${selectedTrack.currentPsychometric} ➔ ` : 'יעד '}{selectedTrack.targetPsychometric}
+										</span>
+									</span>
+								)}
+								{selectedTrack.recommendedSubjectImprovements.map((s, idx) => (
+									<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 font-bold">
+										<BookOpen className="h-3.5 w-3.5 text-indigo-400" />
+										<span>
+											{s.subjectName} ({s.targetUnits} יח״ל): {s.currentGrade > 0 ? `${s.currentGrade} ➔ ` : ''}{s.targetGrade}
+										</span>
+									</span>
+								))}
+							</div>
+						</div>
+					);
+				})()}
 
 				{/* Steps Timeline */}
 				<div className="space-y-4">

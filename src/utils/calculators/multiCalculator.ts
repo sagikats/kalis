@@ -94,16 +94,35 @@ export function calculateMultiInstitutionSekem(
 	const quant = psychResolution.effectiveQuantEmphasis;
 	const verbal = psychResolution.effectiveVerbalEmphasis;
 
+	// Auto-resolve math and physics from bagrutSubjects if present
+	let resolvedMathGrade = input.mathGrade || 0;
+	let resolvedMathUnits = input.mathUnits || 0;
+	let resolvedPhysicsGrade = input.physicsGrade || 0;
+	let resolvedPhysicsUnits = input.physicsUnits || 0;
+
+	if (input.bagrutSubjects && input.bagrutSubjects.length > 0) {
+		const mathSub = input.bagrutSubjects.find((s) => s.name.includes('מתמטיקה'));
+		if (mathSub) {
+			resolvedMathGrade = mathSub.grade;
+			resolvedMathUnits = mathSub.units;
+		}
+		const physSub = input.bagrutSubjects.find((s) => s.name.includes('פיזיקה'));
+		if (physSub) {
+			resolvedPhysicsGrade = physSub.grade;
+			resolvedPhysicsUnits = physSub.units;
+		}
+	}
+
 	const commonCalcInput = {
 		bagrutSubjects: input.bagrutSubjects,
 		psychometricGeneral: psych,
 		psychometricQuant: quant,
 		psychometricVerbal: verbal,
 		psychometricEnglish: input.psychometricEnglish,
-		mathGrade: input.mathGrade,
-		mathUnits: input.mathUnits,
-		physicsGrade: input.physicsGrade,
-		physicsUnits: input.physicsUnits
+		mathGrade: resolvedMathGrade,
+		mathUnits: resolvedMathUnits,
+		physicsGrade: resolvedPhysicsGrade,
+		physicsUnits: resolvedPhysicsUnits
 	};
 
 	// 1. TAU

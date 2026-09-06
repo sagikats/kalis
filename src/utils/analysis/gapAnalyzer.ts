@@ -228,28 +228,56 @@ export function analyzeProgramGap(
 		const missingPoints = Math.abs(gap);
 
 		// 1. Psychometric improvement lever
-		let psychMultiplier = 2.0; // standard 50% weight (e.g. BGU, HUJI, Haifa, Ariel)
-		if (target.calculatorId === 'tau') {
-			psychMultiplier = sekemType === 'management' ? 1.43 : 1.92;
-		} else if (isTechnion) {
-			psychMultiplier = 13.33; // 0.075 coefficient on 0-100 scale
+		const currentPsych = profile.psychometricGeneral || 0;
+		const bagrutAvg = institutionRes.bagrutAverage || 100;
+		let targetPsych = 0;
+		let psychNeeded = 0;
+
+		if (currentPsych > 0) {
+			let psychMultiplier = 2.0; // standard 50% weight (e.g. BGU, HUJI, Haifa, Ariel)
+			if (target.calculatorId === 'tau') {
+				psychMultiplier = sekemType === 'management' ? 1.43 : 1.92;
+			} else if (isTechnion) {
+				psychMultiplier = 13.33; // 0.075 coefficient on 0-100 scale
+			}
+
+			psychNeeded = Math.ceil(missingPoints * psychMultiplier);
+			targetPsych = Math.min(800, currentPsych + psychNeeded);
+		} else {
+			// Candidate has NOT taken psychometric yet: calculate the exact score needed from scratch
+			if (target.calculatorId === 'technion') {
+				const d = Math.min(119, bagrutAvg);
+				targetPsych = Math.min(800, Math.max(200, Math.ceil((threshold + 19 - 0.5 * d) / 0.075)));
+			} else if (target.calculatorId === 'tau') {
+				const cappedBagrut = Math.min(117, bagrutAvg);
+				const step2 = Math.round((cappedBagrut * 9.62 - 349.9) * 100) / 100;
+				const neededFactor = sekemType === 'management' ? 0.7 : 0.52;
+				const intercept = sekemType === 'management' ? (0.3 * step2 - 11.5) : (0.52 * step2 - 43.10);
+				targetPsych = Math.min(800, Math.max(200, Math.ceil((threshold - intercept) / neededFactor)));
+			} else if (target.calculatorId === 'ariel') {
+				targetPsych = Math.min(800, Math.max(200, Math.ceil(2 * threshold - bagrutAvg * 6.666)));
+			} else {
+				// BGU, HUJI, Haifa standard
+				const bt = bagrutAvg * 10 - 330;
+				targetPsych = Math.min(800, Math.max(200, Math.ceil(2 * threshold - bt)));
+			}
+			psychNeeded = targetPsych;
 		}
 
-		const psychNeeded = Math.ceil(missingPoints * psychMultiplier);
-		const currentPsych = profile.psychometricGeneral;
-		const targetPsych = Math.min(800, currentPsych + psychNeeded);
-
 		if (targetPsych <= 800) {
+			const isFirstTime = currentPsych === 0;
 			improvementOptions.push({
 				id: 'opt-psych',
 				type: 'psychometric',
-				title: 'שיפור ציון פסיכומטרי',
-				description: `העלאת הפסיכומטרי ב-${psychNeeded} נקודות (מ-${currentPsych} ל-${targetPsych}) תסגור את פער הסכם באופן ישיר.`,
-				currentValue: currentPsych,
+				title: isFirstTime ? 'השגת ציון פסיכומטרי ראשון' : 'שיפור ציון פסיכומטרי',
+				description: isFirstTime
+					? `השגת ציון פסיכומטרי של ${targetPsych} בבחינה הראשונה תסגור את פער הסכם ותביא לקבלה לתואר.`
+					: `העלאת הפסיכומטרי ב-${psychNeeded} נקודות (מ-${currentPsych} ל-${targetPsych}) תסגור את פער הסכם באופן ישיר.`,
+				currentValue: isFirstTime ? 'טרם נבחנת' : currentPsych,
 				targetValue: targetPsych,
-				gapAmount: psychNeeded,
-				effortLevel: psychNeeded <= 30 ? 'easy' : psychNeeded <= 60 ? 'medium' : 'hard',
-				estimatedWeeks: psychNeeded <= 30 ? 6 : psychNeeded <= 60 ? 10 : 14,
+				gapAmount: isFirstTime ? targetPsych : psychNeeded,
+				effortLevel: targetPsych <= 620 ? 'easy' : targetPsych <= 700 ? 'medium' : 'hard',
+				estimatedWeeks: isFirstTime ? 12 : psychNeeded <= 30 ? 6 : psychNeeded <= 60 ? 10 : 14,
 				potentialSekemGain: missingPoints
 			});
 		}
