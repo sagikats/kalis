@@ -13,13 +13,13 @@ import { POST as tracksPOST } from '../../../app/api/tracks/generate/route';
 import { dbRepository } from '../../db';
 
 describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
-	it('GET /api/health: Returns system status and 7 institutions', async () => {
+	it('GET /api/health: Returns system status and 8 institutions', async () => {
 		const res = await healthGET();
 		assert.equal(res.status, 200);
 
 		const data = await res.json();
 		assert.equal(data.status, 'healthy');
-		assert.equal(data.institutionsCount, 7);
+		assert.equal(data.institutionsCount, 8);
 		assert.ok(data.modules.includes('calculators'));
 	});
 
@@ -48,7 +48,7 @@ describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
 
 		const data = await res.json();
 		assert.equal(data.success, true);
-		assert.equal(data.results.length, 7);
+		assert.equal(data.results.length, 8);
 
 		const technionRes = data.results.find((r: any) => r.institutionId === 'technion');
 		assert.ok(technionRes);

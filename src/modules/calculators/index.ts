@@ -11,6 +11,7 @@ import { evaluateBgu } from './bgu';
 import { evaluateHaifa } from './haifa';
 import { evaluateAriel } from './ariel';
 import { evaluateBarIlan } from './barIlan';
+import { evaluateReichman } from './reichman';
 
 export * from './types';
 export * from './technion';
@@ -20,6 +21,7 @@ export * from './bgu';
 export * from './haifa';
 export * from './ariel';
 export * from './barIlan';
+export * from './reichman';
 
 export const SUPPORTED_INSTITUTIONS = [
 	{ id: 'technion', name: 'הטכניון - מכון טכנולוגי לישראל' },
@@ -28,7 +30,8 @@ export const SUPPORTED_INSTITUTIONS = [
 	{ id: 'bgu', name: 'אוניברסיטת בן-גוריון בנגב' },
 	{ id: 'haifa', name: 'אוניברסיטת חיפה' },
 	{ id: 'ariel', name: 'אוניברסיטת אריאל בשומרון' },
-	{ id: 'bar_ilan', name: 'אוניברסיטת בר-אילן' }
+	{ id: 'bar_ilan', name: 'אוניברסיטת בר-אילן' },
+	{ id: 'reichman', name: 'אוניברסיטת רייכמן (הבינתחומי)' }
 ] as const;
 
 export type SupportedInstitutionId = (typeof SUPPORTED_INSTITUTIONS)[number]['id'];
@@ -98,6 +101,11 @@ export function isProgramEligibleForDirectBagrut(
 		return bagrutAverage >= 102.0;
 	}
 
+	// Reichman University: Direct admission in eligible programs for Bagrut >= 100.0
+	if (institutionId === 'reichman') {
+		return bagrutAverage >= 100.0;
+	}
+
 	return false;
 }
 
@@ -123,6 +131,8 @@ export function calculateInstitution(
 			return evaluateAriel(input);
 		case 'bar_ilan':
 			return evaluateBarIlan(input);
+		case 'reichman':
+			return evaluateReichman(input);
 		default:
 			throw new Error(`Unsupported institution ID: ${institutionId}`);
 	}
@@ -141,6 +151,7 @@ export function calculateAllInstitutions(
 		evaluateBgu(input),
 		evaluateHaifa(input),
 		evaluateAriel(input),
-		evaluateBarIlan(input)
+		evaluateBarIlan(input),
+		evaluateReichman(input)
 	];
 }

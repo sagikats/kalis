@@ -5,6 +5,7 @@ import { calculateHujiAdmission } from './hujiCalculator';
 import { calculateHaifaAdmission } from './haifaCalculator';
 import { calculateArielAdmission } from './arielCalculator';
 import { resolvePsychometricScores } from './psychometricHelper';
+import { evaluateBarIlan, evaluateReichman } from '@/modules/calculators';
 
 export interface UnifiedCalculationInput {
 	bagrutSubjects: SubjectInput[];
@@ -143,6 +144,28 @@ export function calculateMultiInstitutionSekem(
 	// 6. Ariel
 	const arielRes = calculateArielAdmission(commonCalcInput);
 
+	// 7. Bar-Ilan
+	const biuRes = evaluateBarIlan({
+		bagrutSubjects: commonCalcInput.bagrutSubjects,
+		psychometricGeneral: commonCalcInput.psychometricGeneral,
+		psychometricQuant: commonCalcInput.psychometricQuant,
+		mathGrade: commonCalcInput.mathGrade,
+		mathUnits: commonCalcInput.mathUnits,
+		physicsGrade: commonCalcInput.physicsGrade,
+		physicsUnits: commonCalcInput.physicsUnits
+	});
+
+	// 8. Reichman
+	const reichmanRes = evaluateReichman({
+		bagrutSubjects: commonCalcInput.bagrutSubjects,
+		psychometricGeneral: commonCalcInput.psychometricGeneral,
+		psychometricQuant: commonCalcInput.psychometricQuant,
+		mathGrade: commonCalcInput.mathGrade,
+		mathUnits: commonCalcInput.mathUnits,
+		physicsGrade: commonCalcInput.physicsGrade,
+		physicsUnits: commonCalcInput.physicsUnits
+	});
+
 	const allInstitutions: Record<string, InstitutionSekemResult> = {
 		bgu: {
 			institutionId: 'bgu',
@@ -241,6 +264,38 @@ export function calculateMultiInstitutionSekem(
 				haifaRes.droppedSubjects.length > 0
 					? `ממוצע אופטימלי (הושמטו: ${haifaRes.droppedSubjects.join(', ')}), סכם תקן רשמי`
 					: 'סכם לפי נוסחת תקן רשמית של אוניברסיטת חיפה (BT = 10*בגרות - 330)'
+		},
+		bar_ilan: {
+			institutionId: 'bar_ilan',
+			institutionName: 'אוניברסיטת בר-אילן',
+			logoText: 'BIU',
+			badgeColor: 'from-amber-600 to-yellow-500',
+			bagrutAverage: biuRes.bagrutAverage,
+			generalSekem: biuRes.generalSekem,
+			engineeringSekem: biuRes.engineeringSekem,
+			directBagrutEligible: biuRes.directBagrutEligible,
+			droppedSubjects: biuRes.droppedSubjects,
+			optimalUnits: biuRes.optimalUnits,
+			notes:
+				biuRes.droppedSubjects && biuRes.droppedSubjects.length > 0
+					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}), סכם קבלה משולב רשמי`
+					: 'סכם קבלה משולב לפי נוסחאות בר-אילן'
+		},
+		reichman: {
+			institutionId: 'reichman',
+			institutionName: 'אוניברסיטת רייכמן (הבינתחומי)',
+			logoText: 'RUNI',
+			badgeColor: 'from-blue-700 to-indigo-800',
+			bagrutAverage: reichmanRes.bagrutAverage,
+			generalSekem: reichmanRes.generalSekem,
+			engineeringSekem: reichmanRes.engineeringSekem,
+			directBagrutEligible: reichmanRes.directBagrutEligible,
+			droppedSubjects: reichmanRes.droppedSubjects,
+			optimalUnits: reichmanRes.optimalUnits,
+			notes:
+				reichmanRes.droppedSubjects && reichmanRes.droppedSubjects.length > 0
+					? `ממוצע מיטבי (הושמטו: ${reichmanRes.droppedSubjects.join(', ')}), ציון קבלה משולב רשמי`
+					: 'ציון קבלה משולב לפי נוסחאות אוניברסיטת רייכמן'
 		}
 	};
 

@@ -40,7 +40,9 @@ export const AVAILABLE_INSTITUTIONS: InstitutionOption[] = [
      { id: 'huji', name: 'העברית', fullName: 'האוניברסיטה העברית בירושלים', badge: 'HUJI' },
      { id: 'bgu', name: 'בן-גוריון', fullName: 'אוניברסיטת בן-גוריון בנגב', badge: 'ב"ג' },
      { id: 'haifa', name: 'חיפה', fullName: 'אוניברסיטת חיפה', badge: 'UOH' },
-     { id: 'ariel', name: 'אריאל', fullName: 'אוניברסיטת אריאל בשומרון', badge: 'AU' }
+     { id: 'ariel', name: 'אריאל', fullName: 'אוניברסיטת אריאל בשומרון', badge: 'AU' },
+     { id: 'bar_ilan', name: 'בר-אילן', fullName: 'אוניברסיטת בר-אילן', badge: 'BIU' },
+     { id: 'reichman', name: 'רייכמן', fullName: 'אוניברסיטת רייכמן (הבינתחומי)', badge: 'RUNI' }
 ];
 
 export const ALL_INSTITUTION_IDS = AVAILABLE_INSTITUTIONS.map(i => i.id);

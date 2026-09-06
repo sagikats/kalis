@@ -19,7 +19,7 @@ import { UserAcademicProfileRecord } from '../schema';
 describe('Subagent 1: Architecture & Database Layer', () => {
 	it('Repository seeds all universities and indexes programs', () => {
 		const institutions = dbRepository.getAllInstitutions();
-		assert.equal(institutions.length, 7);
+		assert.equal(institutions.length, 8);
 
 		const instIds = institutions.map((i) => i.id);
 		assert.ok(instIds.includes('technion'));
@@ -29,6 +29,14 @@ describe('Subagent 1: Architecture & Database Layer', () => {
 		assert.ok(instIds.includes('haifa'));
 		assert.ok(instIds.includes('ariel'));
 		assert.ok(instIds.includes('bar_ilan'));
+		assert.ok(instIds.includes('reichman'));
+
+		const reichmanPrograms = dbRepository.getProgramsByInstitution('reichman');
+		assert.ok(reichmanPrograms.length > 0);
+		reichmanPrograms.forEach((p) => {
+			assert.equal(p.institutionId, 'reichman');
+			assert.ok(p.minSekemThreshold > 0);
+		});
 
 		const technionPrograms = dbRepository.getProgramsByInstitution('technion');
 		assert.ok(technionPrograms.length > 0);

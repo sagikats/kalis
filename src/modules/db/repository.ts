@@ -57,6 +57,7 @@ export class KalisDatabaseRepository {
 		if (lower.includes('חיפה')) return 'haifa';
 		if (lower.includes('אריאל')) return 'ariel';
 		if (lower.includes('בר אילן') || lower.includes('בר-אילן')) return 'bar_ilan';
+		if (lower.includes('רייכמן') || lower.includes('בינתחומי')) return 'reichman';
 		return 'other';
 	}
 
@@ -128,6 +129,14 @@ export class KalisDatabaseRepository {
 				name: 'אוניברסיטת בר-אילן',
 				calculatorId: 'bar_ilan',
 				websiteUrl: 'https://www.biu.ac.il/',
+				isUniversity: true,
+				defaultMinBagrutUnits: 20
+			},
+			{
+				id: 'reichman',
+				name: 'אוניברסיטת רייכמן (הבינתחומי הרצליה)',
+				calculatorId: 'reichman',
+				websiteUrl: 'https://www.runi.ac.il/',
 				isUniversity: true,
 				defaultMinBagrutUnits: 20
 			}

@@ -19,7 +19,9 @@ import {
 	calculateArielSekem,
 	calculateBarIlanGeneralSekem,
 	calculateBarIlanEngineeringSekem,
-	getBarIlanBonus
+	getBarIlanBonus,
+	calculateReichmanGeneralSekem,
+	getReichmanBonus
 } from '../index';
 
 import { CalculatorSubject } from '../types';
@@ -121,6 +123,23 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 		assert.equal(isProgramEligibleForDirectBagrut('bar_ilan', 'הנדסת מחשבים', 108.0), false);
 	});
 
+	it('Reichman: Bonuses, Sekem and Direct Bagrut', () => {
+		assert.equal(getReichmanBonus({ name: 'מתמטיקה', units: 5, grade: 90 }), 35);
+		assert.equal(getReichmanBonus({ name: 'מתמטיקה', units: 4, grade: 90 }), 12.5);
+		assert.equal(getReichmanBonus({ name: 'מדעי המחשב', units: 5, grade: 90 }), 25);
+		assert.equal(getReichmanBonus({ name: 'ערבית', units: 4, grade: 80 }), 10);
+
+		// General Sekem: BT = 100 * 10 - 330 = 670; Sekem = 0.5 * 600 + 0.5 * 670 = 635
+		const runiSekem = calculateReichmanGeneralSekem(100.0, 600);
+		assert.equal(runiSekem, 635);
+
+		// Direct Bagrut in Reichman: >= 100.0 for Law, Business, Communications
+		assert.equal(isProgramEligibleForDirectBagrut('reichman', 'משפטים', 101.0), true);
+		assert.equal(isProgramEligibleForDirectBagrut('reichman', 'מנהל עסקים', 100.0), true);
+		assert.equal(isProgramEligibleForDirectBagrut('reichman', 'משפטים', 99.0), false);
+		assert.equal(isProgramEligibleForDirectBagrut('reichman', 'מדעי המחשב', 108.0), false);
+	});
+
 	it('All Institutions Engine: Runs simultaneously without errors', () => {
 		const results = calculateAllInstitutions({
 			bagrutSubjects: standardBagrutProfile,
@@ -128,9 +147,18 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 			psychometricQuant: 135
 		});
 
-		assert.equal(results.length, 7);
+		assert.equal(results.length, 8);
 		const instIds = results.map((r) => r.institutionId);
-		assert.deepEqual(instIds, ['technion', 'tau', 'huji', 'bgu', 'haifa', 'ariel', 'bar_ilan']);
+		assert.deepEqual(instIds, [
+			'technion',
+			'tau',
+			'huji',
+			'bgu',
+			'haifa',
+			'ariel',
+			'bar_ilan',
+			'reichman'
+		]);
 		results.forEach((r) => {
 			assert.ok(r.bagrutAverage > 100);
 			assert.ok(r.generalSekem > 0);

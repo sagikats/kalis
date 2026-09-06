@@ -22,8 +22,10 @@ const MAJOR_INSTITUTION_CHIPS = [
 	{ id: 'inst-48', name: 'הטכניון', calcId: 'technion', badge: 'IIT', color: 'from-blue-600 to-teal-500' },
 	{ id: 'inst-3', name: 'בן-גוריון', calcId: 'bgu', badge: 'BGU', color: 'from-cyan-500 to-blue-600' },
 	{ id: 'inst-1', name: 'העברית', calcId: 'huji', badge: 'HUJI', color: 'from-amber-500 to-orange-600' },
+	{ id: 'inst-4', name: 'בר-אילן', calcId: 'bar_ilan', badge: 'BIU', color: 'from-amber-600 to-yellow-500' },
 	{ id: 'inst-5', name: 'חיפה', calcId: 'haifa', badge: 'UOH', color: 'from-sky-500 to-indigo-500' },
-	{ id: 'inst-2', name: 'אריאל', calcId: 'ariel', badge: 'AU', color: 'from-emerald-500 to-green-600' }
+	{ id: 'inst-2', name: 'אריאל', calcId: 'ariel', badge: 'AU', color: 'from-emerald-500 to-green-600' },
+	{ id: 'inst-38', name: 'רייכמן', calcId: 'reichman', badge: 'RUNI', color: 'from-blue-700 to-indigo-800' }
 ];
 
 const DISCIPLINE_FILTERS = [
@@ -40,8 +42,10 @@ const CALC_ID_MAP: Record<string, string> = {
 	'inst-48': 'technion',
 	'inst-3': 'bgu',
 	'inst-1': 'huji',
+	'inst-4': 'bar_ilan',
 	'inst-5': 'haifa',
-	'inst-2': 'ariel'
+	'inst-2': 'ariel',
+	'inst-38': 'reichman'
 };
 
 interface DegreeSearchSelectorProps {

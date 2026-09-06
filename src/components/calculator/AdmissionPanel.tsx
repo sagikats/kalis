@@ -11,6 +11,8 @@ const INST_ID_MAP: Record<string, string> = {
   technion: 'inst-48',
   ariel: 'inst-2',
   haifa: 'inst-5',
+  bar_ilan: 'inst-4',
+  reichman: 'inst-38'
 };
 
 interface Program {
