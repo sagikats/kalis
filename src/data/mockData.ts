@@ -4,7 +4,11 @@ export const UNIVERSITIES: University[] = [
      'טכניון',
      'אוניברסיטת תל אביב',
      'האוניברסיטה העברית',
-     'אוניברסיטת בן-גוריון'
+     'אוניברסיטת בן-גוריון',
+     'אוניברסיטת חיפה',
+     'אוניברסיטת אריאל בשומרון',
+     'אוניברסיטת בר-אילן',
+     'אוניברסיטת רייכמן'
 ];
 
 export const DEGREES: Degree[] = [
@@ -48,6 +52,38 @@ export const DEGREE_THRESHOLDS: Record<University, Record<Degree, { sekem: numbe
           'משפטים': { sekem: 630, reqMath: 4, estHours: 80 },
           'פסיכולוגיה': { sekem: 640, reqMath: 4, estHours: 85 },
           'כלכלה': { sekem: 645, reqMath: 4, estHours: 90 }
+     },
+     'אוניברסיטת חיפה': {
+          'מדעי המחשב': { sekem: 660, reqMath: 5, estHours: 125 },
+          'הנדסת חשמל': { sekem: 640, reqMath: 5, estHours: 115 },
+          'רפואה': { sekem: 710, reqMath: 5, estHours: 190 },
+          'משפטים': { sekem: 620, reqMath: 4, estHours: 80 },
+          'פסיכולוגיה': { sekem: 630, reqMath: 4, estHours: 85 },
+          'כלכלה': { sekem: 635, reqMath: 4, estHours: 85 }
+     },
+     'אוניברסיטת אריאל בשומרון': {
+          'מדעי המחשב': { sekem: 650, reqMath: 5, estHours: 120 },
+          'הנדסת חשמל': { sekem: 630, reqMath: 5, estHours: 110 },
+          'רפואה': { sekem: 715, reqMath: 5, estHours: 195 },
+          'משפטים': { sekem: 615, reqMath: 4, estHours: 75 },
+          'פסיכולוגיה': { sekem: 625, reqMath: 4, estHours: 80 },
+          'כלכלה': { sekem: 630, reqMath: 4, estHours: 80 }
+     },
+     'אוניברסיטת בר-אילן': {
+          'מדעי המחשב': { sekem: 685, reqMath: 5, estHours: 135 },
+          'הנדסת חשמל': { sekem: 665, reqMath: 5, estHours: 125 },
+          'רפואה': { sekem: 730, reqMath: 5, estHours: 200 },
+          'משפטים': { sekem: 640, reqMath: 4, estHours: 85 },
+          'פסיכולוגיה': { sekem: 645, reqMath: 4, estHours: 90 },
+          'כלכלה': { sekem: 650, reqMath: 4, estHours: 90 }
+     },
+     'אוניברסיטת רייכמן': {
+          'מדעי המחשב': { sekem: 660, reqMath: 5, estHours: 125 },
+          'הנדסת חשמל': { sekem: 640, reqMath: 5, estHours: 115 },
+          'רפואה': { sekem: 710, reqMath: 5, estHours: 180 },
+          'משפטים': { sekem: 620, reqMath: 4, estHours: 80 },
+          'פסיכולוגיה': { sekem: 630, reqMath: 4, estHours: 85 },
+          'כלכלה': { sekem: 610, reqMath: 4, estHours: 80 }
      }
 };
 

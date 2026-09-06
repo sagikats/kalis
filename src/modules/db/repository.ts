@@ -182,16 +182,24 @@ export class KalisDatabaseRepository {
 					field.includes('מתמטיקה') ||
 					field.includes('רפואה');
 
-				// Direct Bagrut Eligibility: non-STEM degrees at HUJI/TAU (105+), BGU (104+), Haifa/Ariel (100+)
+				// Direct Bagrut Eligibility: non-STEM degrees at HUJI/TAU (105+), BGU (104+), Bar-Ilan (102+), Haifa/Ariel/Reichman (100+)
 				const directEligible =
 					!isStem &&
 					instId !== 'technion' &&
-					(instId === 'huji' || instId === 'tau' || instId === 'bgu' || instId === 'haifa' || instId === 'ariel');
+					(instId === 'huji' ||
+						instId === 'tau' ||
+						instId === 'bgu' ||
+						instId === 'haifa' ||
+						instId === 'ariel' ||
+						instId === 'bar_ilan' ||
+						instId === 'reichman');
 
 				const directThreshold = directEligible
 					? instId === 'bgu'
 						? 104.0
-						: instId === 'haifa' || instId === 'ariel'
+						: instId === 'bar_ilan'
+						? 102.0
+						: instId === 'haifa' || instId === 'ariel' || instId === 'reichman'
 						? 100.0
 						: 105.0
 					: null;

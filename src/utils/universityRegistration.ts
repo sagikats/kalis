@@ -78,12 +78,22 @@ export function getUniversityRegistrationInfo(
 	}
 
 	// 7. Bar-Ilan University
-	if (lower.includes('בר אילן') || lower.includes('בר-אילן')) {
+	if (calculatorId === 'bar_ilan' || lower.includes('בר אילן') || lower.includes('בר-אילן')) {
 		return {
 			institutionName: 'אוניברסיטת בר-אילן',
 			registrationUrl: 'https://www.biu.ac.il/admissions/bachelor',
 			portalName: 'מרכז שירות וגיוס מועמדים - אוניברסיטת בר-אילן',
-			tips: 'ההרשמה המקוונת כוללת בדיקה אוטומטית של זכאות לשילובים בין-תחומיים.'
+			tips: 'ההרשמה המקוונת כוללת בדיקה אוטומטית של זכאות לשילובים בין-תחומיים ולימודי יהדות.'
+		};
+	}
+
+	// 8. Reichman University
+	if (calculatorId === 'reichman' || lower.includes('רייכמן') || lower.includes('בינתחומי')) {
+		return {
+			institutionName: 'אוניברסיטת רייכמן',
+			registrationUrl: 'https://www.runi.ac.il/admissions/undergraduate/',
+			portalName: 'פורטל ההרשמה והמועמדים - אוניברסיטת רייכמן',
+			tips: 'ההרשמה לרייכמן כוללת בדיקת זכאות מיידית למסלול קבלה ישיר על בסיס בגרות ומלגות הצטיינות.'
 		};
 	}
 

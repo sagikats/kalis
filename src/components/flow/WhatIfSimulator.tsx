@@ -167,7 +167,7 @@ export default function WhatIfSimulator({
 			physicsGrade: effectivePhysicsGrade
 		};
 
-		const allInstitutionIds = ['bgu', 'tau', 'technion', 'huji', 'haifa', 'ariel'];
+		const allInstitutionIds = ['bgu', 'tau', 'technion', 'huji', 'haifa', 'ariel', 'bar_ilan', 'reichman'];
 		const multiRes = calculateMultiInstitutionSekem(calcInput, allInstitutionIds);
 		const targetInst =
 			multiRes.find((r) => r.institutionId === analysis.target.calculatorId) || multiRes[0] || institutionResult;

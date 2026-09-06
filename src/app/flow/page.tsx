@@ -190,7 +190,7 @@ export default function AdmissionFlowPage() {
 				psychometricGeneral: isPsych ? Number(psychGeneral) || 0 : 0,
 				psychometricQuant: isPsych ? Number(psychQuant) || 0 : 0
 			},
-			['bgu', 'tau', 'huji', 'technion', 'ariel', 'haifa']
+			['bgu', 'tau', 'huji', 'technion', 'ariel', 'haifa', 'bar_ilan', 'reichman']
 		);
 
 		const map: Record<string, InstitutionSekemResult> = {};
