@@ -33,6 +33,7 @@ interface RecommendedTracksViewProps {
 	tracks: RecommendedTrack[];
 	userProfile?: UserAcademicProfile;
 	institutionResult?: InstitutionSekemResult;
+	defaultTab?: 'recommended' | 'custom_builder';
 	onSelectProgram?: (programId: string) => void;
 	onEditPreferences: () => void;
 	onBackToReport: () => void;
@@ -45,11 +46,13 @@ export default function RecommendedTracksView({
 	tracks,
 	userProfile,
 	institutionResult,
+	defaultTab = 'recommended',
 	onSelectProgram,
 	onEditPreferences,
 	onBackToReport,
 	onApplyCustomScenario
 }: RecommendedTracksViewProps) {
+	const [activeTab, setActiveTab] = useState<'recommended' | 'custom_builder'>(defaultTab);
 	const [selectedTrackId, setSelectedTrackId] = useState<string>(tracks[1]?.id || tracks[0]?.id || '');
 	const [isPrintMode, setIsPrintMode] = useState(false);
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
@@ -193,9 +196,55 @@ export default function RecommendedTracksView({
 			</div>
 
 			{/* ========================================================================= */}
-			{/* TRACKS CARDS DISPLAY */}
+			{/* VIEW SWITCHER TABS: RECOMMENDED TRACKS vs PERSONAL BUILDER */}
 			{/* ========================================================================= */}
-			<div className={`grid grid-cols-1 ${tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
+			<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-slate-950/80 p-2 rounded-2xl border border-slate-800 shadow-xl">
+				<div className="flex items-center gap-2 p-1 bg-slate-900/90 rounded-xl border border-slate-800">
+					<button
+						type="button"
+						onClick={() => setActiveTab('recommended')}
+						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all ${
+							activeTab === 'recommended'
+								? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20'
+								: 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+						}`}
+					>
+						<Sparkles className="h-4 w-4 text-cyan-300" />
+						<span>ריכוז המסלולים המומלץ ({tracks.length})</span>
+					</button>
+
+					<button
+						type="button"
+						onClick={() => setActiveTab('custom_builder')}
+						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all ${
+							activeTab === 'custom_builder'
+								? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/20'
+								: 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+						}`}
+					>
+						<Sliders className="h-4 w-4 text-indigo-300" />
+						<span>מסלול בנייה אישי 🎛️ (What-If Lab)</span>
+						{customScenarioApplied && (
+							<span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+						)}
+					</button>
+				</div>
+
+				<div className="text-xs text-slate-400 px-3 flex items-center gap-2">
+					{activeTab === 'recommended' ? (
+						<span>💡 3 מסלולים מותאמים אישית לבחירתך</span>
+					) : (
+						<span>🔬 מעבדת סימולציה עצמאית בזמן אמת</span>
+					)}
+				</div>
+			</div>
+
+			{/* ========================================================================= */}
+			{/* TAB 1: RECOMMENDED TRACKS SUMMARY */}
+			{/* ========================================================================= */}
+			{activeTab === 'recommended' && (
+				<div className="space-y-8">
+					<div className={`grid grid-cols-1 ${tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
 				{tracks.map((track) => {
 					const isSelected = track.id === selectedTrackId;
 					const isBalanced = track.id === 'track-balanced';
@@ -606,69 +655,129 @@ export default function RecommendedTracksView({
 				</div>
 			</div>
 
-			{/* ========================================================================= */}
-			{/* CUSTOM TRACK BUILDER (חלונית בניית מסלול אישי) */}
-			{/* ========================================================================= */}
-			{userProfile && institutionResult && (
-				<div className="space-y-4 pt-6 border-t-2 border-slate-800">
-					<div className="bg-slate-900/90 border-2 border-indigo-500/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
-						{/* Ambient Glow */}
-						<div className="absolute top-0 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-
-						{/* Section Header */}
-						<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
-							<div className="space-y-1.5">
-								<div className="flex items-center gap-2.5">
-									<div className="w-9 h-9 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
-										<Sliders className="h-5 w-5" />
-									</div>
-									<h3 className="text-xl sm:text-2xl font-black text-white">
-										חלונית בניית מסלול אישי 🎛️
-									</h3>
-								</div>
-								<p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-									רוצה להרכיב מסלול משלך? בחר תואר, שחק עם סליידר הפסיכומטרי, הוסף או שפר מקצועות בגרות וצפה במידת ההשפעה המדויקת של כל שינוי על הסכם ועל סיכויי הקבלה.
+				{/* Transition CTA to Personal Builder */}
+				{userProfile && institutionResult && (
+					<div className="bg-gradient-to-r from-indigo-950/40 via-slate-900 to-indigo-950/40 border border-indigo-500/30 rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+						<div className="flex items-center gap-3.5">
+							<div className="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 shrink-0">
+								<Sliders className="h-5 w-5" />
+							</div>
+							<div>
+								<h5 className="text-sm sm:text-base font-bold text-white">
+									מעדיף להרכיב שילוב ציונים ומקצועות משלך?
+								</h5>
+								<p className="text-xs text-slate-400">
+									פתח את חלונית הבנייה האישית, שחק עם סליידרים ובדוק את ההשפעה השולית של כל מקצוע על סיכויי הקבלה.
 								</p>
 							</div>
+						</div>
+						<button
+							type="button"
+							onClick={() => setActiveTab('custom_builder')}
+							className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs rounded-xl transition flex items-center gap-2 shrink-0 shadow-lg shadow-indigo-600/20"
+						>
+							<span>עבור לחלונית בניית מסלול אישי</span>
+							<ChevronLeft className="h-4 w-4" />
+						</button>
+					</div>
+				)}
+			</div>
+			)}
 
-							{/* Degree Selector in Custom Builder */}
-							{allAnalyses && allAnalyses.length > 1 && (
-								<div className="flex items-center gap-2 shrink-0 bg-slate-950 p-2 rounded-2xl border border-slate-800">
-									<span className="text-xs font-bold text-slate-400 mr-1">תואר לבדיקה:</span>
-									<select
-										value={analysis.target.program.id}
-										onChange={(e) => onSelectProgram?.(e.target.value)}
-										className="bg-slate-900 border border-slate-700 text-xs font-bold text-cyan-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+			{/* ========================================================================= */}
+			{/* TAB 2: PERSONAL CUSTOM TRACK BUILDER (חלונית בניית מסלול אישי נפרדת) */}
+			{/* ========================================================================= */}
+			{activeTab === 'custom_builder' && (
+				<div className="space-y-6">
+					{userProfile && institutionResult ? (
+						<div className="bg-slate-900/90 border-2 border-indigo-500/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+							{/* Ambient Glow */}
+							<div className="absolute top-0 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
+
+							{/* Section Header */}
+							<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+								<div className="space-y-1.5">
+									<div className="flex items-center gap-2.5">
+										<div className="w-9 h-9 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
+											<Sliders className="h-5 w-5" />
+										</div>
+										<h3 className="text-xl sm:text-2xl font-black text-white">
+											חלונית בניית מסלול אישי 🎛️
+										</h3>
+									</div>
+									<p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+										רוצה להרכיב מסלול משלך? בחר תואר, שחק עם סליידר הפסיכומטרי, הוסף או שפר מקצועות בגרות וצפה במידת ההשפעה המדויקת של כל שינוי על הסכם ועל סיכויי הקבלה.
+									</p>
+								</div>
+
+								<div className="flex items-center gap-3 flex-wrap">
+									{/* Return to Recommended Tracks Button */}
+									<button
+										type="button"
+										onClick={() => setActiveTab('recommended')}
+										className="px-4 py-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700 shadow-sm"
 									>
-										{allAnalyses.map((a) => {
-											const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
-											return (
-												<option key={a.target.program.id} value={a.target.program.id}>
-													{icon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
-												</option>
-											);
-										})}
-									</select>
+										<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+										<span>חזור ל-3 המסלולים המומלצים</span>
+									</button>
+
+									{/* Degree Selector in Custom Builder */}
+									{allAnalyses && allAnalyses.length > 1 && (
+										<div className="flex items-center gap-2 shrink-0 bg-slate-950 p-2 rounded-2xl border border-slate-800">
+											<span className="text-xs font-bold text-slate-400 mr-1">תואר לבדיקה:</span>
+											<select
+												value={analysis.target.program.id}
+												onChange={(e) => onSelectProgram?.(e.target.value)}
+												className="bg-slate-900 border border-slate-700 text-xs font-bold text-cyan-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+											>
+												{allAnalyses.map((a) => {
+													const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
+													return (
+														<option key={a.target.program.id} value={a.target.program.id}>
+															{icon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
+														</option>
+													);
+												})}
+											</select>
+										</div>
+									)}
+								</div>
+							</div>
+
+							{/* Notification when custom scenario is applied */}
+							{customScenarioApplied && (
+								<div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center justify-between gap-2 flex-wrap">
+									<div className="flex items-center gap-2">
+										<CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+										<span>התרחיש האישי שלך הוחל בהצלחה על תוכנית העבודה שלך!</span>
+									</div>
+									<button
+										type="button"
+										onClick={() => setActiveTab('recommended')}
+										className="text-xs text-white underline hover:text-emerald-200 font-bold"
+									>
+										צפה במסלולים המומלצים ➔
+									</button>
 								</div>
 							)}
+
+							{/* Interactive What-If Simulator */}
+							<WhatIfSimulator
+								analysis={analysis}
+								userProfile={userProfile}
+								institutionResult={institutionResult}
+								onApplyScenario={handleApplyScenario}
+							/>
 						</div>
-
-						{/* Notification when custom scenario is applied */}
-						{customScenarioApplied && (
-							<div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2">
-								<CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
-								<span>התרחיש האישי שלך הוחל בהצלחה על תוכנית העבודה שלך!</span>
-							</div>
-						)}
-
-						{/* Interactive What-If Simulator */}
-						<WhatIfSimulator
-							analysis={analysis}
-							userProfile={userProfile}
-							institutionResult={institutionResult}
-							onApplyScenario={handleApplyScenario}
-						/>
-					</div>
+					) : (
+						<div className="text-center py-16 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 space-y-4">
+							<Sliders className="h-12 w-12 text-slate-500 mx-auto" />
+							<h3 className="text-lg font-bold text-white">חסרים נתוני פרופיל לסימולציה</h3>
+							<p className="text-sm text-slate-400">
+								נא להזין ציוני בגרות ופסיכומטרי בשלב 1 כדי שתוכל לבצע סימולציות מותאמות אישית.
+							</p>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
