@@ -91,11 +91,12 @@ npm run build
 ---
 
 ## 📍 5. Current Working State (Last Updated)
-- **Active Branch:** `feature/sonnet-ui-polish` (synced with remote).
+- **Active Branch:** `main` (synced with remote `origin/main`).
 - **Recent Milestones:**
   - Bar-Ilan & Reichman added across all layers (DB, Calculators, UI, Simulator).
   - `MultiUniversityAdmissionGrid.tsx` built with dark-mode glassmorphism and live deltas.
   - Step 4 split into 2 dedicated tabs: Recommended Tracks Summary vs. Personal What-If Builder.
+  - Multi-machine agent handoff protocol and single source of truth instructions defined in `AGENTS.md`, `CLAUDE.md`, `.cursorrules`.
 
 ---
 
