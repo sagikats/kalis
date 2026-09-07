@@ -10,6 +10,7 @@ See comprehensive agent instructions and project guidelines in [AGENTS.md](./AGE
 - **Typecheck**: `npx tsc --noEmit`
 - **Build**: `npm run build`
 - **UI Language**: Hebrew, RTL (`dir="rtl"`)
+- **Wrap-up Trigger**: When user says "סיימנו להיום", follow Section 6 in AGENTS.md (Build + Tests + Update AGENTS.md + Git push).
 - **Key Modules**:
   - `src/modules/calculators/` - Pure math calculators for 8 universities
   - `src/modules/db/` - Academic data and repository

@@ -97,3 +97,31 @@ npm run build
   - `MultiUniversityAdmissionGrid.tsx` built with dark-mode glassmorphism and live deltas.
   - Step 4 split into 2 dedicated tabs: Recommended Tracks Summary vs. Personal What-If Builder.
 
+---
+
+## 🛑 6. Mandatory Wrap-Up Protocol: When User Says "סיימנו להיום" / "Done for today"
+Whenever the user says **"סיימנו להיום"**, **"סיימנו"**, **"עוצרים כאן"**, or **"Done for today"**, you MUST automatically and sequentially execute this 4-step wrap-up protocol:
+
+1. **Step 1: Automated Quality Gate**
+   - Run: `npx tsc --noEmit`
+   - Run: `npx tsx --test src/modules/*/__tests__/*.test.ts` (all 26 tests must pass)
+   - Run: `npm run build`
+   - If any errors exist, fix them immediately before proceeding.
+
+2. **Step 2: Update Handoff State in `AGENTS.md`**
+   - Update Section 5 above with:
+     - The current date/time.
+     - Summary of changes completed in the session.
+     - Files modified or created.
+     - Clear bullet points for **"Next Steps / הצעד הבא"** so the next agent knows exactly where to resume.
+
+3. **Step 3: Git Synchronization**
+   - Stage all relevant changes: `git add <modified_files>`
+   - Commit with a descriptive conventional commit message: `git commit -m "feat/fix/chore: ..."`
+   - Push to the remote branch: `git push`
+
+4. **Step 4: Final Summary Response to User**
+   - Confirm tests and build passed cleanly.
+   - Confirm branch and commit hash pushed to remote.
+   - Present a concise 2-3 bullet summary of what was achieved and what will be tackled in the next session.
+

@@ -9,3 +9,4 @@ Always read and strictly adhere to `AGENTS.md`.
 - UI Text: High-level Hebrew with `dir="rtl"`
 - Pure Calculators: Never import DB or UI into `src/modules/calculators/`
 - Verification: Always ensure `npx tsc --noEmit` and `npm run build` succeed before finishing.
+- Session Wrap-up: When the user says "סיימנו להיום", strictly follow Section 6 in `AGENTS.md` (Build, Test, Update AGENTS.md, Git Push).
