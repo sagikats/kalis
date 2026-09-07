@@ -25,6 +25,7 @@ export interface SubjectLeverCandidate {
 	isPhysics?: boolean;
 	utilityScore: number;
 	leverType: 'psychometric' | 'bagrut_core' | 'bagrut_elective';
+	session?: 'winter' | 'spring_psych' | 'summer';
 }
 
 export interface OptimizationProblem {
@@ -40,4 +41,6 @@ export interface OptimizationSolution {
 	tracks: ActionTrackRecord[];
 	availableLevers: SubjectLeverCandidate[];
 	hasDirectBagrutOption: boolean;
+	mechinaAvailable: boolean;
+	mechinaReason?: string;
 }

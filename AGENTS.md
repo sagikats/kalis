@@ -96,48 +96,30 @@ npm run build
 - **Active Branch:** `audit/optimizer-8-cases-and-improvements`
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **36/36 tests passing** (including all 8 institutional audit cases + Case 9 anchor test).
-  - Background processes (`git push`, `npm run dev`) terminated cleanly to avoid double-send stalls.
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **37/37 tests passing** across all modules.
+  - Background processes: None running.
 
-### 📋 Subagent Task Breakdown for Next Session:
+### 🏆 Implemented Milestones in this Phase:
 
-#### 🏛️ Subagent 1: Architecture & DB Layer (`src/modules/db/`)
-1. **Exam Session Metadata:** Map subjects to Israeli Ministry of Education sessions:
-   - Winter (`winter`): Mandatory core subjects (2u Tanach, History, Literature, Civics, Hebrew) + 4/5u Math & English.
-   - Summer (`summer`): All subjects including 5u elective expansions (Geography, Physics, Biology, CS, etc.).
-2. **Schema Enhancements:**
-   - Add `mechinaAvailable: boolean` and `mechinaReason?: string` to `OptimizationSolution` schema in `schema.ts` / `types.ts`.
-   - Add timeline stage metadata (`session: 'winter' | 'spring_psych' | 'summer'`) to recommended lever records.
+1. **Psychometric Reachability Model (`reachabilityModel.ts`):**
+   - Implemented `computePsychReachability` factoring in weekly availability hours, first-time examinee status, confidence level, and percentile density penalties (caps at +20 pts for scores $\ge 700$ and +35 pts for scores $\ge 660$).
+   - Feasibility classifier (`very_high`, `high`, `moderate`, `challenging`) with realistic bounds (`isRealistic`).
 
-#### 🧠 Subagent 2: Optimization, Scheduling & Algorithms (`src/modules/optimizer/`)
-1. **[NEW] `reachabilityModel.ts`:**
-   - Real-world psychometric ceiling (`personalCeiling`): Base jump by weekly hours + first-timer bonus.
-   - Percentile penalties: Hard cap on delta when current score $\ge 660$ (max +35 pts) and $\ge 700$ (max +20 pts).
-   - Feasibility classifier (`very_high`, `high`, `moderate`, `challenging`, `unrealistic`). Do not generate tracks requiring $>1.3 \times \text{maxImprovement}$.
-2. **[NEW] `calendarScheduler.ts`:**
-   - Sequential station planning: Winter Quick-Win (e.g. Civics 2u $80 \to 93$) $\to$ Spring Psychometric $\to$ Summer 5u Expansion.
-   - Concurrency limits: Prevent overloaded combinations (e.g. Summer Psychometric + 3 Summer 5u Bagruts).
-   - "Safety Cushion" logic: Proactive core-subject winter improvements reducing required psychometric targets.
-3. **[MODIFY] `trackEngine.ts`:**
-   - Implement **Track A (`track-maximize-exam`)**: single-lever utility maximizer (A1: Psychometric only, A2: Single Bagrut, A3: Direct Bagrut).
-   - Implement **Track B (`track-risk-spread`)**: 2-3 vectors with calendar phasing. Flexible (can be multi-bagrut without psychometric if realistic).
-   - Extract **Mechina Track** to separate on-demand helper `generateMechinaTrack()` returned only when requested.
-4. **[MODIFY] `optimizer_audit_8cases.test.ts`:**
-   - Update track IDs to `track-maximize-exam` and `track-risk-spread`.
-   - Add tests for reachability ceiling and calendar scheduling.
+2. **Exam Calendar & Timeline Phasing (`calendarScheduler.ts`):**
+   - Israeli Ministry of Education sessions mapped: Winter (Core 2u mandatory subjects + 4/5u Math & English) vs Summer (5u elective expansions).
+   - Milestone generator creates sequential milestones: Winter Quick-Wins/Safety Cushions $\to$ Spring Psychometric $\to$ Summer 5u Expansions.
 
-#### 📐 Subagent 3: Pure Institution Calculators (`src/modules/calculators/`)
-1. Maintain 100% mathematical purity (no DB or UI dependencies).
-2. Validate that 2u core improvements (e.g. Civics/Tanach) combined with 5u drops continue to adhere strictly to the 20-unit minimum floor and institutional weighting rules.
+3. **Track Redesign in `trackEngine.ts`:**
+   - **Track A (`track-maximize-exam` / `track-direct-bagrut`)**: "מסלול מצוינות / מינימום בחינות" — targets 90–95+ in Bagrut and ambitious psychometric up to `personalCeiling`. Selects single high-yield lever or minimal exam combination.
+   - **Track B (`track-risk-spread`)**: "מסלול סולידי / ביטחון גבוה" — targets moderate 82–90 grades, lower risk, higher attainment probability, spread across seasons without single-point-of-failure risk.
+   - **Mechina Track**: Opt-In only! Excluded from default tracks array; `mechinaAvailable: boolean` flag signals UI to show the option, and `generateMechinaTrack()` runs on demand.
 
-#### 🖥️ Subagent 4: APIs & UI Flow (`src/app/`, `src/components/`)
-1. **API Endpoints:**
-   - Update `POST /api/tracks/generate` to return the new Track A & B structure with `mechinaAvailable`.
-   - Create `POST /api/tracks/mechina` endpoint for on-demand mechina track retrieval.
-2. **UI Step 4 (`RecommendedTracksView.tsx`):**
-   - Update cards to "מיקוד על בחינה אחת" (Track A) and "פיזור סיכונים" (Track B).
-   - Visual timeline breakdown by exam sessions (חורף ⬅️ אביב ⬅️ קיץ).
-   - Opt-In Mechina button displayed at bottom when `mechinaAvailable === true`.
+4. **APIs & UI Flow (`src/app/`, `src/components/`):**
+   - `POST /api/tracks/mechina`: On-demand endpoint for retrieving Mechina track.
+   - `RecommendedTracksView.tsx`: Updated to handle `track-maximize-exam` and `track-risk-spread`.
+
+5. **Test Suite Verification:**
+   - `optimizer_audit_8cases.test.ts`: Updated to 37 passing assertions, testing all 8 institutional edge cases + Case 9 (Opt-In Mechina, reachability ceiling caps, and Israeli session calendar mapping).
 
 ---
 

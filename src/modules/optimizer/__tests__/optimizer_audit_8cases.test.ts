@@ -26,11 +26,14 @@ import assert from 'node:assert/strict';
 
 import {
 	generateOptimizedActionTracks,
+	generateMechinaTrack,
 	calculateLeverUtilityScore,
 	extractRankedSubjectLevers,
 	solveMinimumPsychometricTarget,
 	toCalculatorSubjects,
-	evaluateSimulatedSekem
+	evaluateSimulatedSekem,
+	computePsychReachability,
+	getSubjectExamSession
 } from '../index';
 
 import { AcademicProgramRecord, UserAcademicProfileRecord, UserPreferencesRecord } from '../../db/schema';
@@ -507,11 +510,11 @@ describe('Case 8: Legal 20-unit floor – calculator respects 20-unit minimum du
 	});
 });
 
-// ─── Case 9: Anchor track always present + hallucination-bug regression ────────
+// ─── Case 9: Opt-In Mechina Paradigm, Reachability Ceiling & Calendar Phasing ──
 
-describe('Case 9: track-anchor always present; balanced track never claims closed gap when solver returns null', () => {
-	it('every solution contains a track-anchor regardless of gap size', () => {
-		// Use a very weak candidate who has a large gap
+describe('Case 9: Opt-In Mechina, Reachability Model and Calendar Phasing', () => {
+	it('evaluates mechina as Opt-In only: mechinaAvailable flag set when needed, not in default tracks', () => {
+		// Use a weak candidate who has a large gap
 		const profile: UserAcademicProfileRecord = {
 			userId: 'c9_anchor_test',
 			bagrutSubjects: [
@@ -543,65 +546,76 @@ describe('Case 9: track-anchor always present; balanced track never claims close
 
 		const solution = generateOptimizedActionTracks(program, profile, defaultPreferences);
 
-		// 1. Anchor track must ALWAYS be present
-		const anchorTrack = solution.tracks.find(t => t.id === 'track-anchor');
-		assert.ok(anchorTrack, 'Case 9: track-anchor must always be present regardless of gap size');
-		assert.ok(anchorTrack.estimatedWeeks >= 20,
-			'Case 9: anchor track must span at least 20 weeks (realistic mechina duration)');
-		assert.ok(anchorTrack.milestones.length >= 3,
-			'Case 9: anchor track must have at least 3 milestones (register, study, submit)');
+		// 1. Mechina must NOT be in default tracks array (Opt-In paradigm)
+		const defaultMechinaTrack = solution.tracks.find(t => t.id === 'track-anchor');
+		assert.strictEqual(defaultMechinaTrack, undefined,
+			'Case 9: Mechina must NOT be pushed into default tracks (Opt-In only)');
 
-		// 2. Hallucination-bug regression: if balanced track exists, its targetSekem
-		//    must equal what the simulator actually computed — never a falsely inflated value.
-		const balancedTrack = solution.tracks.find(t => t.id === 'track-balanced');
-		if (balancedTrack) {
-			// The claim in strategyDescription must NOT contain "סגירה במלואו" or similar
-			// if the targetSekem is still below threshold.
-			if ((balancedTrack.targetSekem ?? 0) < program.minSekemThreshold) {
-				const desc = balancedTrack.strategyDescription ?? '';
-				const containsFalseCloseClam =
-					desc.includes('סוגר את סף הקבלה במלואו') &&
-					!desc.includes('פער');
-				assert.ok(!containsFalseCloseClam,
-					`Case 9 (hallucination-bug): balanced track must not claim threshold is fully closed when targetSekem (${balancedTrack.targetSekem}) < threshold (${program.minSekemThreshold})`);
-			}
+		// 2. mechinaAvailable must be true for large-gap candidate
+		assert.strictEqual(solution.mechinaAvailable, true,
+			'Case 9: mechinaAvailable must be true when gap cannot be closed easily');
+
+		// 3. On-demand Mechina track generation works as expected
+		const onDemandMechina = generateMechinaTrack(program, profile, defaultPreferences);
+		assert.strictEqual(onDemandMechina.id, 'track-anchor');
+		assert.ok(onDemandMechina.estimatedWeeks >= 20,
+			'Case 9: on-demand mechina must span at least 20 weeks');
+		assert.ok(onDemandMechina.milestones.length >= 3,
+			'Case 9: on-demand mechina must have at least 3 milestones');
+
+		// 4. Hallucination-bug regression: risk-spread / balanced track must not claim threshold is closed when below cutoff
+		const riskSpreadTrack = solution.tracks.find(t => t.id === 'track-risk-spread' || t.id === 'track-balanced');
+		if (riskSpreadTrack && (riskSpreadTrack.targetSekem ?? 0) < program.minSekemThreshold) {
+			const desc = riskSpreadTrack.strategyDescription ?? '';
+			const containsFalseCloseClam =
+				desc.includes('סוגר את סף הקבלה במלואו') && !desc.includes('פער');
+			assert.ok(!containsFalseCloseClam,
+				`Case 9 (honest reporting): risk-spread track must report remaining gap honestly`);
 		}
 	});
 
-	it('generates an anchor track even for a strong candidate near the threshold', () => {
-		// Even a "good" candidate should have a fallback anchor
-		const profile: UserAcademicProfileRecord = {
-			userId: 'c9b_strong_near_threshold',
-			bagrutSubjects: [
-				{ id: '1', profileId: 'c9b', subjectName: 'מתמטיקה', units: 4, grade: 88, isMandatory: true, isMath: true },
-				{ id: '2', profileId: 'c9b', subjectName: 'אנגלית', units: 5, grade: 90, isMandatory: true },
-				{ id: '3', profileId: 'c9b', subjectName: 'ספרות', units: 2, grade: 85, isMandatory: true },
-				{ id: '4', profileId: 'c9b', subjectName: 'היסטוריה', units: 2, grade: 82, isMandatory: true },
-				{ id: '5', profileId: 'c9b', subjectName: 'תנ״ך', units: 2, grade: 80, isMandatory: true },
-				{ id: '6', profileId: 'c9b', subjectName: 'אזרחות', units: 2, grade: 83, isMandatory: true }
-			],
-			mathUnits: 4, mathGrade: 88,
-			physicsUnits: 0, physicsGrade: 0,
-			psychometricGeneral: 640,
-			psychometricQuant: 128, psychometricVerbal: 128, psychometricEnglish: 126,
+	it('enforces percentile caps and realistic psychometric ceilings in reachabilityModel', () => {
+		const highProfile: UserAcademicProfileRecord = {
+			userId: 'reachability_test',
+			bagrutSubjects: [],
+			mathUnits: 5, mathGrade: 90,
+			physicsUnits: 5, physicsGrade: 85,
+			psychometricGeneral: 710,
+			psychometricQuant: 142, psychometricVerbal: 140, psychometricEnglish: 142,
 			hasTakenPsychometric: true,
 			updatedAt: new Date()
 		};
 
-		const program = makeProgram({
-			institutionId: 'bgu',
-			institutionName: 'בן-גוריון',
-			name: 'רפואה',
-			fieldOfStudy: 'רפואה',
-			minSekemThreshold: 660,
-			relevantSekemType: 'general',
-			directBagrutEligible: false,
-			prerequisites: { mustHavePsychometric: false }
-		});
+		const highReach = computePsychReachability(highProfile, defaultPreferences);
+		// Above 700: max delta is strictly capped at 20 points
+		assert.ok(highReach.maxImprovementPoints <= 20,
+			`Above 700 psychometric must have max delta <= 20, got ${highReach.maxImprovementPoints}`);
+		assert.ok(highReach.personalCeiling <= 730,
+			`Above 700 ceiling must be realistic, got ${highReach.personalCeiling}`);
 
-		const solution = generateOptimizedActionTracks(program, profile, defaultPreferences);
+		const midProfile: UserAcademicProfileRecord = {
+			...highProfile,
+			psychometricGeneral: 670
+		};
+		const midReach = computePsychReachability(midProfile, defaultPreferences);
+		// Above 660: max delta is strictly capped at 35 points
+		assert.ok(midReach.maxImprovementPoints <= 35,
+			`Above 660 psychometric must have max delta <= 35, got ${midReach.maxImprovementPoints}`);
+	});
 
-		const anchorTrack = solution.tracks.find(t => t.id === 'track-anchor');
-		assert.ok(anchorTrack, 'Case 9b: track-anchor must exist even for near-threshold candidate');
+	it('assigns Israeli exam sessions correctly in calendarScheduler', () => {
+		// Mandatory core subjects and math/english are Winter sessions
+		assert.strictEqual(getSubjectExamSession('אזרחות', 2), 'winter');
+		assert.strictEqual(getSubjectExamSession('תנ״ך', 2), 'winter');
+		assert.strictEqual(getSubjectExamSession('ספרות', 2), 'winter');
+		assert.strictEqual(getSubjectExamSession('היסטוריה', 2), 'winter');
+		assert.strictEqual(getSubjectExamSession('מתמטיקה', 5), 'winter');
+		assert.strictEqual(getSubjectExamSession('אנגלית', 5), 'winter');
+
+		// 5-unit expanded electives are Summer sessions only
+		assert.strictEqual(getSubjectExamSession('גיאוגרפיה', 5), 'summer');
+		assert.strictEqual(getSubjectExamSession('פיזיקה', 5), 'summer');
+		assert.strictEqual(getSubjectExamSession('מדעי המחשב', 5), 'summer');
+		assert.strictEqual(getSubjectExamSession('ביולוגיה', 5), 'summer');
 	});
 });

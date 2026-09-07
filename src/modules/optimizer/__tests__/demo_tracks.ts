@@ -204,6 +204,8 @@ const cases: CaseInput[] = [
 ];
 
 const TRACK_ICONS: Record<string, string> = {
+	'track-maximize-exam': '🎯',
+	'track-risk-spread':   '🛡️',
 	'track-fast-psych':    '⚡',
 	'track-direct-bagrut': '🎓',
 	'track-balanced':      '⚖️',
@@ -217,7 +219,7 @@ for (const c of cases) {
 	console.log('\n' + '═'.repeat(70));
 	console.log(`📋  ${c.title}`);
 	console.log(`    מוסד: ${c.program.institutionName} | תוכנית: ${c.program.name}`);
-	console.log(`    סף קבלה: ${c.program.minSekemThreshold} | בגרות ישירה אפשרית: ${sol.hasDirectBagrutOption ? '✅' : '❌'}`);
+	console.log(`    סף קבלה: ${c.program.minSekemThreshold} | בגרות ישירה אפשרית: ${sol.hasDirectBagrutOption ? '✅' : '❌'} | מכינה זמינה (Opt-In): ${sol.mechinaAvailable ? '✅' : '❌'}`);
 	console.log(`    מסלולים שנוצרו: ${sol.tracks.length}`);
 	console.log('─'.repeat(70));
 
