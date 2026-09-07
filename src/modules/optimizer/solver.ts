@@ -111,16 +111,24 @@ export function evaluateSimulatedSekem(
 	physGrade?: number
 ): EvaluatedCandidateState {
 	const baseQuant = profile.psychometricQuant || Math.round((profile.psychometricGeneral || 600) / 5);
+	const baseVerbal = profile.psychometricVerbal || Math.round((profile.psychometricGeneral || 600) / 5);
+	const baseEnglish = profile.psychometricEnglish || Math.round((profile.psychometricGeneral || 600) / 5);
 	const currentGen = profile.psychometricGeneral || 600;
+	// Scale all three sub-scores proportionally with the simulated general score.
+	// Previously only quant was scaled; verbal and English were frozen at the student's original
+	// values, which caused institutions that weight verbal/English (e.g. HUJI, Haifa Law) to
+	// compute an incorrect Sekem during binary-search optimization.
 	const psychRatio = currentGen > 0 ? simulatedPsych / currentGen : 1;
 	const simulatedQuant = Math.min(150, Math.max(50, Math.round(baseQuant * psychRatio)));
+	const simulatedVerbal = Math.min(150, Math.max(50, Math.round(baseVerbal * psychRatio)));
+	const simulatedEnglish = Math.min(150, Math.max(50, Math.round(baseEnglish * psychRatio)));
 
 	const res = calculateInstitution(institutionId, {
 		bagrutSubjects: subjects,
 		psychometricGeneral: simulatedPsych,
 		psychometricQuant: simulatedQuant,
-		psychometricVerbal: profile.psychometricVerbal,
-		psychometricEnglish: profile.psychometricEnglish,
+		psychometricVerbal: simulatedVerbal,
+		psychometricEnglish: simulatedEnglish,
 		mathUnits: mathUnits ?? profile.mathUnits,
 		mathGrade: mathGrade ?? profile.mathGrade,
 		physicsUnits: physUnits ?? profile.physicsUnits,
