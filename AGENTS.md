@@ -38,12 +38,14 @@ The system follows a strict modular 4-subagent architecture:
   * Repository (`repository.ts`), Zod schemas (`schema.ts`), in-memory index for all degrees (`academicData.json`).
   * Direct bagrut thresholds: HUJI/TAU (105+), BGU (104+), BIU (102+), Haifa/Ariel/RUNI (100+). Technion requires psychometric for STEM.
 
-* **Subagent 2: Optimization & Recommendation Engine (`src/modules/optimizer/`)**
+* **Subagent 2: Optimization, Scheduling & Recommendation Engine (`src/modules/optimizer/`)**
   * Closed-loop solver (`solver.ts`), utility scorer (`utilityScorer.ts`), and track generator (`trackEngine.ts`).
-  * Produces 3 realistic personalized tracks:
-    1. *Fast Track (המסלול המהיר)*: Single-focus psychometric jump.
-    2. *Safe Track (המסלול הבטוח)*: Balanced Bagrut improvement + moderate psychometric (or 0 psychometric if direct bagrut eligible).
-    3. *Anchor Track (מסלול העוגן)*: Transition track / Mechina / lower-risk path.
+  * **Core Architectural Paradigm Shift:**
+    1. *Track A (`track-maximize-exam`)*: "מיקוד על בחינה אחת" — Focus on a single decision lever (A1: Psychometric only, A2: Single high-ROI Bagrut lever, or A3: Direct Bagrut with 0 psychometric).
+    2. *Track B (`track-risk-spread`)*: "פיזור סיכונים" — Balanced multi-vector improvement (2-3 levers) designed so no single test failure ruins admission.
+    3. *Mechina (`track-anchor`)*: **Opt-In Only** — Evaluated via `mechinaAvailable: boolean` and exposed via on-demand endpoint `POST /api/tracks/mechina`, never forced as a default track.
+    4. *Reachability Model (`reachabilityModel.ts`)*: Realistic psychometric ceiling (`personalCeiling`) factoring in percentiles (strict caps above 660 and 700), preparation hours, and diagnostic confidence.
+    5. *Exam Calendar & Timeline Phasing (`calendarScheduler.ts`)*: Israeli calendar awareness (Winter sessions for 2u core Quick-Wins/Safety Cushions; Spring for Psychometric; Summer for 5u elective expansions). Prevents cognitive overload/concurrency conflicts.
 
 * **Subagent 3: Pure Institution Calculators (`src/modules/calculators/`)**
   * Pure, deterministic math functions for all 8 institutions (`technion.ts`, `tau.ts`, `huji.ts`, `bgu.ts`, `haifa.ts`, `ariel.ts`, `barIlan.ts`, `reichman.ts`).
@@ -56,9 +58,9 @@ The system follows a strict modular 4-subagent architecture:
       * Step 2: Desired degree & institution selection (DegreeSearchSelector).
       * Step 3: Admission Gap Report (PersonalAdmissionReport).
       * Step 4: Action Tracks & Personal Builder (`RecommendedTracksView.tsx`).
-    * Tab 1: **ריכוז המסלולים המומלץ** (3 tracks + week-by-week timeline).
+    * Tab 1: **ריכוז המסלולים המומלץ** (Track A: מיקוד, Track B: פיזור סיכונים, ציר זמנים מועדי חורף/אביב/קיץ, כפתור מכינה Opt-In).
     * Tab 2: **מסלול בנייה אישי** (`WhatIfSimulator.tsx` + `MultiUniversityAdmissionGrid.tsx`).
-  * REST APIs: `/api/calculate`, `/api/programs`, `/api/tracks/generate`, `/api/health`.
+  * REST APIs: `/api/calculate`, `/api/programs`, `/api/tracks/generate`, `/api/tracks/mechina`, `/api/health`.
 
 ---
 
@@ -69,7 +71,7 @@ Always run and verify these commands when working on the project:
 # 1. Start Development Server (runs on http://localhost:3000)
 npm run dev
 
-# 2. Run All Unit Tests (Must have 26/26 passing)
+# 2. Run All Unit Tests (Must have 36/36 passing)
 npx tsx --test src/modules/*/__tests__/*.test.ts
 
 # 3. Type Checking
@@ -90,13 +92,52 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State (Last Updated)
-- **Active Branch:** `main` (synced with remote `origin/main`).
-- **Recent Milestones:**
-  - Bar-Ilan & Reichman added across all layers (DB, Calculators, UI, Simulator).
-  - `MultiUniversityAdmissionGrid.tsx` built with dark-mode glassmorphism and live deltas.
-  - Step 4 split into 2 dedicated tabs: Recommended Tracks Summary vs. Personal What-If Builder.
-  - Multi-machine agent handoff protocol and single source of truth instructions defined in `AGENTS.md`, `CLAUDE.md`, `.cursorrules`.
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-07)
+- **Active Branch:** `audit/optimizer-8-cases-and-improvements`
+- **Current Quality State:**
+  - `npx tsc --noEmit`: Clean (0 errors)
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **36/36 tests passing** (including all 8 institutional audit cases + Case 9 anchor test).
+  - Background processes (`git push`, `npm run dev`) terminated cleanly to avoid double-send stalls.
+
+### 📋 Subagent Task Breakdown for Next Session:
+
+#### 🏛️ Subagent 1: Architecture & DB Layer (`src/modules/db/`)
+1. **Exam Session Metadata:** Map subjects to Israeli Ministry of Education sessions:
+   - Winter (`winter`): Mandatory core subjects (2u Tanach, History, Literature, Civics, Hebrew) + 4/5u Math & English.
+   - Summer (`summer`): All subjects including 5u elective expansions (Geography, Physics, Biology, CS, etc.).
+2. **Schema Enhancements:**
+   - Add `mechinaAvailable: boolean` and `mechinaReason?: string` to `OptimizationSolution` schema in `schema.ts` / `types.ts`.
+   - Add timeline stage metadata (`session: 'winter' | 'spring_psych' | 'summer'`) to recommended lever records.
+
+#### 🧠 Subagent 2: Optimization, Scheduling & Algorithms (`src/modules/optimizer/`)
+1. **[NEW] `reachabilityModel.ts`:**
+   - Real-world psychometric ceiling (`personalCeiling`): Base jump by weekly hours + first-timer bonus.
+   - Percentile penalties: Hard cap on delta when current score $\ge 660$ (max +35 pts) and $\ge 700$ (max +20 pts).
+   - Feasibility classifier (`very_high`, `high`, `moderate`, `challenging`, `unrealistic`). Do not generate tracks requiring $>1.3 \times \text{maxImprovement}$.
+2. **[NEW] `calendarScheduler.ts`:**
+   - Sequential station planning: Winter Quick-Win (e.g. Civics 2u $80 \to 93$) $\to$ Spring Psychometric $\to$ Summer 5u Expansion.
+   - Concurrency limits: Prevent overloaded combinations (e.g. Summer Psychometric + 3 Summer 5u Bagruts).
+   - "Safety Cushion" logic: Proactive core-subject winter improvements reducing required psychometric targets.
+3. **[MODIFY] `trackEngine.ts`:**
+   - Implement **Track A (`track-maximize-exam`)**: single-lever utility maximizer (A1: Psychometric only, A2: Single Bagrut, A3: Direct Bagrut).
+   - Implement **Track B (`track-risk-spread`)**: 2-3 vectors with calendar phasing. Flexible (can be multi-bagrut without psychometric if realistic).
+   - Extract **Mechina Track** to separate on-demand helper `generateMechinaTrack()` returned only when requested.
+4. **[MODIFY] `optimizer_audit_8cases.test.ts`:**
+   - Update track IDs to `track-maximize-exam` and `track-risk-spread`.
+   - Add tests for reachability ceiling and calendar scheduling.
+
+#### 📐 Subagent 3: Pure Institution Calculators (`src/modules/calculators/`)
+1. Maintain 100% mathematical purity (no DB or UI dependencies).
+2. Validate that 2u core improvements (e.g. Civics/Tanach) combined with 5u drops continue to adhere strictly to the 20-unit minimum floor and institutional weighting rules.
+
+#### 🖥️ Subagent 4: APIs & UI Flow (`src/app/`, `src/components/`)
+1. **API Endpoints:**
+   - Update `POST /api/tracks/generate` to return the new Track A & B structure with `mechinaAvailable`.
+   - Create `POST /api/tracks/mechina` endpoint for on-demand mechina track retrieval.
+2. **UI Step 4 (`RecommendedTracksView.tsx`):**
+   - Update cards to "מיקוד על בחינה אחת" (Track A) and "פיזור סיכונים" (Track B).
+   - Visual timeline breakdown by exam sessions (חורף ⬅️ אביב ⬅️ קיץ).
+   - Opt-In Mechina button displayed at bottom when `mechinaAvailable === true`.
 
 ---
 
@@ -105,7 +146,7 @@ Whenever the user says **"סיימנו להיום"**, **"סיימנו"**, **"ע�
 
 1. **Step 1: Automated Quality Gate**
    - Run: `npx tsc --noEmit`
-   - Run: `npx tsx --test src/modules/*/__tests__/*.test.ts` (all 26 tests must pass)
+   - Run: `npx tsx --test src/modules/*/__tests__/*.test.ts` (all 36 tests must pass)
    - Run: `npm run build`
    - If any errors exist, fix them immediately before proceeding.
 
