@@ -121,6 +121,14 @@ npm run build
 5. **Test Suite Verification:**
    - `optimizer_audit_8cases.test.ts`: Updated to 37 passing assertions, testing all 8 institutional edge cases + Case 9 (Opt-In Mechina, reachability ceiling caps, and Israeli session calendar mapping).
 
+### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
+1. **הרחבת ה-UI עבור Opt-In Mechina ב-`RecommendedTracksView.tsx`:**
+   - כאשר `mechinaAvailable === true`, הוספת כפתור מעוצב בתחתית טאב המסלולים ("הצג אפשרויות מכינה אקדמית") המבצע קריאת `POST /api/tracks/mechina` ומציג מודאל או כרטיס ייעודי למסלול המכינה.
+2. **ויזואליזציה של ציר הזמן והמועדים (חורף ⬅️ אביב ⬅️ קיץ):**
+   - שיפור תצוגת המילסטונים ב-UI כך שיראו את תגיות המועדים (`מועד חורף`, `מועד אביב`, `מועד קיץ`) בצבעים ייעודיים.
+3. **מיזוג ענף (PR / Merge):**
+   - הענף `audit/optimizer-8-cases-and-improvements` מוכן לחלוטין למיזוג ל-`main` לאחר סיום סבב ה-UI.
+
 ---
 
 ## 🛑 6. Mandatory Wrap-Up Protocol: When User Says "סיימנו להיום" / "Done for today"

@@ -6,7 +6,7 @@ See comprehensive agent instructions and project guidelines in [AGENTS.md](./AGE
 - **Project**: Kalis (Israeli Academic Admission Planning & Optimization)
 - **Supported Universities (8)**: Technion, TAU, HUJI, BGU, Haifa, Ariel, Bar-Ilan, Reichman
 - **Dev Server**: `npm run dev` (http://localhost:3000)
-- **Run Tests**: `npx tsx --test src/modules/*/__tests__/*.test.ts` (all 26 tests must pass)
+- **Run Tests**: `npx tsx --test src/modules/*/__tests__/*.test.ts` (all 37 tests must pass)
 - **Typecheck**: `npx tsc --noEmit`
 - **Build**: `npm run build`
 - **UI Language**: Hebrew, RTL (`dir="rtl"`)
