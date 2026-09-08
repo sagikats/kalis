@@ -204,4 +204,41 @@ describe('Subagent 2: Optimizer & Recommendation Algorithms', () => {
 		const balancedTrack = solution.tracks.find((t) => t.id === 'track-risk-spread' || t.id === 'track-balanced');
 		assert.ok(balancedTrack);
 	});
+
+	it('Multi-select Psychometric Strengths: formats verbal and english split correctly', async () => {
+		const { formatPsychSectionsLabel } = await import('../../../utils/analysis/trackGenerator');
+
+		// Multi-select: quant + english
+		const labelQuantEng = formatPsychSectionsLabel({
+			psychExperience: 'once',
+			learningOrientation: 'stem',
+			learningStrength: 'analytical_quick',
+			weeklyAvailabilityHours: 'part_15_25',
+			targetTimeline: 'immediate_october',
+			psychStrongestSections: ['quant', 'english']
+		});
+		assert.equal(labelQuantEng, 'הפרק הכמותי ופרק האנגלית');
+
+		// Multi-select: verbal + english
+		const labelVerbalEng = formatPsychSectionsLabel({
+			psychExperience: 'once',
+			learningOrientation: 'humanities',
+			learningStrength: 'memory_retention',
+			weeklyAvailabilityHours: 'part_15_25',
+			targetTimeline: 'immediate_october',
+			psychStrongestSections: ['verbal', 'english']
+		});
+		assert.equal(labelVerbalEng, 'הפרק המילולי ופרק האנגלית');
+
+		// Mutually exclusive balanced
+		const labelBalanced = formatPsychSectionsLabel({
+			psychExperience: 'once',
+			learningOrientation: 'flexible',
+			learningStrength: 'analytical_quick',
+			weeklyAvailabilityHours: 'part_15_25',
+			targetTimeline: 'immediate_october',
+			psychStrongestSections: ['balanced']
+		});
+		assert.equal(labelBalanced, 'כלל חלקי הבחינה (כמותי, מילולי ואנגלית)');
+	});
 });

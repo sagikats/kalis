@@ -28,7 +28,8 @@ export const UserAcademicProfileInputSchema = z.object({
 export const UserPreferencesInputSchema = z.object({
 	psychExperience: z.enum(['never', 'once', 'multiple']).default('never'),
 	psychFeeling: z.enum(['high_potential', 'low_confidence', 'neutral']).default('neutral'),
-	psychStrongestSection: z.enum(['quant', 'verbal', 'english', 'balanced']).default('balanced'),
+	psychStrongestSection: z.enum(['quant', 'verbal', 'english', 'verbal_eng', 'balanced']).default('balanced'),
+	psychStrongestSections: z.array(z.enum(['quant', 'verbal', 'english', 'balanced'])).optional(),
 	learningOrientation: z.enum(['stem', 'humanities', 'flexible']).default('flexible'),
 	learningStrength: z
 		.enum(['analytical_quick', 'memory_retention', 'deep_accuracy_no_rush'])

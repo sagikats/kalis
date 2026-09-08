@@ -43,7 +43,8 @@ export interface UserPreferencesRecord {
 	userId: string;
 	psychExperience: 'never' | 'once' | 'multiple';
 	psychFeeling: 'high_potential' | 'low_confidence' | 'neutral';
-	psychStrongestSection: 'quant' | 'verbal' | 'english' | 'balanced';
+	psychStrongestSection: 'quant' | 'verbal' | 'english' | 'verbal_eng' | 'balanced';
+	psychStrongestSections?: ('quant' | 'verbal' | 'english' | 'balanced')[];
 	learningOrientation: 'stem' | 'humanities' | 'flexible';
 	learningStrength: 'analytical_quick' | 'memory_retention' | 'deep_accuracy_no_rush';
 	weeklyAvailabilityHours: 'limited_under_15' | 'part_15_25' | 'full_30_plus';

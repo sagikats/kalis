@@ -43,9 +43,41 @@ export default function PreferenceQuestionnaire({
 		'high_potential' | 'reached_ceiling'
 	>(initialAnswers?.psychFeeling || 'high_potential');
 
-	const [psychStrongestSection, setPsychStrongestSection] = useState<
-		'quant' | 'verbal_eng' | 'balanced'
-	>(initialAnswers?.psychStrongestSection || 'quant');
+	const [psychStrongestSections, setPsychStrongestSections] = useState<
+		('quant' | 'verbal' | 'english' | 'balanced')[]
+	>(() => {
+		if (initialAnswers?.psychStrongestSections && initialAnswers.psychStrongestSections.length > 0) {
+			return initialAnswers.psychStrongestSections;
+		}
+		if (initialAnswers?.psychStrongestSection) {
+			if (initialAnswers.psychStrongestSection === 'verbal_eng') {
+				return ['verbal', 'english'];
+			}
+			return [initialAnswers.psychStrongestSection as 'quant' | 'verbal' | 'english' | 'balanced'];
+		}
+		return ['balanced'];
+	});
+
+	const togglePsychStrength = (option: 'quant' | 'verbal' | 'english' | 'balanced') => {
+		if (option === 'balanced') {
+			// If 'balanced' is clicked, it becomes the only option
+			setPsychStrongestSections(['balanced']);
+			return;
+		}
+
+		setPsychStrongestSections((prev) => {
+			// Deselect 'balanced' when selecting any specific section
+			const withoutBalanced = prev.filter((item) => item !== 'balanced');
+
+			if (withoutBalanced.includes(option)) {
+				const next = withoutBalanced.filter((item) => item !== option);
+				// If user unchecks the last specific option, fallback to 'balanced'
+				return next.length === 0 ? ['balanced'] : next;
+			} else {
+				return [...withoutBalanced, option];
+			}
+		});
+	};
 
 	const [learningOrientation, setLearningOrientation] = useState<
 		'humanities' | 'stem' | 'flexible'
@@ -65,11 +97,20 @@ export default function PreferenceQuestionnaire({
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
+
+		const primarySection: 'quant' | 'verbal' | 'english' | 'verbal_eng' | 'balanced' =
+			psychStrongestSections.includes('balanced')
+				? 'balanced'
+				: psychStrongestSections.includes('verbal') && psychStrongestSections.includes('english') && !psychStrongestSections.includes('quant')
+				? 'verbal_eng'
+				: (psychStrongestSections[0] as 'quant' | 'verbal' | 'english') || 'balanced';
+
 		const finalAnswers: UserPreferencesQuestionnaire = {
 			psychExperience,
 			psychWillingness: psychExperience === 'never' ? psychWillingness : undefined,
 			psychFeeling: psychExperience !== 'never' ? psychFeeling : undefined,
-			psychStrongestSection,
+			psychStrongestSection: primarySection,
+			psychStrongestSections,
 			learningOrientation,
 			learningStrength,
 			weeklyAvailabilityHours,
@@ -303,67 +344,112 @@ export default function PreferenceQuestionnaire({
 
 					{/* Question 3: Strongest Section */}
 					<div className="space-y-3 pt-2">
-						<label className="text-sm font-bold text-slate-200 block">
-							3. איזה תחום בפסיכומטרי הכי חזק/נוח לך?
-						</label>
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+						<div className="flex items-center justify-between flex-wrap gap-2">
+							<label className="text-sm font-bold text-slate-200 block">
+								3. באילו תחומים בפסיכומטרי אתה מרגיש חזק יותר?
+							</label>
+							<span className="text-[11px] text-cyan-400 font-semibold bg-cyan-950/40 px-2.5 py-0.5 rounded-full border border-cyan-800/40">
+								בחירה מרובה (או רמה מאוזנת)
+							</span>
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+							{/* Option 1: Quantitative */}
 							<button
 								type="button"
-								onClick={() => setPsychStrongestSection('quant')}
+								onClick={() => togglePsychStrength('quant')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
-									psychStrongestSection === 'quant'
+									psychStrongestSections.includes('quant')
 										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
 										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">הפרק הכמותי</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
-										חזק במתמטיקה, גרפים, בעיות תנועה והספק
+									<div className="flex items-center gap-1.5 mb-1">
+										<span className="text-xs font-black block text-white">הפרק הכמותי</span>
+									</div>
+									<span className="text-[11px] text-slate-400 block leading-snug">
+										חזק במתמטיקה, חשיבה כמותית, גרפים, בעיות תנועה והספק
 									</span>
 								</div>
-								{psychStrongestSection === 'quant' && (
+								{psychStrongestSections.includes('quant') ? (
 									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+								) : (
+									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
 								)}
 							</button>
 
+							{/* Option 2: Verbal */}
 							<button
 								type="button"
-								onClick={() => setPsychStrongestSection('verbal_eng')}
+								onClick={() => togglePsychStrength('verbal')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
-									psychStrongestSection === 'verbal_eng'
+									psychStrongestSections.includes('verbal')
 										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
 										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">המילולי והאנגלית</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
-										הבנה והסקה, אוצר מילים עשיר וקריאה שוטפת
+									<div className="flex items-center gap-1.5 mb-1">
+										<span className="text-xs font-black block text-white">הפרק המילולי</span>
+									</div>
+									<span className="text-[11px] text-slate-400 block leading-snug">
+										הבנה והסקה, אנלוגיות, היגיון, אוצר מילים וכתיבת חיבור
 									</span>
 								</div>
-								{psychStrongestSection === 'verbal_eng' && (
+								{psychStrongestSections.includes('verbal') ? (
 									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+								) : (
+									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
 								)}
 							</button>
 
+							{/* Option 3: English */}
 							<button
 								type="button"
-								onClick={() => setPsychStrongestSection('balanced')}
+								onClick={() => togglePsychStrength('english')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
-									psychStrongestSection === 'balanced'
+									psychStrongestSections.includes('english')
 										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
 										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">רמה מאוזנת ושווה</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
-										אין פרק בולט, החלוקה שווה יחסית בכל התחומים
+									<div className="flex items-center gap-1.5 mb-1">
+										<span className="text-xs font-black block text-white">פרק האנגלית</span>
+									</div>
+									<span className="text-[11px] text-slate-400 block leading-snug">
+										קריאה שוטפת, השלמת משפטים, ניסוח מחדש וקטעי קריאה
 									</span>
 								</div>
-								{psychStrongestSection === 'balanced' && (
+								{psychStrongestSections.includes('english') ? (
 									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+								) : (
+									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
+								)}
+							</button>
+
+							{/* Option 4: Balanced (Mutually Exclusive) */}
+							<button
+								type="button"
+								onClick={() => togglePsychStrength('balanced')}
+								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
+									psychStrongestSections.includes('balanced')
+										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
+										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+								}`}
+							>
+								<div>
+									<div className="flex items-center gap-1.5 mb-1">
+										<span className="text-xs font-black block text-white">רמה מאוזנת ושווה</span>
+									</div>
+									<span className="text-[11px] text-slate-400 block leading-snug">
+										אין פרק בולט, החלוקה שווה יחסית (מבטל סימון פרקים בודדים)
+									</span>
+								</div>
+								{psychStrongestSections.includes('balanced') ? (
+									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+								) : (
+									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
 								)}
 							</button>
 						</div>

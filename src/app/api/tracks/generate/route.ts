@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
 			psychExperience: preferences?.psychExperience || 'never',
 			psychFeeling: preferences?.psychFeeling || 'neutral',
 			psychStrongestSection: preferences?.psychStrongestSection || 'balanced',
+			psychStrongestSections: preferences?.psychStrongestSections,
 			learningOrientation: preferences?.learningOrientation || 'flexible',
 			learningStrength: preferences?.learningStrength || 'analytical_quick',
 			weeklyAvailabilityHours: preferences?.weeklyAvailabilityHours || 'part_15_25',

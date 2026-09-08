@@ -6,12 +6,36 @@ import {
 } from '../calculators/multiCalculator';
 import { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
 
+export type PsychSectionStrength = 'quant' | 'verbal' | 'english' | 'balanced';
+
+export function formatPsychSectionsLabel(answers: UserPreferencesQuestionnaire): string {
+	const sections = answers.psychStrongestSections && answers.psychStrongestSections.length > 0
+		? answers.psychStrongestSections
+		: answers.psychStrongestSection
+		? answers.psychStrongestSection === 'verbal_eng'
+			? ['verbal', 'english']
+			: [answers.psychStrongestSection as PsychSectionStrength]
+		: ['balanced'];
+
+	if (sections.includes('balanced') || sections.length === 0) {
+		return 'כלל חלקי הבחינה (כמותי, מילולי ואנגלית)';
+	}
+
+	const parts: string[] = [];
+	if (sections.includes('quant')) parts.push('הפרק הכמותי');
+	if (sections.includes('verbal')) parts.push('הפרק המילולי');
+	if (sections.includes('english')) parts.push('פרק האנגלית');
+
+	return parts.join(' ו');
+}
+
 export interface UserPreferencesQuestionnaire {
 	// ציר פסיכומטרי
 	psychExperience: 'never' | 'once' | 'multiple';
 	psychWillingness?: 'full_exam' | 'prefer_bagrut_only';
 	psychFeeling?: 'high_potential' | 'reached_ceiling';
-	psychStrongestSection?: 'quant' | 'verbal_eng' | 'balanced';
+	psychStrongestSection?: 'quant' | 'verbal' | 'english' | 'verbal_eng' | 'balanced';
+	psychStrongestSections?: ('quant' | 'verbal' | 'english' | 'balanced')[];
 
 	// ציר בגרויות
 	learningOrientation: 'humanities' | 'stem' | 'flexible';
@@ -1036,9 +1060,7 @@ export function generatePersonalizedTracks(
 			steps: [
 				{
 					title: 'הכנה ממוקדת למועד הקרוב',
-					detail: `מרתון סימולציות ותרגול עומק עם דגש על הפרק ה${
-						answers.psychStrongestSection === 'quant' ? 'כמותי' : 'מילולי'
-					}`,
+					detail: `מרתון סימולציות ותרגול עומק עם דגש על ${formatPsychSectionsLabel(answers)}`,
 					timing: 'שבועות 1–8',
 					type: 'psychometric'
 				},
@@ -1306,9 +1328,7 @@ export function generatePersonalizedTracks(
 					? [
 							{
 								title: 'קורס פסיכומטרי ממוקד שיפור',
-								detail: `חיזוק נקודתי של הפרק ה${
-									answers.psychStrongestSection === 'quant' ? 'כמותי' : 'מילולי'
-								} לעלייה מתונה ל-${balPsych}`,
+								detail: `חיזוק נקודתי של ${formatPsychSectionsLabel(answers)} לעלייה מתונה ל-${balPsych}`,
 								timing: 'שבועות 11–14',
 								type: 'psychometric' as const
 							}
