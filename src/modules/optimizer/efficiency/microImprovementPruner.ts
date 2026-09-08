@@ -64,6 +64,10 @@ export function pruneRedundantLeversWithMicroImprovement(
 
 		for (let i = survivingLevers.length - 1; i >= 0; i--) {
 			const candidateToDrop = survivingLevers[i];
+			// Never prune math upgrade if candidate has fewer than 4 math units (faculty prerequisite)
+			if (candidateToDrop.isMath && (profile.mathUnits || 0) < 4) {
+				continue;
+			}
 			const remainingLevers = survivingLevers.filter((_, idx) => idx !== i);
 
 			// Test 1: Check if surviving state already meets threshold without any micro-improvement

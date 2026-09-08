@@ -87,11 +87,17 @@ export function applyLeversToCandidateState(
 				currentSubs.push({ name: 'פיזיקה', units: physU, grade: physG });
 			}
 		} else {
-			const idx = currentSubs.findIndex((s) => s.name === lever.subjectName);
+			const idx = currentSubs.findIndex(
+				(s) => s.name === lever.subjectName || lever.subjectName.includes(s.name) || s.name.includes(lever.subjectName)
+			);
 			if (idx >= 0) {
 				currentSubs[idx] = { ...currentSubs[idx], grade: lever.targetGrade, units: lever.targetUnits };
 			} else {
-				currentSubs.push({ name: lever.subjectName, grade: lever.targetGrade, units: lever.targetUnits });
+				currentSubs.push({
+					name: lever.subjectName.replace(/\s*\(.*?\)/, '').trim(),
+					grade: lever.targetGrade,
+					units: lever.targetUnits
+				});
 			}
 		}
 	}
@@ -110,25 +116,41 @@ export function evaluateSimulatedSekem(
 	physUnits?: number,
 	physGrade?: number
 ): EvaluatedCandidateState {
-	const baseQuant = profile.psychometricQuant || Math.round((profile.psychometricGeneral || 600) / 5);
-	const baseVerbal = profile.psychometricVerbal || Math.round((profile.psychometricGeneral || 600) / 5);
-	const baseEnglish = profile.psychometricEnglish || Math.round((profile.psychometricGeneral || 600) / 5);
-	const currentGen = profile.psychometricGeneral || 600;
-	// Scale all three sub-scores proportionally with the simulated general score.
-	// Previously only quant was scaled; verbal and English were frozen at the student's original
-	// values, which caused institutions that weight verbal/English (e.g. HUJI, Haifa Law) to
-	// compute an incorrect Sekem during binary-search optimization.
-	const psychRatio = currentGen > 0 ? simulatedPsych / currentGen : 1;
-	const simulatedQuant = Math.min(150, Math.max(50, Math.round(baseQuant * psychRatio)));
-	const simulatedVerbal = Math.min(150, Math.max(50, Math.round(baseVerbal * psychRatio)));
-	const simulatedEnglish = Math.min(150, Math.max(50, Math.round(baseEnglish * psychRatio)));
+	// Official NITE scaling: convert between 200-800 scale and 50-150 subscores
+	// For balanced candidate: Subscore = 50 + (Score - 200) / 6
+	const currentGen = profile.psychometricGeneral && profile.psychometricGeneral > 0 ? profile.psychometricGeneral : simulatedPsych;
+	const baseBalSub = Math.round(50 + (currentGen - 200) / 6);
+	const targetBalSub = Math.round(50 + (simulatedPsych - 200) / 6);
+
+	// Normalize user base subscores on 50-150 scale
+	const normalizeBaseSub = (val: number | undefined): number => {
+		if (!val || val <= 0) return baseBalSub;
+		return val > 150 ? Math.round(50 + (val - 200) / 6) : val;
+	};
+
+	const baseQSub = profile.psychometricQuant ? normalizeBaseSub(profile.psychometricQuant) : baseBalSub;
+	const baseVSub = profile.psychometricVerbal ? normalizeBaseSub(profile.psychometricVerbal) : baseBalSub;
+	const baseESub = profile.psychometricEnglish ? normalizeBaseSub(profile.psychometricEnglish) : baseBalSub;
+
+	const deltaQ = baseQSub - baseBalSub;
+	const deltaV = baseVSub - baseBalSub;
+	const deltaE = baseESub - baseBalSub;
+
+	const simQSub = Math.min(150, Math.max(50, targetBalSub + deltaQ));
+	const simVSub = Math.min(150, Math.max(50, targetBalSub + deltaV));
+	const simESub = Math.min(150, Math.max(50, targetBalSub + deltaE));
+
+	// 200-800 emphasis scores
+	const simQuantScore = Math.min(800, Math.max(200, 200 + (simQSub - 50) * 6));
+	const simVerbalScore = Math.min(800, Math.max(200, 200 + (simVSub - 50) * 6));
+	const simEnglishScore = Math.min(800, Math.max(200, 200 + (simESub - 50) * 6));
 
 	const res = calculateInstitution(institutionId, {
 		bagrutSubjects: subjects,
 		psychometricGeneral: simulatedPsych,
-		psychometricQuant: simulatedQuant,
-		psychometricVerbal: simulatedVerbal,
-		psychometricEnglish: simulatedEnglish,
+		psychometricQuant: simQuantScore,
+		psychometricVerbal: simVerbalScore,
+		psychometricEnglish: simEnglishScore,
 		mathUnits: mathUnits ?? profile.mathUnits,
 		mathGrade: mathGrade ?? profile.mathGrade,
 		physicsUnits: physUnits ?? profile.physicsUnits,

@@ -66,11 +66,11 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 		assert.ok(opt.optimalUnits >= 20);
 	});
 
-	it('TAU: Engineering Sekem matches linear formula', () => {
-		// S_eng = 78.239 + 0.0407 * 140 + 0.0384 * 130 + 4.975 * 105
-		const engSekem = calculateTauEngineeringSekem(105.0, 140, 130);
-		assert.ok(engSekem > 600);
-		assert.ok(engSekem < 750);
+	it('TAU: Engineering Sekem matches official formula', () => {
+		// Bagrut 105.0, Quant 700, with realit bonus:
+		// step1 = 105 * 9.62 - 349.9 = 660.2; raw = (660.2 + 700) * 0.52 - 43.10 + 10 = 674.2 -> 674
+		const engSekem = calculateTauEngineeringSekem(105.0, 700, true);
+		assert.equal(engSekem, 674);
 	});
 
 	it('BGU: General Sekem formula calculation', () => {

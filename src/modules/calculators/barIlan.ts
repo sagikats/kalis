@@ -213,7 +213,8 @@ export function evaluateBarIlan(input: InstitutionCalculatorInput): InstitutionC
 	const mathGrade = input.mathGrade ?? (mathSub ? mathSub.grade : 80);
 
 	const psych = input.psychometricGeneral || 0;
-	const quant = input.psychometricQuant || psych;
+	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateBarIlanGeneralSekem(optimal.average, psych);
 	const engineeringSekem = calculateBarIlanEngineeringSekem(optimal.average, quant, mathUnits, mathGrade);

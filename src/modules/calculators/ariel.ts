@@ -163,7 +163,8 @@ export function calculateArielSekem(bagrutAverage: number, psychometric: number)
 export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateArielOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
-	const quant = input.psychometricQuant || psych;
+	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateArielSekem(optimal.average, psych);
 	const engineeringSekem = calculateArielSekem(optimal.average, quant);

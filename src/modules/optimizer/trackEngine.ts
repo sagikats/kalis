@@ -273,17 +273,23 @@ export function generateOptimizedActionTracks(
 
 	const trackAOptions: CandidateTrackOption[] = [];
 
-	// Option A1: Psychometric Alone (1 Exam)
-	const psychCeiling = reachability.personalCeiling;
-	const singlePsychSol = solveMinimumPsychometricTarget(
-		institutionId,
-		relevantSekemType,
-		threshold,
-		profile,
-		baseSubjects,
-		hasTakenPsych ? currentPsych : 450,
-		psychCeiling
+	const hasMissingMathPrerequisite = Boolean(
+		targetProgram.prerequisites?.minMathUnits && (profile.mathUnits || 0) < targetProgram.prerequisites.minMathUnits
 	);
+
+	// Option A1: Psychometric Alone (1 Exam) - only valid if all subject prerequisites (e.g. math units) are already met
+	const psychCeiling = reachability.personalCeiling;
+	const singlePsychSol = !hasMissingMathPrerequisite
+		? solveMinimumPsychometricTarget(
+				institutionId,
+				relevantSekemType,
+				threshold,
+				profile,
+				baseSubjects,
+				hasTakenPsych ? currentPsych : 450,
+				psychCeiling
+		  )
+		: null;
 
 	if (singlePsychSol !== null && reachability.isRealistic(singlePsychSol)) {
 		const resFast = evaluateSimulatedSekem(
@@ -332,19 +338,33 @@ export function generateOptimizedActionTracks(
 			simState.physicsGrade
 		);
 
-		if (resSingleBagrut.sekem >= threshold || (degreeAllowsDirectBagrut && resSingleBagrut.directBagrutEligible)) {
+		const isDirect =
+			degreeAllowsDirectBagrut &&
+			(resSingleBagrut.directBagrutEligible ||
+				isProgramEligibleForDirectBagrut(institutionId, targetProgram.name, resSingleBagrut.bagrutAverage) ||
+				(targetProgram.directBagrutMinAverage !== null &&
+					targetProgram.directBagrutMinAverage !== undefined &&
+					resSingleBagrut.bagrutAverage >= targetProgram.directBagrutMinAverage));
+
+		if (resSingleBagrut.sekem >= threshold || isDirect) {
 			trackAOptions.push({
-				id: 'track-maximize-exam',
+				id: isDirect ? 'track-direct-bagrut' : 'track-maximize-exam',
 				levers: [highLever],
-				targetPsych: hasTakenPsych ? currentPsych : undefined,
-				targetSekem: resSingleBagrut.sekem,
+				targetPsych: isDirect ? undefined : (hasTakenPsych ? currentPsych : undefined),
+				targetSekem: isDirect ? threshold : resSingleBagrut.sekem,
 				targetBagrutAverage: resSingleBagrut.bagrutAverage,
 				examCount: 1,
-				badge: `מצוינות: ${lever.subjectName} ${lever.targetUnits} יח״ל בלבד`,
-				strategyDescription: `מהלך ממוקד של בחינה אחת: שדרוג ${lever.subjectName} (${lever.targetUnits} יח״ל) לציון מצוינות של ${highTargetGrade} מקפיץ את הממוצע ל-${resSingleBagrut.bagrutAverage.toFixed(1)} וסוגר את הסף ללא שינוי בפסיכומטרי!`,
-				feasibility: 'high',
-				feasibilityExplanation: `בחינת בגרות בודדת במקצוע בעל תועלת מקסימלית (${lever.subjectName}) סוגרת את כל הפער הנדרש.`,
-				keyAdvantage: 'מבחן בגרות אחד בלבד ללא צורך בהיבחנות חוזרת בפסיכומטרי!'
+				badge: isDirect ? 'מצוינות: קבלה ישירה (אפס פסיכומטרי)' : `מצוינות: ${lever.subjectName} ${lever.targetUnits} יח״ל בלבד`,
+				strategyDescription: isDirect
+					? `מעקף פסיכומטרי מלא בבחינה אחת: שדרוג ${lever.subjectName} (${lever.targetUnits} יח״ל) לציון ${highTargetGrade} מעלה את ממוצע הבגרות ל-${resSingleBagrut.bagrutAverage.toFixed(1)} ומקנה קבלה ישירה רשמית ב${targetProgram.institutionName} ללא פסיכומטרי כלל!`
+					: `מהלך ממוקד של בחינה אחת: שדרוג ${lever.subjectName} (${lever.targetUnits} יח״ל) לציון מצוינות של ${highTargetGrade} מקפיץ את הממוצע ל-${resSingleBagrut.bagrutAverage.toFixed(1)} וסוגר את הסף ללא שינוי בפסיכומטרי!`,
+				feasibility: 'very_high',
+				feasibilityExplanation: isDirect
+					? `עמידה מלאה ברף קבלה ישירה של המוסד בבחינה בודדת ללא סיכון פסיכומטרי.`
+					: `בחינת בגרות בודדת במקצוע בעל תועלת מקסימלית (${lever.subjectName}) סוגרת את כל הפער הנדרש.`,
+				keyAdvantage: isDirect
+					? 'אפס תלות בפסיכומטרי! קבלה ישירה על סמך בגרות בלבד.'
+					: 'מבחן בגרות אחד בלבד ללא צורך בהיבחנות חוזרת בפסיכומטרי!'
 			});
 			break; // Found top single bagrut lever
 		}
@@ -542,7 +562,14 @@ export function generateOptimizedActionTracks(
 	// שלביות: חורף (Quick-Win מקצוע חובה 2 יח״ל) -> אביב (פסיכומטרי) -> קיץ (הרחבה).
 	// =========================================================================
 	// Define moderate levers (grades 84-88 for 5u, 88-90 for 2u)
-	const moderateLevers: SubjectLeverCandidate[] = availableLevers.slice(0, 3).map((l) => ({
+	let candidateLeversForB = [...availableLevers];
+	if (hasMissingMathPrerequisite) {
+		const mathL = candidateLeversForB.find((l) => l.isMath);
+		if (mathL) {
+			candidateLeversForB = [mathL, ...candidateLeversForB.filter((l) => !l.isMath)];
+		}
+	}
+	const moderateLevers: SubjectLeverCandidate[] = candidateLeversForB.slice(0, 3).map((l) => ({
 		...l,
 		targetGrade: l.isMath ? 86 : l.targetUnits >= 5 ? 86 : 90
 	}));

@@ -241,4 +241,94 @@ describe('Subagent 2: Optimizer & Recommendation Algorithms', () => {
 		});
 		assert.equal(labelBalanced, 'כלל חלקי הבחינה (כמותי, מילולי ואנגלית)');
 	});
+
+	it('First-time examinee (no psychometric) generates valid targets >= 500 without 65 or phantom +deltas', async () => {
+		const { generatePersonalizedTracks } = await import('../../../utils/analysis/trackGenerator');
+		const { analyzeProgramGap } = await import('../../../utils/analysis/gapAnalyzer');
+		const { calculateMultiInstitutionSekem } = await import('../../../utils/calculators/multiCalculator');
+
+		const profile = {
+			psychometricGeneral: 0,
+			bagrutSubjects: [
+				{ name: 'תנ״ך', units: 2, grade: 83 },
+				{ name: 'ספרות עברית', units: 2, grade: 89 },
+				{ name: 'אזרחות', units: 2, grade: 76 },
+				{ name: 'היסטוריה / תע״י', units: 2, grade: 82 },
+				{ name: 'הבעה עברית', units: 2, grade: 72 },
+				{ name: 'אנגלית', units: 5, grade: 76 },
+				{ name: 'מתמטיקה', units: 5, grade: 88 },
+				{ name: 'פיזיקה', units: 5, grade: 78 }
+			],
+			mathUnits: 5,
+			mathGrade: 88,
+			physicsUnits: 5,
+			physicsGrade: 78
+		};
+
+		const instResults = calculateMultiInstitutionSekem(
+			{
+				bagrutSubjects: profile.bagrutSubjects,
+				psychometricGeneral: 0,
+				psychometricQuant: 0,
+				psychometricVerbal: 0,
+				psychometricEnglish: 0,
+				mathUnits: 5,
+				mathGrade: 88,
+				physicsUnits: 5,
+				physicsGrade: 78
+			},
+			['tau']
+		);
+		const tauRes = instResults[0];
+
+		const target = {
+			calculatorId: 'tau',
+			institutionName: 'אוניברסיטת תל אביב',
+			program: {
+				id: 'tau-cs',
+				name: 'מדעי המחשב',
+				fieldOfStudy: 'מדעי המחשב',
+				admissionThreshold: '705'
+			}
+		};
+
+		const gap = analyzeProgramGap(target as any, profile as any, tauRes);
+		const tracks = generatePersonalizedTracks(gap, profile as any, tauRes, {
+			weeklyAvailabilityHours: 'part_15_25',
+			targetTimeline: 'immediate_october',
+			psychWillingness: 'full_exam',
+			psychExperience: 'never',
+			learningOrientation: 'stem',
+			learningStrength: 'analytical_quick'
+		});
+
+		assert.ok(tracks.length >= 2, 'Must generate at least 2 tracks');
+
+		for (const track of tracks) {
+			// Never propose psychometric target below 200 (valid range is 200-800)
+			if (track.targetPsychometric !== undefined) {
+				assert.ok(
+					track.targetPsychometric >= 500,
+					`Target psychometric must be >= 500 for university degree, got ${track.targetPsychometric} in track ${track.id}`
+				);
+			}
+
+			// Description must never claim a "+65" or "+<target>" phantom jump when user hasn't tested
+			assert.ok(
+				!track.strategyDescription.includes('+65'),
+				`Description must not include +65 phantom delta in track ${track.id}`
+			);
+			assert.ok(
+				!track.strategyDescription.includes('פסיכומטרי ריאלי של 65'),
+				`Description must not claim realistic psychometric of 65 in track ${track.id}`
+			);
+
+			// Sekem must reach or exceed the threshold (705)
+			assert.ok(
+				(track.targetSekem || 0) >= 705,
+				`Target sekem must reach official admission threshold (>= 705), got ${track.targetSekem} in track ${track.id}`
+			);
+		}
+	});
 });
+

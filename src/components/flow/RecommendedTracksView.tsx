@@ -387,7 +387,7 @@ export default function RecommendedTracksView({
 									)}
 
 									{/* Psychometric target if exists */}
-									{track.targetPsychometric && (
+									{typeof track.targetPsychometric === 'number' && track.targetPsychometric > 0 && (
 										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
 											<div className="flex items-center gap-2">
 												<Brain className="h-4 w-4 text-cyan-400" />

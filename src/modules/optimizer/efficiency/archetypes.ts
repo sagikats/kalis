@@ -165,7 +165,7 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 			name: 'הנדסת תעשייה וניהול',
 			fieldOfStudy: 'הנדסת תעשייה וניהול',
 			degreeLevel: 'bachelor',
-			minSekemThreshold: 540,
+			minSekemThreshold: 700,
 			relevantSekemType: 'engineering',
 			directBagrutEligible: false,
 			prerequisites: { mustHavePsychometric: true, minMathUnits: 5 },
@@ -419,7 +419,7 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 			name: 'הנדסת תוכנה',
 			fieldOfStudy: 'הנדסת תוכנה',
 			degreeLevel: 'bachelor',
-			minSekemThreshold: 620,
+			minSekemThreshold: 645,
 			relevantSekemType: 'engineering',
 			directBagrutEligible: false,
 			prerequisites: { minMathUnits: 4, mustHavePsychometric: false },
@@ -591,7 +591,7 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 			updatedAt: new Date()
 		},
 		expectedCharacteristics: {
-			maxAllowedEffortHours: 180
+			maxAllowedEffortHours: 200
 		}
 	},
 

@@ -180,7 +180,8 @@ export function calculateReichmanGeneralSekem(bagrutAverage: number, psychometri
 export function evaluateReichman(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateReichmanOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
-	const quant = input.psychometricQuant || psych;
+	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateReichmanGeneralSekem(optimal.average, psych);
 	// In Reichman CS and Data, quantitative emphasis is prioritized

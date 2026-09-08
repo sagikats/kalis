@@ -149,32 +149,60 @@ export function calculateTauOptimalBagrut(subjects: CalculatorSubject[]): Optima
 
 export function calculateTauGeneralSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const zBagrut = (bagrutAverage - 100) / 7.5;
-	const zPsych = (psychometric - 550) / 95;
-	const composite = 0.5 * zBagrut + 0.5 * zPsych;
-	const raw = composite * 90 + 550;
+	const capped = Math.min(bagrutAverage, 117);
+	const step1 = capped * 9.62 - 349.9;
+	const step2 = Math.round(step1 * 100) / 100;
+	const raw = (step2 + psychometric) * 0.52 - 43.10;
 	return Math.min(800, Math.max(200, Math.round(raw)));
 }
 
 export function calculateTauEngineeringSekem(
 	bagrutAverage: number,
 	quant: number,
-	verbal: number
+	hasRealitBonus: boolean = false
 ): number {
 	if (bagrutAverage <= 0 || quant <= 0) return 0;
-	const v = verbal > 0 ? verbal : quant;
-	const raw = 78.239 + 0.0407 * quant + 0.0384 * v + 4.975 * bagrutAverage;
+	const capped = Math.min(bagrutAverage, 117);
+	const step1 = capped * 9.62 - 349.9;
+	const step2 = Math.round(step1 * 100) / 100;
+	const raw = (step2 + quant) * 0.52 - 43.10;
+	const withBonus = raw + (hasRealitBonus ? 10 : 0);
+	return Math.min(800, Math.max(200, Math.round(withBonus)));
+}
+
+export function calculateTauManagementSekem(bagrutAverage: number, psychometric: number): number {
+	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
+	const capped = Math.min(bagrutAverage, 117);
+	const step1 = capped * 9.62 - 349.9;
+	const step2 = Math.round(step1 * 100) / 100;
+	const raw = 0.3 * step2 + 0.7 * psychometric - 11.5;
 	return Math.min(800, Math.max(200, Math.round(raw)));
 }
 
 export function evaluateTau(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateTauOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
-	const quant = input.psychometricQuant || psych;
-	const verbal = input.psychometricVerbal || psych;
+	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
+
+	const mathSub = input.bagrutSubjects.find((s) => s.name.includes('מתמטיקה'));
+	const effMathUnits = input.mathUnits || (mathSub ? mathSub.units : 0);
+	const effMathGrade = input.mathGrade || (mathSub ? mathSub.grade : 0);
+
+	const physSub = input.bagrutSubjects.find((s) => s.name.includes('פיזיקה'));
+	const effPhysUnits = input.physicsUnits !== undefined ? input.physicsUnits : (physSub ? physSub.units : 0);
+	const effPhysGrade = input.physicsGrade !== undefined ? input.physicsGrade : (physSub ? physSub.grade : 0);
+
+	const hasRealitBonus =
+		effMathUnits === 5 &&
+		effMathGrade >= 55 &&
+		effPhysUnits === 5 &&
+		effPhysGrade >= 55;
 
 	const generalSekem = calculateTauGeneralSekem(optimal.average, psych);
-	const engineeringSekem = calculateTauEngineeringSekem(optimal.average, quant, verbal);
+	const effQuant = quant > psych ? quant : psych;
+	const engineeringSekem = calculateTauEngineeringSekem(optimal.average, effQuant, hasRealitBonus);
+	const managementSekem = calculateTauManagementSekem(optimal.average, psych);
 
 	const directBagrutEligible = optimal.average >= 105.0;
 
@@ -185,6 +213,7 @@ export function evaluateTau(input: InstitutionCalculatorInput): InstitutionCalcu
 		optimalUnits: optimal.optimalUnits,
 		generalSekem,
 		engineeringSekem,
+		managementSekem,
 		directBagrutEligible,
 		notes: directBagrutEligible
 			? ['ממוצע בגרות עומד ברף קבלה ישירה (105 ומעלה) לחוגים זכאים.']

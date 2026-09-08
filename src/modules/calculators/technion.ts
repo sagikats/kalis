@@ -194,7 +194,8 @@ export function calculateTechnionSekem(bagrutAverage: number, psychometric: numb
 export function evaluateTechnion(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateTechnionOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
-	const quant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateTechnionSekem(optimal.average, psych);
 	const engineeringSekem = calculateTechnionSekem(optimal.average, quant);

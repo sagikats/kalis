@@ -4,6 +4,7 @@ import {
 	calculateMultiInstitutionSekem,
 	UnifiedCalculationInput
 } from '../calculators/multiCalculator';
+import { calculateInstitution } from '../../modules/calculators/index';
 import { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
 
 export type PsychSectionStrength = 'quant' | 'verbal' | 'english' | 'balanced';
@@ -130,6 +131,18 @@ export function getRealisticPsychometricCeiling(
 	else if (bagrutAvg < 108) correlatedHardCap = 745;
 	else if (bagrutAvg < 112) correlatedHardCap = 765;
 
+	let ceilingAptitudeCap = correlatedHardCap;
+	if (answers.learningStrength === 'analytical_quick') {
+		ceilingAptitudeCap += 30;
+	}
+	if (answers.learningOrientation === 'stem') {
+		ceilingAptitudeCap += 20;
+	}
+
+	if (currentPsych <= 0 || answers.psychExperience === 'never') {
+		return Math.min(750, Math.max(ceilingAptitudeCap, 720));
+	}
+
 	return Math.min(800, Math.min(hardMaxFromBaseline, Math.min(correlatedHardCap, baseline + maxAllowedJump)));
 }
 
@@ -195,36 +208,58 @@ export function evaluateSimulatedSekem(
 	const physUnits = simulatedPhysUnits ?? (physSub ? physSub.units : baseProfile.physicsUnits);
 	const physGrade = simulatedPhysGrade ?? (physSub ? physSub.grade : baseProfile.physicsGrade);
 
-	const baseQuant = baseProfile.psychometricQuant || Math.round((baseProfile.psychometricGeneral || 600) / 5);
-	const psychRatio = (baseProfile.psychometricGeneral || 600) > 0 ? simulatedPsych / (baseProfile.psychometricGeneral || 600) : 1;
-	const simulatedQuant = Math.min(150, Math.max(50, Math.round(baseQuant * psychRatio)));
+	// Official NITE scaling: convert between 200-800 scale and 50-150 subscores
+	const currentGen = baseProfile.psychometricGeneral && baseProfile.psychometricGeneral > 0 ? baseProfile.psychometricGeneral : simulatedPsych;
+	const baseBalSub = Math.round(50 + (currentGen - 200) / 6);
+	const targetBalSub = Math.round(50 + (simulatedPsych - 200) / 6);
 
-	const input: UnifiedCalculationInput = {
+	const normalizeBaseSub = (val: number | undefined): number => {
+		if (!val || val <= 0) return baseBalSub;
+		return val > 150 ? Math.round(50 + (val - 200) / 6) : val;
+	};
+
+	const baseQSub = baseProfile.psychometricQuant ? normalizeBaseSub(baseProfile.psychometricQuant) : baseBalSub;
+	const baseVSub = baseProfile.psychometricVerbal ? normalizeBaseSub(baseProfile.psychometricVerbal) : baseBalSub;
+	const baseESub = baseProfile.psychometricEnglish ? normalizeBaseSub(baseProfile.psychometricEnglish) : baseBalSub;
+
+	const deltaQ = baseQSub - baseBalSub;
+	const deltaV = baseVSub - baseBalSub;
+	const deltaE = baseESub - baseBalSub;
+
+	const simQSub = Math.min(150, Math.max(50, targetBalSub + deltaQ));
+	const simVSub = Math.min(150, Math.max(50, targetBalSub + deltaV));
+	const simESub = Math.min(150, Math.max(50, targetBalSub + deltaE));
+
+	const simQuantScore = Math.min(800, Math.max(200, 200 + (simQSub - 50) * 6));
+	const simVerbalScore = Math.min(800, Math.max(200, 200 + (simVSub - 50) * 6));
+	const simEnglishScore = Math.min(800, Math.max(200, 200 + (simESub - 50) * 6));
+
+	// Call the dedicated institutional calculator directly (8x faster, isolated, official):
+	const instRes = calculateInstitution(calculatorId, {
 		bagrutSubjects: updatedSubjects,
 		psychometricGeneral: simulatedPsych,
-		psychometricQuant: simulatedQuant,
-		psychometricVerbal: baseProfile.psychometricVerbal,
-		psychometricEnglish: baseProfile.psychometricEnglish,
+		psychometricQuant: simQuantScore,
+		psychometricVerbal: simVerbalScore,
+		psychometricEnglish: simEnglishScore,
 		mathUnits: mathU,
 		mathGrade: mathG,
 		physicsUnits: physUnits,
 		physicsGrade: physGrade
-	};
+	});
 
-	const results = calculateMultiInstitutionSekem(input, [calculatorId]);
-	const instRes = results.find((r) => r.institutionId === calculatorId) || results[0];
-
-	let sekem = instRes?.generalSekem || 0;
-	if (relevantSekemType === 'engineering' && instRes?.engineeringSekem) {
+	let sekem = instRes.generalSekem;
+	if (relevantSekemType === 'engineering' && instRes.engineeringSekem !== undefined) {
 		sekem = instRes.engineeringSekem;
-	} else if (relevantSekemType === 'management' && instRes?.managementSekem) {
+	} else if (relevantSekemType === 'management' && instRes.managementSekem !== undefined) {
 		sekem = instRes.managementSekem;
+	} else if (relevantSekemType === 'technion') {
+		sekem = instRes.engineeringSekem ?? instRes.generalSekem;
 	}
 
 	return {
 		sekem,
-		bagrutAverage: instRes?.bagrutAverage || 0,
-		directBagrutEligible: instRes?.directBagrutEligible || false
+		bagrutAverage: instRes.bagrutAverage,
+		directBagrutEligible: instRes.directBagrutEligible
 	};
 }
 
@@ -315,15 +350,36 @@ export function calculateLeverUtilityScore(
 		}
 	} else if (lever.isPhysics) {
 		baseScore = isStemDegree ? 95 : 30;
+	} else if (
+		lever.targetUnits === 5 &&
+		(lever.subjectName.includes('היסטוריה') || lever.subjectName.includes('תנ') || lever.subjectName.includes('ספרות'))
+	) {
+		// High-yield expansion from existing 2 units (only 3 units completion!)
+		baseScore = isStemDegree ? 92 : 98;
 	} else if (lever.targetUnits === 5) {
 		// 5-unit electives: Geography is universally high yield and very light compared to math/sciences
-		baseScore = lever.subjectName.includes('גיאוגרפיה') ? 95 : (isStemDegree ? 80 : 65);
+		if (lever.subjectName.includes('גיאוגרפיה')) {
+			baseScore = 95;
+		} else if (lever.subjectName.includes('מחשב')) {
+			// CS from scratch has high friction (180h) - demote unless strong analytical
+			baseScore = isStemDegree && answers.learningOrientation === 'stem' ? 65 : 40;
+		} else {
+			baseScore = isStemDegree ? 75 : 65;
+		}
 	} else if (lever.subjectName.includes('אנגלית')) {
 		baseScore = 70;
 	} else {
 		// Core mandatory 2 units (תנ"ך, אזרחות, ספרות, היסטוריה, הבעה)
-		// For non-STEM or when raising low/medium grades, these 2-unit subjects are the easiest, fastest, and least risky!
-		baseScore = !isStemDegree ? 92 : 60;
+		if (lever.subjectName.includes('הבעה') || lever.subjectName.includes('לשון')) {
+			// Severe friction and grading variance in Hebrew expression
+			baseScore = lever.currentGrade < 65 ? 50 : 32; // Demoted unless failing!
+		} else if (lever.subjectName.includes('תנ') || lever.subjectName.includes('ספרות')) {
+			baseScore = !isStemDegree ? 95 : 75; // Predictable structured memorization
+		} else if (lever.subjectName.includes('אזרחות')) {
+			baseScore = !isStemDegree ? 92 : 72; // Formulaic
+		} else {
+			baseScore = !isStemDegree ? 92 : 60;
+		}
 	}
 
 	// 2. Learning Strength & Cognitive Affinity
@@ -437,8 +493,41 @@ function getAvailableSubjectLevers(
 		});
 	}
 
+	// High-Yield 5-Unit Expansion Levers (History & Tanach from existing 2 units)
+	const histSub = (userProfile.bagrutSubjects || []).find(
+		(s) => ((s.name || (s as any).subjectName || '')).includes('היסטוריה') && s.units >= 2
+	);
+	if (histSub && histSub.units < 5) {
+		levers.push({
+			id: 'history_5u_expansion',
+			subjectName: 'היסטוריה',
+			currentGrade: histSub.grade,
+			currentUnits: histSub.units,
+			targetGrade: 92,
+			targetUnits: 5,
+			reason: 'הרחבה מ-2 ל-5 יח״ל באמצעות שאלון השלמה של 3 יח״ל בלבד: מעניקה בונוס מלא (20 נקודות) בחצי מהמאמץ של מקצוע חדש.',
+			priority: 2
+		});
+	}
+
+	const tanachSub = (userProfile.bagrutSubjects || []).find(
+		(s) => ((s.name || (s as any).subjectName || '')).includes('תנ') && s.units >= 2
+	);
+	if (tanachSub && tanachSub.units < 5) {
+		levers.push({
+			id: 'tanach_5u_expansion',
+			subjectName: 'תנ״ך',
+			currentGrade: tanachSub.grade,
+			currentUnits: tanachSub.units,
+			targetGrade: 92,
+			targetUnits: 5,
+			reason: 'הרחבה ל-5 יח״ל מוגבר באמצעות שאלון השלמה: מעניקה בונוס מלא (20 נקודות) במאמץ ממוקד.',
+			priority: 2
+		});
+	}
+
 	// High-Yield 5-Unit Elective (Geography or Computer Science)
-	const hasGeo = userProfile.bagrutSubjects.some((s) => s.name.includes('גיאוגרפיה'));
+	const hasGeo = (userProfile.bagrutSubjects || []).some((s) => ((s.name || (s as any).subjectName || '')).includes('גיאוגרפיה'));
 	if (!hasGeo) {
 		const geoReason = answers.learningStrength === 'memory_retention'
 			? 'התאמה מושלמת לחוזק בשינון: מקצוע מוגבר מובנה שמעניק בונוס 20–25 נקודות ללא עומס מתמטי.'
@@ -455,8 +544,12 @@ function getAvailableSubjectLevers(
 		});
 	}
 
-	const hasCS = userProfile.bagrutSubjects.some((s) => s.name.includes('מחשב'));
-	if (!hasCS && (isStemDegree || answers.learningOrientation === 'stem' || answers.learningStrength === 'analytical_quick')) {
+	const hasCS = (userProfile.bagrutSubjects || []).some((s) => ((s.name || (s as any).subjectName || '')).includes('מחשב'));
+	if (
+		!hasCS &&
+		isStemDegree &&
+		(answers.learningOrientation === 'stem' || answers.learningStrength === 'analytical_quick')
+	) {
 		levers.push({
 			id: 'elective_cs_5u',
 			subjectName: 'מדעי המחשב',
@@ -464,8 +557,8 @@ function getAvailableSubjectLevers(
 			currentUnits: 2,
 			targetGrade: 92,
 			targetUnits: 5,
-			reason: 'מקצוע מוגבר מבוקש המעניק בונוס מדעים (20–25 נקודות) ומתאים לבעלי תפיסה אנליטית.',
-			priority: 2
+			reason: 'מקצוע מוגבר הדורש פרויקט תכנות ולמידה מאפס (בונוס 25 נקודות). מומלץ רק לבעלי רקע או תפיסה אנליטית מובהקת.',
+			priority: 3
 		});
 	}
 
@@ -501,10 +594,30 @@ function getAvailableSubjectLevers(
 	}
 
 	// Weakest / improvable Mandatory Core Subjects (Bible, Literature, History, Civics, Hebrew)
+	// Sorted by Predictable Ease ROI to avoid the "Lowest-Grade Trap" (e.g. Hebrew vs Bible)
 	const coreNames = ['תנ"ך', 'תנך', 'ספרות', 'היסטוריה', 'אזרחות', 'הבעה', 'לשון'];
 	const weakCores = userProfile.bagrutSubjects
 		.filter((s) => coreNames.some((c) => s.name.includes(c)) && s.grade < 92 && s.grade > 0)
-		.sort((a, b) => a.grade - b.grade);
+		.sort((a, b) => {
+			const getScore = (sub: typeof a) => {
+				const isHebrew = sub.name.includes('הבעה') || sub.name.includes('לשון');
+				const isBible = sub.name.includes('תנ');
+				const isLit = sub.name.includes('ספרות');
+				const isCivics = sub.name.includes('אזרחות');
+
+				const delta = Math.min(96, Math.max(92, sub.grade + 10)) - sub.grade;
+				let friction = 1.0;
+				if (isHebrew) friction = 2.03; // 1.45 * 1.40
+				else if (isBible) friction = 0.85;
+				else if (isLit) friction = 0.95;
+				else if (isCivics) friction = 1.0;
+
+				// Severe penalty for Hebrew unless failing (< 68) due to subjective grading & essay variance
+				if (isHebrew && sub.grade >= 68) return delta / (friction * 2.5);
+				return delta / friction;
+			};
+			return getScore(b) - getScore(a);
+		});
 
 	weakCores.forEach((sub, idx) => {
 		const targetGrade = Math.min(96, Math.max(92, sub.grade + 10));
@@ -585,7 +698,9 @@ function applyLeversToSubjects(
 				updated.push({ name: 'פיזיקה', units: physU, grade: physG });
 			}
 		} else {
-			const existingIdx = updated.findIndex((s) => s.name === lever.subjectName);
+			const existingIdx = updated.findIndex(
+				(s) => s.name === lever.subjectName || lever.subjectName.includes(s.name) || s.name.includes(lever.subjectName)
+			);
 			if (existingIdx >= 0) {
 				updated[existingIdx] = {
 					...updated[existingIdx],
@@ -594,7 +709,7 @@ function applyLeversToSubjects(
 				};
 			} else {
 				updated.push({
-					name: lever.subjectName,
+					name: lever.subjectName.replace(/\s*\(.*?\)/, '').trim(),
 					grade: lever.targetGrade,
 					units: lever.targetUnits
 				});
@@ -646,9 +761,16 @@ export function generatePersonalizedTracks(
 	const hasTakenPsych = (userProfile.psychometricGeneral || 0) > 0;
 	const currentPsych = hasTakenPsych ? userProfile.psychometricGeneral : 0;
 	const currentBagrut = institutionRes.bagrutAverage > 0 ? institutionRes.bagrutAverage : 100;
+	const baselinePsych = hasTakenPsych
+		? currentPsych
+		: currentBagrut >= 112 ? 650 : currentBagrut >= 105 ? 600 : currentBagrut >= 98 ? 560 : currentBagrut >= 90 ? 510 : 460;
 	const threshold = gapAnalysis.threshold || (gapAnalysis.userSekem + Math.max(0, Math.abs(gapAnalysis.gap)));
 	const calculatorId = gapAnalysis.target.calculatorId;
 	const relevantSekemType = gapAnalysis.relevantSekemType;
+	const baselineSekem = !hasTakenPsych
+		? evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, userProfile.bagrutSubjects, baselinePsych).sekem
+		: gapAnalysis.userSekem;
+	const effectiveGap = Math.max(0, threshold - baselineSekem);
 	const isTechnion = calculatorId === 'technion';
 	const isStemDegree =
 		relevantSekemType === 'engineering' ||
@@ -820,7 +942,10 @@ export function generatePersonalizedTracks(
 		const fastCount = Math.min(2, availableLevers.length);
 		const fastLevers = availableLevers.slice(0, fastCount);
 		const simFast = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, fastLevers);
-		const fastPsych = Math.min(psychCeiling, currentPsych + 65);
+		const fastPsych = Math.min(
+			psychCeiling,
+			hasTakenPsych ? currentPsych + 65 : Math.max(600, baselinePsych + 50)
+		);
 		const resFast = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, simFast.subjects, fastPsych, simFast.mathUnits, simFast.mathGrade, simFast.physUnits, simFast.physGrade);
 		const fastSubjectNames = fastLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל)`).join(' + ');
 
@@ -829,7 +954,9 @@ export function generatePersonalizedTracks(
 			title: 'המסלול המהיר: מינוף מקצועות מפתח',
 			badge: 'הכי מהיר (מועד קיץ/חורף)',
 			badgeColor: 'from-amber-500 to-orange-600',
-			strategyDescription: `שדרוג ממוקד של ${fastSubjectNames} מעלה את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)} יחד עם פסיכומטרי ריאלי של ${fastPsych} (+${fastPsych - currentPsych} נקודות). ממקסם את הזינוק בסכם (${resFast.sekem.toFixed(isTechnion ? 2 : 1)}) למועד הקרוב.`,
+			strategyDescription: hasTakenPsych
+				? `שדרוג ממוקד של ${fastSubjectNames} מעלה את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)} יחד עם פסיכומטרי ריאלי של ${fastPsych} (+${fastPsych - currentPsych} נקודות). ממקסם את הזינוק בסכם (${resFast.sekem.toFixed(isTechnion ? 2 : 1)}) למועד הקרוב.`
+				: `שדרוג ממוקד של ${fastSubjectNames} מעלה את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)} יחד עם יעד פסיכומטרי ראשון של ${fastPsych}. ממקסם את הזינוק בסכם (${resFast.sekem.toFixed(isTechnion ? 2 : 1)}) למועד הקרוב.`,
 			targetSekem: resFast.sekem,
 			targetPsychometric: fastPsych,
 			currentPsychometric: hasTakenPsych ? currentPsych : undefined,
@@ -845,7 +972,7 @@ export function generatePersonalizedTracks(
 			})),
 			estimatedWeeks: 12,
 			weeklyHours: availableWeeklyHours,
-			feasibility: getFeasibilityEvaluation(fastPsych - currentPsych, fastLevers.length).feasibility,
+			feasibility: getFeasibilityEvaluation(hasTakenPsych ? fastPsych - currentPsych : fastPsych - baselinePsych, fastLevers.length).feasibility,
 			feasibilityExplanation: 'שדרוג ממוקד של מקצועות בעלי מקדם בונוס גבוה לסגירת מרב הפער במחזור בחינה בודד.',
 			steps: [
 				{
@@ -885,7 +1012,9 @@ export function generatePersonalizedTracks(
 			title: 'המסלול הבטוח: פיזור עומס דו-שלבי',
 			badge: 'הכי מומלץ (פיזור סיכונים)',
 			badgeColor: 'from-emerald-500 to-teal-600',
-			strategyDescription: `בפער של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, פיצול המאמץ לשני מחזורים מונע עומס יתר: מחזור 1 מעלה 3 מקצועות מוגברים (${multiSubjectNames}) ל-${multiRes.bagrutAverage.toFixed(1)}, ומחזור 2 מוקדש לקורס פסיכומטרי יסודי עד לציון ריאלי של ${psychCeiling}.`,
+			strategyDescription: hasTakenPsych
+				? `בפער של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, פיצול המאמץ לשני מחזורים מונע עומס יתר: מחזור 1 מעלה 3 מקצועות מוגברים (${multiSubjectNames}) ל-${multiRes.bagrutAverage.toFixed(1)}, ומחזור 2 מוקדש לקורס פסיכומטרי יסודי עד לציון ריאלי של ${psychCeiling}.`
+				: `לקראת עמידה בסף הקבלה של ${threshold.toFixed(isTechnion ? 2 : 0)} נקודות סכם (ללא רקע פסיכומטרי קודם), פיצול המאמץ לשני מחזורים מונע עומס יתר: מחזור 1 מעלה 3 מקצועות מוגברים (${multiSubjectNames}) ל-${multiRes.bagrutAverage.toFixed(1)}, ומחזור 2 מוקדש לקורס פסיכומטרי יסודי עד לציון יעד של ${psychCeiling}.`,
 			targetSekem: multiRes.sekem,
 			targetPsychometric: psychCeiling,
 			currentPsychometric: hasTakenPsych ? currentPsych : undefined,
@@ -922,7 +1051,9 @@ export function generatePersonalizedTracks(
 
 		// Track 3: מסלול העוגן
 		// ONLY suggest Open University Academic Transfer if the gap is truly colossal (gap >= 190 pts)
-		const isTrulyColossalGap = isTechnion ? gapAbs >= 20 : gapAbs >= 190;
+		const isTrulyColossalGap = isTechnion
+			? (hasTakenPsych ? gapAbs >= 20 : effectiveGap >= 20)
+			: (hasTakenPsych ? gapAbs >= 190 : effectiveGap >= 190);
 
 		if (isTrulyColossalGap) {
 			tracks.push({
@@ -930,9 +1061,11 @@ export function generatePersonalizedTracks(
 				title: 'מסלול אפיק מעבר: מעקף פסיכומטרי מלא',
 				badge: 'מעקף פסיכומטרי מלא (לפערים חריגים)',
 				badgeColor: 'from-blue-600 to-indigo-700',
-				strategyDescription: `בפער חריג של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, שיפור בגרויות בודדות אינו מספיק. אפיק המעבר של האוניברסיטה הפתוחה עוקף לחלוטין את ציוני התיכון והפסיכומטרי: לומדים 3–4 קורסים אקדמיים בסיסיים (חדו״א, ליניארית, תכנות/פיזיקה) ועוברים ישירות לשנה ב׳ ב${gapAnalysis.target.institutionName} ללא צורך במבחן פסיכומטרי נוסף.`,
+				strategyDescription: hasTakenPsych
+					? `בפער חריג של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, שיפור בגרויות בודדות אינו מספיק. אפיק המעבר של האוניברסיטה הפתוחה עוקף לחלוטין את ציוני התיכון והפסיכומטרי: לומדים 3–4 קורסים אקדמיים בסיסיים (חדו״א, ליניארית, תכנות/פיזיקה) ועוברים ישירות לשנה ב׳ ב${gapAnalysis.target.institutionName} ללא צורך במבחן פסיכומטרי נוסף.`
+					: `עבור סף קבלה גבוה של ${threshold.toFixed(isTechnion ? 2 : 0)} נקודות סכם ללא רקע פסיכומטרי קודם, אפיק המעבר של האוניברסיטה הפתוחה עוקף לחלוטין את ציוני התיכון והפסיכומטרי: לומדים 3–4 קורסים אקדמיים בסיסיים (חדו״א, ליניארית, תכנות/פיזיקה) ועוברים ישירות לשנה ב׳ ב${gapAnalysis.target.institutionName} ללא צורך במבחן פסיכומטרי נוסף.`,
 				targetSekem: threshold,
-				targetPsychometric: currentPsych,
+				targetPsychometric: undefined,
 				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
 				targetBagrutAverage: currentBagrut,
 				currentBagrutAverage: currentBagrut,
@@ -965,7 +1098,7 @@ export function generatePersonalizedTracks(
 			});
 		} else {
 			// University Mechina
-			const mechinaPsychTarget = Math.min(psychCeiling, Math.max(currentPsych, 620));
+			const mechinaPsychTarget = Math.min(psychCeiling, Math.max(hasTakenPsych ? currentPsych : baselinePsych, 620));
 			tracks.push({
 				id: 'track-mechina',
 				title: 'מסלול העוגן: מכינה קדם-אקדמית ייעודית',
@@ -1036,7 +1169,7 @@ export function generatePersonalizedTracks(
 			basePhysU,
 			basePhysG
 		);
-		const psychDelta = purePsychTarget - currentPsych;
+		const psychDelta = purePsychTarget - (hasTakenPsych ? currentPsych : baselinePsych);
 		const evalRes = getFeasibilityEvaluation(psychDelta, 0);
 
 		tracks.push({
@@ -1093,12 +1226,12 @@ export function generatePersonalizedTracks(
 			? sol3Levers.psych
 			: sol4Levers
 			? sol4Levers.psych
-			: Math.min(psychCeiling, currentPsych + 40);
+			: Math.min(psychCeiling, hasTakenPsych ? currentPsych + 40 : Math.max(580, baselinePsych + 30));
 
 		const simFast = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, winningFastLevers);
 		const resFast = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, simFast.subjects, winningFastPsych, simFast.mathUnits, simFast.mathGrade, simFast.physUnits, simFast.physGrade);
 
-		const psychDelta = winningFastPsych - currentPsych;
+		const psychDelta = winningFastPsych - (hasTakenPsych ? currentPsych : baselinePsych);
 		const evalRes = getFeasibilityEvaluation(psychDelta, winningFastLevers.length);
 		const fastNamesStr = winningFastLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, ציון ${l.targetGrade})`).join(' + ');
 
@@ -1108,7 +1241,11 @@ export function generatePersonalizedTracks(
 			badge: 'הכי מהיר (מועד קיץ/חורף)',
 			badgeColor: 'from-amber-500 to-orange-600',
 			strategyDescription: `שדרוג ממוקד של ${fastNamesStr} מקפיץ את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)}${
-				winningFastPsych > currentPsych ? ` יחד עם פסיכומטרי ${winningFastPsych} (+${psychDelta} נקודות)` : ''
+				winningFastPsych > (hasTakenPsych ? currentPsych : 0)
+					? (hasTakenPsych
+						? ` יחד עם פסיכומטרי ${winningFastPsych} (+${psychDelta} נקודות)`
+						: ` יחד עם יעד פסיכומטרי ראשון של ${winningFastPsych}`)
+					: ''
 			} ומבטיח סכם מחושב של ${resFast.sekem.toFixed(isTechnion ? 2 : 1)} (עומד בסף הקבלה הרשמי: ${threshold}).`,
 			targetSekem: resFast.sekem,
 			targetPsychometric: winningFastPsych,
@@ -1235,15 +1372,20 @@ export function generatePersonalizedTracks(
 		});
 	} else {
 		// Balanced Track with meaningful psychometric reduction rule:
-		const track1Psych = tracks[0]?.targetPsychometric || (hasTakenPsych ? currentPsych + 50 : 650);
+		const track1Psych = tracks[0]?.targetPsychometric || (hasTakenPsych ? currentPsych + 50 : Math.min(psychCeiling, baselinePsych + 50));
 		const minMeaningfulReduction = 20;
 
-		selectedBalLevers = availableLevers.slice(0, Math.min(availableLevers.length, 2));
-		balPsych = track1Psych;
-		let balRes = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, userProfile.bagrutSubjects, currentPsych);
+		// Determine minimal lever count for Track B to ensure meaningful differentiation from Track 1
+		const track1LeverCount = tracks[0]?.recommendedSubjectImprovements?.length || 0;
+		const minBalCount = Math.min(availableLevers.length, track1LeverCount > 0 ? track1LeverCount + 1 : 2);
+		const maxBalCount = Math.min(availableLevers.length, Math.max(minBalCount, 3));
 
-		// Iterate through lever counts (1, 2, 3) to find levers that meaningfully drop the psychometric requirement
-		for (let count = 1; count <= Math.min(availableLevers.length, 3); count++) {
+		selectedBalLevers = availableLevers.slice(0, minBalCount);
+		balPsych = track1Psych;
+		let balRes = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, userProfile.bagrutSubjects, hasTakenPsych ? currentPsych : baselinePsych);
+
+		// Iterate through lever counts to find levers that meaningfully drop the psychometric requirement
+		for (let count = minBalCount; count <= maxBalCount; count++) {
 			const candidateLevers = availableLevers.slice(0, count);
 			const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, candidateLevers);
 			const psychSol = findExactPsychometricTarget(
@@ -1262,7 +1404,7 @@ export function generatePersonalizedTracks(
 
 			if (psychSol !== null) {
 				const targetP = Math.max(hasTakenPsych ? currentPsych : 350, psychSol);
-				if (targetP <= track1Psych - minMeaningfulReduction || count === 1) {
+				if (targetP <= track1Psych - minMeaningfulReduction || targetP < balPsych || count === minBalCount) {
 					selectedBalLevers = candidateLevers;
 					balPsych = targetP;
 					balRes = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, balPsych, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
@@ -1275,7 +1417,7 @@ export function generatePersonalizedTracks(
 
 		track2LeverCount = selectedBalLevers.length;
 		const balSubjectSummary = selectedBalLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, ציון ${l.targetGrade})`).join(' + ');
-		psychBalDelta = balPsych - currentPsych;
+		psychBalDelta = balPsych - (hasTakenPsych ? currentPsych : baselinePsych);
 		const balEval = getFeasibilityEvaluation(psychBalDelta, selectedBalLevers.length);
 
 		tracks.push({
@@ -1380,8 +1522,8 @@ export function generatePersonalizedTracks(
 		);
 
 		const anchorPsych = anchorPsychSol !== null
-			? Math.max(currentPsych, anchorPsychSol)
-			: Math.min(psychCeiling, Math.max(currentPsych, currentPsych + 15));
+			? Math.max(hasTakenPsych ? currentPsych : 350, anchorPsychSol)
+			: Math.min(psychCeiling, Math.max(hasTakenPsych ? currentPsych : baselinePsych, (hasTakenPsych ? currentPsych : baselinePsych) + 15));
 
 		const psychRelief = balPsych - anchorPsych;
 
@@ -1389,7 +1531,7 @@ export function generatePersonalizedTracks(
 		if (psychRelief >= 15 || (!hasTakenPsych && psychRelief >= 10)) {
 			const anchorRes = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, simAnchor.subjects, anchorPsych, simAnchor.mathUnits, simAnchor.mathGrade, simAnchor.physUnits, simAnchor.physGrade);
 			const anchorSummary = anchorLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, ציון ${l.targetGrade})`).join(' + ');
-			const anchorPsychDelta = anchorPsych - currentPsych;
+			const anchorPsychDelta = anchorPsych - (hasTakenPsych ? currentPsych : baselinePsych);
 			const anchorEval = getFeasibilityEvaluation(anchorPsychDelta, anchorLevers.length);
 
 			tracks.push({
@@ -1398,8 +1540,10 @@ export function generatePersonalizedTracks(
 				badge: 'עוגן אקדמי קבוע + בונוס מרבי',
 				badgeColor: 'from-blue-600 to-indigo-700',
 				strategyDescription: `בניית בסיס אקדמי מוצק: שדרוג ${anchorSummary} מעלה את ממוצע הבגרות ל-${anchorRes.bagrutAverage.toFixed(1)}.${
-					anchorPsych > currentPsych
-						? ` דורש רק פסיכומטרי ${anchorPsych} (+${anchorPsychDelta} נקודות בלבד) לסגירת הרף המלא (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`
+					anchorPsych > (hasTakenPsych ? currentPsych : 0)
+						? (hasTakenPsych
+							? ` דורש רק פסיכומטרי ${anchorPsych} (+${anchorPsychDelta} נקודות בלבד) לסגירת הרף המלא (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`
+							: ` דורש יעד פסיכומטרי ראשון נגיש של ${anchorPsych} בלבד לסגירת הרף המלא (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`)
 						: ` סוגר את סף הקבלה ישירות (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)}) ללא צורך בהעלאת ציון הפסיכומטרי!`
 				}`,
 				targetSekem: anchorRes.sekem,
@@ -1436,11 +1580,13 @@ export function generatePersonalizedTracks(
 								}
 						  ]
 						: []),
-					...(anchorPsychDelta > 0
+					...(anchorPsychDelta > 0 || !hasTakenPsych
 						? [
 								{
-									title: 'השלמת פסיכומטרי מתון',
-									detail: `עלייה מתונה ל-${anchorPsych} בלבד (+${anchorPsychDelta} נקודות)`,
+									title: hasTakenPsych ? 'השלמת פסיכומטרי מתון' : 'בחינה פסיכומטרית ראשונה',
+									detail: hasTakenPsych
+										? `עלייה מתונה ל-${anchorPsych} בלבד (+${anchorPsychDelta} נקודות)`
+										: `השגת ציון יעד ראשוני של ${anchorPsych}`,
 									timing: 'שבועות 17–18',
 									type: 'psychometric' as const
 								}
@@ -1448,7 +1594,9 @@ export function generatePersonalizedTracks(
 						: [
 								{
 									title: 'הגשת מועמדות ורישום',
-									detail: `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} וקבלה מובטחת עם הפסיכומטרי הקיים (${currentPsych})!`,
+									detail: hasTakenPsych
+										? `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} וקבלה מובטחת עם הפסיכומטרי הקיים (${currentPsych})!`
+										: `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} וקבלה מובטחת!`,
 									timing: 'שבועות 17–18',
 									type: 'bagrut_core' as const
 								}

@@ -96,39 +96,32 @@ npm run build
 - **Active Branch:** `main` (Fully synchronized with `origin/main`)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **55/55 tests passing** across 18 test suites.
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **80/80 tests passing** across 27 test suites.
   - `npm run build`: Clean (16/16 static pages generated, zero compile or runtime build errors).
   - Background processes: Next.js dev server on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
 
-1. **Track Efficiency & Minimum Effort Engine (`src/modules/optimizer/efficiency/`):**
-   - **Calibrated Effort Cost Model (`effortCostModel.ts`):**
-     - Psychometric attempt hours: 1st attempt = 220h (100%), 2nd attempt = 165h (75% of 1st), 3rd+ attempt = 110h (50% of 1st).
-     - Verbal reasoning intellect bonus: score $\ge 130$ grants a global speedup multiplier ($K_{\text{general}} = 0.85$) across all subjects.
-     - English exemption bonus: score $\ge 134$ grants university exemption (Ptor), eliminating English prep friction ($K_{\text{psych}} = 0.85$).
-     - Subject base hours: Math 5u = 180h, Math 5u boost = 90h, Geography 5u = 100h, 2u core = 40h, exam overhead = 25h per distinct exam.
-   - **Micro-Improvement Redundancy Pruning (`microImprovementPruner.ts`):**
-     - Automatically tests whether an entire redundant exam can be eliminated if an achievable micro-improvement closes the gap:
-       - Psychometric: $\le 7$ points.
-       - Humanities 2-unit core: $\le 5$ points.
-       - 5-unit exam (Math / Physics / Elective): $\le 2–3$ points.
-   - **Annual Multi-Phase Track for Huge Gaps (`trackEngine.ts`):**
-     - For students with large or huge gaps, the engine now generates a **Long-Term Phased Track (`track-long-term`)** spanning 36–44 weeks across Israeli exam sessions (Winter $\to$ Spring $\to$ Summer $\to$ Fall) **in addition** to recommending Opt-In Mechina (`mechinaAvailable: true`).
-   - **12 Comprehensive Benchmark Archetypes (`archetypes.ts`):**
-     - Rigorous benchmark suite modeling 12 diverse student personas across all 8 Israeli universities.
-   - **Automated Efficiency Benchmarker & Test Suite (`efficiencyBenchmarker.ts` & `track_efficiency.test.ts`):**
-     - Validates minimum effort optimality, zero redundancy, ROI index ($\eta$), and reachability bounds.
-     - 55/55 unit tests passing.
+1. **Precision Cross-University Sekem Synchronization & Direct Institutional Calculators:**
+   - **Fix of TAU CS Sekem calculation:** Bagrut 107.0 + Psychometric 698 accurately produces 683.0 (and 706 requires Psychometric 740).
+   - **Direct Institutional Execution:** Eliminated multi-calculator wrappers inside optimization and simulation loops (`trackGenerator.ts`), switching to direct `calculateInstitution(calculatorId, ...)`.
+   - **NITE Official Subscore Alignment:** Replaced naive `/ 5` divisions with official NITE scale conversion ($S = 50 + (P - 200)/6$) and balanced test-taker assumption ($P_q = P_v = P_e = P_g$).
+   - **Subscore Normalization:** Standardized raw subscore normalization (50–150 $\to$ 200–800) across all 8 university calculators.
 
-2. **Cross-University Major Selector (`DegreeSearchSelector.tsx`):**
-   - Added instant one-click comparison for top disciplines across all 8 universities.
+2. **Comprehensive 24-Case QA Benchmark Suite (`all_institutions_benchmarks.test.ts`):**
+   - 3 distinct test cases per university for all 8 Israeli universities covering STEM, direct bagrut, and general admission.
+   - All 24 cases pass with 100% precision.
 
-3. **Official Vector University Logos (`UniversityLogo.tsx`):**
-   - Integrated SVG vector emblems for all 8 supported universities across the catalog, reports, and tracks.
+3. **Smart Bagrut Subject Selection & National Friction Index (`effortCostModel.ts`, `utilityScorer.ts`, `trackGenerator.ts`, `solver.ts`):**
+   - Hebrew / Lashon friction penalty ($2.03$), structured memorization prioritization (תנ״ך, ספרות, גיאוגרפיה).
+   - History 2u $\to$ 5u expansion lever ($75$h).
 
-4. **Explicit Israeli Exam Sessions in UI (`RecommendedTracksView.tsx` & `calendarScheduler.ts`):**
-   - Mapped all exam recommendations to official Israeli Ministry of Education / NITE sessions (Winter, Spring, Summer, Fall).
+4. **Track Efficiency & Minimum Effort Engine (`src/modules/optimizer/efficiency/`):**
+   - Calibrated effort cost model (220h 1st, 165h 2nd, 110h 3rd+).
+   - Verbal reasoning intellect bonus ($\ge 130 \implies 0.85$ multiplier) and English Ptor exemption ($\ge 134 \implies 0.85$).
+   - Micro-improvement redundancy pruning ($\le 7$ pts psych, $\le 5$ pts core, $\le 2-3$ pts 5u).
+   - Annual multi-phase long-term tracks for huge gaps alongside Opt-In Mechina.
+   - 12 benchmark archetypes, 80/80 passing tests.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **חיבור מדדי היעילות ל-UI ב-RecommendedTracksView:**

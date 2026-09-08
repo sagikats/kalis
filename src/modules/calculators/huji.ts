@@ -158,8 +158,11 @@ export function calculateHujiSekem(bagrutAverage: number, psychometric: number):
 export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateHujiOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
+	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateHujiSekem(optimal.average, psych);
+	const engineeringSekem = calculateHujiSekem(optimal.average, quant > psych ? quant : psych);
 	const directBagrutEligible = optimal.average >= 105.0;
 
 	return {
@@ -168,6 +171,7 @@ export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalc
 		bagrutAverage: optimal.average,
 		optimalUnits: optimal.optimalUnits,
 		generalSekem,
+		engineeringSekem,
 		directBagrutEligible,
 		notes: directBagrutEligible
 			? ['ממוצע בגרות עומד ברף קבלה ישירה (105 ומעלה) לחוגים זכאים כגון פסיכולוגיה ומדעי החברה.']
