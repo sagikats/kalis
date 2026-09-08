@@ -27,6 +27,7 @@ import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAna
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
 import WhatIfSimulator from './WhatIfSimulator';
+import UniversityLogo from '../common/UniversityLogo';
 
 interface RecommendedTracksViewProps {
 	analysis: ProgramGapAnalysis;
@@ -146,8 +147,8 @@ export default function RecommendedTracksView({
 							<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
 							<span>שלב 4: תכנון מסלולי פעולה ובניית מסלול אישי</span>
 						</span>
-						<span className="px-3 py-1 bg-slate-950/80 border border-slate-800 text-xs font-bold text-slate-300 rounded-lg flex items-center gap-1.5">
-							<GraduationCap className="h-3.5 w-3.5 text-slate-400" />
+						<span className="px-3 py-1 bg-slate-950/80 border border-slate-800 text-xs font-bold text-slate-300 rounded-lg flex items-center gap-2">
+							<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
 							<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
 						</span>
 					</div>
@@ -775,9 +776,9 @@ export default function RecommendedTracksView({
 										</span>
 									)}
 								</div>
-								<h4 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-									<GraduationCap className="h-6 w-6 text-purple-400 shrink-0" />
-									<span>שוקל מכינה אקדמית במקום שיפורי בגרות ופסיכומטרי בודדים?</span>
+								<h4 className="text-lg sm:text-xl font-black text-white flex items-center gap-2.5">
+									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="rounded" />
+									<span>שוקל מכינה אקדמית ב{analysis.target.institutionName.replace('אוניברסיטת ', '')}?</span>
 								</h4>
 								<p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
 									עבור פערים גדולים או למי שמעדיף מסגרת לימודית אינטנסיבית ומסודרת, מכינה קדם-אקדמית של המוסד מחליפה את ממוצע הבגרות ומספקת נתיב קבלה ישיר עם מעטפת תרגול ומלגות.
@@ -819,13 +820,16 @@ export default function RecommendedTracksView({
 							<div className="relative z-10 pt-4 border-t border-slate-800 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
 								<div className="bg-slate-950/80 border border-purple-500/30 rounded-2xl p-5 space-y-4">
 									<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
-										<div>
-											<h5 className="text-base font-black text-purple-200">
-												{mechinaTrack.title}
-											</h5>
-											<p className="text-xs text-slate-400 mt-0.5">
-												{mechinaTrack.keyAdvantage}
-											</p>
+										<div className="flex items-center gap-3">
+											<UniversityLogo institution={analysis.target.institutionId} size="md" shape="rounded" />
+											<div>
+												<h5 className="text-base font-black text-purple-200">
+													{mechinaTrack.title}
+												</h5>
+												<p className="text-xs text-slate-400 mt-0.5">
+													{mechinaTrack.keyAdvantage}
+												</p>
+											</div>
 										</div>
 										<div className="flex items-center gap-3 text-xs font-bold text-slate-300 shrink-0">
 											<div className="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">

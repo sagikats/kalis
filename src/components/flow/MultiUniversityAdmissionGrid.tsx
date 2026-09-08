@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { TrendingUp, Sparkles, CheckCircle2, Zap, GraduationCap } from 'lucide-react';
+import UniversityLogo from '../common/UniversityLogo';
 
 export interface InstitutionSimulatedState {
 	institutionId: string;
@@ -98,12 +99,8 @@ export default function MultiUniversityAdmissionGrid({
 						{/* ── TOP: Logo badge + Name ── */}
 						<div className="space-y-2">
 							{/* Logo + name row */}
-							<div className="flex items-center gap-1.5">
-								<span
-									className={`w-7 h-7 rounded-xl bg-gradient-to-br ${inst.badgeColor} flex items-center justify-center text-[10px] font-black text-white shrink-0 shadow-sm`}
-								>
-									{inst.logoText}
-								</span>
+							<div className="flex items-center gap-2">
+								<UniversityLogo institution={inst.institutionId || inst.logoText} size="sm" shape="rounded" />
 								<span
 									className="text-[11px] font-bold text-slate-200 leading-tight line-clamp-2"
 									title={inst.institutionName}

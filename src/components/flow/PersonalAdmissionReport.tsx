@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { ProgramGapAnalysis, AdmissionStatus } from '../../utils/analysis/gapAnalyzer';
 import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
+import UniversityLogo from '../common/UniversityLogo';
 
 interface PersonalAdmissionReportProps {
 	analyses: ProgramGapAnalysis[];
@@ -243,13 +244,16 @@ function ProgramReportCard({
 		<div className={`p-5 rounded-2xl border ${borderStyle} shadow-lg space-y-4 flex flex-col justify-between`}>
 			<div className="space-y-2.5">
 				<div className="flex items-start justify-between gap-2">
-					<div>
-						<h4 className="text-base font-bold text-white leading-snug">
-							{item.target.program.fieldOfStudy}
-						</h4>
-						<p className="text-xs text-cyan-400 font-semibold mt-0.5">
-							{item.target.institutionName} · {item.target.program.degreeLevel}
-						</p>
+					<div className="flex items-center gap-3">
+						<UniversityLogo institution={item.target.institutionId} size="md" />
+						<div>
+							<h4 className="text-base font-bold text-white leading-snug">
+								{item.target.program.fieldOfStudy}
+							</h4>
+							<p className="text-xs text-cyan-400 font-semibold mt-0.5">
+								{item.target.institutionName} · {item.target.program.degreeLevel}
+							</p>
+						</div>
 					</div>
 					<span className={`text-xs font-black px-2.5 py-1 rounded-full border shrink-0 ${badgeStyle}`}>
 						{badgeText}

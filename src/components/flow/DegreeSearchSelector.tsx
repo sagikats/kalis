@@ -18,6 +18,7 @@ import {
 import { academicInstitutions } from '../../data/academicData';
 import { AcademicDegree, AcademicInstitution } from '../../types/academic';
 import { TargetProgramSelection } from '../../utils/analysis/gapAnalyzer';
+import UniversityLogo from '../common/UniversityLogo';
 
 export interface CrossUniversityMajor {
 	id: string;
@@ -399,6 +400,7 @@ export default function DegreeSearchSelector({
 									key={target.program.id}
 									className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-950/60 to-indigo-950/60 border border-blue-500/30 text-xs font-bold text-slate-200 shadow-sm"
 								>
+									<UniversityLogo institution={target.institutionId} size="xs" shape="circle" />
 									<span className="text-[10px] text-cyan-300 font-extrabold px-1.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/30">
 										{instInfo?.badge || target.institutionName.replace('אוניברסיטת ', '')}
 									</span>
@@ -589,13 +591,16 @@ export default function DegreeSearchSelector({
 								<button
 									key={inst.id}
 									onClick={() => setSelectedInstFilter(inst.id)}
-									className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border ${
+									className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border ${
 										isChipSelected
-											? 'bg-cyan-500/20 border-cyan-400 text-cyan-200'
+											? 'bg-cyan-500/20 border-cyan-400 text-cyan-200 shadow-sm'
 											: 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
 									}`}
 								>
-									{inst.name}
+									{inst.id !== 'all' && (
+										<UniversityLogo institution={inst.id} size="xs" shape="circle" />
+									)}
+									<span>{inst.name}</span>
 								</button>
 							);
 						})}
@@ -665,14 +670,8 @@ export default function DegreeSearchSelector({
 
 									{/* Institution & Threshold Bar */}
 									<div className="flex items-center justify-between flex-wrap gap-2 text-xs">
-										<div className="flex items-center gap-1.5">
-											{instInfo ? (
-												<span
-													className={`text-[10px] font-black px-2 py-0.5 rounded text-white bg-gradient-to-r ${instInfo.color} shadow-sm`}
-												>
-													{instInfo.badge}
-												</span>
-											) : null}
+										<div className="flex items-center gap-2">
+											<UniversityLogo institution={item.institutionId} size="xs" showBadge={true} />
 											<span className="text-cyan-400 font-bold">
 												{item.institutionName}
 											</span>
