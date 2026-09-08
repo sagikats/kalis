@@ -200,8 +200,8 @@ describe('Subagent 2: Optimizer & Recommendation Algorithms', () => {
 		const directTrack = solution.tracks.find((t) => t.id === 'track-direct-bagrut');
 		assert.equal(directTrack, undefined);
 
-		// Must have balanced track
-		const balancedTrack = solution.tracks.find((t) => t.id === 'track-balanced');
+		// Must have risk-spread / balanced track
+		const balancedTrack = solution.tracks.find((t) => t.id === 'track-risk-spread' || t.id === 'track-balanced');
 		assert.ok(balancedTrack);
 	});
 });

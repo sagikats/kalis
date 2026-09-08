@@ -104,6 +104,7 @@ export interface ImprovementLeverRecord {
 	isMath?: boolean;
 	isPhysics?: boolean;
 	leverType: 'psychometric' | 'bagrut_core' | 'bagrut_elective';
+	session?: 'winter' | 'spring_psych' | 'summer';
 }
 
 export interface TrackMilestoneRecord {

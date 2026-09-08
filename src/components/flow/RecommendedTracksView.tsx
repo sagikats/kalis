@@ -247,8 +247,8 @@ export default function RecommendedTracksView({
 					<div className={`grid grid-cols-1 ${tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
 				{tracks.map((track) => {
 					const isSelected = track.id === selectedTrackId;
-					const isBalanced = track.id === 'track-balanced';
-					const isFast = track.id.startsWith('track-fast');
+					const isBalanced = track.id === 'track-balanced' || track.id === 'track-risk-spread';
+					const isFast = track.id.startsWith('track-fast') || track.id === 'track-maximize-exam';
 
 					let TrackIcon = ShieldCheck;
 					if (isFast) TrackIcon = Zap;

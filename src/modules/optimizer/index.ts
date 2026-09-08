@@ -7,3 +7,5 @@ export * from './types';
 export * from './utilityScorer';
 export * from './solver';
 export * from './trackEngine';
+export * from './reachabilityModel';
+export * from './calendarScheduler';
