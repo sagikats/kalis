@@ -96,48 +96,43 @@ npm run build
 - **Active Branch:** `main` (Fully synchronized with `origin/main`)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **37/37 tests passing** across all modules.
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **55/55 tests passing** across 18 test suites.
   - `npm run build`: Clean (16/16 static pages generated, zero compile or runtime build errors).
-  - Background processes: None running.
+  - Background processes: Next.js dev server on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
 
-1. **Cross-University Major Selector (`DegreeSearchSelector.tsx`):**
-   - Added instant one-click comparison for top disciplines (Computer Science & High-Tech, Electrical Engineering, Medicine, Law, Psychology, Economics/Management, Data/Industrial Engineering, Life Sciences, etc.).
-   - Includes bulk action ("➕ הוסף את כל 8 המוסדות לסל היעדים") to load equivalent programs across all universities into the comparison basket in a single click.
+1. **Track Efficiency & Minimum Effort Engine (`src/modules/optimizer/efficiency/`):**
+   - **Calibrated Effort Cost Model (`effortCostModel.ts`):**
+     - Psychometric attempt hours: 1st attempt = 220h (100%), 2nd attempt = 165h (75% of 1st), 3rd+ attempt = 110h (50% of 1st).
+     - Verbal reasoning intellect bonus: score $\ge 130$ grants a global speedup multiplier ($K_{\text{general}} = 0.85$) across all subjects.
+     - English exemption bonus: score $\ge 134$ grants university exemption (Ptor), eliminating English prep friction ($K_{\text{psych}} = 0.85$).
+     - Subject base hours: Math 5u = 180h, Math 5u boost = 90h, Geography 5u = 100h, 2u core = 40h, exam overhead = 25h per distinct exam.
+   - **Micro-Improvement Redundancy Pruning (`microImprovementPruner.ts`):**
+     - Automatically tests whether an entire redundant exam can be eliminated if an achievable micro-improvement closes the gap:
+       - Psychometric: $\le 7$ points.
+       - Humanities 2-unit core: $\le 5$ points.
+       - 5-unit exam (Math / Physics / Elective): $\le 2–3$ points.
+   - **Annual Multi-Phase Track for Huge Gaps (`trackEngine.ts`):**
+     - For students with large or huge gaps, the engine now generates a **Long-Term Phased Track (`track-long-term`)** spanning 36–44 weeks across Israeli exam sessions (Winter $\to$ Spring $\to$ Summer $\to$ Fall) **in addition** to recommending Opt-In Mechina (`mechinaAvailable: true`).
+   - **12 Comprehensive Benchmark Archetypes (`archetypes.ts`):**
+     - Rigorous benchmark suite modeling 12 diverse student personas across all 8 Israeli universities.
+   - **Automated Efficiency Benchmarker & Test Suite (`efficiencyBenchmarker.ts` & `track_efficiency.test.ts`):**
+     - Validates minimum effort optimality, zero redundancy, ROI index ($\eta$), and reachability bounds.
+     - 55/55 unit tests passing.
 
-2. **Official Vector University Logos (`UniversityLogo.tsx`):**
-   - Designed sharp, responsive SVG vector emblems for all 8 supported universities (Technion, TAU, HUJI, BGU, BIU, Haifa, Ariel, Reichman) with authentic colors, heraldic symbols, and custom gradients.
-   - Deeply integrated into:
-     - Degree selector chips and wishlist tray tags.
-     - Program catalog cards.
-     - Admission Gap Report cards.
-     - Multi-University Simulation Grid headers.
-     - Recommended action track target badges and Opt-In Mechina cards.
+2. **Cross-University Major Selector (`DegreeSearchSelector.tsx`):**
+   - Added instant one-click comparison for top disciplines across all 8 universities.
 
-3. **Explicit Israeli Exam Sessions in UI (`RecommendedTracksView.tsx` & `calendarScheduler.ts`):**
-   - Mapped all exam recommendations to official Israeli Ministry of Education / NITE sessions:
-     - ❄️ **מועד חורף (ינואר–פברואר):** מקצועות ליבה 2 יח״ל + מתמטיקה/אנגלית.
-     - 🌱 **מועד אביב (מרץ–אפריל):** תחנת בחינה פסיכומטרית (לפני עומס בגרויות קיץ).
-     - ☀️ **מועד קיץ (יוני–יולי):** הרחבות 5 יח״ל ומקצועות בחירה.
-     - 🎓 **קליטה במוסד (אוגוסט–ספטמבר):** שיוך מועמד ואימות תנאי סף.
-   - Displayed session badges across Track Cards, Roadmap Summary Bar, and Step Timeline Cards.
+3. **Official Vector University Logos (`UniversityLogo.tsx`):**
+   - Integrated SVG vector emblems for all 8 supported universities across the catalog, reports, and tracks.
 
-4. **Opt-In Mechina Integration:**
-   - Designed and integrated an interactive, non-intrusive Mechina card at the bottom of the recommended tracks tab.
-   - Connects to `POST /api/tracks/mechina` on demand with full details (weekly hours, duration in weeks, direct admission guarantee, and milestones).
-
-5. **Psychometric Reachability Model (`reachabilityModel.ts`):**
-   - Implemented `computePsychReachability` factoring in weekly availability hours, first-time examinee status, confidence level, and percentile density penalties.
-   - Feasibility classifier (`very_high`, `high`, `moderate`, `challenging`) with realistic bounds (`isRealistic`).
-
-6. **Test Suite & Build Verification:**
-   - 37/37 unit tests passing including all 8 institutional calculators and Case 9 edge scenarios.
-   - Next.js Turbopack build verified and clean (16/16 pages).
+4. **Explicit Israeli Exam Sessions in UI (`RecommendedTracksView.tsx` & `calendarScheduler.ts`):**
+   - Mapped all exam recommendations to official Israeli Ministry of Education / NITE sessions (Winter, Spring, Summer, Fall).
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
-1. **משוב משתמשים ואיטרציית UI בסימולטור What-If:**
-   - המשך חידוד חווית המשתמש בסליידרים ובטבלת הקבלה הרב-מוסדית.
+1. **חיבור מדדי היעילות ל-UI ב-RecommendedTracksView:**
+   - הצגת תג מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות בכרטיסיות המסלול.
 2. **ניטור זמני טעינה ואופטימיזציה:**
    - מעקב אחר ביצועי קליינט ב-flow המלא ושיפור זמני תגובה.
 

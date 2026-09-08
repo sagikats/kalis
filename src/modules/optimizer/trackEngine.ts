@@ -21,6 +21,7 @@ import {
 import { SubjectLeverCandidate, OptimizationSolution } from './types';
 import { computePsychReachability, PsychReachability } from './reachabilityModel';
 import { assignSessionToCandidate, generatePhasedMilestones } from './calendarScheduler';
+import { pruneRedundantLeversWithMicroImprovement } from './efficiency/microImprovementPruner';
 
 // ---------------------------------------------------------------------------
 // Helper: institution-specific Mechina / preparatory-program description
@@ -217,10 +218,10 @@ export function generateOptimizedActionTracks(
 	const isStemDegree =
 		relevantSekemType === 'engineering' ||
 		relevantSekemType === 'technion' ||
-		targetProgram.fieldOfStudy.includes('מחשב') ||
-		targetProgram.fieldOfStudy.includes('הנדס') ||
-		targetProgram.fieldOfStudy.includes('פיזיקה') ||
-		targetProgram.fieldOfStudy.includes('מדעים מדויקים');
+		Boolean(targetProgram.fieldOfStudy?.includes('מחשב')) ||
+		Boolean(targetProgram.fieldOfStudy?.includes('הנדס')) ||
+		Boolean(targetProgram.fieldOfStudy?.includes('פיזיקה')) ||
+		Boolean(targetProgram.fieldOfStudy?.includes('מדעים מדויקים'));
 
 	const baseSubjects = toCalculatorSubjects(profile);
 	const initialRes = evaluateSimulatedSekem(
@@ -355,8 +356,41 @@ export function generateOptimizedActionTracks(
 	let directBagrutAvg = 0;
 
 	if (degreeAllowsDirectBagrut) {
-		for (let k = 1; k <= Math.min(3, availableLevers.length); k++) {
-			const candidateLevers = availableLevers.slice(0, k).map((l) => ({
+		const nonMath5Levers = availableLevers.filter((l) => !(l.isMath && l.targetUnits === 5));
+		// For non-STEM degrees, prioritize non-math5 levers to avoid forcing 5-unit math on humanities students
+		const primaryLevers = isStemDegree ? availableLevers : nonMath5Levers;
+
+		const candidateCombos: SubjectLeverCandidate[][] = [];
+		// 1. Slices of primary levers (1, 2, 3)
+		for (let k = 1; k <= Math.min(3, primaryLevers.length); k++) {
+			candidateCombos.push(primaryLevers.slice(0, k));
+		}
+		// 2. Pairs of primary levers
+		if (primaryLevers.length >= 2) {
+			for (let i = 0; i < Math.min(3, primaryLevers.length); i++) {
+				for (let j = i + 1; j < Math.min(4, primaryLevers.length); j++) {
+					candidateCombos.push([primaryLevers[i], primaryLevers[j]]);
+				}
+			}
+		}
+		// 3. Combos combining elective (e.g. Geography 5u) + top core levers
+		const geoLever = primaryLevers.find((l) => l.subjectName.includes('גיאוגרפיה'));
+		if (geoLever) {
+			const coreLevers = primaryLevers.filter((l) => l.leverType === 'bagrut_core');
+			if (coreLevers.length >= 1) {
+				candidateCombos.push([geoLever, coreLevers[0]]);
+			}
+			if (coreLevers.length >= 2) {
+				candidateCombos.push([geoLever, coreLevers[0], coreLevers[1]]);
+			}
+		}
+		// 4. Fallback: single levers from full available pool (including Math 5u if nothing else worked)
+		for (const singleLever of availableLevers) {
+			candidateCombos.push([singleLever]);
+		}
+
+		for (const combo of candidateCombos) {
+			const candidateLevers = combo.map((l) => ({
 				...l,
 				targetGrade: l.isMath ? 92 : l.targetUnits >= 5 ? 95 : 94
 			}));
@@ -513,7 +547,7 @@ export function generateOptimizedActionTracks(
 		targetGrade: l.isMath ? 86 : l.targetUnits >= 5 ? 86 : 90
 	}));
 
-	const simStateB = applyLeversToCandidateState(profile, moderateLevers);
+	const initialSimStateB = applyLeversToCandidateState(profile, moderateLevers);
 	// Moderate psychometric ceiling for track B (avoid high-stress targets)
 	const safePsychCeiling = Math.min(psychCeiling - 10, currentPsych + Math.round(reachability.maxImprovementPoints * 0.8));
 
@@ -522,13 +556,13 @@ export function generateOptimizedActionTracks(
 		relevantSekemType,
 		threshold,
 		profile,
-		simStateB.subjects,
+		initialSimStateB.subjects,
 		hasTakenPsych ? currentPsych : 450,
 		safePsychCeiling,
-		simStateB.mathUnits,
-		simStateB.mathGrade,
-		simStateB.physicsUnits,
-		simStateB.physicsGrade
+		initialSimStateB.mathUnits,
+		initialSimStateB.mathGrade,
+		initialSimStateB.physicsUnits,
+		initialSimStateB.physicsGrade
 	);
 
 	// If safe psych solution is null, try full psychCeiling to avoid leaving an avoidable gap
@@ -539,28 +573,43 @@ export function generateOptimizedActionTracks(
 				relevantSekemType,
 				threshold,
 				profile,
-				simStateB.subjects,
+				initialSimStateB.subjects,
 				hasTakenPsych ? currentPsych : 450,
 				psychCeiling,
-				simStateB.mathUnits,
-				simStateB.mathGrade,
-				simStateB.physicsUnits,
-				simStateB.physicsGrade
+				initialSimStateB.mathUnits,
+				initialSimStateB.mathGrade,
+				initialSimStateB.physicsUnits,
+				initialSimStateB.physicsGrade
 		  ) ?? (hasTakenPsych ? currentPsych : 450);
 
+	// Apply micro-improvement pruning to eliminate redundant exams if minor bump suffices
+	const pruningResult = pruneRedundantLeversWithMicroImprovement(
+		institutionId,
+		relevantSekemType,
+		threshold,
+		profile,
+		moderateLevers,
+		effectivePsychB,
+		psychCeiling
+	);
+
+	const prunedModerateLevers = pruningResult.survivingLevers;
+	const finalPsychB = pruningResult.adjustedPsychometric ?? effectivePsychB;
+
+	const simStateB = applyLeversToCandidateState(profile, prunedModerateLevers);
 	const resB = evaluateSimulatedSekem(
 		institutionId,
 		relevantSekemType,
 		profile,
 		simStateB.subjects,
-		effectivePsychB,
+		finalPsychB,
 		simStateB.mathUnits,
 		simStateB.mathGrade,
 		simStateB.physicsUnits,
 		simStateB.physicsGrade
 	);
 
-	const trackB_levers = moderateLevers.map((l) => ({
+	const trackB_levers = prunedModerateLevers.map((l) => ({
 		id: l.id,
 		trackId: 'track-risk-spread',
 		subjectName: l.subjectName,
@@ -574,22 +623,22 @@ export function generateOptimizedActionTracks(
 		session: l.session
 	}));
 
-	const bagrutSummaryB = moderateLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, יעד ${l.targetGrade})`).join(' + ');
+	const bagrutSummaryB = prunedModerateLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, יעד ${l.targetGrade})`).join(' + ');
 	const remainingGapB = Math.max(0, threshold - resB.sekem);
 	const isClosedB = resB.sekem >= threshold;
 
 	let strategyDescB: string;
 	if (isClosedB) {
 		strategyDescB = `מסלול בטוח וסולידי: שדרוג מתון של ${bagrutSummaryB} ללא לחץ של ציוני קצה. ` +
-			(effectivePsychB > currentPsych
-				? `בשילוב שיפור פסיכומטרי מתון ל-${effectivePsychB} (+${effectivePsychB - currentPsych} נקודות), הסף נסגר במלואו (סכם: ${resB.sekem.toFixed(isTechnion ? 2 : 1)}).`
+			(finalPsychB > currentPsych
+				? `בשילוב שיפור פסיכומטרי מתון ל-${finalPsychB} (+${finalPsychB - currentPsych} נקודות), הסף נסגר במלואו (סכם: ${resB.sekem.toFixed(isTechnion ? 2 : 1)}).`
 				: `מאפשר סגירת הסף במלואו (סכם: ${resB.sekem.toFixed(isTechnion ? 2 : 1)}) ללא צורך בשיפור פסיכומטרי!`);
 	} else {
-		strategyDescB = `שדרוג סולידי של ${bagrutSummaryB} מביא לסכם של ${resB.sekem.toFixed(1)} (פער נותר: ${remainingGapB.toFixed(1)}). להשלמת הסגירה מומלץ לשקול את אפשרות המכינה.`;
+		strategyDescB = `שדרוג סולידי של ${bagrutSummaryB} מביא לסכם של ${resB.sekem.toFixed(1)} (פער נותר: ${remainingGapB.toFixed(1)}). להשלמת הסגירה מומלץ לשקול את אפשרות המכינה או את המסלול השנתי המדורג.`;
 	}
 
 	const trackB_feasibility: FeasibilityLevel = isClosedB
-		? reachability.feasibilityForTarget(effectivePsychB) === 'very_high' || reachability.feasibilityForTarget(effectivePsychB) === 'high'
+		? reachability.feasibilityForTarget(finalPsychB) === 'very_high' || reachability.feasibilityForTarget(finalPsychB) === 'high'
 			? 'very_high'
 			: 'high'
 		: 'moderate';
@@ -603,12 +652,12 @@ export function generateOptimizedActionTracks(
 		badgeColor: 'from-emerald-500 to-teal-600',
 		strategyDescription: strategyDescB,
 		targetSekem: resB.sekem,
-		targetPsychometric: effectivePsychB > currentPsych ? effectivePsychB : undefined,
+		targetPsychometric: finalPsychB > currentPsych ? finalPsychB : undefined,
 		currentPsychometric: hasTakenPsych ? currentPsych : undefined,
 		targetBagrutAverage: resB.bagrutAverage,
 		currentBagrutAverage: currentBagrut,
 		recommendedLevers: trackB_levers,
-		milestones: generatePhasedMilestones('track-risk-spread', trackB_levers, effectivePsychB, currentPsych),
+		milestones: generatePhasedMilestones('track-risk-spread', trackB_levers, finalPsychB, currentPsych),
 		estimatedWeeks: 14,
 		weeklyHours: availableWeeklyHours,
 		feasibility: trackB_feasibility,
@@ -621,15 +670,98 @@ export function generateOptimizedActionTracks(
 
 	// Determine if Mechina should be made available as Opt-In button
 	const hasUnclosedGap = trackA.targetSekem! < threshold || trackB.targetSekem! < threshold;
-	const isLargeInitialGap = threshold - currentSekem >= 25 && reachability.maxImprovementPoints <= 40;
-	const mechinaAvailable = hasUnclosedGap || isLargeInitialGap || trackA.feasibility === 'challenging';
+	const isLargeInitialGap = threshold - currentSekem >= (isTechnion ? 7.0 : 25) && reachability.maxImprovementPoints <= 40;
+	const gapAbs = threshold - currentSekem;
+	const isHugeGap = hasUnclosedGap || isLargeInitialGap || gapAbs >= (isTechnion ? 8.0 : 45.0);
+	const mechinaAvailable = hasUnclosedGap || isLargeInitialGap || trackA.feasibility === 'challenging' || isHugeGap;
 
 	const mechinaReason = mechinaAvailable
 		? 'פער הסכם מציב אתגר במבחנים בודדים — מסלול מכינה קדם-אקדמית מאפשר קבלה מובטחת ללא תלות בציוני קצה.'
 		: undefined;
 
+	// =========================================================================
+	// LONG-TERM MULTI-PHASE TRACK: מסלול ארוך טווח רב-שלבי (`track-long-term`)
+	// For candidates with large gaps who prefer self-study over Mechina
+	// =========================================================================
+	let trackLongTerm: ActionTrackRecord | undefined = undefined;
+
+	if (isHugeGap) {
+		const longTermLeversCandidates: SubjectLeverCandidate[] = availableLevers.slice(0, 4).map((l) => ({
+			...l,
+			targetGrade: l.isMath ? 88 : l.targetUnits >= 5 ? 90 : 92
+		}));
+
+		const simStateLT = applyLeversToCandidateState(profile, longTermLeversCandidates);
+		const targetPsychLT = solveMinimumPsychometricTarget(
+			institutionId,
+			relevantSekemType,
+			threshold,
+			profile,
+			simStateLT.subjects,
+			hasTakenPsych ? currentPsych : 500,
+			Math.min(psychCeiling + 20, 750),
+			simStateLT.mathUnits,
+			simStateLT.mathGrade,
+			simStateLT.physicsUnits,
+			simStateLT.physicsGrade
+		) ?? (hasTakenPsych ? currentPsych + 50 : 620);
+
+		const resLT = evaluateSimulatedSekem(
+			institutionId,
+			relevantSekemType,
+			profile,
+			simStateLT.subjects,
+			targetPsychLT,
+			simStateLT.mathUnits,
+			simStateLT.mathGrade,
+			simStateLT.physicsUnits,
+			simStateLT.physicsGrade
+		);
+
+		const lt_levers = longTermLeversCandidates.map((l) => ({
+			id: l.id,
+			trackId: 'track-long-term',
+			subjectName: l.subjectName,
+			currentGrade: l.currentGrade,
+			currentUnits: l.currentUnits,
+			targetGrade: l.targetGrade,
+			targetUnits: l.targetUnits,
+			priority: l.priority,
+			reason: l.reason,
+			leverType: l.leverType,
+			session: l.session
+		}));
+
+		trackLongTerm = {
+			id: 'track-long-term',
+			userId: profile.userId,
+			programId: targetProgram.id,
+			title: 'מסלול ארוך טווח: תוכנית שנתית רב-שלבית (לפערים רחבים)',
+			badge: 'מסלול שנתי מדורג (פער רחב)',
+			badgeColor: 'from-amber-600 via-orange-600 to-indigo-700',
+			strategyDescription:
+				`תוכנית שנתית מובנית (36–44 שבועות) לסגירת פער של ${gapAbs.toFixed(isTechnion ? 2 : 1)} נקודות סכם: ` +
+				`שילוב מדורג של שיפורי בגרות בחורף, פסיכומטרי ראשון באביב, והרחבות קיץ עד לסכם היעד (${resLT.sekem.toFixed(isTechnion ? 2 : 1)} מתוך ${threshold}).`,
+			targetSekem: resLT.sekem,
+			targetPsychometric: targetPsychLT > currentPsych ? targetPsychLT : undefined,
+			currentPsychometric: hasTakenPsych ? currentPsych : undefined,
+			targetBagrutAverage: resLT.bagrutAverage,
+			currentBagrutAverage: currentBagrut,
+			recommendedLevers: lt_levers,
+			milestones: generatePhasedMilestones('track-long-term', lt_levers, targetPsychLT, currentPsych),
+			estimatedWeeks: 40,
+			weeklyHours: availableWeeklyHours,
+			feasibility: resLT.sekem >= threshold ? 'high' : 'moderate',
+			feasibilityExplanation: 'פריסה שנתית רב-עונתית מאפשרת סגירת פערים עמוקים בהדרגה ללא תלות במועד יחיד.',
+			keyAdvantage: 'חלוקת העומס על פני שנה שלמה עם מטרות ביניים ריאליות.',
+			createdAt: new Date()
+		};
+	}
+
+	const allTracks = trackLongTerm ? [trackA, trackB, trackLongTerm] : [trackA, trackB];
+
 	return {
-		tracks: [trackA, trackB],
+		tracks: allTracks,
 		availableLevers,
 		hasDirectBagrutOption: directBagrutLevers !== null,
 		mechinaAvailable,
