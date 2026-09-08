@@ -269,6 +269,16 @@ export default function AdmissionFlowPage() {
 		}
 	};
 
+	const handleAddMultipleTargets = (targets: TargetProgramSelection[]) => {
+		const newTargets = [...selectedTargets];
+		for (const target of targets) {
+			if (!newTargets.some((t) => t.program.id === target.program.id)) {
+				newTargets.push(target);
+			}
+		}
+		setSelectedTargets(newTargets);
+	};
+
 	const handleRemoveTarget = (programId: string) => {
 		setSelectedTargets(selectedTargets.filter((t) => t.program.id !== programId));
 	};
@@ -698,6 +708,7 @@ export default function AdmissionFlowPage() {
 						<DegreeSearchSelector
 							selectedPrograms={selectedTargets}
 							onToggleProgram={handleToggleTarget}
+							onAddMultiplePrograms={handleAddMultipleTargets}
 							onRemoveProgram={handleRemoveTarget}
 							onClearAll={handleClearAllTargets}
 						/>
