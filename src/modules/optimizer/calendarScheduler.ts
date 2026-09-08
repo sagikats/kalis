@@ -14,6 +14,60 @@ import { SubjectLeverCandidate } from './types';
 
 export type ExamSession = 'winter' | 'spring_psych' | 'summer';
 
+export interface SessionVisualInfo {
+	name: string;
+	timing: string;
+	badgeLabel: string;
+	badgeClass: string;
+	cardBorderClass: string;
+	iconEmoji: string;
+}
+
+export function getSessionInfo(session?: ExamSession | 'winter' | 'spring_psych' | 'summer' | string): SessionVisualInfo {
+	switch (session) {
+		case 'winter':
+		case 'bagrut_core':
+			return {
+				name: 'מועד חורף',
+				timing: 'ינואר–פברואר',
+				badgeLabel: 'מועד חורף (ינואר)',
+				badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+				cardBorderClass: 'border-blue-500/40 hover:border-blue-400',
+				iconEmoji: '❄️'
+			};
+		case 'spring_psych':
+		case 'psychometric':
+			return {
+				name: 'מועד אביב',
+				timing: 'מרץ–אפריל',
+				badgeLabel: 'מועד אביב (מרץ–אפריל)',
+				badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+				cardBorderClass: 'border-cyan-500/40 hover:border-cyan-400',
+				iconEmoji: '🌱'
+			};
+		case 'administrative':
+			return {
+				name: 'קליטה במוסד',
+				timing: 'אוגוסט–ספטמבר',
+				badgeLabel: 'קליטה במוסד (אוגוסט–ספטמבר)',
+				badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+				cardBorderClass: 'border-emerald-500/40 hover:border-emerald-400',
+				iconEmoji: '🎓'
+			};
+		case 'summer':
+		case 'bagrut_elective':
+		default:
+			return {
+				name: 'מועד קיץ',
+				timing: 'מאי–יולי',
+				badgeLabel: 'מועד קיץ (יוני–יולי)',
+				badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+				cardBorderClass: 'border-amber-500/40 hover:border-amber-400',
+				iconEmoji: '☀️'
+			};
+	}
+}
+
 const WINTER_CORE_PATTERNS = [
 	'תנ"ך',
 	'תנ״ך',

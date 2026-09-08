@@ -25,6 +25,7 @@ import {
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
+import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
 import WhatIfSimulator from './WhatIfSimulator';
 
 interface RecommendedTracksViewProps {
@@ -34,6 +35,8 @@ interface RecommendedTracksViewProps {
 	userProfile?: UserAcademicProfile;
 	institutionResult?: InstitutionSekemResult;
 	defaultTab?: 'recommended' | 'custom_builder';
+	mechinaAvailable?: boolean;
+	mechinaReason?: string;
 	onSelectProgram?: (programId: string) => void;
 	onEditPreferences: () => void;
 	onBackToReport: () => void;
@@ -47,6 +50,8 @@ export default function RecommendedTracksView({
 	userProfile,
 	institutionResult,
 	defaultTab = 'recommended',
+	mechinaAvailable,
+	mechinaReason,
 	onSelectProgram,
 	onEditPreferences,
 	onBackToReport,
@@ -56,6 +61,62 @@ export default function RecommendedTracksView({
 	const [selectedTrackId, setSelectedTrackId] = useState<string>(tracks[1]?.id || tracks[0]?.id || '');
 	const [isPrintMode, setIsPrintMode] = useState(false);
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
+
+	// Mechina Opt-In State
+	const [mechinaTrack, setMechinaTrack] = useState<any | null>(null);
+	const [isLoadingMechina, setIsLoadingMechina] = useState<boolean>(false);
+	const [showMechinaDetails, setShowMechinaDetails] = useState<boolean>(false);
+
+	const isMechinaApplicable = mechinaAvailable ?? (analysis.status !== 'accepted' || analysis.gap < 0);
+
+	const handleToggleMechina = async () => {
+		if (showMechinaDetails) {
+			setShowMechinaDetails(false);
+			return;
+		}
+		if (mechinaTrack) {
+			setShowMechinaDetails(true);
+			return;
+		}
+		setIsLoadingMechina(true);
+		try {
+			const res = await fetch('/api/tracks/mechina', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					programId: analysis.target.program.id,
+					profile: {
+						bagrutSubjects: (userProfile?.bagrutSubjects && userProfile.bagrutSubjects.length > 0
+							? userProfile.bagrutSubjects
+							: [{ name: 'מתמטיקה', units: 4, grade: 80 }]
+						).map((s) => ({
+							name: s.name,
+							units: s.units,
+							grade: s.grade
+						})),
+						mathUnits: userProfile?.mathUnits || 4,
+						mathGrade: userProfile?.mathGrade || 80,
+						physicsUnits: userProfile?.physicsUnits ?? 0,
+						physicsGrade: userProfile?.physicsGrade ?? 0,
+						psychometricGeneral: userProfile?.psychometricGeneral ?? 0,
+						psychometricQuant: userProfile?.psychometricQuant ?? 0,
+						psychometricVerbal: userProfile?.psychometricVerbal ?? 0,
+						psychometricEnglish: userProfile?.psychometricEnglish ?? 0,
+						hasTakenPsychometric: (userProfile?.psychometricGeneral || 0) > 0
+					}
+				})
+			});
+			const data = await res.json();
+			if (data.success && data.track) {
+				setMechinaTrack(data.track);
+				setShowMechinaDetails(true);
+			}
+		} catch (err) {
+			console.error('Failed to load mechina track', err);
+		} finally {
+			setIsLoadingMechina(false);
+		}
+	};
 
 	const handlePrint = () => {
 		window.print();
@@ -424,60 +485,75 @@ export default function RecommendedTracksView({
 												</div>
 
 												<div className="space-y-1.5">
-													{/* Psychometric improvement row */}
-													{needsPsychImprovement && (
-														<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/25">
-															<div className="flex items-center gap-1.5 truncate">
-																<Brain className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
-																<span className="text-cyan-200 font-bold truncate">
-																	בחינה פסיכומטרית:
+													{/* Psychometric improvement row with session */}
+													{needsPsychImprovement && (() => {
+														const sInfo = getSessionInfo('spring_psych');
+														return (
+															<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/25 flex-wrap">
+																<div className="flex items-center gap-1.5 truncate">
+																	<Brain className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
+																	<span className="text-cyan-200 font-bold truncate">
+																		בחינה פסיכומטרית:
+																	</span>
+																	<span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${sInfo.badgeClass} shrink-0`}>
+																		{sInfo.iconEmoji} {sInfo.badgeLabel}
+																	</span>
+																</div>
+																<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
+																	{(track.currentPsychometric || 0) > 0 ? (
+																		<>
+																			<span className="text-slate-400 font-normal">{track.currentPsychometric}</span>
+																			<span className="text-slate-500 font-normal">➔</span>
+																			<span className="text-white font-black">{track.targetPsychometric}</span>
+																			<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
+																				(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
+																			</span>
+																		</>
+																	) : (
+																		<>
+																			<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
+																			<span className="text-white font-black">{track.targetPsychometric}</span>
+																		</>
+																	)}
 																</span>
 															</div>
-															<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
-																{(track.currentPsychometric || 0) > 0 ? (
-																	<>
-																		<span className="text-slate-400 font-normal">{track.currentPsychometric}</span>
-																		<span className="text-slate-500 font-normal">➔</span>
-																		<span className="text-white font-black">{track.targetPsychometric}</span>
-																		<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
-																			(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
-																		</span>
-																	</>
-																) : (
-																	<>
-																		<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
-																		<span className="text-white font-black">{track.targetPsychometric}</span>
-																	</>
-																)}
-															</span>
-														</div>
-													)}
+														);
+													})()}
 
-													{/* Bagrut subjects improvement rows */}
-													{track.recommendedSubjectImprovements.map((s, idx) => (
-														<div key={idx} className="text-xs flex items-center justify-between gap-2 px-1">
-															<span className="text-slate-200 font-medium truncate">
-																{s.subjectName} ({s.targetUnits} יח״ל):
-															</span>
-															<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
-																{s.currentGrade > 0 ? (
-																	<>
-																		<span className="text-slate-400 font-normal">{s.currentGrade}</span>
-																		<span className="text-slate-500 font-normal">➔</span>
-																		<span className="text-white font-black">{s.targetGrade}</span>
-																		<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
-																			(+{s.targetGrade - s.currentGrade})
-																		</span>
-																	</>
-																) : (
-																	<>
-																		<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
-																		<span className="text-white font-black">{s.targetGrade}</span>
-																	</>
-																)}
-															</span>
-														</div>
-													))}
+													{/* Bagrut subjects improvement rows with session */}
+													{track.recommendedSubjectImprovements.map((s, idx) => {
+														const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
+														const sInfo = getSessionInfo(sSession);
+														return (
+															<div key={idx} className="text-xs flex items-center justify-between gap-2 px-2 py-1.5 rounded-xl bg-slate-900/60 border border-slate-800/80 flex-wrap">
+																<div className="flex items-center gap-1.5 truncate">
+																	<span className="text-slate-200 font-medium truncate">
+																		{s.subjectName} ({s.targetUnits} יח״ל):
+																	</span>
+																	<span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${sInfo.badgeClass} shrink-0`}>
+																		{sInfo.iconEmoji} {sInfo.badgeLabel}
+																	</span>
+																</div>
+																<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
+																	{s.currentGrade > 0 ? (
+																		<>
+																			<span className="text-slate-400 font-normal">{s.currentGrade}</span>
+																			<span className="text-slate-500 font-normal">➔</span>
+																			<span className="text-white font-black">{s.targetGrade}</span>
+																			<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
+																				(+{s.targetGrade - s.currentGrade})
+																			</span>
+																		</>
+																	) : (
+																		<>
+																			<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
+																			<span className="text-white font-black">{s.targetGrade}</span>
+																		</>
+																	)}
+																</span>
+															</div>
+														);
+													})}
 												</div>
 											</div>
 										);
@@ -583,22 +659,35 @@ export default function RecommendedTracksView({
 								יעדי שיפור במסלול זה:
 							</span>
 							<div className="flex items-center gap-2 flex-wrap">
-								{needsPsych && (
-									<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
-										<Brain className="h-3.5 w-3.5 text-cyan-400" />
-										<span>
-											פסיכומטרי: {(selectedTrack.currentPsychometric || 0) > 0 ? `${selectedTrack.currentPsychometric} ➔ ` : 'יעד '}{selectedTrack.targetPsychometric}
+								{needsPsych && (() => {
+									const sInfo = getSessionInfo('spring_psych');
+									return (
+										<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
+											<Brain className="h-3.5 w-3.5 text-cyan-400" />
+											<span>
+												פסיכומטרי: {(selectedTrack.currentPsychometric || 0) > 0 ? `${selectedTrack.currentPsychometric} ➔ ` : 'יעד '}{selectedTrack.targetPsychometric}
+											</span>
+											<span className={`text-[10px] px-1.5 py-0.5 rounded border ${sInfo.badgeClass}`}>
+												{sInfo.iconEmoji} {sInfo.name}
+											</span>
 										</span>
-									</span>
-								)}
-								{selectedTrack.recommendedSubjectImprovements.map((s, idx) => (
-									<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 font-bold">
-										<BookOpen className="h-3.5 w-3.5 text-indigo-400" />
-										<span>
-											{s.subjectName} ({s.targetUnits} יח״ל): {s.currentGrade > 0 ? `${s.currentGrade} ➔ ` : ''}{s.targetGrade}
+									);
+								})()}
+								{selectedTrack.recommendedSubjectImprovements.map((s, idx) => {
+									const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
+									const sInfo = getSessionInfo(sSession);
+									return (
+										<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 font-bold">
+											<BookOpen className="h-3.5 w-3.5 text-indigo-400" />
+											<span>
+												{s.subjectName} ({s.targetUnits} יח״ל): {s.currentGrade > 0 ? `${s.currentGrade} ➔ ` : ''}{s.targetGrade}
+											</span>
+											<span className={`text-[10px] px-1.5 py-0.5 rounded border ${sInfo.badgeClass}`}>
+												{sInfo.iconEmoji} {sInfo.name}
+											</span>
 										</span>
-									</span>
-								))}
+									);
+								})}
 							</div>
 						</div>
 					);
@@ -607,32 +696,43 @@ export default function RecommendedTracksView({
 				{/* Steps Timeline */}
 				<div className="space-y-4">
 					<h4 className="text-xs font-black text-slate-400 uppercase tracking-wider">
-						שלבי הביצוע המדורגים:
+						שלבי הביצוע המדורגים לפי מועדי ישראל:
 					</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-						{selectedTrack.steps.map((step, idx) => (
-							<div
-								key={idx}
-								className="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 space-y-2 relative overflow-hidden flex flex-col justify-between"
-							>
-								<div className="space-y-1.5">
-									<div className="flex items-center justify-between gap-2">
-										<span className="text-[11px] font-black text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
-											שלב {idx + 1} • {step.timing}
-										</span>
-										<span className="text-[10px] text-slate-500 font-bold uppercase">
-											{step.type === 'psychometric'
-												? 'פסיכומטרי'
-												: step.type === 'bagrut_elective'
-												? 'הרחבת בגרות'
-												: 'שיפור בגרות חובה'}
-										</span>
+						{selectedTrack.steps.map((step, idx) => {
+							const stepSession =
+								(step as any).session ||
+								(step.type === 'psychometric'
+									? 'spring_psych'
+									: step.type === 'bagrut_elective'
+									? 'summer'
+									: step.type === 'mechina'
+									? 'administrative'
+									: 'winter');
+							const sInfo = getSessionInfo(stepSession);
+							return (
+								<div
+									key={idx}
+									className={`bg-slate-950/70 border rounded-2xl p-4 space-y-2 relative overflow-hidden flex flex-col justify-between transition hover:border-slate-700 ${sInfo.cardBorderClass}`}
+								>
+									<div className="space-y-2">
+										<div className="flex items-center justify-between gap-2 flex-wrap">
+											<span className="text-[11px] font-black text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
+												שלב {idx + 1} • {step.timing}
+											</span>
+											<span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${sInfo.badgeClass} flex items-center gap-1`}>
+												<span>{sInfo.iconEmoji}</span>
+												<span>{sInfo.badgeLabel}</span>
+											</span>
+										</div>
+										<h5 className="text-sm font-bold text-white flex items-center gap-1.5">
+											{step.title}
+										</h5>
+										<p className="text-xs text-slate-300 leading-relaxed">{step.detail}</p>
 									</div>
-									<h5 className="text-sm font-bold text-white">{step.title}</h5>
-									<p className="text-xs text-slate-300 leading-relaxed">{step.detail}</p>
 								</div>
-							</div>
-						))}
+							);
+						})}
 					</div>
 				</div>
 
@@ -654,6 +754,151 @@ export default function RecommendedTracksView({
 					</div>
 				</div>
 			</div>
+
+				{/* ========================================================================= */}
+				{/* OPT-IN MECHINA TRACK (מכינה קדם-אקדמית ייעודית כחלופה מובנית) */}
+				{/* ========================================================================= */}
+				{isMechinaApplicable && (
+					<div className="bg-slate-900/90 border border-purple-500/40 rounded-3xl p-6 sm:p-7 space-y-5 shadow-2xl relative overflow-hidden">
+						{/* Ambient purple glow */}
+						<div className="absolute top-0 right-10 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl -z-0 pointer-events-none" />
+
+						<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+							<div className="space-y-1.5 max-w-2xl">
+								<div className="flex items-center gap-2 flex-wrap">
+									<span className="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-500/40 tracking-wider">
+										מסלול חלופי מובנה • מכינה קדם-אקדמית (Opt-In)
+									</span>
+									{mechinaReason && (
+										<span className="text-[10px] text-slate-400">
+											• {mechinaReason}
+										</span>
+									)}
+								</div>
+								<h4 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+									<GraduationCap className="h-6 w-6 text-purple-400 shrink-0" />
+									<span>שוקל מכינה אקדמית במקום שיפורי בגרות ופסיכומטרי בודדים?</span>
+								</h4>
+								<p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+									עבור פערים גדולים או למי שמעדיף מסגרת לימודית אינטנסיבית ומסודרת, מכינה קדם-אקדמית של המוסד מחליפה את ממוצע הבגרות ומספקת נתיב קבלה ישיר עם מעטפת תרגול ומלגות.
+								</p>
+							</div>
+
+							<button
+								type="button"
+								onClick={handleToggleMechina}
+								disabled={isLoadingMechina}
+								className={`px-5 py-3 rounded-2xl font-black text-xs transition flex items-center justify-center gap-2 shrink-0 border shadow-lg ${
+									showMechinaDetails
+										? 'bg-purple-950/80 text-purple-200 border-purple-500/50 hover:bg-purple-900/50'
+										: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white border-purple-400/40 shadow-purple-600/25'
+								}`}
+							>
+								{isLoadingMechina ? (
+									<>
+										<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+										<span>טוען מסלול מכינה...</span>
+									</>
+								) : showMechinaDetails ? (
+									<>
+										<span>הסתר פרטי מכינה</span>
+										<ChevronUp className="h-4 w-4" />
+									</>
+								) : (
+									<>
+										<GraduationCap className="h-4 w-4" />
+										<span>בדוק אפשרות מכינה ייעודית למוסד</span>
+										<ChevronDown className="h-4 w-4" />
+									</>
+								)}
+							</button>
+						</div>
+
+						{/* Expanded Mechina Details */}
+						{showMechinaDetails && mechinaTrack && (
+							<div className="relative z-10 pt-4 border-t border-slate-800 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+								<div className="bg-slate-950/80 border border-purple-500/30 rounded-2xl p-5 space-y-4">
+									<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+										<div>
+											<h5 className="text-base font-black text-purple-200">
+												{mechinaTrack.title}
+											</h5>
+											<p className="text-xs text-slate-400 mt-0.5">
+												{mechinaTrack.keyAdvantage}
+											</p>
+										</div>
+										<div className="flex items-center gap-3 text-xs font-bold text-slate-300 shrink-0">
+											<div className="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+												משך: <span className="text-purple-300">{mechinaTrack.estimatedWeeks} שבועות</span>
+											</div>
+											<div className="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+												עומס: <span className="text-purple-300">{mechinaTrack.weeklyHours} ש״ש</span>
+											</div>
+										</div>
+									</div>
+
+									<p className="text-xs text-slate-300 leading-relaxed">
+										{mechinaTrack.strategyDescription}
+									</p>
+
+									{/* Milestones in Mechina */}
+									{mechinaTrack.milestones && mechinaTrack.milestones.length > 0 && (
+										<div className="space-y-2 pt-2">
+											<h6 className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
+												תחנות מסלול המכינה:
+											</h6>
+											<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+												{mechinaTrack.milestones.map((m: any, mIdx: number) => {
+													const sInfo = getSessionInfo(
+														m.type === 'psychometric'
+															? 'winter'
+															: m.type === 'administrative'
+															? 'administrative'
+															: 'summer'
+													);
+													return (
+														<div
+															key={mIdx}
+															className="bg-slate-900/70 border border-purple-500/20 rounded-xl p-3 space-y-1.5"
+														>
+															<div className="flex items-center justify-between gap-2">
+																<span className="text-[10px] font-black text-purple-400 bg-purple-950/60 border border-purple-500/30 px-2 py-0.5 rounded">
+																	תחנה {m.orderIndex || mIdx + 1} • {m.timing}
+																</span>
+																<span className="text-[10px] text-slate-400 font-bold">
+																	{sInfo.iconEmoji}
+																</span>
+															</div>
+															<div className="text-xs font-bold text-white">
+																{m.title}
+															</div>
+															<p className="text-[11px] text-slate-400 leading-normal">
+																{m.detail}
+															</p>
+														</div>
+													);
+												})}
+											</div>
+										</div>
+									)}
+
+									{/* Mechina perks banner */}
+									<div className="p-3 bg-purple-950/40 border border-purple-500/25 rounded-xl flex items-center justify-between flex-wrap gap-2 text-xs text-purple-200">
+										<div className="flex items-center gap-2">
+											<ShieldCheck className="h-4 w-4 text-purple-400 shrink-0" />
+											<span>
+												תעודת גמר מכינה מוכרת ומחליפה את תעודת הבגרות במוסד זה. עמידה בממוצע היעד מקנה קבלה ישירה.
+											</span>
+										</div>
+										<span className="text-[11px] font-bold text-emerald-400">
+											היתכנות: {mechinaTrack.feasibilityExplanation}
+										</span>
+									</div>
+								</div>
+							</div>
+						)}
+					</div>
+				)}
 
 				{/* Transition CTA to Personal Builder */}
 				{userProfile && institutionResult && (

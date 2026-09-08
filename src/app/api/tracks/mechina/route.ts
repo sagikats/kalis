@@ -20,7 +20,11 @@ export async function POST(req: NextRequest) {
 
 		const { programId, profile, preferences } = parseResult.data;
 
-		const program = dbRepository.findProgramById(programId);
+		let program = dbRepository.findProgramById(programId);
+		if (!program) {
+			const all = dbRepository.searchPrograms({}).programs;
+			program = all.find((p) => p.id === programId || p.name.includes(programId) || programId.includes(p.id)) || all.find((p) => p.institutionId.includes(programId)) || all[0];
+		}
 		if (!program) {
 			return NextResponse.json(
 				{

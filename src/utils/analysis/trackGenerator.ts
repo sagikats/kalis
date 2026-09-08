@@ -36,6 +36,8 @@ export interface SubjectImprovement {
 	targetGrade: number;
 	targetUnits: number;
 	reason: string;
+	session?: 'winter' | 'spring_psych' | 'summer';
+	sessionLabel?: string;
 }
 
 export interface RecommendedTrack {
