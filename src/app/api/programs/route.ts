@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
 			);
 		}
 
+		await dbRepository.ensureSyncedFromSQLite();
 		const searchResult = dbRepository.searchPrograms(parseResult.data);
 
 		return NextResponse.json({

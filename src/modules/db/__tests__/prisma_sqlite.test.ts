@@ -166,4 +166,16 @@ describe('SQLite & Prisma Persistence Layer Integration', () => {
 		const userAfter = await dbRepository.getUserAsync(testUserId);
 		assert.equal(userAfter, null, 'User must be deleted after clearUserStateAsync');
 	});
+
+	test('6. Synchronizes catalog directly from SQLite (institutions and programs)', async () => {
+		await dbRepository.syncFromSQLite();
+		const institutions = dbRepository.getAllInstitutions();
+		assert.equal(institutions.length, 8, 'Must load all 8 universities directly from SQLite');
+
+		const csSearch = dbRepository.searchPrograms({ text: 'מדעי המחשב' });
+		assert.ok(csSearch.total > 0, 'Must find computer science programs loaded from SQLite');
+
+		const technionProg = dbRepository.getProgramsByInstitution('technion');
+		assert.ok(technionProg.length > 0, 'Must have technion programs from SQLite');
+	});
 });

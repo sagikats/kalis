@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
 
 		const { programId, profile, preferences } = parseResult.data;
 
+		await dbRepository.ensureSyncedFromSQLite();
 		const program = dbRepository.findProgramById(programId);
 		if (!program) {
 			return NextResponse.json(

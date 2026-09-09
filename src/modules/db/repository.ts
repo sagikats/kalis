@@ -245,6 +245,86 @@ export class KalisDatabaseRepository {
 		}
 	}
 
+	private isSyncedFromDB = false;
+
+	public async ensureSyncedFromSQLite(): Promise<void> {
+		if (this.isSyncedFromDB) return;
+		await this.syncFromSQLite();
+	}
+
+	public async syncFromSQLite(): Promise<void> {
+		try {
+			const [dbInstitutions, dbPrograms] = await Promise.all([
+				prisma.institution.findMany(),
+				prisma.academicProgram.findMany()
+			]);
+
+			if (dbInstitutions.length > 0 && dbPrograms.length > 0) {
+				this.institutions.clear();
+				this.programsById.clear();
+				this.programsByInstitution.clear();
+				this.programsByField.clear();
+
+				for (const inst of dbInstitutions) {
+					this.institutions.set(inst.id, {
+						id: inst.id,
+						name: inst.name,
+						calculatorId: inst.calculatorId,
+						websiteUrl: inst.websiteUrl || '',
+						isUniversity: inst.isUniversity,
+						defaultMinBagrutUnits: inst.defaultMinBagrutUnits
+					});
+					this.programsByInstitution.set(inst.id, []);
+				}
+
+				for (const p of dbPrograms) {
+					const prereq = p.prerequisitesJson ? JSON.parse(p.prerequisitesJson) : {};
+					const progRecord: AcademicProgramRecord = {
+						id: p.id,
+						institutionId: p.institutionId,
+						institutionName: p.institutionName,
+						facultyName: p.facultyName || p.fieldOfStudy,
+						name: p.name,
+						fieldOfStudy: p.fieldOfStudy,
+						degreeLevel: (p.degreeLevel as any) || 'bachelor',
+						minSekemThreshold: p.minSekemThreshold,
+						relevantSekemType: p.relevantSekemType as any,
+						directBagrutEligible: p.directBagrutEligible,
+						directBagrutMinAverage: p.directBagrutMinAverage ?? undefined,
+						prerequisites: {
+							minMathUnits: prereq.minMathUnits,
+							minMathGrade: prereq.minMathGrade,
+							minPhysUnits: prereq.minPhysUnits,
+							minPhysGrade: prereq.minPhysGrade,
+							mustHavePsychometric: Boolean(prereq.mustHavePsychometric),
+							mandatorySubjects: prereq.mandatorySubjects
+						},
+						description: p.description ?? undefined,
+						comments: p.comments ?? undefined,
+						url: p.url ?? undefined,
+						createdAt: p.createdAt,
+						updatedAt: p.updatedAt
+					};
+
+					this.programsById.set(p.id, progRecord);
+
+					const instList = this.programsByInstitution.get(p.institutionId) || [];
+					instList.push(progRecord);
+					this.programsByInstitution.set(p.institutionId, instList);
+
+					const fieldToken = p.fieldOfStudy.trim().toLowerCase();
+					const fieldList = this.programsByField.get(fieldToken) || [];
+					fieldList.push(progRecord);
+					this.programsByField.set(fieldToken, fieldList);
+				}
+
+				this.isSyncedFromDB = true;
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite sync error (using cached state):', err);
+		}
+	}
+
 	// -------------------------------------------------------------------------
 	// Read Queries
 	// -------------------------------------------------------------------------

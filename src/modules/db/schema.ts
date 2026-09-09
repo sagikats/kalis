@@ -77,6 +77,8 @@ export interface AcademicProgramRecord {
 	directBagrutEligible: boolean;
 	directBagrutMinAverage?: number | null;
 	prerequisites: ProgramPrerequisites;
+	description?: string;
+	comments?: string;
 	url?: string;
 	createdAt: Date;
 	updatedAt: Date;

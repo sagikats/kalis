@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { dbRepository } from '@/modules/db';
 
 export async function GET() {
+	await dbRepository.ensureSyncedFromSQLite();
 	const institutions = dbRepository.getAllInstitutions();
 	return NextResponse.json({
 		status: 'healthy',
