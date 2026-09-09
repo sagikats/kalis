@@ -55,19 +55,18 @@ export default function LandingPage() {
         </div>
 
         {/* Main Headline - Infinite Moving Marquee Ticker (like itsnotviolent.com) */}
-        <div className="relative w-full overflow-hidden py-3 sm:py-5 my-2 group">
+        <div className="relative w-full overflow-hidden py-4 sm:py-6 my-2 group flex" dir="ltr">
           {/* Subtle edge fades for smooth entry & exit */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent z-10" />
 
           {/* Hidden accessible H1 for SEO */}
           <h1 className="sr-only">הצעד הראשון שלך לאקדמיה</h1>
 
-          {/* Seamless Infinite Running Track */}
-          <div className="animate-marquee select-none flex items-center" aria-hidden="true">
-            {/* Track A */}
-            {[...Array(3)].map((_, i) => (
-              <div key={`track-a-${i}`} className="inline-flex items-center gap-3 sm:gap-6 mx-3 sm:mx-6">
+          {/* Seamless Infinite Running Track 1 */}
+          <div className="flex shrink-0 items-center animate-marquee-loop select-none" aria-hidden="true">
+            {[...Array(4)].map((_, i) => (
+              <div key={`track-a-${i}`} className="inline-flex items-center gap-4 sm:gap-8 mx-4 sm:mx-8">
                 <span className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-[#1A1A1A] whitespace-nowrap">
                   הצעד הראשון שלך לאקדמיה
                 </span>
@@ -79,10 +78,12 @@ export default function LandingPage() {
                 </span>
               </div>
             ))}
+          </div>
 
-            {/* Track B (Identical duplicate for seamless 100% loop) */}
-            {[...Array(3)].map((_, i) => (
-              <div key={`track-b-${i}`} className="inline-flex items-center gap-3 sm:gap-6 mx-3 sm:mx-6">
+          {/* Seamless Infinite Running Track 2 (Immediate identical clone following right behind Track 1) */}
+          <div className="flex shrink-0 items-center animate-marquee-loop select-none" aria-hidden="true">
+            {[...Array(4)].map((_, i) => (
+              <div key={`track-b-${i}`} className="inline-flex items-center gap-4 sm:gap-8 mx-4 sm:mx-8">
                 <span className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-[#1A1A1A] whitespace-nowrap">
                   הצעד הראשון שלך לאקדמיה
                 </span>

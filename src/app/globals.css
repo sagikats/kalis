@@ -77,23 +77,21 @@ body {
   will-change: transform;
 }
 
-@keyframes marquee-slide {
+@keyframes marquee-loop {
   0% {
     transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee-slide 32s linear infinite;
+.animate-marquee-loop {
+  animation: marquee-loop 24s linear infinite;
   will-change: transform;
 }
 
-.animate-marquee:hover {
+.group:hover .animate-marquee-loop {
   animation-play-state: paused;
 }
 
