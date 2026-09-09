@@ -92,36 +92,35 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-08)
-- **Active Branch:** `main` (Fully synchronized with `origin/main`)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-09)
+- **Active Branch:** `main` (Merged cleanly from `SQLite-migration`)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **80/80 tests passing** across 27 test suites.
-  - `npm run build`: Clean (16/16 static pages generated, zero compile or runtime build errors).
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **88/88 tests passing** across 28 test suites.
+  - `npm run build`: Clean (20/20 static & dynamic routes generated, zero compile or runtime build errors).
   - Background processes: Next.js dev server on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
 
-1. **Precision Cross-University Sekem Synchronization & Direct Institutional Calculators:**
-   - **Fix of TAU CS Sekem calculation:** Bagrut 107.0 + Psychometric 698 accurately produces 683.0 (and 706 requires Psychometric 740).
-   - **Direct Institutional Execution:** Eliminated multi-calculator wrappers inside optimization and simulation loops (`trackGenerator.ts`), switching to direct `calculateInstitution(calculatorId, ...)`.
-   - **NITE Official Subscore Alignment:** Replaced naive `/ 5` divisions with official NITE scale conversion ($S = 50 + (P - 200)/6$) and balanced test-taker assumption ($P_q = P_v = P_e = P_g$).
-   - **Subscore Normalization:** Standardized raw subscore normalization (50–150 $\to$ 200–800) across all 8 university calculators.
+1. **Full SQLite Database Migration with Prisma ORM (`prisma/`):**
+   - Implemented relational SQLite schema (`prisma/schema.prisma`) with 8 models: `institutions`, `academic_programs`, `bagrut_subjects`, `users`, `user_academic_profiles`, `subject_grades` (1:N dynamic electives), `user_preferences`, and `saved_tracks`.
+   - Populated with 8 institutions, 639 academic programs, and 39 national bagrut subjects via `prisma/seed.ts` (`npm run db:seed`).
+   - Added system-assigned candidate number generation (`candidateNumber` e.g., `KL-10001`) preventing user spoofing.
+   - Golden Master verification: 111/111 baseline checks (100% exact match) between JSON and SQLite solvers.
 
-2. **Comprehensive 24-Case QA Benchmark Suite (`all_institutions_benchmarks.test.ts`):**
-   - 3 distinct test cases per university for all 8 Israeli universities covering STEM, direct bagrut, and general admission.
-   - All 24 cases pass with 100% precision.
+2. **End-to-End SQLite UI Integration:**
+   - Created `GET /api/institutions` directly querying SQLite with in-memory sync cache.
+   - Connected `DegreeSearchSelector.tsx` to `/api/institutions` with visual live indicator badge ("מסד נתונים מסונכרן (SQLite)").
+   - Standardized institution IDs (`technion`, `tau`, `huji`, `bgu`, `haifa`, `ariel`, `bar_ilan`, `reichman`) matching UniversityLogo keys 1:1.
 
-3. **Smart Bagrut Subject Selection & National Friction Index (`effortCostModel.ts`, `utilityScorer.ts`, `trackGenerator.ts`, `solver.ts`):**
-   - Hebrew / Lashon friction penalty ($2.03$), structured memorization prioritization (תנ״ך, ספרות, גיאוגרפיה).
-   - History 2u $\to$ 5u expansion lever ($75$h).
+3. **User-Initiated Track Saving ("שמור מסלול"):**
+   - Created `POST /api/tracks/save` and `GET /api/tracks/save`.
+   - Implemented explicit user saving: tracks are **never** saved automatically upon generation.
+   - Added interactive "שמור מסלול זה" buttons on all track cards (Track A, Track B, Mechina, Roadmap header) with instant feedback ("המסלול נשמר (KL-10001) ✓").
 
-4. **Track Efficiency & Minimum Effort Engine (`src/modules/optimizer/efficiency/`):**
-   - Calibrated effort cost model (220h 1st, 165h 2nd, 110h 3rd+).
-   - Verbal reasoning intellect bonus ($\ge 130 \implies 0.85$ multiplier) and English Ptor exemption ($\ge 134 \implies 0.85$).
-   - Micro-improvement redundancy pruning ($\le 7$ pts psych, $\le 5$ pts core, $\le 2-3$ pts 5u).
-   - Annual multi-phase long-term tracks for huge gaps alongside Opt-In Mechina.
-   - 12 benchmark archetypes, 80/80 passing tests.
+4. **Automated Database Backup Engine:**
+   - Created `npm run db:backup` (`prisma/backup.ts`) generating timestamped snapshots in `prisma/backups/`.
+   - Created browser download endpoint `GET /api/backup` returning `dev.db` directly to client's Downloads folder.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **חיבור מדדי היעילות ל-UI ב-RecommendedTracksView:**
