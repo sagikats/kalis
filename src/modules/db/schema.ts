@@ -5,6 +5,7 @@
 
 export interface UserRecord {
 	id: string;
+	candidateNumber: string;
 	email?: string;
 	name?: string;
 	createdAt: Date;

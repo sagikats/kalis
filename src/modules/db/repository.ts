@@ -384,15 +384,32 @@ export class KalisDatabaseRepository {
 	// Async SQLite / Prisma Persistence Layer
 	// -------------------------------------------------------------------------
 
+	private async ensureUserExists(userId: string): Promise<void> {
+		const existing = await prisma.user.findUnique({ where: { id: userId } });
+		if (!existing) {
+			const count = await prisma.user.count();
+			await prisma.user.create({
+				data: {
+					id: userId,
+					candidateNumber: `KL-${10001 + count}`
+				}
+			});
+		}
+	}
+
 	public async createUserAsync(email?: string, name?: string): Promise<UserRecord> {
+		const count = await prisma.user.count();
+		const candidateNumber = `KL-${10001 + count}`;
 		const created = await prisma.user.create({
 			data: {
+				candidateNumber,
 				email: email ?? null,
 				name: name ?? null
 			}
 		});
 		return {
 			id: created.id,
+			candidateNumber: created.candidateNumber,
 			email: created.email ?? undefined,
 			name: created.name ?? undefined,
 			createdAt: created.createdAt,
@@ -406,6 +423,7 @@ export class KalisDatabaseRepository {
 			if (!u) return null;
 			return {
 				id: u.id,
+				candidateNumber: u.candidateNumber,
 				email: u.email ?? undefined,
 				name: u.name ?? undefined,
 				createdAt: u.createdAt,
@@ -422,11 +440,7 @@ export class KalisDatabaseRepository {
 		this.userProfiles.set(profile.userId, profile);
 
 		try {
-			await prisma.user.upsert({
-				where: { id: profile.userId },
-				update: {},
-				create: { id: profile.userId }
-			});
+			await this.ensureUserExists(profile.userId);
 
 			const savedProfile = await prisma.userAcademicProfile.upsert({
 				where: { userId: profile.userId },
@@ -528,11 +542,7 @@ export class KalisDatabaseRepository {
 		this.userPreferences.set(pref.userId, pref);
 
 		try {
-			await prisma.user.upsert({
-				where: { id: pref.userId },
-				update: {},
-				create: { id: pref.userId }
-			});
+			await this.ensureUserExists(pref.userId);
 
 			await prisma.userPreferences.upsert({
 				where: { userId: pref.userId },
@@ -598,11 +608,7 @@ export class KalisDatabaseRepository {
 		this.saveActionTracks(userId, programId, tracks);
 
 		try {
-			await prisma.user.upsert({
-				where: { id: userId },
-				update: {},
-				create: { id: userId }
-			});
+			await this.ensureUserExists(userId);
 
 			await prisma.savedTrack.deleteMany({ where: { userId, programId } });
 
