@@ -56,29 +56,17 @@ export default function LandingPage() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-[#1E1E1E] leading-[1.12] sm:leading-[1.15]">
+            <h1 className="text-5xl font-black tracking-tight text-[#1E1E1E] sm:text-7xl lg:text-8xl leading-[1.08] sm:leading-[1.1]">
               <span className="block">הצעד הראשון שלך</span>
-              <span className="relative inline-flex items-center justify-center mt-3 sm:mt-4 group">
-                <span className="relative z-10 inline-flex items-center gap-2.5 sm:gap-4 px-5 py-2 sm:px-8 sm:py-3 rounded-2xl sm:rounded-3xl bg-white border border-[#DDD6C9] shadow-xs transition-all duration-300 group-hover:shadow-sm group-hover:border-[#CDC4B5]">
-                  <span className="text-[#1E1E1E]">לאקדמיה</span>
-                  <span className="inline-flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#3C3C3C] text-white shadow-2xs -rotate-3 transition-transform duration-300 group-hover:rotate-0 group-hover:scale-105">
-                    <GraduationCap className="w-4 h-4 sm:w-7 sm:h-7 stroke-[2]" />
-                  </span>
-                </span>
-                {/* Handcrafted organic curved accent stroke */}
-                <svg
-                  className="absolute -bottom-2.5 sm:-bottom-3.5 right-1 w-[96%] h-3 sm:h-4 text-[#C5B59E] overflow-visible pointer-events-none"
-                  viewBox="0 0 240 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              <span className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2">
+                <span>לאקדמיה</span>
+                <span
+                  className="animate-emoji-bob text-4xl sm:text-6xl lg:text-7xl xl:text-8xl cursor-default select-none inline-block hover:scale-110 transition-transform"
+                  role="img"
+                  aria-label="תלמיד מחייך"
                 >
-                  <path
-                    d="M4 8.5C55 2.5 185 2 236 8"
-                    stroke="currentColor"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                  🧑‍🎓
+                </span>
               </span>
             </h1>
 
