@@ -1,13 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --font-sans: var(--font-rubik), var(--font-assistant), var(--font-inter-tight), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-sans: var(--font-ibm-plex), var(--font-inter-tight), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-serif: var(--font-frank-ruhl), 'David Libre', Georgia, Cambria, 'Times New Roman', Times, serif;
   --bg-cream: #FAF8F5;
   --bg-cream-card: #FFFFFF;
   --bg-cream-subtle: #F3EFE8;
   --text-main: #222222;
   --text-muted: #66635C;
   --border-warm: #E6E1D7;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
 }
 
 body {

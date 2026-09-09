@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter_Tight, Rubik, Assistant } from 'next/font/google';
+import { Inter_Tight, IBM_Plex_Sans_Hebrew, Frank_Ruhl_Libre } from 'next/font/google';
 import './globals.css';
 import { PlannerProvider } from '../context/PlannerContext';
 import { AuthProvider } from '../context/AuthContext';
@@ -14,18 +14,18 @@ const interTight = Inter_Tight({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
 });
 
-const rubik = Rubik({
+const ibmPlex = IBM_Plex_Sans_Hebrew({
   subsets: ['hebrew', 'latin'],
-  variable: '--font-rubik',
+  variable: '--font-ibm-plex',
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700'],
 });
 
-const assistant = Assistant({
+const frankRuhl = Frank_Ruhl_Libre({
   subsets: ['hebrew', 'latin'],
-  variable: '--font-assistant',
+  variable: '--font-frank-ruhl',
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="he" dir="rtl" className={`${interTight.variable} ${rubik.variable} ${assistant.variable} h-full antialiased`}>
+    <html lang="he" dir="rtl" className={`${interTight.variable} ${ibmPlex.variable} ${frankRuhl.variable} h-full antialiased`}>
       <body className="font-sans min-h-full flex flex-col bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222]">
         <AuthProvider>
           <PlannerProvider>

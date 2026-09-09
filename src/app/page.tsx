@@ -56,8 +56,8 @@ export default function LandingPage() {
             </div>
 
             {/* Main Headline - Single Line */}
-            <div className="w-full overflow-hidden flex justify-center">
-              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-[#1E1E1E] leading-none whitespace-nowrap inline-flex items-center justify-center gap-2 sm:gap-3 md:gap-4 select-none">
+            <div className="w-full overflow-hidden flex justify-center py-2">
+              <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-[#1A1A1A] leading-tight whitespace-nowrap inline-flex items-center justify-center gap-2 sm:gap-3 md:gap-4 select-none">
                 <span>הצעד הראשון שלך לאקדמיה</span>
                 <span
                   className="animate-emoji-bob text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl cursor-default select-none inline-block hover:scale-110 transition-transform shrink-0"
