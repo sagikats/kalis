@@ -16,6 +16,7 @@ import {
 import { ValidatedProgramSearchQuery } from './validation';
 import rawData from '../../data/academicData.json';
 import { prisma } from '../../lib/prisma';
+import { hashPassword, verifyPassword } from '../../lib/authUtils';
 
 export interface ProgramSearchFilters {
 	institutionId?: string;
@@ -464,14 +465,34 @@ export class KalisDatabaseRepository {
 	// Async SQLite / Prisma Persistence Layer
 	// -------------------------------------------------------------------------
 
+	private async generateNextCandidateNumber(): Promise<string> {
+		const users = await prisma.user.findMany({
+			where: { candidateNumber: { startsWith: 'KL-' } },
+			select: { candidateNumber: true }
+		});
+		let maxNum = 10000;
+		for (const u of users) {
+			if (u.candidateNumber) {
+				const match = u.candidateNumber.match(/^KL-(\d+)$/);
+				if (match) {
+					const num = parseInt(match[1], 10);
+					if (!isNaN(num) && num > maxNum) {
+						maxNum = num;
+					}
+				}
+			}
+		}
+		return `KL-${maxNum + 1}`;
+	}
+
 	private async ensureUserExists(userId: string): Promise<UserRecord> {
 		let existing = await prisma.user.findUnique({ where: { id: userId } });
 		if (!existing) {
-			const count = await prisma.user.count();
+			const candidateNumber = await this.generateNextCandidateNumber();
 			existing = await prisma.user.create({
 				data: {
 					id: userId,
-					candidateNumber: `KL-${10001 + count}`
+					candidateNumber
 				}
 			});
 		}
@@ -486,8 +507,7 @@ export class KalisDatabaseRepository {
 	}
 
 	public async createUserAsync(email?: string, name?: string): Promise<UserRecord> {
-		const count = await prisma.user.count();
-		const candidateNumber = `KL-${10001 + count}`;
+		const candidateNumber = await this.generateNextCandidateNumber();
 		const created = await prisma.user.create({
 			data: {
 				candidateNumber,
@@ -505,6 +525,89 @@ export class KalisDatabaseRepository {
 		};
 	}
 
+	public async registerUserAsync(params: {
+		name?: string;
+		email: string;
+		password?: string;
+		phone?: string;
+	}): Promise<UserRecord> {
+		const normalizedEmail = params.email.trim().toLowerCase();
+		const existing = await prisma.user.findUnique({
+			where: { email: normalizedEmail }
+		});
+
+		if (existing) {
+			throw new Error('כתובת אימייל זו כבר רשומה במערכת');
+		}
+
+		const candidateNumber = await this.generateNextCandidateNumber();
+		const passwordHash = params.password ? hashPassword(params.password) : null;
+
+		const created = await prisma.user.create({
+			data: {
+				candidateNumber,
+				email: normalizedEmail,
+				name: params.name?.trim() || null,
+				phone: params.phone?.trim() || null,
+				passwordHash
+			}
+		});
+
+		return {
+			id: created.id,
+			candidateNumber: created.candidateNumber,
+			email: created.email ?? undefined,
+			name: created.name ?? undefined,
+			phone: created.phone ?? undefined,
+			passwordHash: created.passwordHash ?? undefined,
+			createdAt: created.createdAt,
+			updatedAt: created.updatedAt
+		};
+	}
+
+	public async authenticateUserAsync(email: string, password: string): Promise<UserRecord | null> {
+		const normalizedEmail = email.trim().toLowerCase();
+		const user = await prisma.user.findUnique({
+			where: { email: normalizedEmail }
+		});
+
+		if (!user || !user.passwordHash) {
+			return null;
+		}
+
+		const isValid = verifyPassword(password, user.passwordHash);
+		if (!isValid) {
+			return null;
+		}
+
+		return {
+			id: user.id,
+			candidateNumber: user.candidateNumber,
+			email: user.email ?? undefined,
+			name: user.name ?? undefined,
+			phone: user.phone ?? undefined,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt
+		};
+	}
+
+	public async getUserByEmailAsync(email: string): Promise<UserRecord | null> {
+		const normalizedEmail = email.trim().toLowerCase();
+		const user = await prisma.user.findUnique({
+			where: { email: normalizedEmail }
+		});
+		if (!user) return null;
+		return {
+			id: user.id,
+			candidateNumber: user.candidateNumber,
+			email: user.email ?? undefined,
+			name: user.name ?? undefined,
+			phone: user.phone ?? undefined,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt
+		};
+	}
+
 	public async getUserAsync(userId: string): Promise<UserRecord | null> {
 		try {
 			const u = await prisma.user.findUnique({ where: { id: userId } });
@@ -514,6 +617,7 @@ export class KalisDatabaseRepository {
 				candidateNumber: u.candidateNumber,
 				email: u.email ?? undefined,
 				name: u.name ?? undefined,
+				phone: u.phone ?? undefined,
 				createdAt: u.createdAt,
 				updatedAt: u.updatedAt
 			};

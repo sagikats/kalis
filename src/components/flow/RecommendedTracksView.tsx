@@ -31,6 +31,7 @@ import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '../common/UniversityLogo';
+import { useAuth } from '@/context/AuthContext';
 
 interface RecommendedTracksViewProps {
 	analysis: ProgramGapAnalysis;
@@ -67,6 +68,7 @@ export default function RecommendedTracksView({
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
 
 	// Explicit Track Saving State (Only on User Click)
+	const { user, refreshUser } = useAuth();
 	const [savedTrackMap, setSavedTrackMap] = useState<Record<string, { savedAt: Date; candidateNumber: string }>>({});
 	const [savingTrackId, setSavingTrackId] = useState<string | null>(null);
 	const [saveNotification, setSaveNotification] = useState<string | null>(null);
@@ -75,7 +77,7 @@ export default function RecommendedTracksView({
 		const trackId = track.id || 'track-standard';
 		setSavingTrackId(trackId);
 		try {
-			const existingUserId = typeof window !== 'undefined' ? localStorage.getItem('kalis_user_id') || undefined : undefined;
+			const existingUserId = user?.id || (typeof window !== 'undefined' ? localStorage.getItem('kalis_user_id') || undefined : undefined);
 
 			const res = await fetch('/api/tracks/save', {
 				method: 'POST',
@@ -112,6 +114,9 @@ export default function RecommendedTracksView({
 					if (data.candidateNumber) {
 						localStorage.setItem('kalis_candidate_number', data.candidateNumber);
 					}
+				}
+				if (refreshUser) {
+					refreshUser();
 				}
 				setSavedTrackMap((prev) => ({
 					...prev,

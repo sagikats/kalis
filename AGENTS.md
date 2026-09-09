@@ -122,6 +122,16 @@ npm run build
    - Created `npm run db:backup` (`prisma/backup.ts`) generating timestamped snapshots in `prisma/backups/`.
    - Created browser download endpoint `GET /api/backup` returning `dev.db` directly to client's Downloads folder.
 
+5. **Full User Registration & Authentication Engine:**
+   - Extended SQLite schema with `phone` and `passwordHash` (salted scrypt via native `crypto`).
+   - Implemented monotonic, collision-proof candidate number generation (`KL-XXXXX`).
+   - Created backend endpoints: `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`.
+   - Implemented seamless guest-to-user data migration: guest saved tracks are re-assigned to the registered user upon signup/login.
+   - Built `AuthContext.tsx` with local cache & automatic profile synchronization.
+   - Built sleek Hebrew RTL `AuthModal.tsx` supporting tabs for login and registration.
+   - Upgraded `Navbar.tsx` to dynamically show candidate number badge, avatar initials, saved tracks count, and login/register actions.
+   - Unit & integration tests expanded to **96/96 passing tests** across 29 test suites.
+
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **חיבור מדדי היעילות ל-UI ב-RecommendedTracksView:**
    - הצגת תג מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות בכרטיסיות המסלול.

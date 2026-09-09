@@ -16,17 +16,29 @@ import {
      RefreshCw,
      X,
      AlertTriangle,
-     Calculator
+     Calculator,
+     LogOut,
+     LogIn,
+     UserPlus
 } from 'lucide-react';
 import { usePlanner } from '../../context/PlannerContext';
+import { useAuth } from '../../context/AuthContext';
 
 import KalisLogo from '../common/KalisLogo';
 
 export default function Navbar() {
      const pathname = usePathname();
      const { recalculationPending, recalculationReason, recalculateRoute } = usePlanner();
+     const { user, isAuthenticated, logout, openAuthModal } = useAuth();
      const [showNotifications, setShowNotifications] = useState(false);
      const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+     const getInitials = (name?: string) => {
+          if (!name) return 'מו';
+          const parts = name.trim().split(/\s+/);
+          if (parts.length === 1) return parts[0].slice(0, 2);
+          return `${parts[0][0]}${parts[parts.length - 1][0]}`;
+     };
 
      const navLinks = [
           { href: '/', label: 'דף הבית', icon: Compass },
@@ -44,46 +56,102 @@ export default function Navbar() {
                     {/* Left/Right swapped for RTL: Right Action Icons (Notifications & Profile) appear on the RIGHT in RTL */}
                     <div className="flex items-center gap-3">
 
-                         {/* User Profile Menu */}
-                         <div className="relative">
-                              <button
-                                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                                   className="flex items-center gap-2 p-1.5 pr-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-full transition-colors border border-slate-200/60"
-                              >
-                                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-blue-800 text-white font-bold text-xs shadow-xs">
-                                        יג
-                                   </div>
-                                   <span className="hidden sm:inline">ישראל ישראלי</span>
-                                   <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
-                              </button>
+                         {/* User Profile Menu or Login/Register Buttons */}
+                         {isAuthenticated && user ? (
+                              <div className="relative">
+                                   <button
+                                        onClick={() => setShowProfileMenu(!showProfileMenu)}
+                                        className="flex items-center gap-2 p-1.5 pr-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-full transition-colors border border-slate-200/60"
+                                   >
+                                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-700 text-white font-bold text-xs shadow-xs">
+                                             {getInitials(user.name)}
+                                        </div>
+                                        <span className="hidden sm:inline font-bold text-slate-800">{user.name}</span>
+                                        {user.candidateNumber && (
+                                             <span className="hidden md:inline px-1.5 py-0.5 text-[10px] font-mono bg-blue-100 text-blue-800 rounded font-semibold">
+                                                  {user.candidateNumber}
+                                             </span>
+                                        )}
+                                        <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+                                   </button>
 
-                              {showProfileMenu && (
-                                   <div className="absolute right-0 mt-3 w-56 rounded-2xl bg-white p-2 shadow-xl border border-slate-200 z-50 animate-in fade-in">
-                                        <div className="px-3 py-2 border-b border-slate-100">
-                                             <p className="text-xs font-bold text-slate-900">ישראל ישראלי</p>
-                                             <p className="text-[11px] text-slate-500">מסלול 5 יח״ל מתמטיקה + פסיכומטרי</p>
+                                   {showProfileMenu && (
+                                        <div className="absolute right-0 mt-3 w-64 rounded-2xl bg-white p-2 shadow-xl border border-slate-200 z-50 animate-in fade-in">
+                                             <div className="px-3 py-2.5 border-b border-slate-100">
+                                                  <div className="flex items-center justify-between">
+                                                       <p className="text-xs font-bold text-slate-900">{user.name}</p>
+                                                       {user.candidateNumber && (
+                                                            <span className="px-1.5 py-0.5 text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-200 rounded font-bold">
+                                                                 {user.candidateNumber}
+                                                            </span>
+                                                       )}
+                                                  </div>
+                                                  <p className="text-[11px] text-slate-500 truncate mt-0.5">{user.email}</p>
+                                                  {typeof user.savedTracksCount === 'number' && user.savedTracksCount > 0 && (
+                                                       <div className="mt-1.5 px-2 py-1 bg-emerald-50 border border-emerald-200/60 rounded-lg text-[11px] text-emerald-700 font-bold">
+                                                            ✓ {user.savedTracksCount} מסלולים שמורים בחשבונך
+                                                       </div>
+                                                  )}
+                                             </div>
+                                             <div className="py-1">
+                                                  <Link
+                                                       href="/flow"
+                                                       onClick={() => setShowProfileMenu(false)}
+                                                       className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
+                                                  >
+                                                       <Sliders className="h-3.5 w-3.5 text-blue-500" />
+                                                       בדיקת קבלה ומסלולים
+                                                  </Link>
+                                                  <Link
+                                                       href="/dashboard"
+                                                       onClick={() => setShowProfileMenu(false)}
+                                                       className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
+                                                  >
+                                                       <User className="h-3.5 w-3.5 text-slate-400" />
+                                                       הפרופיל שלי
+                                                  </Link>
+                                                  <Link
+                                                       href="/schedule"
+                                                       onClick={() => setShowProfileMenu(false)}
+                                                       className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
+                                                  >
+                                                       <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                                                       ניהול חסימות ויומן
+                                                  </Link>
+                                             </div>
+                                             <div className="pt-1 border-t border-slate-100">
+                                                  <button
+                                                       onClick={() => {
+                                                            setShowProfileMenu(false);
+                                                            logout();
+                                                       }}
+                                                       className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition text-right"
+                                                  >
+                                                       <LogOut className="h-3.5 w-3.5" />
+                                                       התנתק מהחשבון
+                                                  </button>
+                                             </div>
                                         </div>
-                                        <div className="py-1">
-                                             <Link
-                                                  href="/dashboard"
-                                                  onClick={() => setShowProfileMenu(false)}
-                                                  className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
-                                             >
-                                                  <User className="h-3.5 w-3.5" />
-                                                  הפרופיל שלי
-                                             </Link>
-                                             <Link
-                                                  href="/schedule"
-                                                  onClick={() => setShowProfileMenu(false)}
-                                                  className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
-                                             >
-                                                  <Calendar className="h-3.5 w-3.5" />
-                                                  ניהול חסימות ויומן
-                                             </Link>
-                                        </div>
-                                   </div>
-                              )}
-                         </div>
+                                   )}
+                              </div>
+                         ) : (
+                              <div className="flex items-center gap-1.5 sm:gap-2">
+                                   <button
+                                        onClick={() => openAuthModal('login')}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
+                                   >
+                                        <LogIn className="h-3.5 w-3.5" />
+                                        <span>התחברות</span>
+                                   </button>
+                                   <button
+                                        onClick={() => openAuthModal('register')}
+                                        className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-full shadow-xs hover:shadow transition-all cursor-pointer"
+                                   >
+                                        <UserPlus className="h-3.5 w-3.5" />
+                                        <span>הרשמה</span>
+                                   </button>
+                              </div>
+                         )}
 
                          {/* Notifications Bell */}
                          <div className="relative">

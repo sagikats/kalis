@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
 import './globals.css';
 import { PlannerProvider } from '../context/PlannerContext';
+import { AuthProvider } from '../context/AuthContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import AuthModal from '../components/auth/AuthModal';
 
 const rubik = Rubik({
   subsets: ['latin', 'hebrew'],
@@ -24,11 +26,14 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl" className={`${rubik.variable} h-full antialiased`}>
       <body className="font-sans min-h-full flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
-        <PlannerProvider>
-          <Navbar />
-          <main className="flex-1 w-full">{children}</main>
-          <Footer />
-        </PlannerProvider>
+        <AuthProvider>
+          <PlannerProvider>
+            <Navbar />
+            <main className="flex-1 w-full">{children}</main>
+            <Footer />
+            <AuthModal />
+          </PlannerProvider>
+        </AuthProvider>
       </body>
     </html>
   );
