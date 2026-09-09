@@ -5,11 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
      Compass,
-     Navigation,
      Sparkles,
      Sliders,
-     Calendar,
-     CheckSquare,
      Bell,
      User,
      ChevronDown,
@@ -43,10 +40,7 @@ export default function Navbar() {
      const navLinks = [
           { href: '/', label: 'דף הבית', icon: Compass },
           { href: '/flow', label: 'בדיקת קבלה ופערים', icon: Sliders },
-          { href: '/calculators', label: 'מחשבון סכם', icon: Calculator },
-          { href: '/wizard', label: 'בניית תוכנית', icon: Sparkles },
-          { href: '/dashboard', label: 'קוקפיט למידה', icon: CheckSquare },
-          { href: '/schedule', label: 'לו״ז וסילבוס', icon: Calendar }
+          { href: '/calculators', label: 'מחשבון סכם', icon: Calculator }
      ];
 
      return (
@@ -103,20 +97,12 @@ export default function Navbar() {
                                                        בדיקת קבלה ומסלולים
                                                   </Link>
                                                   <Link
-                                                       href="/dashboard"
+                                                       href="/calculators"
                                                        onClick={() => setShowProfileMenu(false)}
                                                        className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
                                                   >
-                                                       <User className="h-3.5 w-3.5 text-slate-400" />
-                                                       הפרופיל שלי
-                                                  </Link>
-                                                  <Link
-                                                       href="/schedule"
-                                                       onClick={() => setShowProfileMenu(false)}
-                                                       className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
-                                                  >
-                                                       <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                                                       ניהול חסימות ויומן
+                                                       <Calculator className="h-3.5 w-3.5 text-blue-500" />
+                                                       מחשבון סכם
                                                   </Link>
                                              </div>
                                              <div className="pt-1 border-t border-slate-100">

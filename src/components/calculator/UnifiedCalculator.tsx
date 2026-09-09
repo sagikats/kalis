@@ -716,9 +716,9 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                        <span>מה הסיכויים שלי?</span>
                                                   </button>
                                                   <Link
-                                                       href={`/optimizer?university=${encodeURIComponent(res.institutionName)}`}
+                                                       href="/flow"
                                                        className="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
-                                                       title={`כל החוגים ב${res.institutionName}`}
+                                                       title="בדיקת קבלה ופערים"
                                                   >
                                                        <ChevronLeft className="h-4 w-4" />
                                                   </Link>

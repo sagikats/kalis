@@ -17,7 +17,8 @@ import {
   Award,
   Zap,
   Target,
-  Users
+  Users,
+  Calculator
 } from 'lucide-react';
 import { usePlanner } from '../context/PlannerContext';
 import { UNIVERSITIES, DEGREES, DEGREE_THRESHOLDS } from '../data/mockData';
@@ -42,10 +43,8 @@ export default function LandingPage() {
     router.push('/flow');
   };
 
-  const handleStartWizard = () => {
-    setTargetUniversity(teaserUniv);
-    setTargetDegree(teaserDegree);
-    router.push('/wizard');
+  const handleStartCalculator = () => {
+    router.push('/calculators');
   };
 
   return (
@@ -80,19 +79,19 @@ export default function LandingPage() {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={handleStartOptimizer}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-2xl shadow-lg shadow-blue-200 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-2xl shadow-lg shadow-blue-200 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <Sliders className="h-5 w-5" />
-                <span>בדוק סיכויי קבלה ואופטימיזציה</span>
+                <span>בדוק סיכויי קבלה ופערים</span>
                 <ArrowLeft className="h-4 w-4" />
               </button>
 
               <button
-                onClick={handleStartWizard}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 rounded-2xl shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                onClick={handleStartCalculator}
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 rounded-2xl shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
-                <Sparkles className="h-5 w-5 text-blue-600" />
-                <span>בנה תוכנית למידה מותאמת</span>
+                <Calculator className="h-5 w-5 text-blue-600" />
+                <span>מחשבון סכם לכל האוניברסיטאות</span>
               </button>
             </div>
 
@@ -331,22 +330,22 @@ export default function LandingPage() {
             מוכן למצוא את המסלול הקצר ביותר לתואר?
           </h2>
           <p className="text-sm text-sky-200 max-w-xl mx-auto">
-            התחל בבדיקת סיכויי קבלה ואופטימיזציית סכם, או בנה תוכנית למידה מאפס בפחות מ-2 דקות.
+            התחל בבדיקת סיכויי קבלה ופערים, או חשב סכם מדויק לכל 8 האוניברסיטאות בפחות מדקה.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button
               onClick={handleStartOptimizer}
-              className="w-full sm:w-auto px-8 py-3.5 bg-white text-blue-950 hover:bg-slate-100 font-bold text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3.5 bg-white text-blue-950 hover:bg-slate-100 font-bold text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sliders className="h-4 w-4 text-blue-600" />
-              <span>עבור לאופטימיזטור קבלה</span>
+              <span>בדיקת קבלה ופערים</span>
             </button>
             <button
-              onClick={handleStartWizard}
-              className="w-full sm:w-auto px-8 py-3.5 bg-blue-700/80 hover:bg-blue-700 text-white font-bold text-sm rounded-xl border border-blue-400/40 transition flex items-center justify-center gap-2"
+              onClick={handleStartCalculator}
+              className="w-full sm:w-auto px-8 py-3.5 bg-blue-700/80 hover:bg-blue-700 text-white font-bold text-sm rounded-xl border border-blue-400/40 transition flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Sparkles className="h-4 w-4" />
-              <span>התחל באשף התכנון</span>
+              <Calculator className="h-4 w-4" />
+              <span>מחשבון סכם לכל האוניברסיטאות</span>
             </button>
           </div>
         </div>

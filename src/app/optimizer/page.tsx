@@ -122,7 +122,7 @@ export default function OptimizerPage() {
      const handleSelectTrack = (trackId: TrackId, trackSubjectName: string) => {
           setSelectedTrack(trackId);
           setWizardExamDetails(trackSubjectName, 'קיץ 2026', '2026-06-18');
-          router.push('/wizard');
+          router.push('/flow');
      };
 
      const activeProg = currentInstitution?.programs.find((p) => p.fieldOfStudy === targetDegree);

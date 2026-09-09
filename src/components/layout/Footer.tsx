@@ -35,27 +35,17 @@ export default function Footer() {
                               <ul className="space-y-2 text-xs">
                                    <li>
                                         <Link href="/" className="hover:text-sky-300 transition-colors">
-                                             דף הבית והסימולטור
+                                             דף הבית
                                         </Link>
                                    </li>
                                    <li>
-                                        <Link href="/optimizer" className="hover:text-sky-300 transition-colors">
-                                             אופטימיזציית סכם קבלה
+                                        <Link href="/flow" className="hover:text-sky-300 transition-colors">
+                                             בדיקת קבלה ופערים
                                         </Link>
                                    </li>
                                    <li>
-                                        <Link href="/wizard" className="hover:text-sky-300 transition-colors">
-                                             אשף בניית תוכנית למידה
-                                        </Link>
-                                   </li>
-                                   <li>
-                                        <Link href="/dashboard" className="hover:text-sky-300 transition-colors">
-                                             קוקפיט למידה יומי
-                                        </Link>
-                                   </li>
-                                   <li>
-                                        <Link href="/schedule" className="hover:text-sky-300 transition-colors">
-                                             לוח זמנים ועץ סילבוס
+                                        <Link href="/calculators" className="hover:text-sky-300 transition-colors">
+                                             מחשבון סכם לכל האוניברסיטאות
                                         </Link>
                                    </li>
                               </ul>
