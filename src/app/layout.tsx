@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter_Tight, Heebo } from 'next/font/google';
+import { Inter_Tight, Rubik, Assistant } from 'next/font/google';
 import './globals.css';
 import { PlannerProvider } from '../context/PlannerContext';
 import { AuthProvider } from '../context/AuthContext';
@@ -14,11 +14,18 @@ const interTight = Inter_Tight({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
 });
 
-const heebo = Heebo({
+const rubik = Rubik({
   subsets: ['hebrew', 'latin'],
-  variable: '--font-heebo',
+  variable: '--font-rubik',
   display: 'swap',
   weight: ['300', '400', '500', '600', '700', '800', '900'],
+});
+
+const assistant = Assistant({
+  subsets: ['hebrew', 'latin'],
+  variable: '--font-assistant',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700', '800'],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="he" dir="rtl" className={`${interTight.variable} ${heebo.variable} h-full antialiased`}>
+    <html lang="he" dir="rtl" className={`${interTight.variable} ${rubik.variable} ${assistant.variable} h-full antialiased`}>
       <body className="font-sans min-h-full flex flex-col bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222]">
         <AuthProvider>
           <PlannerProvider>

@@ -43,7 +43,7 @@ export default function LandingPage() {
       {/* HERO SECTION */}
       <section className="relative pt-16 pb-20 lg:pt-28 lg:pb-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto space-y-7">
+          <div className="text-center max-w-5xl mx-auto space-y-7">
 
             {/* Top Editorial Badge */}
             <div className="inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-1.5 text-xs font-medium text-[#44423D] border border-[#E0DBD0] shadow-xs animate-in fade-in duration-500">
@@ -55,20 +55,19 @@ export default function LandingPage() {
               <span className="text-[#66635C]">חישוב מדויק ל-8 האוניברסיטאות</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-5xl font-black tracking-tight text-[#1E1E1E] sm:text-7xl lg:text-8xl leading-[1.08] sm:leading-[1.1]">
-              <span className="block">הצעד הראשון שלך</span>
-              <span className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2">
-                <span>לאקדמיה</span>
+            {/* Main Headline - Single Line */}
+            <div className="w-full overflow-hidden flex justify-center">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-[#1E1E1E] leading-none whitespace-nowrap inline-flex items-center justify-center gap-2 sm:gap-3 md:gap-4 select-none">
+                <span>הצעד הראשון שלך לאקדמיה</span>
                 <span
-                  className="animate-emoji-bob text-4xl sm:text-6xl lg:text-7xl xl:text-8xl cursor-default select-none inline-block hover:scale-110 transition-transform"
+                  className="animate-emoji-bob text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl cursor-default select-none inline-block hover:scale-110 transition-transform shrink-0"
                   role="img"
                   aria-label="תלמיד מחייך"
                 >
                   🧑‍🎓
                 </span>
-              </span>
-            </h1>
+              </h1>
+            </div>
 
             {/* Subheadline (Exact user requested sentence) */}
             <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-2xl mx-auto">
