@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "db:seed": "npx tsx prisma/seed.ts",
+    "db:backup": "npx tsx prisma/backup.ts",
     "studio": "prisma studio"
   },
   "dependencies": {
