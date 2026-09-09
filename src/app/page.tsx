@@ -21,8 +21,25 @@ import {
 } from 'lucide-react';
 import GlowCard from '@/components/common/GlowCard';
 
+const HERO_IMAGES = [
+  { src: '/images/hero-grad-1.png', alt: 'בוגרי אקדמיה חוגגים קבלה בזריחה' },
+  { src: '/images/hero-grad-2.png', alt: 'הנפת כובעי בוגרים לשמיים' },
+  { src: '/images/hero-grad-3.png', alt: 'בוגר אקדמיה עם תעודת תואר' },
+  { src: '/images/hero-grad-4.png', alt: 'צלליות סטודנטים חוגגים סיום תואר' },
+  { src: '/images/hero-grad-5.png', alt: 'בוגרי אוניברסיטה עם כובעי סיום' },
+];
+
 export default function LandingPage() {
   const router = useRouter();
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+  // Auto-advance crossfade slideshow every 4.5 seconds
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222] overflow-hidden font-sans" dir="rtl">
@@ -55,17 +72,27 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Hero Banner with Image and Headline on top (STATIC - לא תזוז) */}
-          <div className="relative w-full max-w-5xl mx-auto rounded-3xl sm:rounded-[2.5rem] overflow-hidden border border-[#E5DFD4] shadow-md my-4 h-[320px] sm:h-[420px] md:h-[480px] flex items-center justify-center">
-            {/* The Graduation Image */}
-            <img
-              src="/images/hero-graduation.png"
-              alt="בוגרי אקדמיה חוגגים קבלה"
-              className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] select-none"
-            />
+          {/* Hero Banner with Crossfading Images and Static Headline on top */}
+          <div className="relative w-full max-w-5xl mx-auto rounded-3xl sm:rounded-[2.5rem] overflow-hidden border border-[#E5DFD4] shadow-md my-4 h-[320px] sm:h-[420px] md:h-[480px] flex items-center justify-center bg-black/95">
+            {/* The 5 Crossfading Images */}
+            {HERO_IMAGES.map((img, idx) => {
+              const isActive = idx === currentImageIndex;
+              return (
+                <img
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  className={`absolute inset-0 w-full h-full object-cover object-center select-none transition-all duration-1000 ease-in-out ${
+                    isActive
+                      ? 'opacity-85 scale-100'
+                      : 'opacity-0 scale-105 pointer-events-none'
+                  }`}
+                />
+              );
+            })}
 
             {/* Gradient Overlay for high contrast & clarity */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/35" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/35 pointer-events-none" />
 
             {/* Headline overlaid on the image - 100% STATIC (לא תזוז) */}
             <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl mx-auto">
@@ -75,6 +102,22 @@ export default function LandingPage() {
                   🧑‍🎓
                 </span>
               </h1>
+            </div>
+
+            {/* Carousel Dots Navigation */}
+            <div className="absolute bottom-4 z-20 flex items-center gap-1.5 sm:gap-2">
+              {HERO_IMAGES.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  onClick={() => setCurrentImageIndex(dotIdx)}
+                  aria-label={`עבור לתמונה ${dotIdx + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                    dotIdx === currentImageIndex
+                      ? 'w-6 bg-white'
+                      : 'w-1.5 bg-white/40 hover:bg-white/75'
+                  }`}
+                />
+              ))}
             </div>
           </div>
 
