@@ -57,9 +57,9 @@ export default function LandingPage() {
 
             {/* Main Headline */}
             <h1 className="text-5xl font-black tracking-tight text-[#222222] sm:text-7xl lg:text-8xl leading-[1.08]">
-              ה-Waze של <br />
+              הצעד הראשון שלך <br />
               <span className="text-[#1A1A1A] underline decoration-[#DCD6CA] decoration-wavy decoration-2 underline-offset-8">
-                הלמידה שלך
+                לאקדמיה
               </span>
             </h1>
 
