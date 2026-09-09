@@ -93,50 +93,43 @@ npm run build
 ---
 
 ## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-09)
-- **Active Branch:** `main` (Merged cleanly from `SQLite-migration`)
+- **Active Branch:** `ui-upgred` (Created from `main` for UI isolation and safe iteration)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **88/88 tests passing** across 28 test suites.
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **96/96 tests passing** across 29 test suites.
   - `npm run build`: Clean (20/20 static & dynamic routes generated, zero compile or runtime build errors).
-  - Background processes: Next.js dev server on port 3000.
+  - Background processes: Next.js dev server running on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
 
-1. **Full SQLite Database Migration with Prisma ORM (`prisma/`):**
-   - Implemented relational SQLite schema (`prisma/schema.prisma`) with 8 models: `institutions`, `academic_programs`, `bagrut_subjects`, `users`, `user_academic_profiles`, `subject_grades` (1:N dynamic electives), `user_preferences`, and `saved_tracks`.
-   - Populated with 8 institutions, 639 academic programs, and 39 national bagrut subjects via `prisma/seed.ts` (`npm run db:seed`).
-   - Added system-assigned candidate number generation (`candidateNumber` e.g., `KL-10001`) preventing user spoofing.
-   - Golden Master verification: 111/111 baseline checks (100% exact match) between JSON and SQLite solvers.
+1. **Clean Route Pruning & Streamlined Navigation:**
+   - Deleted obsolete routes: `src/app/wizard/`, `src/app/dashboard/`, `src/app/schedule/`.
+   - Streamlined focus exclusively to:
+     - **Home (`/`)**: Landing page & architectural overview.
+     - **Admission Check & Gaps Flow (`/flow`)**: Complete 4-step wizard (grades, targets, gap report, personalized action tracks).
+     - **Multi-University Sekem Calculator (`/calculators`)**: Official deterministic sekem calculator for all 8 universities.
 
-2. **End-to-End SQLite UI Integration:**
-   - Created `GET /api/institutions` directly querying SQLite with in-memory sync cache.
-   - Connected `DegreeSearchSelector.tsx` to `/api/institutions` with visual live indicator badge ("מסד נתונים מסונכרן (SQLite)").
-   - Standardized institution IDs (`technion`, `tau`, `huji`, `bgu`, `haifa`, `ariel`, `bar_ilan`, `reichman`) matching UniversityLogo keys 1:1.
+2. **OHZI Interactive Award-Winning Aesthetic Overhaul:**
+   - Re-architected design language inspired by Awwwards-winning **OHZI Interactive** (`https://www.awwwards.com/sites/ohzi-interactive#score`):
+     - **Canvas Particle Constellation & Ambient Spotlight (`src/components/common/InteractiveBackground.tsx`)**: Zero external dependencies, pure HTML5 canvas requestAnimationFrame particle network reacting to mouse movement.
+     - **Dynamic Glow Cards (`src/components/common/GlowCard.tsx`)**: Reusable glassmorphic cards with cursor-following radial glow highlights and neon cyan/indigo luminous borders.
+     - **Dark Obsidian Palette**: Root layout updated to `#06070a` with custom dark scrollbars and cyan hover accents (`globals.css`).
+     - **Capsule Navigation (`Navbar.tsx`)**: Floating dark glassmorphism header with active link pill glow, candidate ID badge, and profile menu.
+     - **Architecture Spec HUD (`Footer.tsx`)**: Dark HUD footer featuring real-time system metrics (8 universities, 639 degree tracks, 20u legal dropping rule).
 
-3. **User-Initiated Track Saving ("שמור מסלול"):**
-   - Created `POST /api/tracks/save` and `GET /api/tracks/save`.
-   - Implemented explicit user saving: tracks are **never** saved automatically upon generation.
-   - Added interactive "שמור מסלול זה" buttons on all track cards (Track A, Track B, Mechina, Roadmap header) with instant feedback ("המסלול נשמר (KL-10001) ✓").
-
-4. **Automated Database Backup Engine:**
-   - Created `npm run db:backup` (`prisma/backup.ts`) generating timestamped snapshots in `prisma/backups/`.
-   - Created browser download endpoint `GET /api/backup` returning `dev.db` directly to client's Downloads folder.
-
-5. **Full User Registration & Authentication Engine:**
-   - Extended SQLite schema with `phone` and `passwordHash` (salted scrypt via native `crypto`).
-   - Implemented monotonic, collision-proof candidate number generation (`KL-XXXXX`).
-   - Created backend endpoints: `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`.
-   - Implemented seamless guest-to-user data migration: guest saved tracks are re-assigned to the registered user upon signup/login.
-   - Built `AuthContext.tsx` with local cache & automatic profile synchronization.
-   - Built sleek Hebrew RTL `AuthModal.tsx` supporting tabs for login and registration.
-   - Upgraded `Navbar.tsx` to dynamically show candidate number badge, avatar initials, saved tracks count, and login/register actions.
-   - Unit & integration tests expanded to **96/96 passing tests** across 29 test suites.
+3. **Homepage Capabilities & CTA Consolidation:**
+   - Retained the exact subheadline required by the user.
+   - Replaced old principles with the 3 most prominent current system capabilities:
+     1. **01 // SEKEM ENGINE**: מחשבון סכם מאוחד ל-8 האוניברסיטאות (כולל רצפת 20 יח"ל ובונוסים).
+     2. **02 // GAP DIAGNOSTIC**: בדיקת קבלה ודוח פערים אישי לתואר (639 תארים, סיווג סיכויים).
+     3. **03 // ACTION TRACKS**: מחולל מסלולי פעולה חכמים לסגירת הפער (מיקוד ROI, פיזור סיכונים, חלופת מכינה).
+   - Dual high-impact CTA buttons for starting the flow (`/flow`) and opening the calculator (`/calculators`).
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
-1. **חיבור מדדי היעילות ל-UI ב-RecommendedTracksView:**
-   - הצגת תג מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות בכרטיסיות המסלול.
-2. **ניטור זמני טעינה ואופטימיזציה:**
-   - מעקב אחר ביצועי קליינט ב-flow המלא ושיפור זמני תגובה.
+1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
+   - שילוב תגיות מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות.
+2. **ליטוש מיקרו-אינטראקציות נוספות:**
+   - אנימציות כניסה (framer-motion / CSS keyframes) בעת מעבר בין שלבי ה-flow.
 
 ---
 
