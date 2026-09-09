@@ -20,7 +20,10 @@ import {
 	Award,
 	Sliders,
 	ChevronDown,
-	ChevronUp
+	ChevronUp,
+	Bookmark,
+	BookmarkCheck,
+	Loader2
 } from 'lucide-react';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
@@ -62,6 +65,70 @@ export default function RecommendedTracksView({
 	const [selectedTrackId, setSelectedTrackId] = useState<string>(tracks[1]?.id || tracks[0]?.id || '');
 	const [isPrintMode, setIsPrintMode] = useState(false);
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
+
+	// Explicit Track Saving State (Only on User Click)
+	const [savedTrackMap, setSavedTrackMap] = useState<Record<string, { savedAt: Date; candidateNumber: string }>>({});
+	const [savingTrackId, setSavingTrackId] = useState<string | null>(null);
+	const [saveNotification, setSaveNotification] = useState<string | null>(null);
+
+	const handleSaveTrack = async (track: any) => {
+		const trackId = track.id || 'track-standard';
+		setSavingTrackId(trackId);
+		try {
+			const existingUserId = typeof window !== 'undefined' ? localStorage.getItem('kalis_user_id') || undefined : undefined;
+
+			const res = await fetch('/api/tracks/save', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					userId: existingUserId,
+					programId: analysis.target.program.id,
+					track: {
+						id: track.id,
+						title: track.title,
+						badge: track.badge,
+						badgeColor: track.badgeColor,
+						targetSekem: track.targetSekem,
+						targetPsychometric: track.targetPsychometric,
+						targetBagrutAverage: track.targetBagrutAverage,
+						currentPsychometric: track.currentPsychometric,
+						currentBagrutAverage: track.currentBagrutAverage,
+						strategyDescription: track.strategyDescription || track.description || '',
+						estimatedWeeks: track.estimatedWeeks,
+						weeklyHours: track.weeklyHours,
+						feasibility: track.feasibility,
+						feasibilityExplanation: track.feasibilityExplanation,
+						keyAdvantage: track.keyAdvantage,
+						milestones: track.milestones || track.steps,
+						recommendedLevers: track.recommendedLevers || track.recommendedSubjectImprovements
+					}
+				})
+			});
+
+			const data = await res.json();
+			if (data.success) {
+				if (typeof window !== 'undefined' && data.userId) {
+					localStorage.setItem('kalis_user_id', data.userId);
+					if (data.candidateNumber) {
+						localStorage.setItem('kalis_candidate_number', data.candidateNumber);
+					}
+				}
+				setSavedTrackMap((prev) => ({
+					...prev,
+					[trackId]: { savedAt: new Date(), candidateNumber: data.candidateNumber }
+				}));
+				setSaveNotification(`המסלול נשמר בהצלחה במסד הנתונים! (מספר מועמד: ${data.candidateNumber})`);
+				setTimeout(() => setSaveNotification(null), 6000);
+			} else {
+				alert(data.error || 'שגיאה בשמירת המסלול');
+			}
+		} catch (err: any) {
+			console.error('Failed to save track:', err);
+			alert('אירעה שגיאה בעת שמירת המסלול במסד הנתונים');
+		} finally {
+			setSavingTrackId(null);
+		}
+	};
 
 	// Mechina Opt-In State
 	const [mechinaTrack, setMechinaTrack] = useState<any | null>(null);
@@ -300,6 +367,22 @@ export default function RecommendedTracksView({
 					)}
 				</div>
 			</div>
+
+			{/* Save Track Notification Banner */}
+			{saveNotification && (
+				<div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-200 text-xs font-bold flex items-center justify-between gap-3 shadow-lg shadow-emerald-500/10">
+					<div className="flex items-center gap-2.5">
+						<CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+						<span>{saveNotification}</span>
+					</div>
+					<button
+						onClick={() => setSaveNotification(null)}
+						className="text-slate-400 hover:text-white p-1"
+					>
+						✕
+					</button>
+				</div>
+			)}
 
 			{/* ========================================================================= */}
 			{/* TAB 1: RECOMMENDED TRACKS SUMMARY */}
@@ -653,8 +736,8 @@ export default function RecommendedTracksView({
 								</div>
 							</div>
 
-							{/* Bottom Selection Button */}
-							<div className="p-6 pt-0">
+							{/* Bottom Selection & Save Buttons */}
+							<div className="p-6 pt-0 space-y-2">
 								<button
 									type="button"
 									onClick={() => setSelectedTrackId(track.id)}
@@ -671,6 +754,36 @@ export default function RecommendedTracksView({
 										</>
 									) : (
 										<span>בחר מסלול זה</span>
+									)}
+								</button>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.stopPropagation();
+										handleSaveTrack(track);
+									}}
+									disabled={savingTrackId === track.id}
+									className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border ${
+										savedTrackMap[track.id]
+											? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+											: 'bg-slate-950/80 hover:bg-slate-800 text-slate-300 hover:text-white border-slate-800'
+									}`}
+								>
+									{savingTrackId === track.id ? (
+										<>
+											<Loader2 className="h-3.5 w-3.5 animate-spin text-cyan-400" />
+											<span>שומר מסלול במסד הנתונים...</span>
+										</>
+									) : savedTrackMap[track.id] ? (
+										<>
+											<BookmarkCheck className="h-3.5 w-3.5 text-emerald-400" />
+											<span>המסלול נשמר ({savedTrackMap[track.id].candidateNumber}) ✓</span>
+										</>
+									) : (
+										<>
+											<Bookmark className="h-3.5 w-3.5 text-cyan-400" />
+											<span>שמור מסלול זה</span>
+										</>
 									)}
 								</button>
 							</div>
@@ -696,13 +809,40 @@ export default function RecommendedTracksView({
 						</p>
 					</div>
 
-					<div className="flex items-center gap-4 text-xs font-bold text-slate-400 shrink-0">
+					<div className="flex items-center gap-3 text-xs font-bold text-slate-400 shrink-0 flex-wrap">
 						<div className="bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
 							משך כולל: <span className="text-white">{selectedTrack.estimatedWeeks} שבועות</span>
 						</div>
 						<div className="bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
 							עומס שבועי: <span className="text-white">{selectedTrack.weeklyHours} ש״ש</span>
 						</div>
+						<button
+							type="button"
+							onClick={() => handleSaveTrack(selectedTrack)}
+							disabled={savingTrackId === selectedTrack.id}
+							className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-lg ${
+								savedTrackMap[selectedTrack.id]
+									? 'bg-emerald-600 text-white border-emerald-500 shadow-emerald-600/20'
+									: 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-400/40 shadow-cyan-500/20'
+							}`}
+						>
+							{savingTrackId === selectedTrack.id ? (
+								<>
+									<Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
+									<span>שומר מסלול...</span>
+								</>
+							) : savedTrackMap[selectedTrack.id] ? (
+								<>
+									<BookmarkCheck className="h-3.5 w-3.5 text-white" />
+									<span>המסלול שמור ({savedTrackMap[selectedTrack.id].candidateNumber}) ✓</span>
+								</>
+							) : (
+								<>
+									<Bookmark className="h-3.5 w-3.5 text-white" />
+									<span>שמור מסלול זה</span>
+								</>
+							)}
+						</button>
 					</div>
 				</div>
 
@@ -963,6 +1103,37 @@ export default function RecommendedTracksView({
 										<span className="text-[11px] font-bold text-emerald-400">
 											היתכנות: {mechinaTrack.feasibilityExplanation}
 										</span>
+									</div>
+
+									{/* Save Mechina Track Button */}
+									<div className="pt-2 flex justify-end">
+										<button
+											type="button"
+											onClick={() => handleSaveTrack(mechinaTrack)}
+											disabled={savingTrackId === mechinaTrack.id}
+											className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border ${
+												savedTrackMap[mechinaTrack.id]
+													? 'bg-emerald-600 text-white border-emerald-500 shadow-emerald-600/20'
+													: 'bg-purple-600 hover:bg-purple-500 text-white border-purple-400'
+											}`}
+										>
+											{savingTrackId === mechinaTrack.id ? (
+												<>
+													<Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
+													<span>שומר...</span>
+												</>
+											) : savedTrackMap[mechinaTrack.id] ? (
+												<>
+													<BookmarkCheck className="h-3.5 w-3.5 text-white" />
+													<span>מסלול מכינה שמור ({savedTrackMap[mechinaTrack.id].candidateNumber}) ✓</span>
+												</>
+											) : (
+												<>
+													<Bookmark className="h-3.5 w-3.5 text-white" />
+													<span>שמור מסלול מכינה זה</span>
+												</>
+											)}
+										</button>
 									</div>
 								</div>
 							</div>

@@ -153,4 +153,71 @@ describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
 		assert.equal(data.success, false);
 		assert.ok(data.error.includes('לא נמצא'));
 	});
+
+	it('GET /api/institutions: Returns all 8 institutions with programs directly from SQLite', async () => {
+		const { GET: institutionsGET } = await import('../../../app/api/institutions/route');
+		const req = new NextRequest('http://localhost:3000/api/institutions');
+		const res = await institutionsGET(req);
+		assert.equal(res.status, 200);
+
+		const data = await res.json();
+		assert.equal(data.success, true);
+		assert.equal(data.total, 8);
+		assert.equal(data.institutions.length, 8);
+
+		const tau = data.institutions.find((i: any) => i.id === 'tau');
+		assert.ok(tau, 'TAU must be present in institutions');
+		assert.ok(tau.programs.length > 20, 'TAU must have programs populated from SQLite');
+	});
+
+	it('POST /api/tracks/save: Explicitly saves single track with unique candidateNumber', async () => {
+		const { POST: saveTrackPOST, GET: saveTrackGET } = await import('../../../app/api/tracks/save/route');
+		const testUserId = `user_save_test_${Date.now()}`;
+		const sampleTrack = {
+			id: 'track-risk-spread',
+			title: 'מסלול פיזור סיכונים',
+			badge: 'הבטוח ביותר',
+			badgeColor: 'from-emerald-500 to-teal-600',
+			targetSekem: 706,
+			targetPsychometric: 715,
+			targetBagrutAverage: 108.5,
+			currentPsychometric: 690,
+			currentBagrutAverage: 106.0,
+			strategyDescription: 'שיפור קל בפסיכומטרי ושדרוג בגרות',
+			estimatedWeeks: 18,
+			weeklyHours: 15,
+			feasibility: 'high'
+		};
+
+		const realProgram = dbRepository.getProgramsByInstitution('tau')[0];
+		assert.ok(realProgram, 'Real TAU program must exist in DB');
+
+		const saveReq = new NextRequest('http://localhost:3000/api/tracks/save', {
+			method: 'POST',
+			body: JSON.stringify({
+				userId: testUserId,
+				programId: realProgram.id,
+				track: sampleTrack
+			})
+		});
+
+		const saveRes = await saveTrackPOST(saveReq);
+		assert.equal(saveRes.status, 200);
+
+		const saveData = await saveRes.json();
+		assert.equal(saveData.success, true);
+		assert.ok(saveData.savedTrackId);
+		assert.ok(saveData.candidateNumber.startsWith('KL-'));
+
+		// Query back
+		const getReq = new NextRequest(`http://localhost:3000/api/tracks/save?userId=${testUserId}`);
+		const getRes = await saveTrackGET(getReq);
+		assert.equal(getRes.status, 200);
+
+		const getData = await getRes.json();
+		assert.equal(getData.success, true);
+		assert.equal(getData.tracks.length, 1);
+		assert.equal(getData.tracks[0].title, sampleTrack.title);
+	});
 });
+

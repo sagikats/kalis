@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
 	Search,
 	GraduationCap,
@@ -117,14 +117,14 @@ export const POPULAR_CROSS_MAJORS: CrossUniversityMajor[] = [
 
 const MAJOR_INSTITUTION_CHIPS = [
 	{ id: 'all', name: 'כל המוסדות' },
-	{ id: 'inst-6', name: 'תל אביב', calcId: 'tau', badge: 'TAU', color: 'from-purple-500 to-indigo-600' },
-	{ id: 'inst-48', name: 'הטכניון', calcId: 'technion', badge: 'IIT', color: 'from-blue-600 to-teal-500' },
-	{ id: 'inst-3', name: 'בן-גוריון', calcId: 'bgu', badge: 'BGU', color: 'from-cyan-500 to-blue-600' },
-	{ id: 'inst-1', name: 'העברית', calcId: 'huji', badge: 'HUJI', color: 'from-amber-500 to-orange-600' },
-	{ id: 'inst-4', name: 'בר-אילן', calcId: 'bar_ilan', badge: 'BIU', color: 'from-amber-600 to-yellow-500' },
-	{ id: 'inst-5', name: 'חיפה', calcId: 'haifa', badge: 'UOH', color: 'from-sky-500 to-indigo-500' },
-	{ id: 'inst-2', name: 'אריאל', calcId: 'ariel', badge: 'AU', color: 'from-emerald-500 to-green-600' },
-	{ id: 'inst-38', name: 'רייכמן', calcId: 'reichman', badge: 'RUNI', color: 'from-blue-700 to-indigo-800' }
+	{ id: 'tau', name: 'תל אביב', calcId: 'tau', badge: 'TAU', color: 'from-purple-500 to-indigo-600' },
+	{ id: 'technion', name: 'הטכניון', calcId: 'technion', badge: 'IIT', color: 'from-blue-600 to-teal-500' },
+	{ id: 'bgu', name: 'בן-גוריון', calcId: 'bgu', badge: 'BGU', color: 'from-cyan-500 to-blue-600' },
+	{ id: 'huji', name: 'העברית', calcId: 'huji', badge: 'HUJI', color: 'from-amber-500 to-orange-600' },
+	{ id: 'bar_ilan', name: 'בר-אילן', calcId: 'bar_ilan', badge: 'BIU', color: 'from-amber-600 to-yellow-500' },
+	{ id: 'haifa', name: 'חיפה', calcId: 'haifa', badge: 'UOH', color: 'from-sky-500 to-indigo-500' },
+	{ id: 'ariel', name: 'אריאל', calcId: 'ariel', badge: 'AU', color: 'from-emerald-500 to-green-600' },
+	{ id: 'reichman', name: 'רייכמן', calcId: 'reichman', badge: 'RUNI', color: 'from-blue-700 to-indigo-800' }
 ];
 
 const INST_BADGE_MAP: Record<string, { badge: string; color: string; shortName: string }> = {
@@ -135,7 +135,15 @@ const INST_BADGE_MAP: Record<string, { badge: string; color: string; shortName: 
 	'inst-4': { badge: 'BIU', color: 'from-amber-600 to-yellow-500', shortName: 'בר-אילן' },
 	'inst-5': { badge: 'UOH', color: 'from-sky-500 to-indigo-500', shortName: 'חיפה' },
 	'inst-2': { badge: 'AU', color: 'from-emerald-500 to-green-600', shortName: 'אריאל' },
-	'inst-38': { badge: 'RUNI', color: 'from-blue-700 to-indigo-800', shortName: 'רייכמן' }
+	'inst-38': { badge: 'RUNI', color: 'from-blue-700 to-indigo-800', shortName: 'רייכמן' },
+	tau: { badge: 'TAU', color: 'from-purple-500 to-indigo-600', shortName: 'תל אביב' },
+	technion: { badge: 'IIT', color: 'from-blue-600 to-teal-500', shortName: 'הטכניון' },
+	bgu: { badge: 'BGU', color: 'from-cyan-500 to-blue-600', shortName: 'בן-גוריון' },
+	huji: { badge: 'HUJI', color: 'from-amber-500 to-orange-600', shortName: 'העברית' },
+	bar_ilan: { badge: 'BIU', color: 'from-amber-600 to-yellow-500', shortName: 'בר-אילן' },
+	haifa: { badge: 'UOH', color: 'from-sky-500 to-indigo-500', shortName: 'חיפה' },
+	ariel: { badge: 'AU', color: 'from-emerald-500 to-green-600', shortName: 'אריאל' },
+	reichman: { badge: 'RUNI', color: 'from-blue-700 to-indigo-800', shortName: 'רייכמן' }
 };
 
 const DISCIPLINE_FILTERS = [
@@ -155,7 +163,15 @@ const CALC_ID_MAP: Record<string, string> = {
 	'inst-4': 'bar_ilan',
 	'inst-5': 'haifa',
 	'inst-2': 'ariel',
-	'inst-38': 'reichman'
+	'inst-38': 'reichman',
+	tau: 'tau',
+	technion: 'technion',
+	bgu: 'bgu',
+	huji: 'huji',
+	bar_ilan: 'bar_ilan',
+	haifa: 'haifa',
+	ariel: 'ariel',
+	reichman: 'reichman'
 };
 
 interface DegreeSearchSelectorProps {
@@ -179,11 +195,35 @@ export default function DegreeSearchSelector({
 	const [selectedInstFilter, setSelectedInstFilter] = useState('all');
 	const [selectedDiscipline, setSelectedDiscipline] = useState('all');
 
-	// Flatten all programs with institution metadata
+	// Dynamic SQLite Data state (fallback to bundled academicInstitutions during initial fetch)
+	const [institutionsList, setInstitutionsList] = useState<AcademicInstitution[]>(academicInstitutions);
+	const [isLoadedFromDb, setIsLoadedFromDb] = useState<boolean>(false);
+
+	useEffect(() => {
+		let isMounted = true;
+		async function fetchFromSQLite() {
+			try {
+				const res = await fetch('/api/institutions');
+				const data = await res.json();
+				if (isMounted && data.success && Array.isArray(data.institutions) && data.institutions.length > 0) {
+					setInstitutionsList(data.institutions);
+					setIsLoadedFromDb(true);
+				}
+			} catch (err) {
+				console.warn('[DegreeSearchSelector] Fallback to pre-bundled data:', err);
+			}
+		}
+		fetchFromSQLite();
+		return () => {
+			isMounted = false;
+		};
+	}, []);
+
+	// Flatten all programs with institution metadata directly from SQLite
 	const allFlattenedPrograms = useMemo(() => {
 		const list: TargetProgramSelection[] = [];
-		for (const inst of academicInstitutions) {
-			const calcId = CALC_ID_MAP[inst.id] || 'general';
+		for (const inst of institutionsList) {
+			const calcId = (inst as any).calculatorId || CALC_ID_MAP[inst.id] || inst.id || 'general';
 			for (const prog of inst.programs) {
 				list.push({
 					institutionId: inst.id,
@@ -194,7 +234,7 @@ export default function DegreeSearchSelector({
 			}
 		}
 		return list;
-	}, []);
+	}, [institutionsList]);
 
 	// Extract unique fields that exist across at least 2 institutions for the dropdown
 	const commonCrossFields = useMemo(() => {
@@ -245,8 +285,13 @@ export default function DegreeSearchSelector({
 			}
 
 			// 2. Institution filter
-			if (selectedInstFilter !== 'all' && item.institutionId !== selectedInstFilter) {
-				return false;
+			if (selectedInstFilter !== 'all') {
+				const matchesInst =
+					item.institutionId === selectedInstFilter ||
+					item.calculatorId === selectedInstFilter ||
+					CALC_ID_MAP[item.institutionId] === selectedInstFilter ||
+					CALC_ID_MAP[selectedInstFilter] === item.calculatorId;
+				if (!matchesInst) return false;
 			}
 
 			// 3. Discipline filter
@@ -367,9 +412,21 @@ export default function DegreeSearchSelector({
 							<GraduationCap className="h-5 w-5" />
 						</div>
 						<div>
-							<h3 className="text-sm sm:text-base font-black text-white">
-								סל התארים המבוקשים שלך ({selectedPrograms.length})
-							</h3>
+							<div className="flex items-center gap-2 flex-wrap">
+								<h3 className="text-sm sm:text-base font-black text-white">
+									סל התארים המבוקשים שלך ({selectedPrograms.length})
+								</h3>
+								{isLoadedFromDb ? (
+									<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+										<span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+										<span>מסד נתונים מסונכרן (SQLite)</span>
+									</span>
+								) : (
+									<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-400">
+										<span>טוען מסד נתונים...</span>
+									</span>
+								)}
+							</div>
 							<p className="text-xs text-slate-400">
 								בחר את כל התארים והמוסדות שמעניין אותך לבדוק סיכויי קבלה אליהם
 							</p>

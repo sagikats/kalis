@@ -464,17 +464,25 @@ export class KalisDatabaseRepository {
 	// Async SQLite / Prisma Persistence Layer
 	// -------------------------------------------------------------------------
 
-	private async ensureUserExists(userId: string): Promise<void> {
-		const existing = await prisma.user.findUnique({ where: { id: userId } });
+	private async ensureUserExists(userId: string): Promise<UserRecord> {
+		let existing = await prisma.user.findUnique({ where: { id: userId } });
 		if (!existing) {
 			const count = await prisma.user.count();
-			await prisma.user.create({
+			existing = await prisma.user.create({
 				data: {
 					id: userId,
 					candidateNumber: `KL-${10001 + count}`
 				}
 			});
 		}
+		return {
+			id: existing.id,
+			candidateNumber: existing.candidateNumber,
+			email: existing.email ?? undefined,
+			name: existing.name ?? undefined,
+			createdAt: existing.createdAt,
+			updatedAt: existing.updatedAt
+		};
 	}
 
 	public async createUserAsync(email?: string, name?: string): Promise<UserRecord> {
@@ -722,10 +730,80 @@ export class KalisDatabaseRepository {
 		}
 	}
 
-	public async getActionTracksAsync(userId: string, programId: string): Promise<ActionTrackRecord[]> {
+	public async saveSingleTrackAsync(
+		userId: string,
+		programId: string,
+		track: any
+	): Promise<{ id: string; candidateNumber: string; track: ActionTrackRecord }> {
+		const user = await this.ensureUserExists(userId);
+
+		const trackType = track.id || 'track-standard';
+		await prisma.savedTrack.deleteMany({
+			where: {
+				userId: user.id,
+				programId,
+				trackType
+			}
+		});
+
+		const saved = await prisma.savedTrack.create({
+			data: {
+				userId: user.id,
+				programId,
+				trackType,
+				title: track.title || 'מסלול מותאם אישית',
+				badge: track.badge || '',
+				badgeColor: track.badgeColor || '',
+				targetSekem: track.targetSekem || track.finalSekem || 0,
+				targetPsychometric: track.targetPsychometric ?? null,
+				targetBagrutAverage: track.targetBagrutAverage ?? 0,
+				currentPsychometric: track.currentPsychometric ?? null,
+				currentBagrutAverage: track.currentBagrutAverage ?? null,
+				strategyDescription: track.strategyDescription || track.description || '',
+				estimatedWeeks: track.estimatedWeeks || 0,
+				weeklyHours: track.weeklyHours || 0,
+				feasibility: track.feasibility || 'high',
+				feasibilityExplanation: track.feasibilityExplanation || null,
+				keyAdvantage: track.keyAdvantage || null,
+				stepsJson: JSON.stringify(track.milestones || track.steps || []),
+				subjectImprovementsJson: JSON.stringify(track.recommendedLevers || track.recommendedSubjectImprovements || track.subjectImprovements || [])
+			}
+		});
+
+		const record: ActionTrackRecord = {
+			id: saved.trackType,
+			userId: saved.userId,
+			programId: saved.programId,
+			title: saved.title,
+			badge: saved.badge || '',
+			badgeColor: saved.badgeColor || '',
+			targetSekem: saved.targetSekem,
+			targetPsychometric: saved.targetPsychometric ?? undefined,
+			currentPsychometric: saved.currentPsychometric ?? undefined,
+			targetBagrutAverage: saved.targetBagrutAverage,
+			currentBagrutAverage: saved.currentBagrutAverage ?? undefined,
+			strategyDescription: saved.strategyDescription,
+			estimatedWeeks: saved.estimatedWeeks,
+			weeklyHours: saved.weeklyHours,
+			feasibility: saved.feasibility as any,
+			feasibilityExplanation: saved.feasibilityExplanation || '',
+			keyAdvantage: saved.keyAdvantage || '',
+			milestones: saved.stepsJson ? JSON.parse(saved.stepsJson) : [],
+			recommendedLevers: saved.subjectImprovementsJson ? JSON.parse(saved.subjectImprovementsJson) : [],
+			createdAt: saved.createdAt
+		};
+
+		return {
+			id: saved.id,
+			candidateNumber: user.candidateNumber,
+			track: record
+		};
+	}
+
+	public async getActionTracksAsync(userId: string, programId?: string): Promise<ActionTrackRecord[]> {
 		try {
 			const dbTracks = await prisma.savedTrack.findMany({
-				where: { userId, programId }
+				where: programId ? { userId, programId } : { userId }
 			});
 
 			if (dbTracks.length > 0) {
@@ -751,14 +829,19 @@ export class KalisDatabaseRepository {
 					recommendedLevers: dt.subjectImprovementsJson ? JSON.parse(dt.subjectImprovementsJson) : [],
 					createdAt: dt.createdAt
 				}));
-				this.actionTracks.set(`${userId}:${programId}`, mapped);
+				if (programId) {
+					this.actionTracks.set(`${userId}:${programId}`, mapped);
+				}
 				return mapped;
 			}
 		} catch (err) {
 			console.warn('[KalisDatabaseRepository] SQLite getActionTracksAsync error:', err);
 		}
 
-		return this.getActionTracks(userId, programId);
+		if (programId) {
+			return this.getActionTracks(userId, programId);
+		}
+		return [];
 	}
 
 	public async clearUserStateAsync(userId: string): Promise<void> {
