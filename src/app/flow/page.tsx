@@ -316,31 +316,31 @@ export default function AdmissionFlowPage() {
 	}, [currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
 
 	return (
-		<div className="min-h-screen bg-slate-950 text-slate-100 font-sans dir-rtl">
+		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl">
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 				{/* Top Stepper Navigation */}
-				<div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl">
+				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs">
 					<div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
 						<button
 							onClick={() => setActiveStep(1)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 1
-									? 'bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-									: 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
 							}`}
 						>
 							<div
 								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 1
-										? 'bg-cyan-400 text-slate-950 shadow-sm'
-										: 'bg-slate-800 text-slate-300'
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
 								}`}
 							>
 								1
 							</div>
 							<div className="overflow-hidden">
-								<span className="text-xs font-black block truncate">הזנת ציונים</span>
-								<span className="text-[10px] text-slate-400 block truncate">בגרויות ופסיכומטרי</span>
+								<span className="text-xs font-bold block truncate">הזנת ציונים</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate">בגרויות ופסיכומטרי</span>
 							</div>
 						</button>
 
@@ -348,22 +348,22 @@ export default function AdmissionFlowPage() {
 							onClick={() => setActiveStep(2)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 2
-									? 'bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-									: 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
 							}`}
 						>
 							<div
 								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 2
-										? 'bg-cyan-400 text-slate-950 shadow-sm'
-										: 'bg-slate-800 text-slate-300'
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
 								}`}
 							>
 								2
 							</div>
 							<div className="overflow-hidden">
-								<span className="text-xs font-black block truncate">בחירת תארים</span>
-								<span className="text-[10px] text-slate-400 block truncate">
+								<span className="text-xs font-bold block truncate">בחירת תארים</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate">
 									סל מבוקשים ({selectedTargets.length})
 								</span>
 							</div>
@@ -373,22 +373,22 @@ export default function AdmissionFlowPage() {
 							onClick={() => setActiveStep(3)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 3
-									? 'bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-									: 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
 							}`}
 						>
 							<div
 								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 3
-										? 'bg-cyan-400 text-slate-950 shadow-sm'
-										: 'bg-slate-800 text-slate-300'
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
 								}`}
 							>
 								3
 							</div>
 							<div className="overflow-hidden">
-								<span className="text-xs font-black block truncate">דוח קבלה אישי</span>
-								<span className="text-[10px] text-slate-400 block truncate">סטטוסים והערכה</span>
+								<span className="text-xs font-bold block truncate">דוח קבלה אישי</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate">סטטוסים והערכה</span>
 							</div>
 						</button>
 
@@ -396,22 +396,22 @@ export default function AdmissionFlowPage() {
 							onClick={() => setActiveStep(4)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 4
-									? 'bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-									: 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
 							}`}
 						>
 							<div
 								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 4
-										? 'bg-cyan-400 text-slate-950 shadow-sm'
-										: 'bg-slate-800 text-slate-300'
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
 								}`}
 							>
 								4
 							</div>
 							<div className="overflow-hidden">
-								<span className="text-xs font-black block truncate">תכנון מסלולי פעולה</span>
-								<span className="text-[10px] text-slate-400 block truncate">3 מסלולים + מסלול אישי</span>
+								<span className="text-xs font-bold block truncate">תכנון מסלולי פעולה</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate">3 מסלולים + מסלול אישי</span>
 							</div>
 						</button>
 					</div>
@@ -420,16 +420,16 @@ export default function AdmissionFlowPage() {
 				{/* STEP 1: הזנת ציונים */}
 				{activeStep === 1 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
+						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE5DA] pb-4">
 							<div>
-								<h2 className="text-2xl font-black text-white">שלב 1: הזנת ציונים</h2>
-								<p className="text-sm text-slate-400">
+								<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציונים</h2>
+								<p className="text-sm text-[#66635C]">
 									הזן את ציוני הבגרות והפסיכומטרי שלך — המערכת מחשבת אוטומטית ממוצע אופטימלי וסכמים לכל האוניברסיטאות
 								</p>
 							</div>
 							<button
 								onClick={() => setActiveStep(2)}
-								className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-500/10 transition flex items-center gap-2"
+								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
 							>
 								<span>המשך לבחירת תארים מבוקשים</span>
 								<ArrowLeft className="h-4 w-4" />
@@ -438,14 +438,14 @@ export default function AdmissionFlowPage() {
 
 						<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 							{/* Psychometric Input (5 cols) */}
-							<div className="lg:col-span-5 space-y-5 bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl">
-								<div className="flex items-center gap-3 border-b border-slate-800 pb-3">
-									<div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+							<div className="lg:col-span-5 space-y-5 bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs">
+								<div className="flex items-center gap-3 border-b border-[#EAE5DA] pb-3">
+									<div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
 										<Brain className="h-5 w-5" />
 									</div>
 									<div>
-										<h3 className="text-base font-bold text-white">ציוני בחינה פסיכומטרית</h3>
-										<p className="text-xs text-slate-400">ציון רב-תחומי וציוני פרקים (50–150)</p>
+										<h3 className="text-base font-bold text-[#222222]">ציוני בחינה פסיכומטרית</h3>
+										<p className="text-xs text-[#66635C]">ציון רב-תחומי וציוני פרקים (50–150)</p>
 									</div>
 								</div>
 
@@ -468,8 +468,8 @@ export default function AdmissionFlowPage() {
 									}}
 									className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
 										!hasTakenPsychometric
-											? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-											: 'bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
+											? 'bg-[#F4F0E8] border-[#222222] text-[#222222]'
+											: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#44423D] hover:border-[#CCC5B6]'
 									}`}
 								>
 									<div className="flex items-center gap-3">
@@ -477,36 +477,36 @@ export default function AdmissionFlowPage() {
 											type="checkbox"
 											checked={!hasTakenPsychometric}
 											onChange={() => {}}
-											className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-900 cursor-pointer"
+											className="w-4 h-4 rounded border-[#CCC5B6] text-[#222222] focus:ring-[#222222] cursor-pointer"
 										/>
 										<div>
-											<span className="text-xs font-black block">עדיין לא עשיתי פסיכומטרי</span>
-											<span className="text-[11px] text-slate-400 block mt-0.5">
+											<span className="text-xs font-bold block">עדיין לא עשיתי פסיכומטרי</span>
+											<span className="text-[11px] text-[#66635C] block mt-0.5">
 												טרם ניגשתי לבחינה / מעוניין לבדוק קבלה על סמך בגרות בלבד
 											</span>
 										</div>
 									</div>
 									{!hasTakenPsychometric && (
-										<span className="px-2 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/30">
+										<span className="px-2 py-0.5 rounded-lg bg-white text-[#222222] text-[10px] font-bold border border-[#DDD7CB]">
 											פעיל
 										</span>
 									)}
 								</div>
 
 								{!hasTakenPsychometric ? (
-									<div className="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-2">
-										<div className="flex items-center gap-2 text-cyan-300 text-xs font-bold">
-											<Sparkles className="h-4 w-4 text-cyan-400 shrink-0" />
+									<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-2">
+										<div className="flex items-center gap-2 text-[#222222] text-xs font-bold">
+											<Sparkles className="h-4 w-4 text-blue-700 shrink-0" />
 											<span>נבדוק קבלה ישירה ונחשב עבורך ציוני יעד!</span>
 										</div>
-										<p className="text-[11px] text-slate-300 leading-relaxed">
+										<p className="text-[11px] text-[#55524B] leading-relaxed">
 											המערכת תבדוק אילו תארים מאפשרים קבלה ישירה על סמך ממוצע בגרות בלבד, ובשלב התכנון תחשב בדיוק איזה ציון פסיכומטרי יעד יידרש ממך בבחינה הראשונה לכל תואר מבוקש.
 										</p>
 									</div>
 								) : (
 									<div className="space-y-4">
 										<div className="space-y-1.5">
-											<label className="block text-xs font-bold text-slate-300">
+											<label className="block text-xs font-bold text-[#44423D]">
 												ציון רב-תחומי (200–800):
 											</label>
 											<input
@@ -518,13 +518,13 @@ export default function AdmissionFlowPage() {
 													setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
 												}
 												placeholder="200-800"
-												className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+												className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
 											/>
 										</div>
 
 										<div className="grid grid-cols-3 gap-2.5">
 											<div className="space-y-1.5">
-												<label className="block text-[11px] font-bold text-slate-300">כמותי:</label>
+												<label className="block text-[11px] font-bold text-[#44423D]">כמותי:</label>
 												<input
 													type="number"
 													min={50}
@@ -534,12 +534,12 @@ export default function AdmissionFlowPage() {
 														setPsychQuant(cleanNumberInput(e.target.value, 0, 150) as number)
 													}
 													placeholder="50-150"
-													className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
 												/>
 											</div>
 
 											<div className="space-y-1.5">
-												<label className="block text-[11px] font-bold text-slate-300">מילולי:</label>
+												<label className="block text-[11px] font-bold text-[#44423D]">מילולי:</label>
 												<input
 													type="number"
 													min={50}
@@ -549,12 +549,12 @@ export default function AdmissionFlowPage() {
 														setPsychVerbal(cleanNumberInput(e.target.value, 0, 150) as number)
 													}
 													placeholder="50-150"
-													className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
 												/>
 											</div>
 
 											<div className="space-y-1.5">
-												<label className="block text-[11px] font-bold text-slate-300">אנגלית:</label>
+												<label className="block text-[11px] font-bold text-[#44423D]">אנגלית:</label>
 												<input
 													type="number"
 													min={50}
@@ -564,15 +564,15 @@ export default function AdmissionFlowPage() {
 														setPsychEnglish(cleanNumberInput(e.target.value, 0, 150) as number)
 													}
 													placeholder="50-150"
-													className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
 												/>
 											</div>
 										</div>
 
 										{/* English Classification */}
 										{psychResolution.englishClassification.level !== 'unknown' && (
-											<div className="p-3 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center justify-between text-xs">
-												<span className="text-slate-400 font-medium">רמת אנגלית אקדמית:</span>
+											<div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between text-xs">
+												<span className="text-[#66635C] font-medium">רמת אנגלית אקדמית:</span>
 												<span
 													className={`font-bold px-2 py-0.5 rounded border ${psychResolution.englishClassification.color}`}
 												>
@@ -582,16 +582,16 @@ export default function AdmissionFlowPage() {
 										)}
 
 										{/* Calculated Weights info */}
-										<div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+										<div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[11px] text-[#66635C] space-y-1">
 											<div className="flex justify-between">
 												<span>שקלול מאל״ו בדגש כמותי:</span>
-												<span className="font-bold text-indigo-300">
+												<span className="font-bold text-[#222222]">
 													{psychResolution.effectiveQuantEmphasis}
 												</span>
 											</div>
 											<div className="flex justify-between">
 												<span>שקלול מאל״ו בדגש מילולי:</span>
-												<span className="font-bold text-purple-300">
+												<span className="font-bold text-[#222222]">
 													{psychResolution.effectiveVerbalEmphasis}
 												</span>
 											</div>
@@ -601,11 +601,11 @@ export default function AdmissionFlowPage() {
 							</div>
 
 							{/* Bagrut Input (7 cols) */}
-							<div className="lg:col-span-7 space-y-4 bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl">
-								<div className="flex items-center justify-between border-b border-slate-800 pb-3">
+							<div className="lg:col-span-7 space-y-4 bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs">
+								<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
 									<div className="flex items-center gap-2.5">
-										<BookOpen className="h-5 w-5 text-cyan-400" />
-										<h3 className="text-base font-bold text-white">
+										<BookOpen className="h-5 w-5 text-blue-700" />
+										<h3 className="text-base font-bold text-[#222222]">
 											ציוני תעודת בגרות ({subjects.length} מקצועות)
 										</h3>
 									</div>
@@ -614,7 +614,7 @@ export default function AdmissionFlowPage() {
 											setEditingSubjectIndex(null);
 											setIsSubjectModalOpen(true);
 										}}
-										className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 text-xs font-bold transition flex items-center gap-1.5"
+										className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#222222] hover:bg-[#EFEAE0] text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
 									>
 										<Plus className="h-3.5 w-3.5" />
 										<span>הוסף מקצוע / הגברה</span>
@@ -626,10 +626,10 @@ export default function AdmissionFlowPage() {
 									{subjects.map((sub, idx) => (
 										<div
 											key={idx}
-											className="flex items-center gap-3 p-3 rounded-2xl bg-slate-950 border border-slate-800/80"
+											className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4]"
 										>
 											<div className="flex-1 min-w-0">
-												<span className="text-xs font-bold text-white block truncate">
+												<span className="text-xs font-bold text-[#222222] block truncate">
 													{sub.name}
 												</span>
 											</div>
@@ -638,7 +638,7 @@ export default function AdmissionFlowPage() {
 											<select
 												value={sub.units}
 												onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
-												className="bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none"
+												className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
 											>
 												<option value={2}>2 יח״ל</option>
 												<option value={3}>3 יח״ל</option>
@@ -654,12 +654,12 @@ export default function AdmissionFlowPage() {
 												value={sub.grade}
 												onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
 												placeholder="ציון"
-												className="w-16 bg-slate-900 border border-slate-700 text-xs font-bold text-center text-cyan-300 rounded-xl px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+												className="w-16 bg-white border border-[#DDD7CB] text-xs font-bold text-center text-[#222222] rounded-xl px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#222222]"
 											/>
 
 											<button
 												onClick={() => handleDeleteSubject(idx)}
-												className="p-1 text-slate-500 hover:text-rose-400 transition"
+												className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
 												title="מחק מקצוע"
 											>
 												<Trash2 className="h-4 w-4" />
@@ -675,17 +675,17 @@ export default function AdmissionFlowPage() {
 				{/* STEP 2: בחירת תארים מבוקשים */}
 				{activeStep === 2 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
+						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE5DA] pb-4">
 							<div>
-								<h2 className="text-2xl font-black text-white">שלב 2: בחירת תארים מבוקשים</h2>
-								<p className="text-sm text-slate-400">
+								<h2 className="text-2xl font-black text-[#222222]">שלב 2: בחירת תארים מבוקשים</h2>
+								<p className="text-sm text-[#66635C]">
 									בחר את כל התארים והמוסדות שמעניין אותך לבדוק. תוכל להוסיף תארים מרובים מכל מוסד.
 								</p>
 							</div>
 							<div className="flex items-center gap-3">
 								<button
 									onClick={() => setActiveStep(1)}
-									className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
+									className="px-4 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#DDD7CB] shadow-2xs cursor-pointer"
 								>
 									<ArrowRight className="h-4 w-4" />
 									<span>חזור לציונים</span>
@@ -695,8 +695,8 @@ export default function AdmissionFlowPage() {
 									disabled={selectedTargets.length === 0}
 									className={`px-6 py-2.5 font-bold text-xs rounded-xl transition flex items-center gap-2 ${
 										selectedTargets.length > 0
-											? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/10'
-											: 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+											? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer'
+											: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
 									}`}
 								>
 									<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
@@ -718,24 +718,24 @@ export default function AdmissionFlowPage() {
 				{/* STEP 3: דוח קבלה אישי */}
 				{activeStep === 3 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-4">
+						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE5DA] pb-4">
 							<div>
-								<h2 className="text-2xl font-black text-white">שלב 3: דוח קבלה אישי</h2>
-								<p className="text-sm text-slate-400">
+								<h2 className="text-2xl font-black text-[#222222]">שלב 3: דוח קבלה אישי</h2>
+								<p className="text-sm text-[#66635C]">
 									סיכום סטטוס הקבלה שלך עבור כל התארים שבחרת
 								</p>
 							</div>
 							<div className="flex items-center gap-3">
 								<button
 									onClick={() => setActiveStep(2)}
-									className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
+									className="px-4 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#DDD7CB] shadow-2xs cursor-pointer"
 								>
 									<ArrowRight className="h-4 w-4" />
 									<span>ערוך בחירת תארים</span>
 								</button>
 								<button
 									onClick={() => setActiveStep(4)}
-									className="px-6 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-500/10 transition flex items-center gap-2"
+									className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
 								>
 									<span>לתכנון מסלולי פעולה</span>
 									<ArrowLeft className="h-4 w-4" />
@@ -788,15 +788,15 @@ export default function AdmissionFlowPage() {
 								/>
 							)
 						) : (
-							<div className="text-center py-16 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 space-y-4">
-								<Target className="h-12 w-12 text-slate-500 mx-auto" />
-								<h3 className="text-lg font-bold text-white">טרם נבחר תואר לתכנון מסלול</h3>
-								<p className="text-sm text-slate-400">
+							<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4">
+								<Target className="h-12 w-12 text-[#88857E] mx-auto" />
+								<h3 className="text-lg font-bold text-[#222222]">טרם נבחר תואר לתכנון מסלול</h3>
+								<p className="text-sm text-[#66635C]">
 									בחר תואר מתוך רשימת המבוקשים שלך או מדוח הקבלה כדי שנוכל לבנות עבורך 3 מסלולי שיפור מותאמים.
 								</p>
 								<button
 									onClick={() => setActiveStep(2)}
-									className="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs rounded-xl transition"
+									className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition cursor-pointer"
 								>
 									בחר תארים עכשיו
 								</button>

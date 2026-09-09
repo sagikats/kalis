@@ -460,27 +460,23 @@ export default function WhatIfSimulator({
 	};
 
 	return (
-		<div className="bg-slate-900/95 border-2 border-cyan-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-8 dir-rtl text-right relative overflow-hidden">
-			{/* Ambient background glow */}
-			<div className="absolute top-0 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-			<div className="absolute bottom-0 left-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-
+		<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs space-y-8 dir-rtl text-right relative overflow-hidden">
 			{/* Section Header */}
-			<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+			<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-5">
 				<div className="space-y-1.5">
 					<div className="flex items-center gap-2">
-						<span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-black rounded-lg flex items-center gap-1.5">
-							<Sliders className="h-3.5 w-3.5 text-cyan-400" />
+						<span className="px-3 py-1 bg-[#FAF8F5] text-[#1E597B] border border-[#E5DFD4] text-xs font-black rounded-lg flex items-center gap-1.5">
+							<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
 							<span>מעבדת סימולציה וחישוב השפעה (What-If)</span>
 						</span>
-						<span className="text-xs font-bold text-slate-400">
+						<span className="text-xs font-bold text-[#66635C]">
 							{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}
 						</span>
 					</div>
-					<h3 className="text-xl sm:text-2xl font-black text-white">
+					<h3 className="text-xl sm:text-2xl font-black text-[#222222]">
 						בדוק והוסף בגרויות — וצפה במידת ההשפעה המדויקת על הסכם 🎛️
 					</h3>
-					<p className="text-xs sm:text-sm text-slate-300">
+					<p className="text-xs sm:text-sm text-[#66635C]">
 						הוסף מקצועות בגרות חדשים או שפר מקצועות קיימים, וקבל את התרומה המדויקת של כל מקצוע ישירות לסכם הקבלה.
 					</p>
 				</div>
@@ -490,27 +486,27 @@ export default function WhatIfSimulator({
 					<button
 						type="button"
 						onClick={handlePresetPsychOnly}
-						className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition flex items-center gap-1.5"
+						className="px-3 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] text-xs font-bold rounded-xl border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer"
 						title="חשב פסיכומטרי בלבד לסגירת הפער"
 					>
-						<Zap className="h-3.5 w-3.5 text-amber-400" />
+						<Zap className="h-3.5 w-3.5 text-[#825B15]" />
 						<span>פסיכומטרי בלבד</span>
 					</button>
 
 					<button
 						type="button"
 						onClick={handlePresetBalanced}
-						className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition flex items-center gap-1.5"
+						className="px-3 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] text-xs font-bold rounded-xl border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer"
 						title="איזון בין פסיכומטרי לבגרויות"
 					>
-						<Award className="h-3.5 w-3.5 text-emerald-400" />
+						<Award className="h-3.5 w-3.5 text-[#205739]" />
 						<span>איזון 50/50</span>
 					</button>
 
 					<button
 						type="button"
 						onClick={handlePresetReset}
-						className="px-3 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold rounded-xl border border-slate-700 transition flex items-center gap-1"
+						className="px-3 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#66635C] hover:text-[#222222] text-xs font-bold rounded-xl border border-[#E5DFD4] transition flex items-center gap-1 cursor-pointer"
 						title="איפוס לציונים המקוריים"
 					>
 						<RotateCcw className="h-3.5 w-3.5" />
@@ -522,14 +518,14 @@ export default function WhatIfSimulator({
 			{/* ========================================================================= */}
 			{/* LIVE PROGRESS GAUGE */}
 			{/* ========================================================================= */}
-			<div className="bg-slate-950/80 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-4">
+			<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-4">
 				<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
 					<div className="flex items-center gap-2">
-						<span className="text-xs font-bold text-slate-400">הסכם המשוקלל בסימולציה:</span>
-						<span className="text-2xl sm:text-3xl font-black text-cyan-300 dir-ltr">
+						<span className="text-xs font-bold text-[#66635C]">הסכם המשוקלל בסימולציה:</span>
+						<span className="text-2xl sm:text-3xl font-black text-[#222222] dir-ltr">
 							{currentSekem.toFixed(isTechnion ? 2 : 1)}
 						</span>
-						<span className="text-xs text-slate-500">
+						<span className="text-xs text-[#8A847C]">
 							(התחלת ב-{analysis.userSekem})
 						</span>
 					</div>
@@ -538,25 +534,25 @@ export default function WhatIfSimulator({
 						<div
 							className={`px-4 py-2 rounded-2xl border text-xs font-black flex items-center gap-1.5 ${
 								isAccepted
-									? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-lg shadow-emerald-500/10'
+									? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
 									: isBorderline
-									? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-									: 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+									? 'bg-[#FDF6E8] text-[#825B15] border-[#ECDAB6]'
+									: 'bg-[#FDF1EE] text-[#9B3327] border-[#F1CAC1]'
 							}`}
 						>
 							{isAccepted ? (
 								<>
-									<CheckCircle2 className="h-4 w-4 text-emerald-400" />
+									<CheckCircle2 className="h-4 w-4 text-[#205739]" />
 									<span>התקבלת! (+{rawGap.toFixed(isTechnion ? 2 : 1)} נקודות ביטחון) 🎉</span>
 								</>
 							) : isBorderline ? (
 								<>
-									<AlertCircle className="h-4 w-4 text-amber-400" />
+									<AlertCircle className="h-4 w-4 text-[#825B15]" />
 									<span>על הגבול (חסרות רק {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נק׳)</span>
 								</>
 							) : (
 								<>
-									<AlertCircle className="h-4 w-4 text-rose-400" />
+									<AlertCircle className="h-4 w-4 text-[#9B3327]" />
 									<span>נותר פער של {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות</span>
 								</>
 							)}
@@ -564,41 +560,41 @@ export default function WhatIfSimulator({
 					</div>
 				</div>
 
-				{/* Animated Progress Bar */}
+				{/* Progress Bar */}
 				<div className="space-y-1.5">
-					<div className="w-full h-3.5 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+					<div className="w-full h-3.5 bg-[#EAE5DA] rounded-full overflow-hidden p-0.5 border border-[#DDD7CC]">
 						<div
 							className={`h-full rounded-full transition-all duration-300 ${
 								isAccepted
-									? 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-md shadow-emerald-500/30'
+									? 'bg-[#205739]'
 									: isBorderline
-									? 'bg-gradient-to-r from-amber-500 to-yellow-400'
-									: 'bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500'
+									? 'bg-[#825B15]'
+									: 'bg-[#3C3C3C]'
 							}`}
 							style={{ width: `${Math.max(5, progressPercent)}%` }}
 						/>
 					</div>
 
-					<div className="flex items-center justify-between text-[11px] font-bold text-slate-400">
+					<div className="flex items-center justify-between text-[11px] font-bold text-[#66635C]">
 						<span>הסכם המקורי שלך ({analysis.userSekem})</span>
-						<span className="text-cyan-400 font-black">סגירת פער: {progressPercent}%</span>
+						<span className="text-[#222222] font-black">סגירת פער: {progressPercent}%</span>
 						<span>סף הקבלה הנדרש ({threshold})</span>
 					</div>
 
 					{/* Breakdown of sources of Sekem increase */}
 					{(totalPsychSekemDelta > 0 || totalBagrutSekemDelta > 0) && (
-						<div className="pt-2 border-t border-slate-900 flex items-center justify-end gap-2 flex-wrap text-xs">
-							<span className="text-slate-400 text-[11px]">מקורות השיפור:</span>
+						<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-end gap-2 flex-wrap text-xs">
+							<span className="text-[#66635C] text-[11px]">מקורות השיפור:</span>
 							{totalPsychSekemDelta > 0 && (
-								<span className="px-2.5 py-0.5 rounded-lg bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-[11px] font-black dir-ltr flex items-center gap-1">
-									<Brain className="h-3 w-3 text-cyan-400" />
+								<span className="px-2.5 py-0.5 rounded-lg bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] text-[11px] font-black dir-ltr flex items-center gap-1">
+									<Brain className="h-3 w-3 text-[#1E597B]" />
 									<span>+{totalPsychSekemDelta} נק׳ מפסיכומטרי</span>
 								</span>
 							)}
 							{totalBagrutSekemDelta > 0 && (
-								<span className="px-2.5 py-0.5 rounded-lg bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 text-[11px] font-black dir-ltr flex items-center gap-1">
-									<BookOpen className="h-3 w-3 text-indigo-400" />
-									<span>+{totalBagrutSekemDelta} נק׳ מבגרויות והרחבות</span>
+								<span className="px-2.5 py-0.5 rounded-lg bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] text-[11px] font-black dir-ltr flex items-center gap-1">
+									<BookOpen className="h-3 w-3 text-[#453D78]" />
+									<span>+{totalBagrutSekemDelta} נק׳ מבגרות</span>
 								</span>
 							)}
 						</div>
@@ -609,17 +605,17 @@ export default function WhatIfSimulator({
 			{/* ========================================================================= */}
 			{/* MULTI-UNIVERSITY LIVE IMPACT MATRIX */}
 			{/* ========================================================================= */}
-			<div className="bg-slate-950/90 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-4">
+			<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-4">
 				<div className="flex items-center justify-between flex-wrap gap-2">
 					<div className="flex items-center gap-2.5">
-						<span className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+						<span className="p-1.5 rounded-lg bg-white text-[#222222] border border-[#E5DFD4]">
 							<TrendingUp className="h-4 w-4" />
 						</span>
 						<div>
-							<h4 className="text-sm sm:text-base font-black text-white flex items-center gap-2">
+							<h4 className="text-sm sm:text-base font-black text-[#222222] flex items-center gap-2">
 								<span>השפעה רב-אוניברסיטאית בזמן אמת</span>
-								<span className="hidden sm:inline-block text-[11px] font-normal text-slate-400">
-									(כל שינוי בבגרות או בפסיכומטרי מתעדכן מיד בכל 6 האוניברסיטאות)
+								<span className="hidden sm:inline-block text-[11px] font-normal text-[#66635C]">
+									(כל שינוי בבגרות או בפסיכומטרי מתעדכן מיד בכל 8 האוניברסיטאות)
 								</span>
 							</h4>
 						</div>
@@ -628,9 +624,9 @@ export default function WhatIfSimulator({
 					<button
 						type="button"
 						onClick={() => setShowAllUniversities(!showAllUniversities)}
-						className="text-xs font-bold text-slate-400 hover:text-cyan-300 transition flex items-center gap-1"
+						className="text-xs font-bold text-[#66635C] hover:text-[#222222] transition flex items-center gap-1 cursor-pointer"
 					>
-						<span>{showAllUniversities ? 'כווץ תצוגה' : 'הצג את כל 6 האוניברסיטאות'}</span>
+						<span>{showAllUniversities ? 'כווץ תצוגה' : 'הצג את כל 8 האוניברסיטאות'}</span>
 						{showAllUniversities ? (
 							<ChevronUp className="h-4 w-4" />
 						) : (
@@ -680,24 +676,24 @@ export default function WhatIfSimulator({
 			{/* ========================================================================= */}
 			<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 				{/* 1. PSYCHOMETRIC SLIDER (4 COLS) */}
-				<div className="lg:col-span-4 bg-slate-950/70 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-5 flex flex-col justify-between">
+				<div className="lg:col-span-4 bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 flex flex-col justify-between shadow-2xs">
 					<div className="space-y-4">
-						<div className="flex items-center justify-between border-b border-slate-800 pb-3">
+						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
 							<div className="flex items-center gap-2">
-								<Brain className="h-5 w-5 text-cyan-400" />
+								<Brain className="h-5 w-5 text-[#222222]" />
 								<div>
-									<span className="text-sm font-black text-white block">ציון פסיכומטרי</span>
+									<span className="text-sm font-black text-[#222222] block">ציון פסיכומטרי</span>
 									{!hasOriginalPsych && (
-										<span className="text-[10px] text-amber-400 font-bold block">
+										<span className="text-[10px] text-[#825B15] font-bold block">
 											(טרם נבחנת — סימולציית יעד ראשון)
 										</span>
 									)}
 								</div>
 							</div>
 							<div className="text-left dir-ltr">
-								<span className="text-xl font-black text-cyan-300">{simulatedPsych}</span>
+								<span className="text-xl font-black text-[#222222]">{simulatedPsych}</span>
 								{hasOriginalPsych && simulatedPsych > initialPsych && (
-									<span className="text-xs text-emerald-400 font-bold ml-1.5">
+									<span className="text-xs text-[#205739] font-bold ml-1.5">
 										(+{simulatedPsych - initialPsych})
 									</span>
 								)}
@@ -712,17 +708,17 @@ export default function WhatIfSimulator({
 								step={5}
 								value={simulatedPsych}
 								onChange={(e) => setSimulatedPsych(Number(e.target.value))}
-								className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+								className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#222222]"
 							/>
-							<div className="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+							<div className="flex items-center justify-between text-[11px] text-[#8A847C] font-medium">
 								<span>{hasOriginalPsych ? `קיים: ${initialPsych}` : 'התחלה: 450'}</span>
-								<span className="text-cyan-400 font-bold">תקרה מומלצת: {realisticCeiling}</span>
+								<span className="text-[#1E597B] font-bold">תקרה מומלצת: {realisticCeiling}</span>
 								<span>800</span>
 							</div>
 						</div>
 
 						{simulatedPsych > realisticCeiling && (
-							<div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 font-medium flex items-start gap-2">
+							<div className="p-3 rounded-2xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium flex items-start gap-2">
 								<AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
 								<span>
 									ציון של {simulatedPsych} דורש זינוק חריג יחסית לממוצע הבגרות. מומלץ לשלב שיפור בגרויות.
@@ -732,7 +728,7 @@ export default function WhatIfSimulator({
 					</div>
 
 					{/* Math 5 Units Upgrade Lever */}
-					<div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-3">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-2.5">
 								<input
@@ -740,21 +736,21 @@ export default function WhatIfSimulator({
 									id="math5Upgrade"
 									checked={isMathUpgradedTo5}
 									onChange={(e) => setIsMathUpgradedTo5(e.target.checked)}
-									className="w-4 h-4 rounded text-cyan-500 bg-slate-800 border-slate-700 focus:ring-0 cursor-pointer"
+									className="w-4 h-4 rounded text-[#222222] bg-white border-[#E5DFD4] focus:ring-0 cursor-pointer"
 								/>
-								<label htmlFor="math5Upgrade" className="text-xs font-black text-slate-200 cursor-pointer">
+								<label htmlFor="math5Upgrade" className="text-xs font-black text-[#222222] cursor-pointer">
 									שדרוג מתמטיקה ל-5 יח״ל (+35 בונוס)
 								</label>
 							</div>
-							<span className="text-xs text-cyan-400 font-black dir-ltr">
+							<span className="text-xs text-[#1E597B] font-black dir-ltr">
 								{isMathUpgradedTo5 ? '5 יח״ל' : `${userProfile.mathUnits || 4} יח״ל`}
 							</span>
 						</div>
 
-						<div className="space-y-2 pt-2 border-t border-slate-800/80">
-							<div className="flex items-center justify-between text-xs text-slate-300">
+						<div className="space-y-2 pt-2 border-t border-[#EAE5DA]">
+							<div className="flex items-center justify-between text-xs text-[#66635C]">
 								<span>ציון מתמטיקה ({isMathUpgradedTo5 ? '5 יח״ל' : `${userProfile.mathUnits || 4} יח״ל`}):</span>
-								<span className="font-black text-white dir-ltr">{simulatedMathGrade}</span>
+								<span className="font-black text-[#222222] dir-ltr">{simulatedMathGrade}</span>
 							</div>
 							<input
 								type="range"
@@ -763,11 +759,11 @@ export default function WhatIfSimulator({
 								step={1}
 								value={simulatedMathGrade}
 								onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
-								className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+								className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#222222]"
 							/>
 							{/* Math Marginal Impact Badge */}
 							{mathUpgradeImpact > 0 && (
-								<div className="flex items-center justify-between text-[11px] bg-emerald-950/40 border border-emerald-500/30 rounded-xl px-2.5 py-1 text-emerald-300 font-bold">
+								<div className="flex items-center justify-between text-[11px] bg-[#EBF4EE] border border-[#C6DFCE] rounded-xl px-2.5 py-1 text-[#205739] font-bold">
 									<span>השפעת שיפור מתמטיקה על הסכם:</span>
 									<span className="font-black dir-ltr">+{mathUpgradeImpact} נק׳</span>
 								</div>
@@ -777,33 +773,33 @@ export default function WhatIfSimulator({
 				</div>
 
 				{/* 2. BAGRUT SIMULATION LAB (8 COLS) */}
-				<div className="lg:col-span-8 bg-slate-950/70 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-5">
-					<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+				<div className="lg:col-span-8 bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 shadow-2xs">
+					<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EAE5DA] pb-4">
 						<div className="flex items-center gap-2">
-							<BookOpen className="h-5 w-5 text-indigo-400" />
+							<BookOpen className="h-5 w-5 text-[#222222]" />
 							<div>
-								<span className="text-sm font-black text-white block">מעבדת מקצועות בגרות והגברות</span>
-								<span className="text-xs text-slate-400">
+								<span className="text-sm font-black text-[#222222] block">מעבדת מקצועות בגרות והגברות</span>
+								<span className="text-xs text-[#66635C]">
 									בדוק שדרוג מקצועות קיימים או הוספת מקצוע מוגבר (5 יח״ל) חדש
 								</span>
 							</div>
 						</div>
 
-						<div className="flex items-center gap-2 flex-wrap bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-xs">
+						<div className="flex items-center gap-2 flex-wrap bg-[#FAF8F5] border border-[#E5DFD4] px-3 py-1.5 rounded-xl text-xs">
 							<div className="flex items-center gap-1.5">
-								<span className="text-slate-400 font-medium">ממוצע בגרות מיטבי:</span>
-								<span className="font-black text-indigo-300 dir-ltr text-sm">
+								<span className="text-[#66635C] font-medium">ממוצע בגרות מיטבי:</span>
+								<span className="font-black text-[#222222] dir-ltr text-sm">
 									{simulatedSekemResult.bagrutAverage.toFixed(2)}
 								</span>
 								{simulatedSekemResult.bagrutAverage > (institutionResult.bagrutAverage || 0) && (
-									<span className="text-xs text-emerald-400 font-bold dir-ltr">
+									<span className="text-xs text-[#205739] font-bold dir-ltr">
 										(+{(simulatedSekemResult.bagrutAverage - (institutionResult.bagrutAverage || 0)).toFixed(2)})
 									</span>
 								)}
 							</div>
 							{totalBagrutSekemDelta > 0 && (
-								<span className="px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-black dir-ltr text-[11px] flex items-center gap-1">
-									<Sparkles className="h-3 w-3 text-emerald-400" />
+								<span className="px-2 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black dir-ltr text-[11px] flex items-center gap-1">
+									<Sparkles className="h-3 w-3 text-[#205739]" />
 									<span>+{totalBagrutSekemDelta} נק׳ סכם מכל הבגרויות</span>
 								</span>
 							)}
@@ -811,10 +807,10 @@ export default function WhatIfSimulator({
 					</div>
 
 					{/* Quick Action: Add Popular 5-Unit Elective or Pick Existing */}
-					<div className="space-y-3 bg-slate-900/80 p-4 rounded-2xl border border-slate-800/80">
+					<div className="space-y-3 bg-[#FAF8F5] p-4 rounded-2xl border border-[#E5DFD4]">
 						<div className="flex items-center justify-between flex-wrap gap-2">
-							<span className="text-xs font-black text-slate-200 flex items-center gap-1.5">
-								<Plus className="h-3.5 w-3.5 text-cyan-400" />
+							<span className="text-xs font-black text-[#222222] flex items-center gap-1.5">
+								<Plus className="h-3.5 w-3.5 text-[#222222]" />
 								<span>הוסף מקצוע לבדיקת מידת ההשפעה:</span>
 							</span>
 
@@ -826,7 +822,7 @@ export default function WhatIfSimulator({
 										onChange={(e) => {
 											handleAddExistingSubjectToActive(e.target.value);
 										}}
-										className="bg-slate-950 border border-slate-700 text-xs font-bold text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none"
+										className="bg-white border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
 									>
 										<option value="">+ שפר מקצוע קיים מתעודת הבגרות...</option>
 										{inactiveExistingSubjects.map((s) => (
@@ -852,14 +848,14 @@ export default function WhatIfSimulator({
 										onClick={() =>
 											handleAddPopularElective(elective.name, elective.units, elective.defaultGrade)
 										}
-										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border ${
+										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border cursor-pointer ${
 											isAlreadyAdded
-												? 'bg-cyan-950/40 border-cyan-500/40 text-cyan-300'
-												: 'bg-slate-950 hover:bg-slate-850 text-slate-300 hover:text-white border-slate-800 hover:border-slate-700'
+												? 'bg-[#3C3C3C] text-white border-[#3C3C3C]'
+												: 'bg-white hover:bg-[#F3EFE8] text-[#44423D] hover:text-[#222222] border-[#E5DFD4]'
 										}`}
 									>
 										<span>{elective.label}</span>
-										{isAlreadyAdded && <CheckCircle2 className="h-3 w-3 text-cyan-400" />}
+										{isAlreadyAdded && <CheckCircle2 className="h-3 w-3 text-white" />}
 									</button>
 								);
 							})}
@@ -867,7 +863,7 @@ export default function WhatIfSimulator({
 							<button
 								type="button"
 								onClick={() => setIsSubjectModalOpen(true)}
-								className="px-3 py-1.5 bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 text-xs font-bold rounded-xl border border-dashed border-slate-700 transition flex items-center gap-1"
+								className="px-3 py-1.5 bg-white hover:bg-[#F3EFE8] text-[#66635C] hover:text-[#222222] text-xs font-bold rounded-xl border border-dashed border-[#DDD7CC] transition flex items-center gap-1 cursor-pointer"
 							>
 								<Plus className="h-3 w-3" />
 								<span>מקצוע אחר מהקטלוג...</span>
@@ -877,12 +873,12 @@ export default function WhatIfSimulator({
 
 					{/* Active Subjects List with Sliders and Individual Impact Badges */}
 					<div className="space-y-3">
-						<span className="text-xs font-black text-slate-400 block">
+						<span className="text-xs font-black text-[#66635C] block">
 							מקצועות בבדיקה פעילה ({activeDisplaySubjects.length}):
 						</span>
 
 						{activeDisplaySubjects.length === 0 ? (
-							<div className="text-center py-6 px-4 bg-slate-950/40 rounded-2xl border border-slate-800/80 text-slate-500 text-xs">
+							<div className="text-center py-6 px-4 bg-[#FAF8F5] rounded-2xl border border-[#E5DFD4] text-[#8A847C] text-xs">
 								בחר מקצוע קיים לשיפור או הוסף מקצוע מוגבר 5 יח״ל מהסרגל למעלה כדי לראות את מידת השפעתו על הסכם.
 							</div>
 						) : (
@@ -892,20 +888,20 @@ export default function WhatIfSimulator({
 									return (
 										<div
 											key={item.id}
-											className="bg-slate-950/80 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-3 relative transition"
+											className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-2xl p-3.5 space-y-3 relative transition"
 										>
 											{/* Top Row: Name and Badges */}
 											<div className="flex items-center justify-between">
 												<div className="flex items-center gap-2 flex-wrap">
-													<span className="text-xs font-bold text-white">
+													<span className="text-xs font-bold text-[#222222]">
 														{item.name}
 													</span>
 													{item.isCustomAdded ? (
-														<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+														<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED]">
 															חדש
 														</span>
 													) : item.units !== item.originalUnits ? (
-														<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+														<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]">
 															שודרג ל-{item.units} יח״ל
 														</span>
 													) : null}
@@ -914,7 +910,7 @@ export default function WhatIfSimulator({
 												<button
 													type="button"
 													onClick={() => handleRemoveSimulatedSubject(item.id)}
-													className="text-slate-500 hover:text-rose-400 transition p-1"
+													className="text-[#8A847C] hover:text-[#9B3327] transition p-1 cursor-pointer"
 													title="הסר מקצוע זה מהסימולציה"
 												>
 													<Trash2 className="h-3.5 w-3.5" />
@@ -923,8 +919,8 @@ export default function WhatIfSimulator({
 
 											{/* Units Selector (Pills) */}
 											<div className="flex items-center justify-between text-xs">
-												<span className="text-slate-400 text-[11px]">היקף יחידות:</span>
-												<div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+												<span className="text-[#66635C] text-[11px]">היקף יחידות:</span>
+												<div className="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-[#E5DFD4]">
 													{[2, 3, 4, 5].map((u) => {
 														const isSelected = item.units === u;
 														return (
@@ -932,10 +928,10 @@ export default function WhatIfSimulator({
 																key={u}
 																type="button"
 																onClick={() => handleUnitsChange(item.id, u)}
-																className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition ${
+																className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition cursor-pointer ${
 																	isSelected
-																		? 'bg-cyan-500 text-slate-950 font-black shadow-sm'
-																		: 'text-slate-400 hover:text-white hover:bg-slate-800'
+																		? 'bg-[#3C3C3C] text-white font-black shadow-2xs'
+																		: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
 																}`}
 															>
 																{u} יח״ל
@@ -948,15 +944,15 @@ export default function WhatIfSimulator({
 											{/* Grade Slider */}
 											<div className="space-y-1">
 												<div className="flex items-center justify-between text-xs">
-													<span className="text-slate-400">
+													<span className="text-[#66635C]">
 														{item.isCustomAdded
 															? 'ציון יעד:'
 															: `קיים: ${item.originalGrade} ➔ יעד:`}
 													</span>
 													<div className="text-left dir-ltr">
-														<span className="font-black text-cyan-300">{item.simulatedGrade}</span>
+														<span className="font-black text-[#222222]">{item.simulatedGrade}</span>
 														{!item.isCustomAdded && item.simulatedGrade > item.originalGrade && (
-															<span className="text-[10px] text-emerald-400 font-bold ml-1">
+															<span className="text-[10px] text-[#205739] font-bold ml-1">
 																(+{item.simulatedGrade - item.originalGrade})
 															</span>
 														)}
@@ -972,27 +968,27 @@ export default function WhatIfSimulator({
 													onChange={(e) =>
 														handleGradeSliderChange(item.id, Number(e.target.value))
 													}
-													className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+													className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
 												/>
 											</div>
 
 											{/* MARGINAL IMPACT BADGE */}
-											<div className="pt-2 border-t border-slate-850 flex items-center justify-between text-[11px]">
-												<span className="text-slate-400 font-medium">מידת השפעה שולית:</span>
+											<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-between text-[11px]">
+												<span className="text-[#66635C] font-medium">מידת השפעה שולית:</span>
 												{impact.sekemDelta > 0 ? (
 													<div className="flex items-center gap-1.5 dir-ltr">
-														<span className="px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-black flex items-center gap-1">
-															<Sparkles className="h-3 w-3 text-emerald-400" />
+														<span className="px-2 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black flex items-center gap-1">
+															<Sparkles className="h-3 w-3 text-[#205739]" />
 															<span>+{impact.sekemDelta} נק׳ סכם</span>
 														</span>
 														{impact.bagrutDelta > 0 && (
-															<span className="text-[10px] text-slate-400 font-medium">
+															<span className="text-[10px] text-[#66635C] font-medium">
 																(+{impact.bagrutDelta} בבגרות)
 															</span>
 														)}
 													</div>
 												) : (
-													<span className="text-slate-500 text-[10px] bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+													<span className="text-[#8A847C] text-[10px] bg-white px-2 py-0.5 rounded border border-[#E5DFD4]">
 														הושמט בממוצע המיטבי של האוניברסיטה
 													</span>
 												)}
@@ -1008,18 +1004,18 @@ export default function WhatIfSimulator({
 
 			{/* Action CTA: Apply to My Plan */}
 			{onApplyScenario && (
-				<div className="pt-2 flex items-center justify-between flex-wrap gap-4 border-t border-slate-800">
-					<div className="text-xs text-slate-400 flex items-center gap-2">
-						<Sparkles className="h-4 w-4 text-cyan-400" />
+				<div className="pt-2 flex items-center justify-between flex-wrap gap-4 border-t border-[#EAE5DA]">
+					<div className="text-xs text-[#66635C] flex items-center gap-2">
+						<Sparkles className="h-4 w-4 text-[#1E597B]" />
 						<span>
-							מצאת שילוב ציונים ומקצועות שמביא אותך לקבלה? לחץ כדי לעדכן את תוכנית העבודה שלך בשלב 5.
+							מצאת שילוב ציונים ומקצועות שמביא אותך לקבלה? לחץ כדי לעדכן את תוכנית העבודה שלך.
 						</span>
 					</div>
 
 					<button
 						type="button"
 						onClick={() => onApplyScenario(simulatedPsych, activeEffectiveSubjects, currentSekem)}
-						className="px-6 py-3.5 bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-xs rounded-xl shadow-lg shadow-cyan-500/20 transition flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+						className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-black text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
 					>
 						<span>החל תרחיש זה על מסלול השיפור שלי</span>
 						<ArrowLeft className="h-4 w-4" />

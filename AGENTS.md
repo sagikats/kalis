@@ -92,7 +92,7 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-09)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-09 20:45)
 - **Active Branch:** `ui-upgred` (Created from `main` for UI isolation and safe iteration)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
@@ -102,34 +102,36 @@ npm run build
 
 ### 🏆 Implemented Milestones in this Phase:
 
-1. **Clean Route Pruning & Streamlined Navigation:**
-   - Deleted obsolete routes: `src/app/wizard/`, `src/app/dashboard/`, `src/app/schedule/`.
-   - Streamlined focus exclusively to:
-     - **Home (`/`)**: Landing page & architectural overview.
-     - **Admission Check & Gaps Flow (`/flow`)**: Complete 4-step wizard (grades, targets, gap report, personalized action tracks).
-     - **Multi-University Sekem Calculator (`/calculators`)**: Official deterministic sekem calculator for all 8 universities.
+1. **Warm Editorial Palette & Matte Anthracite Conversion:**
+   - Transformed UI away from harsh dark mode to a premium warm cream/sand canvas (`#FAF8F5`) with soft borders (`#E5DFD4`).
+   - Converted all primary buttons, active chips, and toggles across all pages to the user's requested matte anthracite tone (**`#3C3C3C`**) with subtle hover transitions (**`hover:bg-[#2A2A2A]`**).
 
-2. **OHZI Interactive Award-Winning Aesthetic Overhaul:**
-   - Re-architected design language inspired by Awwwards-winning **OHZI Interactive** (`https://www.awwwards.com/sites/ohzi-interactive#score`):
-     - **Canvas Particle Constellation & Ambient Spotlight (`src/components/common/InteractiveBackground.tsx`)**: Zero external dependencies, pure HTML5 canvas requestAnimationFrame particle network reacting to mouse movement.
-     - **Dynamic Glow Cards (`src/components/common/GlowCard.tsx`)**: Reusable glassmorphic cards with cursor-following radial glow highlights and neon cyan/indigo luminous borders.
-     - **Dark Obsidian Palette**: Root layout updated to `#06070a` with custom dark scrollbars and cyan hover accents (`globals.css`).
-     - **Capsule Navigation (`Navbar.tsx`)**: Floating dark glassmorphism header with active link pill glow, candidate ID badge, and profile menu.
-     - **Architecture Spec HUD (`Footer.tsx`)**: Dark HUD footer featuring real-time system metrics (8 universities, 639 degree tracks, 20u legal dropping rule).
+2. **Official Authentic University Vector Emblems (`public/logos/` & `UniversityLogo.tsx`):**
+   - Replaced all crude SVG approximations and emojis with authentic, official institutional SVG vector emblems for all 8 universities:
+     - **TAU**: Classic Dan Reisinger emblem ("את" menorah).
+     - **BGU**: Official white flame inside the vibrant orange circle (`#F7941E`).
+     - **Technion**: Official seal with the flame, gear, and Star of David in deep navy (`#002D62`).
+     - **HUJI**: Official Scopus torch emblem in brand colors (`#83111F`, `#2F7789`, `#26A594`).
+     - **Bar-Ilan**: Official tree/open book emblem (`#1E40AF` & `#D27228`).
+     - **Haifa**: Official Dina Merhav emblem (`#0284C7`).
+     - **Ariel**: Official emblem (`#008542` & `#00ABB7`).
+     - **Reichman**: Official emblem (`#0F2D96`).
+   - Integrated into `UnifiedCalculator`, `MultiUniversityAdmissionGrid`, `PersonalAdmissionReport`, `DegreeSearchSelector`, `GapAnalysisCard`, and `AcceptedRegistrationCard`.
 
-3. **Homepage Capabilities & CTA Consolidation:**
-   - Retained the exact subheadline required by the user.
-   - Replaced old principles with the 3 most prominent current system capabilities:
-     1. **01 // SEKEM ENGINE**: מחשבון סכם מאוחד ל-8 האוניברסיטאות (כולל רצפת 20 יח"ל ובונוסים).
-     2. **02 // GAP DIAGNOSTIC**: בדיקת קבלה ודוח פערים אישי לתואר (639 תארים, סיווג סיכויים).
-     3. **03 // ACTION TRACKS**: מחולל מסלולי פעולה חכמים לסגירת הפער (מיקוד ROI, פיזור סיכונים, חלופת מכינה).
-   - Dual high-impact CTA buttons for starting the flow (`/flow`) and opening the calculator (`/calculators`).
+3. **High-Contrast Exam Session Badges (`calendarScheduler.ts` & `RecommendedTracksView.tsx`):**
+   - Fixed unreadable dark-mode badge colors on light backgrounds.
+   - Implemented high-contrast, WCAG-compliant pastel session badges:
+     - **מועד קיץ (יוני–יולי) ☀️**: `bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]`
+     - **מועד אביב (מרץ–אפריל) 🌱**: `bg-[#ECFEFF] text-[#0E7490] border-[#A5F3FC]`
+     - **מועד חורף (ינואר) ❄️**: `bg-[#EEF2FF] text-[#1E40AF] border-[#C7D2FE]`
+     - **קליטה במוסד (אוגוסט–ספטמבר) 🎓**: `bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]`
+   - Enhanced badges with `rounded-md`, `font-bold`, and `shadow-2xs` for maximum visual clarity.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
    - שילוב תגיות מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות.
 2. **ליטוש מיקרו-אינטראקציות נוספות:**
-   - אנימציות כניסה (framer-motion / CSS keyframes) בעת מעבר בין שלבי ה-flow.
+   - אנימציות כניסה (CSS keyframes / transitions) בעת מעבר בין שלבי ה-flow.
 
 ---
 

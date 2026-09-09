@@ -26,6 +26,7 @@ import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import AdmissionPanel from '@/components/calculator/AdmissionPanel';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
+import UniversityLogo from '@/components/common/UniversityLogo';
 
 export interface InstitutionOption {
      id: string;
@@ -227,28 +228,28 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
      const allSelected = selectedInstIds.length === ALL_INSTITUTION_IDS.length;
 
      return (
-          <div className="min-h-screen bg-slate-950 text-slate-100 font-sans dir-rtl">
+          <div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl">
                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
                     {/* Header */}
                     <div className="space-y-4 text-center max-w-3xl mx-auto">
-                         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold">
-                              <Calculator className="h-4 w-4" />
+                         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E0DBD0] text-[#44423D] text-xs font-semibold shadow-2xs">
+                              <Calculator className="h-4 w-4 text-blue-700" />
                               <span>מחשבון סכם וקבלה אחוד לאוניברסיטאות בישראל</span>
                          </div>
-                         <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-                              מחשבון סכם <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">כלל-אוניברסיטאי</span>
+                         <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#222222]">
+                              מחשבון סכם <span className="text-[#111111]">כלל-אוניברסיטאי</span>
                          </h1>
-                         <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+                         <p className="text-sm sm:text-base text-[#55524B] leading-relaxed">
                               הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד וקבל חישוב השוואתי מדויק של ציוני הסכם בכל אוניברסיטאות היעד בישראל — הטכניון, תל אביב, העברית, בן-גוריון, בר-אילן, חיפה, אריאל ורייכמן.
                          </p>
                          <div className="flex justify-center pt-1">
                               <Link
                                    href="/flow"
-                                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/10 transition hover:scale-[1.02] active:scale-[0.98]"
+                                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold shadow-xs transition"
                               >
                                    <Sparkles className="h-4 w-4" />
-                                   <span>מעבר לפלואו בדיקת קבלה וניתוח פערים לפי תארים מבוקשים</span>
+                                   <span>מעבר לבדיקת קבלה וניתוח פערים לפי תארים מבוקשים</span>
                                    <ArrowLeft className="h-3.5 w-3.5" />
                               </Link>
                          </div>
@@ -256,16 +257,16 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                     {/* Focused Institution Banner if deep-linked */}
                     {focusedInst && !allSelected && (
-                         <div className="p-4 rounded-2xl bg-blue-950/40 border border-blue-500/30 flex items-center justify-between flex-wrap gap-3">
-                              <div className="flex items-center gap-2 text-xs text-blue-200">
-                                   <Building2 className="h-4 w-4 text-blue-400 shrink-0" />
+                         <div className="p-4 rounded-2xl bg-white border border-[#E5DFD4] flex items-center justify-between flex-wrap gap-3 shadow-2xs">
+                              <div className="flex items-center gap-2 text-xs text-[#44423D]">
+                                   <Building2 className="h-4 w-4 text-blue-600 shrink-0" />
                                    <span>
                                         מציג כרגע חישוב עבור <strong>{focusedInst.fullName}</strong>. מעוניין להשוות לכל האוניברסיטאות?
                                    </span>
                               </div>
                               <button
                                    onClick={selectAllInstitutions}
-                                   className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md"
+                                   className="px-3.5 py-1.5 rounded-xl bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
                               >
                                    <Sparkles className="h-3.5 w-3.5" />
                                    <span>הצג את כל 8 האוניברסיטאות</span>
@@ -274,14 +275,14 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                     )}
 
                     {/* Institution Multi-Select Chips Bar */}
-                    <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-4">
-                         <div className="flex items-center justify-between flex-wrap gap-3 border-b border-slate-800 pb-3">
+                    <div className="bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs space-y-4">
+                         <div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-3">
                               <div className="flex items-center gap-2.5">
-                                   <Building2 className="h-5 w-5 text-cyan-400" />
-                                   <h3 className="text-base sm:text-lg font-bold text-white">
+                                   <Building2 className="h-5 w-5 text-blue-700" />
+                                   <h3 className="text-base sm:text-lg font-bold text-[#222222]">
                                         בחר אוניברסיטאות לחישוב והשוואה:
                                    </h3>
-                                   <span className="text-xs text-slate-400 font-medium">
+                                   <span className="text-xs text-[#66635C] font-medium">
                                         ({selectedInstIds.length} מתוך {AVAILABLE_INSTITUTIONS.length} פעילות)
                                    </span>
                               </div>
@@ -289,7 +290,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                    {!allSelected && (
                                         <button
                                              onClick={selectAllInstitutions}
-                                             className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1 hover:underline"
+                                             className="text-xs font-bold text-blue-700 hover:text-blue-900 transition flex items-center gap-1 hover:underline"
                                         >
                                              <Sparkles className="h-3.5 w-3.5" />
                                              <span>בחר את כל המוסדות</span>
@@ -305,14 +306,12 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                         <button
                                              key={inst.id}
                                              onClick={() => toggleInstitution(inst.id)}
-                                             className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 border shadow-sm ${isSelected
-                                                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-400 text-white shadow-cyan-500/20'
-                                                  : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                                             className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition flex items-center gap-2 border shadow-2xs ${isSelected
+                                                  ? 'bg-[#3C3C3C] border-[#3C3C3C] text-white'
+                                                  : 'bg-[#FAF8F5] border-[#E5DFD4] text-[#55524B] hover:border-[#CCC5B6] hover:text-[#222222]'
                                                   }`}
                                         >
-                                             <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${isSelected ? 'bg-white text-blue-700 font-black' : 'bg-slate-800 text-slate-400'}`}>
-                                                  {isSelected ? '✓' : '+'}
-                                             </span>
+                                             <UniversityLogo institution={inst.id} size="xs" shape="circle" />
                                              <span>{inst.fullName}</span>
                                         </button>
                                    );
@@ -327,15 +326,15 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                          <div className="lg:col-span-6 space-y-6">
 
                               {/* Card 1: Psychometric Scores */}
-                              <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-5">
-                                   <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                              <div className="bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs space-y-5">
+                                   <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">
                                         <div className="flex items-center gap-3">
-                                             <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400">
+                                             <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
                                                   <Brain className="h-5 w-5" />
                                              </div>
                                              <div>
-                                                  <h3 className="text-lg font-bold text-white">1. ציוני בחינה פסיכומטרית</h3>
-                                                  <p className="text-xs text-slate-400">הזן ציון רב-תחומי וציוני הפרקים (כמותי, מילולי ואנגלית)</p>
+                                                  <h3 className="text-lg font-bold text-[#222222]">1. ציוני בחינה פסיכומטרית</h3>
+                                                  <p className="text-xs text-[#66635C]">הזן ציון רב-תחומי וציוני הפרקים (כמותי, מילולי ואנגלית)</p>
                                              </div>
                                         </div>
                                         {englishLevelBadge && (
@@ -363,8 +362,8 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                              }
                                         }}
                                         className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${noPsychometric
-                                             ? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-                                             : 'bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
+                                             ? 'bg-[#F4F0E8] border-[#222222] text-[#222222]'
+                                             : 'bg-[#FAF8F5] border-[#E5DFD4] text-[#44423D] hover:border-[#CCC5B6]'
                                              }`}
                                    >
                                         <div className="flex items-center gap-3">
@@ -372,37 +371,37 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   type="checkbox"
                                                   checked={noPsychometric}
                                                   onChange={() => { }}
-                                                  className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-900 cursor-pointer"
+                                                  className="w-4 h-4 rounded border-[#CCC5B6] text-[#222222] focus:ring-[#222222] cursor-pointer"
                                              />
                                              <div>
-                                                  <span className="text-xs font-black block">עדיין לא עשיתי פסיכומטרי</span>
-                                                  <span className="text-[11px] text-slate-400 block mt-0.5">
+                                                  <span className="text-xs font-bold block">עדיין לא עשיתי פסיכומטרי</span>
+                                                  <span className="text-[11px] text-[#66635C] block mt-0.5">
                                                        בדיקת זכאות לקבלה ישירה (Direct Bagrut Admission) על סמך ממוצע בגרות בלבד
                                                   </span>
                                              </div>
                                         </div>
                                         {noPsychometric && (
-                                             <span className="px-2 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/30">
+                                             <span className="px-2 py-0.5 rounded-lg bg-white text-[#222222] text-[10px] font-bold border border-[#DDD7CB]">
                                                   פעיל
                                              </span>
                                         )}
                                    </div>
 
                                    {noPsychometric ? (
-                                        <div className="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-2">
-                                             <div className="flex items-center gap-2 text-cyan-300 text-xs font-bold">
-                                                  <Sparkles className="h-4 w-4 text-cyan-400 shrink-0" />
+                                        <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-2">
+                                             <div className="flex items-center gap-2 text-[#222222] text-xs font-bold">
+                                                  <Sparkles className="h-4 w-4 text-blue-700 shrink-0" />
                                                   <span>מצב חישוב ללא פסיכומטרי — קבלה ישירה על סמך בגרות</span>
                                              </div>
-                                             <p className="text-[11px] text-slate-300 leading-relaxed">
+                                             <p className="text-[11px] text-[#55524B] leading-relaxed">
                                                   ציוני הסכם יתבססו על ממוצע הבגרות בלבד. כרטיסי האוניברסיטאות משמאל יציגו האם הינך זכאי/ת לקבלה ישירה (Direct Bagrut Admission) בהתאם לממוצע הבגרות שלך.
                                              </p>
                                         </div>
                                    ) : (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                              {/* General Psychometric */}
-                                             <div className="space-y-2">
-                                                  <label className="block text-xs font-bold text-slate-300">
+                                             <div className="space-y-1.5">
+                                                  <label className="block text-xs font-bold text-[#44423D]">
                                                        ציון פסיכומטרי רב-תחומי (200-800):
                                                   </label>
                                                   <input
@@ -417,13 +416,13 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                             setPsychGeneral(cleaned);
                                                        }}
                                                        placeholder="200-800"
-                                                       className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                                                       className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
                                                   />
                                              </div>
 
                                              {/* Quantitative */}
-                                             <div className="space-y-2">
-                                                  <label className="block text-xs font-bold text-slate-300">
+                                             <div className="space-y-1.5">
+                                                  <label className="block text-xs font-bold text-[#44423D]">
                                                        חשיבה כמותית (50-150):
                                                   </label>
                                                   <input
@@ -438,13 +437,13 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                             setPsychQuant(cleaned);
                                                        }}
                                                        placeholder="50-150"
-                                                       className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                                                       className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
                                                   />
                                              </div>
 
                                              {/* Verbal */}
-                                             <div className="space-y-2">
-                                                  <label className="block text-xs font-bold text-slate-300">
+                                             <div className="space-y-1.5">
+                                                  <label className="block text-xs font-bold text-[#44423D]">
                                                        חשיבה מילולית (50-150):
                                                   </label>
                                                   <input
@@ -459,14 +458,14 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                             setPsychVerbal(cleaned);
                                                        }}
                                                        placeholder="50-150"
-                                                       className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                                                       className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
                                                   />
                                              </div>
 
                                              {/* English */}
-                                             <div className="space-y-2">
+                                             <div className="space-y-1.5">
                                                   <div className="flex items-center justify-between">
-                                                       <label className="block text-xs font-bold text-slate-300">
+                                                       <label className="block text-xs font-bold text-[#44423D]">
                                                             אנגלית בפסיכומטרי / אמי"ר (50-150):
                                                        </label>
                                                   </div>
@@ -482,7 +481,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                             setPsychEnglish(cleaned);
                                                        }}
                                                        placeholder="50-150"
-                                                       className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+                                                       className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
                                                   />
                                                   {englishLevelBadge && (
                                                        <div className="sm:hidden pt-1">
@@ -497,31 +496,31 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                                    {/* Live NITE composite calculation indicator */}
                                    {(psychResolution.effectiveQuantEmphasis > 0 || psychResolution.effectiveVerbalEmphasis > 0) && (
-                                        <div className="pt-2 border-t border-slate-800/80">
-                                             <div className="p-3.5 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-blue-950/40 border border-indigo-500/20 text-xs space-y-2">
+                                        <div className="pt-2 border-t border-[#EAE5DA]">
+                                             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-xs space-y-2">
                                                   <div className="flex flex-wrap items-center justify-between gap-1">
                                                        <div className="flex items-center gap-2">
-                                                            <Sparkles className="h-4 w-4 text-indigo-400 shrink-0" />
-                                                            <span className="font-bold text-slate-200">
+                                                            <Sparkles className="h-4 w-4 text-blue-700 shrink-0" />
+                                                            <span className="font-bold text-[#222222]">
                                                                  שקלול מאל"ו רשמי לפי תחומי הבחינה:
                                                             </span>
                                                        </div>
-                                                       <span className="text-[10px] text-slate-400 font-semibold">
+                                                       <span className="text-[10px] text-[#66635C] font-medium">
                                                             משקלים: כמותי 60/20/20 | מילולי 60/20/20 | רב-תחומי 40/40/20
                                                        </span>
                                                   </div>
                                                   <div className="grid grid-cols-3 gap-2 text-center pt-1">
-                                                       <div className="p-2 rounded-xl bg-slate-900/80 border border-slate-800">
-                                                            <span className="text-[10px] text-cyan-300 block font-bold">רב-תחומי</span>
-                                                            <span className="text-base font-black text-white">{psychResolution.effectiveGeneral || '-'}</span>
+                                                       <div className="p-2 rounded-xl bg-white border border-[#E5DFD4]">
+                                                            <span className="text-[10px] text-[#66635C] block font-bold">רב-תחומי</span>
+                                                            <span className="text-base font-black text-[#222222]">{psychResolution.effectiveGeneral || '-'}</span>
                                                        </div>
-                                                       <div className="p-2 rounded-xl bg-slate-900/80 border border-indigo-500/30">
-                                                            <span className="text-[10px] text-indigo-300 block font-bold">דגש כמותי (הנדסה/טכניון)</span>
-                                                            <span className="text-base font-black text-indigo-300">{psychResolution.effectiveQuantEmphasis || '-'}</span>
+                                                       <div className="p-2 rounded-xl bg-white border border-[#E5DFD4]">
+                                                            <span className="text-[10px] text-[#66635C] block font-bold">דגש כמותי (הנדסה/טכניון)</span>
+                                                            <span className="text-base font-black text-[#222222]">{psychResolution.effectiveQuantEmphasis || '-'}</span>
                                                        </div>
-                                                       <div className="p-2 rounded-xl bg-slate-900/80 border border-purple-500/30">
-                                                            <span className="text-[10px] text-purple-300 block font-bold">דגש מילולי (רוח/משפטים)</span>
-                                                            <span className="text-base font-black text-purple-300">{psychResolution.effectiveVerbalEmphasis || '-'}</span>
+                                                       <div className="p-2 rounded-xl bg-white border border-[#E5DFD4]">
+                                                            <span className="text-[10px] text-[#66635C] block font-bold">דגש מילולי (רוח/משפטים)</span>
+                                                            <span className="text-base font-black text-[#222222]">{psychResolution.effectiveVerbalEmphasis || '-'}</span>
                                                        </div>
                                                   </div>
                                              </div>
@@ -530,18 +529,18 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                               </div>
 
                               {/* Card 2: Bagrut Subjects */}
-                              <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-5">
-                                   <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                              <div className="bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs space-y-5">
+                                   <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">
                                         <div className="flex items-center gap-3">
-                                             <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+                                             <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
                                                   <BookOpen className="h-5 w-5" />
                                              </div>
                                              <div>
-                                                  <h3 className="text-lg font-bold text-white">2. ציוני תעודת בגרות (0-100)</h3>
-                                                  <p className="text-xs text-slate-400">בונוסים מחושבים אוטומטית לפי כללי האוניברסיטאות</p>
+                                                  <h3 className="text-lg font-bold text-[#222222]">2. ציוני תעודת בגרות (0-100)</h3>
+                                                  <p className="text-xs text-[#66635C]">בונוסים מחושבים אוטומטית לפי כללי האוניברסיטאות</p>
                                              </div>
                                         </div>
-                                        <span className="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
+                                        <span className="text-xs font-bold text-[#44423D] bg-[#FAF8F5] px-3 py-1 rounded-full border border-[#E5DFD4]">
                                              {subjects.length} מקצועות
                                         </span>
                                    </div>
@@ -549,15 +548,15 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                    {/* List */}
                                    <div className="space-y-2.5 max-h-96 overflow-y-auto pr-1">
                                         {subjects.map((sub, idx) => (
-                                             <div key={idx} className="flex items-center justify-between gap-3 p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-slate-700 transition">
+                                             <div key={idx} className="flex items-center justify-between gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#CCC5B6] transition">
                                                   <button
                                                        type="button"
                                                        onClick={() => handleOpenChangeModal(idx)}
-                                                       className="flex items-center gap-2 text-right bg-slate-900/70 hover:bg-slate-800/90 px-3 py-1.5 rounded-xl border border-slate-700/60 hover:border-cyan-500/50 transition group flex-1 min-w-0"
+                                                       className="flex items-center gap-2 text-right bg-white hover:bg-[#F3EFE8] px-3 py-1.5 rounded-xl border border-[#DDD7CB] transition group flex-1 min-w-0 shadow-2xs"
                                                        title="לחץ כדי להחליף מקצוע מתוך הרשימה"
                                                   >
-                                                       <Search className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-400 shrink-0 transition" />
-                                                       <span className="text-xs font-bold text-slate-100 group-hover:text-cyan-200 truncate transition">
+                                                       <Search className="h-3.5 w-3.5 text-[#88857E] group-hover:text-[#222222] shrink-0 transition" />
+                                                       <span className="text-xs font-bold text-[#222222] truncate transition">
                                                             {sub.name}
                                                        </span>
                                                   </button>
@@ -565,7 +564,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                        <select
                                                             value={sub.units}
                                                             onChange={(e) => handleUpdateSubject(idx, 'units', Number(e.target.value))}
-                                                            className="bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 font-bold px-2 py-1.5 focus:ring-1 focus:ring-cyan-500"
+                                                            className="bg-white border border-[#DDD7CB] rounded-lg text-xs text-[#222222] font-bold px-2 py-1.5 focus:ring-1 focus:ring-[#222222]"
                                                        >
                                                             <option value={1}>1 יח"ל</option>
                                                             <option value={2}>2 יח"ל</option>
@@ -585,11 +584,11 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                                  handleUpdateSubject(idx, 'grade', cleaned);
                                                             }}
                                                             placeholder="0"
-                                                            className="w-16 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-cyan-400 text-center py-1.5 focus:ring-1 focus:ring-cyan-500"
+                                                            className="w-16 bg-white border border-[#DDD7CB] rounded-lg text-xs font-bold text-[#222222] text-center py-1.5 focus:ring-1 focus:ring-[#222222]"
                                                        />
                                                        <button
                                                             onClick={() => handleRemoveSubject(idx)}
-                                                            className="text-slate-500 hover:text-rose-400 p-1.5 rounded-lg hover:bg-rose-500/10 transition"
+                                                            className="text-[#88857E] hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition"
                                                             title="הסר מקצוע"
                                                        >
                                                             <Trash2 className="h-4 w-4" />
@@ -600,17 +599,17 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                    </div>
 
                                    {/* Add Subject Action Bar */}
-                                   <div className="pt-2 border-t border-slate-800/80">
+                                   <div className="pt-2 border-t border-[#EAE5DA]">
                                         <button
                                              type="button"
                                              onClick={handleOpenAddModal}
-                                             className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-cyan-950/50 to-blue-950/50 hover:from-cyan-900/60 hover:to-blue-900/60 border border-cyan-500/30 hover:border-cyan-400/60 text-cyan-300 hover:text-cyan-100 font-bold text-xs flex items-center justify-center gap-2.5 transition shadow-lg group cursor-pointer"
+                                             className="w-full py-3 px-4 rounded-2xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#DDD7CB] hover:border-[#CCC5B6] text-[#222222] font-bold text-xs flex items-center justify-center gap-2.5 transition shadow-2xs group cursor-pointer"
                                         >
-                                             <div className="p-1 rounded-lg bg-cyan-500/20 group-hover:bg-cyan-500/30 transition">
-                                                  <Plus className="h-4 w-4 text-cyan-400" />
+                                             <div className="p-1 rounded-lg bg-white border border-[#E0DBD0] transition">
+                                                  <Plus className="h-4 w-4 text-[#222222]" />
                                              </div>
                                              <span>בחר והוסף מקצוע מתוך רשימת הבגרויות וההגברות (חיפוש מהיר)</span>
-                                             <Search className="h-3.5 w-3.5 text-cyan-400/70 mr-auto group-hover:translate-x-[-2px] transition" />
+                                             <Search className="h-3.5 w-3.5 text-[#88857E] mr-auto group-hover:translate-x-[-2px] transition" />
                                         </button>
                                    </div>
                               </div>
@@ -621,9 +620,9 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                         const resultsElem = document.getElementById('results-section');
                                         resultsElem?.scrollIntoView({ behavior: 'smooth' });
                                    }}
-                                   className="w-full py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-cyan-500/20 transition flex items-center justify-center gap-2 group"
+                                   className="w-full py-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 group cursor-pointer"
                               >
-                                   <Zap className="h-5 w-5 text-yellow-300 group-hover:scale-110 transition-transform" />
+                                   <Zap className="h-5 w-5 text-amber-400 group-hover:scale-110 transition-transform" />
                                    <span>חשב ועדכן תוצאות לכל המוסדות הנבחרים</span>
                               </button>
 
@@ -632,12 +631,12 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                          {/* Right Column: Multi-Institution Comparison Results (6 cols) */}
                          <div className="lg:col-span-6 space-y-6 lg:sticky lg:top-8" id="results-section">
 
-                              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                                   <h3 className="text-xl font-black text-white flex items-center gap-2">
-                                        <Award className="h-6 w-6 text-cyan-400" />
+                              <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">
+                                   <h3 className="text-xl font-black text-[#222222] flex items-center gap-2">
+                                        <Award className="h-6 w-6 text-blue-700" />
                                         תוצאות סכם לפי מוסד לימודים
                                    </h3>
-                                   <span className="text-xs text-cyan-300 font-extrabold bg-cyan-500/20 px-3 py-1 rounded-full border border-cyan-500/30">
+                                   <span className="text-xs text-[#44423D] font-extrabold bg-[#FAF8F5] px-3 py-1 rounded-full border border-[#E5DFD4]">
                                         {institutionResults.length} מוסדות מוצגים
                                    </span>
                               </div>
@@ -647,25 +646,23 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                    {institutionResults.map((res) => (
                                         <div
                                              key={res.institutionId}
-                                             className="bg-slate-900/90 rounded-3xl p-5 border border-slate-800 hover:border-slate-700 shadow-xl transition space-y-4"
+                                             className="bg-white rounded-3xl p-5 border border-[#E5DFD4] hover:border-[#CCC5B6] shadow-xs transition space-y-4"
                                         >
-                                             <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                                             <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
                                                   <div className="flex items-center gap-3">
-                                                       <div className={`w-9 h-9 rounded-2xl bg-gradient-to-br ${res.badgeColor} flex items-center justify-center text-white font-black text-xs shadow-md`}>
-                                                            {res.logoText}
-                                                       </div>
+                                                       <UniversityLogo institution={res.institutionId} size="md" shape="rounded" />
                                                        <div>
-                                                            <h4 className="text-base font-bold text-white">{res.institutionName}</h4>
-                                                            {res.notes && <p className="text-[11px] text-slate-400">{res.notes}</p>}
+                                                            <h4 className="text-base font-bold text-[#222222]">{res.institutionName}</h4>
+                                                            {res.notes && <p className="text-[11px] text-[#66635C]">{res.notes}</p>}
                                                             {res.droppedSubjects && res.droppedSubjects.length > 0 && (
-                                                                 <p className="text-[10px] text-amber-400/90 font-medium mt-0.5">
+                                                                 <p className="text-[10px] text-amber-800 font-medium mt-0.5">
                                                                       הושמטו למיקסום הממוצע: {res.droppedSubjects.join(', ')}
                                                                  </p>
                                                             )}
                                                        </div>
                                                   </div>
                                                   {res.directBagrutEligible && (
-                                                       <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                                                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                                                             אפיק קבלה ישיר!
                                                        </span>
                                                   )}
@@ -673,35 +670,35 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                                              <div className={`grid grid-cols-2 ${res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3`}>
                                                   {/* Bagrut Avg */}
-                                                  <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
-                                                       <span className="text-[11px] text-slate-400 block font-bold">ממוצע בגרות</span>
-                                                       <span className="text-xl font-black text-white mt-1 block">{res.bagrutAverage}</span>
+                                                  <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
+                                                       <span className="text-[11px] text-[#66635C] block font-bold">ממוצע בגרות</span>
+                                                       <span className="text-xl font-black text-[#222222] mt-1 block">{res.bagrutAverage}</span>
                                                        {res.optimalUnits && (
-                                                            <span className="text-[10px] text-purple-400 font-semibold block mt-0.5">
+                                                            <span className="text-[10px] text-blue-700 font-semibold block mt-0.5">
                                                                  {res.optimalUnits} יח"ל (אופטימלי)
                                                             </span>
                                                        )}
                                                   </div>
 
                                                   {/* General Sekem */}
-                                                  <div className="p-3 rounded-2xl bg-blue-950/40 border border-blue-800/50 text-center">
-                                                       <span className="text-[11px] text-blue-300 block font-bold">סכם כללי</span>
-                                                       <span className="text-xl font-black text-cyan-300 mt-1 block">{res.generalSekem}</span>
+                                                  <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
+                                                       <span className="text-[11px] text-[#66635C] block font-bold">סכם כללי</span>
+                                                       <span className="text-xl font-black text-[#222222] mt-1 block">{res.generalSekem}</span>
                                                   </div>
 
                                                   {/* Engineering Sekem */}
                                                   {res.engineeringSekem !== undefined && (
-                                                       <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-center">
-                                                            <span className="text-[11px] text-indigo-300 block font-bold">סכם כמותי/הנדסה</span>
-                                                            <span className="text-xl font-black text-indigo-300 mt-1 block">{res.engineeringSekem}</span>
+                                                       <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
+                                                            <span className="text-[11px] text-[#66635C] block font-bold">סכם כמותי/הנדסה</span>
+                                                            <span className="text-xl font-black text-[#222222] mt-1 block">{res.engineeringSekem}</span>
                                                        </div>
                                                   )}
 
                                                   {/* Management Sekem */}
                                                   {res.managementSekem !== undefined && (
-                                                       <div className="p-3 rounded-2xl bg-amber-950/30 border border-amber-800/50 text-center">
-                                                            <span className="text-[11px] text-amber-300 block font-bold">התאמה לניהול</span>
-                                                            <span className="text-xl font-black text-amber-300 mt-1 block">{res.managementSekem}</span>
+                                                       <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
+                                                            <span className="text-[11px] text-[#66635C] block font-bold">התאמה לניהול</span>
+                                                            <span className="text-xl font-black text-[#222222] mt-1 block">{res.managementSekem}</span>
                                                        </div>
                                                   )}
                                              </div>
@@ -710,14 +707,14 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                              <div className="flex gap-2">
                                                   <button
                                                        onClick={() => setPanelInstitutionId(res.institutionId)}
-                                                       className="flex-1 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10"
+                                                       className="flex-1 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
                                                   >
                                                        <GraduationCap className="h-3.5 w-3.5" />
                                                        <span>מה הסיכויים שלי?</span>
                                                   </button>
                                                   <Link
                                                        href="/flow"
-                                                       className="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
+                                                       className="px-3 py-2.5 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] border border-[#DDD7CB] font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
                                                        title="בדיקת קבלה ופערים"
                                                   >
                                                        <ChevronLeft className="h-4 w-4" />

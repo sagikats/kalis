@@ -43,47 +43,47 @@ export default function Navbar() {
      ];
 
      return (
-          <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#06070a]/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.8)] transition-all">
+          <header className="sticky top-0 z-50 w-full border-b border-[#E7E2D8] bg-[#FAF8F5]/90 backdrop-blur-md transition-all">
                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-                    {/* Left/Right swapped for RTL: Right Action Icons (Notifications & Profile) appear on the RIGHT in RTL */}
-                    <div className="flex items-center gap-3">
+                    {/* Left/Right in RTL: Actions (Notifications & Profile) on the RIGHT visually in RTL */}
+                    <div className="flex items-center gap-2.5">
 
                          {/* User Profile Menu or Login/Register Buttons */}
                          {isAuthenticated && user ? (
                               <div className="relative">
                                    <button
                                         onClick={() => setShowProfileMenu(!showProfileMenu)}
-                                        className="flex items-center gap-2 p-1.5 pr-2.5 text-xs font-bold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] rounded-full transition-colors border border-white/10 cursor-pointer"
+                                        className="flex items-center gap-2 p-1.5 pr-2.5 text-xs font-bold text-[#222222] bg-white hover:bg-[#F4F1EA] rounded-full transition-colors border border-[#E2DDD2] shadow-xs cursor-pointer"
                                    >
-                                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 text-white font-black text-xs shadow-[0_0_10px_rgba(6,182,212,0.3)]">
+                                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#3C3C3C] text-white font-bold text-xs">
                                              {getInitials(user.name)}
                                         </div>
-                                        <span className="hidden sm:inline font-bold text-slate-100">{user.name}</span>
+                                        <span className="hidden sm:inline font-bold text-[#222222]">{user.name}</span>
                                         {user.candidateNumber && (
-                                             <span className="hidden md:inline font-mono text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-1.5 py-0.5 rounded-full">
+                                             <span className="hidden md:inline font-mono text-[10px] text-[#222222] bg-[#EFECE6] border border-[#DDD7CB] px-1.5 py-0.5 rounded-full">
                                                   {user.candidateNumber}
                                              </span>
                                         )}
-                                        <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+                                        <ChevronDown className="h-3.5 w-3.5 text-[#66635C]" />
                                    </button>
 
                                    {/* Profile Dropdown */}
                                    {showProfileMenu && (
-                                        <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-[#0c0e14]/95 p-3 shadow-2xl border border-white/10 backdrop-blur-xl z-50 animate-in fade-in zoom-in-95 duration-150">
-                                             <div className="p-2 border-b border-white/[0.08] mb-2">
+                                        <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white p-3 shadow-xl border border-[#E7E2D8] z-50 animate-in fade-in zoom-in-95 duration-150">
+                                             <div className="p-2 border-b border-[#EAE5DA] mb-2">
                                                   <div className="flex items-center justify-between">
-                                                       <p className="font-bold text-sm text-white">{user.name}</p>
+                                                       <p className="font-bold text-sm text-[#222222]">{user.name}</p>
                                                        {user.candidateNumber && (
-                                                            <span className="font-mono text-xs font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded-md">
+                                                            <span className="font-mono text-xs font-bold text-[#222222] bg-[#EFECE6] border border-[#DDD7CC] px-2 py-0.5 rounded-md">
                                                                  {user.candidateNumber}
                                                             </span>
                                                        )}
                                                   </div>
-                                                  <p className="text-xs text-slate-400 mt-0.5">{user.email}</p>
+                                                  <p className="text-xs text-[#66635C] mt-0.5">{user.email}</p>
                                                   {user.savedTracksCount !== undefined && (
-                                                       <div className="mt-2 flex items-center gap-1.5 text-[11px] text-cyan-400">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                                                       <div className="mt-2 flex items-center gap-1.5 text-[11px] text-blue-700">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
                                                             <span>{user.savedTracksCount} מסלולים שמורים במערכת</span>
                                                        </div>
                                                   )}
@@ -94,7 +94,7 @@ export default function Navbar() {
                                                        setShowProfileMenu(false);
                                                        logout();
                                                   }}
-                                                  className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-400 hover:bg-rose-500/10 rounded-xl transition-colors cursor-pointer"
+                                                  className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors cursor-pointer"
                                              >
                                                   <LogOut className="h-4 w-4" />
                                                   <span>התנתק מהחשבון</span>
@@ -103,20 +103,20 @@ export default function Navbar() {
                                    )}
                               </div>
                          ) : (
-                              <div className="flex items-center gap-1.5">
+                              <div className="flex items-center gap-2">
                                    <button
                                         onClick={() => openAuthModal('login')}
-                                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-full transition-all cursor-pointer"
+                                        className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#44423D] hover:text-[#111111] bg-[#EFECE6] hover:bg-[#EAE5DC] border border-[#E0DBD0] rounded-full transition-all cursor-pointer"
                                    >
-                                        <LogIn className="h-3.5 w-3.5 text-slate-400" />
+                                        <LogIn className="h-3.5 w-3.5 text-[#66635C]" />
                                         <span>התחברות</span>
                                    </button>
                                    <button
                                         onClick={() => openAuthModal('register')}
-                                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 rounded-full transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] cursor-pointer"
+                                        className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold text-white bg-[#3C3C3C] hover:bg-[#2A2A2A] rounded-full transition-all shadow-xs cursor-pointer"
                                    >
                                         <UserPlus className="h-3.5 w-3.5" />
-                                        <span>הרשמה חינם</span>
+                                        <span>הרשמה</span>
                                    </button>
                               </div>
                          )}
@@ -125,46 +125,45 @@ export default function Navbar() {
                          <div className="relative">
                               <button
                                    onClick={() => setShowNotifications(!showNotifications)}
-                                   className="relative p-2 text-slate-400 hover:text-white hover:bg-white/[0.06] rounded-full transition-colors border border-transparent hover:border-white/10"
+                                   className="relative p-2 text-[#66635C] hover:text-[#222222] hover:bg-[#EFECE6] rounded-full transition-colors border border-transparent hover:border-[#E2DDD2]"
                                    title="התראות מערכת"
                               >
                                    <Bell className="h-4 w-4" />
                                    {recalculationPending && (
-                                        <span className="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
-                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                                             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+                                        <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
+                                             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                                         </span>
                                    )}
                               </button>
 
                               {showNotifications && (
-                                   <div className="absolute left-0 mt-2 w-80 rounded-2xl bg-[#0c0e14]/95 p-4 shadow-2xl border border-white/10 backdrop-blur-xl z-50">
-                                        <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
-                                             <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
-                                                  <Bell className="h-4 w-4 text-cyan-400" />
+                                   <div className="absolute left-0 mt-2 w-80 rounded-2xl bg-white p-4 shadow-xl border border-[#E7E2D8] z-50">
+                                        <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
+                                             <h4 className="font-bold text-sm text-[#222222] flex items-center gap-1.5">
+                                                  <Bell className="h-4 w-4 text-blue-600" />
                                                   התראות מסלול
                                              </h4>
                                              <button
                                                   onClick={() => setShowNotifications(false)}
-                                                  className="text-slate-400 hover:text-white"
+                                                  className="text-[#88857E] hover:text-[#222222]"
                                              >
                                                   <X className="h-4 w-4" />
                                              </button>
                                         </div>
                                         <div className="mt-3 space-y-2 max-h-60 overflow-y-auto">
                                              {recalculationPending ? (
-                                                  <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-200">
+                                                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900">
                                                        <div className="flex items-start gap-2">
-                                                            <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                                                            <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                                                             <div>
                                                                  <p className="font-bold">נדרש חישוב מסלול מחדש!</p>
-                                                                 <p className="mt-1 text-slate-300">{recalculationReason || 'זוהה שינוי בעומס הלימודים'}</p>
+                                                                 <p className="mt-1 text-amber-800">{recalculationReason || 'זוהה שינוי בעומס הלימודים'}</p>
                                                                  <button
                                                                       onClick={() => {
                                                                            recalculateRoute();
                                                                            setShowNotifications(false);
                                                                       }}
-                                                                      className="mt-2 text-xs bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1 rounded-lg shadow-xs transition"
+                                                                      className="mt-2 text-xs bg-amber-600 hover:bg-amber-700 text-white font-bold px-3 py-1 rounded-lg shadow-xs transition"
                                                                  >
                                                                       בצע חישוב מסלול עכשיו
                                                                  </button>
@@ -172,15 +171,15 @@ export default function Navbar() {
                                                        </div>
                                                   </div>
                                              ) : (
-                                                  <div className="p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-xs text-slate-400 text-center">
+                                                  <div className="p-3 bg-[#FAF8F5] border border-[#EAE5DA] rounded-xl text-xs text-[#66635C] text-center">
                                                        אין התראות חדשות. תוכנית הלימודים מעודכנת ומיושרת!
                                                   </div>
                                              )}
 
-                                             <div className="p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-xs text-slate-300 flex items-start gap-2">
-                                                  <Sparkles className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
+                                             <div className="p-3 bg-[#FAF8F5] border border-[#EAE5DA] rounded-xl text-xs text-[#44423D] flex items-start gap-2">
+                                                  <Sparkles className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
                                                   <div>
-                                                       <span className="font-bold text-white">טיפ אלגוריתמי:</span> חזרות מרווחות בשבת בבוקר מעלות את שימור הזיכרון ב-35%.
+                                                       <span className="font-bold text-[#222222]">טיפ אלגוריתמי:</span> חזרות מרווחות בסופי שבוע מעלות את שימור הזיכרון ב-35%.
                                                   </div>
                                              </div>
                                         </div>
@@ -191,7 +190,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Navigation Links (Capsule Design) */}
-                    <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] p-1.5 rounded-full border border-white/[0.08] backdrop-blur-md">
+                    <nav className="hidden md:flex items-center gap-1 bg-[#EFECE6] p-1 rounded-full border border-[#E2DDD3]">
                          {navLinks.map((link) => {
                               const Icon = link.icon;
                               const isActive = pathname === link.href;
@@ -199,12 +198,12 @@ export default function Navbar() {
                                    <Link
                                         key={link.href}
                                         href={link.href}
-                                        className={`flex items-center gap-2 px-4 py-1.5 text-sm font-semibold rounded-full transition-all duration-300 ${isActive
-                                             ? 'bg-gradient-to-r from-blue-600/30 to-cyan-500/30 text-white shadow-[0_0_15px_rgba(6,182,212,0.25)] border border-cyan-400/40 font-bold'
-                                             : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                                        className={`flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 ${isActive
+                                             ? 'bg-white text-[#222222] shadow-[0_1px_4px_rgba(0,0,0,0.08)] border border-[#DDD7CC] font-bold'
+                                             : 'text-[#66635C] hover:text-[#222222] hover:bg-white/60'
                                              }`}
                                    >
-                                        <Icon className={`h-4 w-4 ${isActive ? 'text-cyan-400' : 'text-slate-500'}`} />
+                                        <Icon className={`h-4 w-4 ${isActive ? 'text-[#222222]' : 'text-[#88857E]'}`} />
                                         <span>{link.label}</span>
                                    </Link>
                               );
@@ -213,7 +212,7 @@ export default function Navbar() {
 
                     {/* Brand Logo (Appears on the LEFT side in RTL) */}
                     <Link href="/" className="flex items-center gap-3 group">
-                         <KalisLogo size="md" variant="light" showTagline={true} />
+                         <KalisLogo size="md" variant="dark" showTagline={true} />
                     </Link>
 
                </div>

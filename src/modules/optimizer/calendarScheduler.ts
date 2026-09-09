@@ -31,8 +31,8 @@ export function getSessionInfo(session?: ExamSession | 'winter' | 'spring_psych'
 				name: 'מועד חורף',
 				timing: 'ינואר–פברואר',
 				badgeLabel: 'מועד חורף (ינואר)',
-				badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
-				cardBorderClass: 'border-blue-500/40 hover:border-blue-400',
+				badgeClass: 'bg-[#EEF2FF] text-[#1E40AF] border-[#C7D2FE]',
+				cardBorderClass: 'border-[#C7D2FE] hover:border-[#93C5FD]',
 				iconEmoji: '❄️'
 			};
 		case 'spring_psych':
@@ -41,8 +41,8 @@ export function getSessionInfo(session?: ExamSession | 'winter' | 'spring_psych'
 				name: 'מועד אביב',
 				timing: 'מרץ–אפריל',
 				badgeLabel: 'מועד אביב (מרץ–אפריל)',
-				badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
-				cardBorderClass: 'border-cyan-500/40 hover:border-cyan-400',
+				badgeClass: 'bg-[#ECFEFF] text-[#0E7490] border-[#A5F3FC]',
+				cardBorderClass: 'border-[#A5F3FC] hover:border-[#67E8F9]',
 				iconEmoji: '🌱'
 			};
 		case 'administrative':
@@ -50,8 +50,8 @@ export function getSessionInfo(session?: ExamSession | 'winter' | 'spring_psych'
 				name: 'קליטה במוסד',
 				timing: 'אוגוסט–ספטמבר',
 				badgeLabel: 'קליטה במוסד (אוגוסט–ספטמבר)',
-				badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-				cardBorderClass: 'border-emerald-500/40 hover:border-emerald-400',
+				badgeClass: 'bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]',
+				cardBorderClass: 'border-[#A7F3D0] hover:border-[#6EE7B7]',
 				iconEmoji: '🎓'
 			};
 		case 'summer':
@@ -61,8 +61,8 @@ export function getSessionInfo(session?: ExamSession | 'winter' | 'spring_psych'
 				name: 'מועד קיץ',
 				timing: 'מאי–יולי',
 				badgeLabel: 'מועד קיץ (יוני–יולי)',
-				badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-				cardBorderClass: 'border-amber-500/40 hover:border-amber-400',
+				badgeClass: 'bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]',
+				cardBorderClass: 'border-[#FDE68A] hover:border-[#FCD34D]',
 				iconEmoji: '☀️'
 			};
 	}

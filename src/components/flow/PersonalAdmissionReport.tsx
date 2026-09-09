@@ -48,15 +48,15 @@ export default function PersonalAdmissionReport({
 
 	if (analyses.length === 0) {
 		return (
-			<div className="text-center py-16 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 space-y-4">
-				<GraduationCap className="h-12 w-12 text-slate-500 mx-auto" />
-				<h3 className="text-lg font-bold text-white">לא נבחרו תארים להצגה</h3>
-				<p className="text-sm text-slate-400 max-w-md mx-auto">
+			<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4">
+				<GraduationCap className="h-12 w-12 text-[#8A847C] mx-auto" />
+				<h3 className="text-lg font-bold text-[#222222]">לא נבחרו תארים להצגה</h3>
+				<p className="text-sm text-[#66635C] max-w-md mx-auto">
 					כדי לראות דוח קבלה אישי, עליך לבחור לפחות תואר אחד בשלב 2 (בחירת תארים מבוקשים).
 				</p>
 				<button
 					onClick={onAddMorePrograms}
-					className="px-6 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl transition"
+					className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition cursor-pointer"
 				>
 					חזור לבחירת תארים
 				</button>
@@ -67,17 +67,17 @@ export default function PersonalAdmissionReport({
 	return (
 		<div className="space-y-8">
 			{/* Top Hero Stats */}
-			<div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-5">
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-xs space-y-5">
 				<div className="flex items-center justify-between flex-wrap gap-3">
 					<div>
-						<h2 className="text-xl sm:text-2xl font-black text-white">דוח סיכויי קבלה אישי</h2>
-						<p className="text-xs sm:text-sm text-slate-400">
+						<h2 className="text-xl sm:text-2xl font-black text-[#222222]">דוח סיכויי קבלה אישי</h2>
+						<p className="text-xs sm:text-sm text-[#66635C]">
 							הערכה מבוססת מנועי הסכם הרשמיים לכל התארים שבחרת
 						</p>
 					</div>
 					<button
 						onClick={onAddMorePrograms}
-						className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-bold border border-slate-700 transition flex items-center gap-1.5"
+						className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] rounded-xl text-xs font-bold border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer"
 					>
 						<span>ערוך סל תארים</span>
 					</button>
@@ -85,39 +85,39 @@ export default function PersonalAdmissionReport({
 
 				{/* Stat Badges */}
 				<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-					<div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-						<span className="text-[11px] font-bold text-emerald-400 block">✅ התקבלת</span>
-						<span className="text-2xl font-black text-emerald-300 mt-0.5 block">{counts.accepted}</span>
-						<span className="text-[10px] text-emerald-400/80">עובר את רף הסכם</span>
+					<div className="p-3.5 rounded-2xl bg-[#EBF4EE] border border-[#C6DFCE] text-center">
+						<span className="text-[11px] font-bold text-[#205739] block">✅ התקבלת</span>
+						<span className="text-2xl font-black text-[#205739] mt-0.5 block">{counts.accepted}</span>
+						<span className="text-[10px] text-[#205739]/80">עובר את רף הסכם</span>
 					</div>
 
-					<div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
-						<span className="text-[11px] font-bold text-amber-400 block">⚠️ על הגבול</span>
-						<span className="text-2xl font-black text-amber-300 mt-0.5 block">{counts.borderline}</span>
-						<span className="text-[10px] text-amber-400/80">פער קל מהסף</span>
+					<div className="p-3.5 rounded-2xl bg-[#FDF6E8] border border-[#ECDAB6] text-center">
+						<span className="text-[11px] font-bold text-[#825B15] block">⚠️ על הגבול</span>
+						<span className="text-2xl font-black text-[#825B15] mt-0.5 block">{counts.borderline}</span>
+						<span className="text-[10px] text-[#825B15]/80">פער קל מהסף</span>
 					</div>
 
-					<div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-center">
-						<span className="text-[11px] font-bold text-rose-400 block">❌ טרם התקבלת</span>
-						<span className="text-2xl font-black text-rose-300 mt-0.5 block">{counts.not_accepted}</span>
-						<span className="text-[10px] text-rose-400/80">דרוש שיפור נתונים</span>
+					<div className="p-3.5 rounded-2xl bg-[#FDF1EE] border border-[#F1CAC1] text-center">
+						<span className="text-[11px] font-bold text-[#9B3327] block">❌ טרם התקבלת</span>
+						<span className="text-2xl font-black text-[#9B3327] mt-0.5 block">{counts.not_accepted}</span>
+						<span className="text-[10px] text-[#9B3327]/80">דרוש שיפור נתונים</span>
 					</div>
 
-					<div className="p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-center">
-						<span className="text-[11px] font-bold text-purple-400 block">🎓 קבלה נפרדת</span>
-						<span className="text-2xl font-black text-purple-300 mt-0.5 block">{counts.no_threshold}</span>
-						<span className="text-[10px] text-purple-400/80">אודישן / ראיון</span>
+					<div className="p-3.5 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-center">
+						<span className="text-[11px] font-bold text-[#453D78] block">🎓 קבלה נפרדת</span>
+						<span className="text-2xl font-black text-[#453D78] mt-0.5 block">{counts.no_threshold}</span>
+						<span className="text-[10px] text-[#453D78]/80">אודישן / ראיון</span>
 					</div>
 				</div>
 
 				{analyses.length > 0 && analyses.every((a) => a.userSekem === 0) && (
-					<div className="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 flex items-start gap-3">
-						<Sparkles className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
+					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-start gap-3">
+						<Sparkles className="h-5 w-5 text-[#1E597B] shrink-0 mt-0.5" />
 						<div className="space-y-1">
-							<span className="text-xs font-black text-cyan-300 block">
+							<span className="text-xs font-black text-[#1E597B] block">
 								דוח קבלה ראשוני ללא ציון פסיכומטרי
 							</span>
-							<p className="text-[11px] text-slate-300 leading-relaxed">
+							<p className="text-[11px] text-[#66635C] leading-relaxed">
 								סימנת שטרם נבחנת בפסיכומטרי. עבור חוגים שבהם נדרש פסיכומטרי, בשלב 4 (תכנון מסלולים) המערכת תחשב במדויק מהו ציון הפסיכומטרי הנדרש ממך בבחינה הראשונה כדי לסגור את הקבלה!
 							</p>
 						</div>
@@ -129,8 +129,8 @@ export default function PersonalAdmissionReport({
 			{grouped.accepted.length > 0 && (
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<CheckCircle2 className="h-5 w-5 text-emerald-400" />
-						<h3 className="text-base font-black text-emerald-300">
+						<CheckCircle2 className="h-5 w-5 text-[#205739]" />
+						<h3 className="text-base font-black text-[#205739]">
 							תארים שהתקבלת אליהם ({grouped.accepted.length})
 						</h3>
 					</div>
@@ -147,8 +147,8 @@ export default function PersonalAdmissionReport({
 			{grouped.borderline.length > 0 && (
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<AlertCircle className="h-5 w-5 text-amber-400" />
-						<h3 className="text-base font-black text-amber-300">
+						<AlertCircle className="h-5 w-5 text-[#825B15]" />
+						<h3 className="text-base font-black text-[#825B15]">
 							תארים על הגבול — שיפור קל יביא לקבלה ({grouped.borderline.length})
 						</h3>
 					</div>
@@ -166,12 +166,12 @@ export default function PersonalAdmissionReport({
 				<div className="space-y-4">
 					<div className="flex items-center justify-between flex-wrap gap-2">
 						<div className="flex items-center gap-2">
-							<XCircle className="h-5 w-5 text-rose-400" />
-							<h3 className="text-base font-black text-rose-300">
+							<XCircle className="h-5 w-5 text-[#9B3327]" />
+							<h3 className="text-base font-black text-[#9B3327]">
 								תארים שטרם התקבלת אליהם ({grouped.not_accepted.length})
 							</h3>
 						</div>
-						<span className="text-xs text-slate-400">
+						<span className="text-xs text-[#66635C]">
 							לחץ על ״ניתוח פער״ כדי לראות בדיוק מה חסר ואיך לשפר
 						</span>
 					</div>
@@ -188,8 +188,8 @@ export default function PersonalAdmissionReport({
 			{grouped.no_threshold.length > 0 && (
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<HelpCircle className="h-5 w-5 text-purple-400" />
-						<h3 className="text-base font-black text-purple-300">
+						<HelpCircle className="h-5 w-5 text-[#453D78]" />
+						<h3 className="text-base font-black text-[#453D78]">
 							תארים עם קבלה נפרדת ({grouped.no_threshold.length})
 						</h3>
 					</div>
@@ -217,20 +217,20 @@ function ProgramReportCard({
 	const isNoThreshold = item.status === 'no_threshold';
 
 	const borderStyle = isAccepted
-		? 'border-emerald-500/40 bg-emerald-950/10'
+		? 'border-[#C6DFCE] bg-[#FBFDFB]'
 		: isBorderline
-		? 'border-amber-500/40 bg-amber-950/10'
+		? 'border-[#ECDAB6] bg-[#FDFCF8]'
 		: isNoThreshold
-		? 'border-purple-500/40 bg-purple-950/10'
-		: 'border-rose-500/30 bg-rose-950/10';
+		? 'border-[#D2CEEB] bg-[#FAF9FD]'
+		: 'border-[#F1CAC1] bg-[#FDFBFB]';
 
 	const badgeStyle = isAccepted
-		? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30'
+		? 'text-[#205739] bg-[#EBF4EE] border-[#C6DFCE]'
 		: isBorderline
-		? 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+		? 'text-[#825B15] bg-[#FDF6E8] border-[#ECDAB6]'
 		: isNoThreshold
-		? 'text-purple-400 bg-purple-500/10 border-purple-500/30'
-		: 'text-rose-400 bg-rose-500/10 border-rose-500/30';
+		? 'text-[#453D78] bg-[#F2F1F8] border-[#D2CEEB]'
+		: 'text-[#9B3327] bg-[#FDF1EE] border-[#F1CAC1]';
 
 	const badgeText = isAccepted
 		? `התקבלת (+${item.gap})`
@@ -241,16 +241,16 @@ function ProgramReportCard({
 		: `פער: ${Math.abs(item.gap)} נק׳`;
 
 	return (
-		<div className={`p-5 rounded-2xl border ${borderStyle} shadow-lg space-y-4 flex flex-col justify-between`}>
+		<div className={`p-5 rounded-2xl border ${borderStyle} shadow-xs space-y-4 flex flex-col justify-between`}>
 			<div className="space-y-2.5">
 				<div className="flex items-start justify-between gap-2">
 					<div className="flex items-center gap-3">
 						<UniversityLogo institution={item.target.institutionId} size="md" />
 						<div>
-							<h4 className="text-base font-bold text-white leading-snug">
+							<h4 className="text-base font-bold text-[#222222] leading-snug">
 								{item.target.program.fieldOfStudy}
 							</h4>
-							<p className="text-xs text-cyan-400 font-semibold mt-0.5">
+							<p className="text-xs text-[#66635C] font-semibold mt-0.5">
 								{item.target.institutionName} · {item.target.program.degreeLevel}
 							</p>
 						</div>
@@ -262,21 +262,21 @@ function ProgramReportCard({
 
 				{/* Score Comparison Box */}
 				{!isNoThreshold && (
-					<div className="grid grid-cols-2 gap-2 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 text-center text-xs">
+					<div className="grid grid-cols-2 gap-2 bg-[#FAF8F5] p-3 rounded-xl border border-[#E5DFD4] text-center text-xs">
 						<div>
-							<span className="text-[10px] text-slate-400 block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>
-							<span className="text-base font-black text-white">{item.userSekem}</span>
+							<span className="text-[10px] text-[#66635C] block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>
+							<span className="text-base font-black text-[#222222]">{item.userSekem}</span>
 						</div>
 						<div>
-							<span className="text-[10px] text-slate-400 block font-medium">סף קבלה נדרש</span>
-							<span className="text-base font-black text-amber-300">{item.threshold}</span>
+							<span className="text-[10px] text-[#66635C] block font-medium">סף קבלה נדרש</span>
+							<span className="text-base font-black text-[#825B15]">{item.threshold}</span>
 						</div>
 					</div>
 				)}
 
 				{/* Prerequisite alerts preview */}
 				{item.missingPrerequisites.length > 0 && (
-					<div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 font-medium flex items-center gap-1.5">
+					<div className="p-2.5 rounded-xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium flex items-center gap-1.5">
 						<AlertCircle className="h-3.5 w-3.5 shrink-0" />
 						<span>חסרים {item.missingPrerequisites.length} תנאי סף ריאליים (מתמטיקה/פיזיקה)</span>
 					</div>
@@ -297,14 +297,14 @@ function ProgramReportCard({
 							}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black shadow-md shadow-emerald-500/10"
+							className="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-black shadow-xs cursor-pointer"
 						>
 							<span>הרשמה לאוניברסיטה</span>
 							<ExternalLink className="h-3.5 w-3.5" />
 						</a>
 						<button
 							onClick={() => onViewGap(item.target.program.id)}
-							className="py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 shrink-0"
+							className="py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] border border-[#E5DFD4] shrink-0 cursor-pointer"
 							title="צפה בפרטי הקבלה המלאים"
 						>
 							<span>פרטים</span>
@@ -313,10 +313,10 @@ function ProgramReportCard({
 				) : (
 					<button
 						onClick={() => onViewGap(item.target.program.id)}
-						className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+						className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer ${
 							!isNoThreshold
-								? 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-md shadow-blue-500/10'
-								: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+								? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs'
+								: 'bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] border border-[#E5DFD4]'
 						}`}
 					>
 						<Sliders className="h-3.5 w-3.5" />

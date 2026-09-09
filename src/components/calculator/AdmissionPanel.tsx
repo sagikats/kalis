@@ -66,7 +66,6 @@ export default function AdmissionPanel({
   userGeneralSekem,
   userEngineeringSekem,
   userManagementSekem,
-  bagrutAverage,
 }: AdmissionPanelProps) {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -89,7 +88,6 @@ export default function AdmissionPanel({
     return institution.programs.map((prog): ProgramResult => {
       const threshold = parseThreshold(prog.admissionThreshold);
 
-      // Select matching Sekem per discipline (especially for TAU with distinct General, Engineering, and Management channels)
       let programSekem = defaultEffectiveSekem;
       if (institutionId === 'tau') {
         const title = prog.fieldOfStudy;
@@ -142,38 +140,38 @@ export default function AdmissionPanel({
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-[#222222]/30 backdrop-blur-sm z-40 transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
       />
 
-      {/* Slide-over Panel — slides from left (RTL layout) */}
+      {/* Slide-over Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[460px] bg-slate-950 border-l border-slate-800 z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[460px] bg-[#FAF8F5] border-l border-[#E5DFD4] z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         dir="rtl"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-950 sticky top-0 z-10">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[#E5DFD4] bg-white sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-              <GraduationCap className="h-5 w-5 text-cyan-400" />
+            <div className="p-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
+              <GraduationCap className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white">{institutionName}</h2>
-              <p className="text-[11px] text-slate-400">
+              <h2 className="text-sm font-bold text-[#222222]">{institutionName}</h2>
+              <p className="text-[11px] text-[#66635C]">
                 {isTechnion ? 'סכם טכניוני' : 'סכם כללי'}:{' '}
-                <span className="text-cyan-300 font-bold">{userGeneralSekem}</span>
+                <span className="text-[#222222] font-bold">{userGeneralSekem}</span>
                 {!isTechnion && userEngineeringSekem && userEngineeringSekem !== userGeneralSekem && (
                   <span className="mr-2">
-                    · הנדסה: <span className="text-indigo-300 font-bold">{userEngineeringSekem}</span>
+                    · הנדסה: <span className="text-[#222222] font-bold">{userEngineeringSekem}</span>
                   </span>
                 )}
                 {userManagementSekem && (
                   <span className="mr-2">
-                    · ניהול: <span className="text-amber-300 font-bold">{userManagementSekem}</span>
+                    · ניהול: <span className="text-[#222222] font-bold">{userManagementSekem}</span>
                   </span>
                 )}
               </p>
@@ -181,7 +179,7 @@ export default function AdmissionPanel({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-2 rounded-xl text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5] transition"
             aria-label="סגור"
           >
             <X className="h-5 w-5" />
@@ -189,28 +187,28 @@ export default function AdmissionPanel({
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-4 px-5 py-2.5 bg-slate-900/50 border-b border-slate-800/60 flex-wrap">
-          <div className="flex items-center gap-1.5 text-emerald-400">
+        <div className="flex items-center gap-4 px-5 py-2.5 bg-[#F5F2EB] border-b border-[#E5DFD4] flex-wrap">
+          <div className="flex items-center gap-1.5 text-[#205739]">
             <CheckCircle2 className="h-3.5 w-3.5" />
             <span className="text-xs font-bold">{acceptedCount} התקבלת</span>
           </div>
-          <div className="flex items-center gap-1.5 text-amber-400">
+          <div className="flex items-center gap-1.5 text-[#825B15]">
             <AlertCircle className="h-3.5 w-3.5" />
             <span className="text-xs font-bold">{borderlineCount} על הגבול</span>
           </div>
           {auditionCount > 0 && (
-            <div className="flex items-center gap-1.5 text-purple-400">
+            <div className="flex items-center gap-1.5 text-[#453D78]">
               <GraduationCap className="h-3.5 w-3.5" />
               <span className="text-xs font-bold">{auditionCount} קבלה נפרדת</span>
             </div>
           )}
-          <span className="text-[11px] text-slate-600 mr-auto">{sorted.length} חוגים סה&quot;כ</span>
+          <span className="text-[11px] text-[#8A847C] mr-auto">{sorted.length} חוגים סה&quot;כ</span>
         </div>
 
         {/* Program List */}
         <div className="flex-1 overflow-y-auto py-2 px-3 space-y-1.5">
           {sorted.length === 0 && (
-            <p className="text-center text-slate-500 text-sm py-12">לא נמצאו נתוני קבלה</p>
+            <p className="text-center text-[#8A847C] text-sm py-12">לא נמצאו נתוני קבלה</p>
           )}
 
           {sorted.map((item) => {
@@ -218,43 +216,43 @@ export default function AdmissionPanel({
 
             const cfg = {
               accepted: {
-                icon: <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />,
-                rowCls: 'border-emerald-500/20 bg-emerald-500/5',
-                nameCls: 'text-slate-200',
-                barCls: 'bg-emerald-500',
+                icon: <CheckCircle2 className="h-4 w-4 text-[#205739] shrink-0" />,
+                rowCls: 'border-[#C6DFCE] bg-[#EBF4EE]/80',
+                nameCls: 'text-[#222222]',
+                barCls: 'bg-[#205739]',
                 gapLabel: gap > 0 ? `+${gap}` : '✓',
-                gapCls: 'text-emerald-400',
+                gapCls: 'text-[#205739]',
               },
               borderline: {
-                icon: <AlertCircle className="h-4 w-4 text-amber-400 shrink-0" />,
-                rowCls: 'border-amber-500/20 bg-amber-500/5',
-                nameCls: 'text-slate-200',
-                barCls: 'bg-amber-500',
+                icon: <AlertCircle className="h-4 w-4 text-[#825B15] shrink-0" />,
+                rowCls: 'border-[#ECDAB6] bg-[#FDF6E8]/80',
+                nameCls: 'text-[#222222]',
+                barCls: 'bg-[#825B15]',
                 gapLabel: String(gap),
-                gapCls: 'text-amber-400',
+                gapCls: 'text-[#825B15]',
               },
               not_accepted: {
-                icon: <XCircle className="h-4 w-4 text-rose-400/50 shrink-0" />,
-                rowCls: 'border-slate-800/50 bg-transparent',
-                nameCls: 'text-slate-500',
-                barCls: 'bg-rose-500/30',
+                icon: <XCircle className="h-4 w-4 text-[#9B3327]/60 shrink-0" />,
+                rowCls: 'border-[#E5DFD4] bg-white',
+                nameCls: 'text-[#66635C]',
+                barCls: 'bg-[#9B3327]/30',
                 gapLabel: String(gap),
-                gapCls: 'text-rose-400/60',
+                gapCls: 'text-[#9B3327]',
               },
               no_threshold: {
-                icon: <GraduationCap className="h-4 w-4 text-purple-400 shrink-0" />,
-                rowCls: 'border-purple-500/20 bg-purple-500/5',
-                nameCls: 'text-slate-300',
-                barCls: 'bg-purple-500/50',
+                icon: <GraduationCap className="h-4 w-4 text-[#453D78] shrink-0" />,
+                rowCls: 'border-[#D2CEEB] bg-[#F2F1F8]/80',
+                nameCls: 'text-[#222222]',
+                barCls: 'bg-[#453D78]',
                 gapLabel: 'אודישן',
-                gapCls: 'text-purple-400',
+                gapCls: 'text-[#453D78]',
               },
             }[status];
 
             return (
               <div
                 key={program.id}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 border ${cfg.rowCls} transition`}
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 border ${cfg.rowCls} transition shadow-sm`}
               >
                 {cfg.icon}
                 <div className="flex-1 min-w-0">
@@ -262,12 +260,12 @@ export default function AdmissionPanel({
                     <span className={`text-xs font-bold truncate ${cfg.nameCls}`}>
                       {program.fieldOfStudy}
                     </span>
-                    <span className={`text-xs font-black shrink-0 tabular-nums ${cfg.gapCls}`}>
+                    <span className={`text-xs font-bold shrink-0 tabular-nums ${cfg.gapCls}`}>
                       {cfg.gapLabel}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mt-1.5">
-                    <div className="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="flex-1 h-1 bg-[#E5DFD4] rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${cfg.barCls}`}
                         style={{ width: getBarWidth(threshold) }}
@@ -275,9 +273,9 @@ export default function AdmissionPanel({
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
                       {threshold !== null && (
-                        <span className="text-[10px] text-slate-600">סף {threshold}</span>
+                        <span className="text-[10px] text-[#66635C]">סף {threshold}</span>
                       )}
-                      <span className="text-[10px] text-slate-700 px-1.5 py-0.5 bg-slate-800/50 rounded-full">
+                      <span className="text-[10px] text-[#8A847C] px-1.5 py-0.5 bg-white border border-[#E5DFD4] rounded-full">
                         {program.degreeLevel}
                       </span>
                     </div>
@@ -289,8 +287,8 @@ export default function AdmissionPanel({
         </div>
 
         {/* Footer disclaimer */}
-        <div className="px-5 py-3 border-t border-slate-800 bg-slate-950">
-          <p className="text-[10px] text-slate-700 text-center">
+        <div className="px-5 py-3 border-t border-[#E5DFD4] bg-white">
+          <p className="text-[10px] text-[#8A847C] text-center">
             הנתונים לצורך הערכה בלבד · יש לבדוק באתר האוניברסיטה
           </p>
         </div>

@@ -209,17 +209,15 @@ export default function RecommendedTracksView({
 	return (
 		<div className="space-y-8 dir-rtl text-right">
 			{/* Top Header Card */}
-			<div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden space-y-6">
-				<div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden space-y-6">
 				{/* Top Meta & Action Toolbar Row */}
-				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
 					<div className="flex items-center gap-2 flex-wrap">
-						<span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black rounded-lg flex items-center gap-1.5">
-							<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+						<span className="px-3 py-1 bg-[#FAF8F5] text-[#1E597B] border border-[#E5DFD4] text-xs font-black rounded-lg flex items-center gap-1.5">
+							<Sparkles className="h-3.5 w-3.5 text-[#1E597B]" />
 							<span>שלב 4: תכנון מסלולי פעולה ובניית מסלול אישי</span>
 						</span>
-						<span className="px-3 py-1 bg-slate-950/80 border border-slate-800 text-xs font-bold text-slate-300 rounded-lg flex items-center gap-2">
+						<span className="px-3 py-1 bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2">
 							<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
 							<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
 						</span>
@@ -227,17 +225,17 @@ export default function RecommendedTracksView({
 
 					<div className="flex items-center gap-2.5 flex-wrap">
 						{allAnalyses && allAnalyses.length > 1 && (
-							<div className="flex items-center gap-2 bg-slate-950/80 border border-slate-700 px-3 py-1.5 rounded-xl">
-								<span className="text-xs font-bold text-slate-400">החלף תואר:</span>
+							<div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#E5DFD4] px-3 py-1.5 rounded-xl">
+								<span className="text-xs font-bold text-[#66635C]">החלף תואר:</span>
 								<select
 									value={analysis.target.program.id}
 									onChange={(e) => onSelectProgram?.(e.target.value)}
-									className="bg-transparent text-xs font-bold text-cyan-300 focus:outline-none cursor-pointer"
+									className="bg-transparent text-xs font-bold text-[#222222] focus:outline-none cursor-pointer"
 								>
 									{allAnalyses.map((a) => {
 										const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
 										return (
-											<option key={a.target.program.id} value={a.target.program.id} className="bg-slate-900 text-white">
+											<option key={a.target.program.id} value={a.target.program.id} className="bg-white text-[#222222]">
 												{icon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
 											</option>
 										);
@@ -248,22 +246,22 @@ export default function RecommendedTracksView({
 
 						<button
 							onClick={onEditPreferences}
-							className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
+							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
 						>
-							<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+							<Sparkles className="h-3.5 w-3.5 text-[#1E597B]" />
 							<span>ערוך שאלון העדפות</span>
 						</button>
 						<button
 							onClick={handlePrint}
-							className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
+							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
 							title="הדפס או שמור כ-PDF"
 						>
-							<Printer className="h-3.5 w-3.5 text-slate-400" />
+							<Printer className="h-3.5 w-3.5 text-[#8A847C]" />
 							<span>הדפס</span>
 						</button>
 						<button
 							onClick={onBackToReport}
-							className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700"
+							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
 						>
 							<ArrowRight className="h-3.5 w-3.5" />
 							<span>חזור לדוח הקבלה</span>
@@ -274,33 +272,33 @@ export default function RecommendedTracksView({
 				{/* Main Hero Content & Gap Summary Widget */}
 				<div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
 					<div className="flex-1 min-w-0 space-y-2">
-						<h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-snug">
+						<h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#222222] tracking-tight leading-snug">
 							תוכנית פעולה לקבלה לתואר המבוקש
 						</h2>
-						<p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+						<p className="text-xs sm:text-sm text-[#66635C] max-w-3xl leading-relaxed">
 							בחר באחד מ-{tracks.length} המסלולים הריאליים המותאמים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.
 						</p>
 					</div>
 
 					{/* Target & Gap Metrics Box */}
-					<div className="flex items-center gap-4 bg-slate-950/80 border border-slate-800/90 rounded-2xl p-4 shrink-0 shadow-lg">
+					<div className="flex items-center gap-4 bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-4 shrink-0 shadow-xs">
 						<div className="text-center px-2 min-w-[75px]">
-							<span className="text-[11px] font-bold text-slate-400 block">סכם קיים</span>
-							<span className="text-xl font-black text-white dir-ltr">{analysis.userSekem}</span>
-							<span className="text-[10px] text-slate-500 block truncate max-w-[110px]">{analysis.relevantSekemLabel}</span>
+							<span className="text-[11px] font-bold text-[#66635C] block">סכם קיים</span>
+							<span className="text-xl font-black text-[#222222] dir-ltr">{analysis.userSekem}</span>
+							<span className="text-[10px] text-[#8A847C] block truncate max-w-[110px]">{analysis.relevantSekemLabel}</span>
 						</div>
-						<div className="h-10 w-px bg-slate-800" />
+						<div className="h-10 w-px bg-[#E5DFD4]" />
 						<div className="text-center px-2 min-w-[75px]">
-							<span className="text-[11px] font-bold text-slate-400 block">סף יעד</span>
-							<span className="text-xl font-black text-amber-300 dir-ltr">{analysis.threshold || '—'}</span>
-							<span className="text-[10px] text-slate-500 block truncate max-w-[110px]">סף קבלה רשמי</span>
+							<span className="text-[11px] font-bold text-[#66635C] block">סף יעד</span>
+							<span className="text-xl font-black text-[#825B15] dir-ltr">{analysis.threshold || '—'}</span>
+							<span className="text-[10px] text-[#8A847C] block truncate max-w-[110px]">סף קבלה רשמי</span>
 						</div>
 						{analysis.threshold && (
 							<>
-								<div className="h-10 w-px bg-slate-800" />
-								<div className="text-center px-3 py-1 bg-amber-500/10 rounded-xl border border-amber-500/20">
-									<span className="text-[10px] font-black text-amber-400 block uppercase tracking-wider">פער לסגירה</span>
-									<span className="text-lg font-black text-amber-300 dir-ltr">
+								<div className="h-10 w-px bg-[#E5DFD4]" />
+								<div className="text-center px-3 py-1 bg-[#FDF6E8] rounded-xl border border-[#ECDAB6]">
+									<span className="text-[10px] font-black text-[#825B15] block uppercase tracking-wider">פער לסגירה</span>
+									<span className="text-lg font-black text-[#825B15] dir-ltr">
 										{analysis.gap > 0 ? `+${analysis.gap}` : analysis.gap}
 									</span>
 								</div>
@@ -311,8 +309,8 @@ export default function RecommendedTracksView({
 
 				{/* Prerequisites Warning if applicable */}
 				{analysis.missingPrerequisites && analysis.missingPrerequisites.length > 0 && (
-					<div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
-						<AlertTriangle className="h-4 w-4 shrink-0 text-amber-400" />
+					<div className="p-3 rounded-2xl bg-[#FDF6E8] border border-[#ECDAB6] text-xs text-[#825B15] flex items-center gap-2">
+						<AlertTriangle className="h-4 w-4 shrink-0 text-[#825B15]" />
 						<span>
 							<strong>תנאי סף נדרשים לתואר זה:</strong> {analysis.missingPrerequisites.map((p) => p.name).join(' | ')}. מומלץ לשלב את השלמתם במסלול העבודה שלך.
 						</span>
@@ -320,10 +318,10 @@ export default function RecommendedTracksView({
 				)}
 
 				{/* Realism Badge Guarantee */}
-				<div className="pt-4 border-t border-slate-800/80 flex items-center gap-3 text-xs text-slate-300 bg-slate-950/40 rounded-2xl p-3 border border-slate-800">
-					<ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
+				<div className="pt-4 border-t border-[#EAE5DA] flex items-center gap-3 text-xs text-[#66635C] bg-[#FAF8F5] rounded-2xl p-3 border border-[#E5DFD4]">
+					<ShieldCheck className="h-5 w-5 text-[#205739] shrink-0" />
 					<div>
-						<strong className="text-white font-black">אלגוריתם מבוסס מודל ריאליות קפדני:</strong>{' '}
+						<strong className="text-[#222222] font-black">אלגוריתם מבוסס מודל ריאליות קפדני:</strong>{' '}
 						היעדים מוגבלים לחסמי שיפור סטטיסטיים מוכחים (לפי נתוני מרכז הבחינות NITE). ללא דרישות לציון פסיכומטרי 740+ מנקודת פתיחה לא ריאלית, ותוך שילוב שיפור בגרויות נקודתי היכן שנדרש.
 					</div>
 				</div>
@@ -332,39 +330,39 @@ export default function RecommendedTracksView({
 			{/* ========================================================================= */}
 			{/* VIEW SWITCHER TABS: RECOMMENDED TRACKS vs PERSONAL BUILDER */}
 			{/* ========================================================================= */}
-			<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-slate-950/80 p-2 rounded-2xl border border-slate-800 shadow-xl">
-				<div className="flex items-center gap-2 p-1 bg-slate-900/90 rounded-xl border border-slate-800">
+			<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4] shadow-xs">
+				<div className="flex items-center gap-2 p-1 bg-white rounded-xl border border-[#E5DFD4]">
 					<button
 						type="button"
 						onClick={() => setActiveTab('recommended')}
-						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all ${
+						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
 							activeTab === 'recommended'
-								? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20'
-								: 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+								? 'bg-[#3C3C3C] text-white shadow-xs'
+								: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
 						}`}
 					>
-						<Sparkles className="h-4 w-4 text-cyan-300" />
+						<Sparkles className="h-4 w-4 text-inherit" />
 						<span>ריכוז המסלולים המומלץ ({tracks.length})</span>
 					</button>
 
 					<button
 						type="button"
 						onClick={() => setActiveTab('custom_builder')}
-						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all ${
+						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
 							activeTab === 'custom_builder'
-								? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/20'
-								: 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+								? 'bg-[#3C3C3C] text-white shadow-xs'
+								: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
 						}`}
 					>
-						<Sliders className="h-4 w-4 text-indigo-300" />
+						<Sliders className="h-4 w-4 text-inherit" />
 						<span>מסלול בנייה אישי 🎛️ (What-If Lab)</span>
 						{customScenarioApplied && (
-							<span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+							<span className="w-2 h-2 rounded-full bg-[#205739]" />
 						)}
 					</button>
 				</div>
 
-				<div className="text-xs text-slate-400 px-3 flex items-center gap-2">
+				<div className="text-xs text-[#66635C] px-3 flex items-center gap-2">
 					{activeTab === 'recommended' ? (
 						<span>💡 3 מסלולים מותאמים אישית לבחירתך</span>
 					) : (
@@ -375,14 +373,14 @@ export default function RecommendedTracksView({
 
 			{/* Save Track Notification Banner */}
 			{saveNotification && (
-				<div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-200 text-xs font-bold flex items-center justify-between gap-3 shadow-lg shadow-emerald-500/10">
+				<div className="p-4 rounded-2xl bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] text-xs font-bold flex items-center justify-between gap-3 shadow-xs">
 					<div className="flex items-center gap-2.5">
-						<CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+						<CheckCircle2 className="h-5 w-5 text-[#205739] shrink-0" />
 						<span>{saveNotification}</span>
 					</div>
 					<button
 						onClick={() => setSaveNotification(null)}
-						className="text-slate-400 hover:text-white p-1"
+						className="text-[#66635C] hover:text-[#222222] p-1 cursor-pointer"
 					>
 						✕
 					</button>
@@ -410,19 +408,25 @@ export default function RecommendedTracksView({
 							onClick={() => setSelectedTrackId(track.id)}
 							className={`cursor-pointer rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden relative ${
 								isSelected
-									? 'bg-slate-900 border-cyan-500 shadow-2xl shadow-cyan-500/10 ring-2 ring-cyan-500/30'
-									: 'bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900/90'
+									? 'bg-white border-2 border-[#222222] shadow-xs'
+									: 'bg-white border border-[#E5DFD4] hover:border-[#D5CFC2] hover:bg-[#FAF8F5] shadow-2xs'
 							}`}
 						>
 							{/* Track Top Banner */}
 							<div className="p-6 pb-4 space-y-4">
 								<div className="flex items-center justify-between gap-2">
 									<span
-										className={`px-3 py-1 text-[11px] font-black rounded-lg text-white bg-gradient-to-r ${track.badgeColor}`}
+										className={`px-3 py-1 text-[11px] font-black rounded-lg ${
+											isFast
+												? 'bg-[#FDF6E8] text-[#825B15] border border-[#ECDAB6]'
+												: isBalanced
+												? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE]'
+												: 'bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]'
+										}`}
 									>
 										{track.badge}
 									</span>
-									<div className="flex items-center gap-1.5 text-xs font-bold text-slate-400">
+									<div className="flex items-center gap-1.5 text-xs font-bold text-[#66635C]">
 										<Clock className="h-3.5 w-3.5" />
 										<span>{track.estimatedWeeks} שבועות</span>
 									</div>
@@ -432,50 +436,50 @@ export default function RecommendedTracksView({
 									<div
 										className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${
 											isFast
-												? 'bg-amber-500/10 border border-amber-500/20 text-amber-400'
+												? 'bg-[#FDF6E8] border border-[#ECDAB6] text-[#825B15]'
 												: isBalanced
-												? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
-												: 'bg-blue-500/10 border border-blue-500/20 text-blue-400'
+												? 'bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739]'
+												: 'bg-[#EFF6FA] border border-[#C5DFED] text-[#1E597B]'
 										}`}
 									>
 										<TrackIcon className="h-5 w-5" />
 									</div>
 									<div>
-										<h3 className="text-lg font-black text-white leading-snug">{track.title}</h3>
-										<span className="text-[11px] text-cyan-400 font-bold block mt-0.5">
+										<h3 className="text-lg font-black text-[#222222] leading-snug">{track.title}</h3>
+										<span className="text-[11px] text-[#66635C] font-bold block mt-0.5">
 											{track.weeklyHours} שעות למידה שבועיות
 										</span>
 									</div>
 								</div>
 
-								<p className="text-xs text-slate-300 leading-relaxed min-h-[48px]">
+								<p className="text-xs text-[#66635C] leading-relaxed min-h-[48px]">
 									{track.strategyDescription}
 								</p>
 
 								{/* Metric Target Boxes */}
-								<div className="space-y-2 pt-2 border-t border-slate-800">
+								<div className="space-y-2 pt-2 border-t border-[#EAE5DA]">
 									{/* Target Sekem if exists */}
 									{track.targetSekem !== undefined && (
 										<div
-											className={`border rounded-2xl p-3 flex items-center justify-between shadow-sm ${
+											className={`border rounded-2xl p-3 flex items-center justify-between shadow-2xs ${
 												analysis.threshold && track.targetSekem < analysis.threshold
-													? 'bg-amber-950/40 border-amber-500/30'
-													: 'bg-emerald-950/40 border-emerald-500/30'
+													? 'bg-[#FDF6E8] border-[#ECDAB6]'
+													: 'bg-[#EBF4EE] border-[#C6DFCE]'
 											}`}
 										>
 											<div className="flex items-center gap-2">
 												<Sparkles
 													className={`h-4 w-4 ${
 														analysis.threshold && track.targetSekem < analysis.threshold
-															? 'text-amber-400'
-															: 'text-emerald-400'
+															? 'text-[#825B15]'
+															: 'text-[#205739]'
 													}`}
 												/>
 												<span
 													className={`text-xs font-bold ${
 														analysis.threshold && track.targetSekem < analysis.threshold
-															? 'text-amber-300'
-															: 'text-emerald-300'
+															? 'text-[#825B15]'
+															: 'text-[#205739]'
 													}`}
 												>
 													{analysis.threshold && track.targetSekem < analysis.threshold
@@ -487,8 +491,8 @@ export default function RecommendedTracksView({
 												<span
 													className={`text-sm font-black ${
 														analysis.threshold && track.targetSekem < analysis.threshold
-															? 'text-amber-400'
-															: 'text-emerald-400'
+															? 'text-[#825B15]'
+															: 'text-[#205739]'
 													}`}
 												>
 													{track.targetSekem.toFixed(isTechnion ? 2 : 1)}
@@ -497,8 +501,8 @@ export default function RecommendedTracksView({
 													<span
 														className={`text-[10px] ml-1.5 font-medium ${
 															analysis.threshold && track.targetSekem < analysis.threshold
-																? 'text-amber-400/80'
-																: 'text-emerald-400/80'
+																? 'text-[#825B15]/80'
+																: 'text-[#205739]/80'
 														}`}
 													>
 														(סף: {analysis.threshold})
@@ -510,30 +514,30 @@ export default function RecommendedTracksView({
 
 									{/* Psychometric target if exists */}
 									{typeof track.targetPsychometric === 'number' && track.targetPsychometric > 0 && (
-										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+										<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
 											<div className="flex items-center gap-2">
-												<Brain className="h-4 w-4 text-cyan-400" />
-												<span className="text-xs font-bold text-slate-300">יעד פסיכומטרי:</span>
+												<Brain className="h-4 w-4 text-[#222222]" />
+												<span className="text-xs font-bold text-[#66635C]">יעד פסיכומטרי:</span>
 											</div>
 											<div className="text-left dir-ltr">
 												{track.targetPsychometric > (track.currentPsychometric || 0) ? (
 													<>
 														{(track.currentPsychometric || 0) > 0 && (
-															<span className="text-xs text-slate-500 line-through mr-2">
+															<span className="text-xs text-[#8A847C] line-through mr-2">
 																{track.currentPsychometric}
 															</span>
 														)}
-														<span className="text-sm font-black text-cyan-400">
+														<span className="text-sm font-black text-[#222222]">
 															{track.targetPsychometric}
 														</span>
 														{(track.currentPsychometric || 0) > 0 && (
-															<span className="text-[10px] text-emerald-400 ml-1 font-bold">
+															<span className="text-[10px] text-[#205739] ml-1 font-bold">
 																(+{track.targetPsychometric - (track.currentPsychometric || 0)})
 															</span>
 														)}
 													</>
 												) : (
-													<span className="text-xs text-slate-400 font-bold">
+													<span className="text-xs text-[#66635C] font-bold">
 														{track.targetPsychometric} (שומר על הקיים)
 													</span>
 												)}
@@ -552,19 +556,19 @@ export default function RecommendedTracksView({
 
 										if (hasBagrutIncrease) {
 											return (
-												<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+												<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
 													<div className="flex items-center gap-2">
-														<BookOpen className="h-4 w-4 text-indigo-400" />
-														<span className="text-xs font-bold text-slate-300">ממוצע בגרות:</span>
+														<BookOpen className="h-4 w-4 text-[#222222]" />
+														<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
 													</div>
 													<div className="text-left dir-ltr">
-														<span className="text-xs text-slate-500 line-through mr-2">
+														<span className="text-xs text-[#8A847C] line-through mr-2">
 															{track.currentBagrutAverage?.toFixed(1)}
 														</span>
-														<span className="text-sm font-black text-indigo-400">
+														<span className="text-sm font-black text-[#222222]">
 															{track.targetBagrutAverage?.toFixed(1)}
 														</span>
-														<span className="text-[10px] text-emerald-400 ml-1 font-bold">
+														<span className="text-[10px] text-[#205739] ml-1 font-bold">
 															(+{((track.targetBagrutAverage || 0) - (track.currentBagrutAverage || 0)).toFixed(1)})
 														</span>
 													</div>
@@ -574,16 +578,16 @@ export default function RecommendedTracksView({
 
 										if (hasSubjectImprovements) {
 											return (
-												<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+												<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
 													<div className="flex items-center gap-2">
-														<BookOpen className="h-4 w-4 text-indigo-400" />
-														<span className="text-xs font-bold text-slate-300">ממוצע בגרות:</span>
+														<BookOpen className="h-4 w-4 text-[#222222]" />
+														<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
 													</div>
 													<div className="text-left dir-ltr">
-														<span className="text-sm font-black text-indigo-400">
+														<span className="text-sm font-black text-[#222222]">
 															{(track.targetBagrutAverage || track.currentBagrutAverage)?.toFixed(1)}
 														</span>
-														<span className="text-[10px] text-slate-400 ml-1 font-bold">
+														<span className="text-[10px] text-[#66635C] ml-1 font-bold">
 															(משתפר עם המקצועות)
 														</span>
 													</div>
@@ -592,13 +596,13 @@ export default function RecommendedTracksView({
 										}
 
 										return (
-											<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+											<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
 												<div className="flex items-center gap-2">
-													<BookOpen className="h-4 w-4 text-slate-500" />
-													<span className="text-xs font-bold text-slate-400">ממוצע בגרות:</span>
+													<BookOpen className="h-4 w-4 text-[#8A847C]" />
+													<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
 												</div>
 												<div className="text-left dir-ltr">
-													<span className="text-xs font-bold text-slate-400">
+													<span className="text-xs font-bold text-[#66635C]">
 														{track.currentBagrutAverage?.toFixed(1)} (ללא צורך בשיפור)
 													</span>
 												</div>
@@ -622,16 +626,16 @@ export default function RecommendedTracksView({
 										if (!needsPsychImprovement && !hasSubjectImprovements) return null;
 
 										return (
-											<div className="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3 space-y-2">
+											<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 space-y-2">
 												<div className="flex items-center justify-between">
-													<span className="text-[11px] font-bold text-slate-400 block">
+													<span className="text-[11px] font-bold text-[#66635C] block">
 														{needsPsychImprovement && hasSubjectImprovements
 															? 'מקצועות ומרכיבים מומלצים לשיפור:'
 															: needsPsychImprovement
 															? 'מרכיב מומלץ לשיפור:'
 															: 'מקצועות מומלצים לשיפור:'}
 													</span>
-													<span className="text-[10px] text-cyan-400/90 font-bold">
+													<span className="text-[10px] text-[#1E597B] font-bold">
 														{[
 															needsPsychImprovement ? 'פסיכומטרי' : null,
 															hasSubjectImprovements ? `${track.recommendedSubjectImprovements.length} בגרויות` : null
@@ -644,30 +648,30 @@ export default function RecommendedTracksView({
 													{needsPsychImprovement && (() => {
 														const sInfo = getSessionInfo('spring_psych');
 														return (
-															<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/25 flex-wrap">
+															<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
 																<div className="flex items-center gap-1.5 truncate">
-																	<Brain className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
-																	<span className="text-cyan-200 font-bold truncate">
+																	<Brain className="h-3.5 w-3.5 text-[#222222] shrink-0" />
+																	<span className="text-[#222222] font-bold truncate">
 																		בחינה פסיכומטרית:
 																	</span>
-																	<span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${sInfo.badgeClass} shrink-0`}>
+																	<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} shrink-0 shadow-2xs`}>
 																		{sInfo.iconEmoji} {sInfo.badgeLabel}
 																	</span>
 																</div>
-																<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
+																<span className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
 																	{(track.currentPsychometric || 0) > 0 ? (
 																		<>
-																			<span className="text-slate-400 font-normal">{track.currentPsychometric}</span>
-																			<span className="text-slate-500 font-normal">➔</span>
-																			<span className="text-white font-black">{track.targetPsychometric}</span>
-																			<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
+																			<span className="text-[#8A847C] font-normal">{track.currentPsychometric}</span>
+																			<span className="text-[#8A847C] font-normal">➔</span>
+																			<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
+																			<span className="text-[10px] text-[#205739] font-bold ml-0.5">
 																				(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
 																			</span>
 																		</>
 																	) : (
 																		<>
-																			<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
-																			<span className="text-white font-black">{track.targetPsychometric}</span>
+																			<span className="text-[10px] text-[#8A847C] font-normal">יעד:</span>
+																			<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
 																		</>
 																	)}
 																</span>
@@ -680,29 +684,29 @@ export default function RecommendedTracksView({
 														const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
 														const sInfo = getSessionInfo(sSession);
 														return (
-															<div key={idx} className="text-xs flex items-center justify-between gap-2 px-2 py-1.5 rounded-xl bg-slate-900/60 border border-slate-800/80 flex-wrap">
+															<div key={idx} className="text-xs flex items-center justify-between gap-2 px-2 py-1.5 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
 																<div className="flex items-center gap-1.5 truncate">
-																	<span className="text-slate-200 font-medium truncate">
+																	<span className="text-[#222222] font-medium truncate">
 																		{s.subjectName} ({s.targetUnits} יח״ל):
 																	</span>
-																	<span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${sInfo.badgeClass} shrink-0`}>
+																	<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} shrink-0 shadow-2xs`}>
 																		{sInfo.iconEmoji} {sInfo.badgeLabel}
 																	</span>
 																</div>
-																<span className="text-cyan-300 font-bold shrink-0 dir-ltr flex items-center gap-1">
+																<span className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
 																	{s.currentGrade > 0 ? (
 																		<>
-																			<span className="text-slate-400 font-normal">{s.currentGrade}</span>
-																			<span className="text-slate-500 font-normal">➔</span>
-																			<span className="text-white font-black">{s.targetGrade}</span>
-																			<span className="text-[10px] text-emerald-400 font-bold ml-0.5">
+																			<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
+																			<span className="text-[#8A847C] font-normal">➔</span>
+																			<span className="text-[#222222] font-black">{s.targetGrade}</span>
+																			<span className="text-[10px] text-[#205739] font-bold ml-0.5">
 																				(+{s.targetGrade - s.currentGrade})
 																			</span>
 																		</>
 																	) : (
 																		<>
-																			<span className="text-[10px] text-slate-400 font-normal">יעד:</span>
-																			<span className="text-white font-black">{s.targetGrade}</span>
+																			<span className="text-[10px] text-[#8A847C] font-normal">יעד:</span>
+																			<span className="text-[#222222] font-black">{s.targetGrade}</span>
 																		</>
 																	)}
 																</span>
@@ -717,15 +721,15 @@ export default function RecommendedTracksView({
 
 								{/* Feasibility pill */}
 								<div className="pt-2">
-									<div className="flex items-center justify-between text-xs bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-xl">
-										<span className="text-slate-400 font-bold">היתכנות סטטיסטית:</span>
+									<div className="flex items-center justify-between text-xs bg-[#FAF8F5] border border-[#E5DFD4] px-3 py-2 rounded-xl">
+										<span className="text-[#66635C] font-bold">היתכנות סטטיסטית:</span>
 										<span
 											className={`font-black ${
 												track.feasibility === 'very_high'
-													? 'text-emerald-400'
+													? 'text-[#205739]'
 													: track.feasibility === 'high'
-													? 'text-cyan-400'
-													: 'text-amber-400'
+													? 'text-[#1E597B]'
+													: 'text-[#825B15]'
 											}`}
 										>
 											{track.feasibility === 'very_high'
@@ -735,7 +739,7 @@ export default function RecommendedTracksView({
 												: 'בינונית / מאתגרת'}
 										</span>
 									</div>
-									<p className="text-[11px] text-slate-400 mt-1.5 leading-normal">
+									<p className="text-[11px] text-[#66635C] mt-1.5 leading-normal">
 										{track.feasibilityExplanation}
 									</p>
 								</div>
@@ -746,15 +750,15 @@ export default function RecommendedTracksView({
 								<button
 									type="button"
 									onClick={() => setSelectedTrackId(track.id)}
-									className={`w-full py-3 px-4 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+									className={`w-full py-3 px-4 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer ${
 										isSelected
-											? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20 font-black'
-											: 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700'
+											? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black'
+											: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs'
 									}`}
 								>
 									{isSelected ? (
 										<>
-											<CheckCircle2 className="h-4 w-4 text-slate-950" />
+											<CheckCircle2 className="h-4 w-4 text-[#205739]" />
 											<span>המסלול הנבחר שלך</span>
 										</>
 									) : (
@@ -768,25 +772,25 @@ export default function RecommendedTracksView({
 										handleSaveTrack(track);
 									}}
 									disabled={savingTrackId === track.id}
-									className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border ${
+									className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border cursor-pointer ${
 										savedTrackMap[track.id]
-											? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
-											: 'bg-slate-950/80 hover:bg-slate-800 text-slate-300 hover:text-white border-slate-800'
+											? 'bg-[#EBF4EE] border-[#C6DFCE] text-[#205739]'
+											: 'bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] border-[#E5DFD4]'
 									}`}
 								>
 									{savingTrackId === track.id ? (
 										<>
-											<Loader2 className="h-3.5 w-3.5 animate-spin text-cyan-400" />
+											<Loader2 className="h-3.5 w-3.5 animate-spin text-[#222222]" />
 											<span>שומר מסלול במסד הנתונים...</span>
 										</>
 									) : savedTrackMap[track.id] ? (
 										<>
-											<BookmarkCheck className="h-3.5 w-3.5 text-emerald-400" />
+											<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
 											<span>המסלול נשמר ({savedTrackMap[track.id].candidateNumber}) ✓</span>
 										</>
 									) : (
 										<>
-											<Bookmark className="h-3.5 w-3.5 text-cyan-400" />
+											<Bookmark className="h-3.5 w-3.5 text-[#66635C]" />
 											<span>שמור מסלול זה</span>
 										</>
 									)}
@@ -800,35 +804,35 @@ export default function RecommendedTracksView({
 			{/* ========================================================================= */}
 			{/* DETAILED ROADMAP FOR SELECTED TRACK */}
 			{/* ========================================================================= */}
-			<div className="bg-slate-900/90 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
-				<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative overflow-hidden">
+				<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DFD4] pb-5">
 					<div className="space-y-1">
 						<div className="flex items-center gap-2">
-							<Award className="h-5 w-5 text-cyan-400" />
-							<h3 className="text-xl font-black text-white">
+							<Award className="h-5 w-5 text-[#222222]" />
+							<h3 className="text-xl font-bold text-[#222222]">
 								תוכנית עבודה שבוע-אחר-שבוע: {selectedTrack.title}
 							</h3>
 						</div>
-						<p className="text-xs text-slate-300">
+						<p className="text-xs text-[#66635C]">
 							{selectedTrack.keyAdvantage}
 						</p>
 					</div>
 
-					<div className="flex items-center gap-3 text-xs font-bold text-slate-400 shrink-0 flex-wrap">
-						<div className="bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
-							משך כולל: <span className="text-white">{selectedTrack.estimatedWeeks} שבועות</span>
+					<div className="flex items-center gap-3 text-xs font-bold text-[#66635C] shrink-0 flex-wrap">
+						<div className="bg-[#FAF8F5] px-3 py-2 rounded-xl border border-[#E5DFD4]">
+							משך כולל: <span className="text-[#222222] font-bold">{selectedTrack.estimatedWeeks} שבועות</span>
 						</div>
-						<div className="bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
-							עומס שבועי: <span className="text-white">{selectedTrack.weeklyHours} ש״ש</span>
+						<div className="bg-[#FAF8F5] px-3 py-2 rounded-xl border border-[#E5DFD4]">
+							עומס שבועי: <span className="text-[#222222] font-bold">{selectedTrack.weeklyHours} ש״ש</span>
 						</div>
 						<button
 							type="button"
 							onClick={() => handleSaveTrack(selectedTrack)}
 							disabled={savingTrackId === selectedTrack.id}
-							className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-lg ${
+							className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-sm ${
 								savedTrackMap[selectedTrack.id]
-									? 'bg-emerald-600 text-white border-emerald-500 shadow-emerald-600/20'
-									: 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-400/40 shadow-cyan-500/20'
+									? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
+									: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
 							}`}
 						>
 							{savingTrackId === selectedTrack.id ? (
@@ -838,7 +842,7 @@ export default function RecommendedTracksView({
 								</>
 							) : savedTrackMap[selectedTrack.id] ? (
 								<>
-									<BookmarkCheck className="h-3.5 w-3.5 text-white" />
+									<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
 									<span>המסלול שמור ({savedTrackMap[selectedTrack.id].candidateNumber}) ✓</span>
 								</>
 							) : (
@@ -866,20 +870,20 @@ export default function RecommendedTracksView({
 					if (!needsPsych && !hasSubs) return null;
 
 					return (
-						<div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center justify-between flex-wrap gap-2 text-xs">
-							<span className="font-bold text-slate-400">
+						<div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between flex-wrap gap-2 text-xs">
+							<span className="font-bold text-[#66635C]">
 								יעדי שיפור במסלול זה:
 							</span>
 							<div className="flex items-center gap-2 flex-wrap">
 								{needsPsych && (() => {
 									const sInfo = getSessionInfo('spring_psych');
 									return (
-										<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
-											<Brain className="h-3.5 w-3.5 text-cyan-400" />
+										<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] font-bold">
+											<Brain className="h-3.5 w-3.5 text-[#205739]" />
 											<span>
 												פסיכומטרי: {(selectedTrack.currentPsychometric || 0) > 0 ? `${selectedTrack.currentPsychometric} ➔ ` : 'יעד '}{selectedTrack.targetPsychometric}
 											</span>
-											<span className={`text-[10px] px-1.5 py-0.5 rounded border ${sInfo.badgeClass}`}>
+											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#C6DFCE] bg-white text-[#205739]">
 												{sInfo.iconEmoji} {sInfo.name}
 											</span>
 										</span>
@@ -889,12 +893,12 @@ export default function RecommendedTracksView({
 									const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
 									const sInfo = getSessionInfo(sSession);
 									return (
-										<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 font-bold">
-											<BookOpen className="h-3.5 w-3.5 text-indigo-400" />
+										<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F2F1F8] border border-[#D2CEEB] text-[#453D78] font-bold">
+											<BookOpen className="h-3.5 w-3.5 text-[#453D78]" />
 											<span>
 												{s.subjectName} ({s.targetUnits} יח״ל): {s.currentGrade > 0 ? `${s.currentGrade} ➔ ` : ''}{s.targetGrade}
 											</span>
-											<span className={`text-[10px] px-1.5 py-0.5 rounded border ${sInfo.badgeClass}`}>
+											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#D2CEEB] bg-white text-[#453D78]">
 												{sInfo.iconEmoji} {sInfo.name}
 											</span>
 										</span>
@@ -907,7 +911,7 @@ export default function RecommendedTracksView({
 
 				{/* Steps Timeline */}
 				<div className="space-y-4">
-					<h4 className="text-xs font-black text-slate-400 uppercase tracking-wider">
+					<h4 className="text-xs font-bold text-[#8A847C] uppercase tracking-wider">
 						שלבי הביצוע המדורגים לפי מועדי ישראל:
 					</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -925,22 +929,22 @@ export default function RecommendedTracksView({
 							return (
 								<div
 									key={idx}
-									className={`bg-slate-950/70 border rounded-2xl p-4 space-y-2 relative overflow-hidden flex flex-col justify-between transition hover:border-slate-700 ${sInfo.cardBorderClass}`}
+									className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-4 space-y-2 relative overflow-hidden flex flex-col justify-between transition hover:border-[#DDD7CC]"
 								>
 									<div className="space-y-2">
 										<div className="flex items-center justify-between gap-2 flex-wrap">
-											<span className="text-[11px] font-black text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
+											<span className="text-[11px] font-bold text-[#222222] bg-white border border-[#E5DFD4] px-2.5 py-0.5 rounded-md">
 												שלב {idx + 1} • {step.timing}
 											</span>
-											<span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${sInfo.badgeClass} flex items-center gap-1`}>
+											<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} flex items-center gap-1 shadow-2xs`}>
 												<span>{sInfo.iconEmoji}</span>
 												<span>{sInfo.badgeLabel}</span>
 											</span>
 										</div>
-										<h5 className="text-sm font-bold text-white flex items-center gap-1.5">
+										<h5 className="text-sm font-bold text-[#222222] flex items-center gap-1.5">
 											{step.title}
 										</h5>
-										<p className="text-xs text-slate-300 leading-relaxed">{step.detail}</p>
+										<p className="text-xs text-[#66635C] leading-relaxed">{step.detail}</p>
 									</div>
 								</div>
 							);
@@ -949,16 +953,16 @@ export default function RecommendedTracksView({
 				</div>
 
 				{/* Action Buttons */}
-				<div className="pt-4 border-t border-slate-800 flex items-center justify-between flex-wrap gap-4">
-					<div className="text-xs text-slate-400 flex items-center gap-2">
-						<CheckCircle2 className="h-4 w-4 text-emerald-400" />
+				<div className="pt-4 border-t border-[#E5DFD4] flex items-center justify-between flex-wrap gap-4">
+					<div className="text-xs text-[#66635C] flex items-center gap-2">
+						<CheckCircle2 className="h-4 w-4 text-[#205739]" />
 						<span>המסלול נשמר בפרופיל האישי שלך באפליקציה</span>
 					</div>
 
 					<div className="flex items-center gap-3">
 						<button
 							onClick={handlePrint}
-							className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
+							className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2"
 						>
 							<Printer className="h-4 w-4" />
 							<span>הדפס ציר זמנים מלא</span>
@@ -971,27 +975,24 @@ export default function RecommendedTracksView({
 				{/* OPT-IN MECHINA TRACK (מכינה קדם-אקדמית ייעודית כחלופה מובנית) */}
 				{/* ========================================================================= */}
 				{isMechinaApplicable && (
-					<div className="bg-slate-900/90 border border-purple-500/40 rounded-3xl p-6 sm:p-7 space-y-5 shadow-2xl relative overflow-hidden">
-						{/* Ambient purple glow */}
-						<div className="absolute top-0 right-10 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-
+					<div className="bg-white border border-[#D2CEEB] rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative overflow-hidden">
 						<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
 							<div className="space-y-1.5 max-w-2xl">
 								<div className="flex items-center gap-2 flex-wrap">
-									<span className="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-500/40 tracking-wider">
+									<span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] tracking-wider">
 										מסלול חלופי מובנה • מכינה קדם-אקדמית (Opt-In)
 									</span>
 									{mechinaReason && (
-										<span className="text-[10px] text-slate-400">
+										<span className="text-[10px] text-[#66635C]">
 											• {mechinaReason}
 										</span>
 									)}
 								</div>
-								<h4 className="text-lg sm:text-xl font-black text-white flex items-center gap-2.5">
+								<h4 className="text-lg sm:text-xl font-bold text-[#222222] flex items-center gap-2.5">
 									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="rounded" />
 									<span>שוקל מכינה אקדמית ב{analysis.target.institutionName.replace('אוניברסיטת ', '')}?</span>
 								</h4>
-								<p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+								<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
 									עבור פערים גדולים או למי שמעדיף מסגרת לימודית אינטנסיבית ומסודרת, מכינה קדם-אקדמית של המוסד מחליפה את ממוצע הבגרות ומספקת נתיב קבלה ישיר עם מעטפת תרגול ומלגות.
 								</p>
 							</div>
@@ -1000,10 +1001,10 @@ export default function RecommendedTracksView({
 								type="button"
 								onClick={handleToggleMechina}
 								disabled={isLoadingMechina}
-								className={`px-5 py-3 rounded-2xl font-black text-xs transition flex items-center justify-center gap-2 shrink-0 border shadow-lg ${
+								className={`px-5 py-3 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2 shrink-0 border shadow-sm ${
 									showMechinaDetails
-										? 'bg-purple-950/80 text-purple-200 border-purple-500/50 hover:bg-purple-900/50'
-										: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white border-purple-400/40 shadow-purple-600/25'
+										? 'bg-white text-[#453D78] border-[#D2CEEB] hover:bg-[#F2F1F8]'
+										: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
 								}`}
 							>
 								{isLoadingMechina ? (
@@ -1028,38 +1029,38 @@ export default function RecommendedTracksView({
 
 						{/* Expanded Mechina Details */}
 						{showMechinaDetails && mechinaTrack && (
-							<div className="relative z-10 pt-4 border-t border-slate-800 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-								<div className="bg-slate-950/80 border border-purple-500/30 rounded-2xl p-5 space-y-4">
-									<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+							<div className="relative z-10 pt-4 border-t border-[#E5DFD4] space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+								<div className="bg-[#FAF8F5] border border-[#D2CEEB] rounded-2xl p-5 space-y-4">
+									<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E5DFD4] pb-3">
 										<div className="flex items-center gap-3">
 											<UniversityLogo institution={analysis.target.institutionId} size="md" shape="rounded" />
 											<div>
-												<h5 className="text-base font-black text-purple-200">
+												<h5 className="text-base font-bold text-[#222222]">
 													{mechinaTrack.title}
 												</h5>
-												<p className="text-xs text-slate-400 mt-0.5">
+												<p className="text-xs text-[#66635C] mt-0.5">
 													{mechinaTrack.keyAdvantage}
 												</p>
 											</div>
 										</div>
-										<div className="flex items-center gap-3 text-xs font-bold text-slate-300 shrink-0">
-											<div className="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
-												משך: <span className="text-purple-300">{mechinaTrack.estimatedWeeks} שבועות</span>
+										<div className="flex items-center gap-3 text-xs font-bold text-[#66635C] shrink-0">
+											<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
+												משך: <span className="text-[#453D78] font-bold">{mechinaTrack.estimatedWeeks} שבועות</span>
 											</div>
-											<div className="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
-												עומס: <span className="text-purple-300">{mechinaTrack.weeklyHours} ש״ש</span>
+											<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
+												עומס: <span className="text-[#453D78] font-bold">{mechinaTrack.weeklyHours} ש״ש</span>
 											</div>
 										</div>
 									</div>
 
-									<p className="text-xs text-slate-300 leading-relaxed">
+									<p className="text-xs text-[#66635C] leading-relaxed">
 										{mechinaTrack.strategyDescription}
 									</p>
 
 									{/* Milestones in Mechina */}
 									{mechinaTrack.milestones && mechinaTrack.milestones.length > 0 && (
 										<div className="space-y-2 pt-2">
-											<h6 className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
+											<h6 className="text-[11px] font-bold text-[#8A847C] uppercase tracking-wider">
 												תחנות מסלול המכינה:
 											</h6>
 											<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -1074,20 +1075,20 @@ export default function RecommendedTracksView({
 													return (
 														<div
 															key={mIdx}
-															className="bg-slate-900/70 border border-purple-500/20 rounded-xl p-3 space-y-1.5"
+															className="bg-white border border-[#E5DFD4] rounded-xl p-3 space-y-1.5"
 														>
 															<div className="flex items-center justify-between gap-2">
-																<span className="text-[10px] font-black text-purple-400 bg-purple-950/60 border border-purple-500/30 px-2 py-0.5 rounded">
+																<span className="text-[10px] font-bold text-[#453D78] bg-[#F2F1F8] border border-[#D2CEEB] px-2 py-0.5 rounded">
 																	תחנה {m.orderIndex || mIdx + 1} • {m.timing}
 																</span>
-																<span className="text-[10px] text-slate-400 font-bold">
+																<span className="text-[10px] text-[#66635C] font-bold">
 																	{sInfo.iconEmoji}
 																</span>
 															</div>
-															<div className="text-xs font-bold text-white">
+															<div className="text-xs font-bold text-[#222222]">
 																{m.title}
 															</div>
-															<p className="text-[11px] text-slate-400 leading-normal">
+															<p className="text-[11px] text-[#66635C] leading-normal">
 																{m.detail}
 															</p>
 														</div>
@@ -1098,14 +1099,14 @@ export default function RecommendedTracksView({
 									)}
 
 									{/* Mechina perks banner */}
-									<div className="p-3 bg-purple-950/40 border border-purple-500/25 rounded-xl flex items-center justify-between flex-wrap gap-2 text-xs text-purple-200">
+									<div className="p-3 bg-[#F2F1F8] border border-[#D2CEEB] rounded-xl flex items-center justify-between flex-wrap gap-2 text-xs text-[#453D78]">
 										<div className="flex items-center gap-2">
-											<ShieldCheck className="h-4 w-4 text-purple-400 shrink-0" />
+											<ShieldCheck className="h-4 w-4 text-[#453D78] shrink-0" />
 											<span>
 												תעודת גמר מכינה מוכרת ומחליפה את תעודת הבגרות במוסד זה. עמידה בממוצע היעד מקנה קבלה ישירה.
 											</span>
 										</div>
-										<span className="text-[11px] font-bold text-emerald-400">
+										<span className="text-[11px] font-bold text-[#205739]">
 											היתכנות: {mechinaTrack.feasibilityExplanation}
 										</span>
 									</div>
@@ -1116,10 +1117,10 @@ export default function RecommendedTracksView({
 											type="button"
 											onClick={() => handleSaveTrack(mechinaTrack)}
 											disabled={savingTrackId === mechinaTrack.id}
-											className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border ${
+											className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-sm ${
 												savedTrackMap[mechinaTrack.id]
-													? 'bg-emerald-600 text-white border-emerald-500 shadow-emerald-600/20'
-													: 'bg-purple-600 hover:bg-purple-500 text-white border-purple-400'
+													? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
+													: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
 											}`}
 										>
 											{savingTrackId === mechinaTrack.id ? (
@@ -1129,7 +1130,7 @@ export default function RecommendedTracksView({
 												</>
 											) : savedTrackMap[mechinaTrack.id] ? (
 												<>
-													<BookmarkCheck className="h-3.5 w-3.5 text-white" />
+													<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
 													<span>מסלול מכינה שמור ({savedTrackMap[mechinaTrack.id].candidateNumber}) ✓</span>
 												</>
 											) : (
@@ -1148,16 +1149,16 @@ export default function RecommendedTracksView({
 
 				{/* Transition CTA to Personal Builder */}
 				{userProfile && institutionResult && (
-					<div className="bg-gradient-to-r from-indigo-950/40 via-slate-900 to-indigo-950/40 border border-indigo-500/30 rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
 						<div className="flex items-center gap-3.5">
-							<div className="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 shrink-0">
+							<div className="w-10 h-10 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center text-[#222222] shrink-0">
 								<Sliders className="h-5 w-5" />
 							</div>
 							<div>
-								<h5 className="text-sm sm:text-base font-bold text-white">
+								<h5 className="text-sm sm:text-base font-bold text-[#222222]">
 									מעדיף להרכיב שילוב ציונים ומקצועות משלך?
 								</h5>
-								<p className="text-xs text-slate-400">
+								<p className="text-xs text-[#66635C]">
 									פתח את חלונית הבנייה האישית, שחק עם סליידרים ובדוק את ההשפעה השולית של כל מקצוע על סיכויי הקבלה.
 								</p>
 							</div>
@@ -1165,7 +1166,7 @@ export default function RecommendedTracksView({
 						<button
 							type="button"
 							onClick={() => setActiveTab('custom_builder')}
-							className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs rounded-xl transition flex items-center gap-2 shrink-0 shadow-lg shadow-indigo-600/20"
+							className="px-5 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shrink-0 shadow-sm"
 						>
 							<span>עבור לחלונית בניית מסלול אישי</span>
 							<ChevronLeft className="h-4 w-4" />
@@ -1181,22 +1182,19 @@ export default function RecommendedTracksView({
 			{activeTab === 'custom_builder' && (
 				<div className="space-y-6">
 					{userProfile && institutionResult ? (
-						<div className="bg-slate-900/90 border-2 border-indigo-500/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
-							{/* Ambient Glow */}
-							<div className="absolute top-0 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-
+						<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative overflow-hidden">
 							{/* Section Header */}
-							<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+							<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DFD4] pb-5">
 								<div className="space-y-1.5">
 									<div className="flex items-center gap-2.5">
-										<div className="w-9 h-9 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
+										<div className="w-9 h-9 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
 											<Sliders className="h-5 w-5" />
 										</div>
-										<h3 className="text-xl sm:text-2xl font-black text-white">
+										<h3 className="text-xl sm:text-2xl font-bold text-[#222222]">
 											חלונית בניית מסלול אישי 🎛️
 										</h3>
 									</div>
-									<p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+									<p className="text-xs sm:text-sm text-[#66635C] max-w-2xl">
 										רוצה להרכיב מסלול משלך? בחר תואר, שחק עם סליידר הפסיכומטרי, הוסף או שפר מקצועות בגרות וצפה במידת ההשפעה המדויקת של כל שינוי על הסכם ועל סיכויי הקבלה.
 									</p>
 								</div>
@@ -1206,20 +1204,20 @@ export default function RecommendedTracksView({
 									<button
 										type="button"
 										onClick={() => setActiveTab('recommended')}
-										className="px-4 py-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700 shadow-sm"
+										className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#F0EBE1] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] shadow-sm"
 									>
-										<Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+										<Sparkles className="h-3.5 w-3.5 text-[#222222]" />
 										<span>חזור ל-3 המסלולים המומלצים</span>
 									</button>
 
 									{/* Degree Selector in Custom Builder */}
 									{allAnalyses && allAnalyses.length > 1 && (
-										<div className="flex items-center gap-2 shrink-0 bg-slate-950 p-2 rounded-2xl border border-slate-800">
-											<span className="text-xs font-bold text-slate-400 mr-1">תואר לבדיקה:</span>
+										<div className="flex items-center gap-2 shrink-0 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4]">
+											<span className="text-xs font-bold text-[#66635C] mr-1">תואר לבדיקה:</span>
 											<select
 												value={analysis.target.program.id}
 												onChange={(e) => onSelectProgram?.(e.target.value)}
-												className="bg-slate-900 border border-slate-700 text-xs font-bold text-cyan-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+												className="bg-white border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#222222]"
 											>
 												{allAnalyses.map((a) => {
 													const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
@@ -1237,15 +1235,15 @@ export default function RecommendedTracksView({
 
 							{/* Notification when custom scenario is applied */}
 							{customScenarioApplied && (
-								<div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center justify-between gap-2 flex-wrap">
+								<div className="p-4 rounded-2xl bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] text-xs font-bold flex items-center justify-between gap-2 flex-wrap">
 									<div className="flex items-center gap-2">
-										<CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+										<CheckCircle2 className="h-5 w-5 text-[#205739] shrink-0" />
 										<span>התרחיש האישי שלך הוחל בהצלחה על תוכנית העבודה שלך!</span>
 									</div>
 									<button
 										type="button"
 										onClick={() => setActiveTab('recommended')}
-										className="text-xs text-white underline hover:text-emerald-200 font-bold"
+										className="text-xs text-[#205739] underline font-bold"
 									>
 										צפה במסלולים המומלצים ➔
 									</button>
@@ -1261,10 +1259,10 @@ export default function RecommendedTracksView({
 							/>
 						</div>
 					) : (
-						<div className="text-center py-16 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 space-y-4">
-							<Sliders className="h-12 w-12 text-slate-500 mx-auto" />
-							<h3 className="text-lg font-bold text-white">חסרים נתוני פרופיל לסימולציה</h3>
-							<p className="text-sm text-slate-400">
+						<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] space-y-4">
+							<Sliders className="h-12 w-12 text-[#8A847C] mx-auto" />
+							<h3 className="text-lg font-bold text-[#222222]">חסרים נתוני פרופיל לסימולציה</h3>
+							<p className="text-sm text-[#66635C]">
 								נא להזין ציוני בגרות ופסיכומטרי בשלב 1 כדי שתוכל לבצע סימולציות מותאמות אישית.
 							</p>
 						</div>

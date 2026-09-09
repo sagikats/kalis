@@ -5,13 +5,10 @@ import {
 	Brain,
 	BookOpen,
 	Clock,
-	Calendar,
 	Sparkles,
 	CheckCircle2,
 	ChevronLeft,
 	ArrowRight,
-	HelpCircle,
-	AlertCircle,
 	Target
 } from 'lucide-react';
 import { UserPreferencesQuestionnaire } from '@/utils/analysis/trackGenerator';
@@ -60,18 +57,15 @@ export default function PreferenceQuestionnaire({
 
 	const togglePsychStrength = (option: 'quant' | 'verbal' | 'english' | 'balanced') => {
 		if (option === 'balanced') {
-			// If 'balanced' is clicked, it becomes the only option
 			setPsychStrongestSections(['balanced']);
 			return;
 		}
 
 		setPsychStrongestSections((prev) => {
-			// Deselect 'balanced' when selecting any specific section
 			const withoutBalanced = prev.filter((item) => item !== 'balanced');
 
 			if (withoutBalanced.includes(option)) {
 				const next = withoutBalanced.filter((item) => item !== option);
-				// If user unchecks the last specific option, fallback to 'balanced'
 				return next.length === 0 ? ['balanced'] : next;
 			} else {
 				return [...withoutBalanced, option];
@@ -122,35 +116,34 @@ export default function PreferenceQuestionnaire({
 	return (
 		<div className="space-y-8 dir-rtl text-right">
 			{/* Target Program Context Header */}
-			<div className="bg-gradient-to-r from-blue-950/60 via-slate-900 to-indigo-950/60 border border-blue-800/40 rounded-3xl p-6 shadow-xl relative overflow-hidden">
-				<div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-sm relative overflow-hidden">
 				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
 					<div className="space-y-1.5">
 						<div className="flex items-center gap-2">
-							<span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black rounded-lg">
+							<span className="px-3 py-1 bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4] text-xs font-bold rounded-lg">
 								שלב 4: שאלון התאמת מסלול אישי
 							</span>
-							<span className="text-xs text-slate-400 font-medium">
+							<span className="text-xs text-[#66635C] font-medium">
 								{analysis.target.institutionName}
 							</span>
 						</div>
-						<h2 className="text-2xl font-black text-white flex items-center gap-2">
-							<Target className="h-6 w-6 text-cyan-400" />
+						<h2 className="text-2xl font-bold text-[#222222] flex items-center gap-2">
+							<Target className="h-6 w-6 text-[#222222]" />
 							<span>שאלון העדפות ואילוצי למידה עבור: {analysis.target.program.fieldOfStudy}</span>
 						</h2>
-						<p className="text-xs sm:text-sm text-slate-300">
+						<p className="text-xs sm:text-sm text-[#66635C]">
 							כדי שלא נציע לך יעדים תלושים מהמציאות, השאלון ממפה את היכולות, הזמן הפנוי והחוזקות שלך.
 							האלגוריתם ייצר עבורך 3 מסלולים ריאליים ומבוססי סטטיסטיקה לסגירת הפער.
 						</p>
 					</div>
 
 					{analysis.gap > 0 && (
-						<div className="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-4 text-center shrink-0">
-							<span className="text-[11px] font-bold text-amber-400 block">פער סכם נוכחי</span>
-							<span className="text-2xl font-black text-white dir-ltr">
+						<div className="bg-[#FAF8F5] border border-[#ECDAB6] rounded-2xl p-4 text-center shrink-0">
+							<span className="text-[11px] font-bold text-[#825B15] block">פער סכם נוכחי</span>
+							<span className="text-2xl font-bold text-[#222222] dir-ltr">
 								+{analysis.gap.toFixed(analysis.target.calculatorId === 'technion' ? 2 : 1)}
 							</span>
-							<span className="text-[10px] text-slate-400 block mt-0.5">
+							<span className="text-[10px] text-[#66635C] block mt-0.5">
 								{analysis.target.calculatorId === 'technion' ? 'נקודות סכם טכניוני' : 'נקודות סכם'}
 							</span>
 						</div>
@@ -162,14 +155,14 @@ export default function PreferenceQuestionnaire({
 				{/* ========================================================================= */}
 				{/* PART 1: PSYCHOMETRIC AXIS */}
 				{/* ========================================================================= */}
-				<div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
-					<div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-						<div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
+					<div className="flex items-center gap-3 border-b border-[#E5DFD4] pb-4">
+						<div className="w-10 h-10 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
 							<Brain className="h-5 w-5" />
 						</div>
 						<div>
-							<h3 className="text-lg font-black text-white">חלק א׳: ניסיון ויחס לבחינה הפסיכומטרית</h3>
-							<p className="text-xs text-slate-400">
+							<h3 className="text-lg font-bold text-[#222222]">חלק א׳: ניסיון ויחס לבחינה הפסיכומטרית</h3>
+							<p className="text-xs text-[#66635C]">
 								הפסיכומטרי סוגר פערים במהירות, אך נתוני NITE מראים שהשיפור תלוי בניסיון קודם
 							</p>
 						</div>
@@ -177,7 +170,7 @@ export default function PreferenceQuestionnaire({
 
 					{/* Question 1: Experience */}
 					<div className="space-y-3">
-						<label className="text-sm font-bold text-slate-200 block">
+						<label className="text-sm font-bold text-[#222222] block">
 							1. האם נבחנת בבחינה הפסיכומטרית בעבר?
 						</label>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -186,17 +179,17 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setPsychExperience('never')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychExperience === 'never'
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">מעולם לא נבחנתי</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">מעולם לא נבחנתי</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										טרם ניגשתי לבחינה רשמית (פוטנציאל לזינוק משמעותי בקורס ראשון)
 									</span>
 								</div>
-								{psychExperience === 'never' && <CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />}
+								{psychExperience === 'never' && <CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />}
 							</button>
 
 							<button
@@ -204,17 +197,17 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setPsychExperience('once')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychExperience === 'once'
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">נבחנתי פעם אחת</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">נבחנתי פעם אחת</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										מכיר את המבנה, יש פוטנציאל שיפור של 30–60 נקודות במועד שני
 									</span>
 								</div>
-								{psychExperience === 'once' && <CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />}
+								{psychExperience === 'once' && <CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />}
 							</button>
 
 							<button
@@ -222,17 +215,17 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setPsychExperience('multiple')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychExperience === 'multiple'
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">נבחנתי פעמיים או יותר</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">נבחנתי פעמיים או יותר</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										ניגשתי למספר מועדים, קרוב למיצוי הפוטנציאל בבחינה זו
 									</span>
 								</div>
-								{psychExperience === 'multiple' && <CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />}
+								{psychExperience === 'multiple' && <CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />}
 							</button>
 						</div>
 					</div>
@@ -240,7 +233,7 @@ export default function PreferenceQuestionnaire({
 					{/* Question 2: Sub-branch depending on experience */}
 					{psychExperience === 'never' ? (
 						<div className="space-y-3 pt-2">
-							<label className="text-sm font-bold text-slate-200 block">
+							<label className="text-sm font-bold text-[#222222] block">
 								2. האם אתה מתכנן לגשת לפסיכומטרי או מעדיף להתקבל על סמך בגרויות בלבד?
 							</label>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -249,20 +242,20 @@ export default function PreferenceQuestionnaire({
 									onClick={() => setPsychWillingness('full_exam')}
 									className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 										psychWillingness === 'full_exam'
-											? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-											: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+											? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+											: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 									}`}
 								>
 									<div>
-										<span className="text-xs font-black block text-white">
+										<span className="text-xs font-bold block text-[#222222]">
 											מוכן ומעוניין לגשת לפסיכומטרי
 										</span>
-										<span className="text-[11px] text-slate-400 block mt-1">
+										<span className="text-[11px] text-[#66635C] block mt-1">
 											מוכן להשקיע בקורס או למידה אינטנסיבית לקראת מועד קרוב
 										</span>
 									</div>
 									{psychWillingness === 'full_exam' && (
-										<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+										<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 									)}
 								</button>
 
@@ -271,27 +264,27 @@ export default function PreferenceQuestionnaire({
 									onClick={() => setPsychWillingness('prefer_bagrut_only')}
 									className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 										psychWillingness === 'prefer_bagrut_only'
-											? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-											: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+											? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+											: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 									}`}
 								>
 									<div>
-										<span className="text-xs font-black block text-white">
+										<span className="text-xs font-bold block text-[#222222]">
 											מעדיף מסלול מבוסס בגרויות בלבד (אם אפשרי)
 										</span>
-										<span className="text-[11px] text-slate-400 block mt-1">
+										<span className="text-[11px] text-[#66635C] block mt-1">
 											נרתע מפסיכומטרי, מעדיף להשקיע בשיפור שאלונים בבגרות
 										</span>
 									</div>
 									{psychWillingness === 'prefer_bagrut_only' && (
-										<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+										<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 									)}
 								</button>
 							</div>
 						</div>
 					) : (
 						<div className="space-y-3 pt-2">
-							<label className="text-sm font-bold text-slate-200 block">
+							<label className="text-sm font-bold text-[#222222] block">
 								2. איך אתה מרגיש לגבי מועד נוסף בפסיכומטרי?
 							</label>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -300,20 +293,20 @@ export default function PreferenceQuestionnaire({
 									onClick={() => setPsychFeeling('high_potential')}
 									className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 										psychFeeling === 'high_potential'
-											? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-											: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+											? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+											: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 									}`}
 								>
 									<div>
-										<span className="text-xs font-black block text-white">
+										<span className="text-xs font-bold block text-[#222222]">
 											יש לי פוטנציאל לשיפור (לא מיציתי את עצמי)
 										</span>
-										<span className="text-[11px] text-slate-400 block mt-1">
+										<span className="text-[11px] text-[#66635C] block mt-1">
 											לא למדתי מספיק, היה יום לא טוב, או שיש לי מרווח שיפור ברור
 										</span>
 									</div>
 									{psychFeeling === 'high_potential' && (
-										<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+										<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 									)}
 								</button>
 
@@ -322,20 +315,20 @@ export default function PreferenceQuestionnaire({
 									onClick={() => setPsychFeeling('reached_ceiling')}
 									className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 										psychFeeling === 'reached_ceiling'
-											? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-											: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+											? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+											: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 									}`}
 								>
 									<div>
-										<span className="text-xs font-black block text-white">
+										<span className="text-xs font-bold block text-[#222222]">
 											השקעתי מקסימום ואני קרוב לתקרה שלי
 										</span>
-										<span className="text-[11px] text-slate-400 block mt-1">
+										<span className="text-[11px] text-[#66635C] block mt-1">
 											עדיף להתרכז בשיפור בגרויות ולא להמר שוב על פסיכומטרי
 										</span>
 									</div>
 									{psychFeeling === 'reached_ceiling' && (
-										<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+										<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 									)}
 								</button>
 							</div>
@@ -345,10 +338,10 @@ export default function PreferenceQuestionnaire({
 					{/* Question 3: Strongest Section */}
 					<div className="space-y-3 pt-2">
 						<div className="flex items-center justify-between flex-wrap gap-2">
-							<label className="text-sm font-bold text-slate-200 block">
+							<label className="text-sm font-bold text-[#222222] block">
 								3. באילו תחומים בפסיכומטרי אתה מרגיש חזק יותר?
 							</label>
-							<span className="text-[11px] text-cyan-400 font-semibold bg-cyan-950/40 px-2.5 py-0.5 rounded-full border border-cyan-800/40">
+							<span className="text-[11px] text-[#66635C] font-semibold bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-[#E5DFD4]">
 								בחירה מרובה (או רמה מאוזנת)
 							</span>
 						</div>
@@ -359,22 +352,22 @@ export default function PreferenceQuestionnaire({
 								onClick={() => togglePsychStrength('quant')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychStrongestSections.includes('quant')
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
 									<div className="flex items-center gap-1.5 mb-1">
-										<span className="text-xs font-black block text-white">הפרק הכמותי</span>
+										<span className="text-xs font-bold block text-[#222222]">הפרק הכמותי</span>
 									</div>
-									<span className="text-[11px] text-slate-400 block leading-snug">
+									<span className="text-[11px] text-[#66635C] block leading-snug">
 										חזק במתמטיקה, חשיבה כמותית, גרפים, בעיות תנועה והספק
 									</span>
 								</div>
 								{psychStrongestSections.includes('quant') ? (
-									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								) : (
-									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
+									<div className="w-5 h-5 rounded-full border border-[#DDD7CC] bg-[#FAF8F5] shrink-0" />
 								)}
 							</button>
 
@@ -384,22 +377,22 @@ export default function PreferenceQuestionnaire({
 								onClick={() => togglePsychStrength('verbal')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychStrongestSections.includes('verbal')
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
 									<div className="flex items-center gap-1.5 mb-1">
-										<span className="text-xs font-black block text-white">הפרק המילולי</span>
+										<span className="text-xs font-bold block text-[#222222]">הפרק המילולי</span>
 									</div>
-									<span className="text-[11px] text-slate-400 block leading-snug">
+									<span className="text-[11px] text-[#66635C] block leading-snug">
 										הבנה והסקה, אנלוגיות, היגיון, אוצר מילים וכתיבת חיבור
 									</span>
 								</div>
 								{psychStrongestSections.includes('verbal') ? (
-									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								) : (
-									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
+									<div className="w-5 h-5 rounded-full border border-[#DDD7CC] bg-[#FAF8F5] shrink-0" />
 								)}
 							</button>
 
@@ -409,47 +402,47 @@ export default function PreferenceQuestionnaire({
 								onClick={() => togglePsychStrength('english')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychStrongestSections.includes('english')
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
 									<div className="flex items-center gap-1.5 mb-1">
-										<span className="text-xs font-black block text-white">פרק האנגלית</span>
+										<span className="text-xs font-bold block text-[#222222]">פרק האנגלית</span>
 									</div>
-									<span className="text-[11px] text-slate-400 block leading-snug">
+									<span className="text-[11px] text-[#66635C] block leading-snug">
 										קריאה שוטפת, השלמת משפטים, ניסוח מחדש וקטעי קריאה
 									</span>
 								</div>
 								{psychStrongestSections.includes('english') ? (
-									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								) : (
-									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
+									<div className="w-5 h-5 rounded-full border border-[#DDD7CC] bg-[#FAF8F5] shrink-0" />
 								)}
 							</button>
 
-							{/* Option 4: Balanced (Mutually Exclusive) */}
+							{/* Option 4: Balanced */}
 							<button
 								type="button"
 								onClick={() => togglePsychStrength('balanced')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									psychStrongestSections.includes('balanced')
-										? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
 									<div className="flex items-center gap-1.5 mb-1">
-										<span className="text-xs font-black block text-white">רמה מאוזנת ושווה</span>
+										<span className="text-xs font-bold block text-[#222222]">רמה מאוזנת ושווה</span>
 									</div>
-									<span className="text-[11px] text-slate-400 block leading-snug">
+									<span className="text-[11px] text-[#66635C] block leading-snug">
 										אין פרק בולט, החלוקה שווה יחסית (מבטל סימון פרקים בודדים)
 									</span>
 								</div>
 								{psychStrongestSections.includes('balanced') ? (
-									<CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								) : (
-									<div className="w-5 h-5 rounded-full border border-slate-700 bg-slate-900/50 shrink-0" />
+									<div className="w-5 h-5 rounded-full border border-[#DDD7CC] bg-[#FAF8F5] shrink-0" />
 								)}
 							</button>
 						</div>
@@ -459,21 +452,21 @@ export default function PreferenceQuestionnaire({
 				{/* ========================================================================= */}
 				{/* PART 2: BAGRUT ORIENTATION */}
 				{/* ========================================================================= */}
-				<div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
-					<div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-						<div className="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
+					<div className="flex items-center gap-3 border-b border-[#E5DFD4] pb-4">
+						<div className="w-10 h-10 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
 							<BookOpen className="h-5 w-5" />
 						</div>
 						<div>
-							<h3 className="text-lg font-black text-white">חלק ב׳: אוריינטציית בגרויות</h3>
-							<p className="text-xs text-slate-400">
+							<h3 className="text-lg font-bold text-[#222222]">חלק ב׳: אוריינטציית בגרויות</h3>
+							<p className="text-xs text-[#66635C]">
 								התמקדות במקצוע שמתאים לכישורים שלך מבטיחה ציון 90+ עם מינימום תסכול
 							</p>
 						</div>
 					</div>
 
 					<div className="space-y-3">
-						<label className="text-sm font-bold text-slate-200 block">
+						<label className="text-sm font-bold text-[#222222] block">
 							4. באילו מקצועות קל ונוח לך יותר להגיע לציונים גבוהים?
 						</label>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -482,18 +475,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setLearningOrientation('humanities')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									learningOrientation === 'humanities'
-										? 'bg-indigo-950/40 border-indigo-500 text-white shadow-lg shadow-indigo-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">מקצועות הומניים וחברה</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">מקצועות הומניים וחברה</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										תנ״ך, ספרות, היסטוריה, אזרחות (קריאה וסיכומים)
 									</span>
 								</div>
 								{learningOrientation === 'humanities' && (
-									<CheckCircle2 className="h-5 w-5 text-indigo-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -502,18 +495,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setLearningOrientation('stem')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									learningOrientation === 'stem'
-										? 'bg-indigo-950/40 border-indigo-500 text-white shadow-lg shadow-indigo-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">מקצועות ריאליים ומדעים</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">מקצועות ריאליים ומדעים</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										מתמטיקה 5 יח״ל, פיזיקה, מדעי המחשב (בונוסים של 25–35 נקודות)
 									</span>
 								</div>
 								{learningOrientation === 'stem' && (
-									<CheckCircle2 className="h-5 w-5 text-indigo-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -522,18 +515,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setLearningOrientation('flexible')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									learningOrientation === 'flexible'
-										? 'bg-indigo-950/40 border-indigo-500 text-white shadow-lg shadow-indigo-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">גמיש לכל מקצוע</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">גמיש לכל מקצוע</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										מוכן ללמוד כל מקצוע שייתן את התשואה (ROI) הגבוהה ביותר לסכם
 									</span>
 								</div>
 								{learningOrientation === 'flexible' && (
-									<CheckCircle2 className="h-5 w-5 text-indigo-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 						</div>
@@ -543,14 +536,14 @@ export default function PreferenceQuestionnaire({
 				{/* ========================================================================= */}
 				{/* PART 3: LEARNING STYLE & TIME CONSTRAINTS */}
 				{/* ========================================================================= */}
-				<div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
-					<div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-						<div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
+					<div className="flex items-center gap-3 border-b border-[#E5DFD4] pb-4">
+						<div className="w-10 h-10 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
 							<Clock className="h-5 w-5" />
 						</div>
 						<div>
-							<h3 className="text-lg font-black text-white">חלק ג׳: אילוצי זמן, שעות ויעד פתיחה</h3>
-							<p className="text-xs text-slate-400">
+							<h3 className="text-lg font-bold text-[#222222]">חלק ג׳: אילוצי זמן, שעות ויעד פתיחה</h3>
+							<p className="text-xs text-[#66635C]">
 								המסלול חייב להשתלב בשגרת החיים שלך כדי שלא תנשור באמצע
 							</p>
 						</div>
@@ -558,7 +551,7 @@ export default function PreferenceQuestionnaire({
 
 					{/* Question 5: Learning Strength */}
 					<div className="space-y-3">
-						<label className="text-sm font-bold text-slate-200 block">
+						<label className="text-sm font-bold text-[#222222] block">
 							5. איזה סגנון למידה מתאר אותך בצורה הטובה ביותר?
 						</label>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -567,20 +560,20 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setLearningStrength('analytical_quick')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									learningStrength === 'analytical_quick'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">
+									<span className="text-xs font-bold block text-[#222222]">
 										קליטה מהירה ועבודה תחת לחץ זמנים
 									</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										מסתדר טוב עם שאלות אמריקאיות ומהירות תגובה (מתאים לפסיכומטרי)
 									</span>
 								</div>
 								{learningStrength === 'analytical_quick' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -589,20 +582,20 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setLearningStrength('deep_accuracy_no_rush')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									learningStrength === 'deep_accuracy_no_rush'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">
+									<span className="text-xs font-bold block text-[#222222]">
 										למידה יסודית, הבנה עמוקה ודיוק
 									</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										מעדיף מבחנים עם זמן מספק, פתרונות מלאים והבנה ולא ניחוש מהיר
 									</span>
 								</div>
 								{learningStrength === 'deep_accuracy_no_rush' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -611,20 +604,20 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setLearningStrength('memory_retention')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									learningStrength === 'memory_retention'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">
+									<span className="text-xs font-bold block text-[#222222]">
 										זיכרון חזק ויכולת קריאת מסות
 									</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										זוכר פרטים, מונחים היסטוריים ותוכן בקלות (אידיאלי להומני)
 									</span>
 								</div>
 								{learningStrength === 'memory_retention' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 						</div>
@@ -632,7 +625,7 @@ export default function PreferenceQuestionnaire({
 
 					{/* Question 6: Hours */}
 					<div className="space-y-3 pt-2">
-						<label className="text-sm font-bold text-slate-200 block">
+						<label className="text-sm font-bold text-[#222222] block">
 							6. כמה שעות שבועיות תוכל להקדיש ללמידה ושיפור?
 						</label>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -641,18 +634,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setWeeklyAvailabilityHours('full_30_plus')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									weeklyAvailabilityHours === 'full_30_plus'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">30+ שעות שבועיות (מלא)</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">30+ שעות שבועיות (מלא)</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										למידה אינטנסיבית כמשרה מלאה — פוטנציאל לסגירה מהירה
 									</span>
 								</div>
 								{weeklyAvailabilityHours === 'full_30_plus' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -661,20 +654,20 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setWeeklyAvailabilityHours('part_15_25')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									weeklyAvailabilityHours === 'part_15_25'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">
+									<span className="text-xs font-bold block text-[#222222]">
 										15–25 שעות שבועיות (משלב)
 									</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										שילוב בריא עם עבודה חלקית או שירות צבאי/אזרחי
 									</span>
 								</div>
 								{weeklyAvailabilityHours === 'part_15_25' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -683,20 +676,20 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setWeeklyAvailabilityHours('limited_under_15')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									weeklyAvailabilityHours === 'limited_under_15'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">
+									<span className="text-xs font-bold block text-[#222222]">
 										עד 15 שעות שבועיות (מוגבל)
 									</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										עובד במשרה מלאה — נדרש פיזור מאמץ ומסלול שאינו דחוס
 									</span>
 								</div>
 								{weeklyAvailabilityHours === 'limited_under_15' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 						</div>
@@ -704,7 +697,7 @@ export default function PreferenceQuestionnaire({
 
 					{/* Question 7: Target timeline */}
 					<div className="space-y-3 pt-2">
-						<label className="text-sm font-bold text-slate-200 block">
+						<label className="text-sm font-bold text-[#222222] block">
 							7. מתי אתה מעוניין להתחיל את שנת הלימודים האקדמית?
 						</label>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -713,18 +706,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setTargetTimeline('immediate_october')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									targetTimeline === 'immediate_october'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">באוקטובר הקרוב</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">באוקטובר הקרוב</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										רוצה להתחיל בהקדם האפשרי (דרוש שיפור ממוקד במועד הקרוב)
 									</span>
 								</div>
 								{targetTimeline === 'immediate_october' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -733,18 +726,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setTargetTimeline('next_year_october')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									targetTimeline === 'next_year_october'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">אוקטובר של השנה הבאה</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">אוקטובר של השנה הבאה</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										יש מרווח של שנה שלמה להכנה יסודית ללא לחץ
 									</span>
 								</div>
 								{targetTimeline === 'next_year_october' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 
@@ -753,18 +746,18 @@ export default function PreferenceQuestionnaire({
 								onClick={() => setTargetTimeline('flexible')}
 								className={`p-4 rounded-2xl border text-right transition flex items-start justify-between gap-3 ${
 									targetTimeline === 'flexible'
-										? 'bg-amber-950/40 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-										: 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+										? 'bg-[#FAF8F5] border-2 border-[#3C3C3C] text-[#222222] shadow-sm'
+										: 'bg-white border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:border-[#DDD7CC]'
 								}`}
 							>
 								<div>
-									<span className="text-xs font-black block text-white">גמיש לחלוטין</span>
-									<span className="text-[11px] text-slate-400 block mt-1">
+									<span className="text-xs font-bold block text-[#222222]">גמיש לחלוטין</span>
+									<span className="text-[11px] text-[#66635C] block mt-1">
 										העיקר להתקבל למסלול המבוקש בסיכויי ההצלחה הגבוהים ביותר
 									</span>
 								</div>
 								{targetTimeline === 'flexible' && (
-									<CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+									<CheckCircle2 className="h-5 w-5 text-[#222222] shrink-0" />
 								)}
 							</button>
 						</div>
@@ -772,12 +765,12 @@ export default function PreferenceQuestionnaire({
 				</div>
 
 				{/* Actions Bar */}
-				<div className="flex items-center justify-between flex-wrap gap-4 pt-4 border-t border-slate-800">
+				<div className="flex items-center justify-between flex-wrap gap-4 pt-4 border-t border-[#E5DFD4]">
 					{onCancel && (
 						<button
 							type="button"
 							onClick={onCancel}
-							className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl transition flex items-center gap-2 border border-slate-700"
+							className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#E5DFD4]"
 						>
 							<ArrowRight className="h-4 w-4" />
 							<span>חזור לדוח הקבלה</span>
@@ -787,9 +780,9 @@ export default function PreferenceQuestionnaire({
 					<div className="mr-auto flex items-center gap-3 flex-wrap">
 						<button
 							type="submit"
-							className="px-8 py-4 bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-sm rounded-2xl shadow-xl shadow-cyan-500/20 transition flex items-center gap-3 transform hover:scale-[1.02] active:scale-[0.98]"
+							className="px-8 py-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-2xl shadow-sm transition flex items-center gap-3"
 						>
-							<Sparkles className="h-5 w-5 text-cyan-200 animate-pulse" />
+							<Sparkles className="h-5 w-5 text-white" />
 							<span>חשב 3 מסלולים מומלצים ומותאמים אישית</span>
 							<ChevronLeft className="h-5 w-5" />
 						</button>
