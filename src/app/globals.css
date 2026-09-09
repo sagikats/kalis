@@ -8,20 +8,20 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Smooth custom scrollbars */
+/* Smooth custom scrollbars for OHZI aesthetic */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #06070a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #1e293b;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #06b6d4;
 }
 
 @keyframes pulse-subtle {

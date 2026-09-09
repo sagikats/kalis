@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import { usePlanner } from '../../context/PlannerContext';
 import { useAuth } from '../../context/AuthContext';
-
 import KalisLogo from '../common/KalisLogo';
 
 export default function Navbar() {
@@ -40,11 +39,11 @@ export default function Navbar() {
      const navLinks = [
           { href: '/', label: 'דף הבית', icon: Compass },
           { href: '/flow', label: 'בדיקת קבלה ופערים', icon: Sliders },
-          { href: '/calculators', label: 'מחשבון סכם', icon: Calculator }
+          { href: '/calculators', label: 'מחשבון סכם', icon: Calculator },
      ];
 
      return (
-          <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs transition-all">
+          <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#06070a]/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.8)] transition-all">
                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
                     {/* Left/Right swapped for RTL: Right Action Icons (Notifications & Profile) appear on the RIGHT in RTL */}
@@ -55,132 +54,117 @@ export default function Navbar() {
                               <div className="relative">
                                    <button
                                         onClick={() => setShowProfileMenu(!showProfileMenu)}
-                                        className="flex items-center gap-2 p-1.5 pr-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200/80 rounded-full transition-colors border border-slate-200/60"
+                                        className="flex items-center gap-2 p-1.5 pr-2.5 text-xs font-bold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] rounded-full transition-colors border border-white/10 cursor-pointer"
                                    >
-                                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-700 text-white font-bold text-xs shadow-xs">
+                                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 text-white font-black text-xs shadow-[0_0_10px_rgba(6,182,212,0.3)]">
                                              {getInitials(user.name)}
                                         </div>
-                                        <span className="hidden sm:inline font-bold text-slate-800">{user.name}</span>
+                                        <span className="hidden sm:inline font-bold text-slate-100">{user.name}</span>
                                         {user.candidateNumber && (
-                                             <span className="hidden md:inline px-1.5 py-0.5 text-[10px] font-mono bg-blue-100 text-blue-800 rounded font-semibold">
+                                             <span className="hidden md:inline font-mono text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-1.5 py-0.5 rounded-full">
                                                   {user.candidateNumber}
                                              </span>
                                         )}
                                         <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
                                    </button>
 
+                                   {/* Profile Dropdown */}
                                    {showProfileMenu && (
-                                        <div className="absolute right-0 mt-3 w-64 rounded-2xl bg-white p-2 shadow-xl border border-slate-200 z-50 animate-in fade-in">
-                                             <div className="px-3 py-2.5 border-b border-slate-100">
+                                        <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-[#0c0e14]/95 p-3 shadow-2xl border border-white/10 backdrop-blur-xl z-50 animate-in fade-in zoom-in-95 duration-150">
+                                             <div className="p-2 border-b border-white/[0.08] mb-2">
                                                   <div className="flex items-center justify-between">
-                                                       <p className="text-xs font-bold text-slate-900">{user.name}</p>
+                                                       <p className="font-bold text-sm text-white">{user.name}</p>
                                                        {user.candidateNumber && (
-                                                            <span className="px-1.5 py-0.5 text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-200 rounded font-bold">
+                                                            <span className="font-mono text-xs font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded-md">
                                                                  {user.candidateNumber}
                                                             </span>
                                                        )}
                                                   </div>
-                                                  <p className="text-[11px] text-slate-500 truncate mt-0.5">{user.email}</p>
-                                                  {typeof user.savedTracksCount === 'number' && user.savedTracksCount > 0 && (
-                                                       <div className="mt-1.5 px-2 py-1 bg-emerald-50 border border-emerald-200/60 rounded-lg text-[11px] text-emerald-700 font-bold">
-                                                            ✓ {user.savedTracksCount} מסלולים שמורים בחשבונך
+                                                  <p className="text-xs text-slate-400 mt-0.5">{user.email}</p>
+                                                  {user.savedTracksCount !== undefined && (
+                                                       <div className="mt-2 flex items-center gap-1.5 text-[11px] text-cyan-400">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                                                            <span>{user.savedTracksCount} מסלולים שמורים במערכת</span>
                                                        </div>
                                                   )}
                                              </div>
-                                             <div className="py-1">
-                                                  <Link
-                                                       href="/flow"
-                                                       onClick={() => setShowProfileMenu(false)}
-                                                       className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
-                                                  >
-                                                       <Sliders className="h-3.5 w-3.5 text-blue-500" />
-                                                       בדיקת קבלה ומסלולים
-                                                  </Link>
-                                                  <Link
-                                                       href="/calculators"
-                                                       onClick={() => setShowProfileMenu(false)}
-                                                       className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition"
-                                                  >
-                                                       <Calculator className="h-3.5 w-3.5 text-blue-500" />
-                                                       מחשבון סכם
-                                                  </Link>
-                                             </div>
-                                             <div className="pt-1 border-t border-slate-100">
-                                                  <button
-                                                       onClick={() => {
-                                                            setShowProfileMenu(false);
-                                                            logout();
-                                                       }}
-                                                       className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition text-right"
-                                                  >
-                                                       <LogOut className="h-3.5 w-3.5" />
-                                                       התנתק מהחשבון
-                                                  </button>
-                                             </div>
+
+                                             <button
+                                                  onClick={() => {
+                                                       setShowProfileMenu(false);
+                                                       logout();
+                                                  }}
+                                                  className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-400 hover:bg-rose-500/10 rounded-xl transition-colors cursor-pointer"
+                                             >
+                                                  <LogOut className="h-4 w-4" />
+                                                  <span>התנתק מהחשבון</span>
+                                             </button>
                                         </div>
                                    )}
                               </div>
                          ) : (
-                              <div className="flex items-center gap-1.5 sm:gap-2">
+                              <div className="flex items-center gap-1.5">
                                    <button
                                         onClick={() => openAuthModal('login')}
-                                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
+                                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-full transition-all cursor-pointer"
                                    >
-                                        <LogIn className="h-3.5 w-3.5" />
+                                        <LogIn className="h-3.5 w-3.5 text-slate-400" />
                                         <span>התחברות</span>
                                    </button>
                                    <button
                                         onClick={() => openAuthModal('register')}
-                                        className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-full shadow-xs hover:shadow transition-all cursor-pointer"
+                                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 rounded-full transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] cursor-pointer"
                                    >
                                         <UserPlus className="h-3.5 w-3.5" />
-                                        <span>הרשמה</span>
+                                        <span>הרשמה חינם</span>
                                    </button>
                               </div>
                          )}
 
-                         {/* Notifications Bell */}
+                         {/* Notifications Popover */}
                          <div className="relative">
                               <button
                                    onClick={() => setShowNotifications(!showNotifications)}
-                                   className="relative p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50/60 rounded-full transition-colors"
-                                   aria-label="התראות"
+                                   className="relative p-2 text-slate-400 hover:text-white hover:bg-white/[0.06] rounded-full transition-colors border border-transparent hover:border-white/10"
+                                   title="התראות מערכת"
                               >
-                                   <Bell className="h-5 w-5" />
+                                   <Bell className="h-4 w-4" />
                                    {recalculationPending && (
-                                        <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-white" />
+                                        <span className="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
+                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+                                        </span>
                                    )}
                               </button>
 
-                              {/* Notifications Dropdown */}
                               {showNotifications && (
-                                   <div className="absolute right-0 mt-3 w-80 rounded-2xl bg-white p-4 shadow-xl border border-slate-200 z-50 animate-in fade-in slide-in-from-top-2">
-                                        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                                             <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                                                  <Bell className="h-4 w-4 text-blue-600" />
+                                   <div className="absolute left-0 mt-2 w-80 rounded-2xl bg-[#0c0e14]/95 p-4 shadow-2xl border border-white/10 backdrop-blur-xl z-50">
+                                        <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+                                             <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
+                                                  <Bell className="h-4 w-4 text-cyan-400" />
                                                   התראות מסלול
                                              </h4>
                                              <button
                                                   onClick={() => setShowNotifications(false)}
-                                                  className="text-slate-400 hover:text-slate-600"
+                                                  className="text-slate-400 hover:text-white"
                                              >
                                                   <X className="h-4 w-4" />
                                              </button>
                                         </div>
                                         <div className="mt-3 space-y-2 max-h-60 overflow-y-auto">
                                              {recalculationPending ? (
-                                                  <div className="p-3 bg-amber-50 border border-amber-200/80 rounded-xl text-xs text-amber-900">
+                                                  <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-200">
                                                        <div className="flex items-start gap-2">
-                                                            <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                                                            <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                                                             <div>
                                                                  <p className="font-bold">נדרש חישוב מסלול מחדש!</p>
-                                                                 <p className="mt-1 text-slate-700">{recalculationReason || 'זוהה שינוי בעומס הלימודים'}</p>
+                                                                 <p className="mt-1 text-slate-300">{recalculationReason || 'זוהה שינוי בעומס הלימודים'}</p>
                                                                  <button
                                                                       onClick={() => {
                                                                            recalculateRoute();
                                                                            setShowNotifications(false);
                                                                       }}
-                                                                      className="mt-2 text-xs bg-amber-600 text-white font-bold px-3 py-1 rounded-lg shadow-xs hover:bg-amber-700 transition"
+                                                                      className="mt-2 text-xs bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1 rounded-lg shadow-xs transition"
                                                                  >
                                                                       בצע חישוב מסלול עכשיו
                                                                  </button>
@@ -188,15 +172,15 @@ export default function Navbar() {
                                                        </div>
                                                   </div>
                                              ) : (
-                                                  <div className="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 text-center">
+                                                  <div className="p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-xs text-slate-400 text-center">
                                                        אין התראות חדשות. תוכנית הלימודים מעודכנת ומיושרת!
                                                   </div>
                                              )}
 
-                                             <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs text-slate-700 flex items-start gap-2">
-                                                  <Sparkles className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
+                                             <div className="p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-xs text-slate-300 flex items-start gap-2">
+                                                  <Sparkles className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
                                                   <div>
-                                                       <span className="font-bold">טיפ אלגוריתמי:</span> חזרות מרווחות בשבת בבוקר מעלות את שימור הזיכרון ב-35%.
+                                                       <span className="font-bold text-white">טיפ אלגוריתמי:</span> חזרות מרווחות בשבת בבוקר מעלות את שימור הזיכרון ב-35%.
                                                   </div>
                                              </div>
                                         </div>
@@ -204,22 +188,10 @@ export default function Navbar() {
                               )}
                          </div>
 
-                         {/* Recalculate Route Indicator Button if pending */}
-                         {recalculationPending && (
-                              <button
-                                   onClick={() => recalculateRoute()}
-                                   className="hidden lg:flex items-center gap-2 bg-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-xs hover:bg-amber-600 transition-all animate-pulse"
-                                   title="לחץ לחישוב מסלול מחדש"
-                              >
-                                   <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                                   <span>חישוב מסלול מחדש</span>
-                              </button>
-                         )}
-
                     </div>
 
-                    {/* Navigation Links */}
-                    <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60">
+                    {/* Navigation Links (Capsule Design) */}
+                    <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] p-1.5 rounded-full border border-white/[0.08] backdrop-blur-md">
                          {navLinks.map((link) => {
                               const Icon = link.icon;
                               const isActive = pathname === link.href;
@@ -227,12 +199,12 @@ export default function Navbar() {
                                    <Link
                                         key={link.href}
                                         href={link.href}
-                                        className={`flex items-center gap-2 px-4 py-1.5 text-sm font-semibold rounded-full transition-all duration-200 ${isActive
-                                             ? 'bg-white text-blue-600 shadow-xs border border-slate-200/60 font-bold'
-                                             : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                                        className={`flex items-center gap-2 px-4 py-1.5 text-sm font-semibold rounded-full transition-all duration-300 ${isActive
+                                             ? 'bg-gradient-to-r from-blue-600/30 to-cyan-500/30 text-white shadow-[0_0_15px_rgba(6,182,212,0.25)] border border-cyan-400/40 font-bold'
+                                             : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
                                              }`}
                                    >
-                                        <Icon className={`h-4 w-4 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
+                                        <Icon className={`h-4 w-4 ${isActive ? 'text-cyan-400' : 'text-slate-500'}`} />
                                         <span>{link.label}</span>
                                    </Link>
                               );
@@ -241,7 +213,7 @@ export default function Navbar() {
 
                     {/* Brand Logo (Appears on the LEFT side in RTL) */}
                     <Link href="/" className="flex items-center gap-3 group">
-                         <KalisLogo size="md" variant="dark" showTagline={true} />
+                         <KalisLogo size="md" variant="light" showTagline={true} />
                     </Link>
 
                </div>

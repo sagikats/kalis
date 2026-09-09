@@ -240,7 +240,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                               מחשבון סכם <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">כלל-אוניברסיטאי</span>
                          </h1>
                          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-                              הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד וקבל חישוב השוואתי מדויק של ציוני הסכם בכל אוניברסיטאות היעד בישראל — תל אביב, הטכניון, העברית, בן-גוריון, חיפה ואריאל.
+                              הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד וקבל חישוב השוואתי מדויק של ציוני הסכם בכל אוניברסיטאות היעד בישראל — הטכניון, תל אביב, העברית, בן-גוריון, בר-אילן, חיפה, אריאל ורייכמן.
                          </p>
                          <div className="flex justify-center pt-1">
                               <Link
@@ -268,7 +268,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                    className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md"
                               >
                                    <Sparkles className="h-3.5 w-3.5" />
-                                   <span>הצג את כל 6 האוניברסיטאות</span>
+                                   <span>הצג את כל 8 האוניברסיטאות</span>
                               </button>
                          </div>
                     )}

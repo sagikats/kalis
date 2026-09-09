@@ -14,8 +14,8 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: 'Study Planner - Waze של הלמידה לבגרויות ופסיכומטרי',
-  description: 'פלטפורמת למידה אדפטיבית לחישוב מסלול מחדש, אופטימיזציית סכם קבלה ותכנון לו״ז חכם למועמדי אקדמיה בישראל.',
+  title: 'Kalis (קליס) — ארכיטקטורת קבלה ואופטימיזציית סכם לאוניברסיטאות',
+  description: 'פלטפורמת אופטימיזציית קבלה לאקדמיה הראשונה בישראל. מנוע מתמטי רב-מוסדי ל-8 האוניברסיטאות, ניתוח פערי קבלה ומסלולי שיפור אופטימליים.',
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl" className={`${rubik.variable} h-full antialiased`}>
-      <body className="font-sans min-h-full flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
+      <body className="font-sans min-h-full flex flex-col bg-[#06070a] text-slate-100 selection:bg-cyan-500 selection:text-black">
         <AuthProvider>
           <PlannerProvider>
             <Navbar />

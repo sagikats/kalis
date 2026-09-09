@@ -13,77 +13,114 @@ import {
   GraduationCap,
   Sparkles,
   ShieldCheck,
-  Layers,
   TrendingUp,
-  Clock,
+  Cpu,
+  Layers,
   Compass,
-  Building2
+  ArrowUpRight
 } from 'lucide-react';
+import InteractiveBackground from '@/components/common/InteractiveBackground';
+import GlowCard from '@/components/common/GlowCard';
 
 export default function LandingPage() {
   const router = useRouter();
 
   return (
-    <div className="relative overflow-hidden bg-slate-50" dir="rtl">
+    <div className="relative min-h-screen bg-[#06070a] text-slate-100 selection:bg-cyan-500 selection:text-slate-950 overflow-hidden font-sans" dir="rtl">
 
-      {/* Decorative Background Blur Gradients */}
-      <div className="absolute top-0 right-1/4 -z-10 h-96 w-96 rounded-full bg-blue-200/40 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 left-10 -z-10 h-96 w-96 rounded-full bg-indigo-200/30 blur-3xl pointer-events-none" />
+      {/* Interactive OHZI Canvas Background */}
+      <InteractiveBackground />
+
+      {/* Ambient Lighting Spheres */}
+      <div className="pointer-events-none fixed top-10 right-1/4 -z-10 w-[550px] h-[550px] bg-blue-600/[0.08] rounded-full blur-[140px]" />
+      <div className="pointer-events-none fixed top-1/3 left-10 -z-10 w-[600px] h-[600px] bg-indigo-600/[0.06] rounded-full blur-[160px]" />
+      <div className="pointer-events-none fixed bottom-10 right-1/3 -z-10 w-[500px] h-[500px] bg-cyan-500/[0.05] rounded-full blur-[140px]" />
+
+      {/* Grid Pattern Overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025]"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: '48px 48px'
+        }}
+      />
 
       {/* HERO SECTION */}
-      <section className="relative pt-12 pb-20 lg:pt-24 lg:pb-28">
+      <section className="relative pt-16 pb-24 lg:pt-32 lg:pb-36">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-6">
+          <div className="text-center max-w-4xl mx-auto space-y-8">
 
-            {/* Top Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 px-4 py-1.5 text-xs font-bold text-blue-900 border border-blue-200/60 shadow-xs animate-in fade-in duration-300">
-              <Zap className="h-3.5 w-3.5 text-blue-600 animate-pulse" />
-              <span>פלטפורמת אופטימיזציית קבלה לאקדמיה 2026</span>
+            {/* Top Monospace HUD Badge */}
+            <div className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.04] backdrop-blur-md px-4 py-1.5 text-xs font-mono tracking-wider text-slate-300 border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.8)] animate-in fade-in duration-500">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
+              </span>
+              <span className="text-cyan-400 font-bold">2026 // ADMISSION ENGINE</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-slate-300">אופטימיזציה אקדמית מתקדמת</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl font-black tracking-tight text-slate-900 sm:text-6xl lg:text-7xl leading-tight">
-              ה-Waze של <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent">הלמידה שלך</span>
+            <h1 className="text-5xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl leading-[1.08]">
+              ה-Waze של <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(56,189,248,0.25)]">
+                הלמידה שלך
+              </span>
             </h1>
 
-            {/* Subheadline: The existing sentence requested by user */}
-            <p className="text-lg text-slate-600 sm:text-xl font-normal leading-relaxed max-w-2xl mx-auto">
+            {/* Subheadline (Exact user requested sentence) */}
+            <p className="text-base sm:text-xl text-slate-400 font-normal leading-relaxed max-w-2xl mx-auto">
               אלגוריתם למידה אדפטיבי שמחשב מסלול מחדש בזמן אמת, מונע שחיקה, ומתאים את עומס השאלות והחזרות המרווחות ללוח הזמנים האמיתי שלך.
             </p>
 
-            {/* Two Main CTA Buttons */}
+            {/* Two Main CTA Buttons in Award-Winning Aesthetic */}
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={() => router.push('/flow')}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-2xl shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="w-full sm:w-auto relative group overflow-hidden flex items-center justify-center gap-3 px-9 py-4.5 text-base font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-400 rounded-2xl shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:shadow-[0_0_50px_rgba(59,130,246,0.55)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
-                <Sliders className="h-5 w-5" />
+                <div className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out" />
+                <Sliders className="h-5 w-5 text-white" />
                 <span>התחל תהליך: בדיקת קבלה ומסלולים</span>
-                <ArrowLeft className="h-4 w-4 rotate-180" />
+                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
               </button>
 
               <button
                 onClick={() => router.push('/calculators')}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-slate-800 bg-white hover:bg-slate-100 border border-slate-200/90 rounded-2xl shadow-sm hover:shadow transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-9 py-4.5 text-base font-bold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] hover:text-white border border-white/15 hover:border-white/30 rounded-2xl backdrop-blur-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] cursor-pointer"
               >
-                <Calculator className="h-5 w-5 text-blue-600" />
+                <Calculator className="h-5 w-5 text-cyan-400" />
                 <span>מחשבון סכם לכל האוניברסיטאות</span>
               </button>
             </div>
 
-            {/* Stats / Trust Badges */}
-            <div className="pt-12 grid grid-cols-2 md:grid-cols-3 gap-4 text-center max-w-2xl mx-auto border-t border-slate-200/80">
-              <div className="p-3">
-                <p className="text-2xl font-black text-blue-600">8</p>
-                <p className="text-xs text-slate-500 font-medium">אוניברסיטאות נתמכות במלואן</p>
-              </div>
-              <div className="p-3">
-                <p className="text-2xl font-black text-indigo-600">639</p>
-                <p className="text-xs text-slate-500 font-medium">תארים ותוכניות לימוד</p>
-              </div>
-              <div className="p-3 col-span-2 md:col-span-1">
-                <p className="text-2xl font-black text-emerald-600">100%</p>
-                <p className="text-xs text-slate-500 font-medium">נוסחאות סכם רשמיות</p>
+            {/* Futuristic HUD Metrics Bar */}
+            <div className="pt-16 max-w-3xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-md">
+                <div className="bg-[#0c0e14]/90 p-5 text-center group hover:bg-white/[0.03] transition-colors">
+                  <p className="text-3xl font-black font-mono bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                    8
+                  </p>
+                  <p className="text-xs text-slate-400 font-medium mt-1">אוניברסיטאות נתמכות במלואן</p>
+                  <span className="text-[10px] font-mono text-cyan-400/80 mt-0.5 block">100% רשמי ומאומת</span>
+                </div>
+
+                <div className="bg-[#0c0e14]/90 p-5 text-center group hover:bg-white/[0.03] transition-colors">
+                  <p className="text-3xl font-black font-mono bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                    639
+                  </p>
+                  <p className="text-xs text-slate-400 font-medium mt-1">תארים ותוכניות לימוד</p>
+                  <span className="text-[10px] font-mono text-indigo-400/80 mt-0.5 block">מיפוי ספים ארצי</span>
+                </div>
+
+                <div className="bg-[#0c0e14]/90 p-5 text-center group hover:bg-white/[0.03] transition-colors">
+                  <p className="text-3xl font-black font-mono bg-gradient-to-r from-indigo-400 to-emerald-400 bg-clip-text text-transparent">
+                    0
+                  </p>
+                  <p className="text-xs text-slate-400 font-medium mt-1">שעות למידה מבוזבזות</p>
+                  <span className="text-[10px] font-mono text-emerald-400/80 mt-0.5 block">אופטימיזציית מאמץ בלעדית</span>
+                </div>
               </div>
             </div>
 
@@ -91,130 +128,170 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 3 CORE CAPABILITIES SECTION (Replaces old principles) */}
-      <section className="py-20 bg-white border-y border-slate-200/80 relative">
+      {/* 3 CORE CAPABILITIES (BENTO GRID - OHZI INTERACTIVE STYLE) */}
+      <section className="py-24 relative border-t border-white/[0.08]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold text-blue-600 tracking-wider uppercase bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
-              היכולות המובילות של קליס
-            </span>
-            <h2 className="text-3xl font-black text-slate-900 sm:text-4xl lg:text-5xl">
-              שלוש היכולות המרכזיות לשדרוג סיכויי הקבלה שלך
+          <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 font-mono text-xs">
+              <Cpu className="h-3.5 w-3.5" />
+              <span>CORE SYSTEM CAPABILITIES // ארכיטקטורת האתר</span>
+            </div>
+            <h2 className="text-3xl font-black sm:text-5xl tracking-tight text-white">
+              שלוש היכולות המרכזיות <br />
+              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                לסגירת פער הקבלה שלך
+              </span>
             </h2>
-            <p className="text-base text-slate-600 max-w-2xl mx-auto">
-              ארגז כלים אקדמי מתקדם המשלב מתמטיקה מדויקת, אבחון פערים אישי ומחולל מסלולים חכם לחסכון במאות שעות לימוד.
+            <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
+              טכנולוגיה אקדמית שמרכזת עבורך חישוב מתמטי מדויק, אבחון פערים אישי ומסלולי שיפור חכמים לחיסכון בעשרות שעות למידה מיותרות.
             </p>
           </div>
 
-          {/* 3 Capabilities Cards Grid */}
+          {/* 3 Capabilities Glow Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            {/* Capability 1: Multi-University Sekem Calculator */}
-            <div className="rounded-3xl bg-slate-50/80 p-8 border border-slate-200/80 hover:border-blue-300 hover:bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-              <div className="space-y-5">
+            {/* Capability 1: Multi-University Sekem Engine */}
+            <GlowCard glowColor="cyan" className="p-8 flex flex-col justify-between h-full">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-xs">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_25px_rgba(6,182,212,0.15)]">
                     <Calculator className="h-7 w-7" />
                   </div>
-                  <span className="text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-200/70 px-2.5 py-1 rounded-full">
-                    נוסחאות רשמיות
+                  <span className="text-[11px] font-mono font-bold text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 rounded-full">
+                    01 // SEKEM ENGINE
                   </span>
                 </div>
 
-                <div className="space-y-2.5">
-                  <span className="text-xs font-bold text-slate-400">01. דיוק מתמטי מוחלט</span>
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-black text-white group-hover:text-cyan-400 transition-colors">
                     מחשבון סכם מאוחד ל-8 האוניברסיטאות
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-400 leading-relaxed">
                     חישוב סכם סימולטני ומדויק עבור הטכניון, תל אביב, העברית, בן-גוריון, בר-אילן, חיפה, אריאל ורייכמן. כולל שקלול אוטומטי של בונוסי מקצועות, אלגוריתם השמטת מקצועות חוקי (רצפת 20 יח״ל), ואיתור קבלה ישירה על סמך בגרות בלבד.
                   </p>
                 </div>
+
+                {/* Specs Pill List */}
+                <div className="pt-2 flex flex-wrap gap-2">
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ 8 מוסדות רשמיים
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ רצפת 20 יח״ל חוקית
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ קבלה ישירה
+                  </span>
+                </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-200/60 flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500">8 מוסדות • עדכון 2026</span>
+              <div className="pt-8 mt-8 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs text-slate-500 font-mono">LIVE CALCULATION</span>
                 <Link
                   href="/calculators"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 group-hover:translate-x-[-4px] transition-all"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 group-hover:translate-x-[-4px] transition-all"
                 >
-                  <span>פתח מחשבון</span>
-                  <ArrowLeft className="h-3.5 w-3.5 rotate-180" />
+                  <span>פתח מחשבון סכם</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
+            </GlowCard>
 
             {/* Capability 2: Admission Gap Report & Diagnostic */}
-            <div className="rounded-3xl bg-slate-50/80 p-8 border border-slate-200/80 hover:border-indigo-300 hover:bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-              <div className="space-y-5">
+            <GlowCard glowColor="indigo" className="p-8 flex flex-col justify-between h-full">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300 shadow-xs">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-[0_0_25px_rgba(99,102,241,0.15)]">
                     <Target className="h-7 w-7" />
                   </div>
-                  <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200/70 px-2.5 py-1 rounded-full">
-                    מיפוי 639 תארים
+                  <span className="text-[11px] font-mono font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 px-3 py-1 rounded-full">
+                    02 // GAP DIAGNOSTIC
                   </span>
                 </div>
 
-                <div className="space-y-2.5">
-                  <span className="text-xs font-bold text-slate-400">02. אבחון וזיהוי פערים</span>
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-indigo-600 transition-colors">
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-black text-white group-hover:text-indigo-400 transition-colors">
                     בדיקת קבלה ודוח פערים אישי לתואר
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-400 leading-relaxed">
                     בחר את החוג והאוניברסיטה המבוקשים וקבל דוח פערים מיידי: המערכת משווה את נתוניך מול סף הקבלה הרשמי, מציגה את הפער המדויק בנקודות סכם, פסיכומטרי וממוצע בגרות, ומסווגת את סיכוייך (קבלה ודאית, בהישג יד, או דורש מאמץ).
                   </p>
                 </div>
+
+                {/* Specs Pill List */}
+                <div className="pt-2 flex flex-wrap gap-2">
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ 639 תוכניות לימוד
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ ספי קבלה עדכניים
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ זיהוי פער נקודתי
+                  </span>
+                </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-200/60 flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500">השוואת ספים בזמן אמת</span>
+              <div className="pt-8 mt-8 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs text-slate-500 font-mono">REAL-TIME GAPS</span>
                 <Link
                   href="/flow"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-700 group-hover:translate-x-[-4px] transition-all"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 group-hover:translate-x-[-4px] transition-all"
                 >
                   <span>בדוק קבלה לתואר</span>
-                  <ArrowLeft className="h-3.5 w-3.5 rotate-180" />
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
+            </GlowCard>
 
-            {/* Capability 3: AI Action Tracks Generator */}
-            <div className="rounded-3xl bg-slate-50/80 p-8 border border-slate-200/80 hover:border-emerald-300 hover:bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-              <div className="space-y-5">
+            {/* Capability 3: AI Action Tracks Optimizer */}
+            <GlowCard glowColor="blue" className="p-8 flex flex-col justify-between h-full">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300 shadow-xs">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-[0_0_25px_rgba(59,130,246,0.15)]">
                     <Zap className="h-7 w-7" />
                   </div>
-                  <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2.5 py-1 rounded-full">
-                    מינימום מאמץ
+                  <span className="text-[11px] font-mono font-bold text-blue-300 bg-blue-500/10 border border-blue-500/30 px-3 py-1 rounded-full">
+                    03 // ACTION TRACKS
                   </span>
                 </div>
 
-                <div className="space-y-2.5">
-                  <span className="text-xs font-bold text-slate-400">03. מנוע אופטימיזציה בלעדי</span>
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-emerald-600 transition-colors">
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-black text-white group-hover:text-blue-400 transition-colors">
                     מחולל מסלולי פעולה חכמים לסגירת הפער
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-400 leading-relaxed">
                     האלגוריתם הייחודי של קליס מייצר עבורך 2 מסלולי פעולה מנצחים: מסלול מיקוד בבחינה אחת עם ה-ROI המרבי, ומסלול פיזור סיכונים המשלב שיפורים קלים. המסלולים כוללים לוח זמנים למועדי חורף, אביב וקיץ, מודל תקרה ריאלי לפסיכומטרי וחיסכון בשעות למידה.
                   </p>
                 </div>
+
+                {/* Specs Pill List */}
+                <div className="pt-2 flex flex-wrap gap-2">
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ מסלול מיקוד (ROI)
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ מסלול פיזור סיכונים
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-slate-300 border border-white/10">
+                    ✓ חלופת מכינה Opt-In
+                  </span>
+                </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-200/60 flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500">מסלול A: מיקוד • מסלול B: פיזור</span>
+              <div className="pt-8 mt-8 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs text-slate-500 font-mono">EFFORT OPTIMIZATION</span>
                 <Link
                   href="/flow"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 group-hover:translate-x-[-4px] transition-all"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-blue-300 group-hover:translate-x-[-4px] transition-all"
                 >
-                  <span>בנה מסלולים</span>
-                  <ArrowLeft className="h-3.5 w-3.5 rotate-180" />
+                  <span>בנה מסלולים אישיים</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
+            </GlowCard>
 
           </div>
 
@@ -222,37 +299,37 @@ export default function LandingPage() {
       </section>
 
       {/* FINAL HIGH IMPACT BOTTOM BANNER */}
-      <section className="py-20 bg-gradient-to-r from-slate-950 via-blue-950 to-indigo-950 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="py-24 relative overflow-hidden border-t border-white/10">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-blue-950/20 to-[#06070a]" />
 
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-blue-200 backdrop-blur-sm border border-white/10">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-8 relative z-10">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-4 py-1.5 text-xs font-mono text-cyan-300 border border-white/10 backdrop-blur-md">
             <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-            <span>הדרך החכמה והמהירה ביותר להתקבל לתואר</span>
+            <span>THE SHORTEST PATH TO ACADEMIC ADMISSION</span>
           </div>
 
-          <h2 className="text-3xl font-black sm:text-4xl lg:text-5xl tracking-tight">
+          <h2 className="text-3xl font-black sm:text-5xl lg:text-6xl text-white tracking-tight">
             מוכן למצוא את המסלול הקצר ביותר לתואר שלך?
           </h2>
 
-          <p className="text-sm sm:text-base text-blue-100/80 max-w-xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             התחל בבדיקת סיכויי קבלה ומסלולי שיפור מותאמים אישית, או חשב סכם מדויק לכל 8 האוניברסיטאות בישראל.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={() => router.push('/flow')}
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-sm rounded-2xl shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto relative group overflow-hidden px-9 py-4.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-400 text-white font-black text-sm rounded-2xl shadow-[0_0_35px_rgba(59,130,246,0.35)] hover:shadow-[0_0_50px_rgba(59,130,246,0.55)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
             >
+              <div className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out" />
               <Sliders className="h-4 w-4" />
               <span>התחל תהליך: בדיקת קבלה ומסלולים</span>
-              <ArrowLeft className="h-4 w-4 rotate-180" />
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             </button>
 
             <button
               onClick={() => router.push('/calculators')}
-              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-2xl border border-white/20 backdrop-blur-sm transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-9 py-4.5 bg-white/[0.04] hover:bg-white/[0.08] text-white font-bold text-sm rounded-2xl border border-white/15 hover:border-white/30 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
             >
               <Calculator className="h-4 w-4 text-cyan-400" />
               <span>מחשבון סכם לכל האוניברסיטאות</span>
