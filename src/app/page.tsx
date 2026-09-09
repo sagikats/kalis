@@ -81,26 +81,22 @@ export default function LandingPage() {
           {/* Gradient Overlay for high contrast & clarity */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/35 pointer-events-none" />
 
-          {/* Headline overlaid on the image - 100% STATIC (לא תזוז) */}
+          {/* Headline and Subtitle overlaid on the image - 100% STATIC (לא תזוז) */}
           <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl mx-auto flex flex-col items-center justify-center">
-            {/* Top Editorial Badge inside Hero */}
-            <div className="mb-4 sm:mb-6">
-              <div className="inline-flex items-center gap-2.5 rounded-full bg-white/95 backdrop-blur-md px-4 py-1.5 text-xs font-semibold text-[#222222] border border-white/40 shadow-lg animate-in fade-in duration-500">
-                <span className="flex h-2 w-2 relative">
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
-                </span>
-                <span className="text-[#111111] font-bold">2026 // מנוע אופטימיזציה אקדמי</span>
-                <span className="text-[#C0BAB0]">|</span>
-                <span className="text-[#55524B]">חישוב מדויק ל-8 האוניברסיטאות</span>
-              </div>
-            </div>
-
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-2xl select-none inline-flex items-center justify-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
-              <span>הצעד הראשון שלך לאקדמיה</span>
-              <span className="animate-emoji-bob text-3xl sm:text-5xl md:text-6xl lg:text-7xl select-none inline-block shrink-0 drop-shadow-md">
-                🧑‍🎓
-              </span>
+            {/* Main Headline without emoji */}
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-2xl select-none">
+              הצעד הראשון שלך לאקדמיה
             </h1>
+
+            {/* Academic Optimization Engine Subtitle - Under Headline, Transparent Background, Different Font (font-sans) */}
+            <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm md:text-base font-sans font-medium text-white/90 tracking-wide select-none drop-shadow-md">
+              <span className="flex h-2 w-2 relative">
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400" />
+              </span>
+              <span className="font-bold text-white tracking-wider">2026 // מנוע אופטימיזציה אקדמי</span>
+              <span className="text-white/40">|</span>
+              <span className="text-white/85">חישוב מדויק ל-8 האוניברסיטאות</span>
+            </div>
           </div>
 
           {/* Carousel Dots Navigation */}
