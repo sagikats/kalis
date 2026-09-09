@@ -41,66 +41,45 @@ export default function LandingPage() {
       />
 
       {/* HERO SECTION */}
-      <section className="relative pt-16 pb-20 lg:pt-28 lg:pb-32 overflow-hidden">
-        {/* Top Editorial Badge */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center mb-5 sm:mb-7">
-          <div className="inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-1.5 text-xs font-medium text-[#44423D] border border-[#E0DBD0] shadow-xs animate-in fade-in duration-500">
-            <span className="flex h-2 w-2 relative">
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
-            </span>
-            <span className="text-[#222222] font-bold">2026 // מנוע אופטימיזציה אקדמי</span>
-            <span className="text-[#D0CABE]">|</span>
-            <span className="text-[#66635C]">חישוב מדויק ל-8 האוניברסיטאות</span>
+      <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Top Editorial Badge */}
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-1.5 text-xs font-medium text-[#44423D] border border-[#E0DBD0] shadow-xs animate-in fade-in duration-500">
+              <span className="flex h-2 w-2 relative">
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
+              </span>
+              <span className="text-[#222222] font-bold">2026 // מנוע אופטימיזציה אקדמי</span>
+              <span className="text-[#D0CABE]">|</span>
+              <span className="text-[#66635C]">חישוב מדויק ל-8 האוניברסיטאות</span>
+            </div>
           </div>
-        </div>
 
-        {/* Main Headline - Infinite Moving Marquee Ticker (like itsnotviolent.com) */}
-        <div className="relative w-full overflow-hidden py-4 sm:py-6 my-2 group flex" dir="ltr">
-          {/* Subtle edge fades for smooth entry & exit */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent z-10" />
+          {/* Hero Banner with Image and Headline on top (STATIC - לא תזוז) */}
+          <div className="relative w-full max-w-5xl mx-auto rounded-3xl sm:rounded-[2.5rem] overflow-hidden border border-[#E5DFD4] shadow-md my-4 h-[320px] sm:h-[420px] md:h-[480px] flex items-center justify-center">
+            {/* The Graduation Image */}
+            <img
+              src="/images/hero-graduation.png"
+              alt="בוגרי אקדמיה חוגגים קבלה"
+              className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] select-none"
+            />
 
-          {/* Hidden accessible H1 for SEO */}
-          <h1 className="sr-only">הצעד הראשון שלך לאקדמיה</h1>
+            {/* Gradient Overlay for high contrast & clarity */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/35" />
 
-          {/* Seamless Infinite Running Track 1 */}
-          <div className="flex shrink-0 items-center animate-marquee-loop select-none" aria-hidden="true">
-            {[...Array(4)].map((_, i) => (
-              <div key={`track-a-${i}`} className="inline-flex items-center gap-4 sm:gap-8 mx-4 sm:mx-8">
-                <span className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-[#1A1A1A] whitespace-nowrap">
-                  הצעד הראשון שלך לאקדמיה
-                </span>
-                <span className="animate-emoji-bob text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl select-none inline-block">
+            {/* Headline overlaid on the image - 100% STATIC (לא תזוז) */}
+            <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl mx-auto">
+              <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-xl select-none inline-flex items-center justify-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
+                <span>הצעד הראשון שלך לאקדמיה</span>
+                <span className="animate-emoji-bob text-3xl sm:text-5xl md:text-6xl lg:text-7xl select-none inline-block shrink-0 drop-shadow-md">
                   🧑‍🎓
                 </span>
-                <span className="text-[#C5B59E] text-xl sm:text-3xl md:text-4xl lg:text-5xl select-none font-light mx-2 sm:mx-4">
-                  ✦
-                </span>
-              </div>
-            ))}
+              </h1>
+            </div>
           </div>
 
-          {/* Seamless Infinite Running Track 2 (Immediate identical clone following right behind Track 1) */}
-          <div className="flex shrink-0 items-center animate-marquee-loop select-none" aria-hidden="true">
-            {[...Array(4)].map((_, i) => (
-              <div key={`track-b-${i}`} className="inline-flex items-center gap-4 sm:gap-8 mx-4 sm:mx-8">
-                <span className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-[#1A1A1A] whitespace-nowrap">
-                  הצעד הראשון שלך לאקדמיה
-                </span>
-                <span className="animate-emoji-bob text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl select-none inline-block">
-                  🧑‍🎓
-                </span>
-                <span className="text-[#C5B59E] text-xl sm:text-3xl md:text-4xl lg:text-5xl select-none font-light mx-2 sm:mx-4">
-                  ✦
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Subheadline & CTA Buttons Container */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-5 sm:mt-7">
-          <div className="text-center max-w-3xl mx-auto space-y-7">
+          {/* Subheadline & CTA Buttons Container */}
+          <div className="text-center max-w-3xl mx-auto space-y-7 mt-8 sm:mt-10">
             {/* Subheadline (Exact user requested sentence) */}
             <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-2xl mx-auto">
               אלגוריתם למידה אדפטיבי שמחשב מסלול מחדש בזמן אמת, מונע שחיקה, ומתאים את עומס השאלות והחזרות המרווחות ללוח הזמנים האמיתי שלך.
