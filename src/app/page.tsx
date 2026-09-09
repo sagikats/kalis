@@ -57,72 +57,72 @@ export default function LandingPage() {
         }}
       />
 
-      {/* HERO SECTION */}
-      <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Top Editorial Badge */}
-          <div className="text-center mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-1.5 text-xs font-medium text-[#44423D] border border-[#E0DBD0] shadow-xs animate-in fade-in duration-500">
-              <span className="flex h-2 w-2 relative">
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
-              </span>
-              <span className="text-[#222222] font-bold">2026 // מנוע אופטימיזציה אקדמי</span>
-              <span className="text-[#D0CABE]">|</span>
-              <span className="text-[#66635C]">חישוב מדויק ל-8 האוניברסיטאות</span>
-            </div>
-          </div>
+      {/* HERO SECTION - FULL WIDTH FROM NAVBAR TO JUST BEFORE SUBHEADLINE */}
+      <section className="relative w-full">
+        {/* Full-width Edge-to-Edge Banner with Crossfading Images and Static Headline */}
+        <div className="relative w-full overflow-hidden border-b border-[#E5DFD4] shadow-xs h-[360px] sm:h-[440px] md:h-[500px] lg:h-[540px] flex flex-col items-center justify-center bg-black/95">
+          {/* The 5 Crossfading Images */}
+          {HERO_IMAGES.map((img, idx) => {
+            const isActive = idx === currentImageIndex;
+            return (
+              <img
+                key={img.src}
+                src={img.src}
+                alt={img.alt}
+                className={`absolute inset-0 w-full h-full object-cover object-center select-none transition-all duration-1000 ease-in-out ${
+                  isActive
+                    ? 'opacity-85 scale-100'
+                    : 'opacity-0 scale-105 pointer-events-none'
+                }`}
+              />
+            );
+          })}
 
-          {/* Hero Banner with Crossfading Images and Static Headline on top */}
-          <div className="relative w-full max-w-5xl mx-auto rounded-3xl sm:rounded-[2.5rem] overflow-hidden border border-[#E5DFD4] shadow-md my-4 h-[320px] sm:h-[420px] md:h-[480px] flex items-center justify-center bg-black/95">
-            {/* The 5 Crossfading Images */}
-            {HERO_IMAGES.map((img, idx) => {
-              const isActive = idx === currentImageIndex;
-              return (
-                <img
-                  key={img.src}
-                  src={img.src}
-                  alt={img.alt}
-                  className={`absolute inset-0 w-full h-full object-cover object-center select-none transition-all duration-1000 ease-in-out ${
-                    isActive
-                      ? 'opacity-85 scale-100'
-                      : 'opacity-0 scale-105 pointer-events-none'
-                  }`}
-                />
-              );
-            })}
+          {/* Gradient Overlay for high contrast & clarity */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/35 pointer-events-none" />
 
-            {/* Gradient Overlay for high contrast & clarity */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/35 pointer-events-none" />
-
-            {/* Headline overlaid on the image - 100% STATIC (לא תזוז) */}
-            <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl mx-auto">
-              <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-xl select-none inline-flex items-center justify-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
-                <span>הצעד הראשון שלך לאקדמיה</span>
-                <span className="animate-emoji-bob text-3xl sm:text-5xl md:text-6xl lg:text-7xl select-none inline-block shrink-0 drop-shadow-md">
-                  🧑‍🎓
+          {/* Headline overlaid on the image - 100% STATIC (לא תזוז) */}
+          <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl mx-auto flex flex-col items-center justify-center">
+            {/* Top Editorial Badge inside Hero */}
+            <div className="mb-4 sm:mb-6">
+              <div className="inline-flex items-center gap-2.5 rounded-full bg-white/95 backdrop-blur-md px-4 py-1.5 text-xs font-semibold text-[#222222] border border-white/40 shadow-lg animate-in fade-in duration-500">
+                <span className="flex h-2 w-2 relative">
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
                 </span>
-              </h1>
+                <span className="text-[#111111] font-bold">2026 // מנוע אופטימיזציה אקדמי</span>
+                <span className="text-[#C0BAB0]">|</span>
+                <span className="text-[#55524B]">חישוב מדויק ל-8 האוניברסיטאות</span>
+              </div>
             </div>
 
-            {/* Carousel Dots Navigation */}
-            <div className="absolute bottom-4 z-20 flex items-center gap-1.5 sm:gap-2">
-              {HERO_IMAGES.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  onClick={() => setCurrentImageIndex(dotIdx)}
-                  aria-label={`עבור לתמונה ${dotIdx + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                    dotIdx === currentImageIndex
-                      ? 'w-6 bg-white'
-                      : 'w-1.5 bg-white/40 hover:bg-white/75'
-                  }`}
-                />
-              ))}
-            </div>
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-2xl select-none inline-flex items-center justify-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
+              <span>הצעד הראשון שלך לאקדמיה</span>
+              <span className="animate-emoji-bob text-3xl sm:text-5xl md:text-6xl lg:text-7xl select-none inline-block shrink-0 drop-shadow-md">
+                🧑‍🎓
+              </span>
+            </h1>
           </div>
 
-          {/* Subheadline & CTA Buttons Container */}
-          <div className="text-center max-w-3xl mx-auto space-y-7 mt-8 sm:mt-10">
+          {/* Carousel Dots Navigation */}
+          <div className="absolute bottom-5 z-20 flex items-center gap-1.5 sm:gap-2">
+            {HERO_IMAGES.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                onClick={() => setCurrentImageIndex(dotIdx)}
+                aria-label={`עבור לתמונה ${dotIdx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  dotIdx === currentImageIndex
+                    ? 'w-7 bg-white shadow-xs'
+                    : 'w-2 bg-white/40 hover:bg-white/75'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Subheadline & CTA Buttons Container - Just below the image banner */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-20 lg:pb-32">
+          <div className="text-center max-w-3xl mx-auto space-y-7">
             {/* Subheadline (Exact user requested sentence) */}
             <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-2xl mx-auto">
               אלגוריתם למידה אדפטיבי שמחשב מסלול מחדש בזמן אמת, מונע שחיקה, ומתאים את עומס השאלות והחזרות המרווחות ללוח הזמנים האמיתי שלך.

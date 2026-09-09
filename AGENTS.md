@@ -140,6 +140,7 @@ npm run build
 5. **Hero Banner 5-Image Crossfade Slideshow (`src/app/page.tsx`, `public/images/`):**
    - Integrated all 5 authentic academic graduation celebration images (`hero-grad-1.png` through `hero-grad-5.png`).
    - Implemented smooth automatic crossfade transition (1000ms ease-in-out opacity & subtle Ken Burns scale shift) rotating every 4.5s.
+   - Designed full-bleed edge-to-edge layout (`w-full`) extending seamlessly directly from the top navigation bar down to just before the subheadline text.
    - Kept the headline **"הצעד הראשון שלך לאקדמיה 🧑‍🎓"** completely static overlaid on top with a protective dark gradient vignette for 100% WCAG-compliant legibility.
    - Added interactive navigation indicator pills at the bottom of the banner.
 
