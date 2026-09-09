@@ -90,6 +90,19 @@ export interface InstitutionRecord {
 	defaultMinBagrutUnits: number;
 }
 
+export interface BagrutSubjectRecord {
+	id: string;
+	name: string;
+	category: string;
+	categoryLabel: string;
+	defaultUnits: number;
+	allowedUnits: number[];
+	frictionIndex: number;
+	basePrepHours: number;
+	examSessions?: string[];
+	keywords?: string[];
+}
+
 export type FeasibilityLevel = 'very_high' | 'high' | 'moderate' | 'challenging';
 
 export interface ImprovementLeverRecord {

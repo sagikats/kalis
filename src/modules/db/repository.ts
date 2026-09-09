@@ -9,10 +9,13 @@ import {
 	UserAcademicProfileRecord,
 	UserPreferencesRecord,
 	ActionTrackRecord,
+	BagrutSubjectRecord,
+	UserRecord,
 	SekemType
 } from './schema';
 import { ValidatedProgramSearchQuery } from './validation';
 import rawData from '../../data/academicData.json';
+import { prisma } from '../../lib/prisma';
 
 export interface ProgramSearchFilters {
 	institutionId?: string;
@@ -375,6 +378,337 @@ export class KalisDatabaseRepository {
 				this.actionTracks.delete(key);
 			}
 		}
+	}
+
+	// -------------------------------------------------------------------------
+	// Async SQLite / Prisma Persistence Layer
+	// -------------------------------------------------------------------------
+
+	public async createUserAsync(email?: string, name?: string): Promise<UserRecord> {
+		const created = await prisma.user.create({
+			data: {
+				email: email ?? null,
+				name: name ?? null
+			}
+		});
+		return {
+			id: created.id,
+			email: created.email ?? undefined,
+			name: created.name ?? undefined,
+			createdAt: created.createdAt,
+			updatedAt: created.updatedAt
+		};
+	}
+
+	public async getUserAsync(userId: string): Promise<UserRecord | null> {
+		try {
+			const u = await prisma.user.findUnique({ where: { id: userId } });
+			if (!u) return null;
+			return {
+				id: u.id,
+				email: u.email ?? undefined,
+				name: u.name ?? undefined,
+				createdAt: u.createdAt,
+				updatedAt: u.updatedAt
+			};
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] getUserAsync error:', err);
+			return null;
+		}
+	}
+
+	public async saveUserProfileAsync(profile: UserAcademicProfileRecord): Promise<UserAcademicProfileRecord> {
+		profile.updatedAt = new Date();
+		this.userProfiles.set(profile.userId, profile);
+
+		try {
+			await prisma.user.upsert({
+				where: { id: profile.userId },
+				update: {},
+				create: { id: profile.userId }
+			});
+
+			const savedProfile = await prisma.userAcademicProfile.upsert({
+				where: { userId: profile.userId },
+				update: {
+					mathUnits: profile.mathUnits,
+					mathGrade: profile.mathGrade,
+					physicsUnits: profile.physicsUnits,
+					physicsGrade: profile.physicsGrade,
+					psychometricGeneral: profile.psychometricGeneral,
+					psychometricQuant: profile.psychometricQuant,
+					psychometricVerbal: profile.psychometricVerbal,
+					psychometricEnglish: profile.psychometricEnglish,
+					hasTakenPsychometric: profile.hasTakenPsychometric,
+					estimatedBagrutAverage: profile.estimatedBagrutAverage ?? null
+				},
+				create: {
+					userId: profile.userId,
+					mathUnits: profile.mathUnits,
+					mathGrade: profile.mathGrade,
+					physicsUnits: profile.physicsUnits,
+					physicsGrade: profile.physicsGrade,
+					psychometricGeneral: profile.psychometricGeneral,
+					psychometricQuant: profile.psychometricQuant,
+					psychometricVerbal: profile.psychometricVerbal,
+					psychometricEnglish: profile.psychometricEnglish,
+					hasTakenPsychometric: profile.hasTakenPsychometric,
+					estimatedBagrutAverage: profile.estimatedBagrutAverage ?? null
+				}
+			});
+
+			await prisma.subjectGrade.deleteMany({ where: { profileId: savedProfile.id } });
+			if (profile.bagrutSubjects && profile.bagrutSubjects.length > 0) {
+				await prisma.subjectGrade.createMany({
+					data: profile.bagrutSubjects.map((s) => ({
+						profileId: savedProfile.id,
+						subjectName: s.subjectName || (s as any).name || 'מקצוע',
+						units: s.units,
+						grade: s.grade,
+						isMandatory: Boolean(s.isMandatory),
+						isElective: !s.isMandatory,
+						isMath: Boolean(s.isMath || s.subjectName?.includes('מתמטיקה')),
+						isPhysics: Boolean(s.isPhysics || s.subjectName?.includes('פיזיקה')),
+						coefficientBonus: s.coefficientBonus ?? null
+					}))
+				});
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite saveUserProfileAsync error:', err);
+		}
+
+		return profile;
+	}
+
+	public async getUserProfileAsync(userId: string): Promise<UserAcademicProfileRecord | null> {
+		try {
+			const dbProfile = await prisma.userAcademicProfile.findUnique({
+				where: { userId },
+				include: { subjectGrades: true }
+			});
+
+			if (dbProfile) {
+				const profileRecord: UserAcademicProfileRecord = {
+					userId: dbProfile.userId,
+					mathUnits: dbProfile.mathUnits,
+					mathGrade: dbProfile.mathGrade,
+					physicsUnits: dbProfile.physicsUnits,
+					physicsGrade: dbProfile.physicsGrade,
+					psychometricGeneral: dbProfile.psychometricGeneral,
+					psychometricQuant: dbProfile.psychometricQuant,
+					psychometricVerbal: dbProfile.psychometricVerbal,
+					psychometricEnglish: dbProfile.psychometricEnglish,
+					hasTakenPsychometric: dbProfile.hasTakenPsychometric,
+					estimatedBagrutAverage: dbProfile.estimatedBagrutAverage ?? undefined,
+					updatedAt: dbProfile.updatedAt,
+					bagrutSubjects: dbProfile.subjectGrades.map((g) => ({
+						id: g.id,
+						profileId: g.profileId,
+						subjectName: g.subjectName,
+						units: g.units,
+						grade: g.grade,
+						isMandatory: g.isMandatory,
+						isMath: g.isMath,
+						isPhysics: g.isPhysics,
+						coefficientBonus: g.coefficientBonus ?? undefined
+					}))
+				};
+				this.userProfiles.set(userId, profileRecord);
+				return profileRecord;
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite getUserProfileAsync error:', err);
+		}
+
+		return this.userProfiles.get(userId) || null;
+	}
+
+	public async saveUserPreferencesAsync(pref: UserPreferencesRecord): Promise<UserPreferencesRecord> {
+		pref.updatedAt = new Date();
+		this.userPreferences.set(pref.userId, pref);
+
+		try {
+			await prisma.user.upsert({
+				where: { id: pref.userId },
+				update: {},
+				create: { id: pref.userId }
+			});
+
+			await prisma.userPreferences.upsert({
+				where: { userId: pref.userId },
+				update: {
+					psychExperience: pref.psychExperience,
+					psychFeeling: pref.psychFeeling,
+					psychStrongestSection: pref.psychStrongestSection,
+					psychStrongestSectionsJson: pref.psychStrongestSections ? JSON.stringify(pref.psychStrongestSections) : null,
+					learningOrientation: pref.learningOrientation,
+					learningStrength: pref.learningStrength,
+					weeklyAvailabilityHours: pref.weeklyAvailabilityHours,
+					targetTimeline: pref.targetTimeline
+				},
+				create: {
+					userId: pref.userId,
+					psychExperience: pref.psychExperience,
+					psychFeeling: pref.psychFeeling,
+					psychStrongestSection: pref.psychStrongestSection,
+					psychStrongestSectionsJson: pref.psychStrongestSections ? JSON.stringify(pref.psychStrongestSections) : null,
+					learningOrientation: pref.learningOrientation,
+					learningStrength: pref.learningStrength,
+					weeklyAvailabilityHours: pref.weeklyAvailabilityHours,
+					targetTimeline: pref.targetTimeline
+				}
+			});
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite saveUserPreferencesAsync error:', err);
+		}
+
+		return pref;
+	}
+
+	public async getUserPreferencesAsync(userId: string): Promise<UserPreferencesRecord | null> {
+		try {
+			const dbPref = await prisma.userPreferences.findUnique({
+				where: { userId }
+			});
+
+			if (dbPref) {
+				const prefRecord: UserPreferencesRecord = {
+					userId: dbPref.userId,
+					psychExperience: dbPref.psychExperience as any,
+					psychFeeling: dbPref.psychFeeling as any,
+					psychStrongestSection: dbPref.psychStrongestSection as any,
+					psychStrongestSections: dbPref.psychStrongestSectionsJson ? JSON.parse(dbPref.psychStrongestSectionsJson) : undefined,
+					learningOrientation: dbPref.learningOrientation as any,
+					learningStrength: dbPref.learningStrength as any,
+					weeklyAvailabilityHours: dbPref.weeklyAvailabilityHours as any,
+					targetTimeline: dbPref.targetTimeline as any,
+					updatedAt: dbPref.updatedAt
+				};
+				this.userPreferences.set(userId, prefRecord);
+				return prefRecord;
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite getUserPreferencesAsync error:', err);
+		}
+
+		return this.userPreferences.get(userId) || null;
+	}
+
+	public async saveActionTracksAsync(userId: string, programId: string, tracks: ActionTrackRecord[]): Promise<void> {
+		this.saveActionTracks(userId, programId, tracks);
+
+		try {
+			await prisma.user.upsert({
+				where: { id: userId },
+				update: {},
+				create: { id: userId }
+			});
+
+			await prisma.savedTrack.deleteMany({ where: { userId, programId } });
+
+			for (const t of tracks) {
+				await prisma.savedTrack.create({
+					data: {
+						userId,
+						programId,
+						trackType: t.id || 'track-standard',
+						title: t.title,
+						badge: t.badge || '',
+						badgeColor: t.badgeColor || '',
+						targetSekem: t.targetSekem || 0,
+						targetPsychometric: t.targetPsychometric ?? null,
+						targetBagrutAverage: t.targetBagrutAverage || 0,
+						currentPsychometric: t.currentPsychometric ?? null,
+						currentBagrutAverage: t.currentBagrutAverage ?? null,
+						strategyDescription: t.strategyDescription || '',
+						estimatedWeeks: t.estimatedWeeks || 0,
+						weeklyHours: t.weeklyHours || 0,
+						feasibility: t.feasibility || 'high',
+						feasibilityExplanation: t.feasibilityExplanation || null,
+						keyAdvantage: t.keyAdvantage || null,
+						stepsJson: JSON.stringify(t.milestones || (t as any).steps || []),
+						subjectImprovementsJson: JSON.stringify(t.recommendedLevers || (t as any).recommendedSubjectImprovements || [])
+					}
+				});
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite saveActionTracksAsync error:', err);
+		}
+	}
+
+	public async getActionTracksAsync(userId: string, programId: string): Promise<ActionTrackRecord[]> {
+		try {
+			const dbTracks = await prisma.savedTrack.findMany({
+				where: { userId, programId }
+			});
+
+			if (dbTracks.length > 0) {
+				const mapped: ActionTrackRecord[] = dbTracks.map((dt) => ({
+					id: dt.trackType,
+					userId: dt.userId,
+					programId: dt.programId,
+					title: dt.title,
+					badge: dt.badge,
+					badgeColor: dt.badgeColor,
+					targetSekem: dt.targetSekem,
+					targetPsychometric: dt.targetPsychometric ?? undefined,
+					currentPsychometric: dt.currentPsychometric ?? undefined,
+					targetBagrutAverage: dt.targetBagrutAverage,
+					currentBagrutAverage: dt.currentBagrutAverage ?? undefined,
+					strategyDescription: dt.strategyDescription,
+					estimatedWeeks: dt.estimatedWeeks,
+					weeklyHours: dt.weeklyHours,
+					feasibility: dt.feasibility as any,
+					feasibilityExplanation: dt.feasibilityExplanation || '',
+					keyAdvantage: dt.keyAdvantage || '',
+					milestones: dt.stepsJson ? JSON.parse(dt.stepsJson) : [],
+					recommendedLevers: dt.subjectImprovementsJson ? JSON.parse(dt.subjectImprovementsJson) : [],
+					createdAt: dt.createdAt
+				}));
+				this.actionTracks.set(`${userId}:${programId}`, mapped);
+				return mapped;
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] SQLite getActionTracksAsync error:', err);
+		}
+
+		return this.getActionTracks(userId, programId);
+	}
+
+	public async clearUserStateAsync(userId: string): Promise<void> {
+		this.clearUserState(userId);
+		try {
+			await prisma.user.deleteMany({ where: { id: userId } });
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] clearUserStateAsync error:', err);
+		}
+	}
+
+	public async getBagrutSubjectsCatalogAsync(): Promise<BagrutSubjectRecord[]> {
+		try {
+			const dbSubjects = await prisma.bagrutSubject.findMany({
+				orderBy: { id: 'asc' }
+			});
+
+			if (dbSubjects.length > 0) {
+				return dbSubjects.map((s) => ({
+					id: s.id,
+					name: s.name,
+					category: s.category,
+					categoryLabel: s.categoryLabel,
+					defaultUnits: s.defaultUnits,
+					allowedUnits: JSON.parse(s.allowedUnitsJson || '[]'),
+					frictionIndex: s.frictionIndex,
+					basePrepHours: s.basePrepHours,
+					examSessions: s.examSessionsJson ? JSON.parse(s.examSessionsJson) : undefined,
+					keywords: s.keywordsJson ? JSON.parse(s.keywordsJson) : undefined
+				}));
+			}
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] getBagrutSubjectsCatalogAsync error:', err);
+		}
+
+		return [];
 	}
 }
 

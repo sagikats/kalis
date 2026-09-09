@@ -1,0 +1,188 @@
+// Prisma Schema for Kalis (Academic Admission Planning Platform)
+// Database Engine: SQLite (local development)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ---------------------------------------------------------------------------
+// 1. Academic Catalog & Knowledge Models (Institutions, Degrees, Subjects)
+// ---------------------------------------------------------------------------
+
+model Institution {
+  id                    String            @id
+  name                  String
+  code                  String?
+  calculatorId          String
+  websiteUrl            String?
+  isUniversity          Boolean           @default(true)
+  defaultMinBagrutUnits Int               @default(20)
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  programs              AcademicProgram[]
+
+  @@map("institutions")
+}
+
+model AcademicProgram {
+  id                     String      @id
+  institutionId          String
+  institution            Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  institutionName        String
+  facultyName            String?
+  name                   String
+  fieldOfStudy           String
+  degreeLevel            String      @default("bachelor")
+  minSekemThreshold      Float
+  relevantSekemType      String      // 'general' | 'engineering' | 'management' | 'technion'
+  directBagrutEligible   Boolean     @default(false)
+  directBagrutMinAverage Float?
+  prerequisitesJson      String?     // Serialized prerequisites (minMathUnits, mustHavePsychometric, etc.)
+  description            String?
+  comments               String?
+  url                    String?
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+
+  savedTracks            SavedTrack[]
+
+  @@index([institutionId])
+  @@index([fieldOfStudy])
+  @@map("academic_programs")
+}
+
+model BagrutSubject {
+  id               String   @id // e.g. 'math', 'physics', 'history', 'literature'
+  name             String
+  category         String   // 'mandatory' | 'stem' | 'humanities' | 'other'
+  categoryLabel    String
+  defaultUnits     Int      @default(2)
+  allowedUnitsJson String   // e.g. "[2, 3, 4, 5]"
+  frictionIndex    Float    @default(1.0)
+  basePrepHours    Int      @default(60)
+  examSessionsJson String?  // e.g. '["winter", "summer"]'
+  keywordsJson     String?  // e.g. '["מתמטיקה", "חשבון"]'
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("bagrut_subjects")
+}
+
+// ---------------------------------------------------------------------------
+// 2. User & Candidate Personal Profiles
+// ---------------------------------------------------------------------------
+
+model User {
+  id              String                @id @default(uuid())
+  email           String?               @unique
+  name            String?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  academicProfile UserAcademicProfile?
+  preferences     UserPreferences?
+  savedTracks     SavedTrack[]
+
+  @@map("users")
+}
+
+model UserAcademicProfile {
+  id                     String         @id @default(uuid())
+  userId                 String         @unique
+  user                   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mathUnits              Int            @default(3)
+  mathGrade              Int            @default(70)
+  physicsUnits           Int            @default(0)
+  physicsGrade           Int            @default(0)
+  psychometricGeneral    Int            @default(0)
+  psychometricQuant      Int            @default(0)
+  psychometricVerbal     Int            @default(0)
+  psychometricEnglish    Int            @default(0)
+  hasTakenPsychometric   Boolean        @default(false)
+  estimatedBagrutAverage Float?
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+
+  subjectGrades          SubjectGrade[]
+
+  @@map("user_academic_profiles")
+}
+
+model SubjectGrade {
+  id               String              @id @default(uuid())
+  profileId        String
+  profile          UserAcademicProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  subjectName      String
+  units            Int
+  grade            Int
+  isMandatory      Boolean             @default(false)
+  isElective       Boolean             @default(false)
+  isMath           Boolean             @default(false)
+  isPhysics        Boolean             @default(false)
+  category         String?
+  coefficientBonus Float?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  @@index([profileId])
+  @@map("subject_grades")
+}
+
+model UserPreferences {
+  id                         String   @id @default(uuid())
+  userId                     String   @unique
+  user                       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  psychExperience            String   @default("never")
+  psychFeeling               String   @default("neutral")
+  psychStrongestSection      String   @default("balanced")
+  psychStrongestSectionsJson String?  // Serialized array of sections
+  learningOrientation        String   @default("flexible")
+  learningStrength           String   @default("analytical_quick")
+  weeklyAvailabilityHours    String   @default("part_15_25")
+  targetTimeline             String   @default("immediate_october")
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+
+  @@map("user_preferences")
+}
+
+// ---------------------------------------------------------------------------
+// 3. Saved Action Tracks & Optimization Decisions
+// ---------------------------------------------------------------------------
+
+model SavedTrack {
+  id                       String          @id @default(uuid())
+  userId                   String
+  user                     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programId                String
+  program                  AcademicProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+  trackType                String          // 'track-maximize-exam' | 'track-risk-spread' | 'track-anchor'
+  title                    String
+  badge                    String
+  badgeColor               String
+  targetSekem              Float
+  targetPsychometric       Int?
+  targetBagrutAverage      Float
+  currentPsychometric      Int?
+  currentBagrutAverage     Float?
+  strategyDescription      String
+  estimatedWeeks           Int
+  weeklyHours              Int
+  feasibility              String
+  feasibilityExplanation   String?
+  keyAdvantage             String?
+  stepsJson                String          // Serialized JSON of steps/milestones
+  subjectImprovementsJson  String          // Serialized JSON of recommended subject improvements
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
+
+  @@index([userId])
+  @@index([programId])
+  @@map("saved_tracks")
+}

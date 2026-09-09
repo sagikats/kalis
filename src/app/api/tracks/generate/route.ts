@@ -72,10 +72,10 @@ export async function POST(req: NextRequest) {
 
 		const solution = generateOptimizedActionTracks(program, profileRecord, preferencesRecord);
 
-		// Persist solution in repository
-		dbRepository.saveUserProfile(profileRecord);
-		dbRepository.saveUserPreferences(preferencesRecord);
-		dbRepository.saveActionTracks(userId, programId, solution.tracks);
+		// Persist solution in SQLite repository
+		await dbRepository.saveUserProfileAsync(profileRecord);
+		await dbRepository.saveUserPreferencesAsync(preferencesRecord);
+		await dbRepository.saveActionTracksAsync(userId, programId, solution.tracks);
 
 		return NextResponse.json({
 			success: true,

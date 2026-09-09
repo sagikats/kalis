@@ -1,0 +1,164 @@
+/**
+ * Dedicated SQLite & Prisma Persistence Test Suite
+ * Subagent 1: Architecture & Database Design
+ * Verifies User, Dynamic Electives, Preferences, Saved Tracks, and Bagrut Catalog in SQLite
+ */
+
+import { test, describe, after } from 'node:test';
+import assert from 'node:assert/strict';
+import { dbRepository } from '../repository';
+import { UserAcademicProfileRecord, UserPreferencesRecord, ActionTrackRecord } from '../schema';
+import { prisma } from '../../../lib/prisma';
+
+describe('SQLite & Prisma Persistence Layer Integration', () => {
+	const testUserId = 'test_student_dynamic_electives_99';
+	const testProgramId = 'prog-inst-4-1';
+
+	after(async () => {
+		// Clean up test data after execution
+		await dbRepository.clearUserStateAsync(testUserId);
+		await prisma.$disconnect();
+	});
+
+	test('1. Creates user and persists academic profile with dynamic elective subjects', async () => {
+		const testProfile: UserAcademicProfileRecord = {
+			userId: testUserId,
+			mathUnits: 5,
+			mathGrade: 92,
+			physicsUnits: 5,
+			physicsGrade: 94,
+			psychometricGeneral: 715,
+			psychometricQuant: 144,
+			psychometricVerbal: 135,
+			psychometricEnglish: 140,
+			hasTakenPsychometric: true,
+			estimatedBagrutAverage: 110.5,
+			updatedAt: new Date(),
+			bagrutSubjects: [
+				// Mandatory subjects
+				{ id: 'sub_1', profileId: 'p', subjectName: 'מתמטיקה', units: 5, grade: 92, isMandatory: true, isMath: true },
+				{ id: 'sub_2', profileId: 'p', subjectName: 'אנגלית', units: 5, grade: 95, isMandatory: true },
+				{ id: 'sub_3', profileId: 'p', subjectName: 'הבעה עברית', units: 2, grade: 86, isMandatory: true },
+				{ id: 'sub_4', profileId: 'p', subjectName: 'תנ״ך', units: 2, grade: 88, isMandatory: true },
+				// Dynamic Elective subjects that vary per candidate!
+				{ id: 'sub_5', profileId: 'p', subjectName: 'פיזיקה', units: 5, grade: 94, isMandatory: false, isPhysics: true },
+				{ id: 'sub_6', profileId: 'p', subjectName: 'מדעי המחשב', units: 5, grade: 98, isMandatory: false },
+				{ id: 'sub_7', profileId: 'p', subjectName: 'גיאוגרפיה', units: 5, grade: 90, isMandatory: false }
+			]
+		};
+
+		const saved = await dbRepository.saveUserProfileAsync(testProfile);
+		assert.equal(saved.userId, testUserId);
+
+		// Read back directly from SQLite database
+		const fetched = await dbRepository.getUserProfileAsync(testUserId);
+		assert.ok(fetched, 'Profile must be retrieved from SQLite');
+		assert.equal(fetched.userId, testUserId);
+		assert.equal(fetched.psychometricGeneral, 715);
+		assert.equal(fetched.mathGrade, 92);
+		assert.equal(fetched.estimatedBagrutAverage, 110.5);
+
+		// Assert all dynamic electives are preserved
+		assert.equal(fetched.bagrutSubjects.length, 7, 'Must retain all 7 mandatory + elective subjects');
+		const csElective = fetched.bagrutSubjects.find((s) => s.subjectName === 'מדעי המחשב');
+		assert.ok(csElective, 'Computer Science elective must be saved');
+		assert.equal(csElective.units, 5);
+		assert.equal(csElective.grade, 98);
+		assert.equal(csElective.isMandatory, false);
+
+		const geoElective = fetched.bagrutSubjects.find((s) => s.subjectName === 'גיאוגרפיה');
+		assert.ok(geoElective, 'Geography elective must be saved');
+		assert.equal(geoElective.units, 5);
+		assert.equal(geoElective.grade, 90);
+	});
+
+	test('2. Persists and retrieves user preferences in SQLite', async () => {
+		const testPref: UserPreferencesRecord = {
+			userId: testUserId,
+			psychExperience: 'once',
+			psychFeeling: 'high_potential',
+			psychStrongestSection: 'quant',
+			psychStrongestSections: ['quant', 'english'],
+			learningOrientation: 'stem',
+			learningStrength: 'analytical_quick',
+			weeklyAvailabilityHours: 'part_15_25',
+			targetTimeline: 'immediate_october',
+			updatedAt: new Date()
+		};
+
+		await dbRepository.saveUserPreferencesAsync(testPref);
+
+		const fetched = await dbRepository.getUserPreferencesAsync(testUserId);
+		assert.ok(fetched, 'Preferences must be retrieved from SQLite');
+		assert.equal(fetched.userId, testUserId);
+		assert.equal(fetched.psychExperience, 'once');
+		assert.equal(fetched.learningOrientation, 'stem');
+		assert.deepEqual(fetched.psychStrongestSections, ['quant', 'english']);
+	});
+
+	test('3. Persists and retrieves action tracks in SQLite', async () => {
+		const testTracks: ActionTrackRecord[] = [
+			{
+				id: 'track-maximize-exam',
+				userId: testUserId,
+				programId: testProgramId,
+				title: 'מסלול מיקוד: שיפור פסיכומטרי בלבד',
+				badge: 'מיקוד במבחן בודד',
+				badgeColor: 'from-emerald-500 to-teal-700',
+				strategyDescription: 'סגירת סף הסכם על ידי שיפור פסיכומטרי ל-730.',
+				targetSekem: 708.5,
+				targetPsychometric: 730,
+				targetBagrutAverage: 110.5,
+				currentPsychometric: 715,
+				currentBagrutAverage: 110.5,
+				recommendedLevers: [],
+				milestones: [
+					{
+						id: 'm1',
+						trackId: 'track-maximize-exam',
+						orderIndex: 1,
+						title: 'קורס פסיכומטרי מועד אביב',
+						detail: 'חיזוק פרק כמותי ל-148',
+						timing: 'מרץ–אפריל',
+						type: 'psychometric'
+					}
+				],
+				estimatedWeeks: 12,
+				weeklyHours: 20,
+				feasibility: 'high',
+				feasibilityExplanation: 'פער של 15 נקודות בפסיכומטרי הוא נגיש לחלוטין.',
+				keyAdvantage: 'מאמץ ממוקד ללא צורך בפתיחת ספרי בגרויות.',
+				createdAt: new Date()
+			}
+		];
+
+		await dbRepository.saveActionTracksAsync(testUserId, testProgramId, testTracks);
+
+		const fetchedTracks = await dbRepository.getActionTracksAsync(testUserId, testProgramId);
+		assert.equal(fetchedTracks.length, 1);
+		assert.equal(fetchedTracks[0].id, 'track-maximize-exam');
+		assert.equal(fetchedTracks[0].targetSekem, 708.5);
+		assert.equal(fetchedTracks[0].targetPsychometric, 730);
+		assert.equal(fetchedTracks[0].milestones.length, 1);
+		assert.equal(fetchedTracks[0].milestones[0].title, 'קורס פסיכומטרי מועד אביב');
+	});
+
+	test('4. Queries national Bagrut subjects catalog with friction index from SQLite', async () => {
+		const catalog = await dbRepository.getBagrutSubjectsCatalogAsync();
+		assert.ok(catalog.length >= 35, 'Catalog must contain at least 35 subjects');
+
+		const hebrew = catalog.find((s) => s.id === 'hebrew');
+		assert.ok(hebrew, 'Hebrew / Lashon must exist in catalog');
+		assert.equal(hebrew.frictionIndex, 2.03, 'Hebrew must have high friction index of 2.03');
+
+		const geo = catalog.find((s) => s.id === 'geography');
+		assert.ok(geo, 'Geography must exist in catalog');
+		assert.equal(geo.frictionIndex, 0.9, 'Geography must have low friction index of 0.9');
+	});
+
+	test('5. Clears user state and cascades deletion', async () => {
+		await dbRepository.clearUserStateAsync(testUserId);
+		const userAfter = await dbRepository.getUserAsync(testUserId);
+		assert.equal(userAfter, null, 'User must be deleted after clearUserStateAsync');
+	});
+});
