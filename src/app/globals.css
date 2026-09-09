@@ -87,7 +87,7 @@ body {
 }
 
 .animate-marquee-loop {
-  animation: marquee-loop 24s linear infinite;
+  animation: marquee-loop 42s linear infinite;
   will-change: transform;
 }
 
