@@ -61,7 +61,7 @@ export function getEnglishClassification(englishScore: number) {
 			level: 'unknown',
 			label: 'לא הוזן ציון',
 			isExempt: false,
-			color: 'text-slate-400 bg-slate-800/50 border-slate-700'
+			color: 'bg-[#FAF8F5] text-[#66635C] border-[#E5DFD4]'
 		};
 	}
 	if (englishScore >= 134) {
@@ -69,7 +69,7 @@ export function getEnglishClassification(englishScore: number) {
 			level: 'exempt',
 			label: 'פטור מאנגלית באקדמיה (134-150)',
 			isExempt: true,
-			color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30'
+			color: 'bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]'
 		};
 	}
 	if (englishScore >= 120) {
@@ -77,7 +77,7 @@ export function getEnglishClassification(englishScore: number) {
 			level: 'advanced_b',
 			label: 'מתקדמים ב׳ (120-133)',
 			isExempt: false,
-			color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/30'
+			color: 'bg-[#ECFEFF] text-[#0E7490] border-[#A5F3FC]'
 		};
 	}
 	if (englishScore >= 100) {
@@ -85,7 +85,7 @@ export function getEnglishClassification(englishScore: number) {
 			level: 'advanced_a',
 			label: 'מתקדמים א׳ (100-119)',
 			isExempt: false,
-			color: 'text-blue-400 bg-blue-500/10 border-blue-500/30'
+			color: 'bg-[#EEF2FF] text-[#1E40AF] border-[#C7D2FE]'
 		};
 	}
 	if (englishScore >= 85) {
@@ -93,14 +93,14 @@ export function getEnglishClassification(englishScore: number) {
 			level: 'basic',
 			label: 'בסיסי (85-99)',
 			isExempt: false,
-			color: 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+			color: 'bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]'
 		};
 	}
 	return {
 		level: 'pre_basic',
 		label: 'טרום-בסיסי (<85)',
 		isExempt: false,
-		color: 'text-rose-400 bg-rose-500/10 border-rose-500/30'
+		color: 'bg-[#FFF1F2] text-[#9F1239] border-[#FECDD3]'
 	};
 }
 

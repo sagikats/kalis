@@ -574,7 +574,7 @@ export default function AdmissionFlowPage() {
 											<div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between text-xs">
 												<span className="text-[#66635C] font-medium">רמת אנגלית אקדמית:</span>
 												<span
-													className={`font-bold px-2 py-0.5 rounded border ${psychResolution.englishClassification.color}`}
+													className={`text-[11px] font-bold px-2.5 py-0.5 rounded-md border shadow-2xs ${psychResolution.englishClassification.color}`}
 												>
 													{psychResolution.englishClassification.label}
 												</span>

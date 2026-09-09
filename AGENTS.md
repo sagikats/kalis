@@ -127,6 +127,16 @@ npm run build
      - **קליטה במוסד (אוגוסט–ספטמבר) 🎓**: `bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]`
    - Enhanced badges with `rounded-md`, `font-bold`, and `shadow-2xs` for maximum visual clarity.
 
+4. **High-Contrast Academic English Level Badges (`psychometricHelper.ts`, `flow/page.tsx`, `UnifiedCalculator.tsx`):**
+   - Replaced washed-out glowing dark-mode cyan/emerald/blue/amber classes with crisp, high-contrast matte pastel palettes:
+     - **מתקדמים ב׳ (120-133)**: `bg-[#ECFEFF] text-[#0E7490] border-[#A5F3FC]` (Zero neon glow, deep readable dark-teal text).
+     - **פטור (134-150)**: `bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]`
+     - **מתקדמים א׳ (100-119)**: `bg-[#EEF2FF] text-[#1E40AF] border-[#C7D2FE]`
+     - **בסיסי (85-99)**: `bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]`
+     - **טרום-בסיסי (<85)**: `bg-[#FFF1F2] text-[#9F1239] border-[#FECDD3]`
+     - **לא הוזן ציון**: `bg-[#FAF8F5] text-[#66635C] border-[#E5DFD4]`
+   - Enhanced with `rounded-md` and `shadow-2xs` for a clean editorial feel.
+
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
    - שילוב תגיות מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות.

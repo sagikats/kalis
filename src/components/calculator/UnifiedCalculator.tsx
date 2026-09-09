@@ -338,7 +338,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                              </div>
                                         </div>
                                         {englishLevelBadge && (
-                                             <span className={`text-[11px] font-bold px-3 py-1 rounded-full border ${englishLevelBadge.color} hidden sm:inline-block`}>
+                                             <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md border shadow-2xs ${englishLevelBadge.color} hidden sm:inline-block`}>
                                                   {englishLevelBadge.label}
                                              </span>
                                         )}
@@ -485,7 +485,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   />
                                                   {englishLevelBadge && (
                                                        <div className="sm:hidden pt-1">
-                                                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${englishLevelBadge.color}`}>
+                                                            <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-md border shadow-2xs ${englishLevelBadge.color}`}>
                                                                  {englishLevelBadge.label}
                                                             </span>
                                                        </div>
