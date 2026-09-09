@@ -368,17 +368,51 @@ export default function RecommendedTracksView({
 								<div className="space-y-2 pt-2 border-t border-slate-800">
 									{/* Target Sekem if exists */}
 									{track.targetSekem !== undefined && (
-										<div className="bg-emerald-950/40 border border-emerald-500/30 rounded-2xl p-3 flex items-center justify-between shadow-sm">
+										<div
+											className={`border rounded-2xl p-3 flex items-center justify-between shadow-sm ${
+												analysis.threshold && track.targetSekem < analysis.threshold
+													? 'bg-amber-950/40 border-amber-500/30'
+													: 'bg-emerald-950/40 border-emerald-500/30'
+											}`}
+										>
 											<div className="flex items-center gap-2">
-												<Sparkles className="h-4 w-4 text-emerald-400" />
-												<span className="text-xs font-bold text-emerald-300">סכם מחושב מובטח:</span>
+												<Sparkles
+													className={`h-4 w-4 ${
+														analysis.threshold && track.targetSekem < analysis.threshold
+															? 'text-amber-400'
+															: 'text-emerald-400'
+													}`}
+												/>
+												<span
+													className={`text-xs font-bold ${
+														analysis.threshold && track.targetSekem < analysis.threshold
+															? 'text-amber-300'
+															: 'text-emerald-300'
+													}`}
+												>
+													{analysis.threshold && track.targetSekem < analysis.threshold
+														? 'סכם מחושב מוערך:'
+														: 'סכם מחושב מובטח:'}
+												</span>
 											</div>
 											<div className="text-left dir-ltr">
-												<span className="text-sm font-black text-emerald-400">
+												<span
+													className={`text-sm font-black ${
+														analysis.threshold && track.targetSekem < analysis.threshold
+															? 'text-amber-400'
+															: 'text-emerald-400'
+													}`}
+												>
 													{track.targetSekem.toFixed(isTechnion ? 2 : 1)}
 												</span>
 												{analysis.threshold && (
-													<span className="text-[10px] text-emerald-400/80 ml-1.5 font-medium">
+													<span
+														className={`text-[10px] ml-1.5 font-medium ${
+															analysis.threshold && track.targetSekem < analysis.threshold
+																? 'text-amber-400/80'
+																: 'text-emerald-400/80'
+														}`}
+													>
 														(סף: {analysis.threshold})
 													</span>
 												)}
@@ -420,37 +454,69 @@ export default function RecommendedTracksView({
 									)}
 
 									{/* Bagrut target if exists */}
-									{track.targetBagrutAverage && track.targetBagrutAverage > (track.currentBagrutAverage || 0) ? (
-										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
-											<div className="flex items-center gap-2">
-												<BookOpen className="h-4 w-4 text-indigo-400" />
-												<span className="text-xs font-bold text-slate-300">ממוצע בגרות:</span>
+									{(() => {
+										const hasSubjectImprovements = Boolean(
+											track.recommendedSubjectImprovements && track.recommendedSubjectImprovements.length > 0
+										);
+										const hasBagrutIncrease = Boolean(
+											track.targetBagrutAverage && track.targetBagrutAverage > (track.currentBagrutAverage || 0)
+										);
+
+										if (hasBagrutIncrease) {
+											return (
+												<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+													<div className="flex items-center gap-2">
+														<BookOpen className="h-4 w-4 text-indigo-400" />
+														<span className="text-xs font-bold text-slate-300">ממוצע בגרות:</span>
+													</div>
+													<div className="text-left dir-ltr">
+														<span className="text-xs text-slate-500 line-through mr-2">
+															{track.currentBagrutAverage?.toFixed(1)}
+														</span>
+														<span className="text-sm font-black text-indigo-400">
+															{track.targetBagrutAverage?.toFixed(1)}
+														</span>
+														<span className="text-[10px] text-emerald-400 ml-1 font-bold">
+															(+{((track.targetBagrutAverage || 0) - (track.currentBagrutAverage || 0)).toFixed(1)})
+														</span>
+													</div>
+												</div>
+											);
+										}
+
+										if (hasSubjectImprovements) {
+											return (
+												<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+													<div className="flex items-center gap-2">
+														<BookOpen className="h-4 w-4 text-indigo-400" />
+														<span className="text-xs font-bold text-slate-300">ממוצע בגרות:</span>
+													</div>
+													<div className="text-left dir-ltr">
+														<span className="text-sm font-black text-indigo-400">
+															{(track.targetBagrutAverage || track.currentBagrutAverage)?.toFixed(1)}
+														</span>
+														<span className="text-[10px] text-slate-400 ml-1 font-bold">
+															(משתפר עם המקצועות)
+														</span>
+													</div>
+												</div>
+											);
+										}
+
+										return (
+											<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
+												<div className="flex items-center gap-2">
+													<BookOpen className="h-4 w-4 text-slate-500" />
+													<span className="text-xs font-bold text-slate-400">ממוצע בגרות:</span>
+												</div>
+												<div className="text-left dir-ltr">
+													<span className="text-xs font-bold text-slate-400">
+														{track.currentBagrutAverage?.toFixed(1)} (ללא צורך בשיפור)
+													</span>
+												</div>
 											</div>
-											<div className="text-left dir-ltr">
-												<span className="text-xs text-slate-500 line-through mr-2">
-													{track.currentBagrutAverage?.toFixed(1)}
-												</span>
-												<span className="text-sm font-black text-indigo-400">
-													{track.targetBagrutAverage.toFixed(1)}
-												</span>
-												<span className="text-[10px] text-emerald-400 ml-1 font-bold">
-													(+{(track.targetBagrutAverage - (track.currentBagrutAverage || 0)).toFixed(1)})
-												</span>
-											</div>
-										</div>
-									) : (
-										<div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
-											<div className="flex items-center gap-2">
-												<BookOpen className="h-4 w-4 text-slate-500" />
-												<span className="text-xs font-bold text-slate-400">ממוצע בגרות:</span>
-											</div>
-											<div className="text-left dir-ltr">
-												<span className="text-xs font-bold text-slate-400">
-													{track.currentBagrutAverage?.toFixed(1)} (ללא צורך בשיפור)
-												</span>
-											</div>
-										</div>
-									)}
+										);
+									})()}
 
 									{/* Subject and psychometric improvement details */}
 									{(() => {

@@ -55,6 +55,40 @@ export function toCalculatorSubjects(
 	return subs;
 }
 
+/**
+ * Normalizes Hebrew subject names for robust matching across gershayim, quotes, and slash variants.
+ * e.g. תנ"ך == תנ״ך == תנך
+ * e.g. היסטוריה / תע"י == היסטוריה
+ * e.g. ספרות עברית == ספרות
+ */
+export function normalizeHebrewSubjectKey(name: string): string {
+	if (!name) return '';
+	return name
+		.replace(/[\u05F4\u05F3"''`]/g, '')
+		.replace(/\s*\(.*?\)/g, '')
+		.replace(/\/.*$/, '')
+		.trim();
+}
+
+export function isSubjectMatch(nameA: string, nameB: string): boolean {
+	const a = normalizeHebrewSubjectKey(nameA);
+	const b = normalizeHebrewSubjectKey(nameB);
+	if (!a || !b) return false;
+	if (a === b) return true;
+	if (a.includes(b) || b.includes(a)) return true;
+	if ((a.includes('תנ') || a === 'תנך') && (b.includes('תנ') || b === 'תנך')) return true;
+	if (a.includes('היסטוריה') && b.includes('היסטוריה')) return true;
+	if (a.includes('ספרות') && b.includes('ספרות')) return true;
+	if (a.includes('אזרחות') && b.includes('אזרחות')) return true;
+	if ((a.includes('הבעה') || a.includes('לשון')) && (b.includes('הבעה') || b.includes('לשון'))) return true;
+	if (a.includes('מתמטיקה') && b.includes('מתמטיקה')) return true;
+	if (a.includes('פיזיקה') && b.includes('פיזיקה')) return true;
+	if (a.includes('אנגלית') && b.includes('אנגלית')) return true;
+	if (a.includes('גיאוגרפיה') && b.includes('גיאוגרפיה')) return true;
+	if ((a.includes('מחשב') || a.includes('מדעי המחשב')) && (b.includes('מחשב') || b.includes('מדעי המחשב'))) return true;
+	return false;
+}
+
 export function applyLeversToCandidateState(
 	profile: UserAcademicProfileRecord,
 	levers: SubjectLeverCandidate[]
@@ -76,20 +110,18 @@ export function applyLeversToCandidateState(
 		if (lever.isMath) {
 			mathU = lever.targetUnits;
 			mathG = lever.targetGrade;
-			currentSubs = currentSubs.map((s) => (s.name.includes('מתמטיקה') ? { ...s, units: mathU, grade: mathG } : s));
+			currentSubs = currentSubs.map((s) => (isSubjectMatch(s.name, 'מתמטיקה') ? { ...s, units: mathU, grade: mathG } : s));
 		} else if (lever.isPhysics) {
 			physU = lever.targetUnits;
 			physG = lever.targetGrade;
-			const pIdx = currentSubs.findIndex((s) => s.name.includes('פיזיקה'));
+			const pIdx = currentSubs.findIndex((s) => isSubjectMatch(s.name, 'פיזיקה'));
 			if (pIdx >= 0) {
 				currentSubs[pIdx] = { ...currentSubs[pIdx], units: physU, grade: physG };
 			} else {
 				currentSubs.push({ name: 'פיזיקה', units: physU, grade: physG });
 			}
 		} else {
-			const idx = currentSubs.findIndex(
-				(s) => s.name === lever.subjectName || lever.subjectName.includes(s.name) || s.name.includes(lever.subjectName)
-			);
+			const idx = currentSubs.findIndex((s) => isSubjectMatch(s.name, lever.subjectName));
 			if (idx >= 0) {
 				currentSubs[idx] = { ...currentSubs[idx], grade: lever.targetGrade, units: lever.targetUnits };
 			} else {
