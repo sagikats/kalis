@@ -269,13 +269,6 @@ export default function SavedTracksPage() {
 								שלום {user.name}, כאן מרוכזים כל מסלולי הקבלה והאופטימיזציה ששמרת במערכת.
 							</p>
 						</div>
-
-						{user.candidateNumber && (
-							<div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#DDD7CC] text-xs text-[#44423D] shadow-2xs">
-								<span className="text-[#88857E]">מספר מועמד:</span>
-								<span className="font-mono font-bold text-[#222222]">{user.candidateNumber}</span>
-							</div>
-						)}
 					</div>
 
 					{/* Empty Card */}
@@ -352,13 +345,6 @@ export default function SavedTracksPage() {
 					</div>
 
 					<div className="flex items-center gap-3">
-						{user.candidateNumber && (
-							<div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#DDD7CC] text-xs font-medium text-[#44423D] shadow-2xs">
-								<span className="text-[#88857E]">מספר מועמד:</span>
-								<span className="font-mono font-bold text-[#222222]">{user.candidateNumber}</span>
-							</div>
-						)}
-
 						<Link
 							href="/flow"
 							className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-[#3C3C3C] hover:bg-[#2A2A2A] shadow-xs transition-all cursor-pointer"

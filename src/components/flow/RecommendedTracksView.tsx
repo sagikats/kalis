@@ -123,7 +123,7 @@ export default function RecommendedTracksView({
 					...prev,
 					[trackId]: { savedAt: new Date(), candidateNumber: data.candidateNumber }
 				}));
-				setSaveNotification(`המסלול נשמר בהצלחה במסד הנתונים! (מספר מועמד: ${data.candidateNumber})`);
+				setSaveNotification('המסלול נשמר בהצלחה במסד הנתונים!');
 				setTimeout(() => setSaveNotification(null), 6000);
 			} else {
 				alert(data.error || 'שגיאה בשמירת המסלול');
@@ -806,7 +806,7 @@ export default function RecommendedTracksView({
 									) : savedTrackMap[track.id] ? (
 										<>
 											<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
-											<span>המסלול נשמר ({savedTrackMap[track.id].candidateNumber}) ✓</span>
+											<span>המסלול נשמר ✓</span>
 										</>
 									) : (
 										<>
@@ -863,7 +863,7 @@ export default function RecommendedTracksView({
 							) : savedTrackMap[selectedTrack.id] ? (
 								<>
 									<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
-									<span>המסלול שמור ({savedTrackMap[selectedTrack.id].candidateNumber}) ✓</span>
+									<span>המסלול שמור ✓</span>
 								</>
 							) : (
 								<>
@@ -1291,7 +1291,7 @@ export default function RecommendedTracksView({
 											) : savedTrackMap[mechinaTrack.id] ? (
 												<>
 													<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
-													<span>מסלול מכינה שמור ({savedTrackMap[mechinaTrack.id].candidateNumber}) ✓</span>
+													<span>מסלול מכינה שמור ✓</span>
 												</>
 											) : (
 												<>

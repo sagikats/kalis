@@ -62,11 +62,6 @@ export default function Navbar() {
                                              {getInitials(user.name)}
                                         </div>
                                         <span className="hidden sm:inline font-bold text-[#222222]">{user.name}</span>
-                                        {user.candidateNumber && (
-                                             <span className="hidden md:inline font-mono text-[10px] text-[#222222] bg-[#EFECE6] border border-[#DDD7CB] px-1.5 py-0.5 rounded-full">
-                                                  {user.candidateNumber}
-                                             </span>
-                                        )}
                                         <ChevronDown className="h-3.5 w-3.5 text-[#66635C]" />
                                    </button>
 
@@ -74,14 +69,7 @@ export default function Navbar() {
                                    {showProfileMenu && (
                                         <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white p-3 shadow-xl border border-[#E7E2D8] z-50 animate-in fade-in zoom-in-95 duration-150">
                                              <div className="p-2 border-b border-[#EAE5DA] mb-2">
-                                                  <div className="flex items-center justify-between">
-                                                       <p className="font-bold text-sm text-[#222222]">{user.name}</p>
-                                                       {user.candidateNumber && (
-                                                            <span className="font-mono text-xs font-bold text-[#222222] bg-[#EFECE6] border border-[#DDD7CC] px-2 py-0.5 rounded-md">
-                                                                 {user.candidateNumber}
-                                                            </span>
-                                                       )}
-                                                  </div>
+                                                  <p className="font-bold text-sm text-[#222222]">{user.name}</p>
                                                   <p className="text-xs text-[#66635C] mt-0.5">{user.email}</p>
                                                   {user.savedTracksCount !== undefined && (
                                                        <div className="mt-2 flex items-center gap-1.5 text-[11px] text-blue-700">

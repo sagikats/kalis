@@ -172,15 +172,7 @@ export default function AuthModal() {
 						<h4 className="text-lg font-bold text-[#222222] mb-2">
 							{mode === 'register' ? 'נרשמת בהצלחה למערכת!' : 'התחברת בהצלחה!'}
 						</h4>
-						{successData.candidateNumber && (
-							<div className="my-4 inline-flex flex-col items-center p-3 px-6 bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl">
-								<span className="text-xs text-[#66635C] font-semibold">מספר המועמד האישי שלך:</span>
-								<span className="text-xl font-bold text-[#222222] tracking-wider mt-0.5">
-									{successData.candidateNumber}
-								</span>
-							</div>
-						)}
-						<p className="text-xs text-[#8A847C]">החלון ייסגר כעת אוטומטית...</p>
+						<p className="text-xs text-[#8A847C] mt-3">החלון ייסגר כעת אוטומטית...</p>
 					</div>
 				) : (
 					/* Form Body */
