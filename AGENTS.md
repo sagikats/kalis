@@ -189,6 +189,10 @@ npm run build
    - Added `candidateNumber` collision retry handling in `repository.ts`.
    - **Quality State**: **111/111 tests passing** across 33 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
 
+14. **User-Facing Identifier Privacy Polish (`Navbar.tsx`, `saved-tracks/page.tsx`, `AuthModal.tsx`, `RecommendedTracksView.tsx`):**
+   - Completely removed all user-facing displays of the internal database identifier (`candidateNumber` / `KL-XXXXX`).
+   - Retained the identifier strictly in the backend, Prisma DB layer, and APIs for internal system tracking, ensuring zero exposure to the end-user.
+
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
    - שילוב תגיות מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות.
