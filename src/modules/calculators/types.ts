@@ -32,6 +32,8 @@ export interface InstitutionCalculatorInput {
 	psychometricQuant?: number;
 	psychometricVerbal?: number;
 	psychometricEnglish?: number;
+	psychometricQuantEmphasis?: number;
+	psychometricVerbalEmphasis?: number;
 	mathUnits?: number;
 	mathGrade?: number;
 	physicsUnits?: number;

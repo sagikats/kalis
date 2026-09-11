@@ -27,6 +27,7 @@ import AdmissionPanel from '@/components/calculator/AdmissionPanel';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
 import UniversityLogo from '@/components/common/UniversityLogo';
+import { useAuth } from '@/context/AuthContext';
 
 export interface InstitutionOption {
      id: string;
@@ -96,12 +97,49 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
           return null;
      }, [targetInst]);
 
+     const { user, profile } = useAuth();
+
      const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
      const [noPsychometric, setNoPsychometric] = useState<boolean>(false);
      const [psychGeneral, setPsychGeneral] = useState<number | ''>(0);
      const [psychQuant, setPsychQuant] = useState<number | ''>(0);
      const [psychVerbal, setPsychVerbal] = useState<number | ''>(0);
      const [psychEnglish, setPsychEnglish] = useState<number | ''>(0);
+
+     // Sync with user profile on login or profile change
+     useEffect(() => {
+          if (user && profile) {
+               if (profile.bagrutSubjects && profile.bagrutSubjects.length > 0) {
+                    setSubjects(profile.bagrutSubjects.map((s: any) => ({
+                         name: s.subjectName || s.name,
+                         units: s.units,
+                         grade: s.grade
+                    })));
+               }
+               if (profile.hasTakenPsychometric !== undefined) {
+                    setNoPsychometric(!profile.hasTakenPsychometric);
+               }
+               setPsychGeneral(profile.psychometricGeneral || 0);
+               setPsychQuant(profile.psychometricQuant || 0);
+               setPsychVerbal(profile.psychometricVerbal || 0);
+               setPsychEnglish(profile.psychometricEnglish || 0);
+          }
+     }, [user, profile]);
+
+     // Listen for logout event to completely reset
+     useEffect(() => {
+          const handleLogout = () => {
+               setSubjects(DEFAULT_SUBJECTS.map(s => ({ ...s, grade: 0 })));
+               setNoPsychometric(false);
+               setPsychGeneral(0);
+               setPsychQuant(0);
+               setPsychVerbal(0);
+               setPsychEnglish(0);
+               setPanelInstitutionId(null);
+          };
+          window.addEventListener('kalis-logout', handleLogout);
+          return () => window.removeEventListener('kalis-logout', handleLogout);
+     }, []);
 
      // Admission panel state
      const [panelInstitutionId, setPanelInstitutionId] = useState<string | null>(null);

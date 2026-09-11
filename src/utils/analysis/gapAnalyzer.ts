@@ -52,6 +52,8 @@ export interface UserAcademicProfile {
 	psychometricQuant?: number;
 	psychometricVerbal?: number;
 	psychometricEnglish?: number;
+	psychometricQuantEmphasis?: number; // Explicit official NITE score (200-800) from slip
+	psychometricVerbalEmphasis?: number; // Explicit official NITE score (200-800) from slip
 	mathGrade: number;
 	mathUnits: number;
 	physicsGrade?: number;
@@ -89,6 +91,7 @@ export function resolveProgramSekemType(
 		title.includes('מתמטיקה') ||
 		title.includes('נתונים') ||
 		title.includes('סייבר') ||
+		title.includes('מערכות מידע') ||
 		title.includes('ביוטכנולוגיה');
 
 	if (calcId === 'tau') {
@@ -105,10 +108,17 @@ export function resolveProgramSekemType(
 	}
 
 	if (calcId === 'bgu') {
-		if (title.includes('הנדס')) {
-			return { type: 'engineering', label: 'סכם הנדסה רשמי (ב"ג)' };
+		if (title.includes('הנדס') || isEngineeringOrStem) {
+			return { type: 'engineering', label: 'סכם כמותי / הנדסה (ב"ג)' };
 		}
 		return { type: 'general', label: 'סכם כללי (ב"ג)' };
+	}
+
+	if (calcId === 'huji') {
+		if (isEngineeringOrStem) {
+			return { type: 'engineering', label: 'סכם בדגש כמותי (העברית)' };
+		}
+		return { type: 'general', label: 'סכם כללי (העברית)' };
 	}
 
 	if (isEngineeringOrStem) {

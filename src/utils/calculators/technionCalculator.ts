@@ -288,14 +288,16 @@ export function calculateTechnionAdmission(
 	input: TechnionCalculatorInput
 ): TechnionCalculatorResult {
 	const optimal = calculateOptimalTechnionBagrut(input.bagrutSubjects);
-	const psych = input.psychometricGeneral;
-	const quant =
-		input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const psych = input.psychometricGeneral || 0;
+	// In Technion, the official formula for ALL degree tracks
+	// ("חישוב סכם לכל המסלולים פרט לארכיטקטורה, אדריכלות נוף ומסלולי הרפואה"):
+	// S = 0.5 * D + 0.075 * P_general - 19
+	// The psychometric score is strictly the multi-disciplinary (general) score.
+	const sekem = calculateTechnionSekem(optimal.average, psych);
+	const generalSekem = sekem;
+	const engineeringSekem = sekem;
 
-	const generalSekem = calculateTechnionSekem(optimal.average, psych);
-	const engineeringSekem = calculateTechnionSekem(optimal.average, quant);
-
-	const directBagrutEligible = optimal.average >= 108;
+	const directBagrutEligible = false; // Technion does not have direct bagrut admission for CS/engineering
 
 	return {
 		bagrutAverage: optimal.average,

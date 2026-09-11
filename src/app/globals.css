@@ -28,6 +28,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Explicit text direction utilities for RTL/LTR bilingual support */
+.dir-ltr, [dir="ltr"] {
+  direction: ltr !important;
+  text-align: left;
+}
+
+.dir-rtl, [dir="rtl"] {
+  direction: rtl !important;
+  text-align: right;
+}
+
 /* Editorial warm scrollbars */
 ::-webkit-scrollbar {
   width: 8px;

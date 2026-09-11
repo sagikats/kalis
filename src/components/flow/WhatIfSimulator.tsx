@@ -586,13 +586,13 @@ export default function WhatIfSimulator({
 						<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-end gap-2 flex-wrap text-xs">
 							<span className="text-[#66635C] text-[11px]">מקורות השיפור:</span>
 							{totalPsychSekemDelta > 0 && (
-								<span className="px-2.5 py-0.5 rounded-lg bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] text-[11px] font-black dir-ltr flex items-center gap-1">
+								<span className="px-2.5 py-0.5 rounded-lg bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] text-[11px] font-black flex items-center gap-1">
 									<Brain className="h-3 w-3 text-[#1E597B]" />
 									<span>+{totalPsychSekemDelta} נק׳ מפסיכומטרי</span>
 								</span>
 							)}
 							{totalBagrutSekemDelta > 0 && (
-								<span className="px-2.5 py-0.5 rounded-lg bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] text-[11px] font-black dir-ltr flex items-center gap-1">
+								<span className="px-2.5 py-0.5 rounded-lg bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] text-[11px] font-black flex items-center gap-1">
 									<BookOpen className="h-3 w-3 text-[#453D78]" />
 									<span>+{totalBagrutSekemDelta} נק׳ מבגרות</span>
 								</span>
@@ -945,11 +945,17 @@ export default function WhatIfSimulator({
 											<div className="space-y-1">
 												<div className="flex items-center justify-between text-xs">
 													<span className="text-[#66635C]">
-														{item.isCustomAdded
-															? 'ציון יעד:'
-															: `קיים: ${item.originalGrade} ➔ יעד:`}
+														{item.isCustomAdded ? (
+															'ציון יעד:'
+														) : (
+															<span className="inline-flex items-center gap-1">
+																<span>קיים: {item.originalGrade}</span>
+																<span className="text-[#8A847C]">←</span>
+																<span>יעד:</span>
+															</span>
+														)}
 													</span>
-													<div className="text-left dir-ltr">
+													<div dir="ltr" className="text-left dir-ltr">
 														<span className="font-black text-[#222222]">{item.simulatedGrade}</span>
 														{!item.isCustomAdded && item.simulatedGrade > item.originalGrade && (
 															<span className="text-[10px] text-[#205739] font-bold ml-1">

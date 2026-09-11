@@ -12,24 +12,22 @@ import {
 	DroppedSubjectInfo
 } from './types';
 
-const TAU_MANDATORY_SUBJECTS = [
-	'מתמטיקה',
-	'אנגלית',
-	'אזרחות',
-	'הבעה עברית',
-	'לשון',
-	'היסטוריה',
-	'ספרות',
-	'תנ״ך',
-	'תנ"ך'
-];
-
+/**
+ * In TAU official calculator, only Math, English, Civics, Hebrew Expression, and History are strictly non-droppable.
+ * Bible and Literature can be dropped in TAU's optimal calculation if total units remain >= 20.
+ */
 export function isTauMandatorySubject(name: string): boolean {
-	const trimmed = name.trim();
-	return TAU_MANDATORY_SUBJECTS.some((m) => trimmed.includes(m));
+	const n = name.trim();
+	if (n.includes('מתמטיקה')) return true;
+	if (n.includes('אנגלית')) return true;
+	if (n.includes('אזרחות')) return true;
+	if (n.includes('הבעה') || n.includes('לשון') || (n.includes('עברית') && !n.includes('ספרות'))) return true;
+	if (n.includes('היסטוריה') || n.includes('תע"י') || n.includes('תולדות עם ישראל') || n.includes('ידע העם והמדינה')) return true;
+	return false;
 }
 
 export function getTauBonus(subject: CalculatorSubject): number {
+	if (subject.grade < 60) return 0;
 	const n = subject.name.trim();
 
 	if (n.includes('מתמטיקה')) {
@@ -44,15 +42,21 @@ export function getTauBonus(subject: CalculatorSubject): number {
 		return 0;
 	}
 
-	const isSci =
-		n.includes('פיזיקה') ||
-		n.includes('כימיה') ||
-		n.includes('ביולוגיה') ||
-		n.includes('מדעי המחשב');
-
 	if (subject.units >= 5) {
-		if (isSci) return 25;
-		return 20;
+		if (
+			n.includes('פיזיקה') ||
+			n.includes('כימיה') ||
+			n.includes('ביולוגיה') ||
+			n.includes('ספרות') ||
+			n.includes('היסטוריה') ||
+			n.includes('תע"י') ||
+			n.includes('תנ"ך') ||
+			n.includes('תנ״ך') ||
+			n.includes('ערבית')
+		) {
+			return 25;
+		}
+		return 20; // Computer Science, Software, other 5u electives
 	}
 
 	if (subject.units === 4) {
@@ -182,7 +186,10 @@ export function calculateTauManagementSekem(bagrutAverage: number, psychometric:
 export function evaluateTau(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateTauOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
-	const rawQuant = input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych;
+	const explicitQuant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
+		? input.psychometricQuantEmphasis
+		: undefined;
+	const rawQuant = explicitQuant ?? (input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych);
 	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const mathSub = input.bagrutSubjects.find((s) => s.name.includes('מתמטיקה'));
@@ -200,8 +207,7 @@ export function evaluateTau(input: InstitutionCalculatorInput): InstitutionCalcu
 		effPhysGrade >= 55;
 
 	const generalSekem = calculateTauGeneralSekem(optimal.average, psych);
-	const effQuant = quant > psych ? quant : psych;
-	const engineeringSekem = calculateTauEngineeringSekem(optimal.average, effQuant, hasRealitBonus);
+	const engineeringSekem = calculateTauEngineeringSekem(optimal.average, psych, hasRealitBonus);
 	const managementSekem = calculateTauManagementSekem(optimal.average, psych);
 
 	const directBagrutEligible = optimal.average >= 105.0;

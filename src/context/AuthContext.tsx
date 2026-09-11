@@ -20,6 +20,8 @@ interface RegisterParams {
 
 interface AuthContextType {
 	user: AuthUser | null;
+	profile: any | null;
+	preferences: any | null;
 	isAuthenticated: boolean;
 	isLoading: boolean;
 	isAuthModalOpen: boolean;
@@ -30,6 +32,8 @@ interface AuthContextType {
 	register: (params: RegisterParams) => Promise<{ success: boolean; error?: string; candidateNumber?: string }>;
 	logout: () => void;
 	refreshUser: () => Promise<void>;
+	setProfile: (profile: any) => void;
+	setPreferences: (preferences: any) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,6 +46,8 @@ const STORAGE_KEYS = {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [user, setUser] = useState<AuthUser | null>(null);
+	const [profile, setProfile] = useState<any | null>(null);
+	const [preferences, setPreferences] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 	const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('login');
@@ -61,6 +67,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 						.then(data => {
 							if (data.success && data.user) {
 								setUser(data.user);
+								if (data.profile) setProfile(data.profile);
+								if (data.preferences) setPreferences(data.preferences);
 								localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
 								if (data.user.candidateNumber) {
 									localStorage.setItem(STORAGE_KEYS.CANDIDATE_NUMBER, data.user.candidateNumber);
@@ -105,6 +113,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 			const authedUser: AuthUser = data.user;
 			setUser(authedUser);
+			if (data.profile) setProfile(data.profile);
+			if (data.preferences) setPreferences(data.preferences);
 
 			if (typeof window !== 'undefined') {
 				localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(authedUser));
@@ -141,6 +151,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 			const registeredUser: AuthUser = data.user;
 			setUser(registeredUser);
+			if (data.profile) setProfile(data.profile);
+			if (data.preferences) setPreferences(data.preferences);
 
 			if (typeof window !== 'undefined') {
 				localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(registeredUser));
@@ -162,10 +174,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 	const logout = useCallback(() => {
 		setUser(null);
+		setProfile(null);
+		setPreferences(null);
 		if (typeof window !== 'undefined') {
 			localStorage.removeItem(STORAGE_KEYS.USER);
 			localStorage.removeItem(STORAGE_KEYS.USER_ID);
 			localStorage.removeItem(STORAGE_KEYS.CANDIDATE_NUMBER);
+
+			// Completely wipe all flow and track state from local storage
+			localStorage.removeItem('kalis_admission_flow_data');
+
+			try {
+				const keysToRemove: string[] = [];
+				for (let i = 0; i < localStorage.length; i++) {
+					const key = localStorage.key(i);
+					if (key && (key.startsWith('kalis_flow_') || key.startsWith('kalis_admission_flow_'))) {
+						keysToRemove.push(key);
+					}
+				}
+				keysToRemove.forEach(k => localStorage.removeItem(k));
+			} catch (e) {
+				console.warn('[AuthContext] LocalStorage cleanup warning:', e);
+			}
+
+			// Broadcast logout event so all mounted pages/components reset to clean blank state immediately
+			window.dispatchEvent(new Event('kalis-logout'));
 		}
 	}, []);
 
@@ -176,6 +209,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 			const data = await res.json();
 			if (data.success && data.user) {
 				setUser(data.user);
+				if (data.profile) setProfile(data.profile);
+				if (data.preferences) setPreferences(data.preferences);
 				if (typeof window !== 'undefined') {
 					localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
 				}
@@ -189,6 +224,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		<AuthContext.Provider
 			value={{
 				user,
+				profile,
+				preferences,
 				isAuthenticated: !!user,
 				isLoading,
 				isAuthModalOpen,
@@ -198,7 +235,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				login,
 				register,
 				logout,
-				refreshUser
+				refreshUser,
+				setProfile,
+				setPreferences
 			}}
 		>
 			{children}

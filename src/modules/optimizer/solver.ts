@@ -8,6 +8,7 @@ import { CalculatorSubject, InstitutionCalculatorResult } from '../calculators/t
 import { calculateInstitution } from '../calculators/index';
 import { UserAcademicProfileRecord, SekemType } from '../db/schema';
 import { SubjectLeverCandidate } from './types';
+import { simulateRealisticSubscores } from '../../utils/calculators/psychometricHelper';
 
 export interface EvaluatedCandidateState {
 	sekem: number;
@@ -148,41 +149,22 @@ export function evaluateSimulatedSekem(
 	physUnits?: number,
 	physGrade?: number
 ): EvaluatedCandidateState {
-	// Official NITE scaling: convert between 200-800 scale and 50-150 subscores
-	// For balanced candidate: Subscore = 50 + (Score - 200) / 6
+	// Official NITE realistic scaling: respects headroom and 50-150 subscore constraints
 	const currentGen = profile.psychometricGeneral && profile.psychometricGeneral > 0 ? profile.psychometricGeneral : simulatedPsych;
-	const baseBalSub = Math.round(50 + (currentGen - 200) / 6);
-	const targetBalSub = Math.round(50 + (simulatedPsych - 200) / 6);
-
-	// Normalize user base subscores on 50-150 scale
-	const normalizeBaseSub = (val: number | undefined): number => {
-		if (!val || val <= 0) return baseBalSub;
-		return val > 150 ? Math.round(50 + (val - 200) / 6) : val;
-	};
-
-	const baseQSub = profile.psychometricQuant ? normalizeBaseSub(profile.psychometricQuant) : baseBalSub;
-	const baseVSub = profile.psychometricVerbal ? normalizeBaseSub(profile.psychometricVerbal) : baseBalSub;
-	const baseESub = profile.psychometricEnglish ? normalizeBaseSub(profile.psychometricEnglish) : baseBalSub;
-
-	const deltaQ = baseQSub - baseBalSub;
-	const deltaV = baseVSub - baseBalSub;
-	const deltaE = baseESub - baseBalSub;
-
-	const simQSub = Math.min(150, Math.max(50, targetBalSub + deltaQ));
-	const simVSub = Math.min(150, Math.max(50, targetBalSub + deltaV));
-	const simESub = Math.min(150, Math.max(50, targetBalSub + deltaE));
-
-	// 200-800 emphasis scores
-	const simQuantScore = Math.min(800, Math.max(200, 200 + (simQSub - 50) * 6));
-	const simVerbalScore = Math.min(800, Math.max(200, 200 + (simVSub - 50) * 6));
-	const simEnglishScore = Math.min(800, Math.max(200, 200 + (simESub - 50) * 6));
+	const simScores = simulateRealisticSubscores(
+		simulatedPsych,
+		currentGen,
+		profile.psychometricQuant,
+		profile.psychometricVerbal,
+		profile.psychometricEnglish
+	);
 
 	const res = calculateInstitution(institutionId, {
 		bagrutSubjects: subjects,
 		psychometricGeneral: simulatedPsych,
-		psychometricQuant: simQuantScore,
-		psychometricVerbal: simVerbalScore,
-		psychometricEnglish: simEnglishScore,
+		psychometricQuant: simScores.quantEmphasis,
+		psychometricVerbal: simScores.verbalEmphasis,
+		psychometricEnglish: simScores.englishSub,
 		mathUnits: mathUnits ?? profile.mathUnits,
 		mathGrade: mathGrade ?? profile.mathGrade,
 		physicsUnits: physUnits ?? profile.physicsUnits,
@@ -194,6 +176,8 @@ export function evaluateSimulatedSekem(
 		sekem = res.engineeringSekem;
 	} else if (relevantSekemType === 'management' && res.managementSekem !== undefined) {
 		sekem = res.managementSekem;
+	} else if (institutionId === 'technion') {
+		sekem = res.engineeringSekem ?? res.generalSekem;
 	}
 
 	return {
@@ -281,5 +265,18 @@ export function solveMinimumPsychometricTarget(
 		}
 	}
 
-	return bestMatch !== null ? Math.max(effectiveMin, bestMatch) : null;
+	if (bestMatch === null) return null;
+	const target = Math.max(effectiveMin, bestMatch);
+
+	// Institutional Sensitivity Verification Gate:
+	// For Technion, verify that psychometric delta conforms to official slope (0.075 * deltaP)
+	if (institutionId === 'technion' && hasTakenPsych) {
+		const sekemGap = threshold - minRes.sekem;
+		const deltaP = target - currentPsych;
+		if (sekemGap > 0.4 && deltaP < (sekemGap - 0.15) / 0.075) {
+			return null;
+		}
+	}
+
+	return target;
 }

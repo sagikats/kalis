@@ -699,7 +699,7 @@ export function generateOptimizedActionTracks(
 	const hasUnclosedGap = trackA.targetSekem! < threshold || trackB.targetSekem! < threshold;
 	const isLargeInitialGap = threshold - currentSekem >= (isTechnion ? 7.0 : 25) && reachability.maxImprovementPoints <= 40;
 	const gapAbs = threshold - currentSekem;
-	const isHugeGap = hasUnclosedGap || isLargeInitialGap || gapAbs >= (isTechnion ? 8.0 : 45.0);
+	const isHugeGap = hasUnclosedGap || isLargeInitialGap || gapAbs >= (isTechnion ? 3.0 : 20.0) || (trackA.targetPsychometric || 0) >= 720;
 	const mechinaAvailable = hasUnclosedGap || isLargeInitialGap || trackA.feasibility === 'challenging' || isHugeGap;
 
 	const mechinaReason = mechinaAvailable
@@ -713,9 +713,9 @@ export function generateOptimizedActionTracks(
 	let trackLongTerm: ActionTrackRecord | undefined = undefined;
 
 	if (isHugeGap) {
-		const longTermLeversCandidates: SubjectLeverCandidate[] = availableLevers.slice(0, 4).map((l) => ({
+		const longTermLeversCandidates: SubjectLeverCandidate[] = availableLevers.slice(0, Math.min(5, availableLevers.length)).map((l) => ({
 			...l,
-			targetGrade: l.isMath ? 88 : l.targetUnits >= 5 ? 90 : 92
+			targetGrade: l.isMath ? 88 : l.targetUnits >= 5 ? 92 : 92
 		}));
 
 		const simStateLT = applyLeversToCandidateState(profile, longTermLeversCandidates);

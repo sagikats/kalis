@@ -8,6 +8,7 @@ import {
 	Clock,
 	CheckCircle2,
 	ArrowRight,
+	ArrowLeft,
 	TrendingUp,
 	Calendar,
 	BookOpen,
@@ -519,19 +520,22 @@ export default function RecommendedTracksView({
 												<Brain className="h-4 w-4 text-[#222222]" />
 												<span className="text-xs font-bold text-[#66635C]">יעד פסיכומטרי:</span>
 											</div>
-											<div className="text-left dir-ltr">
+											<div dir="ltr" className="text-left dir-ltr flex items-center gap-1">
 												{track.targetPsychometric > (track.currentPsychometric || 0) ? (
 													<>
 														{(track.currentPsychometric || 0) > 0 && (
-															<span className="text-xs text-[#8A847C] line-through mr-2">
-																{track.currentPsychometric}
-															</span>
+															<>
+																<span className="text-xs text-[#8A847C] line-through">
+																	{track.currentPsychometric}
+																</span>
+																<span className="text-[#8A847C] text-xs">➔</span>
+															</>
 														)}
 														<span className="text-sm font-black text-[#222222]">
 															{track.targetPsychometric}
 														</span>
 														{(track.currentPsychometric || 0) > 0 && (
-															<span className="text-[10px] text-[#205739] ml-1 font-bold">
+															<span className="text-[10px] text-[#205739] font-bold">
 																(+{track.targetPsychometric - (track.currentPsychometric || 0)})
 															</span>
 														)}
@@ -561,14 +565,15 @@ export default function RecommendedTracksView({
 														<BookOpen className="h-4 w-4 text-[#222222]" />
 														<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
 													</div>
-													<div className="text-left dir-ltr">
-														<span className="text-xs text-[#8A847C] line-through mr-2">
+													<div dir="ltr" className="text-left dir-ltr flex items-center gap-1">
+														<span className="text-xs text-[#8A847C] line-through">
 															{track.currentBagrutAverage?.toFixed(1)}
 														</span>
+														<span className="text-[#8A847C] text-xs">➔</span>
 														<span className="text-sm font-black text-[#222222]">
 															{track.targetBagrutAverage?.toFixed(1)}
 														</span>
-														<span className="text-[10px] text-[#205739] ml-1 font-bold">
+														<span className="text-[10px] text-[#205739] font-bold">
 															(+{((track.targetBagrutAverage || 0) - (track.currentBagrutAverage || 0)).toFixed(1)})
 														</span>
 													</div>
@@ -658,7 +663,7 @@ export default function RecommendedTracksView({
 																		{sInfo.iconEmoji} {sInfo.badgeLabel}
 																	</span>
 																</div>
-																<span className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
+																<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
 																	{(track.currentPsychometric || 0) > 0 ? (
 																		<>
 																			<span className="text-[#8A847C] font-normal">{track.currentPsychometric}</span>
@@ -683,17 +688,32 @@ export default function RecommendedTracksView({
 													{track.recommendedSubjectImprovements.map((s, idx) => {
 														const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
 														const sInfo = getSessionInfo(sSession);
+														const hasUnitChange = Boolean(s.currentUnits && s.currentUnits > 0 && s.currentUnits !== s.targetUnits);
 														return (
 															<div key={idx} className="text-xs flex items-center justify-between gap-2 px-2 py-1.5 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
 																<div className="flex items-center gap-1.5 truncate">
 																	<span className="text-[#222222] font-medium truncate">
-																		{s.subjectName} ({s.targetUnits} יח״ל):
+																		{s.subjectName}{' '}
+																		{hasUnitChange ? (
+																			<span className="text-[#66635C] font-semibold inline-flex items-center gap-0.5">
+																				(
+																				<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+																					<span>{s.currentUnits}</span>
+																					<span className="text-[#8A847C]">➔</span>
+																					<span>{s.targetUnits}</span>
+																				</span>
+																				<span>יח״ל</span>
+																				):
+																			</span>
+																		) : (
+																			`(${s.targetUnits} יח״ל):`
+																		)}
 																	</span>
 																	<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} shrink-0 shadow-2xs`}>
 																		{sInfo.iconEmoji} {sInfo.badgeLabel}
 																	</span>
 																</div>
-																<span className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
+																<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
 																	{s.currentGrade > 0 ? (
 																		<>
 																			<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
@@ -880,8 +900,17 @@ export default function RecommendedTracksView({
 									return (
 										<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] font-bold">
 											<Brain className="h-3.5 w-3.5 text-[#205739]" />
-											<span>
-												פסיכומטרי: {(selectedTrack.currentPsychometric || 0) > 0 ? `${selectedTrack.currentPsychometric} ➔ ` : 'יעד '}{selectedTrack.targetPsychometric}
+											<span>פסיכומטרי:</span>
+											<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+												{(selectedTrack.currentPsychometric || 0) > 0 ? (
+													<>
+														<span className="text-[#8A847C] font-normal">{selectedTrack.currentPsychometric}</span>
+														<span className="text-[#8A847C]">➔</span>
+														<span className="font-bold">{selectedTrack.targetPsychometric}</span>
+													</>
+												) : (
+													<span>יעד {selectedTrack.targetPsychometric}</span>
+												)}
 											</span>
 											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#C6DFCE] bg-white text-[#205739]">
 												{sInfo.iconEmoji} {sInfo.name}
@@ -892,11 +921,38 @@ export default function RecommendedTracksView({
 								{selectedTrack.recommendedSubjectImprovements.map((s, idx) => {
 									const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
 									const sInfo = getSessionInfo(sSession);
+									const hasUnitChange = Boolean(s.currentUnits && s.currentUnits > 0 && s.currentUnits !== s.targetUnits);
 									return (
 										<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F2F1F8] border border-[#D2CEEB] text-[#453D78] font-bold">
 											<BookOpen className="h-3.5 w-3.5 text-[#453D78]" />
 											<span>
-												{s.subjectName} ({s.targetUnits} יח״ל): {s.currentGrade > 0 ? `${s.currentGrade} ➔ ` : ''}{s.targetGrade}
+												{s.subjectName}{' '}
+												{hasUnitChange ? (
+													<span className="inline-flex items-center gap-0.5">
+														(
+														<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+															<span>{s.currentUnits}</span>
+															<span>➔</span>
+															<span>{s.targetUnits}</span>
+														</span>
+														<span>יח״ל</span>
+														)
+													</span>
+												) : (
+													`(${s.targetUnits} יח״ל)`
+												)}
+												:
+											</span>
+											<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+												{s.currentGrade > 0 ? (
+													<>
+														<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
+														<span className="text-[#8A847C]">➔</span>
+														<span className="font-bold">{s.targetGrade}</span>
+													</>
+												) : (
+													<span>{s.targetGrade}</span>
+												)}
 											</span>
 											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#D2CEEB] bg-white text-[#453D78]">
 												{sInfo.iconEmoji} {sInfo.name}
@@ -1243,9 +1299,10 @@ export default function RecommendedTracksView({
 									<button
 										type="button"
 										onClick={() => setActiveTab('recommended')}
-										className="text-xs text-[#205739] underline font-bold"
+										className="text-xs text-[#205739] underline font-bold inline-flex items-center gap-1"
 									>
-										צפה במסלולים המומלצים ➔
+										<span>צפה במסלולים המומלצים</span>
+										<ArrowLeft className="h-3.5 w-3.5" />
 									</button>
 								</div>
 							)}

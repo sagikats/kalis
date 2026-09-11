@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -22,9 +22,14 @@ import {
 	Search
 } from 'lucide-react';
 
+import { useAuth } from '@/context/AuthContext';
 import { SubjectInput } from '@/utils/calculators/bguCalculator';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
-import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
+import {
+	resolvePsychometricScores,
+	calculateNiteGeneralScore,
+	checkPsychometricCoherence
+} from '@/utils/calculators/psychometricHelper';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 
@@ -47,23 +52,15 @@ import {
 
 const STORAGE_KEY = 'kalis_admission_flow_data';
 
-const DEFAULT_SUBJECTS: SubjectInput[] = [
-	{ name: 'תנ"ך', units: 2, grade: 78 },
-	{ name: 'ספרות עברית', units: 2, grade: 80 },
-	{ name: 'אזרחות', units: 2, grade: 84 },
-	{ name: 'היסטוריה / תע"י', units: 2, grade: 82 },
-	{ name: 'הבעה עברית', units: 2, grade: 85 },
-	{ name: 'אנגלית', units: 5, grade: 90 },
-	{ name: 'מתמטיקה', units: 5, grade: 88 },
-	{ name: 'פיזיקה', units: 5, grade: 86 }
+const CLEAN_BLANK_SUBJECTS: SubjectInput[] = [
+	{ name: 'תנ"ך', units: 2, grade: 0 },
+	{ name: 'ספרות עברית', units: 2, grade: 0 },
+	{ name: 'אזרחות', units: 2, grade: 0 },
+	{ name: 'היסטוריה / תע"י', units: 2, grade: 0 },
+	{ name: 'הבעה עברית', units: 2, grade: 0 },
+	{ name: 'אנגלית', units: 5, grade: 0 },
+	{ name: 'מתמטיקה', units: 5, grade: 0 }
 ];
-
-const INITIAL_PSYCH = {
-	general: 680,
-	quant: 138,
-	verbal: 132,
-	english: 125
-};
 
 function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 100): number | '' {
 	if (rawVal === '') return '';
@@ -75,15 +72,20 @@ function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 1
 
 export default function AdmissionFlowPage() {
 	const router = useRouter();
+	const { user, profile, preferences, isLoading: isAuthLoading } = useAuth();
+
 	const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
 
-	// Step 1: Grades State
-	const [subjects, setSubjects] = useState<SubjectInput[]>(DEFAULT_SUBJECTS);
+	// Step 1: Grades State - Defaults to clean blank state
+	const [subjects, setSubjects] = useState<SubjectInput[]>(() => CLEAN_BLANK_SUBJECTS.map((s) => ({ ...s })));
 	const [hasTakenPsychometric, setHasTakenPsychometric] = useState<boolean>(true);
-	const [psychGeneral, setPsychGeneral] = useState<number | ''>(INITIAL_PSYCH.general);
-	const [psychQuant, setPsychQuant] = useState<number | ''>(INITIAL_PSYCH.quant);
-	const [psychVerbal, setPsychVerbal] = useState<number | ''>(INITIAL_PSYCH.verbal);
-	const [psychEnglish, setPsychEnglish] = useState<number | ''>(INITIAL_PSYCH.english);
+	const [psychGeneral, setPsychGeneral] = useState<number | ''>('');
+	const [psychQuant, setPsychQuant] = useState<number | ''>('');
+	const [psychVerbal, setPsychVerbal] = useState<number | ''>('');
+	const [psychEnglish, setPsychEnglish] = useState<number | ''>('');
+	const [psychQuantEmphasis, setPsychQuantEmphasis] = useState<number | ''>('');
+	const [psychVerbalEmphasis, setPsychVerbalEmphasis] = useState<number | ''>('');
+	const [showEmphasisInputs, setShowEmphasisInputs] = useState<boolean>(false);
 
 	// Step 2: Target Programs Wishlist
 	const [selectedTargets, setSelectedTargets] = useState<TargetProgramSelection[]>([]);
@@ -98,47 +100,259 @@ export default function AdmissionFlowPage() {
 	const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
 	const [editingSubjectIndex, setEditingSubjectIndex] = useState<number | null>(null);
 
-	// Load from LocalStorage on mount
-	useEffect(() => {
-		try {
-			const saved = localStorage.getItem(STORAGE_KEY);
-			if (saved) {
-				const parsed = JSON.parse(saved);
-				if (parsed.subjects && parsed.subjects.length > 0) setSubjects(parsed.subjects);
-				if (parsed.hasTakenPsychometric !== undefined) setHasTakenPsychometric(parsed.hasTakenPsychometric);
-				if (parsed.psychGeneral !== undefined) setPsychGeneral(parsed.psychGeneral);
-				if (parsed.psychQuant !== undefined) setPsychQuant(parsed.psychQuant);
-				if (parsed.psychVerbal !== undefined) setPsychVerbal(parsed.psychVerbal);
-				if (parsed.psychEnglish !== undefined) setPsychEnglish(parsed.psychEnglish);
-				if (parsed.selectedTargets && parsed.selectedTargets.length > 0)
-					setSelectedTargets(parsed.selectedTargets);
-				if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
-				if (parsed.activeStep) setActiveStep(parsed.activeStep);
-			}
-		} catch (e) {
-			console.error('Failed to load saved admission flow data', e);
-		}
+	// Lifecycle and auto-sync refs
+	const currentLoadedUserRef = useRef<string | null | 'uninitialized'>('uninitialized');
+	const isHydratingRef = useRef(false);
+	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+	// Complete reset function
+	const resetFlowToCleanState = useCallback(() => {
+		setActiveStep(1);
+		setSubjects(CLEAN_BLANK_SUBJECTS.map((s) => ({ ...s })));
+		setHasTakenPsychometric(true);
+		setPsychGeneral('');
+		setPsychQuant('');
+		setPsychVerbal('');
+		setPsychEnglish('');
+		setPsychQuantEmphasis('');
+		setPsychVerbalEmphasis('');
+		setShowEmphasisInputs(false);
+		setSelectedTargets([]);
+		setFocusedProgramId(null);
+		setQuestionnaireAnswers(null);
 	}, []);
 
-	// Save to LocalStorage on change
+	// User lifecycle and data loading effect
 	useEffect(() => {
-		try {
-			const toSave = {
-				subjects,
-				hasTakenPsychometric,
-				psychGeneral,
-				psychQuant,
-				psychVerbal,
-				psychEnglish,
-				selectedTargets,
-				questionnaireAnswers,
-				activeStep
-			};
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
-		} catch (e) {
-			console.error('Failed to persist admission flow data', e);
+		if (isAuthLoading) return;
+
+		const handleLogout = () => {
+			resetFlowToCleanState();
+			currentLoadedUserRef.current = null;
+		};
+
+		window.addEventListener('kalis-logout', handleLogout);
+
+		const currentUserId = user?.id || null;
+
+		// Only run hydration when user identity changes
+		if (currentUserId !== currentLoadedUserRef.current) {
+			isHydratingRef.current = true;
+
+			if (currentUserId) {
+				// User is authenticated: load user-scoped data
+				let loadedFromStorage = false;
+				try {
+					const userSaved = localStorage.getItem(`kalis_flow_data_${currentUserId}`);
+					if (userSaved) {
+						const parsed = JSON.parse(userSaved);
+						if (parsed.subjects && parsed.subjects.length > 0) setSubjects(parsed.subjects);
+						if (parsed.hasTakenPsychometric !== undefined) setHasTakenPsychometric(parsed.hasTakenPsychometric);
+						if (parsed.psychGeneral !== undefined) setPsychGeneral(parsed.psychGeneral);
+						if (parsed.psychQuant !== undefined) setPsychQuant(parsed.psychQuant);
+						if (parsed.psychVerbal !== undefined) setPsychVerbal(parsed.psychVerbal);
+						if (parsed.psychEnglish !== undefined) setPsychEnglish(parsed.psychEnglish);
+						if (parsed.psychQuantEmphasis !== undefined) setPsychQuantEmphasis(parsed.psychQuantEmphasis);
+						if (parsed.psychVerbalEmphasis !== undefined) setPsychVerbalEmphasis(parsed.psychVerbalEmphasis);
+						if (parsed.showEmphasisInputs !== undefined) setShowEmphasisInputs(parsed.showEmphasisInputs);
+						if (parsed.selectedTargets) setSelectedTargets(parsed.selectedTargets);
+						if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
+						if (parsed.activeStep) setActiveStep(parsed.activeStep);
+						loadedFromStorage = true;
+					}
+				} catch (e) {
+					console.error('Error loading user-scoped flow data', e);
+				}
+
+				// If not found in user storage, load from DB profile/preferences
+				if (!loadedFromStorage) {
+					if (profile) {
+						if (profile.bagrutSubjects && profile.bagrutSubjects.length > 0) {
+							setSubjects(
+								profile.bagrutSubjects.map((s: any) => ({
+									name: s.subjectName || s.name,
+									units: s.units,
+									grade: s.grade
+								}))
+							);
+						}
+						if (profile.hasTakenPsychometric !== undefined) {
+							setHasTakenPsychometric(profile.hasTakenPsychometric);
+						}
+						setPsychGeneral(profile.psychometricGeneral ? profile.psychometricGeneral : '');
+						setPsychQuant(profile.psychometricQuant ? profile.psychometricQuant : '');
+						setPsychVerbal(profile.psychometricVerbal ? profile.psychometricVerbal : '');
+						setPsychEnglish(profile.psychometricEnglish ? profile.psychometricEnglish : '');
+					}
+					if (preferences) {
+						setQuestionnaireAnswers({
+							psychExperience: preferences.psychExperience,
+							psychFeeling:
+								preferences.psychFeeling === 'low_confidence'
+									? 'reached_ceiling'
+									: (preferences.psychFeeling as any),
+							psychStrongestSection: preferences.psychStrongestSection,
+							psychStrongestSections: preferences.psychStrongestSections,
+							learningOrientation: preferences.learningOrientation,
+							learningStrength: preferences.learningStrength,
+							weeklyAvailabilityHours: preferences.weeklyAvailabilityHours,
+							targetTimeline:
+								preferences.targetTimeline === 'next_year'
+									? 'next_year_october'
+									: (preferences.targetTimeline as any)
+						});
+					}
+				}
+			} else {
+				// User is guest / unauthenticated
+				if (currentLoadedUserRef.current === 'uninitialized') {
+					// Initial page load for guest: check generic guest storage
+					try {
+						const guestSaved = localStorage.getItem(STORAGE_KEY);
+						if (guestSaved) {
+							const parsed = JSON.parse(guestSaved);
+							if (parsed.subjects && parsed.subjects.length > 0) setSubjects(parsed.subjects);
+							if (parsed.hasTakenPsychometric !== undefined) setHasTakenPsychometric(parsed.hasTakenPsychometric);
+							if (parsed.psychGeneral !== undefined) setPsychGeneral(parsed.psychGeneral);
+							if (parsed.psychQuant !== undefined) setPsychQuant(parsed.psychQuant);
+							if (parsed.psychVerbal !== undefined) setPsychVerbal(parsed.psychVerbal);
+							if (parsed.psychEnglish !== undefined) setPsychEnglish(parsed.psychEnglish);
+							if (parsed.psychQuantEmphasis !== undefined) setPsychQuantEmphasis(parsed.psychQuantEmphasis);
+							if (parsed.psychVerbalEmphasis !== undefined) setPsychVerbalEmphasis(parsed.psychVerbalEmphasis);
+							if (parsed.showEmphasisInputs !== undefined) setShowEmphasisInputs(parsed.showEmphasisInputs);
+							if (parsed.selectedTargets) setSelectedTargets(parsed.selectedTargets);
+							if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
+							if (parsed.activeStep) setActiveStep(parsed.activeStep);
+						}
+					} catch (e) {
+						console.error('Error loading guest flow data', e);
+					}
+				} else {
+					// Transitioned from logged in to logged out -> reset completely
+					resetFlowToCleanState();
+				}
+			}
+
+			currentLoadedUserRef.current = currentUserId;
+
+			setTimeout(() => {
+				isHydratingRef.current = false;
+			}, 100);
 		}
-	}, [subjects, hasTakenPsychometric, psychGeneral, psychQuant, psychVerbal, psychEnglish, selectedTargets, questionnaireAnswers, activeStep]);
+
+		return () => {
+			window.removeEventListener('kalis-logout', handleLogout);
+		};
+	}, [isAuthLoading, user, profile, preferences, resetFlowToCleanState]);
+
+	// Auto-save and sync effect
+	useEffect(() => {
+		if (isAuthLoading || isHydratingRef.current || currentLoadedUserRef.current === 'uninitialized') {
+			return;
+		}
+
+		const key = user?.id ? `kalis_flow_data_${user.id}` : STORAGE_KEY;
+		const toSave = {
+			subjects,
+			hasTakenPsychometric,
+			psychGeneral,
+			psychQuant,
+			psychVerbal,
+			psychEnglish,
+			psychQuantEmphasis,
+			psychVerbalEmphasis,
+			showEmphasisInputs,
+			selectedTargets,
+			questionnaireAnswers,
+			activeStep
+		};
+
+		try {
+			localStorage.setItem(key, JSON.stringify(toSave));
+		} catch (e) {
+			console.error('Failed to persist flow data to localStorage', e);
+		}
+
+		// Debounce server PUT /api/users sync if logged in
+		if (user?.id) {
+			if (saveTimeoutRef.current) {
+				clearTimeout(saveTimeoutRef.current);
+			}
+
+			saveTimeoutRef.current = setTimeout(async () => {
+				try {
+					const math = subjects.find((s) => s.name.trim().includes('מתמטיקה'));
+					const physics = subjects.find((s) => s.name.trim().includes('פיזיקה'));
+
+					const profilePayload = {
+						userId: user.id,
+						bagrutSubjects: subjects.map((s) => ({
+							subjectName: s.name,
+							units: s.units,
+							grade: Number(s.grade) || 0,
+							isMandatory: ['תנ"ך', 'ספרות עברית', 'אזרחות', 'היסטוריה / תע"י', 'הבעה עברית', 'אנגלית', 'מתמטיקה'].includes(s.name)
+						})),
+						mathUnits: math?.units || 5,
+						mathGrade: Number(math?.grade) || 0,
+						physicsUnits: physics?.units || 0,
+						physicsGrade: Number(physics?.grade) || 0,
+						psychometricGeneral: hasTakenPsychometric ? Number(psychGeneral) || 0 : 0,
+						psychometricQuant: hasTakenPsychometric ? Number(psychQuant) || 0 : 0,
+						psychometricVerbal: hasTakenPsychometric ? Number(psychVerbal) || 0 : 0,
+						psychometricEnglish: hasTakenPsychometric ? Number(psychEnglish) || 0 : 0,
+						hasTakenPsychometric: Boolean(hasTakenPsychometric)
+					};
+
+					const preferencesPayload = questionnaireAnswers
+						? {
+								userId: user.id,
+								psychExperience: questionnaireAnswers.psychExperience || 'never',
+								psychFeeling:
+									questionnaireAnswers.psychFeeling === 'reached_ceiling'
+										? 'low_confidence'
+										: (questionnaireAnswers.psychFeeling || 'neutral'),
+								psychStrongestSection: questionnaireAnswers.psychStrongestSection || 'balanced',
+								psychStrongestSections: questionnaireAnswers.psychStrongestSections,
+								learningOrientation: questionnaireAnswers.learningOrientation || 'flexible',
+								learningStrength: questionnaireAnswers.learningStrength || 'analytical_quick',
+								weeklyAvailabilityHours: questionnaireAnswers.weeklyAvailabilityHours || 'part_15_25',
+								targetTimeline:
+									questionnaireAnswers.targetTimeline === 'next_year_october'
+										? 'next_year'
+										: (questionnaireAnswers.targetTimeline || 'immediate_october')
+						  }
+						: undefined;
+
+					await fetch('/api/users', {
+						method: 'PUT',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							userId: user.id,
+							profile: profilePayload,
+							preferences: preferencesPayload
+						})
+					});
+				} catch (err) {
+					console.warn('[flow/page.tsx] Auto-sync to /api/users error:', err);
+				}
+			}, 1000);
+		}
+	}, [
+		user?.id,
+		isAuthLoading,
+		subjects,
+		hasTakenPsychometric,
+		psychGeneral,
+		psychQuant,
+		psychVerbal,
+		psychEnglish,
+		psychQuantEmphasis,
+		psychVerbalEmphasis,
+		showEmphasisInputs,
+		selectedTargets,
+		questionnaireAnswers,
+		activeStep
+	]);
 
 	// Extract Math & Physics for university engines
 	const mathSubject = useMemo(() => {
@@ -165,31 +379,71 @@ export default function AdmissionFlowPage() {
 		});
 	}, [psychGeneral, psychQuant, psychVerbal, psychEnglish]);
 
+	// Check coherence between entered general score and subscore-derived score
+	const psychCoherence = useMemo(() => {
+		if (!hasTakenPsychometric) return { isCoherent: true, calculatedGeneral: 0, discrepancy: 0 };
+		const numGen = Number(psychGeneral) || 0;
+		const numQ = Number(psychQuant) || 0;
+		const numV = Number(psychVerbal) || 0;
+		const numE = Number(psychEnglish) || 0;
+		if (numGen === 0 || (numQ === 0 && numV === 0 && numE === 0)) {
+			return { isCoherent: true, calculatedGeneral: 0, discrepancy: 0 };
+		}
+		return checkPsychometricCoherence(
+			numGen,
+			numQ,
+			numV,
+			numE
+		);
+	}, [hasTakenPsychometric, psychGeneral, psychQuant, psychVerbal, psychEnglish]);
+
+	// Handler for subscores that auto-syncs the general score according to NITE formula
+	const handleSubscoreChange = (section: 'quant' | 'verbal' | 'english', val: number | '') => {
+		const newQ = section === 'quant' ? val : psychQuant;
+		const newV = section === 'verbal' ? val : psychVerbal;
+		const newE = section === 'english' ? val : psychEnglish;
+
+		if (section === 'quant') setPsychQuant(val);
+		if (section === 'verbal') setPsychVerbal(val);
+		if (section === 'english') setPsychEnglish(val);
+
+		const numQ = Number(newQ) || 0;
+		const numV = Number(newV) || 0;
+		const numE = Number(newE) || 0;
+
+		// Auto-fill general score ONLY if the user has NOT entered a general score yet!
+		if (!psychGeneral || Number(psychGeneral) === 0) {
+			if (numQ >= 50 && numQ <= 150 && numV >= 50 && numV <= 150 && numE >= 50 && numE <= 150) {
+				const niteGen = calculateNiteGeneralScore(numQ, numV, numE);
+				if (niteGen >= 200 && niteGen <= 800) {
+					setPsychGeneral(niteGen);
+				}
+			}
+		}
+	};
+
 	// User Academic Profile object
 	const userProfile: UserAcademicProfile = useMemo(() => {
 		const isPsych = hasTakenPsychometric;
 		return {
 			bagrutSubjects: subjects.map((s) => ({ ...s, grade: Number(s.grade) || 0 })),
-			psychometricGeneral: isPsych ? Number(psychGeneral) || 0 : 0,
+			psychometricGeneral: isPsych ? psychResolution.effectiveGeneral : 0,
 			psychometricQuant: isPsych ? Number(psychQuant) || 0 : 0,
 			psychometricVerbal: isPsych ? Number(psychVerbal) || 0 : 0,
 			psychometricEnglish: isPsych ? Number(psychEnglish) || 0 : 0,
+			psychometricQuantEmphasis: isPsych && psychQuantEmphasis ? Number(psychQuantEmphasis) : undefined,
+			psychometricVerbalEmphasis: isPsych && psychVerbalEmphasis ? Number(psychVerbalEmphasis) : undefined,
 			mathGrade: Number(mathSubject.grade) || 0,
 			mathUnits: mathSubject.units,
 			physicsGrade: Number(physicsSubject?.grade) || 0,
 			physicsUnits: physicsSubject?.units || 0
 		};
-	}, [subjects, hasTakenPsychometric, psychGeneral, psychQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject]);
+	}, [subjects, hasTakenPsychometric, psychResolution, psychQuant, psychVerbal, psychEnglish, psychQuantEmphasis, psychVerbalEmphasis, mathSubject, physicsSubject]);
 
-	// Multi-institution calculations (all 6 universities)
+	// Multi-institution calculations (all 8 universities)
 	const institutionResultsMap = useMemo(() => {
-		const isPsych = hasTakenPsychometric;
 		const resList = calculateMultiInstitutionSekem(
-			{
-				...userProfile,
-				psychometricGeneral: isPsych ? Number(psychGeneral) || 0 : 0,
-				psychometricQuant: isPsych ? Number(psychQuant) || 0 : 0
-			},
+			userProfile,
 			['bgu', 'tau', 'huji', 'technion', 'ariel', 'haifa', 'bar_ilan', 'reichman']
 		);
 
@@ -231,11 +485,12 @@ export default function AdmissionFlowPage() {
 	// Handlers for Subject Entry
 	const handleSubjectChange = (index: number, field: 'units' | 'grade', value: number | string) => {
 		const updated = [...subjects];
-		let val = Number(value);
-		if (field === 'grade') {
-			val = cleanNumberInput(String(value), 0, 100) as number;
+		if (field === 'units') {
+			updated[index] = { ...updated[index], units: Number(value) };
+		} else {
+			const cleaned = cleanNumberInput(String(value), 0, 100);
+			updated[index] = { ...updated[index], grade: cleaned === '' ? 0 : cleaned };
 		}
-		updated[index] = { ...updated[index], [field]: val };
 		setSubjects(updated);
 	};
 
@@ -245,11 +500,11 @@ export default function AdmissionFlowPage() {
 			updated[editingSubjectIndex] = {
 				name: option.name,
 				units: option.defaultUnits,
-				grade: updated[editingSubjectIndex].grade || 85
+				grade: updated[editingSubjectIndex].grade || 0
 			};
 			setSubjects(updated);
 		} else {
-			setSubjects([...subjects, { name: option.name, units: option.defaultUnits, grade: 85 }]);
+			setSubjects([...subjects, { name: option.name, units: option.defaultUnits, grade: 0 }]);
 		}
 		setIsSubjectModalOpen(false);
 		setEditingSubjectIndex(null);
@@ -460,10 +715,10 @@ export default function AdmissionFlowPage() {
 											setPsychVerbal(0);
 											setPsychEnglish(0);
 										} else {
-											setPsychGeneral(INITIAL_PSYCH.general);
-											setPsychQuant(INITIAL_PSYCH.quant);
-											setPsychVerbal(INITIAL_PSYCH.verbal);
-											setPsychEnglish(INITIAL_PSYCH.english);
+											setPsychGeneral('');
+											setPsychQuant('');
+											setPsychVerbal('');
+											setPsychEnglish('');
 										}
 									}}
 									className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
@@ -506,14 +761,19 @@ export default function AdmissionFlowPage() {
 								) : (
 									<div className="space-y-4">
 										<div className="space-y-1.5">
-											<label className="block text-xs font-bold text-[#44423D]">
-												ציון רב-תחומי (200–800):
-											</label>
+											<div className="flex items-center justify-between">
+												<label className="block text-xs font-bold text-[#44423D]">
+													ציון רב-תחומי (200–800):
+												</label>
+												<span className="text-[10px] text-[#66635C]">
+													לפי ספח הציונים הרשמי
+												</span>
+											</div>
 											<input
 												type="number"
 												min={200}
 												max={800}
-												value={psychGeneral}
+												value={psychGeneral === 0 ? '' : psychGeneral}
 												onChange={(e) =>
 													setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
 												}
@@ -522,6 +782,19 @@ export default function AdmissionFlowPage() {
 											/>
 										</div>
 
+										{/* Gross Mismatch Warning Banner */}
+										{!psychCoherence.isCoherent && psychCoherence.calculatedGeneral > 0 && (
+											<div className="p-3 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-900 space-y-2">
+												<div className="flex items-center gap-1.5 text-xs font-bold">
+													<AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+													<span>פער חריג (מעל 30 נקודות) בין הציון הכולל לציוני הפרקים</span>
+												</div>
+												<p className="text-[11px] leading-relaxed text-amber-800">
+													הציון הרב-תחומי שהוזן ({psychGeneral}) סוטה משמעותית מהערכת שקלול הפרקים (סביב {psychCoherence.calculatedGeneral}). אנא ודא שהנתונים שהזנת תואמים במדויק את ספח הציונים הרשמי ממאל״ו.
+												</p>
+											</div>
+										)}
+
 										<div className="grid grid-cols-3 gap-2.5">
 											<div className="space-y-1.5">
 												<label className="block text-[11px] font-bold text-[#44423D]">כמותי:</label>
@@ -529,9 +802,9 @@ export default function AdmissionFlowPage() {
 													type="number"
 													min={50}
 													max={150}
-													value={psychQuant}
+													value={psychQuant === 0 ? '' : psychQuant}
 													onChange={(e) =>
-														setPsychQuant(cleanNumberInput(e.target.value, 0, 150) as number)
+														handleSubscoreChange('quant', cleanNumberInput(e.target.value, 0, 150) as number)
 													}
 													placeholder="50-150"
 													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
@@ -544,9 +817,9 @@ export default function AdmissionFlowPage() {
 													type="number"
 													min={50}
 													max={150}
-													value={psychVerbal}
+													value={psychVerbal === 0 ? '' : psychVerbal}
 													onChange={(e) =>
-														setPsychVerbal(cleanNumberInput(e.target.value, 0, 150) as number)
+														handleSubscoreChange('verbal', cleanNumberInput(e.target.value, 0, 150) as number)
 													}
 													placeholder="50-150"
 													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
@@ -559,9 +832,9 @@ export default function AdmissionFlowPage() {
 													type="number"
 													min={50}
 													max={150}
-													value={psychEnglish}
+													value={psychEnglish === 0 ? '' : psychEnglish}
 													onChange={(e) =>
-														setPsychEnglish(cleanNumberInput(e.target.value, 0, 150) as number)
+														handleSubscoreChange('english', cleanNumberInput(e.target.value, 0, 150) as number)
 													}
 													placeholder="50-150"
 													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
@@ -581,18 +854,84 @@ export default function AdmissionFlowPage() {
 											</div>
 										)}
 
+										{/* Optional NITE Emphasis Scores (200-800) */}
+										<div className="pt-1">
+											<button
+												type="button"
+												onClick={() => setShowEmphasisInputs(!showEmphasisInputs)}
+												className="text-[11px] font-bold text-[#3C3C3C] hover:text-black flex items-center gap-1.5 transition underline decoration-dotted cursor-pointer"
+											>
+												<span>
+													{showEmphasisInputs
+														? 'הסתר ציוני דגש רשמיים (200–800)'
+														: '+ מתמיין להנדסה / מדעים? הזן ציוני דגש רשמיים מספח מאל״ו'}
+												</span>
+											</button>
+
+											{showEmphasisInputs && (
+												<div className="mt-2.5 p-3 rounded-xl bg-white border border-[#E5DFD4] space-y-2.5 shadow-2xs">
+													<div className="flex items-center justify-between">
+														<span className="text-[11px] font-bold text-[#222222]">
+															ציוני דגש רשמיים (מאל״ו)
+														</span>
+														<span className="text-[10px] text-[#77746D]">אופציונלי (200–800)</span>
+													</div>
+													<div className="grid grid-cols-2 gap-2">
+														<div className="space-y-1">
+															<label className="block text-[10px] font-medium text-[#55524B]">
+																דגש כמותי (הנדסה/מדמ״ח):
+															</label>
+															<input
+																type="number"
+																min={200}
+																max={800}
+																value={psychQuantEmphasis}
+																onChange={(e) =>
+																	setPsychQuantEmphasis(cleanNumberInput(e.target.value, 0, 800) as number)
+																}
+																placeholder={String(psychResolution.effectiveQuantEmphasis)}
+																className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222]"
+															/>
+														</div>
+														<div className="space-y-1">
+															<label className="block text-[10px] font-medium text-[#55524B]">
+																דגש מילולי (הומני/רפואה):
+															</label>
+															<input
+																type="number"
+																min={200}
+																max={800}
+																value={psychVerbalEmphasis}
+																onChange={(e) =>
+																	setPsychVerbalEmphasis(cleanNumberInput(e.target.value, 0, 800) as number)
+																}
+																placeholder={String(psychResolution.effectiveVerbalEmphasis)}
+																className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222]"
+															/>
+														</div>
+													</div>
+												</div>
+											)}
+										</div>
+
 										{/* Calculated Weights info */}
 										<div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[11px] text-[#66635C] space-y-1">
 											<div className="flex justify-between">
-												<span>שקלול מאל״ו בדגש כמותי:</span>
+												<span>
+													שקלול מאל״ו בדגש כמותי{' '}
+													{psychQuantEmphasis ? '(רשמי מהספח)' : '(הערכה לפי פרקים)'}:
+												</span>
 												<span className="font-bold text-[#222222]">
-													{psychResolution.effectiveQuantEmphasis}
+													{psychQuantEmphasis || psychResolution.effectiveQuantEmphasis}
 												</span>
 											</div>
 											<div className="flex justify-between">
-												<span>שקלול מאל״ו בדגש מילולי:</span>
+												<span>
+													שקלול מאל״ו בדגש מילולי{' '}
+													{psychVerbalEmphasis ? '(רשמי מהספח)' : '(הערכה לפי פרקים)'}:
+												</span>
 												<span className="font-bold text-[#222222]">
-													{psychResolution.effectiveVerbalEmphasis}
+													{psychVerbalEmphasis || psychResolution.effectiveVerbalEmphasis}
 												</span>
 											</div>
 										</div>
@@ -609,16 +948,32 @@ export default function AdmissionFlowPage() {
 											ציוני תעודת בגרות ({subjects.length} מקצועות)
 										</h3>
 									</div>
-									<button
-										onClick={() => {
-											setEditingSubjectIndex(null);
-											setIsSubjectModalOpen(true);
-										}}
-										className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#222222] hover:bg-[#EFEAE0] text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
-									>
-										<Plus className="h-3.5 w-3.5" />
-										<span>הוסף מקצוע / הגברה</span>
-									</button>
+									<div className="flex items-center gap-2">
+										<button
+											type="button"
+											onClick={() => {
+												if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
+													resetFlowToCleanState();
+												}
+											}}
+											className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
+											title="איפוס כל הנתונים"
+										>
+											<RefreshCw className="h-3.5 w-3.5" />
+											<span>איפוס</span>
+										</button>
+										<button
+											type="button"
+											onClick={() => {
+												setEditingSubjectIndex(null);
+												setIsSubjectModalOpen(true);
+											}}
+											className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#222222] hover:bg-[#EFEAE0] text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+										>
+											<Plus className="h-3.5 w-3.5" />
+											<span>הוסף מקצוע / הגברה</span>
+										</button>
+									</div>
 								</div>
 
 								{/* Subjects List */}
@@ -651,7 +1006,7 @@ export default function AdmissionFlowPage() {
 												type="number"
 												min={0}
 												max={100}
-												value={sub.grade}
+												value={sub.grade === 0 ? '' : sub.grade}
 												onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
 												placeholder="ציון"
 												className="w-16 bg-white border border-[#DDD7CB] text-xs font-bold text-center text-[#222222] rounded-xl px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#222222]"
@@ -742,6 +1097,29 @@ export default function AdmissionFlowPage() {
 								</button>
 							</div>
 						</div>
+
+						{hasTakenPsychometric && !psychQuantEmphasis && gapAnalyses.some((g) => g.relevantSekemType === 'engineering') && (
+							<div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 flex items-center justify-between flex-wrap gap-3">
+								<div className="flex items-center gap-2.5">
+									<AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
+									<div className="text-xs">
+										<span className="font-bold">נבחר תואר הדורש שקלול בדגש כמותי (הנדסה/מדעי המחשב):</span>
+										<span className="text-amber-800 mr-1">
+											הסכם מחושב כעת לפי הערכת שקלול הפרקים ({psychResolution.effectiveQuantEmphasis}). להבטחת דיוק מוחלט, תוכל להזין את ציון הדגש הרשמי מספח מאל״ו.
+										</span>
+									</div>
+								</div>
+								<button
+									onClick={() => {
+										setShowEmphasisInputs(true);
+										setActiveStep(1);
+									}}
+									className="text-xs font-bold px-3 py-1.5 bg-amber-200/60 hover:bg-amber-200 text-amber-900 rounded-lg border border-amber-300 transition cursor-pointer"
+								>
+									הזן ציון דגש מספח מאל״ו
+								</button>
+							</div>
+						)}
 
 						<PersonalAdmissionReport
 							analyses={gapAnalyses}

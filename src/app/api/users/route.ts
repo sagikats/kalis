@@ -71,3 +71,47 @@ export async function GET(request: NextRequest) {
 		);
 	}
 }
+
+export async function PUT(request: NextRequest) {
+	try {
+		const body = await request.json();
+		const { userId, profile, preferences } = body;
+
+		if (!userId || typeof userId !== 'string') {
+			return NextResponse.json(
+				{ success: false, error: 'Missing required field: userId' },
+				{ status: 400 }
+			);
+		}
+
+		await dbRepository.ensureSyncedFromSQLite();
+
+		let savedProfile = null;
+		if (profile) {
+			profile.userId = userId;
+			savedProfile = await dbRepository.saveUserProfileAsync(profile);
+		}
+
+		let savedPreferences = null;
+		if (preferences) {
+			preferences.userId = userId;
+			savedPreferences = await dbRepository.saveUserPreferencesAsync(preferences);
+		}
+
+		return NextResponse.json({
+			success: true,
+			profile: savedProfile,
+			preferences: savedPreferences
+		});
+	} catch (error: any) {
+		console.error('[API /api/users PUT] Error:', error);
+		return NextResponse.json(
+			{
+				success: false,
+				error: error.message || 'Failed to update user profile'
+			},
+			{ status: 500 }
+		);
+	}
+}
+

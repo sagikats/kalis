@@ -92,12 +92,12 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-09 20:45)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-11 16:20)
 - **Active Branch:** `ui-upgred` (Created from `main` for UI isolation and safe iteration)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **96/96 tests passing** across 29 test suites.
-  - `npm run build`: Clean (20/20 static & dynamic routes generated, zero compile or runtime build errors).
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **106/106 tests passing** across 32 test suites.
+  - `npm run build`: Clean (21/21 static & dynamic routes generated, zero compile or runtime build errors).
   - Background processes: Next.js dev server running on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
@@ -141,9 +141,42 @@ npm run build
    - Integrated all 5 authentic academic graduation celebration images (`hero-grad-1.png` through `hero-grad-5.png`).
    - Implemented smooth automatic crossfade transition (1000ms ease-in-out opacity & subtle Ken Burns scale shift) rotating every 4.5s.
    - Designed full-bleed edge-to-edge layout (`w-full`) extending seamlessly directly from the top navigation bar down to just before the subheadline text.
-   - Maintained static headline **"הצעד הראשון שלך לאקדמיה"** (without emoji) overlaid on top with dark gradient vignette for 100% WCAG-compliant legibility.
+   - Maintained static headline **"הצעד הראשון שלך לאקדמיה"** overlaid on top with dark gradient vignette for 100% WCAG-compliant legibility.
    - Positioned **"2026 // מנוע אופטימיזציה אקדמי"** directly under the headline with a transparent background and distinct `font-sans` typography.
-   - Added interactive navigation indicator pills at the bottom of the banner.
+
+6. **Pre-Flight Institutional Verification Gate & Degree-Specific Adaptation (`trackGenerator.ts`, `psychometricHelper.ts`, all 8 Calculators):**
+   - **Zero Unverified Tracks Policy**: Every proposed track's combined simulated state is directly evaluated and verified against the target institution's pure calculator (`calculateInstitution`). If the verified Sekem is below threshold, it is automatically calibrated to the true minimal requirements or discarded.
+   - **Full NITE Data Collection & Slip Emphasis**: Step 1 collects optional official Quantitative Emphasis and Verbal Emphasis (200–800) from the NITE certificate, allowing 100% official Sekem matching for Engineering/STEM degrees.
+   - **Degree-Specific Engineering Sekem**: Tailored to Technion, TAU, BGU, HUJI, Ariel, Bar-Ilan, Haifa, and Reichman.
+   - **Cross-Track Slope Coherence**: Enforced the mathematical slope ratio (e.g. Technion $\Delta S = 0.5 \Delta D + 0.075 \Delta P \implies 6.67$ pts psychometric per 1 pt Bagrut) across Track 1 and Track 2, eliminating any distorted trade-offs.
+
+7. **3-Track Workload Hierarchy & Multi-Exam Track 3 for Large Gaps (`trackGenerator.ts`, `trackEngine.ts`):**
+   - **Track 1 (המסלול הממוקד / המהיר)**: Strictly 0 to 2 exams (fast ROI, minimal cognitive overhead, single exam or top high-ROI lever).
+   - **Track 2 (המסלול המאוזן / פיזור סיכונים)**: Strictly 2 to 3 exams (moderate workload, safe risk distribution, balanced psychometric target). Never exceeds 3 exams!
+   - **Track 3 (המסלול הרב-שלבי / פער גדול / הקלה מרבית)**: Reserved for large gaps or maximum psychometric relief, offering 4 to 5 exams phased across winter and summer sessions to maximize Bagrut (e.g. 116.5) and bring psychometric requirements down to the absolute mathematical floor ($\text{Floor}(P)$, e.g. 730 for Technion CS).
+   - **Psychometric Ceiling Realism**: Prevented `getRealisticPsychometricCeiling` from artificially capping students with proven high psychometric scores below `currentPsych + maxAllowedJump`.
+
+8. **Saved Tracks Page & Navbar Navigation (`src/app/saved-tracks/page.tsx`, `Navbar.tsx`, `/api/tracks/save`, `repository.ts`):**
+   - **Guest State (Unauthenticated)**: Navigating to `/saved-tracks` displays the designated card with the explicit wording: **"על מנת לצפות במסלולים שמורים יש להירשם לאתר"** and a direct registration CTA button (`openAuthModal('register')`) plus login option.
+   - **Authenticated Management**: Full access to saved tracks with institution emblems (`UniversityLogo`), verified Sekem/psychometric/Bagrut target metrics, study weeks/hours, expandable exam session breakdown (❄️/🌱/☀️), and instant delete functionality (`DELETE /api/tracks/save`).
+   - **Navbar Integration**: Added "מסלולים שמורים" to the top navigation capsule with bookmark icon and real-time saved tracks badge count for authenticated users, plus direct entry in the user profile dropdown.
+   - **Enriched Persistence**: Tracks enriched with full catalog details (`institutionName`, `programName`, `admissionThreshold`) on retrieval.
+   - **Quality State**: 103/103 tests passing, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
+
+9. **Arrow & Units Direction Alignment (`RecommendedTracksView.tsx`, `saved-tracks/page.tsx`, `WhatIfSimulator.tsx`, `globals.css`):**
+   - Added `.dir-ltr, [dir="ltr"] { direction: ltr !important; text-align: left; }` in `globals.css`.
+   - Encapsulated score transitions and elective units expansion in `dir="ltr"` so that arrows consistently and unambiguously point **from existing to target** (`680 ➔ 758 (+78)` and `2 ➔ 5 יח״ל`), resolving reverse-arrow artifacts caused by RTL flexbox bi-directional rendering.
+
+10. **User Data Persistence, Scoped Storage & Absolute Reset on Logout (`/flow`, `/saved-tracks`, `UnifiedCalculator`, `AuthContext`, `/api/users`):**
+   - **Authenticated Personal Data**: When a user logs in, their profile (Bagrut grades & units, psychometric scores & subscores, target degrees, questionnaire preferences) is strictly loaded from their account/DB (`PUT /api/users`, `GET /api/users`) and isolated localStorage (`kalis_flow_data_${user.id}`). Auto-saves via 1-second debounce.
+   - **Absolute Clean Reset on Logout**: When logging out, `AuthContext.logout()` deletes all user keys and flow keys (`kalis_admission_flow_data`, `kalis_flow_*`), sets user/profile to null, and broadcasts `kalis-logout`. All pages (`/flow`, `/saved-tracks`, `UnifiedCalculator`) immediately wipe all states to a clean, blank initial slate (0 grades with clean placeholder inputs, 0 psychometric, step 1, 0 targets).
+   - **Multi-User Isolation Test Suite**: Added `src/modules/db/__tests__/userSyncAndIsolation.test.ts` proving zero cross-contamination and complete data clearing on disconnect.
+
+11. **TAU Pure Multi-Domain & Realit Bonus Exact Matching (`tau.ts`, `tauCalculator.ts`):**
+   - Verified against official TAU admission guidelines and live institutional calculator that Tel Aviv University exclusively evaluates undergraduate candidates based on the General/Multi-Domain Psychometric score (`psychometricGeneral`), never using a separate quantitative emphasis score.
+   - For Engineering and Exact Sciences (Computer Science, etc.), TAU strictly adds the official +10 Realit bonus when Math 5u and Physics 5u are present ($\ge 55$).
+   - Eliminated erroneous quantitative emphasis substitution in `evaluateTau` and `tauCalculator.ts`, bringing TAU Sekem calculations into 100% 1:1 match with TAU's official live calculator (e.g. Bagrut 112.50, Psych 714 $\implies$ General 709, Engineering/Exact Sciences 719, Management 708).
+   - **Quality State**: **106/106 tests passing** across 32 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**

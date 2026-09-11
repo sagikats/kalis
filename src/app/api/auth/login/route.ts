@@ -43,6 +43,13 @@ export async function POST(req: NextRequest) {
 			}
 		}
 
+		const savedTracksCount = await prisma.savedTrack.count({
+			where: { userId: user.id }
+		});
+
+		const profile = await dbRepository.getUserProfileAsync(user.id);
+		const preferences = await dbRepository.getUserPreferencesAsync(user.id);
+
 		return NextResponse.json({
 			success: true,
 			message: 'התחברת בהצלחה!',
@@ -51,8 +58,11 @@ export async function POST(req: NextRequest) {
 				name: user.name,
 				email: user.email,
 				phone: user.phone,
-				candidateNumber: user.candidateNumber
-			}
+				candidateNumber: user.candidateNumber,
+				savedTracksCount
+			},
+			profile,
+			preferences
 		});
 	} catch (error: any) {
 		console.error('[API /api/auth/login POST] Error:', error);

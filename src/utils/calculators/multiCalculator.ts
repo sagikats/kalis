@@ -10,9 +10,11 @@ import { evaluateBarIlan, evaluateReichman } from '@/modules/calculators';
 export interface UnifiedCalculationInput {
 	bagrutSubjects: SubjectInput[];
 	psychometricGeneral: number;
-	psychometricQuant: number;
+	psychometricQuant?: number;
 	psychometricVerbal?: number;
 	psychometricEnglish?: number;
+	psychometricQuantEmphasis?: number;
+	psychometricVerbalEmphasis?: number;
 	mathGrade: number;
 	mathUnits: number;
 	physicsGrade?: number;
@@ -92,8 +94,12 @@ export function calculateMultiInstitutionSekem(
 	});
 
 	const psych = psychResolution.effectiveGeneral;
-	const quant = psychResolution.effectiveQuantEmphasis;
-	const verbal = psychResolution.effectiveVerbalEmphasis;
+	const quant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
+		? input.psychometricQuantEmphasis
+		: psychResolution.effectiveQuantEmphasis;
+	const verbal = input.psychometricVerbalEmphasis && input.psychometricVerbalEmphasis > 0
+		? input.psychometricVerbalEmphasis
+		: psychResolution.effectiveVerbalEmphasis;
 
 	// Auto-resolve math and physics from bagrutSubjects if present
 	let resolvedMathGrade = input.mathGrade || 0;
@@ -120,6 +126,8 @@ export function calculateMultiInstitutionSekem(
 		psychometricQuant: quant,
 		psychometricVerbal: verbal,
 		psychometricEnglish: input.psychometricEnglish,
+		psychometricQuantEmphasis: input.psychometricQuantEmphasis,
+		psychometricVerbalEmphasis: input.psychometricVerbalEmphasis,
 		mathGrade: resolvedMathGrade,
 		mathUnits: resolvedMathUnits,
 		physicsGrade: resolvedPhysicsGrade,

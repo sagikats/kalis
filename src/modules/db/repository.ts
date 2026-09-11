@@ -911,28 +911,39 @@ export class KalisDatabaseRepository {
 			});
 
 			if (dbTracks.length > 0) {
-				const mapped: ActionTrackRecord[] = dbTracks.map((dt) => ({
-					id: dt.trackType,
-					userId: dt.userId,
-					programId: dt.programId,
-					title: dt.title,
-					badge: dt.badge,
-					badgeColor: dt.badgeColor,
-					targetSekem: dt.targetSekem,
-					targetPsychometric: dt.targetPsychometric ?? undefined,
-					currentPsychometric: dt.currentPsychometric ?? undefined,
-					targetBagrutAverage: dt.targetBagrutAverage,
-					currentBagrutAverage: dt.currentBagrutAverage ?? undefined,
-					strategyDescription: dt.strategyDescription,
-					estimatedWeeks: dt.estimatedWeeks,
-					weeklyHours: dt.weeklyHours,
-					feasibility: dt.feasibility as any,
-					feasibilityExplanation: dt.feasibilityExplanation || '',
-					keyAdvantage: dt.keyAdvantage || '',
-					milestones: dt.stepsJson ? JSON.parse(dt.stepsJson) : [],
-					recommendedLevers: dt.subjectImprovementsJson ? JSON.parse(dt.subjectImprovementsJson) : [],
-					createdAt: dt.createdAt
-				}));
+				const mapped: ActionTrackRecord[] = dbTracks.map((dt) => {
+					const prog = this.findProgramById(dt.programId);
+					const inst = prog ? this.getInstitutionById(prog.institutionId) : null;
+					return {
+						id: dt.trackType,
+						savedTrackId: dt.id,
+						userId: dt.userId,
+						programId: dt.programId,
+						title: dt.title,
+						badge: dt.badge,
+						badgeColor: dt.badgeColor,
+						targetSekem: dt.targetSekem,
+						targetPsychometric: dt.targetPsychometric ?? undefined,
+						currentPsychometric: dt.currentPsychometric ?? undefined,
+						targetBagrutAverage: dt.targetBagrutAverage,
+						currentBagrutAverage: dt.currentBagrutAverage ?? undefined,
+						strategyDescription: dt.strategyDescription,
+						estimatedWeeks: dt.estimatedWeeks,
+						weeklyHours: dt.weeklyHours,
+						feasibility: dt.feasibility as any,
+						feasibilityExplanation: dt.feasibilityExplanation || '',
+						keyAdvantage: dt.keyAdvantage || '',
+						milestones: dt.stepsJson ? JSON.parse(dt.stepsJson) : [],
+						recommendedLevers: dt.subjectImprovementsJson ? JSON.parse(dt.subjectImprovementsJson) : [],
+						programName: prog?.name || dt.programId,
+						institutionId: prog?.institutionId,
+						institutionName: inst?.name || prog?.institutionName,
+						fieldOfStudy: prog?.fieldOfStudy,
+						degreeLevel: prog?.degreeLevel,
+						admissionThreshold: prog?.minSekemThreshold,
+						createdAt: dt.createdAt
+					};
+				});
 				if (programId) {
 					this.actionTracks.set(`${userId}:${programId}`, mapped);
 				}
@@ -943,9 +954,70 @@ export class KalisDatabaseRepository {
 		}
 
 		if (programId) {
-			return this.getActionTracks(userId, programId);
+			const tracks = this.getActionTracks(userId, programId);
+			const prog = this.findProgramById(programId);
+			const inst = prog ? this.getInstitutionById(prog.institutionId) : null;
+			return tracks.map((t) => ({
+				...t,
+				programName: prog?.name || programId,
+				institutionId: prog?.institutionId,
+				institutionName: inst?.name || prog?.institutionName,
+				fieldOfStudy: prog?.fieldOfStudy,
+				degreeLevel: prog?.degreeLevel,
+				admissionThreshold: prog?.minSekemThreshold
+			}));
 		}
-		return [];
+
+		// Return all in-memory tracks for this userId across all programs
+		const allTracks: ActionTrackRecord[] = [];
+		for (const [key, tracks] of this.actionTracks.entries()) {
+			if (key.startsWith(`${userId}:`)) {
+				const pId = key.split(':')[1];
+				const prog = this.findProgramById(pId);
+				const inst = prog ? this.getInstitutionById(prog.institutionId) : null;
+				allTracks.push(
+					...tracks.map((t) => ({
+						...t,
+						programName: prog?.name || pId,
+						institutionId: prog?.institutionId,
+						institutionName: inst?.name || prog?.institutionName,
+						fieldOfStudy: prog?.fieldOfStudy,
+						degreeLevel: prog?.degreeLevel,
+						admissionThreshold: prog?.minSekemThreshold
+					}))
+				);
+			}
+		}
+		return allTracks;
+	}
+
+	public async deleteSavedTrackAsync(userId: string, trackId: string, programId?: string): Promise<boolean> {
+		try {
+			const res = await prisma.savedTrack.deleteMany({
+				where: {
+					userId,
+					OR: [
+						{ id: trackId },
+						{ trackType: trackId }
+					],
+					...(programId ? { programId } : {})
+				}
+			});
+
+			for (const [key, tracks] of this.actionTracks.entries()) {
+				if (key.startsWith(`${userId}:`)) {
+					this.actionTracks.set(
+						key,
+						tracks.filter((t) => t.id !== trackId)
+					);
+				}
+			}
+
+			return res.count > 0;
+		} catch (err) {
+			console.warn('[KalisDatabaseRepository] deleteSavedTrackAsync error:', err);
+			return false;
+		}
 	}
 
 	public async clearUserStateAsync(userId: string): Promise<void> {

@@ -91,3 +91,41 @@ export async function GET(req: NextRequest) {
 		);
 	}
 }
+
+export async function DELETE(req: NextRequest) {
+	try {
+		const { searchParams } = new URL(req.url);
+		const userId = searchParams.get('userId');
+		const trackId = searchParams.get('trackId');
+		const programId = searchParams.get('programId') || undefined;
+
+		if (!userId || !trackId) {
+			return NextResponse.json(
+				{
+					success: false,
+					error: 'פרמטרים userId ו-trackId נדרשים למחיקת מסלול'
+				},
+				{ status: 400 }
+			);
+		}
+
+		await dbRepository.ensureSyncedFromSQLite();
+		const deleted = await dbRepository.deleteSavedTrackAsync(userId, trackId, programId);
+
+		return NextResponse.json({
+			success: true,
+			deleted,
+			message: deleted ? 'המסלול הוסר בהצלחה מרשימת השמורים' : 'המסלול לא נמצא או שכבר הוסר'
+		});
+	} catch (error: any) {
+		console.error('[API /api/tracks/save DELETE] Error:', error);
+		return NextResponse.json(
+			{
+				success: false,
+				error: error.message || 'שגיאה במחיקת המסלול השמור'
+			},
+			{ status: 500 }
+		);
+	}
+}
+

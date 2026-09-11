@@ -252,11 +252,10 @@ export function calculateTauAdmission(input: TauCalculatorInput): TauCalculatorR
      }
 
      // TAU Engineering / Exact Sciences Fit Score (ציון התאמה הנדסה ומדעים מדויקים)
-     // Uses quantitative emphasis psychometric composite if higher, plus +10 ריאלית bonus
+     // TAU strictly uses general psychometric + 10 ריאלית bonus (Math 5u + Physics 5u)
      let quantitativeSekem = 0;
      if (psych > 0 && bagrutAverage > 0) {
-          const effPsychForQuant = quant > psych ? quant : psych;
-          const rawQuant = (step2 + effPsychForQuant) * 0.52 - 43.10;
+          const rawQuant = (step2 + psych) * 0.52 - 43.10;
           quantitativeSekem = Math.min(800, Math.max(200, Math.round(rawQuant + (hasRealitBonus ? 10 : 0))));
      }
 

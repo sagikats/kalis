@@ -217,7 +217,10 @@ export function evaluateBgu(input: InstitutionCalculatorInput): InstitutionCalcu
 	const physicsGrade = input.physicsGrade ?? (physSub ? physSub.grade : 0);
 
 	const psych = input.psychometricGeneral || 0;
-	const rawQuant = input.psychometricQuant || psych;
+	const explicitQuant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
+		? input.psychometricQuantEmphasis
+		: undefined;
+	const rawQuant = explicitQuant ?? (input.psychometricQuant || psych);
 	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateBguGeneralSekem(optimal.average, psych);

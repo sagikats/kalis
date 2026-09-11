@@ -28,6 +28,9 @@ export async function GET(req: NextRequest) {
 			where: { userId: user.id }
 		});
 
+		const profile = await dbRepository.getUserProfileAsync(user.id);
+		const preferences = await dbRepository.getUserPreferencesAsync(user.id);
+
 		return NextResponse.json({
 			success: true,
 			user: {
@@ -37,7 +40,9 @@ export async function GET(req: NextRequest) {
 				phone: user.phone,
 				candidateNumber: user.candidateNumber,
 				savedTracksCount
-			}
+			},
+			profile,
+			preferences
 		});
 	} catch (error: any) {
 		console.error('[API /api/auth/me GET] Error:', error);

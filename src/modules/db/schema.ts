@@ -155,7 +155,14 @@ export interface ActionTrackRecord {
 	weeklyHours: number;
 	feasibility: FeasibilityLevel;
 	feasibilityExplanation: string;
-	keyAdvantage: string;
+	keyAdvantage?: string;
+	programName?: string;
+	savedTrackId?: string;
+	institutionId?: string;
+	institutionName?: string;
+	fieldOfStudy?: string;
+	degreeLevel?: string;
+	admissionThreshold?: number;
 	createdAt: Date;
 }
 

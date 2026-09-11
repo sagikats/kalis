@@ -16,7 +16,8 @@ import {
      Calculator,
      LogOut,
      LogIn,
-     UserPlus
+     UserPlus,
+     BookmarkCheck
 } from 'lucide-react';
 import { usePlanner } from '../../context/PlannerContext';
 import { useAuth } from '../../context/AuthContext';
@@ -40,6 +41,7 @@ export default function Navbar() {
           { href: '/', label: 'דף הבית', icon: Compass },
           { href: '/flow', label: 'בדיקת קבלה ופערים', icon: Sliders },
           { href: '/calculators', label: 'מחשבון סכם', icon: Calculator },
+          { href: '/saved-tracks', label: 'מסלולים שמורים', icon: BookmarkCheck, showCount: true },
      ];
 
      return (
@@ -88,6 +90,22 @@ export default function Navbar() {
                                                        </div>
                                                   )}
                                              </div>
+
+                                             <Link
+                                                  href="/saved-tracks"
+                                                  onClick={() => setShowProfileMenu(false)}
+                                                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold text-[#222222] hover:bg-[#F4F1EA] rounded-xl transition-colors mb-1 cursor-pointer"
+                                             >
+                                                  <div className="flex items-center gap-2">
+                                                       <BookmarkCheck className="h-4 w-4 text-blue-600" />
+                                                       <span>המסלולים השמורים שלי</span>
+                                                  </div>
+                                                  {user.savedTracksCount !== undefined && user.savedTracksCount > 0 && (
+                                                       <span className="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded-full font-bold">
+                                                            {user.savedTracksCount}
+                                                       </span>
+                                                  )}
+                                             </Link>
 
                                              <button
                                                   onClick={() => {
@@ -205,6 +223,13 @@ export default function Navbar() {
                                    >
                                         <Icon className={`h-4 w-4 ${isActive ? 'text-[#222222]' : 'text-[#88857E]'}`} />
                                         <span>{link.label}</span>
+                                        {link.showCount && isAuthenticated && user && (user.savedTracksCount ?? 0) > 0 && (
+                                             <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold transition-colors ${
+                                                  isActive ? 'bg-[#3C3C3C] text-white' : 'bg-[#DDD7CC] text-[#222222]'
+                                             }`}>
+                                                  {user.savedTracksCount}
+                                             </span>
+                                        )}
                                    </Link>
                               );
                          })}
