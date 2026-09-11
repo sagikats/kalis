@@ -213,7 +213,7 @@ export function evaluateSimulatedSekem(
 	simulatedMathGrade?: number,
 	simulatedPhysUnits?: number,
 	simulatedPhysGrade?: number
-): { sekem: number; bagrutAverage: number; directBagrutEligible: boolean } {
+): { sekem: number; bagrutAverage: number; directBagrutEligible: boolean; droppedSubjects: string[] } {
 	const mathU = simulatedMathUnits ?? baseProfile.mathUnits ?? 4;
 	const mathG = simulatedMathGrade ?? baseProfile.mathGrade ?? 80;
 
@@ -267,8 +267,21 @@ export function evaluateSimulatedSekem(
 	return {
 		sekem,
 		bagrutAverage: instRes.bagrutAverage,
-		directBagrutEligible: instRes.directBagrutEligible
+		directBagrutEligible: instRes.directBagrutEligible,
+		droppedSubjects: instRes.droppedSubjects ?? []
 	};
+}
+
+export function isValidSubjectCombo(combo: SubjectUpgradeAction[]): boolean {
+	const subjectKeys = combo.map((l) => normalizeHebrewSubjectKey(l.subjectName));
+	return new Set(subjectKeys).size === combo.length;
+}
+
+export function comboHasDroppedSubject(combo: SubjectUpgradeAction[], droppedSubjects?: string[]): boolean {
+	if (!droppedSubjects || droppedSubjects.length === 0) return false;
+	return combo.some((lever) =>
+		droppedSubjects.some((d) => isSubjectMatch(d, lever.subjectName))
+	);
 }
 
 /**
@@ -375,17 +388,17 @@ export function calculateLeverUtilityScore(
 		lever.targetUnits === 5 &&
 		(lever.subjectName.includes('היסטוריה') || lever.subjectName.includes('תנ') || lever.subjectName.includes('ספרות'))
 	) {
-		// High-yield expansion from existing 2 units (only 3 units completion!)
-		baseScore = isStemDegree ? 92 : 98;
+		// High-yield expansion from existing 2 units (only 3 units completion exam required! ~60h)
+		baseScore = isStemDegree ? 102 : 108;
 	} else if (lever.targetUnits === 5) {
-		// 5-unit electives: Geography is universally high yield and very light compared to math/sciences
+		// 5-unit electives from scratch (150h+ prep from zero)
 		if (lever.subjectName.includes('גיאוגרפיה')) {
-			baseScore = 95;
+			baseScore = isStemDegree ? 78 : 85;
 		} else if (lever.subjectName.includes('מחשב')) {
 			// CS from scratch has high friction (180h) - demote unless strong analytical
 			baseScore = isStemDegree && answers.learningOrientation === 'stem' ? 65 : 40;
 		} else {
-			baseScore = isStemDegree ? 75 : 65;
+			baseScore = isStemDegree ? 72 : 65;
 		}
 	} else if (lever.subjectName.includes('אנגלית')) {
 		baseScore = 70;
@@ -573,11 +586,11 @@ export function getAvailableSubjectLevers(
 			id: 'elective_geo_5u',
 			subjectName: 'גיאוגרפיה',
 			currentGrade: 0,
-			currentUnits: 2,
+			currentUnits: 0,
 			targetGrade: 92,
 			targetUnits: 5,
 			reason: geoReason,
-			priority: 2
+			priority: 3
 		});
 	}
 
@@ -591,7 +604,7 @@ export function getAvailableSubjectLevers(
 			id: 'elective_cs_5u',
 			subjectName: 'מדעי המחשב',
 			currentGrade: 0,
-			currentUnits: 2,
+			currentUnits: 0,
 			targetGrade: 92,
 			targetUnits: 5,
 			reason: 'מקצוע מוגבר הדורש פרויקט תכנות ולמידה מאפס (בונוס 25 נקודות). מומלץ רק לבעלי רקע או תפיסה אנליטית מובהקת.',
@@ -895,6 +908,7 @@ export function generatePersonalizedTracks(
 		);
 		if (psychSol !== null) {
 			const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+			if (comboHasDroppedSubject([lever], res.droppedSubjects)) continue;
 			if (res.sekem >= threshold && (!sol1Lever || psychSol < sol1Lever.psych)) {
 				sol1Lever = { lever, psych: psychSol, res };
 			}
@@ -907,6 +921,7 @@ export function generatePersonalizedTracks(
 	for (let i = 0; i < pool2.length; i++) {
 		for (let j = i + 1; j < pool2.length; j++) {
 			const pair = [pool2[i], pool2[j]];
+			if (!isValidSubjectCombo(pair)) continue;
 			const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, pair);
 			const psychSol = findExactPsychometricTarget(
 				calculatorId,
@@ -923,6 +938,7 @@ export function generatePersonalizedTracks(
 			);
 			if (psychSol !== null) {
 				const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+				if (comboHasDroppedSubject(pair, res.droppedSubjects)) continue;
 				if (res.sekem >= threshold && (!sol2Levers || psychSol < sol2Levers.psych)) {
 					sol2Levers = { levers: pair, psych: psychSol, res };
 				}
@@ -937,6 +953,7 @@ export function generatePersonalizedTracks(
 		for (let j = i + 1; j < pool3.length; j++) {
 			for (let k = j + 1; k < pool3.length; k++) {
 				const triple = [pool3[i], pool3[j], pool3[k]];
+				if (!isValidSubjectCombo(triple)) continue;
 				const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, triple);
 				const psychSol = findExactPsychometricTarget(
 					calculatorId,
@@ -953,6 +970,7 @@ export function generatePersonalizedTracks(
 				);
 				if (psychSol !== null) {
 					const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+					if (comboHasDroppedSubject(triple, res.droppedSubjects)) continue;
 					if (res.sekem >= threshold && (!sol3Levers || psychSol < sol3Levers.psych)) {
 						sol3Levers = { levers: triple, psych: psychSol, res };
 					}
@@ -969,6 +987,7 @@ export function generatePersonalizedTracks(
 			for (let k = j + 1; k < pool4.length; k++) {
 				for (let l = k + 1; l < pool4.length; l++) {
 					const quad = [pool4[i], pool4[j], pool4[k], pool4[l]];
+					if (!isValidSubjectCombo(quad)) continue;
 					const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, quad);
 					const psychSol = findExactPsychometricTarget(
 						calculatorId,
@@ -985,6 +1004,7 @@ export function generatePersonalizedTracks(
 					);
 					if (psychSol !== null) {
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+						if (comboHasDroppedSubject(quad, res.droppedSubjects)) continue;
 						if (res.sekem >= threshold && (!sol4Levers || psychSol < sol4Levers.psych)) {
 							sol4Levers = { levers: quad, psych: psychSol, res };
 						}
@@ -1003,6 +1023,7 @@ export function generatePersonalizedTracks(
 				for (let l = k + 1; l < pool5.length; l++) {
 					for (let m = l + 1; m < pool5.length; m++) {
 						const quint = [pool5[i], pool5[j], pool5[k], pool5[l], pool5[m]];
+						if (!isValidSubjectCombo(quint)) continue;
 						const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, quint);
 						const psychSol = findExactPsychometricTarget(
 							calculatorId,
@@ -1019,6 +1040,7 @@ export function generatePersonalizedTracks(
 						);
 						if (psychSol !== null) {
 							const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+							if (comboHasDroppedSubject(quint, res.droppedSubjects)) continue;
 							if (res.sekem >= threshold && (!sol5Levers || psychSol < sol5Levers.psych)) {
 								sol5Levers = { levers: quint, psych: psychSol, res };
 							}
@@ -1633,6 +1655,8 @@ export function generatePersonalizedTracks(
 		// Track 1 target psychometric score:
 		const track1Psych = tracks[0]?.targetPsychometric || (hasTakenPsych ? currentPsych + 50 : Math.min(psychCeiling, baselinePsych + 50));
 		const track1LeverCount = tracks[0]?.recommendedSubjectImprovements?.length || 0;
+		const track1Sekem = tracks[0]?.targetSekem || threshold;
+		const track1Bagrut = tracks[0]?.targetBagrutAverage || currentBagrut;
 
 		if (track1Psych > 720 && tracks[0]) {
 			tracks[0].badge = 'מיקוד בפסיכומטרי (>720)';
@@ -1661,44 +1685,52 @@ export function generatePersonalizedTracks(
 		// עומס מבוקר: לעולם לא מעבר ל-3 בחינות בגרות!
 		// =========================================================================
 		const searchPool2 = availableLevers.slice(0, Math.min(8, availableLevers.length));
-		let bestBalCombo: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
+		let bestBalCombo: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number; droppedSubjects?: string[] } } | null = null;
 
 		const minCount2 = Math.min(searchPool2.length, Math.max(2, track1LeverCount > 0 ? track1LeverCount + 1 : 2));
 		const maxCount2 = Math.min(searchPool2.length, 3);
+		const track1ZeroPsych = track1Psych <= (hasTakenPsych ? currentPsych : baselinePsych);
 
-		for (let count = minCount2; count <= maxCount2; count++) {
-			const combos = getCombinations(searchPool2, count);
-			for (const combo of combos) {
-				const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, combo);
-				const p = findExactPsychometricTarget(
-					calculatorId,
-					relevantSekemType,
-					threshold,
-					userProfile,
-					sim.subjects,
-					Math.max(currentPsych, 450),
-					Math.min(800, track1Psych - 1),
-					sim.mathUnits,
-					sim.mathGrade,
-					sim.physUnits,
-					sim.physGrade
-				);
-				if (p !== null && p < track1Psych) {
-					const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
-					if (res.sekem >= threshold) {
-						if (!bestBalCombo || p < bestBalCombo.psych) {
-							bestBalCombo = { levers: combo, psych: p, res };
+		// Phase 1: If track 1 had a psychometric jump, search for combos that lower the psychometric target
+		if (!track1ZeroPsych) {
+			for (let count = minCount2; count <= maxCount2; count++) {
+				const combos = getCombinations(searchPool2, count);
+				for (const combo of combos) {
+					if (!isValidSubjectCombo(combo)) continue;
+					const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, combo);
+					const p = findExactPsychometricTarget(
+						calculatorId,
+						relevantSekemType,
+						threshold,
+						userProfile,
+						sim.subjects,
+						Math.max(currentPsych, 450),
+						Math.min(800, track1Psych - 1),
+						sim.mathUnits,
+						sim.mathGrade,
+						sim.physUnits,
+						sim.physGrade
+					);
+					if (p !== null && p < track1Psych) {
+						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
+						if (res.sekem >= threshold) {
+							if (!bestBalCombo || p < bestBalCombo.psych || (p === bestBalCombo.psych && res.sekem > bestBalCombo.res.sekem)) {
+								bestBalCombo = { levers: combo, psych: p, res };
+							}
 						}
 					}
 				}
 			}
 		}
 
+		// Phase 2: If Track 1 already passes with 0 psychometric jump OR no lower psych combo was found:
+		// Search for 2..3 lever combos that provide a real safety cushion (higher sekem / higher bagrut) without dropped subjects!
 		if (!bestBalCombo) {
-			// Fallback: search count 2..3 without upper bound on track1Psych
 			for (let count = Math.min(2, searchPool2.length); count <= Math.min(3, searchPool2.length); count++) {
 				const combos = getCombinations(searchPool2, count);
 				for (const combo of combos) {
+					if (!isValidSubjectCombo(combo)) continue;
 					const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, combo);
 					const p = findExactPsychometricTarget(
 						calculatorId,
@@ -1715,8 +1747,21 @@ export function generatePersonalizedTracks(
 					);
 					if (p !== null) {
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
-						if (res.sekem >= threshold && (!bestBalCombo || p < bestBalCombo.psych)) {
-							bestBalCombo = { levers: combo, psych: p, res };
+						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
+						if (res.sekem >= threshold) {
+							// If track 1 had 0 psychometric jump and 1 lever: ensure positive marginal benefit
+							if (track1ZeroPsych && track1LeverCount <= 1) {
+								if (res.sekem <= track1Sekem && res.bagrutAverage <= track1Bagrut) {
+									continue; // Redundant combo! Adds no value over Track 1!
+								}
+							}
+							if (!bestBalCombo) {
+								bestBalCombo = { levers: combo, psych: p, res };
+							} else if (p < bestBalCombo.psych) {
+								bestBalCombo = { levers: combo, psych: p, res };
+							} else if (p === bestBalCombo.psych && res.sekem > bestBalCombo.res.sekem) {
+								bestBalCombo = { levers: combo, psych: p, res };
+							}
 						}
 					}
 				}
@@ -1757,12 +1802,26 @@ export function generatePersonalizedTracks(
 			psychBalDelta = balPsych - (hasTakenPsych ? currentPsych : baselinePsych);
 			const balEval = getFeasibilityEvaluation(psychBalDelta, selectedBalLevers.length);
 
+			const isZeroPsychTrack1 = track1Psych <= (hasTakenPsych ? currentPsych : baselinePsych);
+			const isSafetyCushion = isZeroPsychTrack1 && balPsych <= (hasTakenPsych ? currentPsych : baselinePsych);
+
+			let balStrategyDesc = '';
+			if (balPsych < track1Psych) {
+				balStrategyDesc = `במקום יעד פסיכומטרי של ${track1Psych}, שדרוג ממוקד של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומאפשר קבלה עם יעד פסיכומטרי נמוך ונגיש של ${balPsych} בלבד לסגירת סף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+			} else if (isSafetyCushion) {
+				balStrategyDesc = `ללא צורך בשיפור פסיכומטרי (שומר על ${hasTakenPsych ? currentPsych : baselinePsych} הקיים), שילוב מורחב של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח סכם מוגן של ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} עם מרווח ביטחון מעל סף הקבלה (${threshold}).`;
+			} else {
+				balStrategyDesc = `שילוב מאוזן של ${balSubjectSummary} יחד עם פסיכומטרי מתון של ${balPsych} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח עמידה מלאה בסף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+			}
+
 			tracks.push({
 				id: 'track-balanced',
-				title: 'המסלול המאוזן: שילוב בגרויות ופיזור סיכונים',
-				badge: 'הכי מומלץ (פיזור סיכונים)',
+				title: isSafetyCushion
+					? 'המסלול המאוזן: שילוב בגרויות ורשת ביטחון'
+					: 'המסלול המאוזן: שילוב בגרויות ופיזור סיכונים',
+				badge: isSafetyCushion ? 'רשת ביטחון ומרווח קבלה' : 'הכי מומלץ (פיזור סיכונים)',
 				badgeColor: 'from-emerald-500 to-teal-600',
-				strategyDescription: `במקום להמר על יעד פסיכומטרי קיצוני של ${track1Psych}, שדרוג ממוקד של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומוריד את יעד הפסיכומטרי הנדרש ל-${balPsych} בלבד לסגירת סף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`,
+				strategyDescription: balStrategyDesc,
 				targetSekem: bestBalCombo.res.sekem,
 				targetPsychometric: balPsych,
 				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
@@ -1833,6 +1892,7 @@ export function generatePersonalizedTracks(
 			for (let count = minCount3; count <= maxCount3; count++) {
 				const combos = getCombinations(searchPool3, count);
 				for (const combo of combos) {
+					if (!isValidSubjectCombo(combo)) continue;
 					const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, combo);
 					const pUpper3 = (bestBalCombo && bestBalCombo.res.sekem >= threshold) ? Math.min(800, bestBalCombo.psych - 1) : psychCeiling;
 					const p = findExactPsychometricTarget(
@@ -1850,8 +1910,9 @@ export function generatePersonalizedTracks(
 					);
 					if (p !== null && (!bestBalCombo || bestBalCombo.res.sekem < threshold || p < bestBalCombo.psych)) {
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
 						if (res.sekem >= threshold) {
-							if (!bestSolidCombo || p < bestSolidCombo.psych) {
+							if (!bestSolidCombo || p < bestSolidCombo.psych || (p === bestSolidCombo.psych && res.sekem > bestSolidCombo.res.sekem)) {
 								bestSolidCombo = { levers: combo, psych: p, res };
 							}
 						}

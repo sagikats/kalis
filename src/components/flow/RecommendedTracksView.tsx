@@ -688,13 +688,18 @@ export default function RecommendedTracksView({
 													{track.recommendedSubjectImprovements.map((s, idx) => {
 														const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
 														const sInfo = getSessionInfo(sSession);
+														const isNewSubject = !s.currentUnits || s.currentUnits === 0;
 														const hasUnitChange = Boolean(s.currentUnits && s.currentUnits > 0 && s.currentUnits !== s.targetUnits);
 														return (
 															<div key={idx} className="text-xs flex items-center justify-between gap-2 px-2 py-1.5 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
 																<div className="flex items-center gap-1.5 truncate">
 																	<span className="text-[#222222] font-medium truncate">
 																		{s.subjectName}{' '}
-																		{hasUnitChange ? (
+																		{isNewSubject ? (
+																			<span className="text-[#66635C] font-semibold">
+																				(מקצוע חדש, {s.targetUnits} יח״ל):
+																			</span>
+																		) : hasUnitChange ? (
 																			<span className="text-[#66635C] font-semibold inline-flex items-center gap-0.5">
 																				(
 																				<span dir="ltr" className="inline-flex items-center gap-1 font-mono">

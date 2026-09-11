@@ -519,8 +519,9 @@ export default function SavedTracksPage() {
 													const targetG = lever.targetGrade ?? lever.newGrade ?? 0;
 													const currG = lever.currentGrade ?? 0;
 													const targetU = lever.targetUnits ?? lever.units ?? 0;
+													const isNewSubject = lever.currentUnits === 0;
 													const currU = lever.currentUnits ?? targetU;
-													const hasUnitChange = currU > 0 && targetU > 0 && currU !== targetU;
+													const hasUnitChange = !isNewSubject && currU > 0 && targetU > 0 && currU !== targetU;
 													const sessionInfo = getSessionBadge(lever.sessionLabel || lever.session);
 
 													return (
@@ -531,7 +532,11 @@ export default function SavedTracksPage() {
 															<div className="space-y-1">
 																<div className="flex items-center gap-2 flex-wrap">
 																	<span className="font-bold text-[#222222]">{subName}</span>
-																	{hasUnitChange ? (
+																	{isNewSubject ? (
+																		<span className="text-[#66635C] font-semibold">
+																			(מקצוע חדש, {targetU} יח״ל)
+																		</span>
+																	) : hasUnitChange ? (
 																		<span className="text-[#66635C] font-semibold inline-flex items-center gap-0.5">
 																			(
 																			<span dir="ltr" className="inline-flex items-center gap-1 font-mono">

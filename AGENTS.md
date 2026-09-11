@@ -193,6 +193,13 @@ npm run build
    - Completely removed all user-facing displays of the internal database identifier (`candidateNumber` / `KL-XXXXX`).
    - Retained the identifier strictly in the backend, Prisma DB layer, and APIs for internal system tracking, ensuring zero exposure to the end-user.
 
+15. **Pruning Dropped Subjects, Misleading Units & Safety Cushion Track 2 (`trackGenerator.ts`, `RecommendedTracksView.tsx`, `saved-tracks/page.tsx`):**
+   - **Elimination of Dropped/Phantom Subjects**: Integrated `droppedSubjects` from pure institution calculators into `evaluateSimulatedSekem`. Added `comboHasDroppedSubject` and `isValidSubjectCombo` filters across all solver pools (Track 1, Track 2, Track 3) so the system NEVER proposes an exam that the university calculator legally drops (e.g. Geography 5u at grade 92 being discarded by Technion because it drags down the 114.1 average).
+   - **Accurate Units Display for Brand-New Electives**: Fixed `currentUnits: 0` for new electives (Geography, CS from scratch) and rendered clean `(מקצוע חדש, X יח״ל)` chips in both `RecommendedTracksView` and `saved-tracks/page.tsx`, completely removing confusing `(0 ➔ 5 יח״ל)` or `(2 ➔ 5 יח״ל)` artifacts.
+   - **Intelligent Safety Cushion for Track 2**: When Track 1 already reaches admission threshold with 0 psychometric jump, Track 2 transitions to a true "רשת ביטחון ומרווח קבלה", proposing an optimal multi-lever combination (e.g. Tanach 5u + Literature 5u) that elevates Sekem to 92.40 (+1.40 margin above 91.00) with guaranteed positive marginal benefit over Track 1.
+   - **Context-Aware Strategy Phrasing**: Replaced the flawed template copy that compared identical psychometric numbers (`במקום 714 נוריד ל-714`) with natural Hebrew highlighting the preservation of existing psychometric score (714) and the creation of a dependable safety buffer.
+   - **Quality State**: **111/111 tests passing** across 33 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
+
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
    - שילוב תגיות מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות.
