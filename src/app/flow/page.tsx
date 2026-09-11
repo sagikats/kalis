@@ -675,20 +675,11 @@ export default function AdmissionFlowPage() {
 				{/* STEP 1: הזנת ציונים */}
 				{activeStep === 1 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE5DA] pb-4">
-							<div>
-								<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציונים</h2>
-								<p className="text-sm text-[#66635C]">
-									הזן את ציוני הבגרות והפסיכומטרי שלך — המערכת מחשבת אוטומטית ממוצע אופטימלי וסכמים לכל האוניברסיטאות
-								</p>
-							</div>
-							<button
-								onClick={() => setActiveStep(2)}
-								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
-							>
-								<span>המשך לבחירת תארים מבוקשים</span>
-								<ArrowLeft className="h-4 w-4" />
-							</button>
+						<div className="border-b border-[#EAE5DA] pb-4">
+							<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציונים</h2>
+							<p className="text-sm text-[#66635C]">
+								הזן את ציוני הבגרות והפסיכומטרי שלך — המערכת מחשבת אוטומטית ממוצע אופטימלי וסכמים לכל האוניברסיטאות
+							</p>
 						</div>
 
 						<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -1024,40 +1015,28 @@ export default function AdmissionFlowPage() {
 								</div>
 							</div>
 						</div>
+
+						{/* ניווט תחתון לשלב 1 */}
+						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-end">
+							<button
+								onClick={() => setActiveStep(2)}
+								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
+							>
+								<span>המשך לבחירת תארים מבוקשים</span>
+								<ArrowLeft className="h-4 w-4" />
+							</button>
+						</div>
 					</div>
 				)}
 
 				{/* STEP 2: בחירת תארים מבוקשים */}
 				{activeStep === 2 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE5DA] pb-4">
-							<div>
-								<h2 className="text-2xl font-black text-[#222222]">שלב 2: בחירת תארים מבוקשים</h2>
-								<p className="text-sm text-[#66635C]">
-									בחר את כל התארים והמוסדות שמעניין אותך לבדוק. תוכל להוסיף תארים מרובים מכל מוסד.
-								</p>
-							</div>
-							<div className="flex items-center gap-3">
-								<button
-									onClick={() => setActiveStep(1)}
-									className="px-4 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#DDD7CB] shadow-2xs cursor-pointer"
-								>
-									<ArrowRight className="h-4 w-4" />
-									<span>חזור לציונים</span>
-								</button>
-								<button
-									onClick={() => setActiveStep(3)}
-									disabled={selectedTargets.length === 0}
-									className={`px-6 py-2.5 font-bold text-xs rounded-xl transition flex items-center gap-2 ${
-										selectedTargets.length > 0
-											? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer'
-											: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
-									}`}
-								>
-									<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
-									<ArrowLeft className="h-4 w-4" />
-								</button>
-							</div>
+						<div className="border-b border-[#EAE5DA] pb-4">
+							<h2 className="text-2xl font-black text-[#222222]">שלב 2: בחירת תארים מבוקשים</h2>
+							<p className="text-sm text-[#66635C]">
+								בחר את כל התארים והמוסדות שמעניין אותך לבדוק. תוכל להוסיף תארים מרובים מכל מוסד.
+							</p>
 						</div>
 
 						<DegreeSearchSelector
@@ -1067,35 +1046,40 @@ export default function AdmissionFlowPage() {
 							onRemoveProgram={handleRemoveTarget}
 							onClearAll={handleClearAllTargets}
 						/>
+
+						{/* ניווט תחתון לשלב 2 */}
+						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between">
+							<button
+								onClick={() => setActiveStep(1)}
+								className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer"
+							>
+								<ArrowRight className="h-4 w-4" />
+								<span>חזור להזנת ציונים</span>
+							</button>
+							<button
+								onClick={() => setActiveStep(3)}
+								disabled={selectedTargets.length === 0}
+								className={`px-6 py-3 font-bold text-xs rounded-xl transition flex items-center gap-2 ${
+									selectedTargets.length > 0
+										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer'
+										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+								}`}
+							>
+								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
+								<ArrowLeft className="h-4 w-4" />
+							</button>
+						</div>
 					</div>
 				)}
 
 				{/* STEP 3: דוח קבלה אישי */}
 				{activeStep === 3 && (
 					<div className="space-y-6">
-						<div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE5DA] pb-4">
-							<div>
-								<h2 className="text-2xl font-black text-[#222222]">שלב 3: דוח קבלה אישי</h2>
-								<p className="text-sm text-[#66635C]">
-									סיכום סטטוס הקבלה שלך עבור כל התארים שבחרת
-								</p>
-							</div>
-							<div className="flex items-center gap-3">
-								<button
-									onClick={() => setActiveStep(2)}
-									className="px-4 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#DDD7CB] shadow-2xs cursor-pointer"
-								>
-									<ArrowRight className="h-4 w-4" />
-									<span>ערוך בחירת תארים</span>
-								</button>
-								<button
-									onClick={() => setActiveStep(4)}
-									className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
-								>
-									<span>לתכנון מסלולי פעולה</span>
-									<ArrowLeft className="h-4 w-4" />
-								</button>
-							</div>
+						<div className="border-b border-[#EAE5DA] pb-4">
+							<h2 className="text-2xl font-black text-[#222222]">שלב 3: דוח קבלה אישי</h2>
+							<p className="text-sm text-[#66635C]">
+								סיכום סטטוס הקבלה שלך עבור כל התארים שבחרת
+							</p>
 						</div>
 
 						{hasTakenPsychometric && !psychQuantEmphasis && gapAnalyses.some((g) => g.relevantSekemType === 'engineering') && (
@@ -1126,6 +1110,24 @@ export default function AdmissionFlowPage() {
 							onViewGap={handleViewGapForProgram}
 							onAddMorePrograms={() => setActiveStep(2)}
 						/>
+
+						{/* ניווט תחתון לשלב 3 */}
+						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between">
+							<button
+								onClick={() => setActiveStep(2)}
+								className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer"
+							>
+								<ArrowRight className="h-4 w-4" />
+								<span>חזור לבחירת תארים</span>
+							</button>
+							<button
+								onClick={() => setActiveStep(4)}
+								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
+							>
+								<span>לתכנון מסלולי פעולה</span>
+								<ArrowLeft className="h-4 w-4" />
+							</button>
+						</div>
 					</div>
 				)}
 

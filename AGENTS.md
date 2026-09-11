@@ -176,7 +176,18 @@ npm run build
    - Verified against official TAU admission guidelines and live institutional calculator that Tel Aviv University exclusively evaluates undergraduate candidates based on the General/Multi-Domain Psychometric score (`psychometricGeneral`), never using a separate quantitative emphasis score.
    - For Engineering and Exact Sciences (Computer Science, etc.), TAU strictly adds the official +10 Realit bonus when Math 5u and Physics 5u are present ($\ge 55$).
    - Eliminated erroneous quantitative emphasis substitution in `evaluateTau` and `tauCalculator.ts`, bringing TAU Sekem calculations into 100% 1:1 match with TAU's official live calculator (e.g. Bagrut 112.50, Psych 714 $\implies$ General 709, Engineering/Exact Sciences 719, Management 708).
-   - **Quality State**: **106/106 tests passing** across 32 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
+
+12. **Flow Navigation & Degree Selector Refactoring (`DegreeSearchSelector.tsx`, `flow/page.tsx`):**
+   - Removed the cross-university major comparison feature completely as requested.
+   - Reordered Step 2 components: Search and filters at the top, degree catalog cards in the middle, and the selected degrees tray ("סל התארים המבוקשים שלך") at the bottom.
+   - Relocated "המשך לשלב הבא" / "חזור" navigation buttons to the bottom across all steps (Step 1, Step 2, Step 3), honoring natural downward scanning UX.
+
+13. **Concurrent & Interleaved Study Roadmap Engine (`calendarScheduler.ts`, `trackGenerator.ts`, `RecommendedTracksView.tsx`, `concurrentScheduler.test.ts`):**
+   - Implemented realistic adaptive scheduling: Psychometric runs as a continuous anchor spine (~12 weeks / 3 months), while core bagrut subjects run concurrently in Months 1 and 2 (culminating in exam milestones), leaving Month 3 as a 100% focused psychometric simulation sprint.
+   - Strictly enforced "concurrency only when needed/advantageous": single-lever tracks remain 100% sequential; if weekly hours $< 12$, sequential study is favored to avoid time fragmentation.
+   - Enhanced `RecommendedTracksView` with an interactive multi-stream Gantt chart matrix displaying parallel streams with weekly hours budgets and exam milestones.
+   - Added `candidateNumber` collision retry handling in `repository.ts`.
+   - **Quality State**: **111/111 tests passing** across 33 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**

@@ -473,7 +473,7 @@ export class KalisDatabaseRepository {
 		let maxNum = 10000;
 		for (const u of users) {
 			if (u.candidateNumber) {
-				const match = u.candidateNumber.match(/^KL-(\d+)$/);
+				const match = u.candidateNumber.match(/^KL-(\d+)/);
 				if (match) {
 					const num = parseInt(match[1], 10);
 					if (!isNaN(num) && num > maxNum) {
@@ -488,13 +488,27 @@ export class KalisDatabaseRepository {
 	private async ensureUserExists(userId: string): Promise<UserRecord> {
 		let existing = await prisma.user.findUnique({ where: { id: userId } });
 		if (!existing) {
-			const candidateNumber = await this.generateNextCandidateNumber();
-			existing = await prisma.user.create({
-				data: {
-					id: userId,
-					candidateNumber
+			let candidateNumber = await this.generateNextCandidateNumber();
+			try {
+				existing = await prisma.user.create({
+					data: {
+						id: userId,
+						candidateNumber
+					}
+				});
+			} catch (err: any) {
+				if (err?.code === 'P2002') {
+					candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+					existing = await prisma.user.create({
+						data: {
+							id: userId,
+							candidateNumber
+						}
+					});
+				} else {
+					throw err;
 				}
-			});
+			}
 		}
 		return {
 			id: existing.id,
@@ -507,14 +521,30 @@ export class KalisDatabaseRepository {
 	}
 
 	public async createUserAsync(email?: string, name?: string): Promise<UserRecord> {
-		const candidateNumber = await this.generateNextCandidateNumber();
-		const created = await prisma.user.create({
-			data: {
-				candidateNumber,
-				email: email ?? null,
-				name: name ?? null
+		let candidateNumber = await this.generateNextCandidateNumber();
+		let created;
+		try {
+			created = await prisma.user.create({
+				data: {
+					candidateNumber,
+					email: email ?? null,
+					name: name ?? null
+				}
+			});
+		} catch (err: any) {
+			if (err?.code === 'P2002') {
+				candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+				created = await prisma.user.create({
+					data: {
+						candidateNumber,
+						email: email ?? null,
+						name: name ?? null
+					}
+				});
+			} else {
+				throw err;
 			}
-		});
+		}
 		return {
 			id: created.id,
 			candidateNumber: created.candidateNumber,
@@ -540,18 +570,36 @@ export class KalisDatabaseRepository {
 			throw new Error('כתובת אימייל זו כבר רשומה במערכת');
 		}
 
-		const candidateNumber = await this.generateNextCandidateNumber();
+		let candidateNumber = await this.generateNextCandidateNumber();
 		const passwordHash = params.password ? hashPassword(params.password) : null;
 
-		const created = await prisma.user.create({
-			data: {
-				candidateNumber,
-				email: normalizedEmail,
-				name: params.name?.trim() || null,
-				phone: params.phone?.trim() || null,
-				passwordHash
+		let created;
+		try {
+			created = await prisma.user.create({
+				data: {
+					candidateNumber,
+					email: normalizedEmail,
+					name: params.name?.trim() || null,
+					phone: params.phone?.trim() || null,
+					passwordHash
+				}
+			});
+		} catch (err: any) {
+			if (err?.code === 'P2002') {
+				candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+				created = await prisma.user.create({
+					data: {
+						candidateNumber,
+						email: normalizedEmail,
+						name: params.name?.trim() || null,
+						phone: params.phone?.trim() || null,
+						passwordHash
+					}
+				});
+			} else {
+				throw err;
 			}
-		});
+		}
 
 		return {
 			id: created.id,

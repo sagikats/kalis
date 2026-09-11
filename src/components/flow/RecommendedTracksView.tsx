@@ -965,47 +965,151 @@ export default function RecommendedTracksView({
 					);
 				})()}
 
-				{/* Steps Timeline */}
-				<div className="space-y-4">
-					<h4 className="text-xs font-bold text-[#8A847C] uppercase tracking-wider">
-						שלבי הביצוע המדורגים לפי מועדי ישראל:
-					</h4>
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-						{selectedTrack.steps.map((step, idx) => {
-							const stepSession =
-								(step as any).session ||
-								(step.type === 'psychometric'
-									? 'spring_psych'
-									: step.type === 'bagrut_elective'
-									? 'summer'
-									: step.type === 'mechina'
-									? 'administrative'
-									: 'winter');
-							const sInfo = getSessionInfo(stepSession);
-							return (
-								<div
-									key={idx}
-									className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-4 space-y-2 relative overflow-hidden flex flex-col justify-between transition hover:border-[#DDD7CC]"
-								>
-									<div className="space-y-2">
-										<div className="flex items-center justify-between gap-2 flex-wrap">
-											<span className="text-[11px] font-bold text-[#222222] bg-white border border-[#E5DFD4] px-2.5 py-0.5 rounded-md">
-												שלב {idx + 1} • {step.timing}
-											</span>
-											<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} flex items-center gap-1 shadow-2xs`}>
-												<span>{sInfo.iconEmoji}</span>
-												<span>{sInfo.badgeLabel}</span>
-											</span>
-										</div>
-										<h5 className="text-sm font-bold text-[#222222] flex items-center gap-1.5">
-											{step.title}
-										</h5>
-										<p className="text-xs text-[#66635C] leading-relaxed">{step.detail}</p>
-									</div>
-								</div>
-							);
-						})}
+				{/* Steps & Concurrent Timeline Phasing */}
+				<div className="space-y-5">
+					<div className="flex items-center justify-between flex-wrap gap-2">
+						<h4 className="text-xs font-bold text-[#8A847C] uppercase tracking-wider flex items-center gap-2">
+							<Calendar className="h-4 w-4 text-[#1E597B]" />
+							<span>תוכנית עבודה שבועית ומועדי בחינות:</span>
+						</h4>
+						{selectedTrack.hasConcurrentStudy ? (
+							<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-[#EFF6FA] border border-[#C5DFED] text-[#1E597B] shadow-2xs">
+								<span>🔀</span>
+								<span>למידה משולבת במקביל (חיסכון בזמן)</span>
+							</span>
+						) : (
+							<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-[#FAF8F5] border border-[#E5DFD4] text-[#66635C]">
+								<span>🎯</span>
+								<span>למידה ממוקדת טורית</span>
+							</span>
+						)}
 					</div>
+
+					{/* Visual Multi-Stream Gantt Chart (when schedulePhases is present) */}
+					{selectedTrack.schedulePhases && selectedTrack.schedulePhases.length > 0 ? (
+						<div className="space-y-4">
+							{/* Horizontal Gantt Matrix */}
+							<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-4 sm:p-5 space-y-4">
+								<div className="flex items-center justify-between text-xs font-bold text-[#66635C] border-b border-[#EAE5DA] pb-2.5">
+									<span>מבט-על: פריסת ערוצי הלמידה על פני {selectedTrack.estimatedWeeks} שבועות</span>
+									<span className="text-[11px] text-[#8A847C]">
+										תקציב: {selectedTrack.weeklyHours} שעות שבועיות
+									</span>
+								</div>
+
+								{/* Timeline Columns Header */}
+								<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+									{selectedTrack.schedulePhases.map((phase) => (
+										<div
+											key={phase.phaseIndex}
+											className={`p-3.5 rounded-xl border flex flex-col justify-between gap-3 transition ${
+												phase.isConcurrent
+													? 'bg-white border-[#B8D7E8] shadow-xs'
+													: 'bg-white border-[#E5DFD4]'
+											}`}
+										>
+											<div className="space-y-2">
+												<div className="flex items-center justify-between gap-1 flex-wrap">
+													<span className="text-[11px] font-black text-[#222222] bg-[#FAF8F5] border border-[#E5DFD4] px-2 py-0.5 rounded-md">
+														{phase.timing}
+													</span>
+													{phase.isConcurrent ? (
+														<span className="text-[10px] font-extrabold text-[#1E597B] bg-[#EFF6FA] border border-[#C5DFED] px-1.5 py-0.5 rounded-md flex items-center gap-1">
+															<span>🔀</span>
+															<span>משולב במקביל</span>
+														</span>
+													) : (
+														<span className="text-[10px] font-extrabold text-[#205739] bg-[#EBF4EE] border border-[#C6DFCE] px-1.5 py-0.5 rounded-md flex items-center gap-1">
+															<span>🎯</span>
+															<span>מיקוד בלעדי</span>
+														</span>
+													)}
+												</div>
+
+												<h5 className="text-xs font-black text-[#222222] leading-snug">
+													{phase.title}
+												</h5>
+												<p className="text-[11px] text-[#66635C] leading-relaxed">
+													{phase.strategyNote}
+												</p>
+
+												{/* Parallel Streams in this phase */}
+												<div className="space-y-1.5 pt-1">
+													{phase.streams.map((st, sIdx) => {
+														const isPsych = st.type === 'psychometric';
+														return (
+															<div
+																key={sIdx}
+																className={`p-2 rounded-lg text-xs border flex items-center justify-between gap-2 ${
+																	isPsych
+																		? 'bg-[#F0F5FA] border-[#D1E2F0] text-[#1E597B]'
+																		: 'bg-[#FAF6EE] border-[#ECDAB6] text-[#825B15]'
+																}`}
+															>
+																<div className="flex items-center gap-1.5 min-w-0">
+																	<span>{isPsych ? '🧠' : '📖'}</span>
+																	<span className="font-bold truncate">{st.subjectName}</span>
+																</div>
+																<div className="flex items-center gap-1 shrink-0 font-extrabold text-[11px]">
+																	<span>{st.weeklyHours} ש״ש</span>
+																</div>
+															</div>
+														);
+													})}
+												</div>
+											</div>
+
+											{/* Milestone at end of phase */}
+											{phase.milestoneAtEnd && (
+												<div className="mt-1 pt-2 border-t border-[#EAE5DA] flex items-center gap-1.5 text-[11px] font-extrabold text-[#222222]">
+													<span className="text-sm">🎯</span>
+													<span className="truncate">{phase.milestoneAtEnd.title}</span>
+												</div>
+											)}
+										</div>
+									))}
+								</div>
+							</div>
+						</div>
+					) : (
+						/* Fallback Steps Grid */
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							{selectedTrack.steps.map((step, idx) => {
+								const stepSession =
+									(step as any).session ||
+									(step.type === 'psychometric'
+										? 'spring_psych'
+										: step.type === 'bagrut_elective'
+										? 'summer'
+										: step.type === 'mechina'
+										? 'administrative'
+										: 'winter');
+								const sInfo = getSessionInfo(stepSession);
+								return (
+									<div
+										key={idx}
+										className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-4 space-y-2 relative overflow-hidden flex flex-col justify-between transition hover:border-[#DDD7CC]"
+									>
+										<div className="space-y-2">
+											<div className="flex items-center justify-between gap-2 flex-wrap">
+												<span className="text-[11px] font-bold text-[#222222] bg-white border border-[#E5DFD4] px-2.5 py-0.5 rounded-md">
+													שלב {idx + 1} • {step.timing}
+												</span>
+												<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} flex items-center gap-1 shadow-2xs`}>
+													<span>{sInfo.iconEmoji}</span>
+													<span>{sInfo.badgeLabel}</span>
+												</span>
+											</div>
+											<h5 className="text-sm font-bold text-[#222222] flex items-center gap-1.5">
+												{step.title}
+											</h5>
+											<p className="text-xs text-[#66635C] leading-relaxed">{step.detail}</p>
+										</div>
+									</div>
+								);
+							})}
+						</div>
+					)}
 				</div>
 
 				{/* Action Buttons */}
