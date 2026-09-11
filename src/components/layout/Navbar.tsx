@@ -67,45 +67,51 @@ export default function Navbar() {
 
                                    {/* Profile Dropdown */}
                                    {showProfileMenu && (
-                                        <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white p-3 shadow-xl border border-[#E7E2D8] z-50 animate-in fade-in zoom-in-95 duration-150">
-                                             <div className="p-2 border-b border-[#EAE5DA] mb-2">
-                                                  <p className="font-bold text-sm text-[#222222]">{user.name}</p>
-                                                  <p className="text-xs text-[#66635C] mt-0.5">{user.email}</p>
-                                                  {user.savedTracksCount !== undefined && (
-                                                       <div className="mt-2 flex items-center gap-1.5 text-[11px] text-blue-700">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                                                            <span>{user.savedTracksCount} מסלולים שמורים במערכת</span>
-                                                       </div>
-                                                  )}
-                                             </div>
-
-                                             <Link
-                                                  href="/saved-tracks"
+                                        <>
+                                             <div
+                                                  className="fixed inset-0 z-40"
                                                   onClick={() => setShowProfileMenu(false)}
-                                                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold text-[#222222] hover:bg-[#F4F1EA] rounded-xl transition-colors mb-1 cursor-pointer"
-                                             >
-                                                  <div className="flex items-center gap-2">
-                                                       <BookmarkCheck className="h-4 w-4 text-blue-600" />
-                                                       <span>המסלולים השמורים שלי</span>
+                                             />
+                                             <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white p-3 shadow-xl border border-[#E7E2D8] z-50 animate-in fade-in zoom-in-95 duration-150">
+                                                  <div className="p-2 border-b border-[#EAE5DA] mb-2">
+                                                       <p className="font-bold text-sm text-[#222222]">{user.name}</p>
+                                                       <p className="text-xs text-[#66635C] mt-0.5">{user.email}</p>
+                                                       {user.savedTracksCount !== undefined && (
+                                                            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-blue-700">
+                                                                 <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                                                 <span>{user.savedTracksCount} מסלולים שמורים במערכת</span>
+                                                            </div>
+                                                       )}
                                                   </div>
-                                                  {user.savedTracksCount !== undefined && user.savedTracksCount > 0 && (
-                                                       <span className="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                                                            {user.savedTracksCount}
-                                                       </span>
-                                                  )}
-                                             </Link>
 
-                                             <button
-                                                  onClick={() => {
-                                                       setShowProfileMenu(false);
-                                                       logout();
-                                                  }}
-                                                  className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors cursor-pointer"
-                                             >
-                                                  <LogOut className="h-4 w-4" />
-                                                  <span>התנתק מהחשבון</span>
-                                             </button>
-                                        </div>
+                                                  <Link
+                                                       href="/saved-tracks"
+                                                       onClick={() => setShowProfileMenu(false)}
+                                                       className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold text-[#222222] hover:bg-[#F4F1EA] rounded-xl transition-colors mb-1 cursor-pointer"
+                                                  >
+                                                       <div className="flex items-center gap-2">
+                                                            <BookmarkCheck className="h-4 w-4 text-blue-600" />
+                                                            <span>המסלולים השמורים שלי</span>
+                                                       </div>
+                                                       {user.savedTracksCount !== undefined && user.savedTracksCount > 0 && (
+                                                            <span className="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded-full font-bold">
+                                                                 {user.savedTracksCount}
+                                                            </span>
+                                                       )}
+                                                  </Link>
+
+                                                  <button
+                                                       onClick={() => {
+                                                            setShowProfileMenu(false);
+                                                            logout();
+                                                       }}
+                                                       className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors cursor-pointer"
+                                                  >
+                                                       <LogOut className="h-4 w-4" />
+                                                       <span>התנתק מהחשבון</span>
+                                                  </button>
+                                             </div>
+                                        </>
                                    )}
                               </div>
                          ) : (
@@ -143,7 +149,12 @@ export default function Navbar() {
                               </button>
 
                               {showNotifications && (
-                                   <div className="absolute left-0 mt-2 w-80 rounded-2xl bg-white p-4 shadow-xl border border-[#E7E2D8] z-50">
+                                   <>
+                                        <div
+                                             className="fixed inset-0 z-40"
+                                             onClick={() => setShowNotifications(false)}
+                                        />
+                                        <div className="absolute right-0 mt-2 w-80 rounded-2xl bg-white p-4 shadow-xl border border-[#E7E2D8] z-50">
                                         <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
                                              <h4 className="font-bold text-sm text-[#222222] flex items-center gap-1.5">
                                                   <Bell className="h-4 w-4 text-blue-600" />
@@ -190,6 +201,7 @@ export default function Navbar() {
                                              </div>
                                         </div>
                                    </div>
+                              </>
                               )}
                          </div>
 
