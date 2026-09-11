@@ -196,8 +196,13 @@ npm run build
 15. **Pruning Dropped Subjects, Misleading Units & Safety Cushion Track 2 (`trackGenerator.ts`, `RecommendedTracksView.tsx`, `saved-tracks/page.tsx`):**
    - **Elimination of Dropped/Phantom Subjects**: Integrated `droppedSubjects` from pure institution calculators into `evaluateSimulatedSekem`. Added `comboHasDroppedSubject` and `isValidSubjectCombo` filters across all solver pools (Track 1, Track 2, Track 3) so the system NEVER proposes an exam that the university calculator legally drops (e.g. Geography 5u at grade 92 being discarded by Technion because it drags down the 114.1 average).
    - **Accurate Units Display for Brand-New Electives**: Fixed `currentUnits: 0` for new electives (Geography, CS from scratch) and rendered clean `(מקצוע חדש, X יח״ל)` chips in both `RecommendedTracksView` and `saved-tracks/page.tsx`, completely removing confusing `(0 ➔ 5 יח״ל)` or `(2 ➔ 5 יח״ל)` artifacts.
-   - **Intelligent Safety Cushion for Track 2**: When Track 1 already reaches admission threshold with 0 psychometric jump, Track 2 transitions to a true "רשת ביטחון ומרווח קבלה", proposing an optimal multi-lever combination (e.g. Tanach 5u + Literature 5u) that elevates Sekem to 92.40 (+1.40 margin above 91.00) with guaranteed positive marginal benefit over Track 1.
-   - **Context-Aware Strategy Phrasing**: Replaced the flawed template copy that compared identical psychometric numbers (`במקום 714 נוריד ל-714`) with natural Hebrew highlighting the preservation of existing psychometric score (714) and the creation of a dependable safety buffer.
+   - **Context-Aware Strategy Phrasing**: Replaced the flawed template copy that compared identical psychometric numbers (`במקום 714 נוריד ל-714`) with natural Hebrew highlighting the preservation of existing psychometric score (714).
+
+16. **Strict Single-Exam Admission Policy & Alternative Single Exam (`trackGenerator.ts`):**
+   - **Zero Unnecessary Exams Rule**: When admission can be attained with a SINGLE bagrut exam without raising the psychometric score (`isSingleBagrutAdmissionTrack1`), the system strictly forbids forcing an additional exam just to inflate Sekem above the required threshold.
+   - **Two User-Mandated Behaviors**:
+     1. **Alternative Single Exam**: If another single bagrut exam (e.g. ספרות עברית 2 ➔ 5 יח״ל) independently closes the gap with 0 psychometric jump, Track 2 is generated as: `המסלול החלופי: שדרוג ספרות עברית (בחינה בודדת)`, badged as `חלופה לבחינה בודדת` (8 weeks, 1 exam).
+     2. **Omission When No Alternative Exists**: If no other single subject can achieve admission on its own, Track 2 is completely omitted (`bestBalCombo = null`), presenting only Track 1.
    - **Quality State**: **111/111 tests passing** across 33 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:

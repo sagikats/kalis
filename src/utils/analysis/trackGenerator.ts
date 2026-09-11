@@ -10,6 +10,7 @@ import { normalizeHebrewSubjectKey, isSubjectMatch } from '../../modules/optimiz
 import { simulateRealisticSubscores } from '../calculators/psychometricHelper';
 import {
 	generateConcurrentSchedulePlan,
+	getSubjectExamSession,
 	WeeklySchedulePhase,
 	StudyStream
 } from '../../modules/optimizer/calendarScheduler';
@@ -1681,8 +1682,7 @@ export function generatePersonalizedTracks(
 		) ?? (hasTakenPsych ? currentPsych : 450);
 
 		// =========================================================================
-		// TRACK 2: המסלול המאוזן: שילוב בגרויות ופיזור סיכונים (2 עד 3 בחינות בלבד!)
-		// עומס מבוקר: לעולם לא מעבר ל-3 בחינות בגרות!
+		// TRACK 2: המסלול המאוזן: שילוב בגרויות ופיזור סיכונים (או מסלול חלופי בבחינה בודדת)
 		// =========================================================================
 		const searchPool2 = availableLevers.slice(0, Math.min(8, availableLevers.length));
 		let bestBalCombo: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number; droppedSubjects?: string[] } } | null = null;
@@ -1690,9 +1690,45 @@ export function generatePersonalizedTracks(
 		const minCount2 = Math.min(searchPool2.length, Math.max(2, track1LeverCount > 0 ? track1LeverCount + 1 : 2));
 		const maxCount2 = Math.min(searchPool2.length, 3);
 		const track1ZeroPsych = track1Psych <= (hasTakenPsych ? currentPsych : baselinePsych);
+		const isSingleBagrutAdmissionTrack1 = track1ZeroPsych && track1LeverCount === 1;
+		const track1SubjectName = tracks[0]?.recommendedSubjectImprovements?.[0]?.subjectName;
 
-		// Phase 1: If track 1 had a psychometric jump, search for combos that lower the psychometric target
-		if (!track1ZeroPsych) {
+		if (isSingleBagrutAdmissionTrack1) {
+			// =========================================================================
+			// CRITICAL USER DIRECTIVE:
+			// "אם אפשר להתקבל עם מבחן בגרות אחד אז המסלול השני יכול להיות שני דברים:
+			// או לא קיים
+			// או דרך לסגור את הפער עם בגרות אחרת (גם במבחן אחד)"
+			// =========================================================================
+			for (const lever of searchPool2) {
+				if (lever.subjectName === track1SubjectName) continue;
+				const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, [lever]);
+				const p = findExactPsychometricTarget(
+					calculatorId,
+					relevantSekemType,
+					threshold,
+					userProfile,
+					sim.subjects,
+					Math.max(currentPsych, 450),
+					hasTakenPsych ? currentPsych : baselinePsych,
+					sim.mathUnits,
+					sim.mathGrade,
+					sim.physUnits,
+					sim.physGrade
+				);
+				if (p !== null && p <= (hasTakenPsych ? currentPsych : baselinePsych)) {
+					const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+					if (comboHasDroppedSubject([lever], res.droppedSubjects)) continue;
+					if (res.sekem >= threshold) {
+						bestBalCombo = { levers: [lever], psych: p, res };
+						break; // searchPool2 is sorted by utilityScore; top valid alternative lever selected
+					}
+				}
+			}
+			// If no single alternative lever reaches the threshold, bestBalCombo stays null!
+			// Track 2 will simply NOT exist (או לא קיים).
+		} else if (!track1ZeroPsych) {
+			// Phase 1: If track 1 had a psychometric jump, search for combos that lower the psychometric target
 			for (let count = minCount2; count <= maxCount2; count++) {
 				const combos = getCombinations(searchPool2, count);
 				for (const combo of combos) {
@@ -1724,9 +1760,8 @@ export function generatePersonalizedTracks(
 			}
 		}
 
-		// Phase 2: If Track 1 already passes with 0 psychometric jump OR no lower psych combo was found:
-		// Search for 2..3 lever combos that provide a real safety cushion (higher sekem / higher bagrut) without dropped subjects!
-		if (!bestBalCombo) {
+		// Phase 2: If NOT isSingleBagrutAdmissionTrack1 and no lower psych combo was found:
+		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1) {
 			for (let count = Math.min(2, searchPool2.length); count <= Math.min(3, searchPool2.length); count++) {
 				const combos = getCombinations(searchPool2, count);
 				for (const combo of combos) {
@@ -1749,12 +1784,6 @@ export function generatePersonalizedTracks(
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
 						if (res.sekem >= threshold) {
-							// If track 1 had 0 psychometric jump and 1 lever: ensure positive marginal benefit
-							if (track1ZeroPsych && track1LeverCount <= 1) {
-								if (res.sekem <= track1Sekem && res.bagrutAverage <= track1Bagrut) {
-									continue; // Redundant combo! Adds no value over Track 1!
-								}
-							}
 							if (!bestBalCombo) {
 								bestBalCombo = { levers: combo, psych: p, res };
 							} else if (p < bestBalCombo.psych) {
@@ -1769,7 +1798,7 @@ export function generatePersonalizedTracks(
 			}
 		}
 
-		if (!bestBalCombo) {
+		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1) {
 			const fallbackLevers = availableLevers.slice(0, Math.min(3, availableLevers.length));
 			const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, fallbackLevers);
 			const pBal = findExactPsychometricTarget(
@@ -1802,25 +1831,27 @@ export function generatePersonalizedTracks(
 			psychBalDelta = balPsych - (hasTakenPsych ? currentPsych : baselinePsych);
 			const balEval = getFeasibilityEvaluation(psychBalDelta, selectedBalLevers.length);
 
-			const isZeroPsychTrack1 = track1Psych <= (hasTakenPsych ? currentPsych : baselinePsych);
-			const isSafetyCushion = isZeroPsychTrack1 && balPsych <= (hasTakenPsych ? currentPsych : baselinePsych);
+			const isAlternativeSingleExam = isSingleBagrutAdmissionTrack1 && selectedBalLevers.length === 1;
 
+			let balTitle = 'המסלול המאוזן: שילוב בגרויות ופיזור סיכונים';
+			let balBadge = 'הכי מומלץ (פיזור סיכונים)';
 			let balStrategyDesc = '';
-			if (balPsych < track1Psych) {
+
+			if (isAlternativeSingleExam) {
+				balTitle = `המסלול החלופי: שדרוג ${selectedBalLevers[0]?.subjectName} (בחינה בודדת)`;
+				balBadge = 'חלופה לבחינה בודדת';
+				balStrategyDesc = `חלופה לבחינה בודדת: במקום ${track1SubjectName}, שדרוג ממוקד של ${selectedBalLevers[0]?.subjectName} (${selectedBalLevers[0]?.targetUnits} יח״ל, ציון ${selectedBalLevers[0]?.targetGrade}) מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח קבלה מלאה בבחינה אחת בלבד וללא צורך בשיפור פסיכומטרי (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+			} else if (balPsych < track1Psych) {
 				balStrategyDesc = `במקום יעד פסיכומטרי של ${track1Psych}, שדרוג ממוקד של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומאפשר קבלה עם יעד פסיכומטרי נמוך ונגיש של ${balPsych} בלבד לסגירת סף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
-			} else if (isSafetyCushion) {
-				balStrategyDesc = `ללא צורך בשיפור פסיכומטרי (שומר על ${hasTakenPsych ? currentPsych : baselinePsych} הקיים), שילוב מורחב של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח סכם מוגן של ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} עם מרווח ביטחון מעל סף הקבלה (${threshold}).`;
 			} else {
 				balStrategyDesc = `שילוב מאוזן של ${balSubjectSummary} יחד עם פסיכומטרי מתון של ${balPsych} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח עמידה מלאה בסף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
 			}
 
 			tracks.push({
 				id: 'track-balanced',
-				title: isSafetyCushion
-					? 'המסלול המאוזן: שילוב בגרויות ורשת ביטחון'
-					: 'המסלול המאוזן: שילוב בגרויות ופיזור סיכונים',
-				badge: isSafetyCushion ? 'רשת ביטחון ומרווח קבלה' : 'הכי מומלץ (פיזור סיכונים)',
-				badgeColor: 'from-emerald-500 to-teal-600',
+				title: balTitle,
+				badge: balBadge,
+				badgeColor: isAlternativeSingleExam ? 'from-teal-500 to-emerald-600' : 'from-emerald-500 to-teal-600',
 				strategyDescription: balStrategyDesc,
 				targetSekem: bestBalCombo.res.sekem,
 				targetPsychometric: balPsych,
@@ -1835,52 +1866,65 @@ export function generatePersonalizedTracks(
 					targetUnits: l.targetUnits,
 					reason: l.reason
 				})),
-				estimatedWeeks: 14,
+				estimatedWeeks: isAlternativeSingleExam ? 8 : 14,
 				weeklyHours: availableWeeklyHours,
 				feasibility: balEval.feasibility,
 				feasibilityExplanation: balEval.explanation,
-				steps: [
-					{
-						title: `שיפור / הרחבה של ${selectedBalLevers[0]?.subjectName}`,
-						detail: `הכנה ותרגול ממוקד להגעה לציון ${selectedBalLevers[0]?.targetGrade}`,
-						timing: 'שבועות 1–6',
-						type: selectedBalLevers[0]?.isMath ? 'bagrut_core' : 'bagrut_elective'
-					},
-					...(selectedBalLevers.length > 1
-						? [
-								{
-									title: `השלמת ${selectedBalLevers[1].subjectName}`,
-									detail: `הגעה לציון היעד (${selectedBalLevers[1].targetGrade}) והעלאת הממוצע האופטימלי`,
-									timing: 'שבועות 7–10',
-									type: 'bagrut_elective' as const
-								}
-						  ]
-						: []),
-					...(selectedBalLevers.length > 2
-						? [
-								{
-									title: `השלמת ${selectedBalLevers[2].subjectName}`,
-									detail: `הגעה לציון ${selectedBalLevers[2].targetGrade} לביסוס הבונוסים`,
-									timing: 'שבועות 11–12',
-									type: 'bagrut_elective' as const
-								}
-						  ]
-						: []),
-					{
-						title: 'קורס פסיכומטרי ממוקד יעד מאוזן',
-						detail: `חיזוק נקודתי של ${formatPsychSectionsLabel(answers)} להשגת יעד ריאלי של ${balPsych}`,
-						timing: 'שבועות 13–14',
-						type: 'psychometric'
-					}
-				],
-				keyAdvantage: 'מפרק את היעד הקשה, מונע תלות בבחינה בודדת ומספק יעד פסיכומטרי בר-השגה.'
+				steps: isAlternativeSingleExam
+					? [
+							{
+								title: `שדרוג ממוקד של ${selectedBalLevers[0]?.subjectName}`,
+								detail: `הכנה ותרגול ממוקד להגעה לציון ${selectedBalLevers[0]?.targetGrade} (${selectedBalLevers[0]?.targetUnits} יח״ל)`,
+								timing: getSubjectExamSession(selectedBalLevers[0]?.subjectName, selectedBalLevers[0]?.targetUnits) === 'winter' ? 'ינואר (מועד חורף)' : 'יוני–יולי (מועד קיץ)',
+								type: selectedBalLevers[0]?.isMath ? 'bagrut_core' : 'bagrut_elective'
+							}
+					  ]
+					: [
+							{
+								title: `שיפור / הרחבה של ${selectedBalLevers[0]?.subjectName}`,
+								detail: `הכנה ותרגול ממוקד להגעה לציון ${selectedBalLevers[0]?.targetGrade}`,
+								timing: 'שבועות 1–6',
+								type: selectedBalLevers[0]?.isMath ? 'bagrut_core' : 'bagrut_elective'
+							},
+							...(selectedBalLevers.length > 1
+								? [
+										{
+											title: `השלמת ${selectedBalLevers[1].subjectName}`,
+											detail: `הגעה לציון היעד (${selectedBalLevers[1].targetGrade}) והעלאת הממוצע האופטימלי`,
+											timing: 'שבועות 7–10',
+											type: 'bagrut_elective' as const
+										}
+								  ]
+								: []),
+							...(selectedBalLevers.length > 2
+								? [
+										{
+											title: `השלמת ${selectedBalLevers[2].subjectName}`,
+											detail: `הגעה לציון ${selectedBalLevers[2].targetGrade} לביסוס הבונוסים`,
+											timing: 'שבועות 11–12',
+											type: 'bagrut_elective' as const
+										}
+								  ]
+								: []),
+							...(balPsych > (hasTakenPsych ? currentPsych : baselinePsych)
+								? [
+										{
+											title: 'קורס פסיכומטרי ממוקד יעד מאוזן',
+											detail: `חיזוק נקודתי של ${formatPsychSectionsLabel(answers)} להשגת יעד ריאלי של ${balPsych}`,
+											timing: 'שבועות 13–14',
+											type: 'psychometric' as const
+										}
+								  ]
+								: [])
+					  ],
+				keyAdvantage: isAlternativeSingleExam
+					? `מאפשר סגירת קבלה מלאה בבחינה בודדת של ${selectedBalLevers[0]?.subjectName} כחלופה מלאה לבחינה המוצעת במסלול 1.`
+					: 'מפרק את היעד הקשה, מונע תלות בבחינה בודדת ומספק יעד פסיכומטרי בר-השגה.'
 			});
 		}
 
 		// =========================================================================
 		// TRACK 3: המסלול הרב-שלבי / פער גדול / הקלה מרבית (4 עד 5 בחינות)
-		// עפ״י הנחיית המשתמש:
-		// "מסלול יכול להציע הרבה בחינות במידה ומדובר בפער גדול מאוד לקבלה, זה יוצע כמסלול שלישי פשוט"
 		// =========================================================================
 		const searchPool3 = availableLevers.slice(0, Math.min(8, availableLevers.length));
 		let bestSolidCombo: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
@@ -1888,7 +1932,7 @@ export function generatePersonalizedTracks(
 		const minCount3 = Math.min(searchPool3.length, Math.max(4, track2LeverCount + 1));
 		const maxCount3 = Math.min(searchPool3.length, 5);
 
-		if (minCount3 <= maxCount3 && searchPool3.length >= 4) {
+		if (!isSingleBagrutAdmissionTrack1 && minCount3 <= maxCount3 && searchPool3.length >= 4) {
 			for (let count = minCount3; count <= maxCount3; count++) {
 				const combos = getCombinations(searchPool3, count);
 				for (const combo of combos) {
