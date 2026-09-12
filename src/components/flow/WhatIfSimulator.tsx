@@ -943,16 +943,7 @@ export default function WhatIfSimulator({
 
 			{/* Section Header */}
 			<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-5">
-				<div className="space-y-1.5">
-					<div className="flex items-center gap-2">
-						<span className="px-3 py-1 bg-[#FAF8F5] text-[#1E597B] border border-[#E5DFD4] text-xs font-black rounded-lg flex items-center gap-1.5">
-							<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
-							<span>מעבדת סימולציה וחישוב השפעה (What-If)</span>
-						</span>
-						<span className="text-xs font-bold text-[#66635C]">
-							{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}
-						</span>
-					</div>
+				<div className="space-y-1">
 					<h3 className="text-xl sm:text-2xl font-black text-[#222222]">
 						בדוק והוסף בגרויות — וצפה במידת ההשפעה המדויקת על הסכם 🎛️
 					</h3>
@@ -1115,69 +1106,67 @@ export default function WhatIfSimulator({
 						</div>
 
 						{/* Active Subjects List */}
-						<div className="space-y-3">
+						<div className="space-y-2 sm:space-y-2.5">
 							{/* Math Card if Active */}
 							{isMathActive && (
-								<div className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-2xl p-4 space-y-3 relative transition">
-									<div className="flex items-center justify-between">
-										<div className="flex items-center gap-2 flex-wrap">
-											<span className="text-sm font-black text-[#222222]">
+								<div className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-xl p-3 sm:p-3.5 space-y-2 relative transition shadow-2xs">
+									{/* Row 1: Title, Badge, Units Toggle & Trash */}
+									<div className="flex items-center justify-between gap-2 flex-wrap">
+										<div className="flex items-center gap-1.5 flex-wrap">
+											<span className="text-xs sm:text-sm font-black text-[#222222]">
 												מתמטיקה
 											</span>
-											<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#FAF8F5] text-[#1E597B] border border-[#C5DFED]">
+											<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white text-[#1E597B] border border-[#C5DFED]">
 												{isMathUpgradedTo5 ? '5 יח״ל (+35 בונוס)' : `${userProfile.mathUnits || 4} יח״ל`}
 											</span>
 										</div>
 
-										<button
-											type="button"
-											onClick={() => setIsMathActive(false)}
-											className="text-[#8A847C] hover:text-[#9B3327] transition p-1.5 rounded-lg hover:bg-white cursor-pointer"
-											title="הסר מתמטיקה מרשימת השיפורים (החזר לנתוני בסיס)"
-										>
-											<Trash2 className="h-4 w-4" />
-										</button>
-									</div>
+										<div className="flex items-center gap-1.5">
+											{/* Compact Units Toggle */}
+											<div className="flex items-center gap-0.5 bg-white p-0.5 rounded-lg border border-[#E5DFD4]">
+												<button
+													type="button"
+													onClick={() => setIsMathUpgradedTo5(false)}
+													className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition cursor-pointer ${
+														!isMathUpgradedTo5
+															? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
+															: 'text-[#66635C] hover:text-[#222222]'
+													}`}
+												>
+													{userProfile.mathUnits || 4} יח״ל
+												</button>
+												<button
+													type="button"
+													onClick={() => setIsMathUpgradedTo5(true)}
+													className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition cursor-pointer ${
+														isMathUpgradedTo5
+															? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
+															: 'text-[#66635C] hover:text-[#222222]'
+													}`}
+												>
+													5 יח״ל (+35)
+												</button>
+											</div>
 
-									{/* Units Toggle (4 or 5) */}
-									<div className="flex items-center justify-between text-xs pt-1">
-										<span className="text-[#66635C] text-[11px]">היקף יחידות לימוד:</span>
-										<div className="flex items-center gap-1 bg-white p-0.5 rounded-xl border border-[#E5DFD4]">
 											<button
 												type="button"
-												onClick={() => setIsMathUpgradedTo5(false)}
-												className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-													!isMathUpgradedTo5
-														? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
-														: 'text-[#66635C] hover:text-[#222222]'
-												}`}
+												onClick={() => setIsMathActive(false)}
+												className="text-[#8A847C] hover:text-[#9B3327] transition p-1 rounded-md hover:bg-white cursor-pointer"
+												title="הסר מתמטיקה מרשימת השיפורים"
 											>
-												{userProfile.mathUnits || 4} יח״ל
-											</button>
-											<button
-												type="button"
-												onClick={() => setIsMathUpgradedTo5(true)}
-												className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-													isMathUpgradedTo5
-														? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
-														: 'text-[#66635C] hover:text-[#222222]'
-												}`}
-											>
-												5 יח״ל (+35)
+												<Trash2 className="h-3.5 w-3.5" />
 											</button>
 										</div>
 									</div>
 
-									{/* Math Grade Slider */}
-									<div className="space-y-1.5">
-										<div className="flex items-center justify-between text-xs">
-											<span className="text-[#66635C]">
-												<span>קיים: {userProfile.mathGrade || 80}</span>
-												<span className="text-[#8A847C] mx-1">➔</span>
-												<span>יעד מבוקש:</span>
-											</span>
-											<div dir="ltr" className="text-left dir-ltr">
-												<span className="font-black text-[#222222]">{simulatedMathGrade}</span>
+									{/* Row 2: Grade status on right, Marginal Impact on left */}
+									<div className="flex items-center justify-between text-xs pt-0.5">
+										<div className="flex items-center gap-1.5 text-[11px] text-[#66635C]">
+											<span>קיים: {userProfile.mathGrade || 80}</span>
+											<span className="text-[#8A847C]">➔</span>
+											<span>יעד:</span>
+											<div dir="ltr" className="inline-flex items-center font-black text-[#222222] dir-ltr text-left">
+												<span>{simulatedMathGrade}</span>
 												{simulatedMathGrade > (userProfile.mathGrade || 80) && (
 													<span className="text-[10px] text-[#205739] font-bold ml-1">
 														(+{simulatedMathGrade - (userProfile.mathGrade || 80)})
@@ -1186,31 +1175,30 @@ export default function WhatIfSimulator({
 											</div>
 										</div>
 
-										<input
-											type="range"
-											min={60}
-											max={100}
-											step={1}
-											value={simulatedMathGrade}
-											onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
-											className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
-										/>
+										<div className="text-[11px]">
+											{mathUpgradeImpact > 0 ? (
+												<span className="px-2 py-0.5 rounded-md bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black text-[10px] flex items-center gap-1 dir-ltr">
+													<Sparkles className="h-2.5 w-2.5 text-[#205739]" />
+													<span>+{mathUpgradeImpact} נק׳ סכם</span>
+												</span>
+											) : (
+												<span className="text-[#8A847C] text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4]">
+													ללא שינוי בסכם
+												</span>
+											)}
+										</div>
 									</div>
 
-									{/* Math Marginal Impact */}
-									<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-between text-[11px]">
-										<span className="text-[#66635C] font-medium">מידת השפעה שולית:</span>
-										{mathUpgradeImpact > 0 ? (
-											<span className="px-2.5 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black flex items-center gap-1 dir-ltr">
-												<Sparkles className="h-3 w-3 text-[#205739]" />
-												<span>+{mathUpgradeImpact} נק׳ סכם</span>
-											</span>
-										) : (
-											<span className="text-[#8A847C] text-[10px] bg-white px-2 py-0.5 rounded border border-[#E5DFD4]">
-												ללא שינוי מסכם הבסיס
-											</span>
-										)}
-									</div>
+									{/* Row 3: Slim Slider */}
+									<input
+										type="range"
+										min={60}
+										max={100}
+										step={1}
+										value={simulatedMathGrade}
+										onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
+										className="w-full h-1.5 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+									/>
 								</div>
 							)}
 
@@ -1220,121 +1208,120 @@ export default function WhatIfSimulator({
 								return (
 									<div
 										key={item.id}
-										className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-2xl p-4 space-y-3 relative transition"
+										className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-xl p-3 sm:p-3.5 space-y-2 relative transition shadow-2xs"
 									>
-										{/* Header: Name, Tag, Trash button */}
-										<div className="flex items-center justify-between">
-											<div className="flex items-center gap-2 flex-wrap">
-												<span className="text-sm font-black text-[#222222]">
+										{/* Row 1: Name, Tag, Units Selector & Trash */}
+										<div className="flex items-center justify-between gap-2 flex-wrap">
+											<div className="flex items-center gap-1.5 flex-wrap">
+												<span className="text-xs sm:text-sm font-black text-[#222222]">
 													{item.name}
 												</span>
 												{item.isCustomAdded ? (
-													<span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED]">
-														מקצוע חדש ({item.units} יח״ל)
+													<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED]">
+														חדש ({item.units} יח״ל)
 													</span>
 												) : item.units !== item.originalUnits ? (
-													<span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]">
+													<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]">
 														שודרג ל-{item.units} יח״ל
 													</span>
 												) : (
-													<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white text-[#66635C] border border-[#E5DFD4]">
+													<span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-white text-[#66635C] border border-[#E5DFD4]">
 														{item.units} יח״ל
 													</span>
 												)}
 											</div>
 
-											<button
-												type="button"
-												onClick={() => handleRemoveSimulatedSubject(item.id)}
-												className="text-[#8A847C] hover:text-[#9B3327] transition p-1.5 rounded-lg hover:bg-white cursor-pointer"
-												title="הסר מקצוע זה מרשימת השיפורים"
-											>
-												<Trash2 className="h-4 w-4" />
-											</button>
-										</div>
-
-										{/* Units Selector */}
-										<div className="flex items-center justify-between text-xs pt-1">
-											<span className="text-[#66635C] text-[11px]">היקף יחידות:</span>
-											<div className="flex items-center gap-1 bg-white p-0.5 rounded-xl border border-[#E5DFD4]">
-												{[2, 3, 4, 5].map((u) => {
-													const isSelected = item.units === u;
-													return (
-														<button
-															key={u}
-															type="button"
-															onClick={() => handleUnitsChange(item.id, u)}
-															className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${
-																isSelected
-																	? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
-																	: 'text-[#66635C] hover:text-[#222222]'
-															}`}
-														>
-															{u} יח״ל
-														</button>
-													);
-												})}
-											</div>
-										</div>
-
-										{/* Grade Slider */}
-										<div className="space-y-1.5">
-											<div className="flex items-center justify-between text-xs">
-												<span className="text-[#66635C]">
-													{item.isCustomAdded ? (
-														'ציון יעד:'
-													) : (
-														<span className="inline-flex items-center gap-1">
-															<span>קיים: {item.originalGrade}</span>
-															<span className="text-[#8A847C]">➔</span>
-															<span>יעד מבוקש:</span>
-														</span>
-													)}
-												</span>
-												<div dir="ltr" className="text-left dir-ltr">
-													<span className="font-black text-[#222222]">{item.simulatedGrade}</span>
-													{!item.isCustomAdded && item.simulatedGrade > item.originalGrade && (
-														<span className="text-[10px] text-[#205739] font-bold ml-1">
-															(+{item.simulatedGrade - item.originalGrade})
-														</span>
-													)}
+											<div className="flex items-center gap-1.5">
+												{/* Units Selector */}
+												<div className="flex items-center gap-0.5 bg-white p-0.5 rounded-lg border border-[#E5DFD4]">
+													{[2, 3, 4, 5].map((u) => {
+														const isSelected = item.units === u;
+														return (
+															<button
+																key={u}
+																type="button"
+																onClick={() => handleUnitsChange(item.id, u)}
+																className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition cursor-pointer ${
+																	isSelected
+																		? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
+																		: 'text-[#66635C] hover:text-[#222222]'
+																}`}
+															>
+																{u} יח״ל
+															</button>
+														);
+													})}
 												</div>
-											</div>
 
-											<input
-												type="range"
-												min={item.isCustomAdded ? 60 : Math.min(60, item.originalGrade)}
-												max={100}
-												step={1}
-												value={item.simulatedGrade}
-												onChange={(e) =>
-													handleGradeSliderChange(item.id, Number(e.target.value))
-												}
-												className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
-											/>
+												<button
+													type="button"
+													onClick={() => handleRemoveSimulatedSubject(item.id)}
+													className="text-[#8A847C] hover:text-[#9B3327] transition p-1 rounded-md hover:bg-white cursor-pointer"
+													title="הסר מקצוע זה מרשימת השיפורים"
+												>
+													<Trash2 className="h-3.5 w-3.5" />
+												</button>
+											</div>
 										</div>
 
-										{/* Marginal Impact */}
-										<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-between text-[11px]">
-											<span className="text-[#66635C] font-medium">מידת השפעה שולית:</span>
-											{impact.sekemDelta > 0 ? (
-												<div className="flex items-center gap-1.5 dir-ltr">
-													<span className="px-2.5 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black flex items-center gap-1">
-														<Sparkles className="h-3 w-3 text-[#205739]" />
-														<span>+{impact.sekemDelta} נק׳ סכם</span>
+										{/* Row 2: Grade status on right, Marginal Impact on left */}
+										<div className="flex items-center justify-between text-xs pt-0.5">
+											<div className="flex items-center gap-1.5 text-[11px] text-[#66635C]">
+												{item.isCustomAdded ? (
+													<span>
+														ציון יעד:{' '}
+														<strong className="text-[#222222] font-black">{item.simulatedGrade}</strong>
 													</span>
-													{impact.bagrutDelta > 0 && (
-														<span className="text-[10px] text-[#66635C] font-medium">
-															(+{impact.bagrutDelta} בבגרות)
+												) : (
+													<span className="inline-flex items-center gap-1">
+														<span>קיים: {item.originalGrade}</span>
+														<span className="text-[#8A847C]">➔</span>
+														<span>יעד:</span>
+														<span dir="ltr" className="inline-flex items-center font-black text-[#222222] dir-ltr text-left">
+															{item.simulatedGrade}
+															{item.simulatedGrade > item.originalGrade && (
+																<span className="text-[10px] text-[#205739] font-bold ml-1">
+																	(+{item.simulatedGrade - item.originalGrade})
+																</span>
+															)}
 														</span>
-													)}
-												</div>
-											) : (
-												<span className="text-[#8A847C] text-[10px] bg-white px-2 py-0.5 rounded border border-[#E5DFD4]">
-													הושמט בממוצע המיטבי של האוניברסיטה
-												</span>
-											)}
+													</span>
+												)}
+											</div>
+
+											<div className="text-[11px]">
+												{impact.sekemDelta > 0 ? (
+													<div className="flex items-center gap-1 dir-ltr">
+														<span className="px-2 py-0.5 rounded-md bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black text-[10px] flex items-center gap-1">
+															<Sparkles className="h-2.5 w-2.5 text-[#205739]" />
+															<span>+{impact.sekemDelta} נק׳ סכם</span>
+														</span>
+														{impact.bagrutDelta > 0 && (
+															<span className="text-[10px] text-[#66635C] font-medium hidden sm:inline">
+																(+{impact.bagrutDelta} בגרות)
+															</span>
+														)}
+													</div>
+												) : (
+													<span className="text-[#8A847C] text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4]">
+														הושמט בממוצע מיטבי
+													</span>
+												)}
+											</div>
 										</div>
+
+										{/* Row 3: Slim Slider */}
+										<input
+											type="range"
+											min={item.isCustomAdded ? 60 : Math.min(60, item.originalGrade)}
+											max={100}
+											step={1}
+											value={item.simulatedGrade}
+											onChange={(e) =>
+												handleGradeSliderChange(item.id, Number(e.target.value))
+											}
+											className="w-full h-1.5 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+										/>
 									</div>
 								);
 							})}

@@ -247,7 +247,15 @@ npm run build
       - Opens modal allowing selection from user's inactive matriculation subjects (including Math), popular 5-unit electives (Geography, CS, Physics, Chemistry, Biology, Literature, Bible), or full 40+ subject ministry catalog.
       - Only upon explicit selection does the subject appear in the improvement list with its grade slider, units selector, and marginal impact.
       - Each active card features a trash button (`Trash2`) to remove and revert the subject to baseline.
-    - **Full-Width Baseline Changes Summary**: Preserved at the bottom with 4 comparative KPI cards, table of modified subjects with `dir="ltr"` grade transitions, and "שמור מסלול מותאם אישית" CTA button.
+23. **Compact Subject Cards & Clean What-If Removal (`WhatIfSimulator.tsx`, `RecommendedTracksView.tsx`):**
+    - **Ultra-Compact Subject Cards**: Reduced vertical card height by over 55% (from ~160px down to ~65-70px per card):
+      - **Row 1**: Integrated subject name, status badge (`חדש` / `שודרג`), compact unit selection pills (`[2][3][4][5] יח״ל`), and trash icon button (`Trash2`).
+      - **Row 2**: Baseline-to-target grade transition on the right (`קיים: 82 ➔ יעד: 92 (+10)`) paired directly with marginal Sekem impact on the left (`+5 נק׳ סכם (+0.95 בגרות)`).
+      - **Row 3**: Slim slider (`h-1.5` track with accent `#3C3C3C`).
+      - Applied consistently to Math and all active matriculation core/elective cards.
+    - **Removal of Redundant Degree Headers & What-If Tags**:
+      - Completely removed repetitive degree name and institution pill header in `WhatIfSimulator.tsx`.
+      - Cleaned up tab labels and buttons in `RecommendedTracksView.tsx`: removed `(What-If Lab)` and `(מה אם)` from user-facing action buttons and tab titles (`מסלול בנייה אישי 🎛️`, `ערוך מסלול בסימולטור`, `🔬 סימולציה עצמאית בזמן אמת`).
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**

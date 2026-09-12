@@ -385,7 +385,7 @@ export default function RecommendedTracksView({
 						}`}
 					>
 						<Sliders className="h-4 w-4 text-inherit" />
-						<span>מסלול בנייה אישי 🎛️ (What-If Lab)</span>
+						<span>מסלול בנייה אישי 🎛️</span>
 						{customScenarioApplied && (
 							<span className="w-2 h-2 rounded-full bg-[#205739]" />
 						)}
@@ -396,7 +396,7 @@ export default function RecommendedTracksView({
 					{activeTab === 'recommended' ? (
 						<span>💡 3 מסלולים מותאמים אישית לבחירתך</span>
 					) : (
-						<span>🔬 מעבדת סימולציה עצמאית בזמן אמת</span>
+						<span>🔬 סימולציה עצמאית בזמן אמת</span>
 					)}
 				</div>
 			</div>
@@ -856,7 +856,7 @@ export default function RecommendedTracksView({
 									className="w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border cursor-pointer bg-white hover:bg-[#FAF8F5] text-[#1E597B] border-[#C5DFED] shadow-2xs"
 								>
 									<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
-									<span>ערוך מסלול בסימולטור (מה אם)</span>
+									<span>ערוך מסלול בסימולטור</span>
 								</button>
 								<button
 									type="button"
