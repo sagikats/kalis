@@ -63,9 +63,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 					// Silently fetch fresh user profile & saved tracks count in background
 					fetch(`/api/auth/me?userId=${encodeURIComponent(parsedUser.id)}`)
-						.then(res => res.json())
+						.then(async (res) => {
+							const contentType = res.headers.get('content-type') || '';
+							if (!contentType.includes('application/json')) return null;
+							return res.json();
+						})
 						.then(data => {
-							if (data.success && data.user) {
+							if (data && data.success && data.user) {
 								setUser(data.user);
 								if (data.profile) setProfile(data.profile);
 								if (data.preferences) setPreferences(data.preferences);
@@ -206,8 +210,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		if (!user?.id) return;
 		try {
 			const res = await fetch(`/api/auth/me?userId=${encodeURIComponent(user.id)}`);
+			const contentType = res.headers.get('content-type') || '';
+			if (!res.ok || !contentType.includes('application/json')) return;
 			const data = await res.json();
-			if (data.success && data.user) {
+			if (data && data.success && data.user) {
 				setUser(data.user);
 				if (data.profile) setProfile(data.profile);
 				if (data.preferences) setPreferences(data.preferences);

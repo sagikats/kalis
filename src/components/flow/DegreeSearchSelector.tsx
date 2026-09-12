@@ -99,8 +99,10 @@ export default function DegreeSearchSelector({
 		async function fetchFromSQLite() {
 			try {
 				const res = await fetch('/api/institutions');
+				const contentType = res.headers.get('content-type') || '';
+				if (!res.ok || !contentType.includes('application/json')) return;
 				const data = await res.json();
-				if (isMounted && data.success && Array.isArray(data.institutions) && data.institutions.length > 0) {
+				if (isMounted && data && data.success && Array.isArray(data.institutions) && data.institutions.length > 0) {
 					setInstitutionsList(data.institutions);
 					setIsLoadedFromDb(true);
 				}

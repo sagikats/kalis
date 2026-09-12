@@ -137,6 +137,11 @@ export default function RecommendedTracksView({
 				})
 			});
 
+			const contentType = res.headers.get('content-type') || '';
+			if (!contentType.includes('application/json')) {
+				setSaveNotification('שגיאת תקשורת בעת שמירת המסלול');
+				return;
+			}
 			const data = await res.json();
 			if (data.success) {
 				if (typeof window !== 'undefined' && data.userId) {
@@ -209,6 +214,10 @@ export default function RecommendedTracksView({
 					}
 				})
 			});
+			const contentType = res.headers.get('content-type') || '';
+			if (!contentType.includes('application/json')) {
+				return;
+			}
 			const data = await res.json();
 			if (data.success && data.track) {
 				setMechinaTrack(data.track);

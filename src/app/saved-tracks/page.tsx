@@ -43,9 +43,14 @@ export default function SavedTracksPage() {
 		setIsLoadingTracks(true);
 		try {
 			const res = await fetch(`/api/tracks/save?userId=${encodeURIComponent(userId)}`);
-			const data = await res.json();
-			if (data.success && Array.isArray(data.tracks)) {
-				setTracks(data.tracks);
+			const contentType = res.headers.get('content-type') || '';
+			if (res.ok && contentType.includes('application/json')) {
+				const data = await res.json();
+				if (data.success && Array.isArray(data.tracks)) {
+					setTracks(data.tracks);
+				} else {
+					setTracks([]);
+				}
 			} else {
 				setTracks([]);
 			}
@@ -96,6 +101,11 @@ export default function SavedTracksPage() {
 			const res = await fetch(`/api/tracks/save?${params.toString()}`, {
 				method: 'DELETE'
 			});
+			const contentType = res.headers.get('content-type') || '';
+			if (!contentType.includes('application/json')) {
+				setFeedbackMessage({ type: 'error', text: 'שגיאה במחיקת המסלול' });
+				return;
+			}
 			const data = await res.json();
 
 			if (data.success) {

@@ -711,6 +711,10 @@ export default function WhatIfSimulator({
 						track: customTrackPayload
 					})
 				});
+				const contentType = res.headers.get('content-type') || '';
+				if (!contentType.includes('application/json')) {
+					throw new Error('התקבלה תגובה לא תקינה מהשרת');
+				}
 				const data = await res.json();
 				if (!data.success) {
 					throw new Error(data.error || 'שגיאה בעת שמירת המסלול במסד הנתונים');
