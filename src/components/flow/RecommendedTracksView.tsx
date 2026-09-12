@@ -65,10 +65,21 @@ export default function RecommendedTracksView({
 	onApplyCustomScenario
 }: RecommendedTracksViewProps) {
 	const [activeTab, setActiveTab] = useState<'recommended' | 'custom_builder'>(defaultTab);
+	const [editingTrack, setEditingTrack] = useState<RecommendedTrack | null>(null);
 	const [selectedTrackId, setSelectedTrackId] = useState<string>(tracks[1]?.id || tracks[0]?.id || '');
 	const [isPrintMode, setIsPrintMode] = useState(false);
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
 	const [expandedExplanationMap, setExpandedExplanationMap] = useState<Record<string, boolean>>({});
+
+	const handleEditTrack = (track: RecommendedTrack) => {
+		setEditingTrack(track);
+		setActiveTab('custom_builder');
+		if (typeof window !== 'undefined') {
+			window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+		}
+	};
 
 	const toggleExplanation = (trackId: string) => {
 		setExpandedExplanationMap((prev) => ({
@@ -840,6 +851,17 @@ export default function RecommendedTracksView({
 									type="button"
 									onClick={(e) => {
 										e.stopPropagation();
+										handleEditTrack(track);
+									}}
+									className="w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border cursor-pointer bg-white hover:bg-[#FAF8F5] text-[#1E597B] border-[#C5DFED] shadow-2xs"
+								>
+									<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
+									<span>ערוך מסלול בסימולטור (מה אם)</span>
+								</button>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.stopPropagation();
 										handleSaveTrack(track);
 									}}
 									disabled={savingTrackId === track.id}
@@ -896,6 +918,14 @@ export default function RecommendedTracksView({
 						<div className="bg-[#FAF8F5] px-3 py-2 rounded-xl border border-[#E5DFD4]">
 							עומס שבועי: <span className="text-[#222222] font-bold">{selectedTrack.weeklyHours} ש״ש</span>
 						</div>
+						<button
+							type="button"
+							onClick={() => handleEditTrack(selectedTrack)}
+							className="px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border bg-white hover:bg-[#FAF8F5] text-[#1E597B] border-[#C5DFED] shadow-2xs cursor-pointer"
+						>
+							<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
+							<span>ערוך מסלול בסימולטור</span>
+						</button>
 						<button
 							type="button"
 							onClick={() => handleSaveTrack(selectedTrack)}
@@ -1414,8 +1444,11 @@ export default function RecommendedTracksView({
 									{/* Return to Recommended Tracks Button */}
 									<button
 										type="button"
-										onClick={() => setActiveTab('recommended')}
-										className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#F0EBE1] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] shadow-sm"
+										onClick={() => {
+											setEditingTrack(null);
+											setActiveTab('recommended');
+										}}
+										className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#F0EBE1] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] shadow-sm cursor-pointer"
 									>
 										<Sparkles className="h-3.5 w-3.5 text-[#222222]" />
 										<span>חזור ל-3 המסלולים המומלצים</span>
@@ -1453,7 +1486,10 @@ export default function RecommendedTracksView({
 									</div>
 									<button
 										type="button"
-										onClick={() => setActiveTab('recommended')}
+										onClick={() => {
+											setEditingTrack(null);
+											setActiveTab('recommended');
+										}}
 										className="text-xs text-[#205739] underline font-bold inline-flex items-center gap-1"
 									>
 										<span>צפה במסלולים המומלצים</span>
@@ -1468,6 +1504,11 @@ export default function RecommendedTracksView({
 								userProfile={userProfile}
 								institutionResult={institutionResult}
 								onApplyScenario={handleApplyScenario}
+								initialTrackToEdit={editingTrack}
+								onCancelEdit={() => {
+									setEditingTrack(null);
+									setActiveTab('recommended');
+								}}
 							/>
 						</div>
 					) : (

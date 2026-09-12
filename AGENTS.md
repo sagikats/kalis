@@ -92,7 +92,7 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-12 13:25)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-12 17:55)
 - **Active Branch:** `data-update` (Created from `main` for academic data refresh and catalog enhancements)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
@@ -228,7 +228,15 @@ npm run build
       - **Technion (`technion`)**: Added explicit Medicine (M.D.) at Rappaport Faculty (סכם 92), Molecular Biochemistry (B.Sc, סכם 84), Economics & Management (B.Sc, סכם 88), expanding from 45 to **48** programs.
       - **BGU (`bgu`)**: Retained 209 comprehensive 1:1 synced programs from the official APEX system.
     - **Complete Nationwide Medicine (M.D.) Coverage**: Candidates can now plan direct admission pathways to all medical schools in Israel (Technion, TAU, HUJI, BGU, Bar-Ilan Safed, Ariel, Reichman).
-    - **Synchronized SQLite DB**: Seeded and synchronized SQLite database (`npx tsx prisma/seed.ts`), passing all checks with 111/111 unit tests, 0 typescript errors, clean production build.
+21. **Interactive Track Editing in What-If Simulator, Live Admission Verification, Baseline Changes Summary & Custom Track Persistence (`WhatIfSimulator.tsx`, `RecommendedTracksView.tsx`, `/api/tracks/save`):**
+    - **One-Click Track Editing**: Added an intuitive "ערוך מסלול בסימולטור (מה אם)" action button on every recommended track card in Step 4 Tab 1 and within the selected track roadmap header.
+    - **Pre-Loaded Simulator State**: Clicking "ערוך מסלול" seamlessly switches to Tab 2 (`WhatIfSimulator`), auto-scrolls to the top, and displays a prominent editorial banner ("מצב עריכת מסלול מומלץ: [שם המסלול]") pre-populated with the track's target metrics (psychometric score, 5-unit math upgrades/grades, core subject improvements, and new 5-unit electives like Geography).
+    - **Live Admission Verification Gauge**: The candidate can interactively adjust sliders, grades, and units to see in real-time whether they still meet the university's degree admission threshold (`isAccepted`, `isBorderline`).
+    - **Dedicated Baseline Comparison Summary ("סיכום השינויים אל מול המצב הקיים")**: Positioned directly beneath the simulator levers:
+      - 4 comparative KPI cards: פסיכומטרי, ממוצע בגרות, ציון סכם מול סף, סטטוס קבלה לתואר.
+      - Detailed list of all modified subjects with clean `dir="ltr"` grade transitions (`{from} ➔ {to} (+{delta})`) and marginal Sekem impact tags.
+      - Estimated learning duration and weekly study hours.
+    - **Custom Track Persistence**: Added a primary CTA "שמור מסלול מותאם אישית", persisting the customized plan to the database/SQLite via `POST /api/tracks/save` (with instant feedback and direct link to `/saved-tracks`).
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
