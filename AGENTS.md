@@ -92,8 +92,8 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-12 13:07)
-- **Active Branch:** `ui-upgred` (Created from `main` for UI isolation and safe iteration)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-12 13:25)
+- **Active Branch:** `data-update` (Created from `main` for academic data refresh and catalog enhancements)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
   - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **111/111 tests passing** across 33 test suites.
