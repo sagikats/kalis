@@ -1166,17 +1166,26 @@ export default function WhatIfSimulator({
 									{/* Row 2: Grade status on right, Marginal Impact on left */}
 									<div className="flex items-center justify-between text-xs pt-0.5">
 										<div className="flex items-center gap-1.5 text-[11px] text-[#66635C]">
-											<span>קיים: {userProfile.mathGrade || 80}</span>
-											<span className="text-[#8A847C]">➔</span>
-											<span>יעד:</span>
-											<div dir="ltr" className="inline-flex items-center font-black text-[#222222] dir-ltr text-left">
-												<span>{simulatedMathGrade}</span>
-												{simulatedMathGrade > (userProfile.mathGrade || 80) && (
-													<span className="text-[10px] text-[#205739] font-bold ml-1">
-														(+{simulatedMathGrade - (userProfile.mathGrade || 80)})
-													</span>
-												)}
-											</div>
+											{isMathUpgradedTo5 && (userProfile.mathUnits || 4) !== 5 ? (
+												<span>
+													ציון יעד:{' '}
+													<strong className="text-[#222222] font-black">{simulatedMathGrade}</strong>
+												</span>
+											) : (
+												<span className="inline-flex items-center gap-1">
+													<span>קיים: {userProfile.mathGrade || 80}</span>
+													<span className="text-[#8A847C]">➔</span>
+													<span>יעד:</span>
+													<div dir="ltr" className="inline-flex items-center font-black text-[#222222] dir-ltr text-left">
+														<span>{simulatedMathGrade}</span>
+														{simulatedMathGrade > (userProfile.mathGrade || 80) && (
+															<span className="text-[10px] text-[#205739] font-bold ml-1">
+																(+{simulatedMathGrade - (userProfile.mathGrade || 80)})
+															</span>
+														)}
+													</div>
+												</span>
+											)}
 										</div>
 
 										<div className="text-[11px]">
@@ -1271,7 +1280,7 @@ export default function WhatIfSimulator({
 										{/* Row 2: Grade status on right, Marginal Impact on left */}
 										<div className="flex items-center justify-between text-xs pt-0.5">
 											<div className="flex items-center gap-1.5 text-[11px] text-[#66635C]">
-												{item.isCustomAdded ? (
+												{item.isCustomAdded || item.units !== item.originalUnits ? (
 													<span>
 														ציון יעד:{' '}
 														<strong className="text-[#222222] font-black">{item.simulatedGrade}</strong>
@@ -1759,14 +1768,25 @@ export default function WhatIfSimulator({
 												<span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#66635C] border border-[#E5DFD4]">
 													{change.type}
 												</span>
-												<span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4]">
-													{change.unitsLabel}
+												<span dir="ltr" className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4] dir-ltr inline-flex items-center gap-1">
+													{change.unitsNumber !== change.targetUnitsNumber ? (
+														<>
+															<span>{change.unitsNumber}</span>
+															<span>➔</span>
+															<span>{change.targetUnitsNumber}</span>
+															<span>יח״ל</span>
+														</>
+													) : (
+														<span>{change.unitsLabel}</span>
+													)}
 												</span>
 											</div>
 											<div className="text-[11px] text-[#8A847C] mt-0.5">
 												{change.category === 'bagrut_elective' && change.fromGrade === 0
 													? `מקצוע הגברה חדש שנלמד מאפס לציון ${change.toGrade}`
-													: `שיפור של ${change.deltaGrade} נקודות בציון`}
+													: change.unitsNumber !== change.targetUnitsNumber
+														? `הרחבת היקף לימוד מ-${change.unitsNumber} ל-${change.targetUnitsNumber} יח״ל לציון ${change.toGrade}`
+														: `שיפור של ${change.deltaGrade} נקודות בציון`}
 											</div>
 										</div>
 									</div>
@@ -1774,18 +1794,20 @@ export default function WhatIfSimulator({
 									<div className="flex items-center justify-between sm:justify-end gap-4 shrink-0">
 										{/* Grade Transition in LTR */}
 										<div dir="ltr" className="text-left dir-ltr">
-											{change.fromGrade > 0 ? (
+											{change.fromGrade > 0 && change.unitsNumber === change.targetUnitsNumber ? (
 												<div className="text-xs font-black text-[#222222]">
 													<span>{change.fromGrade}</span>
 													<span className="text-[#8A847C] mx-1">➔</span>
 													<span className="text-[#205739]">{change.toGrade}</span>
-													<span className="text-[10px] text-[#205739] ml-1 font-bold">
-														(+{change.deltaGrade})
-													</span>
+													{change.deltaGrade > 0 && (
+														<span className="text-[10px] text-[#205739] ml-1 font-bold">
+															(+{change.deltaGrade})
+														</span>
+													)}
 												</div>
 											) : (
 												<div className="text-xs font-black text-[#222222]">
-													<span>יעד: {change.toGrade}</span>
+													<span>ציון יעד: {change.toGrade}</span>
 												</div>
 											)}
 										</div>

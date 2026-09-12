@@ -734,15 +734,14 @@ export default function RecommendedTracksView({
 																				(מקצוע חדש, {s.targetUnits} יח״ל):
 																			</span>
 																		) : hasUnitChange ? (
-																			<span className="text-[#66635C] font-semibold inline-flex items-center gap-0.5">
-																				(
-																				<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+																			<span className="text-[#66635C] font-semibold inline-flex items-center gap-1">
+																				<span>(</span>
+																				<span dir="ltr" className="inline-flex items-center gap-1 font-mono text-[#66635C]">
 																					<span>{s.currentUnits}</span>
 																					<span className="text-[#8A847C]">➔</span>
 																					<span>{s.targetUnits}</span>
 																				</span>
-																				<span>יח״ל</span>
-																				):
+																				<span>יח״ל):</span>
 																			</span>
 																		) : (
 																			`(${s.targetUnits} יח״ל):`
@@ -752,23 +751,23 @@ export default function RecommendedTracksView({
 																		{sInfo.iconEmoji} {sInfo.badgeLabel}
 																	</span>
 																</div>
-																<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
-																	{s.currentGrade > 0 ? (
-																		<>
-																			<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
-																			<span className="text-[#8A847C] font-normal">➔</span>
-																			<span className="text-[#222222] font-black">{s.targetGrade}</span>
+																{(!isNewSubject && !hasUnitChange && s.currentGrade > 0) ? (
+																	<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
+																		<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
+																		<span className="text-[#8A847C] font-normal">➔</span>
+																		<span className="text-[#222222] font-black">{s.targetGrade}</span>
+																		{s.targetGrade > s.currentGrade && (
 																			<span className="text-[10px] text-[#205739] font-bold ml-0.5">
 																				(+{s.targetGrade - s.currentGrade})
 																			</span>
-																		</>
-																	) : (
-																		<>
-																			<span className="text-[10px] text-[#8A847C] font-normal">יעד:</span>
-																			<span className="text-[#222222] font-black">{s.targetGrade}</span>
-																		</>
-																	)}
-																</span>
+																		)}
+																	</span>
+																) : (
+																	<div className="flex items-center gap-1.5 shrink-0">
+																		<span className="text-[11px] text-[#66635C] font-medium">ציון יעד:</span>
+																		<span className="text-sm font-black text-[#222222]">{s.targetGrade}</span>
+																	</div>
+																)}
 															</div>
 														);
 													})}
@@ -1011,39 +1010,45 @@ export default function RecommendedTracksView({
 								{selectedTrack.recommendedSubjectImprovements.map((s, idx) => {
 									const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
 									const sInfo = getSessionInfo(sSession);
+									const isNewSubject = !s.currentUnits || s.currentUnits === 0;
 									const hasUnitChange = Boolean(s.currentUnits && s.currentUnits > 0 && s.currentUnits !== s.targetUnits);
 									return (
 										<span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F2F1F8] border border-[#D2CEEB] text-[#453D78] font-bold">
 											<BookOpen className="h-3.5 w-3.5 text-[#453D78]" />
 											<span>
 												{s.subjectName}{' '}
-												{hasUnitChange ? (
-													<span className="inline-flex items-center gap-0.5">
-														(
+												{isNewSubject ? (
+													`(מקצוע חדש, ${s.targetUnits} יח״ל):`
+												) : hasUnitChange ? (
+													<span className="inline-flex items-center gap-1">
+														<span>(</span>
 														<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
 															<span>{s.currentUnits}</span>
 															<span>➔</span>
 															<span>{s.targetUnits}</span>
 														</span>
-														<span>יח״ל</span>
-														)
+														<span>יח״ל):</span>
 													</span>
 												) : (
-													`(${s.targetUnits} יח״ל)`
-												)}
-												:
-											</span>
-											<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
-												{s.currentGrade > 0 ? (
-													<>
-														<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
-														<span className="text-[#8A847C]">➔</span>
-														<span className="font-bold">{s.targetGrade}</span>
-													</>
-												) : (
-													<span>{s.targetGrade}</span>
+													`(${s.targetUnits} יח״ל):`
 												)}
 											</span>
+											{(!isNewSubject && !hasUnitChange && s.currentGrade > 0) ? (
+												<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+													<span className="text-[#8A847C] font-normal">{s.currentGrade}</span>
+													<span className="text-[#8A847C]">➔</span>
+													<span className="font-bold">{s.targetGrade}</span>
+													{s.targetGrade > s.currentGrade && (
+														<span className="text-[10px] text-[#205739] font-bold ml-0.5">
+															(+{s.targetGrade - s.currentGrade})
+														</span>
+													)}
+												</span>
+											) : (
+												<span className="font-mono text-sm font-black text-[#222222]">
+													ציון יעד: {s.targetGrade}
+												</span>
+											)}
 											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#D2CEEB] bg-white text-[#453D78]">
 												{sInfo.iconEmoji} {sInfo.name}
 											</span>

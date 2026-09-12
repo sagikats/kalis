@@ -473,10 +473,10 @@ export class KalisDatabaseRepository {
 		let maxNum = 10000;
 		for (const u of users) {
 			if (u.candidateNumber) {
-				const match = u.candidateNumber.match(/^KL-(\d+)/);
+				const match = u.candidateNumber.match(/^KL-(\d{5})$/);
 				if (match) {
 					const num = parseInt(match[1], 10);
-					if (!isNaN(num) && num > maxNum) {
+					if (!isNaN(num) && num >= 10000 && num < 99999 && num > maxNum) {
 						maxNum = num;
 					}
 				}

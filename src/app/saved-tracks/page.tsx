@@ -547,15 +547,14 @@ export default function SavedTracksPage() {
 																			(מקצוע חדש, {targetU} יח״ל)
 																		</span>
 																	) : hasUnitChange ? (
-																		<span className="text-[#66635C] font-semibold inline-flex items-center gap-0.5">
-																			(
-																			<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
+																		<span className="text-[#66635C] font-semibold inline-flex items-center gap-1">
+																			<span>(</span>
+																			<span dir="ltr" className="inline-flex items-center gap-1 font-mono text-[#66635C]">
 																				<span>{currU}</span>
 																				<span className="text-[#8A847C]">➔</span>
 																				<span>{targetU}</span>
 																			</span>
-																			<span>יח״ל</span>
-																			)
+																			<span>יח״ל)</span>
 																		</span>
 																	) : (
 																		<span className="text-[#66635C]">
@@ -563,7 +562,7 @@ export default function SavedTracksPage() {
 																		</span>
 																	)}
 																	<span dir="ltr" className="inline-flex items-center gap-1.5 text-xs font-bold shrink-0">
-																		{currG > 0 ? (
+																		{(!isNewSubject && !hasUnitChange && currG > 0) ? (
 																			<>
 																				<span className="text-[#88857E] font-normal">{currG}</span>
 																				<span className="text-[#8A847C] font-normal">➔</span>
@@ -577,8 +576,8 @@ export default function SavedTracksPage() {
 																				)}
 																			</>
 																		) : (
-																			<span className="font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 text-[11px]">
-																				יעד: {targetG}
+																			<span className="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[11px]">
+																				ציון יעד: {targetG}
 																			</span>
 																		)}
 																	</span>

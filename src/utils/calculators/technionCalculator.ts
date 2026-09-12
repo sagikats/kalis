@@ -86,7 +86,7 @@ export function getTechnionSubjectBonus(sub: SubjectInput, hasCluster: boolean):
 	const n = sub.name.trim();
 
 	if (n.includes('מתמטיקה')) {
-		if (sub.units === 5) return 30;
+		if (sub.units === 5) return 35;
 		if (sub.units === 4) return 10;
 		return 0;
 	}
@@ -152,7 +152,7 @@ export function isTechnionMandatorySubject(name: string): boolean {
 	)
 		return true;
 	if (n.includes('ספרות')) return true;
-	if (n.includes('תנ"ך')) return true;
+	if (n.includes('תנ"ך') || n.includes('תנ״ך') || n.includes('תנך')) return true;
 	return false;
 }
 

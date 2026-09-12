@@ -1,11 +1,10 @@
 import { calculateBguAdmission, SubjectInput } from './bguCalculator';
 import { calculateTauAdmission } from './tauCalculator';
-import { calculateTechnionAdmission } from './technionCalculator';
 import { calculateHujiAdmission } from './hujiCalculator';
 import { calculateHaifaAdmission } from './haifaCalculator';
 import { calculateArielAdmission } from './arielCalculator';
 import { resolvePsychometricScores } from './psychometricHelper';
-import { evaluateBarIlan, evaluateReichman } from '@/modules/calculators';
+import { evaluateBarIlan, evaluateReichman, evaluateTechnion } from '@/modules/calculators';
 
 export interface UnifiedCalculationInput {
 	bagrutSubjects: SubjectInput[];
@@ -138,7 +137,7 @@ export function calculateMultiInstitutionSekem(
 	const tauRes = calculateTauAdmission(commonCalcInput);
 
 	// 2. Technion
-	const techRes = calculateTechnionAdmission(commonCalcInput);
+	const techRes = evaluateTechnion(commonCalcInput);
 
 	// 3. BGU
 	const bguRes = calculateBguAdmission(commonCalcInput);
@@ -219,11 +218,12 @@ export function calculateMultiInstitutionSekem(
 			directBagrutEligible: techRes.directBagrutEligible,
 			droppedSubjects: techRes.droppedSubjects,
 			optimalUnits: techRes.optimalUnits,
-			notes: techRes.hasClusterBonus
-				? `סכם טכניוני רשמי (0-100) עם בונוס מצרף מדעי/טכנולוגי מוגדל (+30)`
-				: techRes.droppedSubjects.length > 0
+			notes:
+				techRes.droppedSubjects && techRes.droppedSubjects.length > 0
 					? `ממוצע מיטבי (הושמטו: ${techRes.droppedSubjects.join(', ')})`
-					: 'סכם טכניוני רשמי (סולם 0-100, משקל מתמטיקה כפול)'
+					: techRes.notes && techRes.notes.length > 0
+						? techRes.notes.join('. ')
+						: 'סכם טכניוני רשמי (סולם 0-100, משקל מתמטיקה כפול)'
 		},
 		huji: {
 			institutionId: 'huji',
