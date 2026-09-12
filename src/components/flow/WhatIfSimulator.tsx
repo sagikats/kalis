@@ -39,6 +39,7 @@ import { isSubjectMatch } from '@/modules/optimizer/solver';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import MultiUniversityAdmissionGrid, { InstitutionSimulatedState } from '@/components/flow/MultiUniversityAdmissionGrid';
+import UniversityLogo from '@/components/common/UniversityLogo';
 import { useAuth } from '@/context/AuthContext';
 
 export interface SimulatedSubjectItem {
@@ -82,6 +83,7 @@ function applyTrackToSimulatorState(
 	initialPsych: number
 ): {
 	targetPsych: number;
+	isMathActive: boolean;
 	isMath5: boolean;
 	mathGrade: number;
 	subjectsList: SimulatedSubjectItem[];
@@ -93,6 +95,7 @@ function applyTrackToSimulatorState(
 	const mathImp = track.recommendedSubjectImprovements?.find((imp) =>
 		isSubjectMatch(imp.subjectName, 'מתמטיקה')
 	);
+	const isMathActive = !!mathImp;
 	const isMath5 = mathImp ? mathImp.targetUnits === 5 : userProfile.mathUnits === 5;
 	const mathGrade = mathImp ? mathImp.targetGrade : userProfile.mathGrade || 80;
 
@@ -146,6 +149,7 @@ function applyTrackToSimulatorState(
 
 	return {
 		targetPsych,
+		isMathActive,
 		isMath5,
 		mathGrade,
 		subjectsList
@@ -188,6 +192,16 @@ export default function WhatIfSimulator({
 		return initialPsych;
 	});
 
+	const [isMathActive, setIsMathActive] = useState<boolean>(() => {
+		if (initialTrackToEdit) {
+			const mathImp = initialTrackToEdit.recommendedSubjectImprovements?.find((imp) =>
+				isSubjectMatch(imp.subjectName, 'מתמטיקה')
+			);
+			return !!mathImp;
+		}
+		return false;
+	});
+
 	const [isMathUpgradedTo5, setIsMathUpgradedTo5] = useState<boolean>(() => {
 		if (initialTrackToEdit) {
 			const mathImp = initialTrackToEdit.recommendedSubjectImprovements?.find((imp) =>
@@ -209,6 +223,7 @@ export default function WhatIfSimulator({
 	});
 
 	// Simulated Subjects List (includes original + custom added)
+	// STRICT RULE: Only active if proposed in track! No auto-activation of weak subjects!
 	const [simulatedList, setSimulatedList] = useState<SimulatedSubjectItem[]>(() => {
 		if (initialTrackToEdit) {
 			return applyTrackToSimulatorState(initialTrackToEdit, userProfile, initialPsych).subjectsList;
@@ -221,7 +236,7 @@ export default function WhatIfSimulator({
 			originalGrade: s.grade,
 			simulatedGrade: s.grade,
 			isCustomAdded: false,
-			isActive: s.grade < 85 && !s.name.includes('מתמטיקה') // auto-activate weak subjects
+			isActive: false // strictly false by default
 		}));
 	});
 
@@ -232,15 +247,17 @@ export default function WhatIfSimulator({
 	const [savedCustomTrackError, setSavedCustomTrackError] = useState<string | null>(null);
 
 	// Modal State for picking any subject from catalog
+	const [isAddSubjectModalOpen, setIsAddSubjectModalOpen] = useState<boolean>(false);
 	const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
 	const [selectedExistingToAdd, setSelectedExistingToAdd] = useState<string>('');
-	const [showAllUniversities, setShowAllUniversities] = useState<boolean>(true);
+	const [showAllUniversities, setShowAllUniversities] = useState<boolean>(false);
 
 	// Load track into simulator whenever initialTrackToEdit changes
 	useEffect(() => {
 		if (initialTrackToEdit) {
 			const state = applyTrackToSimulatorState(initialTrackToEdit, userProfile, initialPsych);
 			setSimulatedPsych(state.targetPsych);
+			setIsMathActive(state.isMathActive);
 			setIsMathUpgradedTo5(state.isMath5);
 			setSimulatedMathGrade(state.mathGrade);
 			setSimulatedList(state.subjectsList);
@@ -253,6 +270,7 @@ export default function WhatIfSimulator({
 	useEffect(() => {
 		if (!initialTrackToEdit) {
 			setSimulatedPsych(initialPsych);
+			setIsMathActive(false);
 			setIsMathUpgradedTo5(userProfile.mathUnits === 5);
 			setSimulatedMathGrade(userProfile.mathGrade || 80);
 			setSimulatedList(
@@ -264,7 +282,7 @@ export default function WhatIfSimulator({
 					originalGrade: s.grade,
 					simulatedGrade: s.grade,
 					isCustomAdded: false,
-					isActive: s.grade < 85 && !s.name.includes('מתמטיקה')
+					isActive: false
 				}))
 			);
 			setSavedCustomTrackSuccess(false);
@@ -277,6 +295,7 @@ export default function WhatIfSimulator({
 		if (initialTrackToEdit) {
 			const state = applyTrackToSimulatorState(initialTrackToEdit, userProfile, initialPsych);
 			setSimulatedPsych(state.targetPsych);
+			setIsMathActive(state.isMathActive);
 			setIsMathUpgradedTo5(state.isMath5);
 			setSimulatedMathGrade(state.mathGrade);
 			setSimulatedList(state.subjectsList);
@@ -358,13 +377,16 @@ export default function WhatIfSimulator({
 		return baseRes.allInstitutions;
 	}, [userProfile, initialPsych]);
 
+	const effectiveMath5 = isMathActive ? isMathUpgradedTo5 : userProfile.mathUnits === 5;
+	const effectiveMathGrade = isMathActive ? simulatedMathGrade : userProfile.mathGrade || 80;
+
 	// Active Subjects for current simulation
 	const activeEffectiveSubjects = useMemo(() => {
 		return simulatedList
 			.filter((s) => !s.isCustomAdded || s.isActive)
 			.map((s) => ({
 				name: s.name,
-				units: s.units,
+				units: s.isActive ? s.units : s.originalUnits,
 				grade: s.isActive ? s.simulatedGrade : s.originalGrade
 			}));
 	}, [simulatedList]);
@@ -374,10 +396,10 @@ export default function WhatIfSimulator({
 		return calculateSekemForSubjectList(
 			activeEffectiveSubjects,
 			simulatedPsych,
-			isMathUpgradedTo5,
-			simulatedMathGrade
+			effectiveMath5,
+			effectiveMathGrade
 		);
-	}, [activeEffectiveSubjects, simulatedPsych, isMathUpgradedTo5, simulatedMathGrade]);
+	}, [activeEffectiveSubjects, simulatedPsych, effectiveMath5, effectiveMathGrade]);
 
 	const currentSekem = simulatedSekemResult.sekem;
 	const rawGap = Math.round((currentSekem - threshold) * 10) / 10;
@@ -409,7 +431,7 @@ export default function WhatIfSimulator({
 				}
 				return {
 					name: s.name,
-					units: s.units,
+					units: s.isActive ? s.units : s.originalUnits,
 					grade: s.isActive ? s.simulatedGrade : s.originalGrade
 				};
 			});
@@ -417,8 +439,8 @@ export default function WhatIfSimulator({
 		const testRes = calculateSekemForSubjectList(
 			testSubjects,
 			simulatedPsych,
-			isMathUpgradedTo5,
-			simulatedMathGrade
+			effectiveMath5,
+			effectiveMathGrade
 		);
 
 		const sekemDelta = Math.max(0, Math.round((currentSekem - testRes.sekem) * 10) / 10);
@@ -429,6 +451,7 @@ export default function WhatIfSimulator({
 
 	// Math upgrade marginal impact
 	const mathUpgradeImpact = useMemo(() => {
+		if (!isMathActive) return 0;
 		const testRes = calculateSekemForSubjectList(
 			activeEffectiveSubjects,
 			simulatedPsych,
@@ -436,7 +459,7 @@ export default function WhatIfSimulator({
 			userProfile.mathGrade || 80
 		);
 		return Math.max(0, Math.round((currentSekem - testRes.sekem) * 10) / 10);
-	}, [activeEffectiveSubjects, simulatedPsych, currentSekem, userProfile]);
+	}, [isMathActive, activeEffectiveSubjects, simulatedPsych, currentSekem, userProfile]);
 
 	// Total Sekem contribution from all Bagrut improvements & additions combined
 	const totalBagrutSekemDelta = useMemo(() => {
@@ -459,11 +482,11 @@ export default function WhatIfSimulator({
 		const resWithOrigPsych = calculateSekemForSubjectList(
 			activeEffectiveSubjects,
 			hasOriginalPsych ? initialPsych : 0,
-			isMathUpgradedTo5,
-			simulatedMathGrade
+			effectiveMath5,
+			effectiveMathGrade
 		);
 		return Math.max(0, Math.round((currentSekem - resWithOrigPsych.sekem) * 10) / 10);
-	}, [currentSekem, activeEffectiveSubjects, initialPsych, hasOriginalPsych, isMathUpgradedTo5, simulatedMathGrade]);
+	}, [currentSekem, activeEffectiveSubjects, initialPsych, hasOriginalPsych, effectiveMath5, effectiveMathGrade]);
 
 	// Difference between simulated Bagrut average and baseline Bagrut average
 	const bagrutDeltaVal = useMemo(() => {
@@ -507,30 +530,32 @@ export default function WhatIfSimulator({
 			});
 		}
 
-		// 2. Math change
-		const origMathUnits = userProfile.mathUnits || 4;
-		const origMathGrade = userProfile.mathGrade || 80;
-		const curMathUnits = isMathUpgradedTo5 ? 5 : origMathUnits;
-		const mathUnitsChanged = curMathUnits !== origMathUnits;
-		const mathGradeChanged = simulatedMathGrade !== origMathGrade;
+		// 2. Math change (only if Math is actively being improved)
+		if (isMathActive) {
+			const origMathUnits = userProfile.mathUnits || 4;
+			const origMathGrade = userProfile.mathGrade || 80;
+			const curMathUnits = isMathUpgradedTo5 ? 5 : origMathUnits;
+			const mathUnitsChanged = curMathUnits !== origMathUnits;
+			const mathGradeChanged = simulatedMathGrade !== origMathGrade;
 
-		if (mathUnitsChanged || mathGradeChanged) {
-			changes.push({
-				id: 'change-math',
-				category: 'math',
-				name: 'מתמטיקה',
-				type: mathUnitsChanged
-					? `שדרוג מ-${origMathUnits} ל-5 יח״ל`
-					: `שיפור ציון (${curMathUnits} יח״ל)`,
-				unitsLabel: mathUnitsChanged ? `${origMathUnits} ➔ 5 יח״ל` : `${curMathUnits} יח״ל`,
-				unitsNumber: origMathUnits,
-				targetUnitsNumber: curMathUnits,
-				fromGrade: origMathGrade,
-				toGrade: simulatedMathGrade,
-				deltaGrade: simulatedMathGrade - origMathGrade,
-				sekemImpact: mathUpgradeImpact,
-				bagrutImpact: 0
-			});
+			if (mathUnitsChanged || mathGradeChanged) {
+				changes.push({
+					id: 'change-math',
+					category: 'math',
+					name: 'מתמטיקה',
+					type: mathUnitsChanged
+						? `שדרוג מ-${origMathUnits} ל-5 יח״ל`
+						: `שיפור ציון (${curMathUnits} יח״ל)`,
+					unitsLabel: mathUnitsChanged ? `${origMathUnits} ➔ 5 יח״ל` : `${curMathUnits} יח״ל`,
+					unitsNumber: origMathUnits,
+					targetUnitsNumber: curMathUnits,
+					fromGrade: origMathGrade,
+					toGrade: simulatedMathGrade,
+					deltaGrade: simulatedMathGrade - origMathGrade,
+					sekemImpact: mathUpgradeImpact,
+					bagrutImpact: 0
+				});
+			}
 		}
 
 		// 3. Other Bagrut subjects
@@ -580,6 +605,7 @@ export default function WhatIfSimulator({
 		simulatedPsych,
 		userProfile,
 		totalPsychSekemDelta,
+		isMathActive,
 		isMathUpgradedTo5,
 		simulatedMathGrade,
 		mathUpgradeImpact,
@@ -782,14 +808,16 @@ export default function WhatIfSimulator({
 			setSimulatedList(simulatedList.filter((s) => s.id !== id));
 		} else {
 			setSimulatedList(
-				simulatedList.map((s) => (s.id === id ? { ...s, isActive: false, simulatedGrade: s.originalGrade } : s))
+				simulatedList.map((s) =>
+					s.id === id ? { ...s, isActive: false, units: s.originalUnits, simulatedGrade: s.originalGrade } : s
+				)
 			);
 		}
 	};
 
-	// Active subjects currently displayed in the simulation cards
+	// Active subjects currently displayed in the simulation cards (strictly isActive and not math)
 	const activeDisplaySubjects = simulatedList.filter(
-		(s) => (s.isActive || s.isCustomAdded) && !s.name.includes('מתמטיקה')
+		(s) => s.isActive && !s.name.includes('מתמטיקה')
 	);
 
 	// Remaining existing subjects that can be added
@@ -842,6 +870,7 @@ export default function WhatIfSimulator({
 			handleResetToOriginalTrack();
 		} else {
 			setSimulatedPsych(initialPsych);
+			setIsMathActive(false);
 			setIsMathUpgradedTo5(userProfile.mathUnits === 5);
 			setSimulatedMathGrade(userProfile.mathGrade || 80);
 			setSimulatedList(
@@ -853,7 +882,7 @@ export default function WhatIfSimulator({
 					originalGrade: s.grade,
 					simulatedGrade: s.grade,
 					isCustomAdded: false,
-					isActive: s.grade < 85 && !s.name.includes('מתמטיקה')
+					isActive: false
 				}))
 			);
 			setSavedCustomTrackSuccess(false);
@@ -967,184 +996,35 @@ export default function WhatIfSimulator({
 			</div>
 
 			{/* ========================================================================= */}
-			{/* LIVE PROGRESS GAUGE */}
+			{/* 2-COLUMN SIMULATION WORKSPACE */}
+			{/* In RTL (dir="rtl"): */}
+			{/* - First grid child (lg:col-span-7) renders on the RIGHT: Psychometric + Bagruts */}
+			{/* - Second grid child (lg:col-span-5) renders on the LEFT: University Sekem & Progress */}
 			{/* ========================================================================= */}
-			<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-4">
-				<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-					<div className="flex items-center gap-2">
-						<span className="text-xs font-bold text-[#66635C]">הסכם המשוקלל בסימולציה:</span>
-						<span className="text-2xl sm:text-3xl font-black text-[#222222] dir-ltr">
-							{currentSekem.toFixed(isTechnion ? 2 : 1)}
-						</span>
-						<span className="text-xs text-[#8A847C]">
-							(התחלת ב-{analysis.userSekem})
-						</span>
-					</div>
-
-					<div className="flex items-center gap-3">
-						<div
-							className={`px-4 py-2 rounded-2xl border text-xs font-black flex items-center gap-1.5 ${
-								isAccepted
-									? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
-									: isBorderline
-									? 'bg-[#FDF6E8] text-[#825B15] border-[#ECDAB6]'
-									: 'bg-[#FDF1EE] text-[#9B3327] border-[#F1CAC1]'
-							}`}
-						>
-							{isAccepted ? (
-								<>
-									<CheckCircle2 className="h-4 w-4 text-[#205739]" />
-									<span>התקבלת! (+{rawGap.toFixed(isTechnion ? 2 : 1)} נקודות ביטחון) 🎉</span>
-								</>
-							) : isBorderline ? (
-								<>
-									<AlertCircle className="h-4 w-4 text-[#825B15]" />
-									<span>על הגבול (חסרות רק {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נק׳)</span>
-								</>
-							) : (
-								<>
-									<AlertCircle className="h-4 w-4 text-[#9B3327]" />
-									<span>נותר פער של {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות</span>
-								</>
-							)}
-						</div>
-					</div>
-				</div>
-
-				{/* Progress Bar */}
-				<div className="space-y-1.5">
-					<div className="w-full h-3.5 bg-[#EAE5DA] rounded-full overflow-hidden p-0.5 border border-[#DDD7CC]">
-						<div
-							className={`h-full rounded-full transition-all duration-300 ${
-								isAccepted
-									? 'bg-[#205739]'
-									: isBorderline
-									? 'bg-[#825B15]'
-									: 'bg-[#3C3C3C]'
-							}`}
-							style={{ width: `${Math.max(5, progressPercent)}%` }}
-						/>
-					</div>
-
-					<div className="flex items-center justify-between text-[11px] font-bold text-[#66635C]">
-						<span>הסכם המקורי שלך ({analysis.userSekem})</span>
-						<span className="text-[#222222] font-black">סגירת פער: {progressPercent}%</span>
-						<span>סף הקבלה הנדרש ({threshold})</span>
-					</div>
-
-					{/* Breakdown of sources of Sekem increase */}
-					{(totalPsychSekemDelta > 0 || totalBagrutSekemDelta > 0) && (
-						<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-end gap-2 flex-wrap text-xs">
-							<span className="text-[#66635C] text-[11px]">מקורות השיפור:</span>
-							{totalPsychSekemDelta > 0 && (
-								<span className="px-2.5 py-0.5 rounded-lg bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] text-[11px] font-black flex items-center gap-1">
-									<Brain className="h-3 w-3 text-[#1E597B]" />
-									<span>+{totalPsychSekemDelta} נק׳ מפסיכומטרי</span>
-								</span>
-							)}
-							{totalBagrutSekemDelta > 0 && (
-								<span className="px-2.5 py-0.5 rounded-lg bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] text-[11px] font-black flex items-center gap-1">
-									<BookOpen className="h-3 w-3 text-[#453D78]" />
-									<span>+{totalBagrutSekemDelta} נק׳ מבגרות</span>
-								</span>
-							)}
-						</div>
-					)}
-				</div>
-			</div>
-
-			{/* ========================================================================= */}
-			{/* MULTI-UNIVERSITY LIVE IMPACT MATRIX */}
-			{/* ========================================================================= */}
-			<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-4">
-				<div className="flex items-center justify-between flex-wrap gap-2">
-					<div className="flex items-center gap-2.5">
-						<span className="p-1.5 rounded-lg bg-white text-[#222222] border border-[#E5DFD4]">
-							<TrendingUp className="h-4 w-4" />
-						</span>
-						<div>
-							<h4 className="text-sm sm:text-base font-black text-[#222222] flex items-center gap-2">
-								<span>השפעה רב-אוניברסיטאית בזמן אמת</span>
-								<span className="hidden sm:inline-block text-[11px] font-normal text-[#66635C]">
-									(כל שינוי בבגרות או בפסיכומטרי מתעדכן מיד בכל 8 האוניברסיטאות)
-								</span>
-							</h4>
-						</div>
-					</div>
-
-					<button
-						type="button"
-						onClick={() => setShowAllUniversities(!showAllUniversities)}
-						className="text-xs font-bold text-[#66635C] hover:text-[#222222] transition flex items-center gap-1 cursor-pointer"
-					>
-						<span>{showAllUniversities ? 'כווץ תצוגה' : 'הצג את כל 8 האוניברסיטאות'}</span>
-						{showAllUniversities ? (
-							<ChevronUp className="h-4 w-4" />
-						) : (
-							<ChevronDown className="h-4 w-4" />
-						)}
-					</button>
-				</div>
-
-				{showAllUniversities && (
-					<div className="pt-1">
-						<MultiUniversityAdmissionGrid
-							selectedInstitutionId={analysis.target.calculatorId}
-							institutions={simulatedSekemResult.allInstitutions.map((inst): InstitutionSimulatedState => {
-								const baseInst = baselineAllInstitutions.find(
-									(b) => b.institutionId === inst.institutionId
-								);
-								const isEng = analysis.relevantSekemType === 'engineering';
-								const currentScore =
-									isEng && inst.engineeringSekem ? inst.engineeringSekem : inst.generalSekem;
-								const baseScore =
-									isEng && baseInst?.engineeringSekem
-										? baseInst.engineeringSekem
-										: baseInst?.generalSekem || 0;
-								return {
-									institutionId: inst.institutionId,
-									institutionName: inst.institutionName,
-									logoText: inst.logoText,
-									badgeColor: inst.badgeColor,
-									currentScore,
-									baseScore,
-									delta: Math.round((currentScore - baseScore) * 10) / 10,
-									bagrutAverage: inst.bagrutAverage,
-									bagrutDelta: Math.round((inst.bagrutAverage - (baseInst?.bagrutAverage || 0)) * 100) / 100,
-									isTarget: inst.institutionId === analysis.target.calculatorId,
-									isTechnion: inst.institutionId === 'technion',
-									isDirectBagrutEligible: inst.directBagrutEligible,
-									sekemTypeLabel: isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי',
-								};
-							})}
-						/>
-					</div>
-				)}
-			</div>
-
-			{/* ========================================================================= */}
-			{/* CONTROLS: PSYCHOMETRIC & BAGRUT LAB */}
-			{/* ========================================================================= */}
-			<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-				{/* 1. PSYCHOMETRIC SLIDER (4 COLS) */}
-				<div className="lg:col-span-4 bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 flex flex-col justify-between shadow-2xs">
-					<div className="space-y-4">
+			<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+				{/* ----------------------------------------------------------------- */}
+				{/* RIGHT COLUMN (lg:col-span-7): סרגל פסיכומטרי + בגרויות לשיפור */}
+				{/* ----------------------------------------------------------------- */}
+				<div className="lg:col-span-7 space-y-6">
+					{/* 1. PSYCHOMETRIC SLIDER CARD */}
+					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 shadow-2xs">
 						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
-							<div className="flex items-center gap-2">
-								<Brain className="h-5 w-5 text-[#222222]" />
+							<div className="flex items-center gap-2.5">
+								<div className="p-2 rounded-xl bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] shadow-2xs">
+									<Brain className="h-4 w-4 text-[#1E597B]" />
+								</div>
 								<div>
-									<span className="text-sm font-black text-[#222222] block">ציון פסיכומטרי</span>
-									{!hasOriginalPsych && (
-										<span className="text-[10px] text-[#825B15] font-bold block">
-											(טרם נבחנת — סימולציית יעד ראשון)
-										</span>
-									)}
+									<h4 className="text-sm font-black text-[#222222]">סרגל הפסיכומטרי</h4>
+									<span className="text-[11px] text-[#66635C]">
+										{hasOriginalPsych ? `ציון נוכחי: ${initialPsych}` : 'סימולציית בחינה ראשונה'}
+									</span>
 								</div>
 							</div>
+
 							<div className="text-left dir-ltr">
-								<span className="text-xl font-black text-[#222222]">{simulatedPsych}</span>
+								<span className="text-2xl font-black text-[#222222]">{simulatedPsych}</span>
 								{hasOriginalPsych && simulatedPsych > initialPsych && (
-									<span className="text-xs text-[#205739] font-bold ml-1.5">
+									<span className="text-xs text-[#205739] font-black ml-1.5">
 										(+{simulatedPsych - initialPsych})
 									</span>
 								)}
@@ -1159,11 +1039,11 @@ export default function WhatIfSimulator({
 								step={5}
 								value={simulatedPsych}
 								onChange={(e) => setSimulatedPsych(Number(e.target.value))}
-								className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#222222]"
+								className="w-full h-2.5 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
 							/>
 							<div className="flex items-center justify-between text-[11px] text-[#8A847C] font-medium">
 								<span>{hasOriginalPsych ? `קיים: ${initialPsych}` : 'התחלה: 450'}</span>
-								<span className="text-[#1E597B] font-bold">תקרה מומלצת: {realisticCeiling}</span>
+								<span className="text-[#1E597B] font-bold">תקרה ריאלית: {realisticCeiling}</span>
 								<span>800</span>
 							</div>
 						</div>
@@ -1176,285 +1056,515 @@ export default function WhatIfSimulator({
 								</span>
 							</div>
 						)}
+
+						{totalPsychSekemDelta > 0 && (
+							<div className="flex items-center justify-between text-xs bg-[#EFF6FA] border border-[#C5DFED] rounded-xl px-3 py-1.5 text-[#1E597B] font-bold">
+								<span>השפעת השינוי בפסיכומטרי על הסכם:</span>
+								<span className="font-black dir-ltr">+{totalPsychSekemDelta} נק׳ סכם</span>
+							</div>
+						)}
 					</div>
 
-					{/* Math 5 Units Upgrade Lever */}
-					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-3">
-						<div className="flex items-center justify-between">
+					{/* 2. BAGRUT LAB: "הבגרויות שאני רוצה לשפר" */}
+					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 shadow-2xs">
+						<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EAE5DA] pb-4">
 							<div className="flex items-center gap-2.5">
-								<input
-									type="checkbox"
-									id="math5Upgrade"
-									checked={isMathUpgradedTo5}
-									onChange={(e) => setIsMathUpgradedTo5(e.target.checked)}
-									className="w-4 h-4 rounded text-[#222222] bg-white border-[#E5DFD4] focus:ring-0 cursor-pointer"
-								/>
-								<label htmlFor="math5Upgrade" className="text-xs font-black text-[#222222] cursor-pointer">
-									שדרוג מתמטיקה ל-5 יח״ל (+35 בונוס)
-								</label>
+								<div className="p-2 rounded-xl bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] shadow-2xs">
+									<BookOpen className="h-4 w-4 text-[#453D78]" />
+								</div>
+								<div>
+									<h4 className="text-sm sm:text-base font-black text-[#222222]">
+										הבגרויות שאני רוצה לשפר
+									</h4>
+									<span className="text-xs text-[#66635C]">
+										מציג רק מקצועות שבחרת לערוך או שהוצעו במסלול
+									</span>
+								</div>
 							</div>
-							<span className="text-xs text-[#1E597B] font-black dir-ltr">
-								{isMathUpgradedTo5 ? '5 יח״ל' : `${userProfile.mathUnits || 4} יח״ל`}
-							</span>
+
+							{/* Primary "הוסף מקצוע" CTA Button */}
+							<button
+								type="button"
+								onClick={() => setIsAddSubjectModalOpen(true)}
+								className="px-4 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-xs cursor-pointer shrink-0"
+							>
+								<Plus className="h-4 w-4" />
+								<span>הוסף מקצוע</span>
+							</button>
 						</div>
 
-						<div className="space-y-2 pt-2 border-t border-[#EAE5DA]">
-							<div className="flex items-center justify-between text-xs text-[#66635C]">
-								<span>ציון מתמטיקה ({isMathUpgradedTo5 ? '5 יח״ל' : `${userProfile.mathUnits || 4} יח״ל`}):</span>
-								<span className="font-black text-[#222222] dir-ltr">{simulatedMathGrade}</span>
+						{/* Best Bagrut Average KPI bar */}
+						<div className="flex items-center justify-between flex-wrap gap-2 bg-[#FAF8F5] border border-[#E5DFD4] px-4 py-2.5 rounded-2xl text-xs">
+							<div className="flex items-center gap-2">
+								<span className="text-[#66635C] font-medium">ממוצע בגרות מיטבי:</span>
+								<span className="font-black text-[#222222] dir-ltr text-sm">
+									{simulatedSekemResult.bagrutAverage.toFixed(2)}
+								</span>
+								{bagrutDeltaVal > 0 && (
+									<span className="text-xs text-[#205739] font-bold dir-ltr">
+										(+{bagrutDeltaVal.toFixed(2)})
+									</span>
+								)}
 							</div>
-							<input
-								type="range"
-								min={60}
-								max={100}
-								step={1}
-								value={simulatedMathGrade}
-								onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
-								className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#222222]"
-							/>
-							{/* Math Marginal Impact Badge */}
-							{mathUpgradeImpact > 0 && (
-								<div className="flex items-center justify-between text-[11px] bg-[#EBF4EE] border border-[#C6DFCE] rounded-xl px-2.5 py-1 text-[#205739] font-bold">
-									<span>השפעת שיפור מתמטיקה על הסכם:</span>
-									<span className="font-black dir-ltr">+{mathUpgradeImpact} נק׳</span>
+							{totalBagrutSekemDelta > 0 && (
+								<span className="px-2.5 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black dir-ltr text-[11px] flex items-center gap-1">
+									<Sparkles className="h-3 w-3 text-[#205739]" />
+									<span>+{totalBagrutSekemDelta} נק׳ סכם מכל הבגרויות</span>
+								</span>
+							)}
+						</div>
+
+						{/* Active Subjects List */}
+						<div className="space-y-3">
+							{/* Math Card if Active */}
+							{isMathActive && (
+								<div className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-2xl p-4 space-y-3 relative transition">
+									<div className="flex items-center justify-between">
+										<div className="flex items-center gap-2 flex-wrap">
+											<span className="text-sm font-black text-[#222222]">
+												מתמטיקה
+											</span>
+											<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#FAF8F5] text-[#1E597B] border border-[#C5DFED]">
+												{isMathUpgradedTo5 ? '5 יח״ל (+35 בונוס)' : `${userProfile.mathUnits || 4} יח״ל`}
+											</span>
+										</div>
+
+										<button
+											type="button"
+											onClick={() => setIsMathActive(false)}
+											className="text-[#8A847C] hover:text-[#9B3327] transition p-1.5 rounded-lg hover:bg-white cursor-pointer"
+											title="הסר מתמטיקה מרשימת השיפורים (החזר לנתוני בסיס)"
+										>
+											<Trash2 className="h-4 w-4" />
+										</button>
+									</div>
+
+									{/* Units Toggle (4 or 5) */}
+									<div className="flex items-center justify-between text-xs pt-1">
+										<span className="text-[#66635C] text-[11px]">היקף יחידות לימוד:</span>
+										<div className="flex items-center gap-1 bg-white p-0.5 rounded-xl border border-[#E5DFD4]">
+											<button
+												type="button"
+												onClick={() => setIsMathUpgradedTo5(false)}
+												className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+													!isMathUpgradedTo5
+														? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
+														: 'text-[#66635C] hover:text-[#222222]'
+												}`}
+											>
+												{userProfile.mathUnits || 4} יח״ל
+											</button>
+											<button
+												type="button"
+												onClick={() => setIsMathUpgradedTo5(true)}
+												className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+													isMathUpgradedTo5
+														? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
+														: 'text-[#66635C] hover:text-[#222222]'
+												}`}
+											>
+												5 יח״ל (+35)
+											</button>
+										</div>
+									</div>
+
+									{/* Math Grade Slider */}
+									<div className="space-y-1.5">
+										<div className="flex items-center justify-between text-xs">
+											<span className="text-[#66635C]">
+												<span>קיים: {userProfile.mathGrade || 80}</span>
+												<span className="text-[#8A847C] mx-1">➔</span>
+												<span>יעד מבוקש:</span>
+											</span>
+											<div dir="ltr" className="text-left dir-ltr">
+												<span className="font-black text-[#222222]">{simulatedMathGrade}</span>
+												{simulatedMathGrade > (userProfile.mathGrade || 80) && (
+													<span className="text-[10px] text-[#205739] font-bold ml-1">
+														(+{simulatedMathGrade - (userProfile.mathGrade || 80)})
+													</span>
+												)}
+											</div>
+										</div>
+
+										<input
+											type="range"
+											min={60}
+											max={100}
+											step={1}
+											value={simulatedMathGrade}
+											onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
+											className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+										/>
+									</div>
+
+									{/* Math Marginal Impact */}
+									<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-between text-[11px]">
+										<span className="text-[#66635C] font-medium">מידת השפעה שולית:</span>
+										{mathUpgradeImpact > 0 ? (
+											<span className="px-2.5 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black flex items-center gap-1 dir-ltr">
+												<Sparkles className="h-3 w-3 text-[#205739]" />
+												<span>+{mathUpgradeImpact} נק׳ סכם</span>
+											</span>
+										) : (
+											<span className="text-[#8A847C] text-[10px] bg-white px-2 py-0.5 rounded border border-[#E5DFD4]">
+												ללא שינוי מסכם הבסיס
+											</span>
+										)}
+									</div>
+								</div>
+							)}
+
+							{/* Other Active Display Subjects */}
+							{activeDisplaySubjects.map((item) => {
+								const impact = calculateSubjectMarginalImpact(item);
+								return (
+									<div
+										key={item.id}
+										className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-2xl p-4 space-y-3 relative transition"
+									>
+										{/* Header: Name, Tag, Trash button */}
+										<div className="flex items-center justify-between">
+											<div className="flex items-center gap-2 flex-wrap">
+												<span className="text-sm font-black text-[#222222]">
+													{item.name}
+												</span>
+												{item.isCustomAdded ? (
+													<span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED]">
+														מקצוע חדש ({item.units} יח״ל)
+													</span>
+												) : item.units !== item.originalUnits ? (
+													<span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]">
+														שודרג ל-{item.units} יח״ל
+													</span>
+												) : (
+													<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white text-[#66635C] border border-[#E5DFD4]">
+														{item.units} יח״ל
+													</span>
+												)}
+											</div>
+
+											<button
+												type="button"
+												onClick={() => handleRemoveSimulatedSubject(item.id)}
+												className="text-[#8A847C] hover:text-[#9B3327] transition p-1.5 rounded-lg hover:bg-white cursor-pointer"
+												title="הסר מקצוע זה מרשימת השיפורים"
+											>
+												<Trash2 className="h-4 w-4" />
+											</button>
+										</div>
+
+										{/* Units Selector */}
+										<div className="flex items-center justify-between text-xs pt-1">
+											<span className="text-[#66635C] text-[11px]">היקף יחידות:</span>
+											<div className="flex items-center gap-1 bg-white p-0.5 rounded-xl border border-[#E5DFD4]">
+												{[2, 3, 4, 5].map((u) => {
+													const isSelected = item.units === u;
+													return (
+														<button
+															key={u}
+															type="button"
+															onClick={() => handleUnitsChange(item.id, u)}
+															className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${
+																isSelected
+																	? 'bg-[#3C3C3C] text-white shadow-2xs font-black'
+																	: 'text-[#66635C] hover:text-[#222222]'
+															}`}
+														>
+															{u} יח״ל
+														</button>
+													);
+												})}
+											</div>
+										</div>
+
+										{/* Grade Slider */}
+										<div className="space-y-1.5">
+											<div className="flex items-center justify-between text-xs">
+												<span className="text-[#66635C]">
+													{item.isCustomAdded ? (
+														'ציון יעד:'
+													) : (
+														<span className="inline-flex items-center gap-1">
+															<span>קיים: {item.originalGrade}</span>
+															<span className="text-[#8A847C]">➔</span>
+															<span>יעד מבוקש:</span>
+														</span>
+													)}
+												</span>
+												<div dir="ltr" className="text-left dir-ltr">
+													<span className="font-black text-[#222222]">{item.simulatedGrade}</span>
+													{!item.isCustomAdded && item.simulatedGrade > item.originalGrade && (
+														<span className="text-[10px] text-[#205739] font-bold ml-1">
+															(+{item.simulatedGrade - item.originalGrade})
+														</span>
+													)}
+												</div>
+											</div>
+
+											<input
+												type="range"
+												min={item.isCustomAdded ? 60 : Math.min(60, item.originalGrade)}
+												max={100}
+												step={1}
+												value={item.simulatedGrade}
+												onChange={(e) =>
+													handleGradeSliderChange(item.id, Number(e.target.value))
+												}
+												className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+											/>
+										</div>
+
+										{/* Marginal Impact */}
+										<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-between text-[11px]">
+											<span className="text-[#66635C] font-medium">מידת השפעה שולית:</span>
+											{impact.sekemDelta > 0 ? (
+												<div className="flex items-center gap-1.5 dir-ltr">
+													<span className="px-2.5 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black flex items-center gap-1">
+														<Sparkles className="h-3 w-3 text-[#205739]" />
+														<span>+{impact.sekemDelta} נק׳ סכם</span>
+													</span>
+													{impact.bagrutDelta > 0 && (
+														<span className="text-[10px] text-[#66635C] font-medium">
+															(+{impact.bagrutDelta} בבגרות)
+														</span>
+													)}
+												</div>
+											) : (
+												<span className="text-[#8A847C] text-[10px] bg-white px-2 py-0.5 rounded border border-[#E5DFD4]">
+													הושמט בממוצע המיטבי של האוניברסיטה
+												</span>
+											)}
+										</div>
+									</div>
+								);
+							})}
+
+							{/* Empty State when no bagruts are active */}
+							{!isMathActive && activeDisplaySubjects.length === 0 && (
+								<div className="text-center py-10 px-6 bg-[#FAF8F5] rounded-3xl border border-dashed border-[#DDD7CC] space-y-3">
+									<div className="p-3 bg-white border border-[#E5DFD4] rounded-2xl w-fit mx-auto text-[#66635C] shadow-2xs">
+										<BookOpen className="h-6 w-6" />
+									</div>
+									<div className="space-y-1">
+										<h5 className="text-sm font-black text-[#222222]">
+											לא נבחרו בגרויות לשיפור
+										</h5>
+										<p className="text-xs text-[#66635C] max-w-md mx-auto leading-relaxed">
+											כרגע כל מקצועות הבגרות מחושבים לפי הציונים המקוריים שלך. לחץ על ״הוסף מקצוע״ כדי לבחור מקצוע לשיפור או להוסיף מקצוע מוגבר חדש.
+										</p>
+									</div>
+									<button
+										type="button"
+										onClick={() => setIsAddSubjectModalOpen(true)}
+										className="px-5 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold rounded-xl transition inline-flex items-center gap-2 shadow-xs cursor-pointer"
+									>
+										<Plus className="h-4 w-4" />
+										<span>הוסף מקצוע לשיפור</span>
+									</button>
 								</div>
 							)}
 						</div>
 					</div>
 				</div>
 
-				{/* 2. BAGRUT SIMULATION LAB (8 COLS) */}
-				<div className="lg:col-span-8 bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 shadow-2xs">
-					<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EAE5DA] pb-4">
-						<div className="flex items-center gap-2">
-							<BookOpen className="h-5 w-5 text-[#222222]" />
-							<div>
-								<span className="text-sm font-black text-[#222222] block">מעבדת מקצועות בגרות והגברות</span>
-								<span className="text-xs text-[#66635C]">
-									בדוק שדרוג מקצועות קיימים או הוספת מקצוע מוגבר (5 יח״ל) חדש
-								</span>
+				{/* ----------------------------------------------------------------- */}
+				{/* LEFT COLUMN (lg:col-span-5): סכם האוניברסיטה הבלעדי + מד התקדמות לסף */}
+				{/* ----------------------------------------------------------------- */}
+				<div className="lg:col-span-5 lg:sticky lg:top-6 self-start space-y-4">
+					<div className="bg-white border-2 border-[#E5DFD4] rounded-3xl p-6 sm:p-7 shadow-xs space-y-6">
+						{/* University Header with Logo */}
+						<div className="flex items-start justify-between gap-3 border-b border-[#EAE5DA] pb-4">
+							<div className="flex items-center gap-3">
+								<div className="p-2 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] shadow-2xs shrink-0">
+									<UniversityLogo institution={analysis.target.calculatorId} size="md" />
+								</div>
+								<div>
+									<h4 className="text-base font-black text-[#222222]">
+										{analysis.target.institutionName}
+									</h4>
+									<p className="text-xs font-bold text-[#1E597B] line-clamp-1">
+										{analysis.target.program.fieldOfStudy}
+									</p>
+									<span className="text-[11px] text-[#8A847C] block mt-0.5">
+										{analysis.relevantSekemType === 'engineering' ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי'}
+									</span>
+								</div>
+							</div>
+
+							{/* Admission Status Pill Badge */}
+							<div
+								className={`px-3 py-1.5 rounded-xl border text-xs font-black shrink-0 flex items-center gap-1.5 ${
+									isAccepted
+										? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
+										: isBorderline
+										? 'bg-[#FDF6E8] text-[#825B15] border-[#ECDAB6]'
+										: 'bg-[#FDF1EE] text-[#9B3327] border-[#F1CAC1]'
+								}`}
+							>
+								{isAccepted ? (
+									<>
+										<CheckCircle2 className="h-4 w-4 text-[#205739]" />
+										<span>התקבלת!</span>
+									</>
+								) : isBorderline ? (
+									<>
+										<AlertCircle className="h-4 w-4 text-[#825B15]" />
+										<span>על הגבול</span>
+									</>
+								) : (
+									<>
+										<AlertCircle className="h-4 w-4 text-[#9B3327]" />
+										<span>מתחת לסף</span>
+									</>
+								)}
 							</div>
 						</div>
 
-						<div className="flex items-center gap-2 flex-wrap bg-[#FAF8F5] border border-[#E5DFD4] px-3 py-1.5 rounded-xl text-xs">
-							<div className="flex items-center gap-1.5">
-								<span className="text-[#66635C] font-medium">ממוצע בגרות מיטבי:</span>
-								<span className="font-black text-[#222222] dir-ltr text-sm">
-									{simulatedSekemResult.bagrutAverage.toFixed(2)}
+						{/* Live Sekem Score Box */}
+						<div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E5DFD4] text-center space-y-2">
+							<span className="text-xs font-black text-[#66635C] uppercase tracking-wider block">
+								הסכם המחושב בסימולציה
+							</span>
+							<div className="text-4xl sm:text-5xl font-black text-[#222222] dir-ltr tracking-tight">
+								{currentSekem.toFixed(isTechnion ? 2 : 1)}
+							</div>
+
+							<div className="flex items-center justify-center gap-4 text-xs font-bold pt-1">
+								<span className="text-[#8A847C]">
+									בסיס: <strong className="text-[#66635C] font-black">{analysis.userSekem.toFixed(isTechnion ? 2 : 1)}</strong>
 								</span>
-								{simulatedSekemResult.bagrutAverage > (institutionResult.bagrutAverage || 0) && (
-									<span className="text-xs text-[#205739] font-bold dir-ltr">
-										(+{(simulatedSekemResult.bagrutAverage - (institutionResult.bagrutAverage || 0)).toFixed(2)})
+								<span className="text-[#8A847C]">•</span>
+								<span className="text-[#1E597B]">
+									סף נדרש: <strong className="text-[#1E597B] font-black">{threshold.toFixed(isTechnion ? 2 : 1)}</strong>
+								</span>
+							</div>
+
+							{/* Gap Notice */}
+							<div className="pt-2">
+								{isAccepted ? (
+									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#EBF4EE] text-[#205739] text-xs font-bold border border-[#C6DFCE]">
+										<span>+{rawGap.toFixed(isTechnion ? 2 : 1)} נקודות מעל הסף הנדרש 🎉</span>
+									</span>
+								) : isBorderline ? (
+									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#FDF6E8] text-[#825B15] text-xs font-bold border border-[#ECDAB6]">
+										<span>חסרות רק {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות לסף הקבלה</span>
+									</span>
+								) : (
+									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#FDF1EE] text-[#9B3327] text-xs font-bold border border-[#F1CAC1]">
+										<span>פער של {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות לסף הקבלה</span>
 									</span>
 								)}
 							</div>
-							{totalBagrutSekemDelta > 0 && (
-								<span className="px-2 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black dir-ltr text-[11px] flex items-center gap-1">
-									<Sparkles className="h-3 w-3 text-[#205739]" />
-									<span>+{totalBagrutSekemDelta} נק׳ סכם מכל הבגרויות</span>
-								</span>
-							)}
 						</div>
-					</div>
 
-					{/* Quick Action: Add Popular 5-Unit Elective or Pick Existing */}
-					<div className="space-y-3 bg-[#FAF8F5] p-4 rounded-2xl border border-[#E5DFD4]">
-						<div className="flex items-center justify-between flex-wrap gap-2">
-							<span className="text-xs font-black text-[#222222] flex items-center gap-1.5">
-								<Plus className="h-3.5 w-3.5 text-[#222222]" />
-								<span>הוסף מקצוע לבדיקת מידת ההשפעה:</span>
-							</span>
+						{/* Progress Bar Gauge ("כמה אני מתקרב לסף הנדרש עבור התואר") */}
+						<div className="space-y-2.5">
+							<div className="flex items-center justify-between text-xs font-bold text-[#66635C]">
+								<span>מד התקדמות לסף הקבלה:</span>
+								<span className="text-[#222222] font-black text-sm dir-ltr">{progressPercent}%</span>
+							</div>
 
-							{/* Dropdown to add an existing subject */}
-							{inactiveExistingSubjects.length > 0 && (
-								<div className="flex items-center gap-2">
-									<select
-										value={selectedExistingToAdd}
-										onChange={(e) => {
-											handleAddExistingSubjectToActive(e.target.value);
-										}}
-										className="bg-white border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
-									>
-										<option value="">+ שפר מקצוע קיים מתעודת הבגרות...</option>
-										{inactiveExistingSubjects.map((s) => (
-											<option key={s.id} value={s.name}>
-												{s.name} ({s.units} יח״ל, ציון קיים: {s.originalGrade})
-											</option>
-										))}
-									</select>
+							<div className="w-full h-3.5 bg-[#EAE5DA] rounded-full overflow-hidden p-0.5 border border-[#DDD7CC]">
+								<div
+									className={`h-full rounded-full transition-all duration-300 ${
+										isAccepted
+											? 'bg-[#205739]'
+											: isBorderline
+											? 'bg-[#825B15]'
+											: 'bg-[#3C3C3C]'
+									}`}
+									style={{ width: `${Math.max(5, progressPercent)}%` }}
+								/>
+							</div>
+
+							<div className="flex items-center justify-between text-[11px] text-[#8A847C] font-medium">
+								<span>ציון בסיס ({analysis.userSekem.toFixed(isTechnion ? 2 : 1)})</span>
+								<span>יעד קבלה ({threshold.toFixed(isTechnion ? 2 : 1)})</span>
+							</div>
+						</div>
+
+						{/* Sources of improvement */}
+						{(totalPsychSekemDelta > 0 || totalBagrutSekemDelta > 0) && (
+							<div className="pt-3 border-t border-[#EAE5DA] space-y-2">
+								<span className="text-[11px] font-bold text-[#66635C] block">
+									תרומת השינויים בסימולציה לסכם:
+								</span>
+								<div className="flex items-center gap-2 flex-wrap text-xs">
+									{totalPsychSekemDelta > 0 && (
+										<div className="flex-1 min-w-[120px] p-2.5 rounded-xl bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] text-xs font-bold flex items-center justify-between">
+											<span className="flex items-center gap-1.5">
+												<Brain className="h-3.5 w-3.5 text-[#1E597B]" />
+												<span>פסיכומטרי</span>
+											</span>
+											<span className="font-black dir-ltr">+{totalPsychSekemDelta}</span>
+										</div>
+									)}
+									{totalBagrutSekemDelta > 0 && (
+										<div className="flex-1 min-w-[120px] p-2.5 rounded-xl bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] text-xs font-bold flex items-center justify-between">
+											<span className="flex items-center gap-1.5">
+												<BookOpen className="h-3.5 w-3.5 text-[#453D78]" />
+												<span>בגרויות</span>
+											</span>
+											<span className="font-black dir-ltr">+{totalBagrutSekemDelta}</span>
+										</div>
+									)}
+								</div>
+							</div>
+						)}
+
+						{/* Collapsible Accordion for Other 8 Universities */}
+						<div className="pt-3 border-t border-[#EAE5DA]">
+							<button
+								type="button"
+								onClick={() => setShowAllUniversities(!showAllUniversities)}
+								className="w-full flex items-center justify-between text-xs font-bold text-[#66635C] hover:text-[#222222] py-1 transition cursor-pointer"
+							>
+								<span className="flex items-center gap-1.5">
+									<TrendingUp className="h-3.5 w-3.5 text-[#1E597B]" />
+									<span>בדוק התאמה גם ליתר האוניברסיטאות</span>
+								</span>
+								{showAllUniversities ? (
+									<ChevronUp className="h-4 w-4" />
+								) : (
+									<ChevronDown className="h-4 w-4" />
+								)}
+							</button>
+
+							{showAllUniversities && (
+								<div className="pt-3 animate-in fade-in duration-200">
+									<MultiUniversityAdmissionGrid
+										selectedInstitutionId={analysis.target.calculatorId}
+										institutions={simulatedSekemResult.allInstitutions.map((inst): InstitutionSimulatedState => {
+											const baseInst = baselineAllInstitutions.find(
+												(b) => b.institutionId === inst.institutionId
+											);
+											const isEng = analysis.relevantSekemType === 'engineering';
+											const currentScore =
+												isEng && inst.engineeringSekem ? inst.engineeringSekem : inst.generalSekem;
+											const baseScore =
+												isEng && baseInst?.engineeringSekem
+													? baseInst.engineeringSekem
+													: baseInst?.generalSekem || 0;
+											return {
+												institutionId: inst.institutionId,
+												institutionName: inst.institutionName,
+												logoText: inst.logoText,
+												badgeColor: inst.badgeColor,
+												currentScore,
+												baseScore,
+												delta: Math.round((currentScore - baseScore) * 10) / 10,
+												bagrutAverage: inst.bagrutAverage,
+												bagrutDelta: Math.round((inst.bagrutAverage - (baseInst?.bagrutAverage || 0)) * 100) / 100,
+												isTarget: inst.institutionId === analysis.target.calculatorId,
+												isTechnion: inst.institutionId === 'technion',
+												isDirectBagrutEligible: inst.directBagrutEligible,
+												sekemTypeLabel: isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי',
+											};
+										})}
+									/>
 								</div>
 							)}
 						</div>
-
-						{/* Quick Chips for Popular 5-unit subjects */}
-						<div className="flex items-center gap-2 flex-wrap pt-1">
-							{POPULAR_5U_ELECTIVES.map((elective) => {
-								const isAlreadyAdded = simulatedList.some(
-									(s) => s.name === elective.name && s.isActive
-								);
-								return (
-									<button
-										key={elective.name}
-										type="button"
-										onClick={() =>
-											handleAddPopularElective(elective.name, elective.units, elective.defaultGrade)
-										}
-										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border cursor-pointer ${
-											isAlreadyAdded
-												? 'bg-[#3C3C3C] text-white border-[#3C3C3C]'
-												: 'bg-white hover:bg-[#F3EFE8] text-[#44423D] hover:text-[#222222] border-[#E5DFD4]'
-										}`}
-									>
-										<span>{elective.label}</span>
-										{isAlreadyAdded && <CheckCircle2 className="h-3 w-3 text-white" />}
-									</button>
-								);
-							})}
-
-							<button
-								type="button"
-								onClick={() => setIsSubjectModalOpen(true)}
-								className="px-3 py-1.5 bg-white hover:bg-[#F3EFE8] text-[#66635C] hover:text-[#222222] text-xs font-bold rounded-xl border border-dashed border-[#DDD7CC] transition flex items-center gap-1 cursor-pointer"
-							>
-								<Plus className="h-3 w-3" />
-								<span>מקצוע אחר מהקטלוג...</span>
-							</button>
-						</div>
-					</div>
-
-					{/* Active Subjects List with Sliders and Individual Impact Badges */}
-					<div className="space-y-3">
-						<span className="text-xs font-black text-[#66635C] block">
-							מקצועות בבדיקה פעילה ({activeDisplaySubjects.length}):
-						</span>
-
-						{activeDisplaySubjects.length === 0 ? (
-							<div className="text-center py-6 px-4 bg-[#FAF8F5] rounded-2xl border border-[#E5DFD4] text-[#8A847C] text-xs">
-								בחר מקצוע קיים לשיפור או הוסף מקצוע מוגבר 5 יח״ל מהסרגל למעלה כדי לראות את מידת השפעתו על הסכם.
-							</div>
-						) : (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-								{activeDisplaySubjects.map((item) => {
-									const impact = calculateSubjectMarginalImpact(item);
-									return (
-										<div
-											key={item.id}
-											className="bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] rounded-2xl p-3.5 space-y-3 relative transition"
-										>
-											{/* Top Row: Name and Badges */}
-											<div className="flex items-center justify-between">
-												<div className="flex items-center gap-2 flex-wrap">
-													<span className="text-xs font-bold text-[#222222]">
-														{item.name}
-													</span>
-													{item.isCustomAdded ? (
-														<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED]">
-															חדש
-														</span>
-													) : item.units !== item.originalUnits ? (
-														<span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]">
-															שודרג ל-{item.units} יח״ל
-														</span>
-													) : null}
-												</div>
-
-												<button
-													type="button"
-													onClick={() => handleRemoveSimulatedSubject(item.id)}
-													className="text-[#8A847C] hover:text-[#9B3327] transition p-1 cursor-pointer"
-													title="הסר מקצוע זה מהסימולציה"
-												>
-													<Trash2 className="h-3.5 w-3.5" />
-												</button>
-											</div>
-
-											{/* Units Selector (Pills) */}
-											<div className="flex items-center justify-between text-xs">
-												<span className="text-[#66635C] text-[11px]">היקף יחידות:</span>
-												<div className="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-[#E5DFD4]">
-													{[2, 3, 4, 5].map((u) => {
-														const isSelected = item.units === u;
-														return (
-															<button
-																key={u}
-																type="button"
-																onClick={() => handleUnitsChange(item.id, u)}
-																className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition cursor-pointer ${
-																	isSelected
-																		? 'bg-[#3C3C3C] text-white font-black shadow-2xs'
-																		: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
-																}`}
-															>
-																{u} יח״ל
-															</button>
-														);
-													})}
-												</div>
-											</div>
-
-											{/* Grade Slider */}
-											<div className="space-y-1">
-												<div className="flex items-center justify-between text-xs">
-													<span className="text-[#66635C]">
-														{item.isCustomAdded ? (
-															'ציון יעד:'
-														) : (
-															<span className="inline-flex items-center gap-1">
-																<span>קיים: {item.originalGrade}</span>
-																<span className="text-[#8A847C]">←</span>
-																<span>יעד:</span>
-															</span>
-														)}
-													</span>
-													<div dir="ltr" className="text-left dir-ltr">
-														<span className="font-black text-[#222222]">{item.simulatedGrade}</span>
-														{!item.isCustomAdded && item.simulatedGrade > item.originalGrade && (
-															<span className="text-[10px] text-[#205739] font-bold ml-1">
-																(+{item.simulatedGrade - item.originalGrade})
-															</span>
-														)}
-													</div>
-												</div>
-
-												<input
-													type="range"
-													min={item.isCustomAdded ? 60 : Math.min(60, item.originalGrade)}
-													max={100}
-													step={1}
-													value={item.simulatedGrade}
-													onChange={(e) =>
-														handleGradeSliderChange(item.id, Number(e.target.value))
-													}
-													className="w-full h-2 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
-												/>
-											</div>
-
-											{/* MARGINAL IMPACT BADGE */}
-											<div className="pt-2 border-t border-[#EAE5DA] flex items-center justify-between text-[11px]">
-												<span className="text-[#66635C] font-medium">מידת השפעה שולית:</span>
-												{impact.sekemDelta > 0 ? (
-													<div className="flex items-center gap-1.5 dir-ltr">
-														<span className="px-2 py-0.5 rounded-lg bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black flex items-center gap-1">
-															<Sparkles className="h-3 w-3 text-[#205739]" />
-															<span>+{impact.sekemDelta} נק׳ סכם</span>
-														</span>
-														{impact.bagrutDelta > 0 && (
-															<span className="text-[10px] text-[#66635C] font-medium">
-																(+{impact.bagrutDelta} בבגרות)
-															</span>
-														)}
-													</div>
-												) : (
-													<span className="text-[#8A847C] text-[10px] bg-white px-2 py-0.5 rounded border border-[#E5DFD4]">
-														הושמט בממוצע המיטבי של האוניברסיטה
-													</span>
-												)}
-											</div>
-										</div>
-									);
-								})}
-							</div>
-						)}
 					</div>
 				</div>
 			</div>
@@ -1805,6 +1915,171 @@ export default function WhatIfSimulator({
 						<span>החל תרחיש זה על מסלול השיפור שלי</span>
 						<ArrowLeft className="h-4 w-4" />
 					</button>
+				</div>
+			)}
+
+			{/* Modal: Add Subject to Improvement List ("הוסף מקצוע") */}
+			{isAddSubjectModalOpen && (
+				<div className="fixed inset-0 z-50 bg-black/45 backdrop-blur-xs flex items-center justify-center p-4">
+					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-7 max-w-xl w-full max-h-[85vh] overflow-y-auto space-y-6 dir-rtl text-right shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+						{/* Header */}
+						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">
+							<div className="flex items-center gap-2.5">
+								<div className="p-2 rounded-xl bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED]">
+									<Plus className="h-5 w-5" />
+								</div>
+								<div>
+									<h3 className="text-base sm:text-lg font-black text-[#222222]">
+										הוספת מקצוע לשיפור בסימולטור
+									</h3>
+									<p className="text-xs text-[#66635C]">
+										בחר מקצוע מתעודת הבגרות הקיימת שלך, או הוסף מקצוע הגברה 5 יח״ל חדש
+									</p>
+								</div>
+							</div>
+
+							<button
+								type="button"
+								onClick={() => setIsAddSubjectModalOpen(false)}
+								className="p-1.5 text-[#8A847C] hover:text-[#222222] hover:bg-[#FAF8F5] rounded-xl transition cursor-pointer"
+							>
+								<X className="h-5 w-5" />
+							</button>
+						</div>
+
+						{/* Section 1: Inactive Existing Subjects from User Profile */}
+						<div className="space-y-3">
+							<span className="text-xs font-black text-[#222222] block">
+								מקצועות מתעודת הבגרות שלך (לשיפור ציון):
+							</span>
+
+							<div className="space-y-2">
+								{/* Math Option if not active */}
+								{!isMathActive && (
+									<div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between gap-3 hover:border-[#D5CFC2] transition">
+										<div className="space-y-0.5">
+											<div className="flex items-center gap-2">
+												<span className="text-xs font-black text-[#222222]">מתמטיקה</span>
+												<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white text-[#1E597B] border border-[#E5DFD4]">
+													{userProfile.mathUnits || 4} יח״ל
+												</span>
+											</div>
+											<span className="text-[11px] text-[#66635C] block">
+												ציון קיים: {userProfile.mathGrade || 80}
+											</span>
+										</div>
+
+										<button
+											type="button"
+											onClick={() => {
+												setIsMathActive(true);
+												setSimulatedMathGrade(Math.min(95, (userProfile.mathGrade || 80) + 15));
+												setIsAddSubjectModalOpen(false);
+											}}
+											className="px-3 py-1.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-2xs"
+										>
+											+ בחר לשיפור
+										</button>
+									</div>
+								)}
+
+								{/* Other Inactive Subjects */}
+								{inactiveExistingSubjects.map((s) => (
+									<div
+										key={s.id}
+										className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between gap-3 hover:border-[#D5CFC2] transition"
+									>
+										<div className="space-y-0.5">
+											<div className="flex items-center gap-2">
+												<span className="text-xs font-black text-[#222222]">{s.name}</span>
+												<span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white text-[#66635C] border border-[#E5DFD4]">
+													{s.units} יח״ל
+												</span>
+											</div>
+											<span className="text-[11px] text-[#66635C] block">
+												ציון קיים: {s.originalGrade}
+											</span>
+										</div>
+
+										<button
+											type="button"
+											onClick={() => {
+												handleAddExistingSubjectToActive(s.name);
+												setIsAddSubjectModalOpen(false);
+											}}
+											className="px-3 py-1.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-2xs"
+										>
+											+ בחר לשיפור
+										</button>
+									</div>
+								))}
+
+								{isMathActive && inactiveExistingSubjects.length === 0 && (
+									<div className="p-3 text-center text-xs text-[#8A847C] bg-[#FAF8F5] rounded-xl border border-[#E5DFD4]">
+										כל המקצועות מתעודת הבגרות שלך כבר נמצאים ברשימת השיפורים.
+									</div>
+								)}
+							</div>
+						</div>
+
+						{/* Section 2: Popular 5-Unit Electives */}
+						<div className="space-y-3 pt-3 border-t border-[#EAE5DA]">
+							<div className="space-y-0.5">
+								<span className="text-xs font-black text-[#222222] block">
+									הגברות פופולריות (5 יח״ל) להעלאת ממוצע הבגרות:
+								</span>
+								<span className="text-[11px] text-[#66635C]">
+									הוספת מקצוע מוגבר חדש מעניקה בונוס אוניברסיטאי של 20-25 נקודות ומקפיצה את ממוצע הבגרות
+								</span>
+							</div>
+
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+								{POPULAR_5U_ELECTIVES.map((elective) => {
+									const isAlreadyActive = simulatedList.some(
+										(s) => s.name === elective.name && s.isActive
+									);
+									return (
+										<button
+											key={elective.name}
+											type="button"
+											disabled={isAlreadyActive}
+											onClick={() => {
+												handleAddPopularElective(elective.name, elective.units, elective.defaultGrade);
+												setIsAddSubjectModalOpen(false);
+											}}
+											className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-between text-right cursor-pointer ${
+												isAlreadyActive
+													? 'bg-[#FAF8F5] text-[#8A847C] border-[#E5DFD4] cursor-not-allowed opacity-60'
+													: 'bg-[#FAF8F5] hover:bg-white text-[#222222] border-[#E5DFD4] hover:border-[#3C3C3C] shadow-2xs'
+											}`}
+										>
+											<span>{elective.label}</span>
+											{isAlreadyActive ? (
+												<span className="text-[10px] text-[#8A847C]">כבר ברשימה</span>
+											) : (
+												<Plus className="h-3.5 w-3.5 text-[#3C3C3C]" />
+											)}
+										</button>
+									);
+								})}
+							</div>
+						</div>
+
+						{/* Section 3: Pick other subject from Ministry Catalog */}
+						<div className="pt-3 border-t border-[#EAE5DA]">
+							<button
+								type="button"
+								onClick={() => {
+									setIsAddSubjectModalOpen(false);
+									setIsSubjectModalOpen(true);
+								}}
+								className="w-full py-2.5 px-4 bg-white hover:bg-[#FAF8F5] text-[#66635C] hover:text-[#222222] text-xs font-bold rounded-xl border border-dashed border-[#DDD7CC] transition flex items-center justify-center gap-2 cursor-pointer"
+							>
+								<BookOpen className="h-4 w-4" />
+								<span>בחר מקצוע אחר מקטלוג משרד החינוך (40+ מקצועות)...</span>
+							</button>
+						</div>
+					</div>
 				</div>
 			)}
 

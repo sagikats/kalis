@@ -237,6 +237,17 @@ npm run build
       - Detailed list of all modified subjects with clean `dir="ltr"` grade transitions (`{from} ➔ {to} (+{delta})`) and marginal Sekem impact tags.
       - Estimated learning duration and weekly study hours.
     - **Custom Track Persistence**: Added a primary CTA "שמור מסלול מותאם אישית", persisting the customized plan to the database/SQLite via `POST /api/tracks/save` (with instant feedback and direct link to `/saved-tracks`).
+22. **What-If Simulator 2-Column Redesign & Strict Subject Selection (`WhatIfSimulator.tsx`):**
+    - **2-Column RTL Workspace**:
+      - **Right Column (`lg:col-span-7`)**: Psychometric slider on top (interactive 450–800 slider with delta, presets, and realistic ceiling alert), followed directly underneath by "הבגרויות שאני רוצה לשפר".
+      - **Left Column (`lg:col-span-5 lg:sticky lg:top-6`)**: Exclusively dedicated to the target university and degree (`UniversityLogo`, degree name, Sekem type, large live Sekem score, admission status badge, progress bar gauge 0%–100%, and contribution breakdown). Multi-university 8-institution grid tucked neatly into a collapsed-by-default accordion.
+    - **Strict Subject Filtering**: Display strictly restricted to subjects that the candidate explicitly chose to edit or that were proposed in the recommended track. All other subjects are hidden by default (no automatic activation of weak subjects).
+    - **"הוסף מקצוע" Modal Picker (`isAddSubjectModalOpen`)**:
+      - Primary button at the top of the Bagrut lab.
+      - Opens modal allowing selection from user's inactive matriculation subjects (including Math), popular 5-unit electives (Geography, CS, Physics, Chemistry, Biology, Literature, Bible), or full 40+ subject ministry catalog.
+      - Only upon explicit selection does the subject appear in the improvement list with its grade slider, units selector, and marginal impact.
+      - Each active card features a trash button (`Trash2`) to remove and revert the subject to baseline.
+    - **Full-Width Baseline Changes Summary**: Preserved at the bottom with 4 comparative KPI cards, table of modified subjects with `dir="ltr"` grade transitions, and "שמור מסלול מותאם אישית" CTA button.
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
