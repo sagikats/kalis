@@ -34,7 +34,8 @@ import {
 	UnifiedCalculationInput
 } from '@/utils/calculators/multiCalculator';
 import { SubjectInput } from '@/utils/calculators/bguCalculator';
-import { getRealisticPsychometricCeiling, RecommendedTrack } from '@/utils/analysis/trackGenerator';
+import { getRealisticPsychometricCeiling, RecommendedTrack, evaluateSimulatedSekem } from '@/utils/analysis/trackGenerator';
+import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
 import { isSubjectMatch } from '@/modules/optimizer/solver';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
@@ -326,16 +327,38 @@ export default function WhatIfSimulator({
 		const effectivePhysicsUnits = physicsSub ? physicsSub.units : userProfile.physicsUnits;
 		const effectivePhysicsGrade = physicsSub ? physicsSub.grade : userProfile.physicsGrade;
 
-		const psychRatio = psych / (initialPsych || 600);
-		const baseQuant = userProfile.psychometricQuant || Math.round(initialPsych / 5);
-		const simulatedQuant = Math.min(150, Math.max(50, Math.round(baseQuant * psychRatio)));
+		// 1. Dedicated Institutional Calculation for the Selected Target Program
+		const targetEval = evaluateSimulatedSekem(
+			analysis.target.calculatorId,
+			analysis.relevantSekemType,
+			userProfile,
+			updatedSubjects,
+			psych,
+			isMath5 ? 5 : userProfile.mathUnits || 4,
+			mathGradeVal,
+			effectivePhysicsUnits,
+			effectivePhysicsGrade
+		);
+
+		// 2. Realistic Subscores Simulation for Multi-Institution Accordion Grid
+		const simScores = simulateRealisticSubscores(
+			psych,
+			initialPsych || psych,
+			userProfile.psychometricQuant,
+			userProfile.psychometricVerbal,
+			userProfile.psychometricEnglish,
+			userProfile.psychometricQuantEmphasis,
+			userProfile.psychometricVerbalEmphasis
+		);
 
 		const calcInput: UnifiedCalculationInput = {
 			bagrutSubjects: updatedSubjects,
 			psychometricGeneral: psych,
-			psychometricQuant: simulatedQuant,
-			psychometricVerbal: userProfile.psychometricVerbal,
-			psychometricEnglish: userProfile.psychometricEnglish,
+			psychometricQuant: simScores.quantSub,
+			psychometricQuantEmphasis: simScores.quantEmphasis,
+			psychometricVerbal: simScores.verbalSub,
+			psychometricVerbalEmphasis: simScores.verbalEmphasis,
+			psychometricEnglish: simScores.englishSub,
 			mathUnits: isMath5 ? 5 : userProfile.mathUnits || 4,
 			mathGrade: mathGradeVal,
 			physicsUnits: effectivePhysicsUnits,
@@ -344,19 +367,10 @@ export default function WhatIfSimulator({
 
 		const allInstitutionIds = ['bgu', 'tau', 'technion', 'huji', 'haifa', 'ariel', 'bar_ilan', 'reichman'];
 		const multiRes = calculateMultiInstitutionSekem(calcInput, allInstitutionIds);
-		const targetInst =
-			multiRes.find((r) => r.institutionId === analysis.target.calculatorId) || multiRes[0] || institutionResult;
-
-		let sekem = targetInst.generalSekem;
-		if (analysis.relevantSekemType === 'engineering' && targetInst.engineeringSekem) {
-			sekem = targetInst.engineeringSekem;
-		} else if (analysis.relevantSekemType === 'management' && targetInst.managementSekem) {
-			sekem = targetInst.managementSekem;
-		}
 
 		return {
-			sekem,
-			bagrutAverage: targetInst.bagrutAverage,
+			sekem: targetEval.sekem,
+			bagrutAverage: targetEval.bagrutAverage,
 			allInstitutions: multiRes
 		};
 	};

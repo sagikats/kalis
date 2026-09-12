@@ -1,10 +1,15 @@
-import { calculateBguAdmission, SubjectInput } from './bguCalculator';
-import { calculateTauAdmission } from './tauCalculator';
-import { calculateHujiAdmission } from './hujiCalculator';
-import { calculateHaifaAdmission } from './haifaCalculator';
-import { calculateArielAdmission } from './arielCalculator';
+import { SubjectInput } from './bguCalculator';
 import { resolvePsychometricScores } from './psychometricHelper';
-import { evaluateBarIlan, evaluateReichman, evaluateTechnion } from '@/modules/calculators';
+import {
+	evaluateTechnion,
+	evaluateTau,
+	evaluateHuji,
+	evaluateBgu,
+	evaluateHaifa,
+	evaluateAriel,
+	evaluateBarIlan,
+	evaluateReichman
+} from '@/modules/calculators';
 
 export interface UnifiedCalculationInput {
 	bagrutSubjects: SubjectInput[];
@@ -134,44 +139,28 @@ export function calculateMultiInstitutionSekem(
 	};
 
 	// 1. TAU
-	const tauRes = calculateTauAdmission(commonCalcInput);
+	const tauRes = evaluateTau(commonCalcInput);
 
 	// 2. Technion
 	const techRes = evaluateTechnion(commonCalcInput);
 
 	// 3. BGU
-	const bguRes = calculateBguAdmission(commonCalcInput);
+	const bguRes = evaluateBgu(commonCalcInput);
 
 	// 4. HUJI
-	const hujiRes = calculateHujiAdmission(commonCalcInput);
+	const hujiRes = evaluateHuji(commonCalcInput);
 
 	// 5. Haifa
-	const haifaRes = calculateHaifaAdmission(commonCalcInput);
+	const haifaRes = evaluateHaifa(commonCalcInput);
 
 	// 6. Ariel
-	const arielRes = calculateArielAdmission(commonCalcInput);
+	const arielRes = evaluateAriel(commonCalcInput);
 
 	// 7. Bar-Ilan
-	const biuRes = evaluateBarIlan({
-		bagrutSubjects: commonCalcInput.bagrutSubjects,
-		psychometricGeneral: commonCalcInput.psychometricGeneral,
-		psychometricQuant: commonCalcInput.psychometricQuant,
-		mathGrade: commonCalcInput.mathGrade,
-		mathUnits: commonCalcInput.mathUnits,
-		physicsGrade: commonCalcInput.physicsGrade,
-		physicsUnits: commonCalcInput.physicsUnits
-	});
+	const biuRes = evaluateBarIlan(commonCalcInput);
 
 	// 8. Reichman
-	const reichmanRes = evaluateReichman({
-		bagrutSubjects: commonCalcInput.bagrutSubjects,
-		psychometricGeneral: commonCalcInput.psychometricGeneral,
-		psychometricQuant: commonCalcInput.psychometricQuant,
-		mathGrade: commonCalcInput.mathGrade,
-		mathUnits: commonCalcInput.mathUnits,
-		physicsGrade: commonCalcInput.physicsGrade,
-		physicsUnits: commonCalcInput.physicsUnits
-	});
+	const reichmanRes = evaluateReichman(commonCalcInput);
 
 	const allInstitutions: Record<string, InstitutionSekemResult> = {
 		bgu: {
@@ -197,7 +186,7 @@ export function calculateMultiInstitutionSekem(
 			badgeColor: 'from-purple-500 to-indigo-600',
 			bagrutAverage: tauRes.bagrutAverage,
 			generalSekem: tauRes.generalSekem,
-			engineeringSekem: tauRes.quantitativeSekem,
+			engineeringSekem: tauRes.engineeringSekem,
 			managementSekem: tauRes.managementSekem,
 			directBagrutEligible: tauRes.directBagrutEligible,
 			droppedSubjects: tauRes.droppedSubjects,
