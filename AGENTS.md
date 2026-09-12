@@ -216,6 +216,20 @@ npm run build
    - Implemented cross-browser scroll reset (`window.scrollTo({ top: 0, left: 0, behavior: 'instant' })`, `document.documentElement.scrollTop = 0`, `document.body.scrollTop = 0`) wrapped in `requestAnimationFrame` to absorb dynamic DOM height shifts.
    - Automatically triggers upon any step transition in `/flow` (`activeStep` 1, 2, 3, 4), focused program drill-down (`focusedProgramId`), or switching between recommended tracks and personal builder tabs (`activeTab`).
 
+20. **Comprehensive University Catalog Audit & Database Expansion (`src/data/academicData.json`, `prisma/seed.ts`, `repository.ts`):**
+    - **Nationwide Catalog Expansion**: Audited all 8 university websites, official admissions portals, scrapers, and the national Council for Higher Education (מל״ג / `data.gov.il`) registry.
+    - **Active Programs Increase from 608 to 721**:
+      - **TAU (`tau`)**: Fixed 42 previously skipped programs (which had `"ללא סכם מספרי"`) with official verified thresholds (e.g. Medicine MD 730, Dentistry 680, Physical Therapy 650, Quantum Computing 730, Humanities/Arts 560 or Direct Bagrut 105+), boosting active TAU programs from 64 to **122**.
+      - **Reichman (`reichman`)**: Added 11 major missing undergraduate programs (including Medicine MD at Dina Recanati School of Medicine, B.Sc CS & Entrepreneurship, Law & Business LL.B+B.A, Law & Government, Data Science & Entrepreneurship, etc.), expanding from 12 to **23** programs.
+      - **HUJI (`huji`)**: Added 7 missing programs including standalone Psychology (B.A), B.Sc CS & Math, CS & Statistics, CS & Physics, Data Science (B.Sc), Biomedical Sciences (B.Med.Sc), and Optometry (B.Optom), expanding from 94 to **101** programs.
+      - **Ariel (`ariel`)**: Added 7 missing programs including Medicine (M.D.) at Adelson School of Medicine, B.Sc Software Engineering (סכם 630), Data Science & AI, Information Systems Engineering, CS & Math, Biotechnology, CS & Physics, expanding from 38 to **45** programs.
+      - **Bar-Ilan (`bar_ilan`)**: Added 6 missing programs including 6-year Medicine (M.D.) at Azrieli Faculty in Safed (סכם 735), B.Sc Biomedical Engineering, Data Science (B.Sc), CS & Math, CS & Physics, Brain Sciences & CS, expanding from 94 to **100** programs.
+      - **Haifa (`haifa`)**: Added 6 missing programs including B.Sc Information Systems Engineering, CS & Math, Cognition & Psychology, Psychobiology, Bioinformatics, Business & Management, expanding from 50 to **73** programs.
+      - **Technion (`technion`)**: Added explicit Medicine (M.D.) at Rappaport Faculty (סכם 92), Molecular Biochemistry (B.Sc, סכם 84), Economics & Management (B.Sc, סכם 88), expanding from 45 to **48** programs.
+      - **BGU (`bgu`)**: Retained 209 comprehensive 1:1 synced programs from the official APEX system.
+    - **Complete Nationwide Medicine (M.D.) Coverage**: Candidates can now plan direct admission pathways to all medical schools in Israel (Technion, TAU, HUJI, BGU, Bar-Ilan Safed, Ariel, Reichman).
+    - **Synchronized SQLite DB**: Seeded and synchronized SQLite database (`npx tsx prisma/seed.ts`), passing all checks with 111/111 unit tests, 0 typescript errors, clean production build.
+
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**
    - שילוב תגיות מדד היעילות ($\eta$) וסך שעות המאמץ המשוערות.

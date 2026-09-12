@@ -182,26 +182,32 @@ async function main() {
 				field.includes('מתמטיקה') ||
 				field.includes('רפואה');
 
-			const directEligible =
-				!isStem &&
-				instId !== 'technion' &&
-				(instId === 'huji' ||
-					instId === 'tau' ||
-					instId === 'bgu' ||
-					instId === 'haifa' ||
-					instId === 'ariel' ||
-					instId === 'bar_ilan' ||
-					instId === 'reichman');
+			const requiresPsych = p.requiresPsychometric !== undefined
+				? p.requiresPsychometric
+				: (instId === 'technion' || isStem);
 
-			const directThreshold = directEligible
-				? instId === 'bgu'
-					? 104.0
-					: instId === 'bar_ilan'
-					? 102.0
-					: instId === 'haifa' || instId === 'ariel' || instId === 'reichman'
-					? 100.0
-					: 105.0
-				: null;
+			const directEligible = p.directBagrutEligible !== undefined
+				? p.directBagrutEligible
+				: (!requiresPsych && instId !== 'technion' &&
+					(instId === 'huji' ||
+						instId === 'tau' ||
+						instId === 'bgu' ||
+						instId === 'haifa' ||
+						instId === 'ariel' ||
+						instId === 'bar_ilan' ||
+						instId === 'reichman'));
+
+			const directThreshold = p.directBagrutMinAverage !== undefined
+				? p.directBagrutMinAverage
+				: (directEligible
+					? instId === 'bgu'
+						? 104.0
+						: instId === 'bar_ilan'
+						? 102.0
+						: instId === 'haifa' || instId === 'ariel' || instId === 'reichman'
+						? 100.0
+						: 105.0
+					: null);
 
 			programRecords.push({
 				id: progId,
@@ -213,12 +219,13 @@ async function main() {
 				degreeLevel: p.degreeLevel || 'bachelor',
 				minSekemThreshold: parsedThreshold,
 				relevantSekemType: sekemType,
+				requiresPsychometric: requiresPsych,
 				directBagrutEligible: directEligible,
 				directBagrutMinAverage: directThreshold,
 				prerequisitesJson: JSON.stringify({
 					minMathUnits: isStem ? 4 : undefined,
 					minMathGrade: isStem ? 75 : undefined,
-					mustHavePsychometric: isStem || instId === 'technion'
+					mustHavePsychometric: requiresPsych
 				}),
 				description: p.description ?? null,
 				comments: p.comments ?? null,
