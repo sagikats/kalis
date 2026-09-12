@@ -802,7 +802,13 @@ export function isDegreeEligibleForDirectBagrut(degreeName: string, calculatorId
 		'הנדסת מערכות תקשורת',
 		'הנדסת חומרים',
 		'הנדסה ביורפואית',
-		'הנדסה'
+		'הנדסה',
+		'מדעי המוח',
+		'נוירוביולוגיה',
+		'פסיכולוגיה',
+		'בינה מלאכותית',
+		'מדעי הנתונים',
+		'משפטים'
 	];
 	if (strictlyMandatesPsych.some((d) => lower.includes(d))) {
 		return false;
@@ -1460,7 +1466,7 @@ export function generatePersonalizedTracks(
 		let winningFastPsych: number;
 
 		const currentP = hasTakenPsych ? currentPsych : baselinePsych;
-		if (sol1Lever && (sol1Lever.psych - currentP <= 55 || !sol2Levers)) {
+		if (sol1Lever && ((sol1Lever.psych - currentP <= 80 && sol1Lever.psych <= psychCeiling) || !sol2Levers)) {
 			winningFastLevers = [sol1Lever.lever];
 			winningFastPsych = sol1Lever.psych;
 		} else if (sol2Levers) {
@@ -1592,7 +1598,11 @@ export function generatePersonalizedTracks(
 		(gapAnalysis.target as any).program?.name ||
 		(gapAnalysis.target as any).program?.fieldOfStudy ||
 		'';
-	const degreeAllowsDirectBagrut = isDegreeEligibleForDirectBagrut(degreeName, calculatorId);
+	const targetProgram = (gapAnalysis.target as any).program;
+	const degreeRequiresPsychometric = targetProgram?.requiresPsychometric !== undefined
+		? targetProgram.requiresPsychometric
+		: (calculatorId === 'technion' || !isDegreeEligibleForDirectBagrut(degreeName, calculatorId));
+	const degreeAllowsDirectBagrut = !degreeRequiresPsychometric && (targetProgram?.directBagrutEligible ?? (calculatorId !== 'technion' && isDegreeEligibleForDirectBagrut(degreeName, calculatorId)));
 
 	// Check if direct bagrut admission can be achieved with 1 to 3 levers (only for eligible degrees)
 	if (degreeAllowsDirectBagrut) {
@@ -1621,14 +1631,15 @@ export function generatePersonalizedTracks(
 	if (directBagrutSol) {
 		track2LeverCount = directBagrutSol.levers.length;
 		const bagrutSummary = directBagrutSol.levers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, ציון ${l.targetGrade})`).join(' + ');
+		const realDirectSekem = directBagrutSol.res.sekem > 0 ? directBagrutSol.res.sekem : threshold;
 		tracks.push({
 			id: 'track-direct-bagrut',
 			title: 'המסלול הבטוח: קבלה ישירה על סמך בגרות (אפס פסיכומטרי!)',
 			badge: 'קבלה ישירה ללא פסיכומטרי',
 			badgeColor: 'from-emerald-500 to-teal-600',
-			strategyDescription: `מעקף פסיכומטרי מלא: שדרוג ${bagrutSummary} מעלה את ממוצע הבגרות ל-${directBagrutSol.res.bagrutAverage.toFixed(1)} ומקנה זכאות מלאה לקבלה ישירה (Direct Bagrut Admission) ב${gapAnalysis.target.institutionName} — ללא צורך במבחן פסיכומטרי כלל!`,
-			targetSekem: threshold,
-			targetPsychometric: undefined,
+			strategyDescription: `מעקף פסיכומטרי מלא: שדרוג ${bagrutSummary} מעלה את ממוצע הבגרות ל-${directBagrutSol.res.bagrutAverage.toFixed(1)} ומקנה זכאות מלאה לקבלה ישירה (Direct Bagrut Admission) ב${gapAnalysis.target.institutionName} — ללא צורך במבחן פסיכומטרי כלל! (סכם מחושב: ${realDirectSekem.toFixed(isTechnion ? 2 : 1)}).`,
+			targetSekem: realDirectSekem,
+			targetPsychometric: hasTakenPsych ? currentPsych : undefined,
 			currentPsychometric: hasTakenPsych ? currentPsych : undefined,
 			targetBagrutAverage: directBagrutSol.res.bagrutAverage,
 			currentBagrutAverage: currentBagrut,

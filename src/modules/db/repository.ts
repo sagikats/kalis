@@ -186,27 +186,25 @@ export class KalisDatabaseRepository {
 					field.includes('מתמטיקה') ||
 					field.includes('רפואה');
 
-				// Direct Bagrut Eligibility: non-STEM degrees at HUJI/TAU (105+), BGU (104+), Bar-Ilan (102+), Haifa/Ariel/Reichman (100+)
-				const directEligible =
-					!isStem &&
-					instId !== 'technion' &&
-					(instId === 'huji' ||
-						instId === 'tau' ||
-						instId === 'bgu' ||
-						instId === 'haifa' ||
-						instId === 'ariel' ||
-						instId === 'bar_ilan' ||
-						instId === 'reichman');
-
-				const directThreshold = directEligible
-					? instId === 'bgu'
-						? 104.0
-						: instId === 'bar_ilan'
-						? 102.0
-						: instId === 'haifa' || instId === 'ariel' || instId === 'reichman'
-						? 100.0
-						: 105.0
-					: null;
+				const requiresPsych = p.requiresPsychometric !== undefined
+					? p.requiresPsychometric
+					: (instId === 'technion' || isStem);
+				const directEligible = p.directBagrutEligible !== undefined
+					? p.directBagrutEligible
+					: (!requiresPsych && instId !== 'technion');
+				const directThreshold = (p.directBagrutMinAverage !== undefined && p.directBagrutMinAverage !== null)
+					? p.directBagrutMinAverage
+					: (directEligible
+						? instId === 'bgu'
+							? 104.0
+							: instId === 'bar_ilan'
+							? 102.0
+							: instId === 'haifa' || instId === 'ariel' || instId === 'reichman'
+							? 100.0
+							: (instId === 'tau' || instId === 'huji')
+							? 105.0
+							: 100.0
+						: null);
 
 				const programRecord: AcademicProgramRecord = {
 					id: progId,
@@ -218,12 +216,13 @@ export class KalisDatabaseRepository {
 					degreeLevel: 'bachelor',
 					minSekemThreshold: parsedThreshold,
 					relevantSekemType: sekemType,
+					requiresPsychometric: requiresPsych,
 					directBagrutEligible: directEligible,
 					directBagrutMinAverage: directThreshold,
 					prerequisites: {
 						minMathUnits: isStem ? 4 : undefined,
 						minMathGrade: isStem ? 75 : undefined,
-						mustHavePsychometric: isStem || instId === 'technion'
+						mustHavePsychometric: requiresPsych
 					},
 					url: p.url,
 					createdAt: new Date(),
@@ -290,6 +289,7 @@ export class KalisDatabaseRepository {
 						degreeLevel: (p.degreeLevel as any) || 'bachelor',
 						minSekemThreshold: p.minSekemThreshold,
 						relevantSekemType: p.relevantSekemType as any,
+						requiresPsychometric: (p as any).requiresPsychometric ?? !p.directBagrutEligible,
 						directBagrutEligible: p.directBagrutEligible,
 						directBagrutMinAverage: p.directBagrutMinAverage ?? undefined,
 						prerequisites: {

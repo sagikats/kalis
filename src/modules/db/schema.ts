@@ -78,6 +78,7 @@ export interface AcademicProgramRecord {
 	relevantSekemType: SekemType;
 	directBagrutEligible: boolean;
 	directBagrutMinAverage?: number | null;
+	requiresPsychometric?: boolean;
 	prerequisites: ProgramPrerequisites;
 	description?: string;
 	comments?: string;

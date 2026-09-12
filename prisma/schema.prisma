@@ -43,6 +43,7 @@ model AcademicProgram {
   relevantSekemType      String      // 'general' | 'engineering' | 'management' | 'technion'
   directBagrutEligible   Boolean     @default(false)
   directBagrutMinAverage Float?
+  requiresPsychometric   Boolean     @default(true)
   prerequisitesJson      String?     // Serialized prerequisites (minMathUnits, mustHavePsychometric, etc.)
   description            String?
   comments               String?

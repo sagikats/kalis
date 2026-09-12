@@ -13,6 +13,9 @@ export interface AcademicDegree {
      additionalConditions?: string | null;
      comments?: string | null;
      registrationStatus?: string | null;
+     requiresPsychometric?: boolean;
+     directBagrutEligible?: boolean;
+     directBagrutMinAverage?: number | null;
      url?: string;
 }
 

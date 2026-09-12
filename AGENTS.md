@@ -92,11 +92,11 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-11 16:20)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-12 13:07)
 - **Active Branch:** `ui-upgred` (Created from `main` for UI isolation and safe iteration)
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **106/106 tests passing** across 32 test suites.
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **111/111 tests passing** across 33 test suites.
   - `npm run build`: Clean (21/21 static & dynamic routes generated, zero compile or runtime build errors).
   - Background processes: Next.js dev server running on port 3000.
 
@@ -203,7 +203,18 @@ npm run build
    - **Two User-Mandated Behaviors**:
      1. **Alternative Single Exam**: If another single bagrut exam (e.g. ספרות עברית 2 ➔ 5 יח״ל) independently closes the gap with 0 psychometric jump, Track 2 is generated as: `המסלול החלופי: שדרוג ספרות עברית (בחינה בודדת)`, badged as `חלופה לבחינה בודדת` (8 weeks, 1 exam).
      2. **Omission When No Alternative Exists**: If no other single subject can achieve admission on its own, Track 2 is completely omitted (`bestBalCombo = null`), presenting only Track 1.
-   - **Quality State**: **111/111 tests passing** across 33 test suites, `tsc --noEmit` clean, Next.js build 21/21 clean routes.
+17. **Explicit Database Field for Psychometric Requirements & Direct Bagrut Pruning (`prisma/schema.prisma`, `academicData.json`, `repository.ts`, `trackGenerator.ts`):**
+   - **Architectural Shift**: Shifted completely away from fragile subject-name regex/keyword parsing to a first-class DB schema attribute `requiresPsychometric Boolean @default(true)` in `AcademicProgram`, `AcademicProgramRecord`, and `academicData.json`.
+   - **Zero Direct Bagrut Hallucinations**: Programs mandating psychometric scores (like TAU's elite Neuroscience / Brain Sciences & AI degree) have `requiresPsychometric: true` and `directBagrutEligible: false`. Direct Bagrut tracks can NEVER be generated for them.
+   - **Real Calculated Sekem Metrics**: Fixed `track-direct-bagrut` so that `targetSekem` reflects true simulated institutional Sekem (`directBagrutSol.res.sekem`), completely eliminating fabricated threshold echoes.
+   - **Workload & Effort Hierarchy Integrity**: Calibrated Track 1 single-lever jump limit up to 80 points (when $\le$ `psychCeiling`) so Track 1 serves as the focused 2-exam fast lever (1 Bagrut + Psych), while Track 2 provides genuine 3-exam risk spread with lower psychometric target (e.g. for Chen Katz: Track 1 requires Psych 697, Track 2 relieves psychometric down to 675 with 3 Bagruts).
+18. **Track Card Explanation Drawer (`RecommendedTracksView.tsx`):**
+   - Removed crowded static `strategyDescription` paragraph from under track card title and weekly hours, achieving perfect vertical alignment for metric KPI boxes across all 3 cards.
+   - Added an interactive expandable drawer button **"הסבר על התוכנית"** with info icon and animated rotating chevron at the bottom of each track card (below feasibility indicator), revealing full strategic rationale on demand.
+
+19. **Automated Scroll to Top on Step & Tab Transitions (`flow/page.tsx`, `RecommendedTracksView.tsx`):**
+   - Implemented cross-browser scroll reset (`window.scrollTo({ top: 0, left: 0, behavior: 'instant' })`, `document.documentElement.scrollTop = 0`, `document.body.scrollTop = 0`) wrapped in `requestAnimationFrame` to absorb dynamic DOM height shifts.
+   - Automatically triggers upon any step transition in `/flow` (`activeStep` 1, 2, 3, 4), focused program drill-down (`focusedProgramId`), or switching between recommended tracks and personal builder tabs (`activeTab`).
 
 ### 🎯 Next Steps / הצעד הבא לסוכן הנכנס:
 1. **הצגת מדדי יעילות בכרטיסיות המסלול ב-RecommendedTracksView:**

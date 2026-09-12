@@ -122,6 +122,21 @@ export default function AdmissionFlowPage() {
 		setQuestionnaireAnswers(null);
 	}, []);
 
+	// Always scroll to top when transitioning steps or focused program
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+			const frame = requestAnimationFrame(() => {
+				window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+				document.documentElement.scrollTop = 0;
+				document.body.scrollTop = 0;
+			});
+			return () => cancelAnimationFrame(frame);
+		}
+	}, [activeStep, focusedProgramId]);
+
 	// User lifecycle and data loading effect
 	useEffect(() => {
 		if (isAuthLoading) return;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Zap,
 	ShieldCheck,
@@ -24,7 +24,8 @@ import {
 	ChevronUp,
 	Bookmark,
 	BookmarkCheck,
-	Loader2
+	Loader2,
+	Info
 } from 'lucide-react';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
@@ -67,6 +68,23 @@ export default function RecommendedTracksView({
 	const [selectedTrackId, setSelectedTrackId] = useState<string>(tracks[1]?.id || tracks[0]?.id || '');
 	const [isPrintMode, setIsPrintMode] = useState(false);
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
+	const [expandedExplanationMap, setExpandedExplanationMap] = useState<Record<string, boolean>>({});
+
+	const toggleExplanation = (trackId: string) => {
+		setExpandedExplanationMap((prev) => ({
+			...prev,
+			[trackId]: !prev[trackId]
+		}));
+	};
+
+	// Scroll to top when switching between Recommended tracks and Custom builder tabs
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+		}
+	}, [activeTab]);
 
 	// Explicit Track Saving State (Only on User Click)
 	const { user, refreshUser } = useAuth();
@@ -453,10 +471,6 @@ export default function RecommendedTracksView({
 									</div>
 								</div>
 
-								<p className="text-xs text-[#66635C] leading-relaxed min-h-[48px]">
-									{track.strategyDescription}
-								</p>
-
 								{/* Metric Target Boxes */}
 								<div className="space-y-2 pt-2 border-t border-[#EAE5DA]">
 									{/* Target Sekem if exists */}
@@ -768,6 +782,38 @@ export default function RecommendedTracksView({
 										{track.feasibilityExplanation}
 									</p>
 								</div>
+
+								{/* Expandable Program Explanation */}
+								{track.strategyDescription && (
+									<div className="pt-2 border-t border-[#EAE5DA]">
+										<button
+											type="button"
+											onClick={(e) => {
+												e.stopPropagation();
+												toggleExplanation(track.id);
+											}}
+											className="w-full flex items-center justify-between py-2 px-3 rounded-xl text-xs font-bold text-[#66635C] hover:text-[#222222] bg-[#FAF8F5] hover:bg-[#F2EFE9] border border-[#E5DFD4] transition cursor-pointer"
+										>
+											<span className="flex items-center gap-1.5">
+												<Info className="h-3.5 w-3.5 text-[#8A847C]" />
+												<span>הסבר על התוכנית</span>
+											</span>
+											<ChevronDown
+												className={`h-4 w-4 text-[#8A847C] transition-transform duration-200 ${
+													expandedExplanationMap[track.id] ? 'rotate-180 text-[#222222]' : ''
+												}`}
+											/>
+										</button>
+
+										{expandedExplanationMap[track.id] && (
+											<div className="mt-2 p-3 bg-white border border-[#E5DFD4] rounded-2xl shadow-2xs animate-fadeIn">
+												<p className="text-xs text-[#66635C] leading-relaxed">
+													{track.strategyDescription}
+												</p>
+											</div>
+										)}
+									</div>
+								)}
 							</div>
 
 							{/* Bottom Selection & Save Buttons */}
