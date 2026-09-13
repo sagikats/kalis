@@ -273,7 +273,7 @@ export default function DegreeSearchSelector({
 					<span>מציג {Math.min(filteredPrograms.length, 60)} ראשונות</span>
 				</div>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 max-h-[560px] overflow-y-auto pr-1">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 max-h-[420px] overflow-y-auto pr-1">
 					{filteredPrograms.slice(0, 60).map((item) => {
 						const selected = isSelected(item.program.id);
 						const threshold = item.program.admissionThreshold;
