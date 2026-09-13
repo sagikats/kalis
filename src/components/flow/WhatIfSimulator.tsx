@@ -770,7 +770,8 @@ export default function WhatIfSimulator({
 			updated[existingIndex] = {
 				...updated[existingIndex],
 				isActive: true,
-				simulatedGrade: defaultGrade
+				units,
+				simulatedGrade: Math.max(updated[existingIndex].originalGrade, defaultGrade)
 			};
 			setSimulatedList(updated);
 		} else {
@@ -794,12 +795,12 @@ export default function WhatIfSimulator({
 		setIsSubjectModalOpen(false);
 	};
 
-	// Add existing subject to active simulation list
+	// Add existing subject to active simulation list (preserves originalGrade and originalUnits so score never drops on add)
 	const handleAddExistingSubjectToActive = (subjectName: string) => {
 		if (!subjectName) return;
 		const updated = simulatedList.map((s) => {
 			if (s.name === subjectName) {
-				return { ...s, isActive: true, simulatedGrade: Math.min(95, s.originalGrade + 15) };
+				return { ...s, isActive: true, units: s.originalUnits, simulatedGrade: s.originalGrade };
 			}
 			return s;
 		});
@@ -2019,7 +2020,8 @@ export default function WhatIfSimulator({
 											type="button"
 											onClick={() => {
 												setIsMathActive(true);
-												setSimulatedMathGrade(Math.min(95, (userProfile.mathGrade || 80) + 15));
+												setSimulatedMathGrade(userProfile.mathGrade || 80);
+												setIsMathUpgradedTo5(userProfile.mathUnits === 5);
 												setIsAddSubjectModalOpen(false);
 											}}
 											className="px-3 py-1.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-2xs"
