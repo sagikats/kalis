@@ -311,7 +311,7 @@ export default function WhatIfSimulator({
 		psych: number,
 		isMath5: boolean,
 		mathGradeVal: number
-	): { sekem: number; bagrutAverage: number; allInstitutions: InstitutionSekemResult[] } => {
+	): { sekem: number; bagrutAverage: number; allInstitutions: InstitutionSekemResult[]; droppedSubjects: string[] } => {
 		const updatedSubjects = subjects.map((s) => {
 			if (s.name.includes('מתמטיקה')) {
 				return {
@@ -371,7 +371,8 @@ export default function WhatIfSimulator({
 		return {
 			sekem: targetEval.sekem,
 			bagrutAverage: targetEval.bagrutAverage,
-			allInstitutions: multiRes
+			allInstitutions: multiRes,
+			droppedSubjects: targetEval.droppedSubjects || []
 		};
 	};
 
@@ -1329,9 +1330,19 @@ export default function WhatIfSimulator({
 															</span>
 														)}
 													</div>
-												) : (
+												) : impact.bagrutDelta > 0 ? (
+													<div className="flex items-center gap-1 dir-ltr">
+														<span className="px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#205739] border border-[#E5DFD4] font-bold text-[10px]">
+															+{impact.bagrutDelta} בגרות
+														</span>
+													</div>
+												) : (simulatedSekemResult.droppedSubjects || []).includes(item.name) ? (
 													<span className="text-[#8A847C] text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4]">
 														הושמט בממוצע מיטבי
+													</span>
+												) : (
+													<span className="text-[#8A847C] text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4]">
+														ללא שינוי בסכם
 													</span>
 												)}
 											</div>
@@ -1833,9 +1844,17 @@ export default function WhatIfSimulator({
 													<Sparkles className="h-3 w-3 text-[#205739]" />
 													<span>+{change.sekemImpact} סכם</span>
 												</span>
-											) : (
+											) : change.bagrutImpact > 0 ? (
+												<span className="px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#205739] border border-[#E5DFD4] text-[10px] font-bold dir-ltr">
+													+{change.bagrutImpact} בגרות
+												</span>
+											) : (simulatedSekemResult.droppedSubjects || []).includes(change.name) ? (
 												<span className="px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#8A847C] border border-[#E5DFD4] text-[10px]">
 													הושמט בממוצע המיטבי
+												</span>
+											) : (
+												<span className="px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#8A847C] border border-[#E5DFD4] text-[10px]">
+													ללא שינוי בסכם
 												</span>
 											)}
 										</div>

@@ -256,7 +256,7 @@ export function analyzeProgramGap(
 		} else {
 			// Candidate has NOT taken psychometric yet: calculate the exact score needed from scratch
 			if (target.calculatorId === 'technion') {
-				const d = Math.min(119, bagrutAvg);
+				const d = Math.min(125, bagrutAvg);
 				targetPsych = Math.min(800, Math.max(200, Math.ceil((threshold + 19 - 0.5 * d) / 0.075)));
 			} else if (target.calculatorId === 'tau') {
 				const cappedBagrut = Math.min(117, bagrutAvg);

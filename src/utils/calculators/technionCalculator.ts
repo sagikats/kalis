@@ -205,7 +205,7 @@ export function calculateOptimalTechnionBagrut(
 			totalWeight += w;
 		}
 		const avg =
-			totalWeight > 0 ? Math.min(119, Math.round((totalScore / totalWeight) * 10) / 10) : 0;
+			totalWeight > 0 ? Math.min(125, Math.round((totalScore / totalWeight) * 10) / 10) : 0;
 		return {
 			average: avg,
 			optimalUnits: totalActiveUnits,
@@ -256,7 +256,7 @@ export function calculateOptimalTechnionBagrut(
 	}
 
 	return {
-		average: Math.min(119, bestAvg),
+		average: Math.min(125, bestAvg),
 		optimalUnits: bestUnits,
 		totalUnits: totalActiveUnits,
 		droppedSubjects: bestDropped,
@@ -270,13 +270,13 @@ export function calculateOptimalTechnionBagrut(
  * Formula for all general & engineering tracks (except Architecture/Landscape Architecture):
  * S = 0.5 * D + 0.075 * P - 19
  * Where:
- * D = Optimal Bagrut Average (capped at 119)
+ * D = Optimal Bagrut Average
  * P = General Psychometric Score (or quantitative track)
  * Scale: 0 - 100
  */
 export function calculateTechnionSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const d = Math.min(119, bagrutAverage);
+	const d = Math.min(125, bagrutAverage);
 	const raw = 0.5 * d + 0.075 * psychometric - 19;
 	return Math.min(100, Math.max(0, Math.round(raw * 10) / 10));
 }
