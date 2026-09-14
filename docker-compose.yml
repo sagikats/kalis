@@ -1,0 +1,19 @@
+services:
+  kalis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kalis-app
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - kalis_data:/app/prisma
+
+volumes:
+  kalis_data:
+    driver: local
