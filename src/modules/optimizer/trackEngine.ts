@@ -252,6 +252,15 @@ export function generateOptimizedActionTracks(
 		(!['מדעי המחשב', 'הנדסת', 'רפואה', 'רפואת שיניים'].some((d) => (targetProgram.name || '').includes(d)) &&
 			institutionId !== 'technion');
 
+	// Degree-specific hard prerequisites
+	const degreePsychFloor = targetProgram.prerequisites?.minPsychometricFloor || (
+		targetProgram.name?.includes('רפואה') ? 700 :
+		(targetProgram.name?.includes('מחשב') || targetProgram.name?.includes('תוכנה')) ? 600 :
+		targetProgram.name?.includes('הנדס') ? 560 :
+		(targetProgram.name?.includes('מתמטיקה') || targetProgram.name?.includes('פיזיקה')) ? 550 : 500
+	);
+	const minPsychSearchFloor = hasTakenPsych ? Math.max(currentPsych, degreePsychFloor) : degreePsychFloor;
+
 	// =========================================================================
 	// TRACK A: מסלול מצוינות / מינימום בחינות (`track-maximize-exam` / `track-direct-bagrut`)
 	// פילוסופיה: ציוני יעד גבוהים (90–95+ בבגרות, פסיכומטרי שאפתני עד התקרה).
@@ -273,6 +282,33 @@ export function generateOptimizedActionTracks(
 
 	const trackAOptions: CandidateTrackOption[] = [];
 
+	// Option A0: Existing Direct Bagrut Qualification (0 Exams, 0 Psychometric)
+	const meetsDirectMath = (profile.mathUnits === 5 && (profile.mathGrade || 0) >= (targetProgram.prerequisites?.directBagrutMath5Min || 75)) ||
+		(profile.mathUnits === 4 && (profile.mathGrade || 0) >= (targetProgram.prerequisites?.directBagrutMath4Min || 85)) ||
+		(!targetProgram.prerequisites?.directBagrutMath5Min && !targetProgram.prerequisites?.directBagrutMath4Min);
+
+	const isDirectEligibleExisting = degreeAllowsDirectBagrut && (
+		initialRes.directBagrutEligible ||
+		isProgramEligibleForDirectBagrut(institutionId, targetProgram.name, currentBagrut) ||
+		(targetProgram.directBagrutMinAverage !== null && targetProgram.directBagrutMinAverage !== undefined && currentBagrut >= targetProgram.directBagrutMinAverage)
+	) && meetsDirectMath;
+
+	if (isDirectEligibleExisting) {
+		trackAOptions.push({
+			id: 'track-direct-bagrut',
+			levers: [],
+			targetPsych: undefined,
+			targetSekem: Math.max(currentSekem, threshold),
+			targetBagrutAverage: currentBagrut,
+			examCount: 0,
+			badge: 'קבלה ישירה מיידית (0 בחינות!)',
+			strategyDescription: `זכאות מיידית לקבלה ישירה! ממוצע הבגרות הקיים שלך (${currentBagrut.toFixed(1)}) וציוני הבגרות עומדים במלואם ברף הקבלה הישירה (Direct Bagrut Admission) ב${targetProgram.institutionName} — ללא צורך במבחן פסיכומטרי וללא צורך בשיפור בגרויות כלל!`,
+			feasibility: 'very_high',
+			feasibilityExplanation: `עמידה מלאה ומיידית ברף קבלה ישירה בבגרות (${currentBagrut.toFixed(1)}) ללא צורך בבחינות נוספות.`,
+			keyAdvantage: 'קבלה ישירה מיידית! אפס מבחנים נוספים ואפס תלות בפסיכומטרי.'
+		});
+	}
+
 	const hasMissingMathPrerequisite = Boolean(
 		targetProgram.prerequisites?.minMathUnits && (profile.mathUnits || 0) < targetProgram.prerequisites.minMathUnits
 	);
@@ -286,7 +322,7 @@ export function generateOptimizedActionTracks(
 				threshold,
 				profile,
 				baseSubjects,
-				hasTakenPsych ? currentPsych : 450,
+				minPsychSearchFloor,
 				psychCeiling
 		  )
 		: null;
@@ -471,7 +507,7 @@ export function generateOptimizedActionTracks(
 			threshold,
 			profile,
 			simState.subjects,
-			hasTakenPsych ? currentPsych : 450,
+			minPsychSearchFloor,
 			psychCeiling,
 			simState.mathUnits,
 			simState.mathGrade,
@@ -584,7 +620,7 @@ export function generateOptimizedActionTracks(
 		threshold,
 		profile,
 		initialSimStateB.subjects,
-		hasTakenPsych ? currentPsych : 450,
+		minPsychSearchFloor,
 		safePsychCeiling,
 		initialSimStateB.mathUnits,
 		initialSimStateB.mathGrade,
@@ -601,13 +637,13 @@ export function generateOptimizedActionTracks(
 				threshold,
 				profile,
 				initialSimStateB.subjects,
-				hasTakenPsych ? currentPsych : 450,
+				minPsychSearchFloor,
 				psychCeiling,
 				initialSimStateB.mathUnits,
 				initialSimStateB.mathGrade,
 				initialSimStateB.physicsUnits,
 				initialSimStateB.physicsGrade
-		  ) ?? (hasTakenPsych ? currentPsych : 450);
+		  ) ?? minPsychSearchFloor;
 
 	// Apply micro-improvement pruning to eliminate redundant exams if minor bump suffices
 	const pruningResult = pruneRedundantLeversWithMicroImprovement(
