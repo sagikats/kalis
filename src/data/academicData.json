@@ -718,10 +718,11 @@
         "description": "מתמטיקה היא שפה אוניברסלית המכתיבה שיח עקבי והגיוני. ככזאת, היא משמשת כשפתם של כל המדעים  ובפרט היא הבסיס עליו נבנים כל המדעים המדויקים (פיזיקה, כימיה, מדעי כדור הארץ, מדעי המחשב וכו)  וההנדסה על כל סוגיה וגווניה. בנוסף כיום חלקים גדלים והולכים בדיסציפלינות אחרות כמו מדעי החיים ומדעי החברה משתמשים ב",
         "admissionThreshold": 600,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
-        "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "minPsychometricFloor": 550,
+        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או קבלה ישירה על סמך בגרות 100+ ו-5 יח״ל מתמטיקה 80+",
+        "requiresPsychometric": false,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100.0
       },
       {
         "id": "prog-inst-4-50",
@@ -730,10 +731,11 @@
         "description": "הביטוי מתמטיקה שימושית או מתמטיקה יישומית מהווה מסגרת לענפי המתמטיקה, שיש להם שימוש נרחב בתחומי מדע אחרים. משמעותו של הביטוי השתנתה במשך השנים, עם חדירתה של המתמטיקה לתחומי מדע רבים. לא קיימת הגדרה מדויקת מי מענפי המתמטיקה נחשבים ל\"מתמטיקה שימושית\" ומי ל\"מתמטיקה טהורה\". כיוון שעד לאמצע המאה ה-19 לא ",
         "admissionThreshold": 600,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
-        "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "minPsychometricFloor": 550,
+        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או קבלה ישירה על סמך בגרות 100+ ו-5 יח״ל מתמטיקה 80+",
+        "requiresPsychometric": false,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100.0
       },
       {
         "id": "prog-inst-4-51",
@@ -2810,6 +2812,7 @@
         "admissionThreshold": 710,
         "sekemScore": 710,
         "programId": "0512",
+        "minPsychometricFloor": 600,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null

@@ -63,6 +63,12 @@ export interface ProgramPrerequisites {
 	minPhysUnits?: number;
 	minPhysGrade?: number;
 	mustHavePsychometric: boolean;
+	minPsychometricFloor?: number;
+	minPsychometricQuant?: number;
+	requiresPhysics?: boolean;
+	directBagrutMath5Min?: number;
+	directBagrutMath4Min?: number;
+	directBagrutMinAverage?: number;
 	mandatorySubjects?: string[];
 }
 

@@ -186,6 +186,21 @@ async function main() {
 				? p.requiresPsychometric
 				: (instId === 'technion' || isStem);
 
+			let minPsychFloor = p.minPsychometricFloor !== undefined ? p.minPsychometricFloor : undefined;
+			if (minPsychFloor === undefined) {
+				if (field.includes('רפואה')) {
+					minPsychFloor = 700;
+				} else if (field.includes('מחשב') || field.includes('תוכנה') || field.includes('סייבר') || field.includes('נתונים') || field.includes('בינה מלאכותית')) {
+					minPsychFloor = instId === 'technion' ? 660 : (instId === 'tau' || instId === 'huji') ? 630 : 600;
+				} else if (field.includes('הנדס')) {
+					minPsychFloor = instId === 'technion' ? 620 : (instId === 'tau' || instId === 'bgu') ? 600 : 560;
+				} else if (field.includes('פיזיקה') || field.includes('מתמטיקה')) {
+					minPsychFloor = 550;
+				} else if (requiresPsych) {
+					minPsychFloor = 500;
+				}
+			}
+
 			const directEligible = p.directBagrutEligible !== undefined
 				? p.directBagrutEligible
 				: (!requiresPsych && instId !== 'technion' &&
@@ -209,6 +224,19 @@ async function main() {
 						: 105.0
 					: null);
 
+			const requiresPhys = field.includes('הנדס') || field.includes('פיזיקה');
+			const prereqObj: any = {
+				minMathUnits: isStem ? 4 : undefined,
+				minMathGrade: isStem ? 75 : undefined,
+				mustHavePsychometric: requiresPsych,
+				minPsychometricFloor: minPsychFloor,
+				requiresPhysics: requiresPhys
+			};
+			if (p.id === 'prog-inst-4-49' || p.id === 'prog-inst-4-50') {
+				prereqObj.directBagrutMath5Min = 80;
+				prereqObj.directBagrutMath4Min = 90;
+			}
+
 			programRecords.push({
 				id: progId,
 				institutionId: instId,
@@ -222,11 +250,7 @@ async function main() {
 				requiresPsychometric: requiresPsych,
 				directBagrutEligible: directEligible,
 				directBagrutMinAverage: directThreshold,
-				prerequisitesJson: JSON.stringify({
-					minMathUnits: isStem ? 4 : undefined,
-					minMathGrade: isStem ? 75 : undefined,
-					mustHavePsychometric: requiresPsych
-				}),
+				prerequisitesJson: JSON.stringify(prereqObj),
 				description: p.description ?? null,
 				comments: p.comments ?? null,
 				url: p.url ?? null

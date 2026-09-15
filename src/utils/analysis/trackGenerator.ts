@@ -1,4 +1,5 @@
 import { SubjectInput } from '../calculators/bguCalculator';
+import { AcademicDegree } from '../../types/academic';
 import {
 	InstitutionSekemResult,
 	calculateMultiInstitutionSekem,
@@ -225,9 +226,13 @@ export function evaluateSimulatedSekem(
 		return s;
 	});
 
-	const physSub = updatedSubjects.find((s) => s.name.includes('פיזיקה'));
-	const physUnits = simulatedPhysUnits ?? (physSub ? physSub.units : baseProfile.physicsUnits);
-	const physGrade = simulatedPhysGrade ?? (physSub ? physSub.grade : baseProfile.physicsGrade);
+	const physSub = updatedSubjects.find((s) => isSubjectMatch(s.name, 'פיזיקה'));
+	const physUnits = (simulatedPhysUnits !== undefined && simulatedPhysUnits > 0)
+		? simulatedPhysUnits
+		: (physSub ? physSub.units : (baseProfile.physicsUnits || 0));
+	const physGrade = (simulatedPhysGrade !== undefined && simulatedPhysGrade > 0)
+		? simulatedPhysGrade
+		: (physSub ? physSub.grade : (baseProfile.physicsGrade || 0));
 
 	// Official NITE realistic scaling: respects headroom and 50-150 subscore constraints
 	const currentGen = baseProfile.psychometricGeneral && baseProfile.psychometricGeneral > 0 ? baseProfile.psychometricGeneral : simulatedPsych;
@@ -750,11 +755,13 @@ export function applyLeversToSubjects(
 	let updated = [...baseSubjects];
 
 	for (const lever of selectedLevers) {
-		if (lever.isMath) {
+		const isMath = !!lever.isMath || isSubjectMatch(lever.subjectName, 'מתמטיקה');
+		const isPhysics = !!lever.isPhysics || isSubjectMatch(lever.subjectName, 'פיזיקה');
+		if (isMath) {
 			mathU = lever.targetUnits;
 			mathG = lever.targetGrade;
 			updated = updated.map((s) => (isSubjectMatch(s.name, 'מתמטיקה') ? { ...s, units: mathU, grade: mathG } : s));
-		} else if (lever.isPhysics) {
+		} else if (isPhysics) {
 			physU = lever.targetUnits;
 			physG = lever.targetGrade;
 			const pIdx = updated.findIndex((s) => isSubjectMatch(s.name, 'פיזיקה'));
@@ -819,6 +826,85 @@ export function isDegreeEligibleForDirectBagrut(degreeName: string, calculatorId
 	return true;
 }
 
+export interface DegreeHardRequirements {
+	minPsychometricFloor: number;
+	minPsychometricQuant?: number;
+	requiresPhysics: boolean;
+	minMathUnits: number;
+	minMathGrade: number;
+	directBagrutEligible: boolean;
+	directBagrutMinAverage?: number;
+	directBagrutMath5Min?: number;
+	directBagrutMath4Min?: number;
+}
+
+export function extractDegreeHardRequirements(
+	program: AcademicDegree | undefined,
+	calculatorId: string
+): DegreeHardRequirements {
+	const progName = (program?.fieldOfStudy || program?.description || '').toLowerCase();
+
+	let parsedPrereq: any = {};
+	if (program?.prerequisitesJson) {
+		try {
+			parsedPrereq = JSON.parse(program.prerequisitesJson);
+		} catch (e) {
+			parsedPrereq = {};
+		}
+	}
+	if ((program as any)?.prerequisites) {
+		parsedPrereq = { ...parsedPrereq, ...(program as any).prerequisites };
+	}
+
+	const isMedicine = progName.includes('רפואה') || progName.includes('רפואת שיניים');
+	const isCS = progName.includes('מדעי המחשב') || progName.includes('הנדסת תוכנה') || progName.includes('סייבר') || progName.includes('בינה מלאכותית');
+	const isEngineering = progName.includes('הנדס');
+	const isExactScience = isCS || isEngineering || progName.includes('מתמטיקה') || progName.includes('פיזיקה') || progName.includes('כימיה');
+
+	// Degree-specific psychometric floor
+	let minPsychFloor = parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor;
+	if (!minPsychFloor || minPsychFloor <= 0) {
+		if (isMedicine) minPsychFloor = 700;
+		else if (isCS) minPsychFloor = 600;
+		else if (isEngineering) minPsychFloor = 560;
+		else if (isExactScience) minPsychFloor = 550;
+		else minPsychFloor = 500;
+	}
+
+	// Physics prerequisite
+	let requiresPhysics = parsedPrereq.requiresPhysics ?? (program as any)?.requiresPhysics;
+	if (requiresPhysics === undefined) {
+		requiresPhysics = isEngineering || (calculatorId === 'technion' && isExactScience);
+	}
+
+	// Direct Bagrut
+	const requiresPsychometric = program?.requiresPsychometric ?? (
+		parsedPrereq.mustHavePsychometric ?? (calculatorId === 'technion' || isMedicine || isCS)
+	);
+
+	let directBagrutEligible = program?.directBagrutEligible ?? parsedPrereq.directBagrutEligible;
+	if (directBagrutEligible === undefined) {
+		directBagrutEligible = !requiresPsychometric && isDegreeEligibleForDirectBagrut(progName, calculatorId);
+	}
+
+	let directBagrutMinAverage = program?.directBagrutMinAverage ?? parsedPrereq.directBagrutMinAverage;
+	if (!directBagrutMinAverage && directBagrutEligible) {
+		directBagrutMinAverage = (calculatorId === 'biu' || calculatorId === 'bar_ilan') ? 100.0 : 102.0;
+	}
+
+	return {
+		minPsychometricFloor: minPsychFloor,
+		minPsychometricQuant: parsedPrereq.minPsychometricQuant ?? (isExactScience ? 115 : undefined),
+		requiresPhysics: Boolean(requiresPhysics),
+		minMathUnits: parsedPrereq.minMathUnits ?? (isExactScience ? 4 : 3),
+		minMathGrade: parsedPrereq.minMathGrade ?? (isExactScience ? 75 : 60),
+		directBagrutEligible: Boolean(directBagrutEligible),
+		directBagrutMinAverage: directBagrutMinAverage ?? undefined,
+		directBagrutMath5Min: parsedPrereq.directBagrutMath5Min ?? (isExactScience ? 80 : undefined),
+		directBagrutMath4Min: parsedPrereq.directBagrutMath4Min ?? (isExactScience ? 90 : undefined)
+	};
+}
+
 /**
  * Main Closed-Loop Generator producing 3 mathematically guaranteed tailored admission tracks
  */
@@ -851,6 +937,11 @@ export function generatePersonalizedTracks(
 		gapAnalysis.target.program.fieldOfStudy.includes('פיזיקה') ||
 		gapAnalysis.target.program.fieldOfStudy.includes('מתמטיקה') ||
 		gapAnalysis.target.program.fieldOfStudy.includes('כימיה');
+
+	// Degree-specific hard prerequisites gate
+	const hardReqs = extractDegreeHardRequirements(gapAnalysis.target.program, calculatorId);
+	const degreePsychFloor = hardReqs.minPsychometricFloor;
+	const minPsychSearchFloor = hasTakenPsych ? Math.max(currentPsych, degreePsychFloor) : degreePsychFloor;
 
 	// Universal strict hard limit: No track may EVER propose a psychometric score higher than currentPsych + MAX_REALISTIC_PSYCHOMETRIC_JUMP (100)
 	const maxAllowedPsychTarget = hasTakenPsych
@@ -888,7 +979,7 @@ export function generatePersonalizedTracks(
 				threshold,
 				userProfile,
 				userProfile.bagrutSubjects,
-				hasTakenPsych ? currentPsych : 450,
+				minPsychSearchFloor,
 				psychCeiling,
 				baseMathU,
 				baseMathG,
@@ -906,7 +997,7 @@ export function generatePersonalizedTracks(
 			threshold,
 			userProfile,
 			sim.subjects,
-			hasTakenPsych ? currentPsych : 450,
+			minPsychSearchFloor,
 			800,
 			sim.mathUnits,
 			sim.mathGrade,
@@ -936,7 +1027,7 @@ export function generatePersonalizedTracks(
 				threshold,
 				userProfile,
 				sim.subjects,
-				hasTakenPsych ? currentPsych : 450,
+				minPsychSearchFloor,
 				800,
 				sim.mathUnits,
 				sim.mathGrade,
@@ -968,7 +1059,7 @@ export function generatePersonalizedTracks(
 					threshold,
 					userProfile,
 					sim.subjects,
-					hasTakenPsych ? currentPsych : 450,
+					minPsychSearchFloor,
 					800,
 					sim.mathUnits,
 					sim.mathGrade,
@@ -1002,7 +1093,7 @@ export function generatePersonalizedTracks(
 						threshold,
 						userProfile,
 						sim.subjects,
-						hasTakenPsych ? currentPsych : 450,
+						minPsychSearchFloor,
 						800,
 						sim.mathUnits,
 						sim.mathGrade,
@@ -1038,7 +1129,7 @@ export function generatePersonalizedTracks(
 							threshold,
 							userProfile,
 							sim.subjects,
-							hasTakenPsych ? currentPsych : 450,
+							minPsychSearchFloor,
 							800,
 							sim.mathUnits,
 							sim.mathGrade,
@@ -1083,7 +1174,7 @@ export function generatePersonalizedTracks(
 			threshold,
 			userProfile,
 			simFast.subjects,
-			hasTakenPsych ? currentPsych : 450,
+			minPsychSearchFloor,
 			800,
 			simFast.mathUnits,
 			simFast.mathGrade,
@@ -1160,7 +1251,7 @@ export function generatePersonalizedTracks(
 			threshold,
 			userProfile,
 			multiSim.subjects,
-			hasTakenPsych ? currentPsych : 450,
+			minPsychSearchFloor,
 			800,
 			multiSim.mathUnits,
 			multiSim.mathGrade,
@@ -1178,8 +1269,8 @@ export function generatePersonalizedTracks(
 				badge: 'הכי מומלץ (פיזור סיכונים)',
 				badgeColor: 'from-emerald-500 to-teal-600',
 				strategyDescription: hasTakenPsych
-					? `פיצול המאמץ לשני מחזורים מונע עומס יתר: מחזור 1 מעלה 3 מקצועות (${multiSubjectNames}) ל-${multiRes.bagrutAverage.toFixed(1)}, ובמחזור 2 נדרש יעד פסיכומטרי של ${targetP_Multi} (+${targetP_Multi - currentPsych} נקודות) לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}).`
-					: `פיצול המאמץ לשני מחזורים מונע עומס יתר: מחזור 1 מעלה 3 מקצועות (${multiSubjectNames}) ל-${multiRes.bagrutAverage.toFixed(1)}, ובמחזור 2 נדרש יעד פסיכומטרי של ${targetP_Multi} לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}).`,
+					? `פיזור העומס בין שדרוג מקצועות הבגרות (${multiSubjectNames}) לבין הפסיכומטרי מביא לממוצע בגרות של ${multiRes.bagrutAverage.toFixed(1)} ומאפשר לעמוד ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}) עם יעד פסיכומטרי נגיש יותר של ${targetP_Multi} (+${targetP_Multi - currentPsych} נקודות בלבד).`
+					: `פיזור העומס בין שדרוג מקצועות הבגרות (${multiSubjectNames}) לבין הפסיכומטרי מביא לממוצע בגרות של ${multiRes.bagrutAverage.toFixed(1)} ומאפשר לעמוד ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}) עם יעד פסיכומטרי נגיש של ${targetP_Multi}.`,
 				targetSekem: multiRes.sekem,
 				targetPsychometric: targetP_Multi,
 				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
@@ -1226,7 +1317,7 @@ export function generatePersonalizedTracks(
 				threshold,
 				userProfile,
 				simMax.subjects,
-				hasTakenPsych ? currentPsych : 350,
+				minPsychSearchFloor,
 				800,
 				simMax.mathUnits,
 				simMax.mathGrade,
@@ -1485,7 +1576,7 @@ export function generatePersonalizedTracks(
 				threshold,
 				userProfile,
 				sim2.subjects,
-				hasTakenPsych ? currentPsych : 450,
+				minPsychSearchFloor,
 				800,
 				sim2.mathUnits,
 				sim2.mathGrade,
@@ -1504,7 +1595,7 @@ export function generatePersonalizedTracks(
 					threshold,
 					userProfile,
 					sim1.subjects,
-					hasTakenPsych ? currentPsych : 450,
+					minPsychSearchFloor,
 					800,
 					sim1.mathUnits,
 					sim1.mathGrade,
@@ -1512,7 +1603,7 @@ export function generatePersonalizedTracks(
 					sim1.physGrade
 				);
 				winningFastLevers = top1;
-				winningFastPsych = p1 ?? (hasTakenPsych ? currentPsych : 450);
+				winningFastPsych = p1 ?? minPsychSearchFloor;
 			}
 		}
 
@@ -1602,42 +1693,74 @@ export function generatePersonalizedTracks(
 	const degreeRequiresPsychometric = targetProgram?.requiresPsychometric !== undefined
 		? targetProgram.requiresPsychometric
 		: (calculatorId === 'technion' || !isDegreeEligibleForDirectBagrut(degreeName, calculatorId));
-	const degreeAllowsDirectBagrut = !degreeRequiresPsychometric && (targetProgram?.directBagrutEligible ?? (calculatorId !== 'technion' && isDegreeEligibleForDirectBagrut(degreeName, calculatorId)));
+	const degreeAllowsDirectBagrut = hardReqs.directBagrutEligible;
 
-	// Check if direct bagrut admission can be achieved with 1 to 3 levers (only for eligible degrees)
+	// Check if direct bagrut admission can be achieved with 0 to 3 levers (only for eligible degrees)
 	if (degreeAllowsDirectBagrut) {
-		for (let k = 1; k <= Math.min(3, availableLevers.length); k++) {
-			const testLevers = availableLevers.slice(0, k);
-			const testSim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, testLevers);
-			const evalZero = evaluateSimulatedSekem(
-				calculatorId,
-				relevantSekemType,
-				userProfile,
-				testSim.subjects,
-				hasTakenPsych ? currentPsych : 0,
-				testSim.mathUnits,
-				testSim.mathGrade,
-				testSim.physUnits,
-				testSim.physGrade
-			);
+		// First check k = 0: Does the candidate already qualify for direct bagrut with existing scores?
+		const evalZeroExisting = evaluateSimulatedSekem(
+			calculatorId,
+			relevantSekemType,
+			userProfile,
+			userProfile.bagrutSubjects,
+			hasTakenPsych ? currentPsych : 0,
+			baseMathU,
+			baseMathG,
+			basePhysU,
+			basePhysG
+		);
+		const meetsMathPrereq = (baseMathU === 5 && baseMathG >= (hardReqs.directBagrutMath5Min ?? 70)) ||
+			(baseMathU === 4 && baseMathG >= (hardReqs.directBagrutMath4Min ?? 85)) ||
+			(!hardReqs.directBagrutMath5Min && !hardReqs.directBagrutMath4Min);
 
-			if (evalZero.directBagrutEligible) {
-				directBagrutSol = { levers: testLevers, res: evalZero };
-				break;
+		const isDirectEligibleNow = (evalZeroExisting.directBagrutEligible || (hardReqs.directBagrutMinAverage && evalZeroExisting.bagrutAverage >= hardReqs.directBagrutMinAverage)) && meetsMathPrereq;
+
+		if (isDirectEligibleNow) {
+			directBagrutSol = { levers: [], res: evalZeroExisting };
+		} else {
+			for (let k = 1; k <= Math.min(3, availableLevers.length); k++) {
+				const testLevers = availableLevers.slice(0, k);
+				const testSim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, testLevers);
+				const evalZero = evaluateSimulatedSekem(
+					calculatorId,
+					relevantSekemType,
+					userProfile,
+					testSim.subjects,
+					hasTakenPsych ? currentPsych : 0,
+					testSim.mathUnits,
+					testSim.mathGrade,
+					testSim.physUnits,
+					testSim.physGrade
+				);
+
+				const meetsMathSim = (testSim.mathUnits === 5 && testSim.mathGrade >= (hardReqs.directBagrutMath5Min ?? 70)) ||
+					(testSim.mathUnits === 4 && testSim.mathGrade >= (hardReqs.directBagrutMath4Min ?? 85)) ||
+					(!hardReqs.directBagrutMath5Min && !hardReqs.directBagrutMath4Min);
+
+				if ((evalZero.directBagrutEligible || (hardReqs.directBagrutMinAverage && evalZero.bagrutAverage >= hardReqs.directBagrutMinAverage)) && meetsMathSim) {
+					directBagrutSol = { levers: testLevers, res: evalZero };
+					break;
+				}
 			}
 		}
 	}
 
 	if (directBagrutSol) {
 		track2LeverCount = directBagrutSol.levers.length;
-		const bagrutSummary = directBagrutSol.levers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, ציון ${l.targetGrade})`).join(' + ');
+		const isZeroLevers = directBagrutSol.levers.length === 0;
+		const bagrutSummary = isZeroLevers
+			? 'ציוני הבגרות הקיימים שלך'
+			: directBagrutSol.levers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל, ציון ${l.targetGrade})`).join(' + ');
 		const realDirectSekem = directBagrutSol.res.sekem > 0 ? directBagrutSol.res.sekem : threshold;
-		tracks.push({
-			id: 'track-direct-bagrut',
-			title: 'המסלול הבטוח: קבלה ישירה על סמך בגרות (אפס פסיכומטרי!)',
-			badge: 'קבלה ישירה ללא פסיכומטרי',
+
+		const directTrack: RecommendedTrack = {
+			id: isZeroLevers ? 'track-direct-admit-zero' : 'track-direct-bagrut',
+			title: isZeroLevers ? 'קבלה ישירה מיידית על סמך בגרות קיימת' : 'המסלול הבטוח: קבלה ישירה על סמך בגרות (אפס פסיכומטרי!)',
+			badge: isZeroLevers ? 'קבלה ישירה מיידית (0 בחינות!)' : 'קבלה ישירה ללא פסיכומטרי',
 			badgeColor: 'from-emerald-500 to-teal-600',
-			strategyDescription: `מעקף פסיכומטרי מלא: שדרוג ${bagrutSummary} מעלה את ממוצע הבגרות ל-${directBagrutSol.res.bagrutAverage.toFixed(1)} ומקנה זכאות מלאה לקבלה ישירה (Direct Bagrut Admission) ב${gapAnalysis.target.institutionName} — ללא צורך במבחן פסיכומטרי כלל! (סכם מחושב: ${realDirectSekem.toFixed(isTechnion ? 2 : 1)}).`,
+			strategyDescription: isZeroLevers
+				? `זכאות מיידית לקבלה ישירה! ממוצע הבגרות הקיים שלך (${directBagrutSol.res.bagrutAverage.toFixed(1)}) וציוני הבגרות עומדים במלואם ברף הקבלה הישירה (Direct Bagrut Admission) ב${gapAnalysis.target.institutionName} — ללא צורך במבחן פסיכומטרי וללא צורך בשיפור בגרויות כלל!`
+				: `מעקף פסיכומטרי מלא: שדרוג ${bagrutSummary} מעלה את ממוצע הבגרות ל-${directBagrutSol.res.bagrutAverage.toFixed(1)} ומקנה זכאות מלאה לקבלה ישירה (Direct Bagrut Admission) ב${gapAnalysis.target.institutionName} — ללא צורך במבחן פסיכומטרי כלל! (סכם מחושב: ${realDirectSekem.toFixed(isTechnion ? 2 : 1)}).`,
 			targetSekem: realDirectSekem,
 			targetPsychometric: hasTakenPsych ? currentPsych : undefined,
 			currentPsychometric: hasTakenPsych ? currentPsych : undefined,
@@ -1651,18 +1774,38 @@ export function generatePersonalizedTracks(
 				targetUnits: l.targetUnits,
 				reason: l.reason
 			})),
-			estimatedWeeks: directBagrutSol.levers.length * 6,
-			weeklyHours: availableWeeklyHours,
+			estimatedWeeks: isZeroLevers ? 1 : directBagrutSol.levers.length * 6,
+			weeklyHours: isZeroLevers ? 0 : availableWeeklyHours,
 			feasibility: 'very_high',
-			feasibilityExplanation: `קבלה מובטחת רשמית על סמך עמידה ברף קבלה ישירה בבגרות (${directBagrutSol.res.bagrutAverage.toFixed(1)}), עם אפס תלות במבחן הפסיכומטרי.`,
-			steps: directBagrutSol.levers.map((l, idx) => ({
-				title: `שיפור / הרחבת בגרות ב-${l.subjectName}`,
-				detail: `הכנה ותרגול ממוקד להגעה לציון ${l.targetGrade} (${l.reason})`,
-				timing: `שבועות ${idx * 6 + 1}–${idx * 6 + 6}`,
-				type: l.isMath ? 'bagrut_core' : 'bagrut_elective'
-			})),
-			keyAdvantage: 'אפס תלות בפסיכומטרי! קבלה ישירה רשמית על סמך שדרוג בגרויות בלבד.'
-		});
+			feasibilityExplanation: isZeroLevers
+				? `עמידה מלאה ומיידית ברף קבלה ישירה בבגרות (${directBagrutSol.res.bagrutAverage.toFixed(1)}) ללא צורך בבחינות נוספות.`
+				: `קבלה מובטחת רשמית על סמך עמידה ברף קבלה ישירה בבגרות (${directBagrutSol.res.bagrutAverage.toFixed(1)}), עם אפס תלות במבחן הפסיכומטרי.`,
+			steps: isZeroLevers
+				? [
+					{
+						title: 'הגשת מועמדות לקבלה ישירה',
+						detail: `הגשת ציוני הבגרות המצטיינים למדור הרישום ב${gapAnalysis.target.institutionName} לקבלת הודעת קבלה רשמית`,
+						timing: 'מיידי',
+						type: 'administrative' as any
+					}
+				]
+				: directBagrutSol.levers.map((l, idx) => ({
+					title: `שיפור / הרחבת בגרות ב-${l.subjectName}`,
+					detail: `הכנה ותרגול ממוקד להגעה לציון ${l.targetGrade} (${l.reason})`,
+					timing: `שבועות ${idx * 6 + 1}–${idx * 6 + 6}`,
+					type: l.isMath ? 'bagrut_core' : 'bagrut_elective'
+				})),
+			keyAdvantage: isZeroLevers
+				? 'קבלה ישירה מיידית! אין צורך בפסיכומטרי ואין צורך בבחינות נוספות.'
+				: 'אפס תלות בפסיכומטרי! קבלה ישירה רשמית על סמך שדרוג בגרויות בלבד.'
+		};
+
+		if (isZeroLevers) {
+			// Prepend as the primary track (Track 1)
+			tracks.unshift(directTrack);
+		} else {
+			tracks.push(directTrack);
+		}
 	} else {
 		// Track 1 target psychometric score:
 		const track1Psych = tracks[0]?.targetPsychometric || (hasTakenPsych ? currentPsych + 50 : Math.min(psychCeiling, baselinePsych + 50));
@@ -1684,13 +1827,13 @@ export function generatePersonalizedTracks(
 			threshold,
 			userProfile,
 			simMax5.subjects,
-			hasTakenPsych ? currentPsych : 350,
+			minPsychSearchFloor,
 			800,
 			simMax5.mathUnits,
 			simMax5.mathGrade,
 			simMax5.physUnits,
 			simMax5.physGrade
-		) ?? (hasTakenPsych ? currentPsych : 450);
+		) ?? minPsychSearchFloor;
 
 		// =========================================================================
 		// TRACK 2: המסלול המאוזן: שילוב בגרויות ופיזור סיכונים (או מסלול חלופי בבחינה בודדת)
@@ -1720,7 +1863,7 @@ export function generatePersonalizedTracks(
 					threshold,
 					userProfile,
 					sim.subjects,
-					Math.max(currentPsych, 450),
+					minPsychSearchFloor,
 					hasTakenPsych ? currentPsych : baselinePsych,
 					sim.mathUnits,
 					sim.mathGrade,
@@ -1751,7 +1894,7 @@ export function generatePersonalizedTracks(
 						threshold,
 						userProfile,
 						sim.subjects,
-						Math.max(currentPsych, 450),
+						minPsychSearchFloor,
 						Math.min(800, track1Psych - 1),
 						sim.mathUnits,
 						sim.mathGrade,
@@ -1759,6 +1902,13 @@ export function generatePersonalizedTracks(
 						sim.physGrade
 					);
 					if (p !== null && p < track1Psych) {
+						// ROI Guard: If this combo adds 2 or more exams over Track 1, but lowers psychometric by less than 10 points, skip it!
+						const addedExams = combo.length - track1LeverCount;
+						const psychRelief = track1Psych - p;
+						if (addedExams >= 2 && psychRelief < 10) {
+							continue;
+						}
+
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
 						if (res.sekem >= threshold) {
@@ -1784,7 +1934,7 @@ export function generatePersonalizedTracks(
 						threshold,
 						userProfile,
 						sim.subjects,
-						Math.max(currentPsych, 450),
+						minPsychSearchFloor,
 						800,
 						sim.mathUnits,
 						sim.mathGrade,
@@ -1818,7 +1968,7 @@ export function generatePersonalizedTracks(
 				threshold,
 				userProfile,
 				sim.subjects,
-				Math.max(currentPsych, 450),
+				minPsychSearchFloor,
 				800,
 				sim.mathUnits,
 				sim.mathGrade,
@@ -1956,7 +2106,7 @@ export function generatePersonalizedTracks(
 						threshold,
 						userProfile,
 						sim.subjects,
-						Math.max(currentPsych, 450),
+						minPsychSearchFloor,
 						pUpper3,
 						sim.mathUnits,
 						sim.mathGrade,
@@ -2047,7 +2197,7 @@ export function generatePersonalizedTracks(
 					threshold,
 					userProfile,
 					simAnchor.subjects,
-					hasTakenPsych ? currentPsych : 450,
+					minPsychSearchFloor,
 					800,
 					simAnchor.mathUnits,
 					simAnchor.mathGrade,
@@ -2056,7 +2206,7 @@ export function generatePersonalizedTracks(
 				);
 
 				const anchorPsych = anchorPsychSol !== null
-					? Math.max(hasTakenPsych ? currentPsych : 350, anchorPsychSol)
+					? Math.max(minPsychSearchFloor, anchorPsychSol)
 					: null;
 
 				const psychRelief = anchorPsych !== null ? balPsych - anchorPsych : 0;
@@ -2256,11 +2406,28 @@ export function generatePersonalizedTracks(
 		}
 		t.estimatedWeeks = schedulePlan.totalWeeks;
 
+		// Hard Prerequisites Gate: If degree requires physics and candidate has 0 units,
+		// and this track doesn't include Physics as a lever, attach the mandatory requirement step:
+		if (hardReqs.requiresPhysics && basePhysU === 0 && t.id !== 'track-transfer' && t.id !== 'track-mechina' && t.id !== 'track-direct-admit-zero') {
+			const hasPhysLever = t.recommendedSubjectImprovements.some((l) => isSubjectMatch(l.subjectName, 'פיזיקה'));
+			if (!hasPhysLever) {
+				const hasPhysStep = t.steps.some((s) => s.title.includes('פיזיקה'));
+				if (!hasPhysStep) {
+					t.steps.push({
+						title: 'דרישת קדם קשיחה: מבחן סיווג / פטור בפיזיקה',
+						detail: `התואר מחייב בגרות בפיזיקה או מעבר מבחן סיווג מוסדי בפיזיקה (ציון 70+) לפני פתיחת שנת הלימודים ב${gapAnalysis.target.institutionName}`,
+						timing: 'קיץ (לפני פתיחת השנה)',
+						type: 'administrative' as any
+					});
+				}
+			}
+		}
+
 		// STRICT REQUIREMENT: Only tracks that meet or exceed the threshold are returned!
 		if (t.targetSekem >= threshold - 0.05) {
 			verifiedTracks.push(t);
 		}
 	}
 
-	return verifiedTracks;
+	return verifiedTracks.slice(0, 3);
 }

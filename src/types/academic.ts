@@ -12,10 +12,12 @@ export interface AcademicDegree {
      hebrewRequirement?: string | null;
      additionalConditions?: string | null;
      comments?: string | null;
-     registrationStatus?: string | null;
      requiresPsychometric?: boolean;
      directBagrutEligible?: boolean;
      directBagrutMinAverage?: number | null;
+     minPsychometricFloor?: number | null;
+     prerequisitesJson?: string | null;
+     registrationStatus?: string | null;
      url?: string;
 }
 

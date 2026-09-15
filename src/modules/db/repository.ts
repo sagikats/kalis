@@ -222,7 +222,13 @@ export class KalisDatabaseRepository {
 					prerequisites: {
 						minMathUnits: isStem ? 4 : undefined,
 						minMathGrade: isStem ? 75 : undefined,
-						mustHavePsychometric: requiresPsych
+						mustHavePsychometric: requiresPsych,
+						minPsychometricFloor: (p as any).minPsychometricFloor ?? undefined,
+						minPsychometricQuant: (p as any).minPsychometricQuant ?? undefined,
+						requiresPhysics: (p as any).requiresPhysics ?? (sekemType === 'engineering' || (instId === 'technion' && isStem)),
+						directBagrutMath5Min: (p as any).directBagrutMath5Min ?? undefined,
+						directBagrutMath4Min: (p as any).directBagrutMath4Min ?? undefined,
+						directBagrutMinAverage: directThreshold ?? undefined
 					},
 					url: p.url,
 					createdAt: new Date(),
@@ -298,6 +304,12 @@ export class KalisDatabaseRepository {
 							minPhysUnits: prereq.minPhysUnits,
 							minPhysGrade: prereq.minPhysGrade,
 							mustHavePsychometric: Boolean(prereq.mustHavePsychometric),
+							minPsychometricFloor: prereq.minPsychometricFloor,
+							minPsychometricQuant: prereq.minPsychometricQuant,
+							requiresPhysics: prereq.requiresPhysics,
+							directBagrutMath5Min: prereq.directBagrutMath5Min,
+							directBagrutMath4Min: prereq.directBagrutMath4Min,
+							directBagrutMinAverage: prereq.directBagrutMinAverage,
 							mandatorySubjects: prereq.mandatorySubjects
 						},
 						description: p.description ?? undefined,

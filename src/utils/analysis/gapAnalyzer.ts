@@ -133,14 +133,44 @@ export function resolveProgramSekemType(
  */
 export function checkProgramPrerequisites(
 	programTitle: string,
-	profile: UserAcademicProfile
+	profile: UserAcademicProfile,
+	targetProgram?: AcademicDegree
 ): PrerequisiteCheck[] {
 	const checks: PrerequisiteCheck[] = [];
 	const title = programTitle.toLowerCase();
 
 	const isEngineering = title.includes('הנדס');
-	const isCS = title.includes('מדעי המחשב') || title.includes('תוכנה') || title.includes('סייבר');
-	const isExactScience = isEngineering || isCS || title.includes('פיזיקה') || title.includes('מתמטיקה');
+	const isCS = title.includes('מדעי המחשב') || title.includes('תוכנה') || title.includes('סייבר') || title.includes('בינה מלאכותית');
+	const isMedicine = title.includes('רפואה') || title.includes('רפואת שיניים');
+	const isExactScience = isEngineering || isCS || title.includes('פיזיקה') || title.includes('מתמטיקה') || title.includes('כימיה');
+
+	// 0. Degree-specific hard psychometric floor
+	let psychFloor = targetProgram?.minPsychometricFloor;
+	if (!psychFloor && targetProgram?.prerequisitesJson) {
+		try {
+			const parsed = JSON.parse(targetProgram.prerequisitesJson);
+			psychFloor = parsed.minPsychometricFloor;
+		} catch (e) {}
+	}
+	if (!psychFloor) {
+		if (isMedicine) psychFloor = 700;
+		else if (isCS) psychFloor = 600;
+		else if (isEngineering) psychFloor = 560;
+		else if (isExactScience) psychFloor = 550;
+	}
+
+	if (psychFloor && psychFloor > 0) {
+		const currPsych = profile.psychometricGeneral || 0;
+		const isMet = currPsych >= psychFloor;
+		checks.push({
+			id: 'psych_floor',
+			name: 'רצפת פסיכומטרי מינימלית לתואר',
+			required: `ציון ${psychFloor} ומעלה ברף המינימום המוסדי לתואר`,
+			current: currPsych > 0 ? `ציון ${currPsych}` : 'טרם הוזן ציון פסיכומטרי',
+			isMet,
+			notes: isMet ? undefined : `החוג מחייב רף פסיכומטרי קשיח של ${psychFloor} לפחות כתנאי סף לקבלה.`
+		});
+	}
 
 	// 1. Math prerequisite
 	if (isExactScience) {
@@ -158,19 +188,23 @@ export function checkProgramPrerequisites(
 		});
 	}
 
-	// 2. Physics prerequisite for engineering
-	if (isEngineering) {
+	// 2. Physics prerequisite for engineering and physics-requiring degrees
+	const requiresPhysics = isEngineering ||
+		(targetProgram as any)?.requiresPhysics ||
+		(targetProgram?.prerequisitesJson?.includes('"requiresPhysics":true'));
+
+	if (requiresPhysics) {
 		const physicsUnits = profile.physicsUnits || 0;
 		const physicsGrade = profile.physicsGrade || 0;
 		const isMet = physicsUnits === 5 && physicsGrade >= 65;
 
 		checks.push({
 			id: 'physics',
-			name: 'בגרות בפיזיקה (פטור ממכינה)',
-			required: '5 יח״ל בציון 65+ (מעניק פטור ממכינת קישור בפיזיקה)',
+			name: 'בגרות בפיזיקה (פטור ממכינה / מבחן סיווג)',
+			required: '5 יח״ל בציון 65+ או מעבר מבחן סיווג בפיזיקה (70+)',
 			current: physicsUnits > 0 ? `${physicsUnits} יח״ל בציון ${physicsGrade}` : 'ללא בגרות בפיזיקה',
 			isMet,
-			notes: isMet ? undefined : 'קבלה אפשרית, אך תחייב מעבר מכינת קישור / בחינת סיווג בפיזיקה לפני פתיחת שנת הלימודים.'
+			notes: isMet ? undefined : 'קבלה אפשרית, אך מחייבת מעבר מבחן סיווג מוסדי בפיזיקה (ציון 70+) או מכינה לפני פתיחת שנת הלימודים.'
 		});
 	}
 
@@ -228,7 +262,7 @@ export function analyzeProgramGap(
 		else status = 'not_accepted';
 	}
 
-	const prerequisites = checkProgramPrerequisites(target.program.fieldOfStudy, profile);
+	const prerequisites = checkProgramPrerequisites(target.program.fieldOfStudy, profile, target.program);
 	const missingPrerequisites = prerequisites.filter((p) => !p.isMet);
 
 	// Generate actionable improvement levers if there's a gap
