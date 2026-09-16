@@ -224,6 +224,25 @@ export function simulateRealisticSubscores(
 	baseQuantEmphasis?: number,
 	baseVerbalEmphasis?: number
 ): { quantSub: number; verbalSub: number; englishSub: number; quantEmphasis: number; verbalEmphasis: number } {
+	const hasCustomSubscores = Boolean(
+		(baseQuant && baseQuant > 0) ||
+		(baseVerbal && baseVerbal > 0) ||
+		(baseEnglish && baseEnglish > 0) ||
+		(baseQuantEmphasis && baseQuantEmphasis > 0) ||
+		(baseVerbalEmphasis && baseVerbalEmphasis > 0)
+	);
+
+	if (!hasCustomSubscores) {
+		const balSub = Math.min(150, Math.max(50, Math.round(50 + (targetGen - 200) / 6)));
+		return {
+			quantSub: balSub,
+			verbalSub: balSub,
+			englishSub: balSub,
+			quantEmphasis: targetGen,
+			verbalEmphasis: targetGen
+		};
+	}
+
 	const currentGen = baseGen > 0 ? baseGen : targetGen;
 	const baseBalSub = Math.round(50 + (currentGen - 200) / 6);
 	

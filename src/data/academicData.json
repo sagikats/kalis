@@ -2347,10 +2347,10 @@
         "admissionThreshold": 685,
         "psychometricScore": 685,
         "sekemScore": 685,
-        "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
-        "comments": "תואר ראשון בפסיכולוגיה (חד-חוגי או דו-חוגי). סף קבלה סכם/פסיכומטרי 685+"
+        "requiresPsychometric": false,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 106.5,
+        "comments": "תואר ראשון בפסיכולוגיה (חד-חוגי או דו-חוגי). סף קבלה סכם/פסיכומטרי 685+ או קבלה ישירה עם בגרות 106.5+"
       },
       {
         "id": "prog-inst-1-96",

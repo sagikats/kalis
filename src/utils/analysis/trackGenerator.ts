@@ -1843,11 +1843,20 @@ export function generatePersonalizedTracks(
 
 		const minCount2 = Math.min(searchPool2.length, Math.max(2, track1LeverCount > 0 ? track1LeverCount + 1 : 2));
 		const maxCount2 = Math.min(searchPool2.length, 3);
-		const track1ZeroPsych = track1Psych <= (hasTakenPsych ? currentPsych : baselinePsych);
+		const baseP = hasTakenPsych ? currentPsych : baselinePsych;
+		const track1ZeroPsych = track1Psych <= baseP;
 		const isSingleBagrutAdmissionTrack1 = track1ZeroPsych && track1LeverCount === 1;
+		const isZeroExamsTrack1 = track1ZeroPsych && track1LeverCount === 0;
+		const track1ExamCount = track1LeverCount + (track1Psych > baseP ? 1 : 0);
 		const track1SubjectName = tracks[0]?.recommendedSubjectImprovements?.[0]?.subjectName;
 
-		if (isSingleBagrutAdmissionTrack1) {
+		if (isZeroExamsTrack1) {
+			// =========================================================================
+			// Zero-Exam Admission: Candidate already meets admission threshold with
+			// existing credentials! Never prescribe redundant exams or burden.
+			// =========================================================================
+			bestBalCombo = null;
+		} else if (isSingleBagrutAdmissionTrack1) {
 			// =========================================================================
 			// CRITICAL USER DIRECTIVE:
 			// "אם אפשר להתקבל עם מבחן בגרות אחד אז המסלול השני יכול להיות שני דברים:
@@ -1864,13 +1873,13 @@ export function generatePersonalizedTracks(
 					userProfile,
 					sim.subjects,
 					minPsychSearchFloor,
-					hasTakenPsych ? currentPsych : baselinePsych,
+					baseP,
 					sim.mathUnits,
 					sim.mathGrade,
 					sim.physUnits,
 					sim.physGrade
 				);
-				if (p !== null && p <= (hasTakenPsych ? currentPsych : baselinePsych)) {
+				if (p !== null && p <= baseP) {
 					const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 					if (comboHasDroppedSubject([lever], res.droppedSubjects)) continue;
 					if (res.sekem >= threshold) {
@@ -1903,7 +1912,8 @@ export function generatePersonalizedTracks(
 					);
 					if (p !== null && p < track1Psych) {
 						// ROI Guard: If this combo adds 2 or more exams over Track 1, but lowers psychometric by less than 10 points, skip it!
-						const addedExams = combo.length - track1LeverCount;
+						const comboExamCount = combo.length + (p > baseP ? 1 : 0);
+						const addedExams = comboExamCount - track1ExamCount;
 						const psychRelief = track1Psych - p;
 						if (addedExams >= 2 && psychRelief < 10) {
 							continue;
@@ -1921,8 +1931,8 @@ export function generatePersonalizedTracks(
 			}
 		}
 
-		// Phase 2: If NOT isSingleBagrutAdmissionTrack1 and no lower psych combo was found:
-		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1) {
+		// Phase 2: If NOT single bagrut and NOT already admitted, search remaining combos with ROI Guard:
+		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1 && !isZeroExamsTrack1) {
 			for (let count = Math.min(2, searchPool2.length); count <= Math.min(3, searchPool2.length); count++) {
 				const combos = getCombinations(searchPool2, count);
 				for (const combo of combos) {
@@ -1942,6 +1952,14 @@ export function generatePersonalizedTracks(
 						sim.physGrade
 					);
 					if (p !== null) {
+						const comboExamCount = combo.length + (p > baseP ? 1 : 0);
+						const addedExams = comboExamCount - track1ExamCount;
+						const psychRelief = track1Psych - p;
+						// Enforce ROI Guard: Reject combinations adding >= 2 exams without >= 10 psychometric relief
+						if (addedExams >= 2 && psychRelief < 10) {
+							continue;
+						}
+
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
 						if (res.sekem >= threshold) {
@@ -1959,7 +1977,7 @@ export function generatePersonalizedTracks(
 			}
 		}
 
-		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1) {
+		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1 && !isZeroExamsTrack1) {
 			const fallbackLevers = availableLevers.slice(0, Math.min(3, availableLevers.length));
 			const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, fallbackLevers);
 			const pBal = findExactPsychometricTarget(
@@ -1976,9 +1994,14 @@ export function generatePersonalizedTracks(
 				sim.physGrade
 			);
 			if (pBal !== null) {
-				const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, pBal, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
-				if (res.sekem >= threshold) {
-					bestBalCombo = { levers: fallbackLevers, psych: pBal, res };
+				const fallbackExams = fallbackLevers.length + (pBal > baseP ? 1 : 0);
+				const addedExams = fallbackExams - track1ExamCount;
+				const psychRelief = track1Psych - pBal;
+				if (addedExams < 2 || psychRelief >= 10) {
+					const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, pBal, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+					if (res.sekem >= threshold && !comboHasDroppedSubject(fallbackLevers, res.droppedSubjects)) {
+						bestBalCombo = { levers: fallbackLevers, psych: pBal, res };
+					}
 				}
 			}
 		}
@@ -2093,13 +2116,15 @@ export function generatePersonalizedTracks(
 		const minCount3 = Math.min(searchPool3.length, Math.max(4, track2LeverCount + 1));
 		const maxCount3 = Math.min(searchPool3.length, 5);
 
-		if (!isSingleBagrutAdmissionTrack1 && minCount3 <= maxCount3 && searchPool3.length >= 4) {
+		if (!track1ZeroPsych && !isSingleBagrutAdmissionTrack1 && !isZeroExamsTrack1 && gapAnalysis.gap < 0 && minCount3 <= maxCount3 && searchPool3.length >= 4) {
 			for (let count = minCount3; count <= maxCount3; count++) {
 				const combos = getCombinations(searchPool3, count);
 				for (const combo of combos) {
 					if (!isValidSubjectCombo(combo)) continue;
 					const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, combo);
-					const pUpper3 = (bestBalCombo && bestBalCombo.res.sekem >= threshold) ? Math.min(800, bestBalCombo.psych - 1) : psychCeiling;
+					const pUpper3 = (bestBalCombo && bestBalCombo.res.sekem >= threshold)
+						? Math.min(800, bestBalCombo.psych - 1)
+						: Math.min(800, track1Psych - 10);
 					const p = findExactPsychometricTarget(
 						calculatorId,
 						relevantSekemType,
@@ -2114,6 +2139,9 @@ export function generatePersonalizedTracks(
 						sim.physGrade
 					);
 					if (p !== null && (!bestBalCombo || bestBalCombo.res.sekem < threshold || p < bestBalCombo.psych)) {
+						// ROI Guard for Track 3: Must provide at least 10 points of psychometric relief over Track 1
+						if (track1Psych - p < 10) continue;
+
 						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 						if (comboHasDroppedSubject(combo, res.droppedSubjects)) continue;
 						if (res.sekem >= threshold) {
@@ -2318,7 +2346,7 @@ export function generatePersonalizedTracks(
 	// =========================================================================
 	const verifiedTracks: RecommendedTrack[] = [];
 	for (const t of uniqueTracks) {
-		if (t.id === 'track-mechina' || t.id === 'track-transfer' || t.id === 'track-direct-bagrut') {
+		if (t.id === 'track-mechina' || t.id === 'track-transfer' || t.id === 'track-direct-bagrut' || t.id === 'track-direct-admit-zero') {
 			verifiedTracks.push(t);
 			continue;
 		}
@@ -2378,7 +2406,9 @@ export function generatePersonalizedTracks(
 		}
 
 		// Strictly sync values directly from the official calculator
-		t.targetSekem = isTechnion ? Math.round(instCheck.sekem * 100) / 100 : Math.round(instCheck.sekem * 10) / 10;
+		t.targetSekem = isTechnion
+			? Math.round(instCheck.sekem * 100) / 100
+			: (calculatorId === 'bgu' || calculatorId === 'tau' ? Math.round(instCheck.sekem * 10) / 10 : Math.round(instCheck.sekem));
 		t.targetBagrutAverage = Math.round(instCheck.bagrutAverage * 10) / 10;
 
 		// Build concurrent/interleaved schedule plan for realistic time phasing:

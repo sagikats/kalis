@@ -58,6 +58,7 @@ export interface UserAcademicProfile {
 	mathUnits: number;
 	physicsGrade?: number;
 	physicsUnits?: number;
+	bagrutAverage?: number;
 }
 
 export function parseAdmissionThreshold(raw: number | string | undefined | null): number | null {
