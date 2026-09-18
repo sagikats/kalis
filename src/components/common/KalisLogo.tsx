@@ -85,7 +85,7 @@ export default function KalisLogo({
                     </div>
                     {showTagline && (
                          <div className={`font-semibold tracking-normal ${taglineSize} ${taglineColor} mt-0.5`}>
-                              מנוע קבלה אקדמי
+                              לא רק מחשבון
                          </div>
                     )}
                </div>

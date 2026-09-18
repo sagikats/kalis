@@ -119,9 +119,9 @@ export default function LandingPage() {
         {/* Subheadline & CTA Buttons Container - Just below the image banner */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-20 lg:pb-32">
           <div className="text-center max-w-3xl mx-auto space-y-7">
-            {/* Subheadline (Exact user requested sentence) */}
+            {/* Subheadline */}
             <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-2xl mx-auto">
-              אלגוריתם למידה אדפטיבי שמחשב מסלול מחדש בזמן אמת, מונע שחיקה, ומתאים את עומס השאלות והחזרות המרווחות ללוח הזמנים האמיתי שלך.
+              אלגוריתם אופטימיזציה אדפטיבי שמחשב מסלול קבלה מחדש בזמן אמת, מונע מבחנים מיותרים ושחיקה, ומתאים את פריסת הבגרויות והפסיכומטרי ללוח הזמנים האמיתי שלך.
             </p>
 
             {/* Two Main CTA Buttons - Clean Editorial Aesthetic */}
@@ -157,7 +157,7 @@ export default function LandingPage() {
 
                 <div className="bg-white p-5 text-center">
                   <p className="text-3xl font-extrabold font-sans text-[#222222]">
-                    639
+                    721
                   </p>
                   <p className="text-xs text-[#55524B] font-medium mt-1">תארים ותוכניות לימוד</p>
                   <span className="text-[10px] text-[#88857E] mt-0.5 block">מיפוי ספים ארצי</span>
@@ -272,7 +272,7 @@ export default function LandingPage() {
                 {/* Specs Pill List */}
                 <div className="pt-2 flex flex-wrap gap-2">
                   <span className="text-[11px] px-2.5 py-1 rounded-lg bg-[#FAF8F5] text-[#55524B] border border-[#E5DFD4]">
-                    ✓ 639 תוכניות לימוד
+                    ✓ 721 תוכניות לימוד
                   </span>
                   <span className="text-[11px] px-2.5 py-1 rounded-lg bg-[#FAF8F5] text-[#55524B] border border-[#E5DFD4]">
                     ✓ ספי קבלה עדכניים
