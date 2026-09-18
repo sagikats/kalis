@@ -22,58 +22,59 @@ export default function KalisLogo({
 
      const textColor = variant === 'light' ? 'text-white' : 'text-[#222222]';
      const taglineColor = variant === 'light' ? 'text-slate-300' : 'text-[#66635C]';
-     const pillarColor = variant === 'light' ? '#E2E8F0' : '#222222';
 
      return (
           <div className={`flex items-center gap-2.5 select-none ${className}`} dir="rtl">
-               {/* SVG LOGO MARK: Iconic 'M' Monogram with Upward Admission Arrow */}
+               {/* SVG LOGO MARK: Iconic Academic Graduation Cap (Mortarboard) */}
                <svg
                     height={iconHeight}
-                    viewBox="0 0 100 100"
+                    viewBox="0 0 48 48"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     className="shrink-0"
                >
                     <defs>
-                         {/* Modern Blue to Teal Cyan Gradient */}
-                         <linearGradient id="mitkablimArrowGradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#0284c7" />
-                              <stop offset="60%" stopColor="#0ea5e9" />
+                         {/* Signature Cyan Academic Tassel Gradient */}
+                         <linearGradient id={`mitkablimTassel-${variant}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stopColor={variant === 'light' ? '#38bdf8' : '#0284c7'} />
                               <stop offset="100%" stopColor="#06b6d4" />
                          </linearGradient>
                     </defs>
 
-                    {/* Left Pillar of M */}
-                    <rect
-                         x="12"
-                         y="24"
-                         width="15"
-                         height="62"
-                         rx="7"
-                         fill={pillarColor}
-                    />
-
-                    {/* Center Chevron Left Slope */}
+                    {/* Skullcap / Headpiece under the mortarboard */}
                     <path
-                         d="M 27 34 L 46 64 C 48 67 52 67 54 64 L 62 51 L 44 26 C 41 22 35 22 32 25 L 27 30 Z"
-                         fill={pillarColor}
+                         d="M 13 22.5 V 30 C 13 36 18 39.5 24 39.5 C 30 39.5 35 36 35 30 V 22.5 C 31.5 25.5 27.5 27 24 27 C 20.5 27 16.5 25.5 13 22.5 Z"
+                         fill={variant === 'light' ? '#cbd5e1' : '#18181b'}
                     />
 
-                    {/* Ascending Right Arrow Arm of M (Rising into Admission) */}
-                    <g>
-                         {/* Main Diagonal Launch Bar */}
-                         <path
-                              d="M 48 60 L 78 19 C 80 16 84 17 85 20 L 87 26 C 88 29 87 33 84 37 L 59 73 C 56 77 50 76 48 72 Z"
-                              fill="url(#mitkablimArrowGradient)"
-                         />
-                         {/* Arrow Tip / Flag */}
-                         <path
-                              d="M 68 14 L 88 14 C 90.5 14 92 15.5 92 18 L 92 38 L 84 30 L 84 22 L 76 22 Z"
-                              fill="url(#mitkablimArrowGradient)"
-                         />
-                         {/* Cyan Accent Target Dot */}
-                         <circle cx="88" cy="18" r="5" fill="#00d8f6" />
-                    </g>
+                    {/* Mortarboard 3D Rim / Underside Depth */}
+                    <path
+                         d="M 4 19 L 24 29 L 44 19 L 44 21.5 L 24 31.5 L 4 21.5 Z"
+                         fill={variant === 'light' ? '#94a3b8' : '#141416'}
+                    />
+
+                    {/* Mortarboard Top Diamond Plate */}
+                    <path
+                         d="M 24 7 L 44 17 L 24 27 L 4 17 Z"
+                         fill={variant === 'light' ? '#F8FAFC' : '#27272a'}
+                    />
+
+                    {/* Silk Ribbon Cord draping gracefully to the side */}
+                    <path
+                         d="M 24 17 C 33 17 40 21 40 26 V 35"
+                         stroke={`url(#mitkablimTassel-${variant})`}
+                         strokeWidth="2.4"
+                         strokeLinecap="round"
+                    />
+
+                    {/* Academic Tassel Brush / Fringe */}
+                    <path
+                         d="M 37.5 35 H 42.5 L 43.5 42 C 43.5 42.5 43 43 42 43 H 38 C 37 43 36.5 42.5 36.5 42 L 37.5 35 Z"
+                         fill={`url(#mitkablimTassel-${variant})`}
+                    />
+
+                    {/* Center Academic Stud (Matches Brand Cyan Dot) */}
+                    <circle cx="24" cy="17" r="2.4" fill="#00d8f6" />
                </svg>
 
                {/* BRAND TYPOGRAPHY: מתקבלים */}
