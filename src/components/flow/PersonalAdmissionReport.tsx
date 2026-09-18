@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
+import Link from 'next/link';
 import {
 	CheckCircle2,
 	AlertCircle,
@@ -201,6 +202,22 @@ export default function PersonalAdmissionReport({
 					</div>
 				</div>
 			)}
+
+			{/* Legal disclaimer note */}
+			<div className="pt-4 border-t border-[#E5DFD4] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#7E7A73]">
+				<p className="leading-relaxed">
+					* החישובים מבוססים על נוסחאות המוסדות ומהווים כלי עזר והדמיה עצמאית בלבד. הקבלה הסופית והחישוב הקובע נקבעים אך ורק ע״י מוסד הלימוד האקדמי.
+				</p>
+				<div className="flex items-center gap-2.5 shrink-0">
+					<Link href="/terms" target="_blank" className="underline hover:text-[#222222]">
+						תנאי שימוש
+					</Link>
+					<span>•</span>
+					<Link href="/privacy" target="_blank" className="underline hover:text-[#222222]">
+						מדיניות פרטיות
+					</Link>
+				</div>
+			</div>
 		</div>
 	);
 }

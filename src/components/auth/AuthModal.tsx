@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import {
 	X,
@@ -264,6 +265,30 @@ export default function AuthModal() {
 									/>
 								</div>
 							</div>
+						)}
+
+						{mode === 'register' && (
+							<p className="text-[11px] text-[#8A847C] text-center leading-relaxed px-1">
+								בלחיצה על &quot;צור חשבון&quot;, הנך מאשר/ת את{' '}
+								<Link
+									href="/terms"
+									target="_blank"
+									onClick={closeAuthModal}
+									className="underline text-[#3C3C3C] hover:text-black font-semibold"
+								>
+									תנאי השימוש
+								</Link>{' '}
+								ואת{' '}
+								<Link
+									href="/privacy"
+									target="_blank"
+									onClick={closeAuthModal}
+									className="underline text-[#3C3C3C] hover:text-black font-semibold"
+								>
+									מדיניות הפרטיות
+								</Link>{' '}
+								ומסכים/ה לשמירת הנתונים.
+							</p>
 						)}
 
 						<button

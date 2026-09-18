@@ -52,6 +52,18 @@ export default function Footer() {
                                              <span>מחשבון סכם ל-8 האוניברסיטאות</span>
                                         </Link>
                                    </li>
+                                   <li>
+                                        <Link href="/terms" className="inline-flex items-center gap-1.5 text-[#55524B] hover:text-[#111111] transition-colors">
+                                             <ArrowUpLeft className="h-3 w-3 text-[#9E988D]" />
+                                             <span>תנאי שימוש והגבלת אחריות</span>
+                                        </Link>
+                                   </li>
+                                   <li>
+                                        <Link href="/privacy" className="inline-flex items-center gap-1.5 text-[#55524B] hover:text-[#111111] transition-colors">
+                                             <ArrowUpLeft className="h-3 w-3 text-[#9E988D]" />
+                                             <span>מדיניות פרטיות והגנת מידע</span>
+                                        </Link>
+                                   </li>
                               </ul>
                          </div>
 
@@ -68,7 +80,7 @@ export default function Footer() {
                                    </div>
                                    <div className="p-2.5 rounded-xl bg-white border border-[#E2DDD2] flex items-center justify-between shadow-2xs">
                                         <span className="text-[#66635C]">תוכניות לימוד במאגר:</span>
-                                        <span className="text-[#222222] font-bold">639 תארים ומסלולים</span>
+                                        <span className="text-[#222222] font-bold">721 תארים ומסלולים</span>
                                    </div>
                                    <div className="p-2.5 rounded-xl bg-white border border-[#E2DDD2] flex items-center justify-between shadow-2xs">
                                         <span className="text-[#66635C]">חוק שמטת מקצועות:</span>
@@ -79,14 +91,31 @@ export default function Footer() {
 
                     </div>
 
+                    {/* Disclaimer Bar */}
+                    <div className="mt-10 pt-4 border-t border-[#E5DFD4]/70 text-[11px] text-[#7E7A73] text-center sm:text-right leading-relaxed">
+                         <p>
+                              * הבהרה: המידע, החישובים ומסלולי הפעולה באתר מהווים כלי עזר והדמיה עצמאית בלבד, ואינם מהווים אישור קבלה או מצג רשמי מטעם מוסדות הלימוד או המועצה להשכלה גבוהה. ההחלטה הסופית וחישוב הסכם הקובע לקבלה מתבצעים אך ורק על ידי מוסד הלימוד האקדמי.
+                         </p>
+                    </div>
+
                     {/* Bottom Sub-bar */}
-                    <div className="mt-12 pt-6 border-t border-[#E5DFD4] flex flex-col sm:flex-row items-center justify-between text-xs text-[#88857E] gap-4">
+                    <div className="mt-4 pt-4 border-t border-[#E5DFD4] flex flex-col sm:flex-row items-center justify-between text-xs text-[#88857E] gap-4">
                          <p className="font-sans text-[11px]">
                               © 2026 KALIS. ארכיטקטורת קבלה אקדמית. כל הזכויות שמורות.
                          </p>
-                         <div className="flex items-center gap-2 text-[11px] text-[#66635C]">
-                              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                              <span>מערכת מקוונת ופעילה</span>
+                         <div className="flex items-center gap-4 text-[11px]">
+                              <Link href="/terms" className="text-[#66635C] hover:text-[#222222] transition-colors">
+                                   תנאי שימוש
+                              </Link>
+                              <span className="text-[#C5BFB5]">•</span>
+                              <Link href="/privacy" className="text-[#66635C] hover:text-[#222222] transition-colors">
+                                   מדיניות פרטיות
+                              </Link>
+                              <span className="text-[#C5BFB5]">•</span>
+                              <div className="inline-flex items-center gap-1.5 text-[#66635C]">
+                                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                                   <span>מערכת מקוונת</span>
+                              </div>
                          </div>
                     </div>
                </div>
