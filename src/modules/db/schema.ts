@@ -10,6 +10,9 @@ export interface UserRecord {
 	name?: string;
 	phone?: string;
 	passwordHash?: string;
+	googleId?: string;
+	image?: string;
+	authProvider?: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

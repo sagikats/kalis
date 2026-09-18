@@ -8,6 +8,8 @@ export interface AuthUser {
 	email: string;
 	phone?: string;
 	candidateNumber?: string;
+	image?: string;
+	authProvider?: string;
 	savedTracksCount?: number;
 }
 
@@ -29,6 +31,7 @@ interface AuthContextType {
 	openAuthModal: (mode?: 'login' | 'register') => void;
 	closeAuthModal: () => void;
 	login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+	loginWithGoogle: (payload: { credential?: string; accessToken?: string; user?: any }) => Promise<{ success: boolean; error?: string }>;
 	register: (params: RegisterParams) => Promise<{ success: boolean; error?: string; candidateNumber?: string }>;
 	logout: () => void;
 	refreshUser: () => Promise<void>;
@@ -176,6 +179,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		}
 	}, []);
 
+	const loginWithGoogle = useCallback(async (payload: { credential?: string; accessToken?: string; user?: any }): Promise<{ success: boolean; error?: string }> => {
+		try {
+			const guestUserId = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.USER_ID) || undefined : undefined;
+
+			const res = await fetch('/api/auth/google', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					...payload,
+					guestUserId
+				})
+			});
+
+			const data = await res.json();
+			if (!data.success) {
+				return { success: false, error: data.error || 'התחברות עם Google נכשלה' };
+			}
+
+			const authedUser: AuthUser = data.user;
+			setUser(authedUser);
+			if (data.profile) setProfile(data.profile);
+			if (data.preferences) setPreferences(data.preferences);
+
+			if (typeof window !== 'undefined') {
+				localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(authedUser));
+				localStorage.setItem(STORAGE_KEYS.USER_ID, authedUser.id);
+				if (authedUser.candidateNumber) {
+					localStorage.setItem(STORAGE_KEYS.CANDIDATE_NUMBER, authedUser.candidateNumber);
+				}
+			}
+
+			return { success: true };
+		} catch (err: any) {
+			console.error('[AuthContext] loginWithGoogle error:', err);
+			return { success: false, error: 'שגיאת תקשורת עם השרת' };
+		}
+	}, []);
+
 	const logout = useCallback(() => {
 		setUser(null);
 		setProfile(null);
@@ -239,6 +280,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				openAuthModal,
 				closeAuthModal,
 				login,
+				loginWithGoogle,
 				register,
 				logout,
 				refreshUser,

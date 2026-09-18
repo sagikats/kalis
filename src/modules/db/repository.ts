@@ -620,8 +620,90 @@ export class KalisDatabaseRepository {
 			name: created.name ?? undefined,
 			phone: created.phone ?? undefined,
 			passwordHash: created.passwordHash ?? undefined,
+			googleId: created.googleId ?? undefined,
+			image: created.image ?? undefined,
+			authProvider: created.authProvider ?? undefined,
 			createdAt: created.createdAt,
 			updatedAt: created.updatedAt
+		};
+	}
+
+	public async findOrCreateGoogleUserAsync(params: {
+		googleId: string;
+		email: string;
+		name?: string;
+		image?: string;
+	}): Promise<UserRecord> {
+		const normalizedEmail = params.email.trim().toLowerCase();
+
+		// 1. Try finding by googleId
+		let user = await prisma.user.findUnique({
+			where: { googleId: params.googleId }
+		});
+
+		// 2. If not found by googleId, try finding by email to link existing account
+		if (!user) {
+			user = await prisma.user.findUnique({
+				where: { email: normalizedEmail }
+			});
+
+			if (user) {
+				user = await prisma.user.update({
+					where: { id: user.id },
+					data: {
+						googleId: params.googleId,
+						image: user.image || params.image || null,
+						name: user.name || params.name || null
+					}
+				});
+			}
+		}
+
+		// 3. If still not found, create new Google user
+		if (!user) {
+			let candidateNumber = await this.generateNextCandidateNumber();
+			try {
+				user = await prisma.user.create({
+					data: {
+						candidateNumber,
+						email: normalizedEmail,
+						name: params.name?.trim() || null,
+						googleId: params.googleId,
+						image: params.image || null,
+						authProvider: 'google'
+					}
+				});
+			} catch (err: any) {
+				if (err?.code === 'P2002') {
+					candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+					user = await prisma.user.create({
+						data: {
+							candidateNumber,
+							email: normalizedEmail,
+							name: params.name?.trim() || null,
+							googleId: params.googleId,
+							image: params.image || null,
+							authProvider: 'google'
+						}
+					});
+				} else {
+					throw err;
+				}
+			}
+		}
+
+		return {
+			id: user.id,
+			candidateNumber: user.candidateNumber,
+			email: user.email ?? undefined,
+			name: user.name ?? undefined,
+			phone: user.phone ?? undefined,
+			passwordHash: user.passwordHash ?? undefined,
+			googleId: user.googleId ?? undefined,
+			image: user.image ?? undefined,
+			authProvider: user.authProvider ?? undefined,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt
 		};
 	}
 

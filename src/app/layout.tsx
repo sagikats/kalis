@@ -63,6 +63,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl" className={`${interTight.variable} ${ibmPlex.variable} ${frankRuhl.variable} h-full antialiased`}>
+      <head>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+      </head>
       <body className="font-sans min-h-full flex flex-col bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222]">
         <AuthProvider>
           <PlannerProvider>
