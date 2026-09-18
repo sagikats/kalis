@@ -121,7 +121,7 @@ export default function AuthModal() {
 					</div>
 
 					<h3 className="text-xl font-bold text-[#222222] tracking-tight">
-						{mode === 'login' ? 'ברוכים השבים לקליס' : 'הצטרפות לפלטפורמת קליס'}
+						{mode === 'login' ? 'ברוכים השבים למתקבלים' : 'הצטרפות לפלטפורמת מתקבלים'}
 					</h3>
 					<p className="text-xs text-[#66635C] mt-1 max-w-xs mx-auto">
 						{mode === 'login'

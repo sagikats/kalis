@@ -15,7 +15,7 @@ export default function Footer() {
                          <div className="space-y-4 md:col-span-5">
                               <KalisLogo size="md" variant="dark" showTagline={true} />
                               <p className="text-xs text-[#66635C] leading-relaxed max-w-md pt-2">
-                                   פלטפורמת אופטימיזציית הקבלה המובילה בישראל. מנוע מתמטי רב-מוסדי ל-8 האוניברסיטאות המובילות, ניתוח פערי קבלה ל-639 תוכניות לימוד ומסלולי שיפור חכמים לציון היעד במינימום מאמץ.
+                                   פלטפורמת הקבלה האקדמית המובילה בישראל. מנוע מתמטי רב-מוסדי ל-8 האוניברסיטאות המובילות, ניתוח פערי קבלה ל-721 תוכניות לימוד ומסלולי שיפור חכמים לציון היעד במינימום מאמץ.
                               </p>
                               <div className="flex flex-wrap items-center gap-2.5 text-[11px] font-sans pt-2">
                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E0DBD0] text-[#44423D] shadow-2xs">
@@ -101,7 +101,7 @@ export default function Footer() {
                     {/* Bottom Sub-bar */}
                     <div className="mt-4 pt-4 border-t border-[#E5DFD4] flex flex-col sm:flex-row items-center justify-between text-xs text-[#88857E] gap-4">
                          <p className="font-sans text-[11px]">
-                              © 2026 KALIS. ארכיטקטורת קבלה אקדמית. כל הזכויות שמורות.
+                              © 2026 מתקבלים (mitkablim.co.il). כל הזכויות שמורות.
                          </p>
                          <div className="flex items-center gap-4 text-[11px]">
                               <Link href="/terms" className="text-[#66635C] hover:text-[#222222] transition-colors">

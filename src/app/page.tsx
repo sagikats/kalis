@@ -185,7 +185,7 @@ export default function LandingPage() {
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E0DBD0] text-[#55524B] text-xs font-semibold shadow-2xs">
               <Cpu className="h-3.5 w-3.5 text-blue-600" />
-              <span>יכולות המערכת // ארכיטקטורת קליס</span>
+              <span>יכולות המערכת // ארכיטקטורת מתקבלים</span>
             </div>
             <h2 className="text-3xl font-black sm:text-5xl tracking-tight text-[#222222]">
               שלוש היכולות המרכזיות <br />
@@ -312,7 +312,7 @@ export default function LandingPage() {
                     מחולל מסלולי פעולה חכמים לסגירת הפער
                   </h3>
                   <p className="text-sm text-[#55524B] leading-relaxed">
-                    האלגוריתם הייחודי של קליס מייצר עבורך 2 מסלולי פעולה מנצחים: מסלול מיקוד בבחינה אחת עם ה-ROI המרבי, ומסלול פיזור סיכונים המשלב שיפורים קלים. המסלולים כוללים לוח זמנים למועדי חורף, אביב וקיץ, מודל תקרה ריאלי לפסיכומטרי וחיסכון בשעות למידה.
+                    האלגוריתם הייחודי של מתקבלים מייצר עבורך 2 מסלולי פעולה מנצחים: מסלול מיקוד בבחינה אחת עם ה-ROI המרבי, ומסלול פיזור סיכונים המשלב שיפורים קלים. המסלולים כוללים לוח זמנים למועדי חורף, אביב וקיץ, מודל תקרה ריאלי לפסיכומטרי וחיסכון בשעות למידה.
                   </p>
                 </div>
 

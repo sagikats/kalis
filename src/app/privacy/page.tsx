@@ -4,8 +4,8 @@ import { ShieldCheck, Lock, ArrowRight, EyeOff, UserCheck, Trash2, Database, Hel
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'מדיניות פרטיות והגנת מידע | קליס (Kalis)',
-	description: 'מדיניות הפרטיות, שמירת המידע וההגנה על נתוני המועמדים בפלטפורמת קליס.',
+	title: 'מדיניות פרטיות והגנת מידע | מתקבלים (mitkablim.co.il)',
+	description: 'מדיניות הפרטיות, שמירת המידע וההגנה על נתוני המועמדים בפלטפורמת מתקבלים (mitkablim.co.il).',
 };
 
 export default function PrivacyPage() {
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
 								התחייבות ברזל: אי-הפצה ואי-מסחר בנתוני המשתמש
 							</h2>
 							<p className="text-xs sm:text-sm text-[#047857] leading-relaxed">
-								פלטפורמת <strong>קליס</strong> מתחייבת באופן חד-משמעי: <strong>איננו מוכרים, משכירים, מעבירים או משתפים את המידע האישי שלך או את ציוני הבגרות והפסיכומטרי שלך עם שום גורם חיצוני</strong> – לרבות אוניברסיטאות, מכללות, מכוני הכנה לפסיכומטרי, מפרסמים או חברות מסחריות. המידע נשמר אך ורק לשימושך האישי במערכת.
+								פלטפורמת <strong>מתקבלים (mitkablim.co.il)</strong> מתחייבת באופן חד-משמעי: <strong>איננו מוכרים, משכירים, מעבירים או משתפים את המידע האישי שלך או את ציוני הבגרות והפסיכומטרי שלך עם שום גורם חיצוני</strong> – לרבות אוניברסיטאות, מכללות, מכוני הכנה לפסיכומטרי, מפרסמים או חברות מסחריות. המידע נשמר אך ורק לשימושך האישי במערכת.
 							</p>
 						</div>
 					</div>
