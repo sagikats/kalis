@@ -356,20 +356,12 @@ export default function RecommendedTracksView({
 					</div>
 				)}
 
-				{/* Realism Badge Guarantee */}
-				<div className="pt-4 border-t border-[#EAE5DA] flex items-center gap-3 text-xs text-[#66635C] bg-[#FAF8F5] rounded-2xl p-3 border border-[#E5DFD4]">
-					<ShieldCheck className="h-5 w-5 text-[#205739] shrink-0" />
-					<div>
-						<strong className="text-[#222222] font-black">אלגוריתם מבוסס מודל ריאליות קפדני:</strong>{' '}
-						היעדים מוגבלים לחסמי שיפור סטטיסטיים מוכחים (לפי נתוני מרכז הבחינות NITE). ללא דרישות לציון פסיכומטרי 740+ מנקודת פתיחה לא ריאלית, ותוך שילוב שיפור בגרויות נקודתי היכן שנדרש.
-					</div>
-				</div>
 			</div>
 
 			{/* ========================================================================= */}
 			{/* VIEW SWITCHER TABS: RECOMMENDED TRACKS vs PERSONAL BUILDER */}
 			{/* ========================================================================= */}
-			<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4] shadow-xs">
+			<div className="flex items-center justify-start gap-4 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4] shadow-xs">
 				<div className="flex items-center gap-2 p-1 bg-white rounded-xl border border-[#E5DFD4]">
 					<button
 						type="button"
@@ -399,14 +391,6 @@ export default function RecommendedTracksView({
 							<span className="w-2 h-2 rounded-full bg-[#205739]" />
 						)}
 					</button>
-				</div>
-
-				<div className="text-xs text-[#66635C] px-3 flex items-center gap-2">
-					{activeTab === 'recommended' ? (
-						<span>💡 3 מסלולים מותאמים אישית לבחירתך</span>
-					) : (
-						<span>🔬 סימולציה עצמאית בזמן אמת</span>
-					)}
 				</div>
 			</div>
 
