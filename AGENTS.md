@@ -92,12 +92,13 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-12 17:55)
-- **Active Branch:** `data-update` (Created from `main` for academic data refresh and catalog enhancements)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-17 19:45)
+- **Active Branch:** `up-to-cloude`
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **111/111 tests passing** across 33 test suites.
-  - `npm run build`: Clean (21/21 static & dynamic routes generated, zero compile or runtime build errors).
+  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **115/115 tests passing** across 34 test suites.
+  - `npm run build`: Clean (21/21 static & dynamic routes generated via webpack, zero compile or runtime build errors).
+  - `npx tsx src/modules/qa/run.ts`: **100/100 Quality Score across all 24 archetypes and 49 tracks**.
   - Background processes: Next.js dev server running on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
@@ -277,6 +278,23 @@ npm run build
       - **Warnings**: **0**.
     - **Unit Test Coverage**: **115/115 unit tests passing** across 34 test suites.
     - **Production Deployment**: Verified live on Oracle Cloud instance (`ubuntu@129.159.158.60`), Docker container rebuilt and healthy (`/api/health`).
+
+25. **Optimization Engine Overhaul: Elimination of Sekem Overshoot & Single-Exam Alternative Track 2 (`trackGenerator.ts`, `trackAuditor.ts`, `archetypes.ts`, `runner.ts`, `package.json`):**
+    - **Single-Exam Alternative Policy in Track 2**:
+      - Addressed candidate dilemmas where Track 1 required 1 exam (e.g., Psychometric or 1 Bagrut) and previously Track 2 unnecessarily forced 2-3 exams with huge Sekem overshoots (e.g., hitting 720 when threshold is 680).
+      - When another single Bagrut exam (e.g. 2u Bible or Math) independently achieves admission with zero psychometric jump (`balPsych <= baseP`), Track 2 is dynamically structured as: `המסלול החלופי: שדרוג [שם המקצוע] (בחינה בודדת)` badged as `חלופה לבחינה בודדת`, giving the student a direct 1-vs-1 choice (1 Psychometric exam vs. 1 Bagrut exam) without study bloat.
+    - **Minimal Grade Calibration (`calibrateComboGrades`)**:
+      - For multi-exam combinations in Track 2, calibrated target grades to the exact minimum needed to meet admission thresholds rather than default maximums, preventing unrealistic effort expectations and excessive Sekem overshoots.
+    - **QA Auditor Expansion & Check 8 (`SEKEM_OVERSHOOT_OVERKILL`)**:
+      - Integrated Check 8 into `trackAuditor.ts`, flagging any track where simulated Sekem overshoots the threshold by > 2.5 points on Technion or > 20 points on other universities (unless direct bagrut or prerequisite-driven).
+      - Expanded benchmark archetypes to 24 diverse candidate scenarios (3 per university across all 8 universities: Technion, TAU, HUJI, BGU, Bar-Ilan, Haifa, Ariel, Reichman) covering all user-reported edge cases (Yonatan, Tal, Roni, Shahar, Adi, Itai, Matan, etc.).
+    - **Flawless 100/100 Benchmark Verification**:
+      - Audited all 24 archetypes across 49 generated tracks via Subagent 5 QA Auditor.
+      - Quality Score: **100 / 100**. Clean Tracks: **100%**. Critical Errors: **0**. Warnings: **0**.
+    - **Build & Quality Assurance**:
+      - Updated `package.json` build command to `next build --webpack` for stable build compilation.
+      - Full unit test suite passing: **115/115 tests**.
+      - Production build verified: **21/21 static & dynamic routes** generated cleanly.
 
 ---
 

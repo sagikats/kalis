@@ -1,6 +1,7 @@
 /**
  * Subagent 5: Automated QA & Track Quality Auditor
- * Standard Benchmark Suite of 24 Diverse Student Archetypes Across All 8 Universities
+ * Standard Benchmark Suite of 24 Diverse Brand-New Student Archetypes Across All 8 Universities
+ * (3 New Scenarios per University: Technion, TAU, HUJI, BGU, BIU, Haifa, Ariel, Reichman)
  */
 
 import { StudentArchetype } from './types';
@@ -16,311 +17,177 @@ const defaultPref: UserPreferencesQuestionnaire = {
 
 export const BENCHMARK_ARCHETYPES: StudentArchetype[] = [
 	// =========================================================================
-	// 1. BAR-ILAN UNIVERSITY (BIU)
+	// 1. TECHNION (הטכניון) - 3 New Cases
 	// =========================================================================
 	{
-		id: 'adel_yarden_biu_math',
-		name: 'אדל ירדן — מתמטיקה בבר-אילן',
-		description: 'ממוצע בגרות מצטיין 110.86, 5 יח״ל מתמטיקה 96, ללא פסיכומטרי. זכאית לקבלה ישירה מיידית!',
+		id: 'guy_technion_civil',
+		name: 'גיא — הנדסה אזרחית בטכניון',
+		description: 'בגרות 100.3, פסיכומטרי 640, חסר פיזיקה. סף קבלה 88.0. נדרשת התייחסות לחובת סיווג בפיזיקה.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 96 },
-				{ name: 'אנגלית', units: 5, grade: 80 },
-				{ name: 'כימיה', units: 5, grade: 98 },
-				{ name: 'תלמוד', units: 5, grade: 94 },
-				{ name: 'מדעי החברה', units: 5, grade: 96 },
-				{ name: 'אזרחות', units: 2, grade: 88 },
-				{ name: 'תנ״ך', units: 2, grade: 84 },
-				{ name: 'ספרות', units: 2, grade: 82 },
-				{ name: 'היסטוריה', units: 2, grade: 85 },
-				{ name: 'עברית', units: 2, grade: 86 }
-			],
-			psychometricGeneral: 0,
-			mathGrade: 96,
-			mathUnits: 5,
-			physicsUnits: 0,
-			physicsGrade: 0,
-			bagrutAverage: 110.86
-		},
-		preferences: { ...defaultPref, weeklyAvailabilityHours: 'full_30_plus' },
-		targetProgramId: 'prog-inst-4-49',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			expectedDirectBagrut: true,
-			maxAllowedExamsTrack1: 0 // MUST be 0 exams!
-		}
-	},
-	{
-		id: 'omer_biu_datascience_stuck_psych',
-		name: 'עומר — מדעי הנתונים בבר-אילן',
-		description: 'פסיכומטרי תקוע על 640 אחרי 3 ניסיונות. זקוק למנופי בגרות כדי לא לקפוץ מעל 660.',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 85 },
+				{ name: 'מתמטיקה', units: 4, grade: 85 },
 				{ name: 'אנגלית', units: 5, grade: 88 },
-				{ name: 'מדעי המחשב', units: 5, grade: 86 },
-				{ name: 'תנ״ך', units: 2, grade: 72 },
-				{ name: 'ספרות', units: 2, grade: 70 },
-				{ name: 'היסטוריה', units: 2, grade: 74 },
-				{ name: 'אזרחות', units: 2, grade: 78 }
+				{ name: 'כימיה', units: 5, grade: 90 },
+				{ name: 'מדעי החברה', units: 5, grade: 92 },
+				{ name: 'תנ״ך', units: 2, grade: 80 },
+				{ name: 'ספרות', units: 2, grade: 78 },
+				{ name: 'היסטוריה', units: 2, grade: 82 },
+				{ name: 'אזרחות', units: 2, grade: 84 },
+				{ name: 'עברית', units: 2, grade: 80 }
 			],
 			psychometricGeneral: 640,
 			mathGrade: 85,
-			mathUnits: 5,
+			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 104.2
+			bagrutAverage: 100.3
 		},
-		preferences: {
-			...defaultPref,
-			psychExperience: 'multiple',
-			psychFeeling: 'reached_ceiling',
-			weeklyAvailabilityHours: 'part_15_25'
-		},
-		targetProgramId: 'prog-inst-4-15',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			allowedPsychCeiling: 660,
-			maxAllowedExamsTrack2: 3
-		}
-	},
-
-	// =========================================================================
-	// 2. TEL AVIV UNIVERSITY (TAU)
-	// =========================================================================
-	{
-		id: 'adel_yarden_tau_ee',
-		name: 'אדל ירדן — הנדסת חשמל בתל אביב',
-		description: 'ממוצע 110.86, חסרת פיזיקה. סכם יעד 710.0. חובה לבדוק אי-קיום פערי סכם 710/720 וציון דרישת פיזיקה.',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 96 },
-				{ name: 'אנגלית', units: 5, grade: 80 },
-				{ name: 'כימיה', units: 5, grade: 98 },
-				{ name: 'תלמוד', units: 5, grade: 94 },
-				{ name: 'מדעי החברה', units: 5, grade: 96 },
-				{ name: 'אזרחות', units: 2, grade: 88 },
-				{ name: 'תנ״ך', units: 2, grade: 84 },
-				{ name: 'ספרות', units: 2, grade: 82 },
-				{ name: 'היסטוריה', units: 2, grade: 85 },
-				{ name: 'עברית', units: 2, grade: 86 }
-			],
-			psychometricGeneral: 0,
-			mathGrade: 96,
-			mathUnits: 5,
-			physicsUnits: 0,
-			physicsGrade: 0,
-			bagrutAverage: 110.86
-		},
-		preferences: { ...defaultPref, weeklyAvailabilityHours: 'full_30_plus' },
-		targetProgramId: 'prog-tau-0512-74',
+		preferences: defaultPref,
+		targetProgramId: 'prog-technion-5',
 		expectedBehaviors: {
 			mustAchieveAdmission: true,
 			requiresPhysicsPrerequisiteNotice: true
 		}
 	},
 	{
-		id: 'daniel_tau_cs',
-		name: 'דניאל — מדעי המחשב בתל אביב',
-		description: 'מועמד חזק (בגרות 106.2, פסיכומטרי 660). זקוק לכיסוי פער מול סף 735.',
+		id: 'michal_technion_biomed',
+		name: 'מיכל — הנדסה ביו-רפואית בטכניון',
+		description: 'בגרות 109.6, פסיכומטרי 660. סף קבלה 87.0. מועמדת ריאלית עם פיזיקה ומתמטיקה 5 יח״ל.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 88 },
+				{ name: 'מתמטיקה', units: 5, grade: 86 },
 				{ name: 'אנגלית', units: 5, grade: 90 },
-				{ name: 'מדעי המחשב', units: 5, grade: 92 },
-				{ name: 'פיזיקה', units: 5, grade: 86 },
-				{ name: 'תנ״ך', units: 2, grade: 75 },
-				{ name: 'ספרות', units: 2, grade: 72 },
-				{ name: 'היסטוריה', units: 2, grade: 76 },
-				{ name: 'אזרחות', units: 2, grade: 80 }
+				{ name: 'ביולוגיה', units: 5, grade: 94 },
+				{ name: 'פיזיקה', units: 5, grade: 80 },
+				{ name: 'תנ״ך', units: 2, grade: 84 },
+				{ name: 'ספרות', units: 2, grade: 80 },
+				{ name: 'היסטוריה', units: 2, grade: 82 },
+				{ name: 'אזרחות', units: 2, grade: 85 }
 			],
 			psychometricGeneral: 660,
-			mathGrade: 88,
-			mathUnits: 5,
-			physicsUnits: 5,
-			physicsGrade: 86,
-			bagrutAverage: 106.2
-		},
-		preferences: defaultPref,
-		targetProgramId: 'prog-tau-0368-2',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			maxAllowedExamsTrack1: 2
-		}
-	},
-	{
-		id: 'shira_tau_business_low_core',
-		name: 'שירה — ניהול ומנהל עסקים בתל אביב',
-		description: 'ציוני חובה נמוכים (תנ״ך 65, ספרות 68). ROI עצום על שדרוג מקצועות 2 יח״ל.',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 4, grade: 74 },
-				{ name: 'אנגלית', units: 5, grade: 84 },
-				{ name: 'מדעי החברה', units: 5, grade: 85 },
-				{ name: 'תנ״ך', units: 2, grade: 65 },
-				{ name: 'ספרות', units: 2, grade: 68 },
-				{ name: 'היסטוריה', units: 2, grade: 72 },
-				{ name: 'אזרחות', units: 2, grade: 70 }
-			],
-			psychometricGeneral: 610,
-			mathGrade: 74,
-			mathUnits: 4,
-			physicsUnits: 0,
-			physicsGrade: 0,
-			bagrutAverage: 98.4
-		},
-		preferences: { ...defaultPref, learningOrientation: 'humanities' },
-		targetProgramId: 'prog-tau-1211-1',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			prohibitedSubjectLevers: ['פיזיקה']
-		}
-	},
-	{
-		id: 'tamar_tau_law_high_verbal',
-		name: 'תמר — משפטים בתל אביב',
-		description: 'כישורים מילוליים מעולים (ספרות 5 יח״ל 95, פטור מאנגלית 144, פסיכומטרי מילולי גבוה).',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 4, grade: 80 },
-				{ name: 'אנגלית', units: 5, grade: 94 },
-				{ name: 'ספרות', units: 5, grade: 95 },
-				{ name: 'היסטוריה', units: 5, grade: 92 },
-				{ name: 'תנ״ך', units: 2, grade: 86 },
-				{ name: 'אזרחות', units: 2, grade: 90 }
-			],
-			psychometricGeneral: 645,
-			mathGrade: 80,
-			mathUnits: 4,
-			physicsUnits: 0,
-			physicsGrade: 0,
-			bagrutAverage: 107.5
-		},
-		preferences: { ...defaultPref, psychStrongestSection: 'verbal' },
-		targetProgramId: 'prog-tau-1411-1',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			maxAllowedExamsTrack1: 1
-		}
-	},
-
-	// =========================================================================
-	// 3. TECHNION (טכניון)
-	// =========================================================================
-	{
-		id: 'chen_katz_technion_cs',
-		name: 'חן כץ — מדעי המחשב בטכניון',
-		description: 'מועמד חזק (בגרות 108.5, פסיכומטרי 680). סף טכניון ~91.00. דורש עמידה מלאה במשוואת השיפוע.',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 90 },
-				{ name: 'אנגלית', units: 5, grade: 88 },
-				{ name: 'פיזיקה', units: 5, grade: 90 },
-				{ name: 'מדעי המחשב', units: 5, grade: 92 },
-				{ name: 'תנ״ך', units: 2, grade: 78 },
-				{ name: 'ספרות', units: 2, grade: 76 },
-				{ name: 'היסטוריה', units: 2, grade: 80 },
-				{ name: 'אזרחות', units: 2, grade: 84 }
-			],
-			psychometricGeneral: 680,
-			mathGrade: 90,
-			mathUnits: 5,
-			physicsUnits: 5,
-			physicsGrade: 90,
-			bagrutAverage: 108.5
-		},
-		preferences: defaultPref,
-		targetProgramId: 'prog-tech-234-1',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			maxAllowedExamsTrack1: 2,
-			maxAllowedExamsTrack2: 3
-		}
-	},
-	{
-		id: 'ron_technion_mech',
-		name: 'רון — הנדסת מכונות בטכניון',
-		description: 'סף קבלה 84.00, מועמד גבולי (בגרות 103, פסיכומטרי 650).',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 82 },
-				{ name: 'אנגלית', units: 5, grade: 80 },
-				{ name: 'פיזיקה', units: 5, grade: 80 },
-				{ name: 'כימיה', units: 5, grade: 85 },
-				{ name: 'תנ״ך', units: 2, grade: 72 },
-				{ name: 'ספרות', units: 2, grade: 70 },
-				{ name: 'היסטוריה', units: 2, grade: 74 },
-				{ name: 'אזרחות', units: 2, grade: 78 }
-			],
-			psychometricGeneral: 650,
-			mathGrade: 82,
+			mathGrade: 86,
 			mathUnits: 5,
 			physicsUnits: 5,
 			physicsGrade: 80,
-			bagrutAverage: 103.0
+			bagrutAverage: 109.6
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-tech-032-1',
+		targetProgramId: 'prog-technion-6',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'amit_technion_arch',
+		name: 'עמית — ארכיטקטורה בטכניון',
+		description: 'בגרות 100.1, פסיכומטרי 620. סף קבלה 85.0. מסלול יצירתי ללא חובת פיזיקה.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 82 },
+				{ name: 'אנגלית', units: 5, grade: 90 },
+				{ name: 'אמנות', units: 5, grade: 95 },
+				{ name: 'גיאוגרפיה', units: 5, grade: 92 },
+				{ name: 'תנ״ך', units: 2, grade: 82 },
+				{ name: 'ספרות', units: 2, grade: 80 },
+				{ name: 'היסטוריה', units: 2, grade: 84 },
+				{ name: 'אזרחות', units: 2, grade: 82 }
+			],
+			psychometricGeneral: 620,
+			mathGrade: 82,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 100.1
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-technion-2',
 		expectedBehaviors: {
 			mustAchieveAdmission: true
 		}
 	},
 
 	// =========================================================================
-	// 4. HEBREW UNIVERSITY OF JERUSALEM (HUJI)
+	// 2. TEL AVIV UNIVERSITY (אוניברסיטת תל אביב) - 3 New Cases
 	// =========================================================================
 	{
-		id: 'noa_huji_medicine',
-		name: 'נועה — רפואה באוניברסיטה העברית',
-		description: 'בגרות 113.5, פסיכומטרי 710. סף מעבר 740+. רצפת פסיכומטרי קשיחה של 700.',
+		id: 'yonatan_tau_mech',
+		name: 'יונתן — הנדסה מכנית בתל אביב',
+		description: 'בגרות 107.25, פסיכומטרי 630. סף קבלה 650. זכאי לבונוס ריאלי +10 של את״א.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 98 },
-				{ name: 'אנגלית', units: 5, grade: 96 },
-				{ name: 'ביולוגיה', units: 5, grade: 98 },
-				{ name: 'כימיה', units: 5, grade: 96 },
-				{ name: 'תנ״ך', units: 2, grade: 90 },
-				{ name: 'ספרות', units: 2, grade: 88 },
-				{ name: 'היסטוריה', units: 2, grade: 92 },
-				{ name: 'אזרחות', units: 2, grade: 90 }
+				{ name: 'מתמטיקה', units: 5, grade: 84 },
+				{ name: 'אנגלית', units: 5, grade: 88 },
+				{ name: 'פיזיקה', units: 5, grade: 82 },
+				{ name: 'כימיה', units: 5, grade: 86 },
+				{ name: 'תנ״ך', units: 2, grade: 78 },
+				{ name: 'ספרות', units: 2, grade: 76 },
+				{ name: 'היסטוריה', units: 2, grade: 80 },
+				{ name: 'אזרחות', units: 2, grade: 82 }
 			],
-			psychometricGeneral: 710,
-			mathGrade: 98,
+			psychometricGeneral: 630,
+			mathGrade: 84,
 			mathUnits: 5,
-			physicsUnits: 0,
-			physicsGrade: 0,
-			bagrutAverage: 113.5
+			physicsUnits: 5,
+			physicsGrade: 82,
+			bagrutAverage: 107.25
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-huji-med-1',
+		targetProgramId: 'prog-tau-0542-64',
 		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			allowedPsychCeiling: 760
+			mustAchieveAdmission: true
 		}
 	},
 	{
-		id: 'maya_huji_psychology_direct',
-		name: 'מאיה — פסיכולוגיה בעברית',
-		description: 'בגרות 108.2, ללא פסיכומטרי. זכאית מלאה לקבלה ישירה על סמך בגרות 106.5+!',
+		id: 'lior_tau_econ',
+		name: 'ליאור — כלכלה בתל אביב',
+		description: 'בגרות 98.5, פסיכומטרי 600. סף קבלה 610. פער קטן של 10 נקודות סכם כללי.',
 		profile: {
 			bagrutSubjects: [
 				{ name: 'מתמטיקה', units: 4, grade: 88 },
-				{ name: 'אנגלית', units: 5, grade: 92 },
-				{ name: 'מדעי החברה', units: 5, grade: 95 },
-				{ name: 'ספרות', units: 5, grade: 94 },
-				{ name: 'תנ״ך', units: 2, grade: 88 },
-				{ name: 'היסטוריה', units: 2, grade: 90 },
-				{ name: 'אזרחות', units: 2, grade: 92 }
+				{ name: 'אנגלית', units: 5, grade: 85 },
+				{ name: 'גיאוגרפיה', units: 5, grade: 90 },
+				{ name: 'תנ״ך', units: 2, grade: 76 },
+				{ name: 'ספרות', units: 2, grade: 74 },
+				{ name: 'היסטוריה', units: 2, grade: 78 },
+				{ name: 'אזרחות', units: 2, grade: 80 }
 			],
-			psychometricGeneral: 0,
+			psychometricGeneral: 600,
 			mathGrade: 88,
 			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 108.2
+			bagrutAverage: 98.5
 		},
-		preferences: { ...defaultPref, weeklyAvailabilityHours: 'full_30_plus' },
-		targetProgramId: 'prog-inst-1-95',
+		preferences: defaultPref,
+		targetProgramId: 'prog-tau-1011-82',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'shirel_tau_nursing_direct',
+		name: 'שיראל — הסבת אקדמאים למדעי האחיוּת בתל אביב',
+		description: 'בגרות 105.74, ללא פסיכומטרי. זכאית לקבלה ישירה מיידית על סמך בגרות 100+ בלבד!',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 84 },
+				{ name: 'אנגלית', units: 5, grade: 88 },
+				{ name: 'ביולוגיה', units: 5, grade: 92 },
+				{ name: 'מדעי החברה', units: 5, grade: 90 },
+				{ name: 'תנ״ך', units: 2, grade: 86 },
+				{ name: 'ספרות', units: 2, grade: 84 },
+				{ name: 'היסטוריה', units: 2, grade: 85 },
+				{ name: 'אזרחות', units: 2, grade: 88 }
+			],
+			psychometricGeneral: 0,
+			mathGrade: 84,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 105.74
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-tau-0162-14',
 		expectedBehaviors: {
 			mustAchieveAdmission: true,
 			expectedDirectBagrut: true,
@@ -329,79 +196,304 @@ export const BENCHMARK_ARCHETYPES: StudentArchetype[] = [
 	},
 
 	// =========================================================================
-	// 5. BEN-GURION UNIVERSITY (BGU)
+	// 3. HEBREW UNIVERSITY (האוניברסיטה העברית) - 3 New Cases
 	// =========================================================================
 	{
-		id: 'yossi_bgu_industrial_fulltime',
-		name: 'יוסי — הנדסת מחשבים בבן-גוריון',
-		description: 'עובד במשרה מלאה (מוגבל ל-12 שעות שבועיות). זקוק למסלול ממוקד ללא עומס יתר.',
+		id: 'uri_huji_electrical_cs',
+		name: 'אורי — הנדסת חשמל ומחשבים בעברית',
+		description: 'בגרות 104.71, פסיכומטרי 650. סף קבלה 680. מועמד STEM עם רקע מדעי חזק.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 4, grade: 82 },
-				{ name: 'אנגלית', units: 5, grade: 80 },
-				{ name: 'מדעי המחשב', units: 5, grade: 85 },
+				{ name: 'מתמטיקה', units: 5, grade: 86 },
+				{ name: 'אנגלית', units: 5, grade: 90 },
+				{ name: 'מדעי המחשב', units: 5, grade: 90 },
+				{ name: 'פיזיקה', units: 5, grade: 84 },
+				{ name: 'תנ״ך', units: 2, grade: 78 },
+				{ name: 'ספרות', units: 2, grade: 76 },
+				{ name: 'היסטוריה', units: 2, grade: 80 },
+				{ name: 'אזרחות', units: 2, grade: 82 }
+			],
+			psychometricGeneral: 650,
+			mathGrade: 86,
+			mathUnits: 5,
+			physicsUnits: 5,
+			physicsGrade: 84,
+			bagrutAverage: 104.71
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-1-14',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'daniel_huji_linguistics_direct',
+		name: 'דניאל — בלשנות בעברית',
+		description: 'בגרות 108.26, ללא פסיכומטרי. זכאי מלא לקבלה ישירה על סמך בגרות 105+!',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 86 },
+				{ name: 'אנגלית', units: 5, grade: 92 },
+				{ name: 'ספרות', units: 5, grade: 95 },
+				{ name: 'היסטוריה', units: 5, grade: 94 },
+				{ name: 'תנ״ך', units: 2, grade: 88 },
+				{ name: 'אזרחות', units: 2, grade: 90 }
+			],
+			psychometricGeneral: 0,
+			mathGrade: 86,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 108.26
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-1-9',
+		expectedBehaviors: {
+			mustAchieveAdmission: true,
+			expectedDirectBagrut: true,
+			maxAllowedExamsTrack1: 0
+		}
+	},
+	{
+		id: 'yael_huji_agro',
+		name: 'יעל — אגרואקולוגיה ובריאות הצמח בעברית',
+		description: 'בגרות 95.73, פסיכומטרי 580. סף קבלה 600. פקולטה לחקלאות ברחובות.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 80 },
+				{ name: 'אנגלית', units: 5, grade: 84 },
+				{ name: 'ביולוגיה', units: 5, grade: 88 },
 				{ name: 'תנ״ך', units: 2, grade: 76 },
 				{ name: 'ספרות', units: 2, grade: 74 },
 				{ name: 'היסטוריה', units: 2, grade: 78 },
 				{ name: 'אזרחות', units: 2, grade: 80 }
 			],
-			psychometricGeneral: 620,
-			mathGrade: 82,
+			psychometricGeneral: 580,
+			mathGrade: 80,
 			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 100.5
-		},
-		preferences: {
-			...defaultPref,
-			weeklyAvailabilityHours: 'limited_under_15'
-		},
-		targetProgramId: 'prog-bgu-178',
-		expectedBehaviors: {
-			mustAchieveAdmission: true,
-			maxAllowedExamsTrack1: 2
-		}
-	},
-	{
-		id: 'itamar_bgu_cs',
-		name: 'איתמר — מדעי המחשב בבן-גוריון',
-		description: 'בגרות 105.0, פסיכומטרי 690. סכם כמותי/הנדסי בבן-גוריון.',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 88 },
-				{ name: 'אנגלית', units: 5, grade: 86 },
-				{ name: 'פיזיקה', units: 5, grade: 85 },
-				{ name: 'מדעי המחשב', units: 5, grade: 90 },
-				{ name: 'תנ״ך', units: 2, grade: 74 },
-				{ name: 'ספרות', units: 2, grade: 70 },
-				{ name: 'היסטוריה', units: 2, grade: 75 },
-				{ name: 'אזרחות', units: 2, grade: 80 }
-			],
-			psychometricGeneral: 690,
-			mathGrade: 88,
-			mathUnits: 5,
-			physicsUnits: 5,
-			physicsGrade: 85,
-			bagrutAverage: 105.0
+			bagrutAverage: 95.73
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-bgu-cs-1',
+		targetProgramId: 'prog-inst-1-1',
 		expectedBehaviors: {
 			mustAchieveAdmission: true
 		}
 	},
 
 	// =========================================================================
-	// 6. UNIVERSITY OF HAIFA (חיפה)
+	// 4. BEN-GURION UNIVERSITY (אוניברסיטת בן-גוריון) - 3 New Cases
 	// =========================================================================
 	{
-		id: 'guy_haifa_socialwork_direct',
-		name: 'גיא — עבודה סוציאלית באוניברסיטת חיפה',
-		description: 'ממוצע 102.5, ללא פסיכומטרי. קבלה ישירה על סמך בגרות 100+ בלבד.',
+		id: 'nadav_bgu_ee_cs',
+		name: 'נדב — הנדסת חשמל ומדעי המחשב בבן-גוריון',
+		description: 'בגרות 100.8, פסיכומטרי 540. סף קבלה 567 (סכם הנדסה).',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 82 },
+				{ name: 'אנגלית', units: 5, grade: 85 },
+				{ name: 'כימיה', units: 5, grade: 85 },
+				{ name: 'תנ״ך', units: 2, grade: 76 },
+				{ name: 'ספרות', units: 2, grade: 74 },
+				{ name: 'היסטוריה', units: 2, grade: 78 },
+				{ name: 'אזרחות', units: 2, grade: 80 }
+			],
+			psychometricGeneral: 540,
+			mathGrade: 82,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 100.8
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-bgu-155',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'hadar_bgu_econ',
+		name: 'הדר — כלכלה בבן-גוריון',
+		description: 'בגרות 100.8, פסיכומטרי 560. סף קבלה 600 (סכם כללי).',
 		profile: {
 			bagrutSubjects: [
 				{ name: 'מתמטיקה', units: 4, grade: 80 },
 				{ name: 'אנגלית', units: 5, grade: 85 },
+				{ name: 'ביולוגיה', units: 5, grade: 88 },
+				{ name: 'תנ״ך', units: 2, grade: 80 },
+				{ name: 'ספרות', units: 2, grade: 76 },
+				{ name: 'היסטוריה', units: 2, grade: 82 },
+				{ name: 'אזרחות', units: 2, grade: 84 }
+			],
+			psychometricGeneral: 560,
+			mathGrade: 80,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 100.8
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-bgu-41',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'alon_bgu_history_direct',
+		name: 'אלון — היסטוריה כללית בבן-גוריון',
+		description: 'בגרות 105.84, ללא פסיכומטרי. זכאי מלא לקבלה ישירה על סמך בגרות 104+!',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 85 },
+				{ name: 'אנגלית', units: 5, grade: 90 },
+				{ name: 'היסטוריה', units: 5, grade: 94 },
+				{ name: 'מדעי החברה', units: 5, grade: 92 },
+				{ name: 'תנ״ך', units: 2, grade: 86 },
+				{ name: 'ספרות', units: 2, grade: 84 },
+				{ name: 'אזרחות', units: 2, grade: 88 }
+			],
+			psychometricGeneral: 0,
+			mathGrade: 85,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 105.84
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-bgu-22',
+		expectedBehaviors: {
+			mustAchieveAdmission: true,
+			expectedDirectBagrut: true,
+			maxAllowedExamsTrack1: 0
+		}
+	},
+
+	// =========================================================================
+	// 5. BAR-ILAN UNIVERSITY (אוניברסיטת בר-אילן) - 3 New Cases
+	// =========================================================================
+	{
+		id: 'tal_biu_ee',
+		name: 'טל — הנדסת חשמל בבר-אילן',
+		description: 'בגרות 101.96, פסיכומטרי 640. סף קבלה 680.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 5, grade: 82 },
+				{ name: 'אנגלית', units: 5, grade: 86 },
+				{ name: 'פיזיקה', units: 5, grade: 80 },
+				{ name: 'כימיה', units: 5, grade: 85 },
+				{ name: 'תנ״ך', units: 2, grade: 78 },
+				{ name: 'ספרות', units: 2, grade: 76 },
+				{ name: 'היסטוריה', units: 2, grade: 82 },
+				{ name: 'אזרחות', units: 2, grade: 84 }
+			],
+			psychometricGeneral: 640,
+			mathGrade: 82,
+			mathUnits: 5,
+			physicsUnits: 5,
+			physicsGrade: 80,
+			bagrutAverage: 101.96
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-4-15',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'yonatan_biu_history_direct',
+		name: 'יונתן — היסטוריה כללית בבר-אילן',
+		description: 'בגרות 106.22, ללא פסיכומטרי. זכאי מלא לקבלה ישירה על סמך בגרות 102+!',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 82 },
+				{ name: 'אנגלית', units: 5, grade: 88 },
+				{ name: 'היסטוריה', units: 5, grade: 92 },
+				{ name: 'תנ״ך', units: 5, grade: 90 },
+				{ name: 'ספרות', units: 2, grade: 84 },
+				{ name: 'אזרחות', units: 2, grade: 86 }
+			],
+			psychometricGeneral: 0,
+			mathGrade: 82,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 106.22
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-4-14',
+		expectedBehaviors: {
+			mustAchieveAdmission: true,
+			expectedDirectBagrut: true,
+			maxAllowedExamsTrack1: 0
+		}
+	},
+	{
+		id: 'roni_biu_optometry',
+		name: 'רוני — אופטומטריה בבר-אילן',
+		description: 'בגרות 94.45, פסיכומטרי 580. סף קבלה 600.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 78 },
+				{ name: 'אנגלית', units: 5, grade: 84 },
+				{ name: 'ביולוגיה', units: 5, grade: 86 },
+				{ name: 'תנ״ך', units: 2, grade: 76 },
+				{ name: 'ספרות', units: 2, grade: 74 },
+				{ name: 'היסטוריה', units: 2, grade: 78 },
+				{ name: 'אזרחות', units: 2, grade: 80 }
+			],
+			psychometricGeneral: 580,
+			mathGrade: 78,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 94.45
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-4-1',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+
+	// =========================================================================
+	// 6. UNIVERSITY OF HAIFA (אוניברסיטת חיפה) - 3 New Cases
+	// =========================================================================
+	{
+		id: 'shahar_haifa_econ',
+		name: 'שחר — כלכלה באוניברסיטת חיפה',
+		description: 'בגרות 95.32, פסיכומטרי 590. סף קבלה 620.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 80 },
+				{ name: 'אנגלית', units: 5, grade: 84 },
+				{ name: 'מדעי החברה', units: 5, grade: 88 },
+				{ name: 'תנ״ך', units: 2, grade: 78 },
+				{ name: 'ספרות', units: 2, grade: 76 },
+				{ name: 'היסטוריה', units: 2, grade: 80 },
+				{ name: 'אזרחות', units: 2, grade: 82 }
+			],
+			psychometricGeneral: 590,
+			mathGrade: 80,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 95.32
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-5-12',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'maayan_haifa_sped_direct',
+		name: 'מעיין — חינוך מיוחד באוניברסיטת חיפה',
+		description: 'בגרות 104.4, ללא פסיכומטרי. זכאית מלאה לקבלה ישירה על סמך בגרות 100+!',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 84 },
+				{ name: 'אנגלית', units: 5, grade: 88 },
 				{ name: 'מדעי החברה', units: 5, grade: 92 },
 				{ name: 'ספרות', units: 5, grade: 90 },
 				{ name: 'תנ״ך', units: 2, grade: 84 },
@@ -409,14 +501,14 @@ export const BENCHMARK_ARCHETYPES: StudentArchetype[] = [
 				{ name: 'אזרחות', units: 2, grade: 88 }
 			],
 			psychometricGeneral: 0,
-			mathGrade: 80,
+			mathGrade: 84,
 			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 102.5
+			bagrutAverage: 104.4
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-haifa-sw-1',
+		targetProgramId: 'prog-inst-5-10',
 		expectedBehaviors: {
 			mustAchieveAdmission: true,
 			expectedDirectBagrut: true,
@@ -424,145 +516,204 @@ export const BENCHMARK_ARCHETYPES: StudentArchetype[] = [
 		}
 	},
 	{
-		id: 'sapir_haifa_cs',
-		name: 'ספיר — מדעי המחשב בחיפה',
-		description: 'בגרות 104.0, מתמטיקה 4 יח״ל 88, פסיכומטרי 630.',
+		id: 'adi_haifa_mgmt_psych',
+		name: 'עדי — ניהול ופסיכולוגיה באוניברסיטת חיפה',
+		description: 'בגרות 100.14, פסיכומטרי 630. סף קבלה 670.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 4, grade: 88 },
-				{ name: 'אנגלית', units: 5, grade: 85 },
-				{ name: 'מדעי המחשב', units: 5, grade: 90 },
-				{ name: 'תנ״ך', units: 2, grade: 78 },
-				{ name: 'ספרות', units: 2, grade: 75 },
-				{ name: 'היסטוריה', units: 2, grade: 80 },
-				{ name: 'אזרחות', units: 2, grade: 82 }
+				{ name: 'מתמטיקה', units: 4, grade: 86 },
+				{ name: 'אנגלית', units: 5, grade: 90 },
+				{ name: 'פסיכולוגיה', units: 5, grade: 92 },
+				{ name: 'תנ״ך', units: 2, grade: 82 },
+				{ name: 'ספרות', units: 2, grade: 80 },
+				{ name: 'היסטוריה', units: 2, grade: 84 },
+				{ name: 'אזרחות', units: 2, grade: 86 }
 			],
 			psychometricGeneral: 630,
-			mathGrade: 88,
+			mathGrade: 86,
 			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 104.0
+			bagrutAverage: 100.14
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-haifa-cs-1',
+		targetProgramId: 'prog-inst-5-48',
 		expectedBehaviors: {
 			mustAchieveAdmission: true
 		}
 	},
 
 	// =========================================================================
-	// 7. ARIEL UNIVERSITY (אריאל)
+	// 7. ARIEL UNIVERSITY (אוניברסיטת אריאל) - 3 New Cases
 	// =========================================================================
 	{
-		id: 'aviv_ariel_software_math3u',
-		name: 'אביב — הנדסת תוכנה באריאל',
-		description: 'בוגר 3 יח״ל מתמטיקה (ציון 85), פסיכומטרי 580. חובה שדרוג מתמטיקה ל-4/5 יח״ל כתנאי סף.',
+		id: 'itay_ariel_mech',
+		name: 'איתי — הנדסת מכונות ומכטרוניקה באריאל',
+		description: 'בגרות 92.46, פסיכומטרי 560. סף קבלה 610.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 3, grade: 85 },
-				{ name: 'אנגלית', units: 4, grade: 80 },
-				{ name: 'גיאוגרפיה', units: 5, grade: 92 },
-				{ name: 'תנ״ך', units: 2, grade: 78 },
-				{ name: 'ספרות', units: 2, grade: 75 },
-				{ name: 'היסטוריה', units: 2, grade: 80 },
-				{ name: 'אזרחות', units: 2, grade: 82 }
-			],
-			psychometricGeneral: 580,
-			mathGrade: 85,
-			mathUnits: 3,
-			physicsUnits: 0,
-			physicsGrade: 0,
-			bagrutAverage: 95.0
-		},
-		preferences: defaultPref,
-		targetProgramId: 'prog-ariel-se-1',
-		expectedBehaviors: {
-			mustAchieveAdmission: true
-		}
-	},
-	{
-		id: 'moriah_ariel_civil',
-		name: 'מוריה — הנדסה אזרחית באריאל',
-		description: 'מתמטיקה 4 יח״ל 78, ללא פיזיקה. סף קבלה 590.',
-		profile: {
-			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 4, grade: 78 },
-				{ name: 'אנגלית', units: 5, grade: 82 },
-				{ name: 'כימיה', units: 5, grade: 84 },
+				{ name: 'מתמטיקה', units: 4, grade: 80 },
+				{ name: 'אנגלית', units: 4, grade: 78 },
+				{ name: 'פיזיקה', units: 5, grade: 75 },
+				{ name: 'כימיה', units: 5, grade: 78 },
 				{ name: 'תנ״ך', units: 2, grade: 76 },
 				{ name: 'ספרות', units: 2, grade: 74 },
 				{ name: 'היסטוריה', units: 2, grade: 78 },
 				{ name: 'אזרחות', units: 2, grade: 80 }
 			],
-			psychometricGeneral: 590,
-			mathGrade: 78,
+			psychometricGeneral: 560,
+			mathGrade: 80,
+			mathUnits: 4,
+			physicsUnits: 5,
+			physicsGrade: 75,
+			bagrutAverage: 92.46
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-2-8',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'noa_ariel_edu_direct',
+		name: 'נועה — חינוך באריאל',
+		description: 'בגרות 101.8, ללא פסיכומטרי. זכאית מלאה לקבלה ישירה על סמך בגרות 100+!',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 80 },
+				{ name: 'אנגלית', units: 5, grade: 86 },
+				{ name: 'ספרות', units: 5, grade: 90 },
+				{ name: 'מדעי החברה', units: 5, grade: 88 },
+				{ name: 'תנ״ך', units: 2, grade: 84 },
+				{ name: 'היסטוריה', units: 2, grade: 82 },
+				{ name: 'אזרחות', units: 2, grade: 86 }
+			],
+			psychometricGeneral: 0,
+			mathGrade: 80,
 			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 97.0
+			bagrutAverage: 101.8
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-ariel-civil-1',
+		targetProgramId: 'prog-inst-2-11',
+		expectedBehaviors: {
+			mustAchieveAdmission: true,
+			expectedDirectBagrut: true,
+			maxAllowedExamsTrack1: 0
+		}
+	},
+	{
+		id: 'matan_ariel_ee',
+		name: 'מתן — הנדסת חשמל ואלקטרוניקה באריאל',
+		description: 'בגרות 98.5, פסיכומטרי 570. סף קבלה 620.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 5, grade: 76 },
+				{ name: 'אנגלית', units: 5, grade: 80 },
+				{ name: 'פיזיקה', units: 5, grade: 75 },
+				{ name: 'מדעי המחשב', units: 5, grade: 80 },
+				{ name: 'תנ״ך', units: 2, grade: 74 },
+				{ name: 'ספרות', units: 2, grade: 72 },
+				{ name: 'היסטוריה', units: 2, grade: 76 },
+				{ name: 'אזרחות', units: 2, grade: 78 }
+			],
+			psychometricGeneral: 570,
+			mathGrade: 76,
+			mathUnits: 5,
+			physicsUnits: 5,
+			physicsGrade: 75,
+			bagrutAverage: 98.5
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-2-7',
 		expectedBehaviors: {
 			mustAchieveAdmission: true
 		}
 	},
 
 	// =========================================================================
-	// 8. REICHMAN UNIVERSITY (רייכמן)
+	// 8. REICHMAN UNIVERSITY (אוניברסיטת רייכמן) - 3 New Cases
 	// =========================================================================
 	{
-		id: 'dana_reichman_business',
-		name: 'דנה — מנהל עסקים ויזמות ברייכמן',
-		description: 'ממוצע 101.0, פסיכומטרי 610. סף קבלה 650.',
+		id: 'tomer_reichman_comm_direct',
+		name: 'תומר — תקשורת ברייכמן',
+		description: 'בגרות 102.41, ללא פסיכומטרי. זכאי מלא לקבלה ישירה על סמך בגרות 100+!',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 4, grade: 85 },
+				{ name: 'מתמטיקה', units: 4, grade: 84 },
 				{ name: 'אנגלית', units: 5, grade: 90 },
-				{ name: 'מדעי החברה', units: 5, grade: 90 },
-				{ name: 'תנ״ך', units: 2, grade: 80 },
-				{ name: 'ספרות', units: 2, grade: 78 },
-				{ name: 'היסטוריה', units: 2, grade: 82 },
-				{ name: 'אזרחות', units: 2, grade: 84 }
+				{ name: 'תקשורת', units: 5, grade: 94 },
+				{ name: 'מדעי החברה', units: 5, grade: 92 },
+				{ name: 'תנ״ך', units: 2, grade: 84 },
+				{ name: 'ספרות', units: 2, grade: 82 },
+				{ name: 'היסטוריה', units: 2, grade: 85 },
+				{ name: 'אזרחות', units: 2, grade: 86 }
 			],
-			psychometricGeneral: 610,
-			mathGrade: 85,
+			psychometricGeneral: 0,
+			mathGrade: 84,
 			mathUnits: 4,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 101.0
+			bagrutAverage: 102.41
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-runi-ba-1',
+		targetProgramId: 'prog-inst-38-9',
 		expectedBehaviors: {
 			mustAchieveAdmission: true,
-			maxAllowedExamsTrack1: 1
+			expectedDirectBagrut: true,
+			maxAllowedExamsTrack1: 0
 		}
 	},
 	{
-		id: 'eyal_reichman_cs',
-		name: 'איל — מדעי המחשב ברייכמן',
-		description: 'בגרות 102.0, פסיכומטרי 640. סף קבלה 690.',
+		id: 'inbal_reichman_datascience',
+		name: 'ענבל — מדע הנתונים (B.Sc) ברייכמן',
+		description: 'בגרות 100.5, פסיכומטרי 600. סף קבלה 650.',
 		profile: {
 			bagrutSubjects: [
-				{ name: 'מתמטיקה', units: 5, grade: 85 },
-				{ name: 'אנגלית', units: 5, grade: 88 },
-				{ name: 'מדעי המחשב', units: 5, grade: 88 },
-				{ name: 'תנ״ך', units: 2, grade: 75 },
+				{ name: 'מתמטיקה', units: 5, grade: 80 },
+				{ name: 'אנגלית', units: 5, grade: 84 },
+				{ name: 'מדעי המחשב', units: 5, grade: 82 },
+				{ name: 'תנ״ך', units: 2, grade: 74 },
 				{ name: 'ספרות', units: 2, grade: 72 },
 				{ name: 'היסטוריה', units: 2, grade: 76 },
-				{ name: 'אזרחות', units: 2, grade: 80 }
+				{ name: 'אזרחות', units: 2, grade: 78 }
 			],
-			psychometricGeneral: 640,
-			mathGrade: 85,
+			psychometricGeneral: 600,
+			mathGrade: 80,
 			mathUnits: 5,
 			physicsUnits: 0,
 			physicsGrade: 0,
-			bagrutAverage: 102.0
+			bagrutAverage: 100.5
 		},
 		preferences: defaultPref,
-		targetProgramId: 'prog-runi-cs-1',
+		targetProgramId: 'prog-reichman-2',
+		expectedBehaviors: {
+			mustAchieveAdmission: true
+		}
+	},
+	{
+		id: 'guy_reichman_law',
+		name: 'גיא — משפטים ברייכמן',
+		description: 'בגרות 96.5, פסיכומטרי 570. סף קבלה 620.',
+		profile: {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 78 },
+				{ name: 'אנגלית', units: 5, grade: 82 },
+				{ name: 'היסטוריה', units: 5, grade: 85 },
+				{ name: 'תנ״ך', units: 2, grade: 74 },
+				{ name: 'ספרות', units: 2, grade: 72 },
+				{ name: 'אזרחות', units: 2, grade: 76 }
+			],
+			psychometricGeneral: 570,
+			mathGrade: 78,
+			mathUnits: 4,
+			physicsUnits: 0,
+			physicsGrade: 0,
+			bagrutAverage: 96.5
+		},
+		preferences: defaultPref,
+		targetProgramId: 'prog-inst-38-6',
 		expectedBehaviors: {
 			mustAchieveAdmission: true
 		}

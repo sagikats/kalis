@@ -334,6 +334,27 @@ export function auditSingleTrack(
 		score -= 8;
 	}
 
+	// =========================================================================
+	// Check 8: Excessive Sekem Overshoot & Workload Overkill
+	// =========================================================================
+	const maxAllowedOvershoot = isTechnion ? 2.5 : 20;
+	const overshoot = simSekem - threshold;
+	const isDrivenByPrereq = Boolean(degreePsychFloor && targetPsych && targetPsych <= degreePsychFloor + 5);
+	const isPurePsychFirstAttempt = (profile.psychometricGeneral === 0) && (track.recommendedSubjectImprovements?.length || 0) === 0;
+	if (overshoot > maxAllowedOvershoot && !isDirectBagrutTrack && !isDrivenByPrereq && !isPurePsychFirstAttempt) {
+		issues.push({
+			code: 'SEKEM_OVERSHOOT_OVERKILL',
+			severity: 'warning',
+			penaltyPoints: 15,
+			title: 'סכם עודף באופן מופרז (Overkill)',
+			description: `סכם המסלול (${simSekem.toFixed(1)}) חורג ביותר מ-${maxAllowedOvershoot} נקודות מעל סף הקבלה (${threshold}). יש לכייל את ציוני המטרה של המנופים לעמידה מדויקת בסף ללא עומס מיותר.`,
+			expected: `<= ${(threshold + maxAllowedOvershoot).toFixed(1)}`,
+			actual: simSekem.toFixed(1),
+			remedyRecommendation: 'כייל את ציוני המטרה של המנופים למינימום ההכרחי לסגירת הסף.'
+		});
+		score -= 15;
+	}
+
 	// Final normalization of score & grade
 	const finalScore = Math.max(0, Math.min(100, score));
 	let grade: 'A+' | 'A' | 'B' | 'C' | 'D' | 'F' = 'A+';

@@ -94,7 +94,8 @@ export function runBatchAudit(): BatchAuditSummary {
 		PSYCHOMETRIC_OVERLOAD: 0,
 		WORKLOAD_OVERLOAD: 0,
 		COPY_PARADOX: 0,
-		MECHINA_MISMANAGEMENT: 0
+		MECHINA_MISMANAGEMENT: 0,
+		SEKEM_OVERSHOOT_OVERKILL: 0
 	};
 
 	for (const archetype of BENCHMARK_ARCHETYPES) {
@@ -330,6 +331,7 @@ function getCategoryDescription(cat: TrackAuditPenaltyCategory): string {
 		case 'WORKLOAD_OVERLOAD': return 'עומס בחינות ומקביליות חורג (מעל 2 במסלול 1 או מעל 3 במסלול 2)';
 		case 'COPY_PARADOX': return 'סתירה ניסוחית (כגון שדרוג 0 ל-5 יח״ל במקצוע קיים)';
 		case 'MECHINA_MISMANAGEMENT': return 'ניהול לא מותאם של מסלול מכינה';
+		case 'SEKEM_OVERSHOOT_OVERKILL': return 'חריגת סכם מופרזת או עומס בחינות מיותר בפער קטן שניתן לסגור בבחינה בודדת';
 		default: return '';
 	}
 }

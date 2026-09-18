@@ -28,7 +28,8 @@ export type TrackAuditPenaltyCategory =
 	| 'PSYCHOMETRIC_OVERLOAD'
 	| 'WORKLOAD_OVERLOAD'
 	| 'COPY_PARADOX'
-	| 'MECHINA_MISMANAGEMENT';
+	| 'MECHINA_MISMANAGEMENT'
+	| 'SEKEM_OVERSHOOT_OVERKILL';
 
 export interface TrackAuditIssue {
 	code: TrackAuditPenaltyCategory;

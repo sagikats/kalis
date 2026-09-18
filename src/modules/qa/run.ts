@@ -12,11 +12,18 @@ const summary = runBatchAudit();
 const reportMarkdown = formatAuditMarkdownReport(summary);
 
 // Write to artifact directory
-const artifactDir = '/Users/sagikats/.gemini/antigravity-ide/brain/1fe02994-97b5-48a3-81cf-039ad169d76a';
+const artifactDir = process.env.ARTIFACT_DIR || '/Users/sagikats/.gemini/antigravity-ide/brain/5818b513-7a00-4269-826a-4fcfab52e64f';
 const artifactPath = path.join(artifactDir, 'track_qa_audit_report.md');
 try {
-	fs.writeFileSync(artifactPath, reportMarkdown, 'utf-8');
-	console.log(`📄 הדוח המלא נשמר כ-Artifact בנתיב: ${artifactPath}`);
+	if (fs.existsSync(artifactDir)) {
+		fs.writeFileSync(artifactPath, reportMarkdown, 'utf-8');
+		console.log(`📄 הדוח המלא נשמר כ-Artifact בנתיב: ${artifactPath}`);
+	}
+	// Also save a persistent copy in docs/
+	const docsDir = path.join(process.cwd(), 'docs');
+	if (!fs.existsSync(docsDir)) fs.mkdirSync(docsDir, { recursive: true });
+	fs.writeFileSync(path.join(docsDir, 'track_qa_audit_report.md'), reportMarkdown, 'utf-8');
+	console.log(`📄 עותק נשמר ב: docs/track_qa_audit_report.md`);
 } catch (e) {
 	console.error('Failed to write artifact:', e);
 }
