@@ -91,6 +91,9 @@ describe('Matriculation Grade Validation & Empty State Guards', () => {
 
 		const dummyGap: ProgramGapAnalysis = {
 			target: {
+				institutionId: 'inst-48',
+				institutionName: 'הטכניון',
+				calculatorId: 'technion',
 				program: {
 					id: 'prog-1',
 					name: 'מדעי המחשב',
@@ -100,23 +103,22 @@ describe('Matriculation Grade Validation & Empty State Guards', () => {
 					degreeType: 'bachelor',
 					admissionThreshold: 88,
 					prerequisites: []
-				} as any,
-				institutionName: 'הטכניון',
-				calculatorId: 'technion',
-				logoText: 'IIT',
-				badgeColor: '#002D62'
+				} as any
 			},
 			userSekem: 0,
 			threshold: 88,
 			gap: -88,
 			status: 'not_accepted',
 			relevantSekemType: 'engineering',
-			relevantSekemLabel: 'סכם הנדסה'
+			relevantSekemLabel: 'סכם הנדסה',
+			prerequisites: [],
+			missingPrerequisites: [],
+			improvementOptions: []
 		};
 
 		const preferences = {
 			psychExperience: 'never' as const,
-			psychFeeling: 'neutral' as const,
+			psychFeeling: 'high_potential' as const,
 			psychStrongestSection: 'balanced' as const,
 			learningOrientation: 'flexible' as const,
 			learningStrength: 'analytical_quick' as const,
