@@ -26,6 +26,7 @@ export default function AuthModal() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [phone, setPhone] = useState('');
+	const [agreeToTerms, setAgreeToTerms] = useState(false);
 
 	const [error, setError] = useState<string | null>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,6 +37,7 @@ export default function AuthModal() {
 			setMode(authModalMode);
 			setError(null);
 			setSuccessData(null);
+			setAgreeToTerms(false);
 		}
 	}, [isAuthModalOpen, authModalMode]);
 
@@ -76,6 +78,11 @@ export default function AuthModal() {
 				}
 				if (password.length < 6) {
 					setError('הסיסמה חייבת להכיל לפחות 6 תווים');
+					setIsSubmitting(false);
+					return;
+				}
+				if (!agreeToTerms) {
+					setError('יש לסמן את תיבת אישור תנאי השימוש ומדיניות הפרטיות כדי להירשם');
 					setIsSubmitting(false);
 					return;
 				}
@@ -126,7 +133,7 @@ export default function AuthModal() {
 					<p className="text-xs text-[#66635C] mt-1 max-w-xs mx-auto">
 						{mode === 'login'
 							? 'התחבר כדי לצפות במסלולים השמורים שלך ולנהל את תוכנית הקבלה'
-							: 'הרשמה מהירה מקצה לך מספר מועמד אישי ומסנכרנת את נתוניך'}
+							: 'הרשמה מהירה מאפשרת לשמור את המסלולים שלך ולסנכרן את הנתונים'}
 					</p>
 				</div>
 
@@ -268,33 +275,49 @@ export default function AuthModal() {
 						)}
 
 						{mode === 'register' && (
-							<p className="text-[11px] text-[#8A847C] text-center leading-relaxed px-1">
-								בלחיצה על &quot;צור חשבון&quot;, הנך מאשר/ת את{' '}
-								<Link
-									href="/terms"
-									target="_blank"
-									onClick={closeAuthModal}
-									className="underline text-[#3C3C3C] hover:text-black font-semibold"
-								>
-									תנאי השימוש
-								</Link>{' '}
-								ואת{' '}
-								<Link
-									href="/privacy"
-									target="_blank"
-									onClick={closeAuthModal}
-									className="underline text-[#3C3C3C] hover:text-black font-semibold"
-								>
-									מדיניות הפרטיות
-								</Link>{' '}
-								ומסכים/ה לשמירת הנתונים.
-							</p>
+							<div className="p-3.5 bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl">
+								<label className="flex items-start gap-2.5 cursor-pointer select-none">
+									<input
+										type="checkbox"
+										id="agree-to-terms-checkbox"
+										checked={agreeToTerms}
+										onChange={(e) => {
+											setAgreeToTerms(e.target.checked);
+											if (error) setError(null);
+										}}
+										className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#DDD7CB] text-[#3C3C3C] focus:ring-[#3C3C3C] accent-[#3C3C3C] cursor-pointer"
+									/>
+									<span className="text-[11px] text-[#55524B] leading-relaxed">
+										קראתי ואני מאשר/ת את{' '}
+										<Link
+											href="/terms"
+											target="_blank"
+											className="underline text-[#222222] hover:text-black font-bold"
+										>
+											תנאי השימוש
+										</Link>{' '}
+										ואת{' '}
+										<Link
+											href="/privacy"
+											target="_blank"
+											className="underline text-[#222222] hover:text-black font-bold"
+										>
+											מדיניות הפרטיות
+										</Link>
+										. אני מסכים/ה לשמירת פרטיי במערכת וידוע לי שהאתר אינו מוכר או מעביר את הנתונים שלי לשום גורם חיצוני.
+									</span>
+								</label>
+							</div>
 						)}
 
 						<button
 							type="submit"
-							disabled={isSubmitting}
-							className="w-full mt-2 py-3 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-sm transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+							disabled={isSubmitting || (mode === 'register' && !agreeToTerms)}
+							className={`w-full mt-2 py-3 px-4 bg-[#3C3C3C] text-white font-bold text-sm rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+								isSubmitting || (mode === 'register' && !agreeToTerms)
+									? 'opacity-50 cursor-not-allowed'
+									: 'hover:bg-[#2A2A2A] cursor-pointer'
+							}`}
 						>
 							{isSubmitting ? (
 								<div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -306,7 +329,7 @@ export default function AuthModal() {
 							) : (
 								<>
 									<Sparkles className="w-4 h-4" />
-									<span>צור חשבון והקצה מספר מועמד</span>
+									<span>צור חשבון</span>
 								</>
 							)}
 						</button>
