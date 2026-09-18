@@ -1018,9 +1018,17 @@ export function generatePersonalizedTracks(
 	institutionRes: InstitutionSekemResult,
 	answers: UserPreferencesQuestionnaire
 ): RecommendedTrack[] {
+	// HARD GUARD: If user has not entered valid Bagrut grades (no subjects, total units < 20, or bagrut average <= 0)
+	// NEVER invent fake tracks!
+	const validSubjects = (userProfile.bagrutSubjects || []).filter((s) => (Number(s.grade) || 0) > 0);
+	const totalUnits = validSubjects.reduce((acc, s) => acc + (s.units || 0), 0);
+	if (validSubjects.length === 0 || totalUnits < 20 || !institutionRes || institutionRes.bagrutAverage <= 0) {
+		return [];
+	}
+
 	const hasTakenPsych = (userProfile.psychometricGeneral || 0) > 0;
 	const currentPsych = hasTakenPsych ? userProfile.psychometricGeneral : 0;
-	const currentBagrut = institutionRes.bagrutAverage > 0 ? institutionRes.bagrutAverage : 100;
+	const currentBagrut = institutionRes.bagrutAverage;
 	const baselinePsych = hasTakenPsych
 		? currentPsych
 		: currentBagrut >= 112 ? 650 : currentBagrut >= 105 ? 600 : currentBagrut >= 98 ? 560 : currentBagrut >= 90 ? 510 : 460;

@@ -49,6 +49,10 @@ import {
 	RecommendedTrack,
 	generatePersonalizedTracks
 } from '@/utils/analysis/trackGenerator';
+import {
+	validateUserGrades,
+	GradeValidationResult
+} from '@/utils/analysis/gradeValidation';
 
 const STORAGE_KEY = 'kalis_admission_flow_data';
 
@@ -96,6 +100,31 @@ export default function AdmissionFlowPage() {
 	// Step 5: Questionnaire Preferences State
 	const [questionnaireAnswers, setQuestionnaireAnswers] = useState<UserPreferencesQuestionnaire | null>(null);
 
+	// Validation of matriculation (Bagrut) and psychometric inputs
+	const [showValidationErrors, setShowValidationErrors] = useState<boolean>(false);
+
+	const gradeValidation: GradeValidationResult = useMemo(() => {
+		return validateUserGrades(subjects, hasTakenPsychometric, psychGeneral);
+	}, [subjects, hasTakenPsychometric, psychGeneral]);
+
+	const handleStepClick = (targetStep: 1 | 2 | 3 | 4) => {
+		if (targetStep > 1 && !gradeValidation.isValid) {
+			setShowValidationErrors(true);
+			setActiveStep(1);
+			return;
+		}
+		setActiveStep(targetStep);
+	};
+
+	const handleProceedFromStep1 = () => {
+		if (!gradeValidation.isValid) {
+			setShowValidationErrors(true);
+			return;
+		}
+		setShowValidationErrors(false);
+		setActiveStep(2);
+	};
+
 	// Modal State for adding/changing subjects
 	const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
 	const [editingSubjectIndex, setEditingSubjectIndex] = useState<number | null>(null);
@@ -108,6 +137,7 @@ export default function AdmissionFlowPage() {
 	// Complete reset function
 	const resetFlowToCleanState = useCallback(() => {
 		setActiveStep(1);
+		setShowValidationErrors(false);
 		setSubjects(CLEAN_BLANK_SUBJECTS.map((s) => ({ ...s })));
 		setHasTakenPsychometric(true);
 		setPsychGeneral('');
@@ -572,18 +602,19 @@ export default function AdmissionFlowPage() {
 		setActiveStep(4);
 	};
 
-	// Generate the 3 tailored, realistic tracks for Step 5
+	// Generate the 3 tailored, realistic tracks for Step 4
 	const recommendedTracks = useMemo(() => {
+		if (!gradeValidation.isValid) return null;
 		if (!currentFocusedAnalysis || !questionnaireAnswers) return null;
 		const instRes = institutionResultsMap[currentFocusedAnalysis.target.calculatorId];
-		if (!instRes) return null;
+		if (!instRes || instRes.bagrutAverage <= 0) return null;
 		return generatePersonalizedTracks(
 			currentFocusedAnalysis,
 			userProfile,
 			instRes,
 			questionnaireAnswers
 		);
-	}, [currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
+	}, [gradeValidation.isValid, currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
 
 	return (
 		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl">
@@ -592,7 +623,7 @@ export default function AdmissionFlowPage() {
 				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs">
 					<div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
 						<button
-							onClick={() => setActiveStep(1)}
+							onClick={() => handleStepClick(1)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 1
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
@@ -615,7 +646,7 @@ export default function AdmissionFlowPage() {
 						</button>
 
 						<button
-							onClick={() => setActiveStep(2)}
+							onClick={() => handleStepClick(2)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 2
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
@@ -640,7 +671,7 @@ export default function AdmissionFlowPage() {
 						</button>
 
 						<button
-							onClick={() => setActiveStep(3)}
+							onClick={() => handleStepClick(3)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 3
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
@@ -663,7 +694,7 @@ export default function AdmissionFlowPage() {
 						</button>
 
 						<button
-							onClick={() => setActiveStep(4)}
+							onClick={() => handleStepClick(4)}
 							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
 								activeStep === 4
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
@@ -784,8 +815,17 @@ export default function AdmissionFlowPage() {
 													setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
 												}
 												placeholder="200-800"
-												className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+												className={`w-full bg-white border rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none transition ${
+													showValidationErrors && gradeValidation.isPsychometricMissing
+														? 'border-rose-400 bg-rose-50/40 ring-1 ring-rose-400'
+														: 'border-[#DDD7CB] focus:ring-1 focus:ring-[#222222]'
+												}`}
 											/>
+											{showValidationErrors && gradeValidation.isPsychometricMissing && (
+												<span className="text-[11px] font-bold text-rose-600 block mt-1">
+													יש להזין ציון רב-תחומי (200–800) או לסמן &quot;עדיין לא עשיתי פסיכומטרי&quot;
+												</span>
+											)}
 										</div>
 
 										{/* Gross Mismatch Warning Banner */}
@@ -984,57 +1024,92 @@ export default function AdmissionFlowPage() {
 
 								{/* Subjects List */}
 								<div className="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
-									{subjects.map((sub, idx) => (
-										<div
-											key={idx}
-											className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4]"
-										>
-											<div className="flex-1 min-w-0">
-												<span className="text-xs font-bold text-[#222222] block truncate">
-													{sub.name}
-												</span>
+									{subjects.map((sub, idx) => {
+										const isMissing =
+											showValidationErrors &&
+											(!sub.grade || Number(sub.grade) <= 0);
+										return (
+											<div
+												key={idx}
+												className={`flex items-center gap-3 p-3 rounded-2xl border transition-all ${
+													isMissing
+														? 'bg-[#FFF1F2] border-[#FECDD3]'
+														: 'bg-[#FAF8F5] border-[#E5DFD4]'
+												}`}
+											>
+												<div className="flex-1 min-w-0">
+													<span
+														className={`text-xs font-bold block truncate ${
+															isMissing ? 'text-[#9F1239]' : 'text-[#222222]'
+														}`}
+													>
+														{sub.name}
+													</span>
+													{isMissing && (
+														<span className="text-[10px] font-bold text-[#E11D48] block mt-0.5">
+															נדרש להזין ציון
+														</span>
+													)}
+												</div>
+
+												{/* Units selector */}
+												<select
+													value={sub.units}
+													onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
+													className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
+												>
+													<option value={2}>2 יח״ל</option>
+													<option value={3}>3 יח״ל</option>
+													<option value={4}>4 יח״ל</option>
+													<option value={5}>5 יח״ל</option>
+												</select>
+
+												{/* Grade input */}
+												<input
+													type="number"
+													min={0}
+													max={100}
+													value={sub.grade === 0 ? '' : sub.grade}
+													onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
+													placeholder="ציון"
+													className={`w-16 bg-white border text-xs font-bold text-center rounded-xl px-2 py-1.5 focus:outline-none transition ${
+														isMissing
+															? 'border-[#E11D48] bg-white ring-1 ring-[#E11D48] text-[#9F1239] placeholder:text-[#FECDD3]'
+															: 'border-[#DDD7CB] text-[#222222] focus:ring-1 focus:ring-[#222222]'
+													}`}
+												/>
+
+												<button
+													onClick={() => handleDeleteSubject(idx)}
+													className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
+													title="מחק מקצוע"
+												>
+													<Trash2 className="h-4 w-4" />
+												</button>
 											</div>
-
-											{/* Units selector */}
-											<select
-												value={sub.units}
-												onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
-												className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
-											>
-												<option value={2}>2 יח״ל</option>
-												<option value={3}>3 יח״ל</option>
-												<option value={4}>4 יח״ל</option>
-												<option value={5}>5 יח״ל</option>
-											</select>
-
-											{/* Grade input */}
-											<input
-												type="number"
-												min={0}
-												max={100}
-												value={sub.grade === 0 ? '' : sub.grade}
-												onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
-												placeholder="ציון"
-												className="w-16 bg-white border border-[#DDD7CB] text-xs font-bold text-center text-[#222222] rounded-xl px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#222222]"
-											/>
-
-											<button
-												onClick={() => handleDeleteSubject(idx)}
-												className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
-												title="מחק מקצוע"
-											>
-												<Trash2 className="h-4 w-4" />
-											</button>
-										</div>
-									))}
+										);
+									})}
 								</div>
 							</div>
 						</div>
 
+						{/* Validation alert banner if attempting to advance without valid inputs */}
+						{showValidationErrors && !gradeValidation.isValid && (
+							<div className="p-4 rounded-2xl bg-[#FFF1F2] border border-[#FECDD3] text-[#9F1239] space-y-1.5 shadow-2xs">
+								<div className="flex items-center gap-2 text-xs font-bold text-[#E11D48]">
+									<AlertCircle className="h-4 w-4 shrink-0" />
+									<span>יש להשלים את הזנת הציונים כדי שנוכל לחשב עבורך נתונים מדויקים</span>
+								</div>
+								<p className="text-xs text-[#9F1239] leading-relaxed">
+									{gradeValidation.errorMessage}
+								</p>
+							</div>
+						)}
+
 						{/* ניווט תחתון לשלב 1 */}
 						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-end">
 							<button
-								onClick={() => setActiveStep(2)}
+								onClick={handleProceedFromStep1}
 								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
 							>
 								<span>המשך לבחירת תארים מבוקשים</span>
@@ -1097,59 +1172,91 @@ export default function AdmissionFlowPage() {
 							</p>
 						</div>
 
-						{hasTakenPsychometric && !psychQuantEmphasis && gapAnalyses.some((g) => g.relevantSekemType === 'engineering') && (
-							<div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 flex items-center justify-between flex-wrap gap-3">
-								<div className="flex items-center gap-2.5">
-									<AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
-									<div className="text-xs">
-										<span className="font-bold">נבחר תואר הדורש שקלול בדגש כמותי (הנדסה/מדעי המחשב):</span>
-										<span className="text-amber-800 mr-1">
-											הסכם מחושב כעת לפי הערכת שקלול הפרקים ({psychResolution.effectiveQuantEmphasis}). להבטחת דיוק מוחלט, תוכל להזין את ציון הדגש הרשמי מספח מאל״ו.
-										</span>
-									</div>
-								</div>
+						{!gradeValidation.isValid ? (
+							<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
+								<AlertCircle className="h-12 w-12 text-[#E11D48] mx-auto" />
+								<h3 className="text-lg font-bold text-[#222222]">חסרים נתוני ציונים לחישוב סיכויי קבלה</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									על מנת לחשב סכמים מדויקים ולבדוק עמידה בתנאי הסף של האוניברסיטאות, יש להזין תחילה את ציוני הבגרות והפסיכומטרי שלך.
+								</p>
 								<button
-									onClick={() => {
-										setShowEmphasisInputs(true);
-										setActiveStep(1);
-									}}
-									className="text-xs font-bold px-3 py-1.5 bg-amber-200/60 hover:bg-amber-200 text-amber-900 rounded-lg border border-amber-300 transition cursor-pointer"
+									onClick={() => setActiveStep(1)}
+									className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition cursor-pointer"
 								>
-									הזן ציון דגש מספח מאל״ו
+									חזור להזנת ציונים (שלב 1)
 								</button>
 							</div>
+						) : (
+							<>
+								{hasTakenPsychometric && !psychQuantEmphasis && gapAnalyses.some((g) => g.relevantSekemType === 'engineering') && (
+									<div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 flex items-center justify-between flex-wrap gap-3">
+										<div className="flex items-center gap-2.5">
+											<AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
+											<div className="text-xs">
+												<span className="font-bold">נבחר תואר הדורש שקלול בדגש כמותי (הנדסה/מדעי המחשב):</span>
+												<span className="text-amber-800 mr-1">
+													הסכם מחושב כעת לפי הערכת שקלול הפרקים ({psychResolution.effectiveQuantEmphasis}). להבטחת דיוק מוחלט, תוכל להזין את ציון הדגש הרשמי מספח מאל״ו.
+												</span>
+											</div>
+										</div>
+										<button
+											onClick={() => {
+												setShowEmphasisInputs(true);
+												setActiveStep(1);
+											}}
+											className="text-xs font-bold px-3 py-1.5 bg-amber-200/60 hover:bg-amber-200 text-amber-900 rounded-lg border border-amber-300 transition cursor-pointer"
+										>
+											הזן ציון דגש מספח מאל״ו
+										</button>
+									</div>
+								)}
+
+								<PersonalAdmissionReport
+									analyses={gapAnalyses}
+									onViewGap={handleViewGapForProgram}
+									onAddMorePrograms={() => setActiveStep(2)}
+								/>
+
+								{/* ניווט תחתון לשלב 3 */}
+								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between">
+									<button
+										onClick={() => setActiveStep(2)}
+										className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer"
+									>
+										<ArrowRight className="h-4 w-4" />
+										<span>חזור לבחירת תארים</span>
+									</button>
+									<button
+										onClick={() => setActiveStep(4)}
+										className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
+									>
+										<span>לתכנון מסלולי פעולה</span>
+										<ArrowLeft className="h-4 w-4" />
+									</button>
+								</div>
+							</>
 						)}
-
-						<PersonalAdmissionReport
-							analyses={gapAnalyses}
-							onViewGap={handleViewGapForProgram}
-							onAddMorePrograms={() => setActiveStep(2)}
-						/>
-
-						{/* ניווט תחתון לשלב 3 */}
-						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between">
-							<button
-								onClick={() => setActiveStep(2)}
-								className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer"
-							>
-								<ArrowRight className="h-4 w-4" />
-								<span>חזור לבחירת תארים</span>
-							</button>
-							<button
-								onClick={() => setActiveStep(4)}
-								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
-							>
-								<span>לתכנון מסלולי פעולה</span>
-								<ArrowLeft className="h-4 w-4" />
-							</button>
-						</div>
 					</div>
 				)}
 
 				{/* STEP 4: תכנון מסלולי פעולה ובניית מסלול אישי */}
 				{activeStep === 4 && (
 					<div className="space-y-6">
-						{currentFocusedAnalysis ? (
+						{!gradeValidation.isValid ? (
+							<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
+								<AlertCircle className="h-12 w-12 text-[#E11D48] mx-auto" />
+								<h3 className="text-lg font-bold text-[#222222]">לא ניתן לבנות מסלולים ללא ציוני פתיחה</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									המערכת אינה מייצרת מסלולי שיפור משוערים ללא נתוני אמת. יש להזין את ציוני הבגרות המלאים כדי שנוכל לבנות עבורך תוכנית אופטימיזציה אמיתית ומדויקת.
+								</p>
+								<button
+									onClick={() => setActiveStep(1)}
+									className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition cursor-pointer"
+								>
+									הזן ציונים עכשיו (שלב 1)
+								</button>
+							</div>
+						) : currentFocusedAnalysis ? (
 							currentFocusedAnalysis.status === 'accepted' ? (
 								<AcceptedRegistrationCard
 									analysis={currentFocusedAnalysis}

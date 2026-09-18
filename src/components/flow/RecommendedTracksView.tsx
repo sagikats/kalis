@@ -315,7 +315,9 @@ export default function RecommendedTracksView({
 							תוכנית פעולה לקבלה לתואר המבוקש
 						</h2>
 						<p className="text-xs sm:text-sm text-[#66635C] max-w-3xl leading-relaxed">
-							בחר באחד מ-{tracks.length} המסלולים הריאליים המותאמים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.
+							{tracks.length > 0
+								? `בחר באחד מ-${tracks.length} המסלולים הריאליים המותאמים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.`
+								: 'השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך לבדיקת קבלה.'}
 						</p>
 					</div>
 
@@ -373,7 +375,7 @@ export default function RecommendedTracksView({
 						}`}
 					>
 						<Sparkles className="h-4 w-4 text-inherit" />
-						<span>ריכוז המסלולים המומלץ ({tracks.length})</span>
+						<span>ריכוז המסלולים המומלץ {tracks.length > 0 ? `(${tracks.length})` : ''}</span>
 					</button>
 
 					<button
@@ -414,6 +416,29 @@ export default function RecommendedTracksView({
 			{/* TAB 1: RECOMMENDED TRACKS SUMMARY */}
 			{/* ========================================================================= */}
 			{activeTab === 'recommended' && (
+				tracks.length === 0 ? (
+					<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
+						<AlertTriangle className="h-12 w-12 text-[#8A847C] mx-auto" />
+						<h3 className="text-lg font-bold text-[#222222]">לא נמצאו מסלולי שיפור אוטומטיים</h3>
+						<p className="text-sm text-[#66635C] leading-relaxed">
+							על מנת שנוכל להציג מסלולי פעולה ריאליים ומדויקים, יש לוודא שציוני הבגרות והפסיכומטרי הוזנו במלואם. לחלופין, תוכל להשתמש בלשונית &quot;מסלול בנייה אישי&quot; כדי לדמות ציונים בעצמך.
+						</p>
+						<div className="flex items-center justify-center gap-3 pt-2">
+							<button
+								onClick={onBackToReport}
+								className="px-5 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition cursor-pointer"
+							>
+								חזור לדוח הקבלה
+							</button>
+							<button
+								onClick={() => setActiveTab('custom_builder')}
+								className="px-5 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl border border-[#DDD7CB] transition cursor-pointer"
+							>
+								מעבר למסלול בנייה אישי
+							</button>
+						</div>
+					</div>
+				) : (
 				<div className="space-y-8">
 					<div className={`grid grid-cols-1 ${tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
 				{tracks.map((track) => {
@@ -1413,6 +1438,7 @@ export default function RecommendedTracksView({
 					</div>
 				)}
 			</div>
+				)
 			)}
 
 			{/* ========================================================================= */}
