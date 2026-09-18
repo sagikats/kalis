@@ -815,17 +815,8 @@ export default function AdmissionFlowPage() {
 													setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
 												}
 												placeholder="200-800"
-												className={`w-full bg-white border rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none transition ${
-													showValidationErrors && gradeValidation.isPsychometricMissing
-														? 'border-rose-400 bg-rose-50/40 ring-1 ring-rose-400'
-														: 'border-[#DDD7CB] focus:ring-1 focus:ring-[#222222]'
-												}`}
+												className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
 											/>
-											{showValidationErrors && gradeValidation.isPsychometricMissing && (
-												<span className="text-[11px] font-bold text-rose-600 block mt-1">
-													יש להזין ציון רב-תחומי (200–800) או לסמן &quot;עדיין לא עשיתי פסיכומטרי&quot;
-												</span>
-											)}
 										</div>
 
 										{/* Gross Mismatch Warning Banner */}
@@ -1024,71 +1015,49 @@ export default function AdmissionFlowPage() {
 
 								{/* Subjects List */}
 								<div className="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
-									{subjects.map((sub, idx) => {
-										const isMissing =
-											showValidationErrors &&
-											(!sub.grade || Number(sub.grade) <= 0);
-										return (
-											<div
-												key={idx}
-												className={`flex items-center gap-3 p-3 rounded-2xl border transition-all ${
-													isMissing
-														? 'bg-[#FFF1F2] border-[#FECDD3]'
-														: 'bg-[#FAF8F5] border-[#E5DFD4]'
-												}`}
-											>
-												<div className="flex-1 min-w-0">
-													<span
-														className={`text-xs font-bold block truncate ${
-															isMissing ? 'text-[#9F1239]' : 'text-[#222222]'
-														}`}
-													>
-														{sub.name}
-													</span>
-													{isMissing && (
-														<span className="text-[10px] font-bold text-[#E11D48] block mt-0.5">
-															נדרש להזין ציון
-														</span>
-													)}
-												</div>
-
-												{/* Units selector */}
-												<select
-													value={sub.units}
-													onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
-													className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
-												>
-													<option value={2}>2 יח״ל</option>
-													<option value={3}>3 יח״ל</option>
-													<option value={4}>4 יח״ל</option>
-													<option value={5}>5 יח״ל</option>
-												</select>
-
-												{/* Grade input */}
-												<input
-													type="number"
-													min={0}
-													max={100}
-													value={sub.grade === 0 ? '' : sub.grade}
-													onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
-													placeholder="ציון"
-													className={`w-16 bg-white border text-xs font-bold text-center rounded-xl px-2 py-1.5 focus:outline-none transition ${
-														isMissing
-															? 'border-[#E11D48] bg-white ring-1 ring-[#E11D48] text-[#9F1239] placeholder:text-[#FECDD3]'
-															: 'border-[#DDD7CB] text-[#222222] focus:ring-1 focus:ring-[#222222]'
-													}`}
-												/>
-
-												<button
-													onClick={() => handleDeleteSubject(idx)}
-													className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
-													title="מחק מקצוע"
-												>
-													<Trash2 className="h-4 w-4" />
-												</button>
+									{subjects.map((sub, idx) => (
+										<div
+											key={idx}
+											className="flex items-center gap-3 p-3 rounded-2xl border transition-all bg-[#FAF8F5] border-[#E5DFD4]"
+										>
+											<div className="flex-1 min-w-0">
+												<span className="text-xs font-bold text-[#222222] block truncate">
+													{sub.name}
+												</span>
 											</div>
-										);
-									})}
+
+											{/* Units selector */}
+											<select
+												value={sub.units}
+												onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
+												className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
+											>
+												<option value={2}>2 יח״ל</option>
+												<option value={3}>3 יח״ל</option>
+												<option value={4}>4 יח״ל</option>
+												<option value={5}>5 יח״ל</option>
+											</select>
+
+											{/* Grade input */}
+											<input
+												type="number"
+												min={0}
+												max={100}
+												value={sub.grade === 0 ? '' : sub.grade}
+												onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
+												placeholder="ציון"
+												className="w-16 bg-white border border-[#DDD7CB] text-xs font-bold text-center rounded-xl px-2 py-1.5 text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+											/>
+
+											<button
+												onClick={() => handleDeleteSubject(idx)}
+												className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
+												title="מחק מקצוע"
+											>
+												<Trash2 className="h-4 w-4" />
+											</button>
+										</div>
+									))}
 								</div>
 							</div>
 						</div>
