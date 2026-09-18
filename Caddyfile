@@ -1,0 +1,16 @@
+{
+    # Global options
+    admin off
+}
+
+# Production domain with automatic Let's Encrypt SSL & HTTPS redirect
+mitkablim.co.il, www.mitkablim.co.il {
+    encode gzip zstd
+    reverse_proxy kalis:3000
+}
+
+# Direct IP fallback on HTTP (ensures site is reachable even before DNS propagation)
+http://129.159.158.60 {
+    encode gzip zstd
+    reverse_proxy kalis:3000
+}

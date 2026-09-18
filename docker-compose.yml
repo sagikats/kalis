@@ -5,15 +5,35 @@ services:
       dockerfile: Dockerfile
     container_name: kalis-app
     restart: unless-stopped
+    expose:
+      - "3000"
     ports:
-      - "80:3000"
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
     volumes:
       - kalis_data:/app/prisma
 
+  caddy:
+    image: caddy:2-alpine
+    container_name: kalis-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - kalis
+
 volumes:
   kalis_data:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local
