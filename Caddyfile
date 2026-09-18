@@ -3,8 +3,8 @@
     admin off
 }
 
-# Production domain with automatic Let's Encrypt SSL & HTTPS redirect
-mitkablim.co.il, www.mitkablim.co.il {
+# Production domains with automatic Let's Encrypt SSL & HTTPS redirect
+mitkablim.co.il, www.mitkablim.co.il, mitkablim.com, www.mitkablim.com {
     encode gzip zstd
     reverse_proxy kalis:3000
 }
