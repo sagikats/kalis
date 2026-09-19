@@ -985,32 +985,6 @@ export default function AdmissionFlowPage() {
 											ציוני תעודת בגרות ({subjects.length} מקצועות)
 										</h3>
 									</div>
-									<div className="flex items-center gap-2">
-										<button
-											type="button"
-											onClick={() => {
-												if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
-													resetFlowToCleanState();
-												}
-											}}
-											className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
-											title="איפוס כל הנתונים"
-										>
-											<RefreshCw className="h-3.5 w-3.5" />
-											<span>איפוס</span>
-										</button>
-										<button
-											type="button"
-											onClick={() => {
-												setEditingSubjectIndex(null);
-												setIsSubjectModalOpen(true);
-											}}
-											className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#222222] hover:bg-[#EFEAE0] text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
-										>
-											<Plus className="h-3.5 w-3.5" />
-											<span>הוסף מקצוע / הגברה</span>
-										</button>
-									</div>
 								</div>
 
 								{/* Subjects List */}
@@ -1058,6 +1032,35 @@ export default function AdmissionFlowPage() {
 											</button>
 										</div>
 									))}
+								</div>
+
+								{/* Bottom Action Buttons: Add Subject & Reset */}
+								<div className="pt-3 border-t border-[#EAE5DA] flex items-center justify-between">
+									<button
+										type="button"
+										onClick={() => {
+											setEditingSubjectIndex(null);
+											setIsSubjectModalOpen(true);
+										}}
+										className="px-4 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#EFEAE0] border border-[#DDD7CB] text-[#222222] text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs active:scale-[0.99]"
+									>
+										<Plus className="h-4 w-4" />
+										<span>הוסף מקצוע / הגברה</span>
+									</button>
+
+									<button
+										type="button"
+										onClick={() => {
+											if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
+												resetFlowToCleanState();
+											}
+										}}
+										className="px-3.5 py-2 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+										title="איפוס כל הנתונים"
+									>
+										<RefreshCw className="h-3.5 w-3.5" />
+										<span>איפוס</span>
+									</button>
 								</div>
 							</div>
 						</div>
