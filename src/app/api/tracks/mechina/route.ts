@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbRepository, GenerateTracksRequestSchema, UserAcademicProfileRecord, UserPreferencesRecord } from '@/modules/db';
-import { generateMechinaTrack } from '@/modules/optimizer';
+import { generateMechinaTrack, getDegreeBypassRoutes } from '@/modules/optimizer';
 
 export async function POST(req: NextRequest) {
 	try {
@@ -74,12 +74,16 @@ export async function POST(req: NextRequest) {
 			updatedAt: new Date()
 		};
 
-		const track = generateMechinaTrack(program, profileRecord, preferencesRecord);
+		const bypassRoutes = getDegreeBypassRoutes(program, profileRecord, preferencesRecord);
 
 		return NextResponse.json({
 			success: true,
 			program,
-			track
+			track: bypassRoutes.mechinaTrack,
+			mechinaTrack: bypassRoutes.mechinaTrack,
+			afikMaavarTrack: bypassRoutes.afikMaavarTrack,
+			hasAfikMaavar: bypassRoutes.hasAfikMaavar,
+			afikSpec: bypassRoutes.afikSpec
 		});
 	} catch (error: any) {
 		return NextResponse.json(

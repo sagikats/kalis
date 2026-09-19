@@ -143,13 +143,14 @@ export interface TrackMilestoneRecord {
 	title: string;
 	detail: string;
 	timing: string;
-	type: 'psychometric' | 'bagrut_core' | 'bagrut_elective' | 'administrative';
+	type: 'psychometric' | 'bagrut_core' | 'bagrut_elective' | 'administrative' | 'mechina' | 'academic_course';
 }
 
 export interface ActionTrackRecord {
 	id: string;
 	userId: string;
 	programId: string;
+	type?: string;
 	title: string;
 	badge: string;
 	badgeColor: string;

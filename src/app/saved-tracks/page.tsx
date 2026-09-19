@@ -137,6 +137,18 @@ export default function SavedTracksPage() {
 	// Helper for session badges
 	const getSessionBadge = (sessionLabel?: string) => {
 		const lbl = sessionLabel || '';
+		if (lbl.includes('אפיק') || lbl.includes('פתוחה') || lbl.includes('אקדמי')) {
+			return {
+				name: 'קורס אקדמי (האו״פ) 🌐',
+				classes: 'bg-[#ECFEFF] text-[#0E7490] border-[#A5F3FC]'
+			};
+		}
+		if (lbl.includes('מכינה')) {
+			return {
+				name: 'לימודי מכינה 🎓',
+				classes: 'bg-[#EEF2FF] text-[#453D78] border-[#D2CEEB]'
+			};
+		}
 		if (lbl.includes('חורף')) {
 			return {
 				name: 'מועד חורף (ינואר) ❄️',
@@ -450,58 +462,140 @@ export default function SavedTracksPage() {
 
 								{/* Verified Targets KPI Grid */}
 								<div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 bg-[#FAF8F5] p-3.5 rounded-2xl border border-[#EBE6DC]">
-									{/* Sekem Target */}
-									<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
-										<span className="text-[11px] text-[#66635C] block">סכם יעד מאומת</span>
-										<span className="text-base sm:text-lg font-extrabold text-[#222222]">
-											{track.targetSekem}
-										</span>
-										{track.admissionThreshold && (
-											<span className="text-[10px] text-emerald-700 block font-semibold">
-												(סף: {track.admissionThreshold})
-											</span>
-										)}
-									</div>
+									{track.id?.includes('afik-maavar') ? (
+										<>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">מסלול קבלה</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#0E7490]">
+													אפיק מעבר
+												</span>
+												<span className="text-[10px] text-[#065F46] block font-semibold">
+													האו״פ ➔ מוסד
+												</span>
+											</div>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">פסיכומטרי</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#065F46]">
+													פטור מלא
+												</span>
+												<span className="text-[10px] text-[#065F46] block font-semibold">
+													ללא צורך בבחינה
+												</span>
+											</div>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">ממוצע מעבר נדרש</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													85+
+												</span>
+												<span className="text-[10px] text-[#66635C] block font-semibold">
+													בקורסי האו״פ
+												</span>
+											</div>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">קורסים אקדמיים</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{levers.length}
+												</span>
+												<span className="text-[10px] text-[#0E7490] block font-semibold">
+													נ״ז מוכרות לתואר
+												</span>
+											</div>
+										</>
+									) : track.type === 'mechina' ? (
+										<>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">מסלול קבלה</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#453D78]">
+													מכינה אקדמית
+												</span>
+												<span className="text-[10px] text-[#453D78] block font-semibold">
+													מחליפת בגרות
+												</span>
+											</div>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">יעד פסיכומטרי</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{track.targetPsychometric ? track.targetPsychometric : 'ללא פסיכומטרי'}
+												</span>
+												<span className="text-[10px] text-[#66635C] block font-semibold">
+													{track.targetPsychometric ? 'דרישת מכינה' : 'פטור מלא'}
+												</span>
+											</div>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">ממוצע גמר מכינה</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#205739]">
+													{track.targetBagrutAverage ? `${track.targetBagrutAverage.toFixed(0)}+` : '85+'}
+												</span>
+												<span className="text-[10px] text-[#66635C] block font-semibold">
+													תעודת גמר מוסדית
+												</span>
+											</div>
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">מקצועות מכינה</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{levers.length}
+												</span>
+												<span className="text-[10px] text-[#453D78] block font-semibold">
+													לימודי ליבה פנימיים
+												</span>
+											</div>
+										</>
+									) : (
+										<>
+											{/* Sekem Target */}
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">סכם יעד מאומת</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{track.targetSekem}
+												</span>
+												{track.admissionThreshold && (
+													<span className="text-[10px] text-emerald-700 block font-semibold">
+														(סף: {track.admissionThreshold})
+													</span>
+												)}
+											</div>
 
-									{/* Psychometric Target */}
-									<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
-										<span className="text-[11px] text-[#66635C] block">יעד פסיכומטרי</span>
-										<span className="text-base sm:text-lg font-extrabold text-[#222222]">
-											{track.targetPsychometric ? track.targetPsychometric : 'ללא פסיכומטרי'}
-										</span>
-										{track.targetPsychometric && track.currentPsychometric ? (
-											<span className="text-[10px] text-blue-700 block font-semibold">
-												({track.targetPsychometric >= track.currentPsychometric ? '+' : ''}
-												{track.targetPsychometric - track.currentPsychometric} נקודות)
-											</span>
-										) : (
-											<span className="text-[10px] text-emerald-700 block font-semibold">קבלה ישירה</span>
-										)}
-									</div>
+											{/* Psychometric Target */}
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">יעד פסיכומטרי</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{track.targetPsychometric ? track.targetPsychometric : 'ללא פסיכומטרי'}
+												</span>
+												{track.targetPsychometric && track.currentPsychometric ? (
+													<span className="text-[10px] text-blue-700 block font-semibold">
+														({track.targetPsychometric >= track.currentPsychometric ? '+' : ''}
+														{track.targetPsychometric - track.currentPsychometric} נקודות)
+													</span>
+												) : (
+													<span className="text-[10px] text-emerald-700 block font-semibold">קבלה ישירה</span>
+												)}
+											</div>
 
-									{/* Bagrut Average Target */}
-									<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
-										<span className="text-[11px] text-[#66635C] block">ממוצע בגרות יעד</span>
-										<span className="text-base sm:text-lg font-extrabold text-[#222222]">
-											{track.targetBagrutAverage ? track.targetBagrutAverage.toFixed(1) : 'ללא שינוי'}
-										</span>
-										{track.currentBagrutAverage && (
-											<span className="text-[10px] text-[#88857E] block">
-												(נוכחי: {track.currentBagrutAverage.toFixed(1)})
-											</span>
-										)}
-									</div>
+											{/* Bagrut Average Target */}
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">ממוצע בגרות יעד</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{track.targetBagrutAverage ? track.targetBagrutAverage.toFixed(1) : 'ללא שינוי'}
+												</span>
+												{track.currentBagrutAverage && (
+													<span className="text-[10px] text-[#88857E] block">
+														(נוכחי: {track.currentBagrutAverage.toFixed(1)})
+													</span>
+												)}
+											</div>
 
-									{/* Levers Count */}
-									<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
-										<span className="text-[11px] text-[#66635C] block">בחינות לשיפור</span>
-										<span className="text-base sm:text-lg font-extrabold text-[#222222]">
-											{levers.length}
-										</span>
-										<span className="text-[10px] text-[#66635C] block font-semibold">
-											{levers.length === 0 ? 'פסיכומטרי בלבד' : 'מקצועות בגרות'}
-										</span>
-									</div>
+											{/* Levers Count */}
+											<div className="p-2.5 rounded-xl bg-white border border-[#E5DFD4] text-center">
+												<span className="text-[11px] text-[#66635C] block">בחינות לשיפור</span>
+												<span className="text-base sm:text-lg font-extrabold text-[#222222]">
+													{levers.length}
+												</span>
+												<span className="text-[10px] text-[#66635C] block font-semibold">
+													{levers.length === 0 ? 'פסיכומטרי בלבד' : 'מקצועות בגרות'}
+												</span>
+											</div>
+										</>
+									)}
 								</div>
 
 								{/* Required Subject Improvements List (Expandable) */}
@@ -513,7 +607,13 @@ export default function SavedTracksPage() {
 										>
 											<span className="flex items-center gap-1.5">
 												<Layers className="w-3.5 h-3.5 text-blue-600" />
-												<span>פירוט הבחינות לשיפור והרחבה ({levers.length} בחינות)</span>
+												<span>
+													{track.id?.includes('afik-maavar')
+														? `פירוט קורסי האפיק באוניברסיטה הפתוחה (${levers.length} קורסים)`
+														: track.type === 'mechina'
+														? `פירוט מקצועות הליבה במכינה (${levers.length} מקצועות)`
+														: `פירוט הבחינות לשיפור והרחבה (${levers.length} בחינות)`}
+												</span>
 											</span>
 											{isExpanded ? (
 												<ChevronUp className="w-4 h-4 text-[#88857E]" />
@@ -533,6 +633,8 @@ export default function SavedTracksPage() {
 													const currU = lever.currentUnits ?? targetU;
 													const hasUnitChange = !isNewSubject && currU > 0 && targetU > 0 && currU !== targetU;
 													const sessionInfo = getSessionBadge(lever.sessionLabel || lever.session);
+													const isAfik = track.id?.includes('afik-maavar');
+													const isMechina = track.type === 'mechina' && !isAfik;
 
 													return (
 														<div
@@ -542,7 +644,15 @@ export default function SavedTracksPage() {
 															<div className="space-y-1">
 																<div className="flex items-center gap-2 flex-wrap">
 																	<span className="font-bold text-[#222222]">{subName}</span>
-																	{isNewSubject ? (
+																	{isAfik ? (
+																		<span className="text-[#0E7490] font-semibold">
+																			({targetU} נ״ז אקדמיות)
+																		</span>
+																	) : isMechina ? (
+																		<span className="text-[#453D78] font-semibold">
+																			({targetU} יח״ל מכינה)
+																		</span>
+																	) : isNewSubject ? (
 																		<span className="text-[#66635C] font-semibold">
 																			(מקצוע חדש, {targetU} יח״ל)
 																		</span>
@@ -551,7 +661,7 @@ export default function SavedTracksPage() {
 																			<span>(</span>
 																			<span dir="ltr" className="inline-flex items-center gap-1 font-mono text-[#66635C]">
 																				<span>{currU}</span>
-																				<span className="text-[#8A847C]">➔</span>
+																				<span>➔</span>
 																				<span>{targetU}</span>
 																			</span>
 																			<span>יח״ל)</span>

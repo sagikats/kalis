@@ -89,118 +89,18 @@ export function getMechinaDescription(institutionId: string, institutionName: st
 	}
 }
 
+import { generateAccurateMechinaTrack } from './bypassRoutesEngine';
+
 /**
  * Generates on-demand Mechina track when requested by candidate (Opt-In).
+ * 100% authentic academic mechina curriculum (zero random Bagrut levers).
  */
 export function generateMechinaTrack(
 	targetProgram: AcademicProgramRecord,
 	profile: UserAcademicProfileRecord,
 	preferences: UserPreferencesRecord
 ): ActionTrackRecord {
-	const institutionId = targetProgram.institutionId;
-	const threshold = targetProgram.minSekemThreshold;
-	const hasTakenPsych = profile.hasTakenPsychometric && profile.psychometricGeneral > 0;
-	const currentPsych = hasTakenPsych ? profile.psychometricGeneral : 0;
-	const isStemDegree =
-		targetProgram.relevantSekemType === 'engineering' ||
-		targetProgram.relevantSekemType === 'technion' ||
-		targetProgram.fieldOfStudy.includes('מחשב') ||
-		targetProgram.fieldOfStudy.includes('הנדס');
-
-	const baseSubjects = toCalculatorSubjects(profile);
-	const initialRes = evaluateSimulatedSekem(
-		institutionId,
-		targetProgram.relevantSekemType,
-		profile,
-		baseSubjects,
-		hasTakenPsych ? currentPsych : 600
-	);
-
-	const currentSekem = initialRes.sekem;
-	const currentBagrut = initialRes.bagrutAverage;
-	const sekemGap = Math.max(0, threshold - currentSekem);
-	const mechina = getMechinaDescription(institutionId, targetProgram.institutionName);
-	const availableLevers = extractRankedSubjectLevers(profile, isStemDegree, preferences).map(assignSessionToCandidate);
-	const anchorTopLever = availableLevers.find((l) => l.isMath || l.isPhysics) ?? availableLevers[0];
-
-	const availableWeeklyHours =
-		preferences.weeklyAvailabilityHours === 'limited_under_15'
-			? 12
-			: preferences.weeklyAvailabilityHours === 'full_30_plus'
-			? 32
-			: 20;
-
-	return {
-		id: 'track-anchor',
-		userId: profile.userId,
-		programId: targetProgram.id,
-		title: `מסלול מכינה אקדמית: ${mechina.name}`,
-		badge: 'מסלול מובנה (Opt-In דרך מכינה)',
-		badgeColor: 'from-violet-500 to-purple-700',
-		strategyDescription:
-			`${mechina.detail} ` +
-			`הפער הנוכחי לסף הקבלה עומד על ${sekemGap.toFixed(1)} נקודות סכם (סכם נוכחי: ${currentSekem.toFixed(1)}, סף: ${threshold}). ` +
-			`מסלול המכינה מעניק מסגרת לימודית רשמית וסגירת פערים יסודית ללא לחץ של מועדי בחינות בודדים.`,
-		targetSekem: threshold,
-		targetPsychometric: undefined,
-		currentPsychometric: hasTakenPsych ? currentPsych : undefined,
-		targetBagrutAverage: currentBagrut,
-		currentBagrutAverage: currentBagrut,
-		recommendedLevers: anchorTopLever
-			? [
-					{
-						id: anchorTopLever.id,
-						trackId: 'track-anchor',
-						subjectName: anchorTopLever.subjectName,
-						currentGrade: anchorTopLever.currentGrade,
-						currentUnits: anchorTopLever.currentUnits,
-						targetGrade: anchorTopLever.targetGrade,
-						targetUnits: anchorTopLever.targetUnits,
-						priority: anchorTopLever.priority,
-						reason: anchorTopLever.reason,
-						leverType: anchorTopLever.leverType,
-						session: anchorTopLever.session
-					}
-			  ]
-			: [],
-		milestones: [
-			{
-				id: 'ma1',
-				trackId: 'track-anchor',
-				orderIndex: 1,
-				title: `רישום ל${mechina.name}`,
-				detail: 'בדיקת מועדי הרישום ותנאי הקבלה למכינה.',
-				timing: 'שבוע 1–2',
-				type: 'psychometric'
-			},
-			{
-				id: 'ma2',
-				trackId: 'track-anchor',
-				orderIndex: 2,
-				title: anchorTopLever ? `חיזוק מקצוע מפתח — ${anchorTopLever.subjectName}` : 'חיזוק ציוני ליבה',
-				detail: anchorTopLever
-					? `מיקוד בשדרוג ${anchorTopLever.subjectName} לציון ${anchorTopLever.targetGrade} במסגרת המכינה.`
-					: 'עבודה על שיפור ממוצע הבגרות תוך שנת המכינה.',
-				timing: 'שבועות 4–24',
-				type: anchorTopLever?.isMath ? 'bagrut_core' : 'bagrut_elective'
-			},
-			{
-				id: 'ma3',
-				trackId: 'track-anchor',
-				orderIndex: 3,
-				title: 'הגשת מועמדות לקבלה אקדמית',
-				detail: `הגשת מועמדות ל${targetProgram.institutionName} על סמך תעודת גמר מכינה.`,
-				timing: `שבועות ${mechina.durationWeeks - 4}–${mechina.durationWeeks}`,
-				type: 'administrative'
-			}
-		],
-		estimatedWeeks: mechina.durationWeeks,
-		weeklyHours: availableWeeklyHours,
-		feasibility: sekemGap <= 30 ? 'very_high' : 'high',
-		feasibilityExplanation: `מסגרת מכינה שנתית מספקת ודאות גבוהה לסגירת פער של ${sekemGap.toFixed(1)} נקודות סכם.`,
-		keyAdvantage: 'מסגרת לימודית מובנית ומעטפת אקדמית מלאה המאפשרת קבלה מובטחת.',
-		createdAt: new Date()
-	};
+	return generateAccurateMechinaTrack(targetProgram, profile, preferences);
 }
 
 export function generateOptimizedActionTracks(
