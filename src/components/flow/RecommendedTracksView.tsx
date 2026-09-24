@@ -440,7 +440,7 @@ export default function RecommendedTracksView({
 						</div>
 						<p className="text-xs sm:text-sm text-[#66635C] max-w-3xl leading-relaxed">
 							{tracks.length > 0
-								? `בחר באחד מ-${tracks.length} המסלולים הריאליים המותאמים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.`
+								? `בנינו עבורך ${tracks.length === 1 ? 'מסלול אחד' : `${tracks.length} מסלולים`}, ממש פה למטה`
 								: 'השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך לבדיקת קבלה.'}
 						</p>
 					</div>
