@@ -549,6 +549,8 @@ export default function OptimizerPage() {
                                                        <span className="text-xs text-slate-500 block mb-1">ציון:</span>
                                                        <input
                                                             type="number"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             min={50}
                                                             max={100}
                                                             value={localMathGrade}
@@ -585,6 +587,8 @@ export default function OptimizerPage() {
                                                        <span className="text-xs text-slate-500 block mb-1">ציון:</span>
                                                        <input
                                                             type="number"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             min={50}
                                                             max={100}
                                                             value={localEngGrade}
@@ -620,6 +624,8 @@ export default function OptimizerPage() {
                                                        <span className="text-xs text-slate-500 block mb-1">ציון פסיכומטרי קיים (200-800):</span>
                                                        <input
                                                             type="number"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             min={200}
                                                             max={800}
                                                             value={localPsychScore}

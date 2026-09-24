@@ -448,6 +448,8 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   </label>
                                                   <input
                                                        type="number"
+                                                       inputMode="numeric"
+                                                       pattern="[0-9]*"
                                                        min={200}
                                                        max={800}
                                                        value={psychGeneral}
@@ -469,6 +471,8 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   </label>
                                                   <input
                                                        type="number"
+                                                       inputMode="numeric"
+                                                       pattern="[0-9]*"
                                                        min={50}
                                                        max={150}
                                                        value={psychQuant}
@@ -490,6 +494,8 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   </label>
                                                   <input
                                                        type="number"
+                                                       inputMode="numeric"
+                                                       pattern="[0-9]*"
                                                        min={50}
                                                        max={150}
                                                        value={psychVerbal}
@@ -513,6 +519,8 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   </div>
                                                   <input
                                                        type="number"
+                                                       inputMode="numeric"
+                                                       pattern="[0-9]*"
                                                        min={50}
                                                        max={150}
                                                        value={psychEnglish}

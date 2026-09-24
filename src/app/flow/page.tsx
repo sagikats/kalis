@@ -803,6 +803,8 @@ export default function AdmissionFlowPage() {
 											</div>
 											<input
 												type="number"
+												inputMode="numeric"
+												pattern="[0-9]*"
 												min={200}
 												max={800}
 												value={psychGeneral === 0 ? '' : psychGeneral}
@@ -832,6 +834,8 @@ export default function AdmissionFlowPage() {
 												<label className="block text-[11px] font-bold text-[#44423D]">כמותי:</label>
 												<input
 													type="number"
+													inputMode="numeric"
+													pattern="[0-9]*"
 													min={50}
 													max={150}
 													value={psychQuant === 0 ? '' : psychQuant}
@@ -847,6 +851,8 @@ export default function AdmissionFlowPage() {
 												<label className="block text-[11px] font-bold text-[#44423D]">מילולי:</label>
 												<input
 													type="number"
+													inputMode="numeric"
+													pattern="[0-9]*"
 													min={50}
 													max={150}
 													value={psychVerbal === 0 ? '' : psychVerbal}
@@ -862,6 +868,8 @@ export default function AdmissionFlowPage() {
 												<label className="block text-[11px] font-bold text-[#44423D]">אנגלית:</label>
 												<input
 													type="number"
+													inputMode="numeric"
+													pattern="[0-9]*"
 													min={50}
 													max={150}
 													value={psychEnglish === 0 ? '' : psychEnglish}
@@ -915,6 +923,8 @@ export default function AdmissionFlowPage() {
 															</label>
 															<input
 																type="number"
+																inputMode="numeric"
+																pattern="[0-9]*"
 																min={200}
 																max={800}
 																value={psychQuantEmphasis}
@@ -931,6 +941,8 @@ export default function AdmissionFlowPage() {
 															</label>
 															<input
 																type="number"
+																inputMode="numeric"
+																pattern="[0-9]*"
 																min={200}
 																max={800}
 																value={psychVerbalEmphasis}
