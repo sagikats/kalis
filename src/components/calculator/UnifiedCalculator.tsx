@@ -729,11 +729,6 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
                                                        <span className="text-[11px] text-[#66635C] block font-bold">ממוצע בגרות</span>
                                                        <span className="text-xl font-black text-[#222222] mt-1 block">{res.bagrutAverage}</span>
-                                                       {res.optimalUnits && (
-                                                            <span className="text-[10px] text-blue-700 font-semibold block mt-0.5">
-                                                                 {res.optimalUnits} יח"ל (אופטימלי)
-                                                            </span>
-                                                       )}
                                                   </div>
 
                                                   {/* General Sekem */}
