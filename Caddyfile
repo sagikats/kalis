@@ -3,14 +3,27 @@
     admin off
 }
 
-# Production domains with automatic Let's Encrypt SSL & HTTPS redirect
-mitkablim.co.il, www.mitkablim.co.il, mitkablim.com, www.mitkablim.com {
-    encode gzip zstd
-    reverse_proxy kalis:3000
+# Redirect all alternative domains and subdomains permanently (301) to canonical https://mitkablim.co.il
+www.mitkablim.co.il, mitkablim.com, www.mitkablim.com {
+    redir https://mitkablim.co.il{uri} 301
 }
 
-# Direct IP fallback on HTTP (ensures site is reachable even before DNS propagation)
+# Direct IP access redirect to canonical HTTPS domain
 http://129.159.158.60 {
+    redir https://mitkablim.co.il{uri} 301
+}
+
+# Primary Canonical Domain (HTTPS with automated Let's Encrypt SSL & HSTS)
+mitkablim.co.il {
+    header {
+        # Strict-Transport-Security (HSTS): enforces HTTPS across all browsers and search engines
+        Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+        # Standard security headers
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
     encode gzip zstd
     reverse_proxy kalis:3000
 }
