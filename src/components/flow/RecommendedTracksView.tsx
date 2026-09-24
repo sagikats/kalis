@@ -623,7 +623,7 @@ export default function RecommendedTracksView({
 								</div>
 
 								{/* Metric Target Boxes */}
-								<div className="space-y-2 pt-2 border-t border-[#EAE5DA]">
+								<div className="pt-2 border-t border-[#EAE5DA]">
 									{/* 1. Subject and psychometric improvement details */}
 									{(() => {
 										const needsPsychImprovement = Boolean(
@@ -640,16 +640,12 @@ export default function RecommendedTracksView({
 										if (!needsPsychImprovement && !hasSubjectImprovements) return null;
 
 										return (
-											<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 space-y-2">
+											<div className="bg-[#F5F1E8] border border-[#DDD5C7] rounded-2xl p-3.5 space-y-2.5 shadow-xs mb-3.5">
 												<div className="flex items-center justify-between">
-													<span className="text-[11px] font-bold text-[#66635C] block">
-														{needsPsychImprovement && hasSubjectImprovements
-															? 'מקצועות ומרכיבים מומלצים לשיפור:'
-															: needsPsychImprovement
-															? 'מרכיב מומלץ לשיפור:'
-															: 'מקצועות מומלצים לשיפור:'}
+													<span className="text-[13px] font-black text-[#222222] block">
+														המלצות לשיפור
 													</span>
-													<span className="text-[10px] text-[#1E597B] font-bold">
+													<span className="text-[10px] text-[#1E597B] font-bold bg-[#EBF4FA] px-2 py-0.5 rounded-md border border-[#CCE4F4]">
 														{[
 															needsPsychImprovement ? 'פסיכומטרי' : null,
 															hasSubjectImprovements ? `${track.recommendedSubjectImprovements.length} בגרויות` : null
@@ -740,161 +736,164 @@ export default function RecommendedTracksView({
 										);
 									})()}
 
-									{/* 2. Psychometric target if exists */}
-									{typeof track.targetPsychometric === 'number' && track.targetPsychometric > 0 && (
-										<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
-											<div className="flex items-center gap-2">
-												<Brain className="h-4 w-4 text-[#222222]" />
-												<span className="text-xs font-bold text-[#66635C]">יעד פסיכומטרי:</span>
-											</div>
-											<div dir="ltr" className="text-left dir-ltr flex items-center gap-1">
-												{track.targetPsychometric > (track.currentPsychometric || 0) ? (
-													<>
-														{(track.currentPsychometric || 0) > 0 && (
-															<>
-																<span className="text-xs text-[#8A847C] line-through">
-																	{track.currentPsychometric}
-																</span>
-																<span className="text-[#8A847C] text-xs">➔</span>
-															</>
-														)}
-														<span className="text-sm font-black text-[#222222]">
-															{track.targetPsychometric}
-														</span>
-														{(track.currentPsychometric || 0) > 0 && (
-															<span className="text-[10px] text-[#205739] font-bold">
-																(+{track.targetPsychometric - (track.currentPsychometric || 0)})
-															</span>
-														)}
-													</>
-												) : (
-													<span className="text-xs text-[#66635C] font-bold">
-														{track.targetPsychometric} (שומר על הקיים)
-													</span>
-												)}
-											</div>
-										</div>
-									)}
-
-									{/* 3. Bagrut target if exists */}
-									{(() => {
-										const hasSubjectImprovements = Boolean(
-											track.recommendedSubjectImprovements && track.recommendedSubjectImprovements.length > 0
-										);
-										const hasBagrutIncrease = Boolean(
-											track.targetBagrutAverage && track.targetBagrutAverage > (track.currentBagrutAverage || 0)
-										);
-
-										if (hasBagrutIncrease) {
-											return (
-												<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
-													<div className="flex items-center gap-2">
-														<BookOpen className="h-4 w-4 text-[#222222]" />
-														<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
-													</div>
-													<div dir="ltr" className="text-left dir-ltr flex items-center gap-1">
-														<span className="text-xs text-[#8A847C] line-through">
-															{track.currentBagrutAverage?.toFixed(1)}
-														</span>
-														<span className="text-[#8A847C] text-xs">➔</span>
-														<span className="text-sm font-black text-[#222222]">
-															{track.targetBagrutAverage?.toFixed(1)}
-														</span>
-														<span className="text-[10px] text-[#205739] font-bold">
-															(+{((track.targetBagrutAverage || 0) - (track.currentBagrutAverage || 0)).toFixed(1)})
-														</span>
-													</div>
+									{/* Metric Target Summary Boxes */}
+									<div className="space-y-2">
+										{/* 2. Psychometric target if exists */}
+										{typeof track.targetPsychometric === 'number' && track.targetPsychometric > 0 && (
+											<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
+												<div className="flex items-center gap-2">
+													<Brain className="h-4 w-4 text-[#222222]" />
+													<span className="text-xs font-bold text-[#66635C]">יעד פסיכומטרי:</span>
 												</div>
-											);
-										}
+												<div dir="ltr" className="text-left dir-ltr flex items-center gap-1">
+													{track.targetPsychometric > (track.currentPsychometric || 0) ? (
+														<>
+															{(track.currentPsychometric || 0) > 0 && (
+																<>
+																	<span className="text-xs text-[#8A847C] line-through">
+																		{track.currentPsychometric}
+																	</span>
+																	<span className="text-[#8A847C] text-xs">➔</span>
+																</>
+															)}
+															<span className="text-sm font-black text-[#222222]">
+																{track.targetPsychometric}
+															</span>
+															{(track.currentPsychometric || 0) > 0 && (
+																<span className="text-[10px] text-[#205739] font-bold">
+																	(+{track.targetPsychometric - (track.currentPsychometric || 0)})
+																</span>
+															)}
+														</>
+													) : (
+														<span className="text-xs text-[#66635C] font-bold">
+															{track.targetPsychometric} (שומר על הקיים)
+														</span>
+													)}
+												</div>
+											</div>
+										)}
 
-										if (hasSubjectImprovements) {
+										{/* 3. Bagrut target if exists */}
+										{(() => {
+											const hasSubjectImprovements = Boolean(
+												track.recommendedSubjectImprovements && track.recommendedSubjectImprovements.length > 0
+											);
+											const hasBagrutIncrease = Boolean(
+												track.targetBagrutAverage && track.targetBagrutAverage > (track.currentBagrutAverage || 0)
+											);
+
+											if (hasBagrutIncrease) {
+												return (
+													<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
+														<div className="flex items-center gap-2">
+															<BookOpen className="h-4 w-4 text-[#222222]" />
+															<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
+														</div>
+														<div dir="ltr" className="text-left dir-ltr flex items-center gap-1">
+															<span className="text-xs text-[#8A847C] line-through">
+																{track.currentBagrutAverage?.toFixed(1)}
+															</span>
+															<span className="text-[#8A847C] text-xs">➔</span>
+															<span className="text-sm font-black text-[#222222]">
+																{track.targetBagrutAverage?.toFixed(1)}
+															</span>
+															<span className="text-[10px] text-[#205739] font-bold">
+																(+{((track.targetBagrutAverage || 0) - (track.currentBagrutAverage || 0)).toFixed(1)})
+															</span>
+														</div>
+													</div>
+												);
+											}
+
+											if (hasSubjectImprovements) {
+												return (
+													<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
+														<div className="flex items-center gap-2">
+															<BookOpen className="h-4 w-4 text-[#222222]" />
+															<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
+														</div>
+														<div className="text-left dir-ltr">
+															<span className="text-sm font-black text-[#222222]">
+																{(track.targetBagrutAverage || track.currentBagrutAverage)?.toFixed(1)}
+															</span>
+															<span className="text-[10px] text-[#66635C] ml-1 font-bold">
+																(משתפר עם המקצועות)
+															</span>
+														</div>
+													</div>
+												);
+											}
+
 											return (
 												<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
 													<div className="flex items-center gap-2">
-														<BookOpen className="h-4 w-4 text-[#222222]" />
+														<BookOpen className="h-4 w-4 text-[#8A847C]" />
 														<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
 													</div>
 													<div className="text-left dir-ltr">
-														<span className="text-sm font-black text-[#222222]">
-															{(track.targetBagrutAverage || track.currentBagrutAverage)?.toFixed(1)}
-														</span>
-														<span className="text-[10px] text-[#66635C] ml-1 font-bold">
-															(משתפר עם המקצועות)
+														<span className="text-xs font-bold text-[#66635C]">
+															{track.currentBagrutAverage?.toFixed(1)} (ללא צורך בשיפור)
 														</span>
 													</div>
 												</div>
 											);
-										}
+										})()}
 
-										return (
-											<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-3 flex items-center justify-between">
+										{/* 4. Target Sekem if exists */}
+										{track.targetSekem !== undefined && (
+											<div
+												className={`border rounded-2xl p-3 flex items-center justify-between shadow-2xs ${
+													analysis.threshold && track.targetSekem < analysis.threshold
+														? 'bg-[#FDF6E8] border-[#ECDAB6]'
+														: 'bg-[#EBF4EE] border-[#C6DFCE]'
+												}`}
+											>
 												<div className="flex items-center gap-2">
-													<BookOpen className="h-4 w-4 text-[#8A847C]" />
-													<span className="text-xs font-bold text-[#66635C]">ממוצע בגרות:</span>
-												</div>
-												<div className="text-left dir-ltr">
-													<span className="text-xs font-bold text-[#66635C]">
-														{track.currentBagrutAverage?.toFixed(1)} (ללא צורך בשיפור)
-													</span>
-												</div>
-											</div>
-										);
-									})()}
-
-									{/* 4. Target Sekem if exists */}
-									{track.targetSekem !== undefined && (
-										<div
-											className={`border rounded-2xl p-3 flex items-center justify-between shadow-2xs ${
-												analysis.threshold && track.targetSekem < analysis.threshold
-													? 'bg-[#FDF6E8] border-[#ECDAB6]'
-													: 'bg-[#EBF4EE] border-[#C6DFCE]'
-											}`}
-										>
-											<div className="flex items-center gap-2">
-												<Sparkles
-													className={`h-4 w-4 ${
-														analysis.threshold && track.targetSekem < analysis.threshold
-															? 'text-[#825B15]'
-															: 'text-[#205739]'
-													}`}
-												/>
-												<span
-													className={`text-xs font-bold ${
-														analysis.threshold && track.targetSekem < analysis.threshold
-															? 'text-[#825B15]'
-															: 'text-[#205739]'
-													}`}
-												>
-													{analysis.threshold && track.targetSekem < analysis.threshold
-														? 'סכם מחושב מוערך:'
-														: 'סכם מחושב:'}
-												</span>
-											</div>
-											<div className="text-left dir-ltr">
-												<span
-													className={`text-sm font-black ${
-														analysis.threshold && track.targetSekem < analysis.threshold
-															? 'text-[#825B15]'
-															: 'text-[#205739]'
-													}`}
-												>
-													{track.targetSekem.toFixed(isTechnion ? 2 : 1)}
-												</span>
-												{analysis.threshold && (
-													<span
-														className={`text-[10px] ml-1.5 font-medium ${
+													<Sparkles
+														className={`h-4 w-4 ${
 															analysis.threshold && track.targetSekem < analysis.threshold
-																? 'text-[#825B15]/80'
-																: 'text-[#205739]/80'
+																? 'text-[#825B15]'
+																: 'text-[#205739]'
+														}`}
+													/>
+													<span
+														className={`text-xs font-bold ${
+															analysis.threshold && track.targetSekem < analysis.threshold
+																? 'text-[#825B15]'
+																: 'text-[#205739]'
 														}`}
 													>
-														(סף: {analysis.threshold})
+														{analysis.threshold && track.targetSekem < analysis.threshold
+															? 'סכם מחושב מוערך:'
+															: 'סכם מחושב:'}
 													</span>
-												)}
+												</div>
+												<div className="text-left dir-ltr">
+													<span
+														className={`text-sm font-black ${
+															analysis.threshold && track.targetSekem < analysis.threshold
+																? 'text-[#825B15]'
+																: 'text-[#205739]'
+														}`}
+													>
+														{track.targetSekem.toFixed(isTechnion ? 2 : 1)}
+													</span>
+													{analysis.threshold && (
+														<span
+															className={`text-[10px] ml-1.5 font-medium ${
+																analysis.threshold && track.targetSekem < analysis.threshold
+																	? 'text-[#825B15]/80'
+																	: 'text-[#205739]/80'
+															}`}
+														>
+															(סף: {analysis.threshold})
+														</span>
+													)}
+												</div>
 											</div>
-										</div>
-									)}
+										)}
+									</div>
 								</div>
 
 
