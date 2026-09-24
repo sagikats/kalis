@@ -576,17 +576,25 @@ export default function RecommendedTracksView({
 							{/* Track Top Banner */}
 							<div className="p-6 pb-4 space-y-4">
 								<div className="flex items-center justify-between gap-2">
-									<span
-										className={`px-3 py-1 text-[11px] font-black rounded-lg ${
-											isFast
-												? 'bg-[#FDF6E8] text-[#825B15] border border-[#ECDAB6]'
-												: isBalanced
-												? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE]'
-												: 'bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]'
-										}`}
-									>
-										{track.badge?.replace(/\s*\([^)]*\)/g, '').trim()}
-									</span>
+									<div className="flex items-center gap-2">
+										<span
+											className={`px-3 py-1 text-[11px] font-black rounded-lg ${
+												isFast
+													? 'bg-[#FDF6E8] text-[#825B15] border border-[#ECDAB6]'
+													: isBalanced
+													? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE]'
+													: 'bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]'
+											}`}
+										>
+											{track.badge?.replace(/\s*\([^)]*\)/g, '').trim()}
+										</span>
+										{isSelected && (
+											<span className="flex items-center gap-1 text-[10px] font-bold text-[#205739] bg-[#EBF4EE] border border-[#C6DFCE] px-2 py-0.5 rounded-md">
+												<CheckCircle2 className="h-3 w-3 text-[#205739]" />
+												<span>מסלול מוצג</span>
+											</span>
+										)}
+									</div>
 									<div className="flex items-center gap-1.5 text-xs font-bold text-[#66635C]">
 										<Clock className="h-3.5 w-3.5" />
 										<span>{track.estimatedWeeks} שבועות</span>
@@ -933,26 +941,8 @@ export default function RecommendedTracksView({
 								)}
 							</div>
 
-							{/* Bottom Selection & Save Buttons */}
+							{/* Bottom Action & Save Buttons */}
 							<div className="p-6 pt-0 space-y-2">
-								<button
-									type="button"
-									onClick={() => setSelectedTrackId(track.id)}
-									className={`w-full py-3 px-4 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer ${
-										isSelected
-											? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] font-black'
-											: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs'
-									}`}
-								>
-									{isSelected ? (
-										<>
-											<CheckCircle2 className="h-4 w-4 text-[#205739]" />
-											<span>המסלול הנבחר שלך</span>
-										</>
-									) : (
-										<span>בחר מסלול זה</span>
-									)}
-								</button>
 								<button
 									type="button"
 									onClick={(e) => {
