@@ -326,16 +326,20 @@ export default function RecommendedTracksView({
 	return (
 		<div className="space-y-8 dir-rtl text-right">
 			{/* Top Header Card */}
-			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden space-y-6">
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs relative space-y-6">
 				{/* Top Meta & Action Toolbar Row */}
-				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
+				<div className="relative z-30 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
 					<div className="flex items-center gap-2 flex-wrap">
 						{allAnalyses && allAnalyses.length > 1 ? (
 							<div className="relative" ref={programDropdownRef}>
 								<button
 									type="button"
 									onClick={() => setIsProgramDropdownOpen(!isProgramDropdownOpen)}
-									className="px-3 py-1 bg-[#FAF8F5] hover:bg-[#F2EFE9] border border-[#E5DFD4] hover:border-[#CCC5B6] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2 transition cursor-pointer select-none shadow-2xs"
+									className={`px-3 py-1 border text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2 transition cursor-pointer select-none shadow-2xs outline-none focus:outline-none focus:ring-0 ${
+										isProgramDropdownOpen
+											? 'bg-[#F2EFE9] border-[#CCC5B6]'
+											: 'bg-[#FAF8F5] hover:bg-[#F2EFE9] border-[#E5DFD4] hover:border-[#CCC5B6]'
+									}`}
 									title="לחץ לבחירת תואר אחר מהתארים שנבחרו"
 								>
 									<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
@@ -344,8 +348,11 @@ export default function RecommendedTracksView({
 								</button>
 
 								{isProgramDropdownOpen && (
-									<div className="absolute top-full right-0 mt-2 w-72 sm:w-80 bg-white border border-[#E5DFD4] rounded-2xl shadow-lg p-2 z-50 animate-in fade-in duration-150">
-										<div className="px-2.5 py-1.5 text-[11px] font-bold text-[#8A847C] border-b border-[#EAE5DA] mb-1">
+									<div
+										className="absolute top-full right-0 mt-2 w-72 sm:w-80 border border-[#DDD7CC] rounded-2xl shadow-2xl p-2.5 z-50 animate-in fade-in duration-150"
+										style={{ backgroundColor: '#ffffff', isolation: 'isolate' }}
+									>
+										<div className="px-2.5 py-1.5 text-[11px] font-bold text-[#8A847C] border-b border-[#EAE5DA] mb-1.5">
 											בחירת תואר מבוקש:
 										</div>
 										<div className="space-y-1 max-h-64 overflow-y-auto">
@@ -360,13 +367,13 @@ export default function RecommendedTracksView({
 															onSelectProgram?.(a.target.program.id);
 															setIsProgramDropdownOpen(false);
 														}}
-														className={`w-full flex items-center justify-between gap-2.5 px-2.5 py-2 rounded-xl text-xs font-bold transition text-right cursor-pointer ${
+														className={`w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition text-right cursor-pointer outline-none focus:outline-none ${
 															isSelected
 																? 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4]'
 																: 'text-[#66635C] hover:bg-[#FAF8F5] hover:text-[#222222]'
 														}`}
 													>
-														<div className="flex items-center gap-2 min-w-0">
+														<div className="flex items-center gap-2.5 min-w-0">
 															<UniversityLogo institution={a.target.institutionId} size="xs" shape="circle" />
 															<div className="truncate">
 																<div className="text-[#222222] truncate">{a.target.program.fieldOfStudy}</div>
