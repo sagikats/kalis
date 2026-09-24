@@ -4,7 +4,7 @@ import React from 'react';
 
 interface MitkablimLogoProps {
      className?: string;
-     size?: 'sm' | 'md' | 'lg';
+     size?: 'inline' | 'sm' | 'md' | 'lg';
      variant?: 'dark' | 'light';
      showTagline?: boolean;
 }
@@ -16,15 +16,17 @@ export default function KalisLogo({
      showTagline = true
 }: MitkablimLogoProps) {
      // Size dimensions
-     const iconHeight = size === 'sm' ? 28 : size === 'lg' ? 44 : 36;
-     const titleSize = size === 'sm' ? 'text-lg' : size === 'lg' ? 'text-2xl' : 'text-xl';
-     const taglineSize = size === 'sm' ? 'text-[8.5px]' : size === 'lg' ? 'text-[11px]' : 'text-[9.5px]';
+     const iconHeight = size === 'inline' ? 22 : size === 'sm' ? 28 : size === 'lg' ? 44 : 36;
+     const titleSize = size === 'inline' ? 'text-lg sm:text-xl' : size === 'sm' ? 'text-lg' : size === 'lg' ? 'text-2xl' : 'text-xl';
+     const taglineSize = size === 'inline' ? 'text-[8px]' : size === 'sm' ? 'text-[8.5px]' : size === 'lg' ? 'text-[11px]' : 'text-[9.5px]';
+     const gapClass = size === 'inline' ? 'gap-1.5' : 'gap-2.5';
+     const dotSize = size === 'inline' ? 'text-xl sm:text-2xl' : size === 'sm' ? 'text-xl' : 'text-2xl';
 
      const textColor = variant === 'light' ? 'text-white' : 'text-[#222222]';
      const taglineColor = variant === 'light' ? 'text-slate-300' : 'text-[#66635C]';
 
      return (
-          <div className={`flex items-center gap-2.5 select-none ${className}`} dir="rtl">
+          <div className={`flex items-center ${gapClass} select-none ${className}`} dir="rtl">
                {/* SVG LOGO MARK: Iconic Academic Graduation Cap (Mortarboard) */}
                <svg
                     height={iconHeight}
@@ -81,7 +83,7 @@ export default function KalisLogo({
                <div className="flex flex-col text-right justify-center">
                     <div className={`font-extrabold tracking-tight leading-none ${titleSize} ${textColor} flex items-baseline gap-0.5`}>
                          <span>מתקבלים</span>
-                         <span className="text-cyan-500 font-black text-2xl leading-none">.</span>
+                         <span className={`text-cyan-500 font-black ${dotSize} leading-none`}>.</span>
                     </div>
                     {showTagline && (
                          <div className={`font-semibold tracking-normal ${taglineSize} ${taglineColor} mt-0.5`}>

@@ -23,6 +23,7 @@ import {
   HelpCircle
 } from 'lucide-react';
 import GlowCard from '@/components/common/GlowCard';
+import KalisLogo from '@/components/common/KalisLogo';
 
 const HERO_IMAGES = [
   { src: '/images/hero-grad-1.png', alt: 'בוגרי אקדמיה חוגגים קבלה בזריחה' },
@@ -152,8 +153,39 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-20 lg:pb-32">
           <div className="text-center max-w-3xl mx-auto space-y-7">
             {/* Subheadline */}
-            <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-2xl mx-auto">
-              מערכת חישוב סכמי קבלה וייעוץ לבניית מסלולים לשיפור הסכם בצורה שתביא אתכם כמה שיותר מהר עם כמה שפחות כאבי ראש, לאקדמיה
+            <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-3xl mx-auto">
+              <span className="block mb-1 sm:mb-2">
+                נעשה את זה פשוט, אתם מזינים את הציונים ומה התארים שאתם חולמים עליהם
+              </span>
+              <span className="inline-flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1">
+                <span>אנחנו נגיד לכם מה הדרך</span>
+                <span className="relative inline-block font-bold text-[#222222] px-0.5">
+                  הכי יעילה
+                  <svg
+                    className="absolute -bottom-2 right-0 w-full h-3 overflow-visible pointer-events-none"
+                    viewBox="0 0 100 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <linearGradient id="curvedUnderlineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#0284c7" />
+                        <stop offset="100%" stopColor="#06b6d4" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M 3 2.5 C 30 12, 70 12, 97 2.5"
+                      stroke="url(#curvedUnderlineGrad)"
+                      strokeWidth="2.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+                <span>שלכם להיות</span>
+                <span className="inline-flex items-center align-middle mx-1 -translate-y-0.5">
+                  <KalisLogo size="inline" showTagline={false} />
+                </span>
+              </span>
             </p>
 
             {/* Two Main CTA Buttons - Clean Editorial Aesthetic */}
