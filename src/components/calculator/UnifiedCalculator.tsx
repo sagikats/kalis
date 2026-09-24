@@ -12,6 +12,7 @@ import {
      Trash2,
      Building2,
      ChevronLeft,
+     ChevronDown,
      ArrowLeft,
      Award,
      BookOpen,
@@ -140,6 +141,16 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
      // Subject catalog modal state
      const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
      const [editingSubjectIndex, setEditingSubjectIndex] = useState<number | null>(null);
+
+     // Expand/collapse institution calculation details
+     const [expandedInstitutions, setExpandedInstitutions] = useState<Record<string, boolean>>({});
+
+     const toggleInstitutionDetails = (id: string) => {
+          setExpandedInstitutions((prev) => ({
+               ...prev,
+               [id]: !prev[id]
+          }));
+     };
 
      const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 }, [subjects]);
      const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
@@ -680,21 +691,39 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                              key={res.institutionId}
                                              className="bg-white rounded-3xl p-5 border border-[#E5DFD4] hover:border-[#CCC5B6] shadow-xs transition space-y-4"
                                         >
-                                             <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
-                                                  <div className="flex items-center gap-3">
+                                             <div className="flex items-start justify-between border-b border-[#EAE5DA] pb-3 gap-2">
+                                                  <div className="flex items-start gap-3 flex-1 min-w-0">
                                                        <UniversityLogo institution={res.institutionId} size="md" shape="rounded" />
-                                                       <div>
+                                                       <div className="flex-1 min-w-0">
                                                             <h4 className="text-base font-bold text-[#222222]">{res.institutionName}</h4>
-                                                            {res.notes && <p className="text-[11px] text-[#66635C]">{res.notes}</p>}
-                                                            {res.droppedSubjects && res.droppedSubjects.length > 0 && (
-                                                                 <p className="text-[10px] text-amber-800 font-medium mt-0.5">
-                                                                      הושמטו למיקסום הממוצע: {res.droppedSubjects.join(', ')}
-                                                                 </p>
+                                                            {(res.notes || (res.droppedSubjects && res.droppedSubjects.length > 0)) && (
+                                                                 <button
+                                                                      type="button"
+                                                                      onClick={() => toggleInstitutionDetails(res.institutionId)}
+                                                                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#66635C] hover:text-[#222222] transition mt-0.5 cursor-pointer select-none"
+                                                                 >
+                                                                      <span>{expandedInstitutions[res.institutionId] ? 'הסתר פירוט' : 'הצג פירוט'}</span>
+                                                                      <ChevronDown
+                                                                           className={`h-3 w-3 text-[#8A847C] transition-transform duration-200 ${
+                                                                                expandedInstitutions[res.institutionId] ? 'rotate-180 text-[#222222]' : ''
+                                                                           }`}
+                                                                      />
+                                                                 </button>
+                                                            )}
+                                                            {expandedInstitutions[res.institutionId] && (
+                                                                 <div className="mt-2 p-2.5 bg-[#FAF8F5] border border-[#E5DFD4] rounded-xl text-[11px] space-y-1 animate-in fade-in duration-150">
+                                                                      {res.notes && <p className="text-[#66635C] leading-relaxed">{res.notes}</p>}
+                                                                      {res.droppedSubjects && res.droppedSubjects.length > 0 && (
+                                                                           <p className="text-[10px] text-amber-800 font-medium">
+                                                                                הושמטו למיקסום הממוצע: {res.droppedSubjects.join(', ')}
+                                                                           </p>
+                                                                      )}
+                                                                 </div>
                                                             )}
                                                        </div>
                                                   </div>
                                                   {res.directBagrutEligible && (
-                                                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                                                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 shrink-0">
                                                             אפיק קבלה ישיר!
                                                        </span>
                                                   )}
