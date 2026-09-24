@@ -1286,7 +1286,7 @@ export default function RecommendedTracksView({
 									<span>שוקל מסלול עוקף קבלה ב{analysis.target.institutionName.replace('אוניברסיטת ', '')}?</span>
 								</h4>
 								<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
-									עבור פערים גדולים או למי שמעוניין בנתיב ישיר ללא תלות בבגרויות ובפסיכומטרי: מכינה קדם-אקדמית במוסד (מחליפה את תעודת הבגרות בתוכנית ממוקדת) או אפיק מעבר מהאוניברסיטה הפתוחה (קבלה מובטחת עם צבירת נקודות זכות אקדמיות ופטור מלא מבגרות ופסיכומטרי).
+									עבור פערים גדולים או למי שמעוניין בנתיב ישיר ללא תלות בבגרויות ובפסיכומטרי: מכינה קדם-אקדמית במוסד (מחליפה את תעודת הבגרות בתוכנית ממוקדת) או אפיק מעבר מהאוניברסיטה הפתוחה (צבירת נקודות זכות אקדמיות ופטור מלא מבגרות ופסיכומטרי).
 								</p>
 							</div>
 
@@ -1350,9 +1350,6 @@ export default function RecommendedTracksView({
 										>
 											<Globe className="h-4 w-4 text-[#0E7490]" />
 											<span>אפיק מעבר מהאוניברסיטה הפתוחה</span>
-											<span className="text-[10px] bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] px-2 py-0.5 rounded font-bold shadow-2xs">
-												קבלה מובטחת 100%
-											</span>
 										</button>
 									</div>
 								)}
@@ -1583,7 +1580,7 @@ export default function RecommendedTracksView({
 											<div className="space-y-2 pt-1">
 												<div className="flex items-center justify-between flex-wrap gap-2">
 													<h6 className="text-[11px] font-bold text-[#8A847C] uppercase tracking-wider">
-														מקבץ קורסי האוניברסיטה הפתוחה למעבר מובטח (מוכרים ומקוזזים מתואר הבוגר):
+														מקבץ קורסי האוניברסיטה הפתוחה למעבר אקדמי (מוכרים ומקוזזים מתואר הבוגר):
 													</h6>
 													<span className="text-[10px] text-[#0E7490] font-bold bg-[#ECFEFF] border border-[#A5F3FC] px-2 py-0.5 rounded">
 														מעבר ישיר לשנה ב׳ בפקולטה
