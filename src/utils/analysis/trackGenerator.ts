@@ -1634,7 +1634,7 @@ export function generatePersonalizedTracks(
 			badge: 'הכי מהיר',
 			badgeColor: 'from-amber-500 to-orange-600',
 			strategyDescription: hasTakenPsych
-				? `ריכוז כל המאמץ בקורס פסיכומטרי ממוקד אחד. מעלה את הציון מ-${currentPsych} ל-${purePsychTarget} (+${psychDelta} נקודות) וסוגר את הפער במלואו (סכם מחושב מובטח: ${verifiedRes.sekem.toFixed(isTechnion ? 2 : 1)}) ללא פתיחת ספרי בגרות.`
+				? `ריכוז כל המאמץ בקורס פסיכומטרי ממוקד אחד. מעלה את הציון מ-${currentPsych} ל-${purePsychTarget} (+${psychDelta} נקודות) וסוגר את הפער במלואו (סכם מחושב: ${verifiedRes.sekem.toFixed(isTechnion ? 2 : 1)}) ללא פתיחת ספרי בגרות.`
 				: `השגת ציון יעד פסיכומטרי ראשוני של ${purePsychTarget} מביאה לסכם מחושב של ${verifiedRes.sekem.toFixed(isTechnion ? 2 : 1)} ומבטיחה קבלה ישירה.`,
 			targetSekem: verifiedRes.sekem,
 			targetPsychometric: purePsychTarget,
@@ -2170,14 +2170,14 @@ export function generatePersonalizedTracks(
 				balTitle = `המסלול החלופי: שדרוג ${selectedBalLevers[0]?.subjectName} (בחינה בודדת)`;
 				balBadge = 'חלופה לבחינה בודדת';
 				if (isSingleBagrutAdmissionTrack1) {
-					balStrategyDesc = `חלופה לבחינה בודדת: במקום ${track1SubjectName}, שדרוג ממוקד של ${selectedBalLevers[0]?.subjectName} (${selectedBalLevers[0]?.targetUnits} יח״ל, ציון ${selectedBalLevers[0]?.targetGrade}) מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח קבלה מלאה בבחינה אחת בלבד וללא צורך בשיפור פסיכומטרי (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+					balStrategyDesc = `חלופה לבחינה בודדת: במקום ${track1SubjectName}, שדרוג ממוקד של ${selectedBalLevers[0]?.subjectName} (${selectedBalLevers[0]?.targetUnits} יח״ל, ציון ${selectedBalLevers[0]?.targetGrade}) מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח קבלה מלאה בבחינה אחת בלבד וללא צורך בשיפור פסיכומטרי (סכם מחושב: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
 				} else {
-					balStrategyDesc = `חלופה לבחינה בודדת: במקום בחינה פסיכומטרית, שדרוג ממוקד של ${selectedBalLevers[0]?.subjectName} (${selectedBalLevers[0]?.targetUnits} יח״ל, ציון ${selectedBalLevers[0]?.targetGrade}) מעלה את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח עמידה מלאה בסף הקבלה בבחינה אחת בלבד וללא פסיכומטרי (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+					balStrategyDesc = `חלופה לבחינה בודדת: במקום בחינה פסיכומטרית, שדרוג ממוקד של ${selectedBalLevers[0]?.subjectName} (${selectedBalLevers[0]?.targetUnits} יח״ל, ציון ${selectedBalLevers[0]?.targetGrade}) מעלה את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח עמידה מלאה בסף הקבלה בבחינה אחת בלבד וללא פסיכומטרי (סכם מחושב: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
 				}
 			} else if (balPsych < track1Psych) {
-				balStrategyDesc = `במקום יעד פסיכומטרי של ${track1Psych}, שדרוג ממוקד של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומאפשר קבלה עם יעד פסיכומטרי נמוך ונגיש של ${balPsych} בלבד לסגירת סף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+				balStrategyDesc = `במקום יעד פסיכומטרי של ${track1Psych}, שדרוג ממוקד של ${balSubjectSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומאפשר קבלה עם יעד פסיכומטרי נמוך ונגיש של ${balPsych} בלבד לסגירת סף הקבלה (סכם מחושב: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
 			} else {
-				balStrategyDesc = `שילוב מאוזן של ${balSubjectSummary} יחד עם פסיכומטרי מתון של ${balPsych} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח עמידה מלאה בסף הקבלה (סכם מחושב מובטח: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
+				balStrategyDesc = `שילוב מאוזן של ${balSubjectSummary} יחד עם פסיכומטרי מתון של ${balPsych} מקפיץ את ממוצע הבגרות ל-${targetBagrutBal.toFixed(1)} ומבטיח עמידה מלאה בסף הקבלה (סכם מחושב: ${bestBalCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`;
 			}
 
 			tracks.push({
@@ -2316,7 +2316,7 @@ export function generatePersonalizedTracks(
 				title: 'מסלול רב-שלבי: מקסימום בגרויות והקלה מרבית בפסיכומטרי',
 				badge: 'הקלה מרבית בפסיכומטרי',
 				badgeColor: 'from-blue-600 to-indigo-700',
-				strategyDescription: `בפער של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, המסלול הרב-שלבי מחלק את העומס על פני מספר מועדים ומוריד את רף הפסיכומטרי למינימום האפשרי: שדרוג והרחבה של ${solidSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutSolid.toFixed(1)} ומאפשר קבלה מלאה עם פסיכומטרי רגוע ונגיש של ${solidPsych} בלבד לסגירת סף הקבלה (סכם מחושב מובטח: ${bestSolidCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`,
+				strategyDescription: `בפער של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, המסלול הרב-שלבי מחלק את העומס על פני מספר מועדים ומוריד את רף הפסיכומטרי למינימום האפשרי: שדרוג והרחבה של ${solidSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutSolid.toFixed(1)} ומאפשר קבלה מלאה עם פסיכומטרי רגוע ונגיש של ${solidPsych} בלבד לסגירת סף הקבלה (סכם מחושב: ${bestSolidCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`,
 				targetSekem: bestSolidCombo.res.sekem,
 				targetPsychometric: solidPsych,
 				currentPsychometric: hasTakenPsych ? currentPsych : undefined,

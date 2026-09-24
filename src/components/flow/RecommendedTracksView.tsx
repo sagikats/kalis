@@ -650,7 +650,7 @@ export default function RecommendedTracksView({
 												>
 													{analysis.threshold && track.targetSekem < analysis.threshold
 														? 'סכם מחושב מוערך:'
-														: 'סכם מחושב מובטח:'}
+														: 'סכם מחושב:'}
 												</span>
 											</div>
 											<div className="text-left dir-ltr">
