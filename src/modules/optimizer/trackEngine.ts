@@ -201,7 +201,7 @@ export function generateOptimizedActionTracks(
 			targetSekem: Math.max(currentSekem, threshold),
 			targetBagrutAverage: currentBagrut,
 			examCount: 0,
-			badge: 'קבלה ישירה מיידית (0 בחינות!)',
+			badge: 'קבלה ישירה מיידית',
 			strategyDescription: `זכאות מיידית לקבלה ישירה! ממוצע הבגרות הקיים שלך (${currentBagrut.toFixed(1)}) וציוני הבגרות עומדים במלואם ברף הקבלה הישירה (Direct Bagrut Admission) ב${targetProgram.institutionName} — ללא צורך במבחן פסיכומטרי וללא צורך בשיפור בגרויות כלל!`,
 			feasibility: 'very_high',
 			feasibilityExplanation: `עמידה מלאה ומיידית ברף קבלה ישירה בבגרות (${currentBagrut.toFixed(1)}) ללא צורך בבחינות נוספות.`,
@@ -246,7 +246,7 @@ export function generateOptimizedActionTracks(
 			targetSekem: resFast.sekem,
 			targetBagrutAverage: currentBagrut,
 			examCount: 1,
-			badge: 'מצוינות: פסיכומטרי בלבד (מועד יחיד)',
+			badge: 'מצוינות: פסיכומטרי בלבד',
 			strategyDescription: hasTakenPsych
 				? `מיקוד מלא בבחינה אחת בלבד: השגת ציון ${singlePsychSol} בפסיכומטרי (+${psychDelta} נקודות) סוגרת את מלוא הסף (סכם מובטח: ${resFast.sekem.toFixed(isTechnion ? 2 : 1)}) ללא צורך בפתיחת ספרי בגרות כלל.`
 				: `ציון יעד פסיכומטרי ראשון: השגת ${singlePsychSol} בבחינה בודדת תבטיח קבלה ישירה על בסיס ממוצע הבגרות הנוכחי (${currentBagrut.toFixed(1)}).`,
@@ -290,7 +290,7 @@ export function generateOptimizedActionTracks(
 				targetSekem: isDirect ? threshold : resSingleBagrut.sekem,
 				targetBagrutAverage: resSingleBagrut.bagrutAverage,
 				examCount: 1,
-				badge: isDirect ? 'מצוינות: קבלה ישירה (אפס פסיכומטרי)' : `מצוינות: ${lever.subjectName} ${lever.targetUnits} יח״ל בלבד`,
+				badge: isDirect ? 'מצוינות: קבלה ישירה' : `מצוינות: ${lever.subjectName} ${lever.targetUnits} יח״ל בלבד`,
 				strategyDescription: isDirect
 					? `מעקף פסיכומטרי מלא בבחינה אחת: שדרוג ${lever.subjectName} (${lever.targetUnits} יח״ל) לציון ${highTargetGrade} מעלה את ממוצע הבגרות ל-${resSingleBagrut.bagrutAverage.toFixed(1)} ומקנה קבלה ישירה רשמית ב${targetProgram.institutionName} ללא פסיכומטרי כלל!`
 					: `מהלך ממוקד של בחינה אחת: שדרוג ${lever.subjectName} (${lever.targetUnits} יח״ל) לציון מצוינות של ${highTargetGrade} מקפיץ את הממוצע ל-${resSingleBagrut.bagrutAverage.toFixed(1)} וסוגר את הסף ללא שינוי בפסיכומטרי!`,
@@ -388,7 +388,7 @@ export function generateOptimizedActionTracks(
 			targetSekem: threshold,
 			targetBagrutAverage: directBagrutAvg,
 			examCount: directBagrutLevers.length,
-			badge: 'מצוינות: קבלה ישירה (אפס פסיכומטרי)',
+			badge: 'מצוינות: קבלה ישירה',
 			strategyDescription: `מעקף פסיכומטרי מלא: שדרוג ${leverNames} לציון מצוינות מעלה את ממוצע הבגרות ל-${directBagrutAvg.toFixed(1)} ומקנה קבלה ישירה רשמית ב${targetProgram.institutionName} ללא תלות בפסיכומטרי כלל!`,
 			feasibility: 'very_high',
 			feasibilityExplanation: `עמידה מלאה ברף קבלה ישירה של המוסד ללא סיכון פסיכומטרי.`,
@@ -435,7 +435,7 @@ export function generateOptimizedActionTracks(
 			targetSekem: evalRes.sekem,
 			targetBagrutAverage: evalRes.bagrutAverage,
 			examCount: 2,
-			badge: 'מצוינות: 2 מבחנים בלבד (בגרות + פסיכומטרי)',
+			badge: 'מצוינות: 2 מבחנים בלבד',
 			strategyDescription: `שילוב מנצח של 2 בחינות בלבד: שדרוג ${topLever.subjectName} לציון ${highLever.targetGrade} ושיפור פסיכומטרי ל-${evalPsych} מביאים לסכם של ${evalRes.sekem.toFixed(isTechnion ? 2 : 1)}.`,
 			feasibility,
 			feasibilityExplanation: `סגירת סף הקבלה ב-2 בחינות בלבד תוך מיצוי פוטנציאל ההישג.`,
@@ -611,7 +611,7 @@ export function generateOptimizedActionTracks(
 		userId: profile.userId,
 		programId: targetProgram.id,
 		title: 'מסלול סולידי: ביטחון גבוה ופיזור סיכונים (ציוני 82–90)',
-		badge: 'מסלול סולידי (ציוני 82–90 בטוחים)',
+		badge: 'מסלול סולידי',
 		badgeColor: 'from-emerald-500 to-teal-600',
 		strategyDescription: strategyDescB,
 		targetSekem: resB.sekem,
@@ -700,7 +700,7 @@ export function generateOptimizedActionTracks(
 			userId: profile.userId,
 			programId: targetProgram.id,
 			title: 'מסלול ארוך טווח: תוכנית שנתית רב-שלבית (לפערים רחבים)',
-			badge: 'מסלול שנתי מדורג (פער רחב)',
+			badge: 'מסלול שנתי מדורג',
 			badgeColor: 'from-amber-600 via-orange-600 to-indigo-700',
 			strategyDescription:
 				`תוכנית שנתית מובנית (36–44 שבועות) לסגירת פער של ${gapAbs.toFixed(isTechnion ? 2 : 1)} נקודות סכם: ` +

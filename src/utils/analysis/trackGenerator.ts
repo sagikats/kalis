@@ -1300,7 +1300,7 @@ export function generatePersonalizedTracks(
 			tracks.push({
 				id: 'track-fast-hybrid',
 				title: 'המסלול המהיר: מינוף מקצועות מפתח',
-				badge: 'הכי מהיר (מועד קיץ/חורף)',
+				badge: 'הכי מהיר',
 				badgeColor: 'from-amber-500 to-orange-600',
 				strategyDescription: hasTakenPsych
 					? `שדרוג ממוקד של ${fastSubjectNames} מעלה את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)}. לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}), נדרש יעד פסיכומטרי של ${targetP_Fast} (+${targetP_Fast - currentPsych} נקודות).`
@@ -1377,7 +1377,7 @@ export function generatePersonalizedTracks(
 			tracks.push({
 				id: 'track-multi-year',
 				title: 'המסלול הבטוח: פיזור עומס דו-שלבי',
-				badge: 'הכי מומלץ (פיזור סיכונים)',
+				badge: 'הכי מומלץ',
 				badgeColor: 'from-emerald-500 to-teal-600',
 				strategyDescription: hasTakenPsych
 					? `פיזור העומס בין שדרוג מקצועות הבגרות (${multiSubjectNames}) לבין הפסיכומטרי מביא לממוצע בגרות של ${multiRes.bagrutAverage.toFixed(1)} ומאפשר לעמוד ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}) עם יעד פסיכומטרי נגיש יותר של ${targetP_Multi} (+${targetP_Multi - currentPsych} נקודות בלבד).`
@@ -1442,7 +1442,7 @@ export function generatePersonalizedTracks(
 					tracks.push({
 						id: 'track-multi-exam',
 						title: 'מסלול רב-שלבי: מקסימום בגרויות והקלה מרבית בפסיכומטרי',
-						badge: 'הקלה מרבית בפסיכומטרי (פריסה רב-עונתית)',
+						badge: 'הקלה מרבית בפסיכומטרי',
 						badgeColor: 'from-blue-600 to-indigo-700',
 						strategyDescription: `שדרוג מקיף של ${maxLevers.length} מקצועות (${maxSubjectNames}) מקפיץ את ממוצע הבגרות ל-${maxRes.bagrutAverage.toFixed(1)} ומוריד את יעד הפסיכומטרי הנדרש ל-${targetP_Max} בלבד לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}).`,
 						targetSekem: maxRes.sekem,
@@ -1492,7 +1492,7 @@ export function generatePersonalizedTracks(
 			tracks.push({
 				id: 'track-transfer',
 				title: 'מסלול אפיק מעבר: מעקף פסיכומטרי מלא',
-				badge: 'מעקף פסיכומטרי מלא (לפערים חריגים)',
+				badge: 'מעקף פסיכומטרי מלא',
 				badgeColor: 'from-blue-600 to-indigo-700',
 				strategyDescription: hasTakenPsych
 					? `בפער חריג של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, שיפור בגרויות בודדות אינו מספיק. אפיק המעבר של האוניברסיטה הפתוחה עוקף לחלוטין את ציוני התיכון והפסיכומטרי: לומדים 3–4 קורסים אקדמיים בסיסיים (חדו״א, ליניארית, תכנות/פיזיקה) ועוברים ישירות לשנה ב׳ ב${gapAnalysis.target.institutionName} ללא צורך במבחן פסיכומטרי נוסף.`
@@ -1631,7 +1631,7 @@ export function generatePersonalizedTracks(
 		tracks.push({
 			id: 'track-fast',
 			title: 'המסלול המהיר: זינוק פסיכומטרי ממוקד',
-			badge: 'הכי מהיר (מועד בודד)',
+			badge: 'הכי מהיר',
 			badgeColor: 'from-amber-500 to-orange-600',
 			strategyDescription: hasTakenPsych
 				? `ריכוז כל המאמץ בקורס פסיכומטרי ממוקד אחד. מעלה את הציון מ-${currentPsych} ל-${purePsychTarget} (+${psychDelta} נקודות) וסוגר את הפער במלואו (סכם מחושב מובטח: ${verifiedRes.sekem.toFixed(isTechnion ? 2 : 1)}) ללא פתיחת ספרי בגרות.`
@@ -1729,7 +1729,7 @@ export function generatePersonalizedTracks(
 		tracks.push({
 			id: 'track-fast-hybrid',
 			title: 'המסלול המהיר: מינוף ממוקד מקבילי',
-			badge: 'הכי מהיר (מועד קיץ/חורף)',
+			badge: 'הכי מהיר',
 			badgeColor: 'from-amber-500 to-orange-600',
 			strategyDescription: `שדרוג ממוקד של ${fastNamesStr} מקפיץ את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)}${
 				winningFastPsych > (hasTakenPsych ? currentPsych : 0)
@@ -1868,7 +1868,7 @@ export function generatePersonalizedTracks(
 		const directTrack: RecommendedTrack = {
 			id: isZeroLevers ? 'track-direct-admit-zero' : 'track-direct-bagrut',
 			title: isZeroLevers ? 'קבלה ישירה מיידית על סמך בגרות קיימת' : 'המסלול הבטוח: קבלה ישירה על סמך בגרות (אפס פסיכומטרי!)',
-			badge: isZeroLevers ? 'קבלה ישירה מיידית (0 בחינות!)' : 'קבלה ישירה ללא פסיכומטרי',
+			badge: isZeroLevers ? 'קבלה ישירה מיידית' : 'קבלה ישירה ללא פסיכומטרי',
 			badgeColor: 'from-emerald-500 to-teal-600',
 			strategyDescription: isZeroLevers
 				? `זכאות מיידית לקבלה ישירה! ממוצע הבגרות הקיים שלך (${directBagrutSol.res.bagrutAverage.toFixed(1)}) וציוני הבגרות עומדים במלואם ברף הקבלה הישירה (Direct Bagrut Admission) ב${gapAnalysis.target.institutionName} — ללא צורך במבחן פסיכומטרי וללא צורך בשיפור בגרויות כלל!`
@@ -1926,7 +1926,7 @@ export function generatePersonalizedTracks(
 		const track1Bagrut = tracks[0]?.targetBagrutAverage || currentBagrut;
 
 		if (track1Psych > 720 && tracks[0]) {
-			tracks[0].badge = 'מיקוד בפסיכומטרי (>720)';
+			tracks[0].badge = 'מיקוד בפסיכומטרי';
 			tracks[0].title = 'המסלול הממוקד: זינוק פסיכומטרי גבוה (בחינה אחת)';
 		}
 
@@ -2163,7 +2163,7 @@ export function generatePersonalizedTracks(
 			const isAlternativeSingleExam = (isSingleBagrutAdmissionTrack1 || track1ExamCount === 1) && selectedBalLevers.length === 1 && balPsych <= baseP;
 
 			let balTitle = 'המסלול המאוזן: שילוב בגרויות ופיזור סיכונים';
-			let balBadge = 'הכי מומלץ (פיזור סיכונים)';
+			let balBadge = 'הכי מומלץ';
 			let balStrategyDesc = '';
 
 			if (isAlternativeSingleExam) {
@@ -2314,7 +2314,7 @@ export function generatePersonalizedTracks(
 			tracks.push({
 				id: 'track-multi-exam',
 				title: 'מסלול רב-שלבי: מקסימום בגרויות והקלה מרבית בפסיכומטרי',
-				badge: 'הקלה מרבית בפסיכומטרי (פריסה רב-עונתית)',
+				badge: 'הקלה מרבית בפסיכומטרי',
 				badgeColor: 'from-blue-600 to-indigo-700',
 				strategyDescription: `בפער של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, המסלול הרב-שלבי מחלק את העומס על פני מספר מועדים ומוריד את רף הפסיכומטרי למינימום האפשרי: שדרוג והרחבה של ${solidSummary} מקפיץ את ממוצע הבגרות ל-${targetBagrutSolid.toFixed(1)} ומאפשר קבלה מלאה עם פסיכומטרי רגוע ונגיש של ${solidPsych} בלבד לסגירת סף הקבלה (סכם מחושב מובטח: ${bestSolidCombo.res.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`,
 				targetSekem: bestSolidCombo.res.sekem,

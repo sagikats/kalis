@@ -587,7 +587,7 @@ export default function RecommendedTracksView({
 												: 'bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]'
 										}`}
 									>
-										{track.badge}
+										{track.badge?.replace(/\s*\([^)]*\)/g, '').trim()}
 									</span>
 									<div className="flex items-center gap-1.5 text-xs font-bold text-[#66635C]">
 										<Clock className="h-3.5 w-3.5" />
