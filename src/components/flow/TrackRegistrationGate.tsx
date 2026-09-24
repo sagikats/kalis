@@ -6,7 +6,9 @@ import {
 	Sparkles,
 	ArrowLeft,
 	ArrowRight,
-	CheckCircle2
+	CheckCircle2,
+	UserPlus,
+	LogIn
 } from 'lucide-react';
 import UniversityLogo from '../common/UniversityLogo';
 import { ProgramGapAnalysis } from '../../utils/analysis/gapAnalyzer';
@@ -75,7 +77,7 @@ export default function TrackRegistrationGate({
 			{/* Main Gate Card */}
 			<div className="relative bg-white rounded-3xl border border-[#E5DFD4] overflow-hidden shadow-sm">
 				{/* Background Teaser Grid (Blurred) */}
-				<div className="p-6 sm:p-8 space-y-6 filter blur-[6px] select-none pointer-events-none opacity-45">
+				<div className="absolute inset-0 z-0 p-6 sm:p-8 space-y-6 filter blur-[8px] select-none pointer-events-none opacity-35 overflow-hidden">
 					<div className="flex items-center justify-between">
 						<div className="space-y-1">
 							<div className="h-6 w-48 bg-[#DDD7CC] rounded-lg animate-pulse" />
@@ -148,7 +150,7 @@ export default function TrackRegistrationGate({
 				</div>
 
 				{/* Foreground Conversion Overlay */}
-				<div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 sm:p-10 text-center bg-gradient-to-b from-white/80 via-white/95 to-white">
+				<div className="relative z-10 flex flex-col items-center justify-center p-6 sm:p-10 text-center bg-gradient-to-b from-white/85 via-white/95 to-white backdrop-blur-[2px]">
 					{/* Glowing Lock Badge */}
 					<div className="relative mb-5">
 						<div className="absolute -inset-2 bg-amber-500/20 rounded-full blur-xl" />
@@ -191,20 +193,22 @@ export default function TrackRegistrationGate({
 					</div>
 
 					{/* CTA Actions */}
-					<div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
+					<div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 w-full max-w-lg">
 						<button
 							onClick={() => openAuthModal('register')}
-							className="w-full flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+							className="flex-1 h-13 sm:h-14 flex items-center justify-center gap-2 px-5 rounded-2xl bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
 						>
-							<span>הרשמה מהירה ופתיחת המסלולים (חינם)</span>
-							<ArrowLeft className="w-4 h-4" />
+							<UserPlus className="w-4 h-4 text-white shrink-0" />
+							<span className="whitespace-nowrap">הרשמה מהירה בחינם</span>
+							<ArrowLeft className="w-4 h-4 text-white/80 shrink-0" />
 						</button>
 
 						<button
 							onClick={() => openAuthModal('login')}
-							className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-white hover:bg-[#F3EFE8] text-[#222222] font-semibold text-xs sm:text-sm border border-[#DDD7CC] transition cursor-pointer"
+							className="flex-1 h-13 sm:h-14 flex items-center justify-center gap-2 px-5 rounded-2xl bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm border border-[#DDD7CC] hover:border-[#C4BCB0] shadow-2xs hover:shadow-xs transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
 						>
-							כבר רשום? התחבר
+							<LogIn className="w-4 h-4 text-[#66635C] shrink-0" />
+							<span className="whitespace-nowrap">כבר רשום? התחבר</span>
 						</button>
 					</div>
 
