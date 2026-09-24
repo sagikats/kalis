@@ -441,13 +441,11 @@ export default function RecommendedTracksView({
 						<div className="text-center px-2 min-w-[75px]">
 							<span className="text-[11px] font-bold text-[#66635C] block">סכם קיים</span>
 							<span className="text-xl font-black text-[#222222] dir-ltr">{analysis.userSekem}</span>
-							<span className="text-[10px] text-[#8A847C] block truncate max-w-[110px]">{analysis.relevantSekemLabel}</span>
 						</div>
 						<div className="h-10 w-px bg-[#E5DFD4]" />
 						<div className="text-center px-2 min-w-[75px]">
-							<span className="text-[11px] font-bold text-[#66635C] block">סף יעד</span>
+							<span className="text-[11px] font-bold text-[#66635C] block">סף קבלה</span>
 							<span className="text-xl font-black text-[#825B15] dir-ltr">{analysis.threshold || '—'}</span>
-							<span className="text-[10px] text-[#8A847C] block truncate max-w-[110px]">סף קבלה רשמי</span>
 						</div>
 						{analysis.threshold && (
 							<>
