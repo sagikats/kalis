@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { TrendingUp, Sparkles, CheckCircle2, Zap, GraduationCap } from 'lucide-react';
+import { TrendingUp, Sparkles } from 'lucide-react';
 import UniversityLogo from '../common/UniversityLogo';
 
 export interface InstitutionSimulatedState {
@@ -136,16 +135,6 @@ export default function MultiUniversityAdmissionGrid({
 							>
 								{inst.sekemTypeLabel}
 							</div>
-
-							{/* Direct bagrut eligibility badge */}
-							{inst.isDirectBagrutEligible && (
-								<div className="flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded-lg bg-[#FDF6E8] border border-[#ECDAB6]">
-									<Zap className="h-2.5 w-2.5 text-[#825B15] shrink-0" />
-									<span className="text-[9px] font-black text-[#825B15] leading-none">
-										קבלה ישירה
-									</span>
-								</div>
-							)}
 						</div>
 
 						{/* ── TARGET BADGE (top-left corner) ── */}

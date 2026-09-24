@@ -436,7 +436,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   <span>מצב חישוב ללא פסיכומטרי — קבלה ישירה על סמך בגרות</span>
                                              </div>
                                              <p className="text-[11px] text-[#55524B] leading-relaxed">
-                                                  ציוני הסכם יתבססו על ממוצע הבגרות בלבד. כרטיסי האוניברסיטאות משמאל יציגו האם הינך זכאי/ת לקבלה ישירה (Direct Bagrut Admission) בהתאם לממוצע הבגרות שלך.
+                                                  ציוני הסכם יתבססו על ממוצע הבגרות בלבד בהתאם לחישובי המוסדות האקדמיים.
                                              </p>
                                         </div>
                                    ) : (
@@ -722,11 +722,6 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                             )}
                                                        </div>
                                                   </div>
-                                                  {res.directBagrutEligible && (
-                                                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 shrink-0">
-                                                            אפיק קבלה ישיר!
-                                                       </span>
-                                                  )}
                                              </div>
 
                                              <div className={`grid grid-cols-2 ${res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3`}>
