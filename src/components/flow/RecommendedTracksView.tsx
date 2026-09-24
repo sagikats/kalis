@@ -500,21 +500,30 @@ export default function RecommendedTracksView({
 						<span>ריכוז המסלולים המומלץ {tracks.length > 0 ? `(${tracks.length})` : ''}</span>
 					</button>
 
-					<button
-						type="button"
-						onClick={() => setActiveTab('custom_builder')}
-						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
-							activeTab === 'custom_builder'
-								? 'bg-[#3C3C3C] text-white shadow-xs'
-								: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
-						}`}
-					>
-						<Sliders className="h-4 w-4 text-inherit" />
-						<span>מסלול בנייה אישי 🎛️</span>
-						{customScenarioApplied && (
-							<span className="w-2 h-2 rounded-full bg-[#205739]" />
-						)}
-					</button>
+					<div className="relative group">
+						<button
+							type="button"
+							onClick={() => setActiveTab('custom_builder')}
+							title="בניית מסלול בעצמך"
+							className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
+								activeTab === 'custom_builder'
+									? 'bg-[#3C3C3C] text-white shadow-xs'
+									: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
+							}`}
+						>
+							<Sliders className="h-4 w-4 text-inherit" />
+							<span>מסלול בנייה אישי 🎛️</span>
+							{customScenarioApplied && (
+								<span className="w-2 h-2 rounded-full bg-[#205739]" />
+							)}
+						</button>
+
+						{/* Hover Tooltip Popup */}
+						<div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-[#222222] text-white text-[11px] font-bold rounded-xl shadow-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50 flex items-center gap-1.5 border border-[#3C3C3C]">
+							<span>בניית מסלול בעצמך</span>
+							<div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-[#222222]" />
+						</div>
+					</div>
 				</div>
 			</div>
 
