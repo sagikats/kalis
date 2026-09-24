@@ -153,7 +153,7 @@ export default function LandingPage() {
           <div className="text-center max-w-3xl mx-auto space-y-7">
             {/* Subheadline */}
             <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-2xl mx-auto">
-              אלגוריתם אופטימיזציה אדפטיבי שמחשב מסלול קבלה מחדש בזמן אמת, מונע מבחנים מיותרים ושחיקה, ומתאים את פריסת הבגרויות והפסיכומטרי ללוח הזמנים האמיתי שלך.
+              מערכת חישוב סכמי קבלה וייעוץ לבניית מסלולים לשיפור הסכם בצורה שתביא אתכם כמה שיותר מהר עם כמה שפחות כאבי ראש, לאקדמיה
             </p>
 
             {/* Two Main CTA Buttons - Clean Editorial Aesthetic */}
