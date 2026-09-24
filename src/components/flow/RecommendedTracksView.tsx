@@ -1019,14 +1019,6 @@ export default function RecommendedTracksView({
 					<div className="flex items-center gap-2.5 text-xs font-bold text-[#66635C] shrink-0 flex-wrap">
 						<button
 							type="button"
-							onClick={() => handleEditTrack(selectedTrack)}
-							className="px-3.5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 border bg-white hover:bg-[#FAF8F5] text-[#1E597B] border-[#C5DFED] shadow-2xs cursor-pointer"
-						>
-							<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
-							<span>ערוך בסימולטור</span>
-						</button>
-						<button
-							type="button"
 							onClick={() => handleSaveTrack(selectedTrack)}
 							disabled={savingTrackId === selectedTrack.id}
 							className={`px-3.5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 border shadow-2xs cursor-pointer ${
