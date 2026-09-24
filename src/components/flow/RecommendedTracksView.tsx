@@ -338,76 +338,16 @@ export default function RecommendedTracksView({
 			{/* Top Header Card */}
 			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs relative space-y-6">
 				{/* Top Meta & Action Toolbar Row */}
-				<div className="relative z-30 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
-					<div className="flex items-center gap-2 flex-wrap">
-						{allAnalyses && allAnalyses.length > 1 ? (
-							<div className="relative" ref={programDropdownRef}>
-								<button
-									type="button"
-									onClick={() => setIsProgramDropdownOpen(!isProgramDropdownOpen)}
-									className={`px-3 py-1 border text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2 transition cursor-pointer select-none shadow-2xs outline-none focus:outline-none focus:ring-0 ${
-										isProgramDropdownOpen
-											? 'bg-[#F2EFE9] border-[#CCC5B6]'
-											: 'bg-[#FAF8F5] hover:bg-[#F2EFE9] border-[#E5DFD4] hover:border-[#CCC5B6]'
-									}`}
-									title="לחץ לבחירת תואר אחר מהתארים שנבחרו"
-								>
-									<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
-									<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
-									<ChevronDown className={`h-3.5 w-3.5 text-[#66635C] transition-transform duration-200 ${isProgramDropdownOpen ? 'rotate-180 text-[#222222]' : ''}`} />
-								</button>
-
-								{isProgramDropdownOpen && (
-									<div
-										className="absolute top-full right-0 mt-2 w-72 sm:w-80 border border-[#DDD7CC] rounded-2xl shadow-2xl p-2.5 z-50 animate-in fade-in duration-150"
-										style={{ backgroundColor: '#ffffff', isolation: 'isolate' }}
-									>
-										<div className="px-2.5 py-1.5 text-[11px] font-bold text-[#8A847C] border-b border-[#EAE5DA] mb-1.5">
-											בחירת תואר מבוקש:
-										</div>
-										<div className="space-y-1 max-h-64 overflow-y-auto">
-											{allAnalyses.map((a) => {
-												const isSelected = a.target.program.id === analysis.target.program.id;
-												const statusIcon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
-												return (
-													<button
-														key={a.target.program.id}
-														type="button"
-														onClick={() => {
-															onSelectProgram?.(a.target.program.id);
-															setIsProgramDropdownOpen(false);
-														}}
-														className={`w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition text-right cursor-pointer outline-none focus:outline-none ${
-															isSelected
-																? 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4]'
-																: 'text-[#66635C] hover:bg-[#FAF8F5] hover:text-[#222222]'
-														}`}
-													>
-														<div className="flex items-center gap-2.5 min-w-0">
-															<UniversityLogo institution={a.target.institutionId} size="xs" shape="circle" />
-															<div className="truncate">
-																<div className="text-[#222222] truncate">{a.target.program.fieldOfStudy}</div>
-																<div className="text-[10px] text-[#8A847C] truncate">{a.target.institutionName}</div>
-															</div>
-														</div>
-														<span className="text-xs shrink-0">{statusIcon}</span>
-													</button>
-												);
-											})}
-										</div>
-									</div>
-								)}
-							</div>
-						) : (
-							<span className="px-3 py-1 bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2">
-								<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
-								<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
-							</span>
-						)}
-					</div>
+				<div className="relative z-30 flex items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
+					<button
+						onClick={onBackToReport}
+						className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
+					>
+						<ArrowRight className="h-3.5 w-3.5" />
+						<span>חזור לדוח הקבלה</span>
+					</button>
 
 					<div className="flex items-center gap-2.5 flex-wrap">
-
 						<button
 							onClick={onEditPreferences}
 							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
@@ -423,22 +363,81 @@ export default function RecommendedTracksView({
 							<Printer className="h-3.5 w-3.5 text-[#8A847C]" />
 							<span>הדפס</span>
 						</button>
-						<button
-							onClick={onBackToReport}
-							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
-						>
-							<ArrowRight className="h-3.5 w-3.5" />
-							<span>חזור לדוח הקבלה</span>
-						</button>
 					</div>
 				</div>
 
 				{/* Main Hero Content & Gap Summary Widget */}
-				<div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-					<div className="flex-1 min-w-0 space-y-2">
-						<h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#222222] tracking-tight leading-snug">
-							תוכנית פעולה לקבלה לתואר המבוקש
-						</h2>
+				<div className="relative z-20 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+					<div className="flex-1 min-w-0 space-y-3">
+						<div className="flex items-center gap-3 flex-wrap">
+							<h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#222222] tracking-tight leading-snug shrink-0">
+								תוכנית פעולה עבור:
+							</h2>
+							{allAnalyses && allAnalyses.length > 1 ? (
+								<div className="relative" ref={programDropdownRef}>
+									<button
+										type="button"
+										onClick={() => setIsProgramDropdownOpen(!isProgramDropdownOpen)}
+										className={`px-3.5 py-2 border text-sm sm:text-base font-bold text-[#222222] rounded-2xl flex items-center gap-2.5 transition cursor-pointer select-none shadow-2xs outline-none focus:outline-none focus:ring-0 ${
+											isProgramDropdownOpen
+												? 'bg-[#F2EFE9] border-[#CCC5B6]'
+												: 'bg-[#FAF8F5] hover:bg-[#F2EFE9] border-[#E5DFD4] hover:border-[#CCC5B6]'
+										}`}
+										title="לחץ לבחירת תואר אחר מהתארים שנבחרו"
+									>
+										<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="circle" />
+										<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+										<ChevronDown className={`h-4 w-4 text-[#66635C] transition-transform duration-200 ${isProgramDropdownOpen ? 'rotate-180 text-[#222222]' : ''}`} />
+									</button>
+
+									{isProgramDropdownOpen && (
+										<div
+											className="absolute top-full right-0 mt-2 w-72 sm:w-84 border border-[#DDD7CC] rounded-2xl shadow-2xl p-2.5 z-50 animate-in fade-in duration-150"
+											style={{ backgroundColor: '#ffffff', isolation: 'isolate' }}
+										>
+											<div className="px-2.5 py-1.5 text-[11px] font-bold text-[#8A847C] border-b border-[#EAE5DA] mb-1.5">
+												בחירת תואר מבוקש:
+											</div>
+											<div className="space-y-1 max-h-64 overflow-y-auto">
+												{allAnalyses.map((a) => {
+													const isSelected = a.target.program.id === analysis.target.program.id;
+													const statusIcon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
+													return (
+														<button
+															key={a.target.program.id}
+															type="button"
+															onClick={() => {
+																onSelectProgram?.(a.target.program.id);
+																setIsProgramDropdownOpen(false);
+															}}
+															className={`w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition text-right cursor-pointer outline-none focus:outline-none ${
+																isSelected
+																	? 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4]'
+																	: 'text-[#66635C] hover:bg-[#FAF8F5] hover:text-[#222222]'
+															}`}
+														>
+															<div className="flex items-center gap-2.5 min-w-0">
+																<UniversityLogo institution={a.target.institutionId} size="xs" shape="circle" />
+																<div className="truncate">
+																	<div className="text-[#222222] truncate">{a.target.program.fieldOfStudy}</div>
+																	<div className="text-[10px] text-[#8A847C] truncate">{a.target.institutionName}</div>
+																</div>
+															</div>
+															<span className="text-xs shrink-0">{statusIcon}</span>
+														</button>
+													);
+												})}
+											</div>
+										</div>
+									)}
+								</div>
+							) : (
+								<span className="px-3.5 py-2 bg-[#FAF8F5] border border-[#E5DFD4] text-sm sm:text-base font-bold text-[#222222] rounded-2xl flex items-center gap-2.5">
+									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="circle" />
+									<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+								</span>
+							)}
+						</div>
 						<p className="text-xs sm:text-sm text-[#66635C] max-w-3xl leading-relaxed">
 							{tracks.length > 0
 								? `בחר באחד מ-${tracks.length} המסלולים הריאליים המותאמים שהופקו עבורך, או השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך.`
