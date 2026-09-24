@@ -814,45 +814,37 @@ export default function RecommendedTracksView({
 												</div>
 
 												<div className="space-y-1.5">
-													{/* Psychometric improvement row with session */}
-													{needsPsychImprovement && (() => {
-														const sInfo = getSessionInfo('spring_psych');
-														return (
-															<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
-																<div className="flex items-center gap-1.5 truncate">
-																	<Brain className="h-3.5 w-3.5 text-[#222222] shrink-0" />
-																	<span className="text-[#222222] font-bold truncate">
-																		בחינה פסיכומטרית:
-																	</span>
-																	<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} shrink-0 shadow-2xs`}>
-																		{sInfo.iconEmoji} {sInfo.badgeLabel}
-																	</span>
-																</div>
-																<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
-																	{(track.currentPsychometric || 0) > 0 ? (
-																		<>
-																			<span className="text-[#8A847C] font-normal">{track.currentPsychometric}</span>
-																			<span className="text-[#8A847C] font-normal">➔</span>
-																			<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
-																			<span className="text-[10px] text-[#205739] font-bold ml-0.5">
-																				(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
-																			</span>
-																		</>
-																	) : (
-																		<>
-																			<span className="text-[10px] text-[#8A847C] font-normal">יעד:</span>
-																			<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
-																		</>
-																	)}
+													{/* Psychometric improvement row */}
+													{needsPsychImprovement && (
+														<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
+															<div className="flex items-center gap-1.5 truncate">
+																<Brain className="h-3.5 w-3.5 text-[#222222] shrink-0" />
+																<span className="text-[#222222] font-bold truncate">
+																	בחינה פסיכומטרית:
 																</span>
 															</div>
-														);
-													})()}
+															<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
+																{(track.currentPsychometric || 0) > 0 ? (
+																	<>
+																		<span className="text-[#8A847C] font-normal">{track.currentPsychometric}</span>
+																		<span className="text-[#8A847C] font-normal">➔</span>
+																		<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
+																		<span className="text-[10px] text-[#205739] font-bold ml-0.5">
+																			(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
+																		</span>
+																	</>
+																) : (
+																	<>
+																		<span className="text-[10px] text-[#8A847C] font-normal">יעד:</span>
+																		<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
+																	</>
+																)}
+															</span>
+														</div>
+													)}
 
-													{/* Bagrut subjects improvement rows with session */}
+													{/* Bagrut subjects improvement rows */}
 													{track.recommendedSubjectImprovements.map((s, idx) => {
-														const sSession = s.session || getSubjectExamSession(s.subjectName, s.targetUnits);
-														const sInfo = getSessionInfo(sSession);
 														const isNewSubject = !s.currentUnits || s.currentUnits === 0;
 														const hasUnitChange = Boolean(s.currentUnits && s.currentUnits > 0 && s.currentUnits !== s.targetUnits);
 														return (
@@ -877,9 +869,6 @@ export default function RecommendedTracksView({
 																		) : (
 																			`(${s.targetUnits} יח״ל):`
 																		)}
-																	</span>
-																	<span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${sInfo.badgeClass} shrink-0 shadow-2xs`}>
-																		{sInfo.iconEmoji} {sInfo.badgeLabel}
 																	</span>
 																</div>
 																{(!isNewSubject && !hasUnitChange && s.currentGrade > 0) ? (
