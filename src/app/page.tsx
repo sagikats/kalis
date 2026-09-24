@@ -153,7 +153,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-20 lg:pb-32">
           <div className="text-center max-w-4xl mx-auto space-y-7">
             {/* Subheadline */}
-            <p className="text-lg sm:text-[22px] md:text-2xl text-[#24211D] font-medium sm:font-semibold leading-relaxed sm:leading-snug max-w-4xl mx-auto tracking-normal">
+            <div className="text-lg sm:text-[22px] md:text-2xl text-[#24211D] font-medium sm:font-semibold leading-relaxed sm:leading-snug max-w-4xl mx-auto tracking-normal">
               <span className="block mb-1 sm:mb-2.5">
                 נעשה את זה פשוט, אתם מזינים את הציונים ומה התארים שאתם חולמים עליהם
               </span>
@@ -186,7 +186,7 @@ export default function LandingPage() {
                   <KalisLogo size="inline" showTagline={false} />
                 </span>
               </span>
-            </p>
+            </div>
 
             {/* Two Main CTA Buttons - Clean Editorial Aesthetic */}
             <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">

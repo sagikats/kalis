@@ -25,8 +25,11 @@ export default function KalisLogo({
      const textColor = variant === 'light' ? 'text-white' : 'text-[#222222]';
      const taglineColor = variant === 'light' ? 'text-slate-300' : 'text-[#66635C]';
 
+     const isInline = size === 'inline';
+     const Container = isInline ? 'span' : 'div';
+
      return (
-          <div className={`flex items-center ${gapClass} select-none ${className}`} dir="rtl">
+          <Container className={`${isInline ? 'inline-flex' : 'flex'} items-center ${gapClass} select-none ${className}`} dir="rtl">
                {/* SVG LOGO MARK: Iconic Academic Graduation Cap (Mortarboard) */}
                <svg
                     height={iconHeight}
@@ -80,18 +83,18 @@ export default function KalisLogo({
                </svg>
 
                {/* BRAND TYPOGRAPHY: מתקבלים */}
-               <div className="flex flex-col text-right justify-center">
-                    <div className={`font-extrabold tracking-tight leading-none ${titleSize} ${textColor} flex items-baseline gap-0.5`}>
+               <Container className={`${isInline ? 'inline-flex' : 'flex'} flex-col text-right justify-center`}>
+                    <Container className={`font-extrabold tracking-tight leading-none ${titleSize} ${textColor} ${isInline ? 'inline-flex' : 'flex'} items-baseline gap-0.5`}>
                          <span>מתקבלים</span>
                          <span className={`text-cyan-500 font-black ${dotSize} leading-none`}>.</span>
-                    </div>
+                    </Container>
                     {showTagline && (
-                         <div className={`font-semibold tracking-normal ${taglineSize} ${taglineColor} mt-0.5`}>
+                         <Container className={`font-semibold tracking-normal ${taglineSize} ${taglineColor} mt-0.5`}>
                               לא רק מחשבון
-                         </div>
+                         </Container>
                     )}
-               </div>
-          </div>
+               </Container>
+          </Container>
      );
 }
 
