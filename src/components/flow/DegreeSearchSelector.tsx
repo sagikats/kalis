@@ -191,26 +191,6 @@ export default function DegreeSearchSelector({
 			{/* 1. TOP COMPONENT: SEARCH & DETAILED FILTERS (חיפוש וסינון תארים) */}
 			{/* ========================================================================= */}
 			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 shadow-xs space-y-4">
-				{/* Search bar */}
-				<div className="relative">
-					<Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#8A847C]" />
-					<input
-						type="text"
-						value={searchQuery}
-						onChange={(e) => setSearchQuery(e.target.value)}
-						placeholder="חפש חוג ספציפי (למשל: מדעי המחשב, הנדסת חשמל, ניהול, משפטים, פסיכולוגיה)..."
-						className="w-full bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl pr-12 pl-10 py-3.5 text-sm font-medium text-[#222222] placeholder-[#8A847C] focus:outline-none focus:ring-2 focus:ring-[#222222]/20 focus:border-[#222222] transition"
-					/>
-					{searchQuery && (
-						<button
-							onClick={() => setSearchQuery('')}
-							className="absolute left-3.5 top-1/2 -translate-y-1/2 p-1 text-[#8A847C] hover:text-[#222222] cursor-pointer"
-						>
-							<X className="h-4 w-4" />
-						</button>
-					)}
-				</div>
-
 				{/* Institution Pills */}
 				<div className="space-y-1.5">
 					<span className="text-xs font-bold text-[#66635C] block">סינון לפי מוסד:</span>
@@ -258,6 +238,26 @@ export default function DegreeSearchSelector({
 							);
 						})}
 					</div>
+				</div>
+
+				{/* Search bar */}
+				<div className="relative pt-1">
+					<Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#8A847C]" />
+					<input
+						type="text"
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						placeholder="חפש חוג ספציפי (למשל: מדעי המחשב, הנדסת חשמל, ניהול, משפטים, פסיכולוגיה)..."
+						className="w-full bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl pr-12 pl-10 py-3.5 text-sm font-medium text-[#222222] placeholder-[#8A847C] focus:outline-none focus:ring-2 focus:ring-[#222222]/20 focus:border-[#222222] transition"
+					/>
+					{searchQuery && (
+						<button
+							onClick={() => setSearchQuery('')}
+							className="absolute left-3.5 top-1/2 -translate-y-1/2 p-1 text-[#8A847C] hover:text-[#222222] cursor-pointer"
+						>
+							<X className="h-4 w-4" />
+						</button>
+					)}
 				</div>
 			</div>
 
