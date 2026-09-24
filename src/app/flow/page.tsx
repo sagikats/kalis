@@ -1252,11 +1252,6 @@ export default function AdmissionFlowPage() {
 									userProfile={userProfile}
 									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
 									mechinaAvailable={currentFocusedAnalysis.status === 'not_accepted' || currentFocusedAnalysis.gap < 0}
-									mechinaReason={
-										currentFocusedAnalysis.status === 'not_accepted'
-											? 'הפער מהסף מצדיק שקילת מכינה אקדמית'
-											: undefined
-									}
 									onSelectProgram={(programId) => setFocusedProgramId(programId)}
 									onEditPreferences={() => setQuestionnaireAnswers(null)}
 									onBackToReport={() => setActiveStep(3)}

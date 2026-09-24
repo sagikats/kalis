@@ -1356,11 +1356,6 @@ export default function RecommendedTracksView({
 									<span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] tracking-wider">
 										מסלולים עוקפים מובנים • מכינה קדם-אקדמית & אפיק מעבר (Opt-In)
 									</span>
-									{mechinaReason && (
-										<span className="text-[10px] text-[#66635C]">
-											• {mechinaReason}
-										</span>
-									)}
 								</div>
 								<h4 className="text-lg sm:text-xl font-bold text-[#222222] flex items-center gap-2.5">
 									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="rounded" />
