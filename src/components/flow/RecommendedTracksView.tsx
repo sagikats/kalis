@@ -386,7 +386,7 @@ export default function RecommendedTracksView({
 										title="לחץ לבחירת תואר אחר מהתארים שנבחרו"
 									>
 										<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="circle" />
-										<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+										<span>{analysis.target.program.fieldOfStudy} • {analysis.target.institutionName}</span>
 										<ChevronDown className={`h-4 w-4 text-[#66635C] transition-transform duration-200 ${isProgramDropdownOpen ? 'rotate-180 text-[#222222]' : ''}`} />
 									</button>
 
@@ -434,7 +434,7 @@ export default function RecommendedTracksView({
 							) : (
 								<span className="px-3.5 py-2 bg-[#FAF8F5] border border-[#E5DFD4] text-sm sm:text-base font-bold text-[#222222] rounded-2xl flex items-center gap-2.5">
 									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="circle" />
-									<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+									<span>{analysis.target.program.fieldOfStudy} • {analysis.target.institutionName}</span>
 								</span>
 							)}
 						</div>
