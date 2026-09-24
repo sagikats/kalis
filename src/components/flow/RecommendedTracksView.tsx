@@ -9,6 +9,7 @@ import {
 	CheckCircle2,
 	ArrowRight,
 	ArrowLeft,
+	ArrowDown,
 	TrendingUp,
 	Calendar,
 	BookOpen,
@@ -438,10 +439,15 @@ export default function RecommendedTracksView({
 								</span>
 							)}
 						</div>
-						<p className="text-xs sm:text-sm text-[#66635C] max-w-3xl leading-relaxed">
-							{tracks.length > 0
-								? `בנינו עבורך ${tracks.length === 1 ? 'מסלול אחד' : `${tracks.length} מסלולים`}, ממש פה למטה`
-								: 'השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך לבדיקת קבלה.'}
+						<p className="text-xs sm:text-sm text-[#66635C] max-w-3xl leading-relaxed flex items-center gap-1.5 flex-wrap">
+							<span>
+								{tracks.length > 0
+									? `בנינו עבורך ${tracks.length === 1 ? 'מסלול אחד' : `${tracks.length} מסלולים`}, ממש פה למטה`
+									: 'השתמש בחלונית בניית המסלול האישי שלמטה כדי להרכיב שילוב ציונים ומקצועות משלך לבדיקת קבלה.'}
+							</span>
+							{tracks.length > 0 && (
+								<ArrowDown className="h-4 w-4 text-[#66635C] shrink-0" />
+							)}
 						</p>
 					</div>
 
