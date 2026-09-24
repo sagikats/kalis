@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
 	Zap,
 	ShieldCheck,
@@ -112,6 +112,24 @@ export default function RecommendedTracksView({
 	const [savedTrackMap, setSavedTrackMap] = useState<Record<string, { savedAt: Date; candidateNumber: string }>>({});
 	const [savingTrackId, setSavingTrackId] = useState<string | null>(null);
 	const [saveNotification, setSaveNotification] = useState<string | null>(null);
+
+	// Program switcher dropdown state
+	const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false);
+	const programDropdownRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		function handleClickOutside(event: MouseEvent) {
+			if (programDropdownRef.current && !programDropdownRef.current.contains(event.target as Node)) {
+				setIsProgramDropdownOpen(false);
+			}
+		}
+		if (isProgramDropdownOpen) {
+			document.addEventListener('mousedown', handleClickOutside);
+		}
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [isProgramDropdownOpen]);
 
 	// Load previously saved tracks for this user and program on mount
 	useEffect(() => {
@@ -312,32 +330,66 @@ export default function RecommendedTracksView({
 				{/* Top Meta & Action Toolbar Row */}
 				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
 					<div className="flex items-center gap-2 flex-wrap">
-						<span className="px-3 py-1 bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2">
-							<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
-							<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
-						</span>
+						{allAnalyses && allAnalyses.length > 1 ? (
+							<div className="relative" ref={programDropdownRef}>
+								<button
+									type="button"
+									onClick={() => setIsProgramDropdownOpen(!isProgramDropdownOpen)}
+									className="px-3 py-1 bg-[#FAF8F5] hover:bg-[#F2EFE9] border border-[#E5DFD4] hover:border-[#CCC5B6] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2 transition cursor-pointer select-none shadow-2xs"
+									title="לחץ לבחירת תואר אחר מהתארים שנבחרו"
+								>
+									<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
+									<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+									<ChevronDown className={`h-3.5 w-3.5 text-[#66635C] transition-transform duration-200 ${isProgramDropdownOpen ? 'rotate-180 text-[#222222]' : ''}`} />
+								</button>
+
+								{isProgramDropdownOpen && (
+									<div className="absolute top-full right-0 mt-2 w-72 sm:w-80 bg-white border border-[#E5DFD4] rounded-2xl shadow-lg p-2 z-50 animate-in fade-in duration-150">
+										<div className="px-2.5 py-1.5 text-[11px] font-bold text-[#8A847C] border-b border-[#EAE5DA] mb-1">
+											בחירת תואר מבוקש:
+										</div>
+										<div className="space-y-1 max-h-64 overflow-y-auto">
+											{allAnalyses.map((a) => {
+												const isSelected = a.target.program.id === analysis.target.program.id;
+												const statusIcon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
+												return (
+													<button
+														key={a.target.program.id}
+														type="button"
+														onClick={() => {
+															onSelectProgram?.(a.target.program.id);
+															setIsProgramDropdownOpen(false);
+														}}
+														className={`w-full flex items-center justify-between gap-2.5 px-2.5 py-2 rounded-xl text-xs font-bold transition text-right cursor-pointer ${
+															isSelected
+																? 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4]'
+																: 'text-[#66635C] hover:bg-[#FAF8F5] hover:text-[#222222]'
+														}`}
+													>
+														<div className="flex items-center gap-2 min-w-0">
+															<UniversityLogo institution={a.target.institutionId} size="xs" shape="circle" />
+															<div className="truncate">
+																<div className="text-[#222222] truncate">{a.target.program.fieldOfStudy}</div>
+																<div className="text-[10px] text-[#8A847C] truncate">{a.target.institutionName}</div>
+															</div>
+														</div>
+														<span className="text-xs shrink-0">{statusIcon}</span>
+													</button>
+												);
+											})}
+										</div>
+									</div>
+								)}
+							</div>
+						) : (
+							<span className="px-3 py-1 bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2">
+								<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
+								<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
+							</span>
+						)}
 					</div>
 
 					<div className="flex items-center gap-2.5 flex-wrap">
-						{allAnalyses && allAnalyses.length > 1 && (
-							<div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#E5DFD4] px-3 py-1.5 rounded-xl">
-								<span className="text-xs font-bold text-[#66635C]">החלף תואר:</span>
-								<select
-									value={analysis.target.program.id}
-									onChange={(e) => onSelectProgram?.(e.target.value)}
-									className="bg-transparent text-xs font-bold text-[#222222] focus:outline-none cursor-pointer"
-								>
-									{allAnalyses.map((a) => {
-										const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
-										return (
-											<option key={a.target.program.id} value={a.target.program.id} className="bg-white text-[#222222]">
-												{icon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
-											</option>
-										);
-									})}
-								</select>
-							</div>
-						)}
 
 						<button
 							onClick={onEditPreferences}
