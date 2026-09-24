@@ -181,7 +181,7 @@ export default function LandingPage() {
                     />
                   </svg>
                 </span>
-                <span>שלכם להיות</span>
+                <span>שבה אתם</span>
                 <span className="inline-flex items-center align-middle mx-1 -translate-y-0.5">
                   <KalisLogo size="inline" showTagline={false} />
                 </span>
