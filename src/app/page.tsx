@@ -17,7 +17,10 @@ import {
   Cpu,
   Layers,
   Compass,
-  ArrowUpRight
+  ArrowUpRight,
+  ChevronDown,
+  BookOpen,
+  HelpCircle
 } from 'lucide-react';
 import GlowCard from '@/components/common/GlowCard';
 
@@ -40,6 +43,35 @@ export default function LandingPage() {
     }, 4500);
     return () => clearInterval(timer);
   }, []);
+
+  const [openFaqIndex, setOpenFaqIndex] = React.useState<number | null>(null);
+
+  const toggleFaq = (idx: number) => {
+    setOpenFaqIndex((prev) => (prev === idx ? null : idx));
+  };
+
+  const FAQ_ITEMS = [
+    {
+      q: 'איך עובד מחשבון בגרויות וחישוב ממוצע בגרות מיטבי?',
+      a: 'מחשבון הבגרויות של מתקבלים משקלל את כל ציוני הבגרות עם הבונוסים האקדמיים הרשמיים (עד 35 נקודות במתמטיקה 5 יח״ל ועד 25 נקודות במקצועות מוגברים), ומפעיל אלגוריתם השמטת מקצועות חוקי (תוך שמירה על רצפת 20 יח״ל לפחות) כדי להפיק עבור כל מועמד את ממוצע הבגרות הגבוה ביותר האפשרי בכל אחת מ-8 האוניברסיטאות.'
+    },
+    {
+      q: 'מהו מחשבון פסיכומטרי וכיצד מחושב סכם בגרויות ופסיכומטרי?',
+      a: 'מחשבון פסיכומטרי משקלל את ציון הבחינה הפסיכומטרית הארצית (ציון רב-תחומי, בדגש כמותי לתחומי הנדסה ומדעים מדויקים, או בדגש מילולי למדעי הרוח והחברה) יחד עם ממוצע הבגרויות, בהתאם לנוסחאות הסכם הרשמיות של כל אוניברסיטה (הטכניון, תל אביב, העברית, בן-גוריון, בר-אילן, חיפה, אריאל ורייכמן).'
+    },
+    {
+      q: 'מה ההבדל בין סף קבלה לציון סכם בגרויות?',
+      a: 'סכם בגרויות ופסיכומטרי הוא הציון המשוקלל האישי של המועמד. סף קבלה הוא ציון הרף המינימלי שנקבע על ידי האוניברסיטה לקבלה ישירה לחוג מסוים באותה שנת לימודים. מועמד שהסכם שלו שווה לסף הקבלה או גבוה ממנו זכאי לקבלה ישירה לחוג.'
+    },
+    {
+      q: 'איך בודקים סיכויי קבלה ונתוני קבלה לתואר ב-8 האוניברסיטאות בישראל?',
+      a: 'מזינים פעם אחת את ציוני הבגרות והפסיכומטרי במערכת מתקבלים, ובוחרים את התארים המבוקשים. המערכת מחשבת באופן מיידי את הסכם האישי מול ספי הקבלה ב-721 תוכניות לימוד ומציגה דוח קבלה אישי מפורט: קבלה ישירה, המתנה, או פער מדויק מהסף הנדרש.'
+    },
+    {
+      q: 'מה עושים אם ציון הסכם נמוך מסף הקבלה לתואר המבוקש?',
+      a: 'המערכת מייצרת מסלולי שיפור אופטימליים מותאמים אישית: שדרוג מקצועות בגרות בעלי תמורה גבוהה (ROI), שיפור פסיכומטרי ממוקד, או חלופות קבלה ישירה כגון מכינה קדם-אקדמית ייעודית או אפיק מעבר של האוניברסיטה הפתוחה.'
+    }
+  ];
 
   return (
     <div className="relative min-h-screen bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222] overflow-hidden font-sans" dir="rtl">
@@ -344,6 +376,159 @@ export default function LandingPage() {
 
           </div>
 
+        </div>
+      </section>
+
+      {/* COMPREHENSIVE SEO KNOWLEDGE & UNIVERSITY HUBS */}
+      <section className="py-20 relative border-t border-[#EAE4D8] bg-[#FAF8F5]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E0DBD0] text-[#55524B] text-xs font-semibold shadow-2xs">
+              <BookOpen className="h-3.5 w-3.5 text-blue-600" />
+              <span>מדריך קבלה וחישוב סכם // 8 האוניברסיטאות</span>
+            </div>
+            <h2 className="text-3xl font-black sm:text-4xl lg:text-5xl tracking-tight text-[#222222]">
+              מחשבון בגרויות, מחשבון פסיכומטרי ובירור סיכויי קבלה לתואר
+            </h2>
+            <p className="text-sm sm:text-base text-[#66635C] max-w-2xl mx-auto">
+              כל המידע, ספי הקבלה הרשמיים ונוסחאות הסכם של כל האוניברסיטאות בישראל במקום אחד.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Pillar 1 */}
+            <div className="bg-white rounded-2xl border border-[#E5DFD4] p-6 space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-[#F4F0E8] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
+                <Calculator className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#222222]">מחשבון בגרויות וממוצע מיטבי</h3>
+              <p className="text-xs sm:text-sm text-[#55524B] leading-relaxed">
+                שקלול ציוני בגרות עם בונוסים אקדמיים (עד 35 נקודות בהגברות 5 יח״ל), אלגוריתם השמטת מקצועות חוקי (רצפת 20 יח״ל) ואיתור קבלה ישירה ללא פסיכומטרי.
+              </p>
+            </div>
+
+            {/* Pillar 2 */}
+            <div className="bg-white rounded-2xl border border-[#E5DFD4] p-6 space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-[#F4F0E8] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
+                <Cpu className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#222222]">מחשבון פסיכומטרי ודגשים</h3>
+              <p className="text-xs sm:text-sm text-[#55524B] leading-relaxed">
+                שקלול ציון פסיכומטרי רב-תחומי, דגש כמותי להנדסה ומדעים מדויקים ודגש מילולי. התאמה לנוסחאות הסכם הרשמיות של כל מוסד אקדמי ובירור רמות פטור באנגלית.
+              </p>
+            </div>
+
+            {/* Pillar 3 */}
+            <div className="bg-white rounded-2xl border border-[#E5DFD4] p-6 space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-[#F4F0E8] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
+                <Target className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#222222]">נתוני קבלה וסף קבלה</h3>
+              <p className="text-xs sm:text-sm text-[#55524B] leading-relaxed">
+                בירור ספי קבלה רשמיים ועדכניים עבור 721 תוכניות לימוד: הנדסה, מדעי המחשב, רפואה, משפטים, מנהל עסקים ופסיכולוגיה. אבחון פער נקודתי מול הרף הנדרש.
+              </p>
+            </div>
+
+            {/* Pillar 4 */}
+            <div className="bg-white rounded-2xl border border-[#E5DFD4] p-6 space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-[#F4F0E8] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
+                <Zap className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#222222]">שיפור בגרויות, מכינה ואפיק מעבר</h3>
+              <p className="text-xs sm:text-sm text-[#55524B] leading-relaxed">
+                מסלולי שיפור אופטימליים: תכנון מועדי בחינות חורף וקיץ למינימום עומס, לצד מסלולים עוקפים כגון מכינה קדם-אקדמית ייעודית ואפיק מעבר של האוניברסיטה הפתוחה.
+              </p>
+            </div>
+          </div>
+
+          {/* Quick University Links for SEO Internal Linking */}
+          <div className="mt-12 p-6 bg-white rounded-2xl border border-[#E5DFD4] shadow-2xs">
+            <h4 className="text-xs font-bold text-[#88857E] uppercase tracking-wider mb-4">
+              מחשבוני סכם ייעודיים לפי אוניברסיטה:
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <Link href="/calculators/technion" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם טכניון</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/tau" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם תל אביב</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/huji" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם העברית</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/bgu" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם בן-גוריון</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/bar-ilan" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם בר-אילן</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/haifa" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם חיפה</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/ariel" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם אריאל</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+              <Link href="/calculators/reichman" className="flex items-center justify-between p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE8] border border-[#E5DFD4] text-xs font-bold text-[#222222] transition">
+                <span>מחשבון סכם רייכמן</span>
+                <ArrowLeft className="h-3.5 w-3.5 text-[#88857E]" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FREQUENTLY ASKED QUESTIONS (FAQ) ACCORDION */}
+      <section className="py-20 relative border-t border-[#EAE4D8] bg-[#F7F4EE]">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E0DBD0] text-[#55524B] text-xs font-semibold shadow-2xs">
+              <HelpCircle className="h-3.5 w-3.5 text-amber-600" />
+              <span>שאלות ותשובות נפוצות</span>
+            </div>
+            <h2 className="text-3xl font-black sm:text-4xl text-[#222222] tracking-tight">
+              שאלות נפוצות על סכם, בגרויות וסיכויי קבלה
+            </h2>
+            <p className="text-sm sm:text-base text-[#66635C]">
+              כל מה שחשוב לדעת על חישוב ממוצע בגרות, ציוני פסיכומטרי, ספי קבלה ושיפור ציונים
+            </p>
+          </div>
+
+          <div className="space-y-3.5">
+            {FAQ_ITEMS.map((item, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl border border-[#E5DFD4] overflow-hidden shadow-2xs transition-all"
+                >
+                  <button
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full flex items-center justify-between p-5 text-right font-bold text-sm sm:text-base text-[#222222] hover:bg-[#FAF8F5] transition cursor-pointer"
+                    aria-expanded={isOpen}
+                  >
+                    <span>{item.q}</span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-[#88857E] shrink-0 transition-transform duration-200 ${
+                        isOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#55524B] leading-relaxed border-t border-[#F0ECE1]">
+                      {item.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 

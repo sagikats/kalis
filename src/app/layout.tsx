@@ -6,6 +6,7 @@ import { AuthProvider } from '../context/AuthContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AuthModal from '../components/auth/AuthModal';
+import JsonLd from '../components/seo/JsonLd';
 
 const interTight = Inter_Tight({
   subsets: ['latin'],
@@ -29,30 +30,66 @@ const frankRuhl = Frank_Ruhl_Libre({
 });
 
 export const metadata: Metadata = {
-  title: 'מתקבלים (Mitkablim) — מחשבון סכם ואופטימיזציית קבלה ל-8 האוניברסיטאות | mitkablim.co.il',
-  description: 'פלטפורמת הקבלה האקדמית המובילה בישראל. מחשבון סכם רב-מוסדי ל-8 האוניברסיטאות, בדיקת סיכויי קבלה ל-721 תארים ומסלולי שיפור חכמים לציון היעד במינימום מאמץ.',
+  title: {
+    default: 'מתקבלים — מחשבון בגרויות, מחשבון פסיכומטרי, חישוב סכם וסיכויי קבלה לתואר',
+    template: '%s | מתקבלים'
+  },
+  description: 'מחשבון בגרויות ומחשבון פסיכומטרי רשמי ל-8 האוניברסיטאות בישראל. בדיקת סיכויי קבלה לתואר, נתוני קבלה, חישוב ממוצע בגרות, בירור סף קבלה וסכם בגרויות מדויק ל-721 תארים. בדקו עכשיו חינם!',
   metadataBase: new URL('https://mitkablim.co.il'),
+  alternates: {
+    canonical: '/',
+  },
   keywords: [
+    'מחשבון בגרויות',
+    'מחשבון פסיכומטרי',
+    'קבלה לתואר',
+    'נתוני קבלה',
+    'סכם בגרויות',
+    'סף קבלה',
+    'חישוב ממוצע בגרות',
+    'סיכויי קבלה',
+    'סיכויי קבלה לאוניברסיטה',
+    'תנאי קבלה לאוניברסיטה',
     'מחשבון סכם',
     'חישוב סכם',
-    'סיכויי קבלה',
-    'תנאי קבלה לאוניברסיטה',
+    'סכם קבלה',
+    'תנאי קבלה להנדסה',
+    'תנאי קבלה למדעי המחשב',
+    'תנאי קבלה לרפואה',
     'סכם טכניון',
     'סכם תל אביב',
     'סכם העברית',
     'סכם בן גוריון',
+    'סכם בר אילן',
+    'סכם חיפה',
+    'סכם אריאל',
+    'סכם רייכמן',
     'שיפור בגרויות',
     'שיפור פסיכומטרי',
+    'מכינה אקדמית',
+    'אפיק מעבר',
+    'האוניברסיטה הפתוחה',
     'מתקבלים',
     'mitkablim'
   ],
   openGraph: {
-    title: 'מתקבלים — מחשבון סכם ואופטימיזציית קבלה לאוניברסיטאות',
-    description: 'גלה בדיוק לאילו תארים אתה מתקבל ואיך לשפר את הסכם לציון היעד במינימום מאמץ.',
+    title: 'מתקבלים — מחשבון בגרויות, מחשבון פסיכומטרי וסכם קבלה לאוניברסיטאות',
+    description: 'מחשבון בגרויות ופסיכומטרי מדויק ל-8 האוניברסיטאות בישראל. גלו בדיוק לאילו תארים אתם מתקבלים ואיך לשפר את הסכם לציון היעד במינימום מאמץ.',
     url: 'https://mitkablim.co.il',
     siteName: 'מתקבלים (Mitkablim)',
     locale: 'he_IL',
     type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -65,6 +102,7 @@ export default function RootLayout({
     <html lang="he" dir="rtl" className={`${interTight.variable} ${ibmPlex.variable} ${frankRuhl.variable} h-full antialiased`}>
       <head>
         <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <JsonLd />
       </head>
       <body className="font-sans min-h-full flex flex-col bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222]">
         <AuthProvider>

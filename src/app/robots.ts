@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://mitkablim.com/sitemap.xml',
+    sitemap: 'https://mitkablim.co.il/sitemap.xml',
   };
 }

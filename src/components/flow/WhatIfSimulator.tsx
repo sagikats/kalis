@@ -713,10 +713,15 @@ export default function WhatIfSimulator({
 				]
 			};
 
+			if (!user) {
+				openAuthModal('register');
+				return;
+			}
+
 			if (onSaveCustomTrack) {
 				await onSaveCustomTrack(customTrackPayload);
 			} else {
-				const existingUserId = user?.id || (typeof window !== 'undefined' ? localStorage.getItem('kalis_user_id') || undefined : undefined);
+				const existingUserId = user.id;
 				const res = await fetch('/api/tracks/save', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },

@@ -29,10 +29,17 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		// Use provided userId or fallback to a deterministic / guest userId
-		const effectiveUserId = userId && typeof userId === 'string' && userId.trim().length > 0
-			? userId.trim()
-			: `guest_${Date.now()}`;
+		// Saving tracks strictly requires a registered user
+		const effectiveUserId = userId && typeof userId === 'string' ? userId.trim() : '';
+		if (!effectiveUserId || effectiveUserId.startsWith('guest_')) {
+			return NextResponse.json(
+				{
+					success: false,
+					error: 'יש להירשם או להתחבר לאתר על מנת לשמור מסלולים'
+				},
+				{ status: 401 }
+			);
+		}
 
 		const result = await dbRepository.saveSingleTrackAsync(effectiveUserId, programId, track);
 

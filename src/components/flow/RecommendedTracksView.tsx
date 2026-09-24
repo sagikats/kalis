@@ -35,6 +35,7 @@ import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '../common/UniversityLogo';
+import TrackRegistrationGate from './TrackRegistrationGate';
 import { useAuth } from '@/context/AuthContext';
 
 interface RecommendedTracksViewProps {
@@ -100,16 +101,26 @@ export default function RecommendedTracksView({
 	}, [activeTab]);
 
 	// Explicit Track Saving State (Only on User Click)
-	const { user, refreshUser } = useAuth();
+	const { user, refreshUser, openAuthModal } = useAuth();
+
+	// Guard: Unauthenticated users are gated behind registration
+	if (!user) {
+		return <TrackRegistrationGate analysis={analysis} onBackToReport={onBackToReport} />;
+	}
+
 	const [savedTrackMap, setSavedTrackMap] = useState<Record<string, { savedAt: Date; candidateNumber: string }>>({});
 	const [savingTrackId, setSavingTrackId] = useState<string | null>(null);
 	const [saveNotification, setSaveNotification] = useState<string | null>(null);
 
 	const handleSaveTrack = async (track: any) => {
+		if (!user) {
+			openAuthModal('register');
+			return;
+		}
 		const trackId = track.id || 'track-standard';
 		setSavingTrackId(trackId);
 		try {
-			const existingUserId = user?.id || (typeof window !== 'undefined' ? localStorage.getItem('kalis_user_id') || undefined : undefined);
+			const existingUserId = user.id;
 
 			const res = await fetch('/api/tracks/save', {
 				method: 'POST',

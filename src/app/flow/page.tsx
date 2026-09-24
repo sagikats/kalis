@@ -37,6 +37,7 @@ import DegreeSearchSelector from '@/components/flow/DegreeSearchSelector';
 import PersonalAdmissionReport from '@/components/flow/PersonalAdmissionReport';
 import PreferenceQuestionnaire from '@/components/flow/PreferenceQuestionnaire';
 import RecommendedTracksView from '@/components/flow/RecommendedTracksView';
+import TrackRegistrationGate from '@/components/flow/TrackRegistrationGate';
 import AcceptedRegistrationCard from '@/components/flow/AcceptedRegistrationCard';
 import {
 	TargetProgramSelection,
@@ -1242,6 +1243,11 @@ export default function AdmissionFlowPage() {
 									initialAnswers={questionnaireAnswers || undefined}
 									onSubmit={(answers) => setQuestionnaireAnswers(answers)}
 									onCancel={() => setActiveStep(3)}
+								/>
+							) : !user ? (
+								<TrackRegistrationGate
+									analysis={currentFocusedAnalysis}
+									onBackToReport={() => setActiveStep(3)}
 								/>
 							) : (
 								<RecommendedTracksView

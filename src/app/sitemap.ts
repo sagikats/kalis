@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://mitkablim.com';
+  const baseUrl = 'https://mitkablim.co.il';
   const lastModified = new Date();
 
   return [
@@ -15,19 +15,61 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/flow`,
       lastModified,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/calculators`,
       lastModified,
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/calculators/technion`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators/tau`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators/huji`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/calculators/bgu`,
       lastModified,
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators/bar-ilan`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators/haifa`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators/ariel`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators/reichman`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/saved-tracks`,
