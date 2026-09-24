@@ -815,30 +815,6 @@ export default function RecommendedTracksView({
 									})()}
 								</div>
 
-								{/* Feasibility pill */}
-								<div className="pt-2">
-									<div className="flex items-center justify-between text-xs bg-[#FAF8F5] border border-[#E5DFD4] px-3 py-2 rounded-xl">
-										<span className="text-[#66635C] font-bold">היתכנות סטטיסטית:</span>
-										<span
-											className={`font-black ${
-												track.feasibility === 'very_high'
-													? 'text-[#205739]'
-													: track.feasibility === 'high'
-													? 'text-[#1E597B]'
-													: 'text-[#825B15]'
-											}`}
-										>
-											{track.feasibility === 'very_high'
-												? 'גבוהה מאוד (מעל 85%)'
-												: track.feasibility === 'high'
-												? 'גבוהה (75%–85%)'
-												: 'בינונית / מאתגרת'}
-										</span>
-									</div>
-									<p className="text-[11px] text-[#66635C] mt-1.5 leading-normal">
-										{track.feasibilityExplanation}
-									</p>
-								</div>
 
 								{/* Expandable Program Explanation */}
 								{track.strategyDescription && (
@@ -1466,15 +1442,10 @@ export default function RecommendedTracksView({
 										)}
 
 										{/* Mechina perks banner */}
-										<div className="p-3 bg-[#F2F1F8] border border-[#D2CEEB] rounded-xl flex items-center justify-between flex-wrap gap-2 text-xs text-[#453D78]">
-											<div className="flex items-center gap-2">
-												<ShieldCheck className="h-4 w-4 text-[#453D78] shrink-0" />
-												<span>
-													תעודת גמר מכינה מוכרת ומחליפה את תעודת הבגרות במוסד זה. עמידה בממוצע היעד מקנה קבלה ישירה.
-												</span>
-											</div>
-											<span className="text-[11px] font-bold text-[#205739]">
-												היתכנות: {mechinaTrack.feasibilityExplanation}
+										<div className="p-3 bg-[#F2F1F8] border border-[#D2CEEB] rounded-xl flex items-center gap-2 text-xs text-[#453D78]">
+											<ShieldCheck className="h-4 w-4 text-[#453D78] shrink-0" />
+											<span>
+												תעודת גמר מכינה מוכרת ומחליפה את תעודת הבגרות במוסד זה. עמידה בממוצע היעד מקנה קבלה ישירה.
 											</span>
 										</div>
 
@@ -1673,9 +1644,6 @@ export default function RecommendedTracksView({
 													<span>מתווה אפיקי המעבר באו״פ</span>
 													<ExternalLink className="h-3 w-3" />
 												</a>
-												<span className="text-[11px] font-bold text-[#065F46]">
-													היתכנות: {afikMaavarTrack.feasibilityExplanation}
-												</span>
 											</div>
 										</div>
 
