@@ -151,18 +151,18 @@ export default function LandingPage() {
 
         {/* Subheadline & CTA Buttons Container - Just below the image banner */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-20 lg:pb-32">
-          <div className="text-center max-w-3xl mx-auto space-y-7">
+          <div className="text-center max-w-4xl mx-auto space-y-7">
             {/* Subheadline */}
-            <p className="text-base sm:text-xl text-[#55524B] font-normal leading-relaxed max-w-3xl mx-auto">
-              <span className="block mb-1 sm:mb-2">
+            <p className="text-lg sm:text-[22px] md:text-2xl text-[#24211D] font-medium sm:font-semibold leading-relaxed sm:leading-snug max-w-4xl mx-auto tracking-normal">
+              <span className="block mb-1 sm:mb-2.5">
                 נעשה את זה פשוט, אתם מזינים את הציונים ומה התארים שאתם חולמים עליהם
               </span>
-              <span className="inline-flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1">
+              <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5">
                 <span>אנחנו נגיד לכם מה הדרך</span>
-                <span className="relative inline-block font-bold text-[#222222] px-0.5">
+                <span className="relative inline-block font-black text-[#111111] px-0.5">
                   הכי יעילה
                   <svg
-                    className="absolute -bottom-2 right-0 w-full h-3 overflow-visible pointer-events-none"
+                    className="absolute -bottom-2.5 sm:-bottom-3 right-0 w-full h-3 sm:h-3.5 overflow-visible pointer-events-none"
                     viewBox="0 0 100 12"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -176,13 +176,13 @@ export default function LandingPage() {
                     <path
                       d="M 3 2.5 C 30 12, 70 12, 97 2.5"
                       stroke="url(#curvedUnderlineGrad)"
-                      strokeWidth="2.8"
+                      strokeWidth="3.2"
                       strokeLinecap="round"
                     />
                   </svg>
                 </span>
                 <span>שבה אתם</span>
-                <span className="inline-flex items-center align-middle mx-1 -translate-y-0.5">
+                <span className="inline-flex items-center align-middle mx-1.5 -translate-y-0.5">
                   <KalisLogo size="inline" showTagline={false} />
                 </span>
               </span>

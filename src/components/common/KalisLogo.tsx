@@ -16,11 +16,11 @@ export default function KalisLogo({
      showTagline = true
 }: MitkablimLogoProps) {
      // Size dimensions
-     const iconHeight = size === 'inline' ? 22 : size === 'sm' ? 28 : size === 'lg' ? 44 : 36;
-     const titleSize = size === 'inline' ? 'text-lg sm:text-xl' : size === 'sm' ? 'text-lg' : size === 'lg' ? 'text-2xl' : 'text-xl';
-     const taglineSize = size === 'inline' ? 'text-[8px]' : size === 'sm' ? 'text-[8.5px]' : size === 'lg' ? 'text-[11px]' : 'text-[9.5px]';
+     const iconHeight = size === 'inline' ? 25 : size === 'sm' ? 28 : size === 'lg' ? 44 : 36;
+     const titleSize = size === 'inline' ? 'text-xl sm:text-2xl' : size === 'sm' ? 'text-lg' : size === 'lg' ? 'text-2xl' : 'text-xl';
+     const taglineSize = size === 'inline' ? 'text-[8.5px]' : size === 'sm' ? 'text-[8.5px]' : size === 'lg' ? 'text-[11px]' : 'text-[9.5px]';
      const gapClass = size === 'inline' ? 'gap-1.5' : 'gap-2.5';
-     const dotSize = size === 'inline' ? 'text-xl sm:text-2xl' : size === 'sm' ? 'text-xl' : 'text-2xl';
+     const dotSize = size === 'inline' ? 'text-2xl sm:text-3xl' : size === 'sm' ? 'text-xl' : 'text-2xl';
 
      const textColor = variant === 'light' ? 'text-white' : 'text-[#222222]';
      const taglineColor = variant === 'light' ? 'text-slate-300' : 'text-[#66635C]';
