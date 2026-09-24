@@ -281,10 +281,6 @@ export default function RecommendedTracksView({
 				{/* Top Meta & Action Toolbar Row */}
 				<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
 					<div className="flex items-center gap-2 flex-wrap">
-						<span className="px-3 py-1 bg-[#FAF8F5] text-[#1E597B] border border-[#E5DFD4] text-xs font-black rounded-lg flex items-center gap-1.5">
-							<Sparkles className="h-3.5 w-3.5 text-[#1E597B]" />
-							<span>שלב 4: תכנון מסלולי פעולה ובניית מסלול אישי</span>
-						</span>
 						<span className="px-3 py-1 bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-lg flex items-center gap-2">
 							<UniversityLogo institution={analysis.target.institutionId} size="xs" shape="circle" />
 							<span>{analysis.target.institutionName} • {analysis.target.program.fieldOfStudy}</span>
