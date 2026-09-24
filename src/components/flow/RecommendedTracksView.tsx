@@ -816,27 +816,27 @@ export default function RecommendedTracksView({
 												<div className="space-y-1.5">
 													{/* Psychometric improvement row */}
 													{needsPsychImprovement && (
-														<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-[#E5DFD4] flex-wrap">
+														<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-[#FAF5FF] border border-[#E9D8FD] flex-wrap">
 															<div className="flex items-center gap-1.5 truncate">
-																<Brain className="h-3.5 w-3.5 text-[#222222] shrink-0" />
-																<span className="text-[#222222] font-bold truncate">
+																<Brain className="h-3.5 w-3.5 text-[#7E22CE] shrink-0" />
+																<span className="text-[#581C87] font-bold truncate">
 																	בחינה פסיכומטרית:
 																</span>
 															</div>
-															<span dir="ltr" className="text-[#222222] font-bold shrink-0 dir-ltr flex items-center gap-1">
+															<span dir="ltr" className="text-[#3B0764] font-bold shrink-0 dir-ltr flex items-center gap-1">
 																{(track.currentPsychometric || 0) > 0 ? (
 																	<>
-																		<span className="text-[#8A847C] font-normal">{track.currentPsychometric}</span>
-																		<span className="text-[#8A847C] font-normal">➔</span>
-																		<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
-																		<span className="text-[10px] text-[#205739] font-bold ml-0.5">
+																		<span className="text-[#7E22CE]/60 font-normal">{track.currentPsychometric}</span>
+																		<span className="text-[#7E22CE]/60 font-normal">➔</span>
+																		<span className="text-[#3B0764] font-black">{track.targetPsychometric}</span>
+																		<span className="text-[10px] text-[#6B21A8] font-bold ml-0.5 bg-[#F3E8FF] px-1.5 py-0.5 rounded-md border border-[#E9D8FD]">
 																			(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
 																		</span>
 																	</>
 																) : (
 																	<>
-																		<span className="text-[10px] text-[#8A847C] font-normal">יעד:</span>
-																		<span className="text-[#222222] font-black">{track.targetPsychometric}</span>
+																		<span className="text-[10px] text-[#7E22CE]/70 font-normal">יעד:</span>
+																		<span className="text-[#3B0764] font-black">{track.targetPsychometric}</span>
 																	</>
 																)}
 															</span>
@@ -1084,21 +1084,21 @@ export default function RecommendedTracksView({
 								{needsPsych && (() => {
 									const sInfo = getSessionInfo('spring_psych');
 									return (
-										<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] font-bold">
-											<Brain className="h-3.5 w-3.5 text-[#205739]" />
+										<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAF5FF] border border-[#E9D8FD] text-[#6B21A8] font-bold">
+											<Brain className="h-3.5 w-3.5 text-[#7E22CE]" />
 											<span>פסיכומטרי:</span>
 											<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
 												{(selectedTrack.currentPsychometric || 0) > 0 ? (
 													<>
 														<span className="text-[#8A847C] font-normal">{selectedTrack.currentPsychometric}</span>
 														<span className="text-[#8A847C]">➔</span>
-														<span className="font-bold">{selectedTrack.targetPsychometric}</span>
+														<span className="font-bold text-[#3B0764]">{selectedTrack.targetPsychometric}</span>
 													</>
 												) : (
 													<span>יעד {selectedTrack.targetPsychometric}</span>
 												)}
 											</span>
-											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#C6DFCE] bg-white text-[#205739]">
+											<span className="text-[10px] px-1.5 py-0.5 rounded border border-[#E9D8FD] bg-white text-[#6B21A8]">
 												{sInfo.iconEmoji} {sInfo.name}
 											</span>
 										</span>
