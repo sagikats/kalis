@@ -113,6 +113,37 @@ export default function RecommendedTracksView({
 	const [savingTrackId, setSavingTrackId] = useState<string | null>(null);
 	const [saveNotification, setSaveNotification] = useState<string | null>(null);
 
+	// Load previously saved tracks for this user and program on mount
+	useEffect(() => {
+		if (!user?.id || !analysis?.target?.program?.id) return;
+		let isMounted = true;
+		fetch(
+			`/api/tracks/save?userId=${encodeURIComponent(user.id)}&programId=${encodeURIComponent(
+				analysis.target.program.id
+			)}`
+		)
+			.then((res) => (res.ok ? res.json() : null))
+			.then((data) => {
+				if (isMounted && data && data.success && Array.isArray(data.tracks)) {
+					const map: Record<string, { savedAt: Date; candidateNumber: string }> = {};
+					data.tracks.forEach((t: any) => {
+						const tid = t.track?.id || t.id;
+						if (tid) {
+							map[tid] = {
+								savedAt: new Date(t.savedAt || t.createdAt),
+								candidateNumber: t.candidateNumber || ''
+							};
+						}
+					});
+					setSavedTrackMap((prev) => ({ ...prev, ...map }));
+				}
+			})
+			.catch((err) => console.error('Failed to load saved tracks map:', err));
+		return () => {
+			isMounted = false;
+		};
+	}, [user?.id, analysis?.target?.program?.id]);
+
 	const handleSaveTrack = async (track: any) => {
 		if (!user) {
 			openAuthModal('register');
@@ -1219,10 +1250,31 @@ export default function RecommendedTracksView({
 
 				{/* Action Buttons */}
 				<div className="pt-4 border-t border-[#E5DFD4] flex items-center justify-between flex-wrap gap-4">
-					<div className="text-xs text-[#66635C] flex items-center gap-2">
-						<CheckCircle2 className="h-4 w-4 text-[#205739]" />
-						<span>המסלול נשמר בפרופיל האישי שלך באפליקציה</span>
-					</div>
+					{savedTrackMap[selectedTrack.id] ? (
+						<div className="text-xs text-[#205739] flex items-center gap-2 font-bold bg-[#EBF4EE] border border-[#C6DFCE] px-3.5 py-2 rounded-xl">
+							<CheckCircle2 className="h-4 w-4 text-[#205739]" />
+							<span>המסלול נשמר בפרופיל האישי שלך באפליקציה</span>
+						</div>
+					) : (
+						<button
+							type="button"
+							onClick={() => handleSaveTrack(selectedTrack)}
+							disabled={savingTrackId === selectedTrack.id}
+							className="px-4 py-2.5 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#E5DFD4] cursor-pointer"
+						>
+							{savingTrackId === selectedTrack.id ? (
+								<>
+									<Loader2 className="h-3.5 w-3.5 animate-spin text-[#222222]" />
+									<span>שומר מסלול במסד הנתונים...</span>
+								</>
+							) : (
+								<>
+									<Bookmark className="h-3.5 w-3.5 text-[#66635C]" />
+									<span>שמור מסלול זה לפרופיל האישי</span>
+								</>
+							)}
+						</button>
+					)}
 
 					<div className="flex items-center gap-3">
 						<button
