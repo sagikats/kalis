@@ -3,13 +3,13 @@
     admin off
 }
 
-# Redirect all alternative domains and subdomains permanently (301) to canonical https://mitkablim.co.il
+# Redirect all alternative domains permanently (301) to canonical https://mitkablim.co.il
 www.mitkablim.co.il, mitkablim.com, www.mitkablim.com {
     redir https://mitkablim.co.il{uri} 301
 }
 
-# Direct IP access redirect to canonical HTTPS domain
-http://129.159.158.60 {
+# Direct HTTP requests for any domain or IP -> 301 straight to canonical HTTPS
+http://129.159.158.60, http://mitkablim.com, http://www.mitkablim.com, http://www.mitkablim.co.il {
     redir https://mitkablim.co.il{uri} 301
 }
 
