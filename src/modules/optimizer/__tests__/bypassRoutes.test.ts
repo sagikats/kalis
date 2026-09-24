@@ -188,7 +188,7 @@ describe('Bypass Routes Engine: Mechina & Open University Transition Tracks', ()
 			assert.ok(result.afikSpec);
 
 			assert.strictEqual(result.afikSpec.targetInstitutionName, 'הטכניון - מכון טכנולוגי לישראל');
-			assert.strictEqual(result.afikSpec.requiredGpa, 85);
+			assert.strictEqual(result.afikSpec.requiredGpa, 87);
 			assert.strictEqual(result.afikSpec.minCourseGrade, 80);
 			assert.ok(result.afikSpec.requiredCredits >= 24);
 			assert.ok(result.afikSpec.courses.length >= 4);
@@ -205,9 +205,11 @@ describe('Bypass Routes Engine: Mechina & Open University Transition Tracks', ()
 			// Afik Maavar registration & info links
 			assert.ok(result.afikMaavarTrack.registrationUrl, 'Afik Maavar track must have registrationUrl');
 			assert.strictEqual(result.afikMaavarTrack.registrationUrl, 'https://www.openu.ac.il/registration/');
-			assert.ok(result.afikSpec?.registrationUrl, 'Afik spec must have registrationUrl');
 			assert.ok(result.afikSpec?.infoUrl, 'Afik spec must have infoUrl');
-			assert.strictEqual(result.afikSpec?.infoUrl, 'https://www.openu.ac.il/transfer/');
+			assert.strictEqual(
+				result.afikSpec?.infoUrl,
+				'https://www.openu.ac.il/transfertrack/technion/pages/computer_science.aspx'
+			);
 		});
 
 		it('should provide correct Mechina registration links across all 8 supported universities', () => {

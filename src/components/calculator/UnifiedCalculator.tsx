@@ -28,6 +28,7 @@ import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
 import UniversityLogo from '@/components/common/UniversityLogo';
 import { useAuth } from '@/context/AuthContext';
+import { cleanGradeInput, cleanNumberInput } from '@/utils/gradeInputHelper';
 
 export interface InstitutionOption {
      id: string;
@@ -60,14 +61,6 @@ const DEFAULT_SUBJECTS: SubjectInput[] = [
      { name: 'פיזיקה', units: 5, grade: 0 }
 ];
 
-/** Clean helper to parse number inputs preventing leading zeros (e.g. "085" -> 85) */
-function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 100): number | '' {
-     if (rawVal === '') return '';
-     const sanitized = rawVal.replace(/^0+(?=\d)/, '');
-     const num = parseInt(sanitized, 10);
-     if (isNaN(num)) return '';
-     return Math.min(maxVal, Math.max(minVal, num));
-}
 
 interface UnifiedCalculatorProps {
      initialInstId?: string | null;
@@ -243,12 +236,12 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
           const updated = [...subjects];
           let val = value;
           if (field === 'grade') {
-               val = cleanNumberInput(String(value), 0, 100);
+               val = cleanGradeInput(String(value));
                if (event && event.target) {
-                    event.target.value = String(val);
+                    event.target.value = val === '' ? '' : String(val);
                }
           }
-          updated[index] = { ...updated[index], [field]: val };
+          updated[index] = { ...updated[index], [field]: val === '' ? 0 : val };
           setSubjects(updated);
      };
 
@@ -611,15 +604,16 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                             <option value={5}>5 יח"ל</option>
                                                        </select>
                                                        <input
-                                                            type="number"
-                                                            min={0}
-                                                            max={100}
-                                                            value={sub.grade}
+                                                            type="text"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
+                                                            maxLength={3}
+                                                            value={sub.grade === 0 ? '' : sub.grade}
                                                             onChange={(e) => handleUpdateSubject(idx, 'grade', e.target.value, e)}
                                                             onBlur={(e) => {
-                                                                 const cleaned = cleanNumberInput(e.target.value, 0, 100);
-                                                                 e.target.value = String(cleaned);
-                                                                 handleUpdateSubject(idx, 'grade', cleaned);
+                                                                 const cleaned = cleanGradeInput(e.target.value);
+                                                                 e.target.value = cleaned === '' ? '' : String(cleaned);
+                                                                 handleUpdateSubject(idx, 'grade', cleaned === '' ? 0 : cleaned);
                                                             }}
                                                             placeholder="0"
                                                             className="w-16 bg-white border border-[#DDD7CB] rounded-lg text-xs font-bold text-[#222222] text-center py-1.5 focus:ring-1 focus:ring-[#222222]"

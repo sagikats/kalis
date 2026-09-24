@@ -28,7 +28,11 @@ import {
 } from '../db/schema';
 import { toCalculatorSubjects } from './solver';
 import { calculateInstitution } from '../calculators/index';
-import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '../../utils/universityRegistration';
+import {
+	getMechinaRegistrationUrl,
+	getAfikMaavarRegistrationUrl,
+	getAfikMaavarInfoUrl
+} from '../../utils/universityRegistration';
 
 export interface OpenUniversityCourseDetail {
 	courseNumber: string;
@@ -221,8 +225,8 @@ export function generateAccurateMechinaTrack(
 			targetMechinaGpa = domain === 'computer_science' ? 87 : 83;
 			break;
 		case 'bgu':
-			mechinaName = 'מכינת בן-גוריון (מרכז חוסידמן למכינות קדם-אקדמיות)';
-			mechinaFaculty = isStem ? 'מכינה להנדסה ומדעי הטבע' : 'מכינה למדעי החברה וניהול';
+			mechinaName = 'המרכז ללימודים קדם-אקדמיים (מכינת חוסידמן) באוניברסיטת בן-גוריון';
+			mechinaFaculty = isStem ? 'מכינה ייעודית להנדסה ומדעי הטבע' : 'מכינה למדעי החברה וניהול';
 			durationWeeks = 36;
 			targetMechinaGpa = 84;
 			break;
@@ -467,27 +471,101 @@ function buildDomainAfikSpecification(
 		const isHuji = instId === 'huji';
 		const isBgu = instId === 'bgu';
 
-		const gpa = isTechnion ? 85 : isTau ? 85 : isHuji ? 85 : isBgu ? 85 : 82;
-		const minGrade = isTechnion ? 80 : 75;
+		if (isTechnion) {
+			return {
+				channelTitle: `אפיק מעבר למדעי המחשב ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 87,
+				minCourseGrade: 80,
+				requiredCredits: 36,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 80 },
+					{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 80 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 80 },
+					{ courseNumber: '20476', courseName: 'מתמטיקה בדידה', credits: 4, minGrade: 80 },
+					{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade: 80 },
+					{ courseNumber: '20407', courseName: 'מבני נתונים ומבוא לאלגוריתמים', credits: 6, minGrade: 80 }
+				],
+				specialRequirements: 'עמידה בכל 6 קורסי החובה תוך שנתיים אקדמיות לכל היותר, בממוצע 87 ומעלה וציון 80 לפחות בכל קורס.',
+				academicAdvantage: '0 בגרות ו-0 פסיכומטרי! קבלה מובטחת על סמך הצלחה בקורסים אקדמיים + פטור וקרדיט של 36 נ״ז לתואר.'
+			};
+		}
+
+		if (isTau) {
+			return {
+				channelTitle: `אפיק מעבר למדעי המחשב ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 87,
+				minCourseGrade: 75,
+				requiredCredits: 36,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 80 },
+					{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 80 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 80 },
+					{ courseNumber: '20229', courseName: 'אלגברה לינארית 2', credits: 5, minGrade: 75 },
+					{ courseNumber: '20476', courseName: 'מתמטיקה בדידה', credits: 4, minGrade: 75 },
+					{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade: 75 }
+				],
+				specialRequirements: 'ממוצע 87 ומעלה בכלל הקורסים, ציון 80 לפחות באינפי 1, אינפי 2 ואלגברה לינארית 1, וציון 75 לפחות בשאר הקורסים. פטור באנגלית ברמת מתקדמים ב׳.',
+				academicAdvantage: 'קבלה ישירה לשנה ב׳ בבית הספר למדעי המחשב באוניברסיטת תל-אביב ללא תלות בציוני בגרות ופסיכומטרי.'
+			};
+		}
+
+		if (isHuji) {
+			return {
+				channelTitle: `אפיק מעבר למדעי המחשב ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 90,
+				minCourseGrade: 75,
+				requiredCredits: 36,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 75 },
+					{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 75 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 75 },
+					{ courseNumber: '20229', courseName: 'אלגברה לינארית 2', credits: 5, minGrade: 75 },
+					{ courseNumber: '20476', courseName: 'מתמטיקה בדידה', credits: 4, minGrade: 75 },
+					{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade: 75 }
+				],
+				specialRequirements: 'זכאות לתעודת בגרות וממוצע 90 ומעלה בכלל קורסי האפיק (ציון 75 לפחות בכל קורס). מעבר מובטח לשנה ב׳ בחוג למדעי המחשב.',
+				academicAdvantage: 'מעבר מובטח לחוג למדעי המחשב של האוניברסיטה העברית עם צבירת 36 נ״ז אקדמיות מראש.'
+			};
+		}
+
+		if (isBgu) {
+			return {
+				channelTitle: `אפיק מעבר למדעי המחשב ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 85,
+				minCourseGrade: 70,
+				requiredCredits: 35,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 70 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 70 },
+					{ courseNumber: '20229', courseName: 'אלגברה לינארית 2', credits: 5, minGrade: 70 },
+					{ courseNumber: '20476', courseName: 'מתמטיקה בדידה', credits: 4, minGrade: 70 },
+					{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade: 70 },
+					{ courseNumber: '20407', courseName: 'מבני נתונים ומבוא לאלגוריתמים', credits: 6, minGrade: 70 }
+				],
+				specialRequirements: 'ממוצע 85 ומעלה בכלל הקורסים וציון 70 לפחות בכל קורס. מעבר ישיר לתוכנית למדעי המחשב בבן-גוריון.',
+				academicAdvantage: 'מעבר ישיר לפקולטה למדעי המחשב והמידע בבן-גוריון ללא צורך בסכם כמותי גבוה.'
+			};
+		}
 
 		return {
 			channelTitle: `אפיק מעבר למדעי המחשב ב${instName}`,
 			targetInstitutionName: instName,
-			requiredGpa: gpa,
-			minCourseGrade: minGrade,
-			requiredCredits: 30,
+			requiredGpa: 85,
+			minCourseGrade: 70,
+			requiredCredits: 34,
 			courses: [
-				{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 6, minGrade },
-				{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 6, minGrade },
-				{ courseNumber: '20485', courseName: 'אלגברה לינארית 1', credits: 6, minGrade },
-				{ courseNumber: '20486', courseName: 'אלגברה לינארית 2', credits: 4, minGrade },
-				{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade },
-				{ courseNumber: '20407', courseName: 'מבני נתונים ומבוא לאלגוריתמים', credits: 6, minGrade }
+				{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 70 },
+				{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 70 },
+				{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 70 },
+				{ courseNumber: '20476', courseName: 'מתמטיקה בדידה', credits: 4, minGrade: 70 },
+				{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade: 70 }
 			],
-			specialRequirements: isTechnion
-				? 'עמידה בכל 6 הקורסים תוך שנתיים אקדמיות לכל היותר, בממוצע 85 ומעלה וציון 80 לפחות בכל קורס.'
-				: 'השלמת מקבץ הקורסים בממוצע היעד מקנה קבלה מובטחת לשנה ב׳ עם פטור מלא מכל הקורסים שנלמדו.',
-			academicAdvantage: '0 בגרות ו-0 פסיכומטרי! קבלה מובטחת על סמך הצלחה בקורסים אקדמיים + פטור וקרדיט של 30 נ״ז לתואר.'
+			specialRequirements: 'השלמת מקבץ הקורסים בממוצע היעד מקנה קבלה מובטחת לשנה ב׳ עם פטור מלא מכל הקורסים שנלמדו.',
+			academicAdvantage: '0 בגרות ו-0 פסיכומטרי! קבלה מובטחת על סמך הצלחה בקורסים אקדמיים + פטור וקרדיטציה מלאה.'
 		};
 	}
 
@@ -495,20 +573,77 @@ function buildDomainAfikSpecification(
 	if (domain === 'engineering') {
 		const isTechnion = instId === 'technion';
 		const isTau = instId === 'tau';
-		const gpa = isTechnion ? 83 : isTau ? 85 : 82;
+		const isBgu = instId === 'bgu';
+
+		if (isTechnion) {
+			return {
+				channelTitle: `אפיק מעבר להנדסה ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 87,
+				minCourseGrade: 75,
+				requiredCredits: 37,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 75 },
+					{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 75 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 75 },
+					{ courseNumber: '20218', courseName: 'מבוא למשוואות דיפרנציאליות רגילות (מד״ר)', credits: 3, minGrade: 75 },
+					{ courseNumber: '20215', courseName: 'פיזיקה: יסודות המכניקה', credits: 7, minGrade: 75 },
+					{ courseNumber: '20441', courseName: 'מבוא למדעי המחשב ושפת Java', credits: 6, minGrade: 75 }
+				],
+				specialRequirements: 'ממוצע 87 ומעלה וציון 75 לפחות בכל קורס. מעבר ישיר לפקולטות להנדסה (חשמל, מכונות, אזרחית ועוד) בטכניון.',
+				academicAdvantage: 'מעבר מובטח לפקולטות המובילות בטכניון ללא צורך בסכם סכם הנדסי תיכוני.'
+			};
+		}
+
+		if (isTau) {
+			return {
+				channelTitle: `אפיק מעבר להנדסה ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 87,
+				minCourseGrade: 75,
+				requiredCredits: 33,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 80 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 80 },
+					{ courseNumber: '20229', courseName: 'אלגברה לינארית 2', credits: 5, minGrade: 75 },
+					{ courseNumber: '20215', courseName: 'פיזיקה: יסודות המכניקה', credits: 7, minGrade: 80 },
+					{ courseNumber: '20250', courseName: 'פיזיקה: חשמל ומגנטיות', credits: 7, minGrade: 75 }
+				],
+				specialRequirements: 'ממוצע 87 ומעלה וציון 75 לפחות בכל קורס (ציון 80 באינפי 1 ובמכניקה). מעבר לשנה ב׳ בהנדסה באת"א.',
+				academicAdvantage: 'מעבר מובטח לפקולטה להנדסה באת"א ללא תלות בסכם התיכוני, עם פטור מ-33 נ״ז.'
+			};
+		}
+
+		if (isBgu) {
+			return {
+				channelTitle: `אפיק מעבר להנדסה ב${instName}`,
+				targetInstitutionName: instName,
+				requiredGpa: 85,
+				minCourseGrade: 70,
+				requiredCredits: 35,
+				courses: [
+					{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 70 },
+					{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 70 },
+					{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 70 },
+					{ courseNumber: '20215', courseName: 'פיזיקה: יסודות המכניקה', credits: 7, minGrade: 70 },
+					{ courseNumber: '20250', courseName: 'פיזיקה: חשמל ומגנטיות', credits: 7, minGrade: 70 }
+				],
+				specialRequirements: 'ממוצע 85 ומעלה וציון 70 לפחות בכל קורס. מעבר ישיר לפקולטה למדעי ההנדסה בבן-גוריון.',
+				academicAdvantage: 'מעבר מובטח לפקולטה להנדסה בבן-גוריון ללא צורך בסכם הנדסי גבוה.'
+			};
+		}
 
 		return {
 			channelTitle: `אפיק מעבר להנדסה ב${instName}`,
 			targetInstitutionName: instName,
-			requiredGpa: gpa,
+			requiredGpa: 82,
 			minCourseGrade: 75,
 			requiredCredits: 28,
 			courses: [
-				{ courseNumber: '20406', courseName: 'חשבון דיפרנציאלי ואינטגרלי 1 (חדו״א 1)', credits: 6, minGrade: 75 },
-				{ courseNumber: '20425', courseName: 'חשבון דיפרנציאלי ואינטגרלי 2 (חדו״א 2)', credits: 6, minGrade: 75 },
-				{ courseNumber: '20485', courseName: 'אלגברה לינארית 1', credits: 6, minGrade: 75 },
-				{ courseNumber: '20187', courseName: 'פיזיקה: יסודות המכניקה', credits: 6, minGrade: 75 },
-				{ courseNumber: '20188', courseName: 'פיזיקה: חשמל ומגנטיות', credits: 6, minGrade: 75 }
+				{ courseNumber: '20474', courseName: 'חשבון אינפיניטסימלי 1 (אינפי 1)', credits: 7, minGrade: 75 },
+				{ courseNumber: '20475', courseName: 'חשבון אינפיניטסימלי 2 (אינפי 2)', credits: 7, minGrade: 75 },
+				{ courseNumber: '20109', courseName: 'אלגברה לינארית 1', credits: 7, minGrade: 75 },
+				{ courseNumber: '20215', courseName: 'פיזיקה: יסודות המכניקה', credits: 7, minGrade: 75 }
 			],
 			specialRequirements: 'עמידה במקבץ בממוצע הנדרש מקנה קבלה מובטחת לפקולטה להנדסה והכרה מלאה בנקודות הזכות.',
 			academicAdvantage: 'מעבר מובטח לפקולטה להנדסה ללא תלות בסכם התיכוני, עם סיום כמעט שנה אקדמית שלמה מראש.'
@@ -636,11 +771,12 @@ function buildDomainAfikSpecification(
 export function getAfikMaavarSpecification(
 	targetProgram: AcademicProgramRecord
 ): AfikMaavarSpec {
+	const domain = categorizeDegreeDomain(targetProgram);
 	const spec = buildDomainAfikSpecification(targetProgram);
 	return {
 		...spec,
 		registrationUrl: getAfikMaavarRegistrationUrl(targetProgram.institutionId),
-		infoUrl: 'https://www.openu.ac.il/transfer/'
+		infoUrl: getAfikMaavarInfoUrl(targetProgram.institutionId, domain)
 	};
 }
 

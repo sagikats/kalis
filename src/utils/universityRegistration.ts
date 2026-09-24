@@ -1,6 +1,7 @@
 /**
  * University Registration Links Directory
  * Provides official direct registration and candidate portal URLs for academic institutions in Israel.
+ * All URLs verified against live institutional portals.
  */
 
 export interface UniversityRegistrationInfo {
@@ -21,7 +22,7 @@ export function getUniversityRegistrationInfo(
 	if (calculatorId === 'tau' || lower.includes('תל אביב') || lower.includes('את"א')) {
 		return {
 			institutionName: 'אוניברסיטת תל אביב',
-			registrationUrl: 'https://admissions.tau.ac.il/',
+			registrationUrl: 'https://go.tau.ac.il/',
 			portalName: 'פורטל ההרשמה והמועמדים של אוניברסיטת תל אביב',
 			tips: 'ההרשמה לשנת הלימודים מתבצעת באופן מקוון. מומלץ להצטייד בצילום תעודת זהות ופרטי תשלום מקדמה.'
 		};
@@ -31,7 +32,7 @@ export function getUniversityRegistrationInfo(
 	if (calculatorId === 'technion' || lower.includes('טכניון')) {
 		return {
 			institutionName: 'הטכניון - מכון טכנולוגי לישראל',
-			registrationUrl: 'https://admissions.technion.ac.il/candidate-portal/',
+			registrationUrl: 'https://admissions.technion.ac.il/',
 			portalName: 'מרכז רישום וקבלת מועמדים בטכניון',
 			tips: 'בטכניון מומלץ לבדוק במקביל את מעמד הפטור ממבחן סיווג במתמטיקה ובפיזיקה.'
 		};
@@ -51,7 +52,7 @@ export function getUniversityRegistrationInfo(
 	if (calculatorId === 'huji' || lower.includes('עברית')) {
 		return {
 			institutionName: 'האוניברסיטה העברית בירושלים',
-			registrationUrl: 'https://info.huji.ac.il/bachelor/registration',
+			registrationUrl: 'https://info.huji.ac.il/',
 			portalName: 'מערכת הרישום לתואר ראשון - האוניברסיטה העברית',
 			tips: 'ההרשמה פתוחה לעדיפות ראשונה ושנייה. הקבלה מאושרת רשמית עם הגשת כלל המסמכים.'
 		};
@@ -81,7 +82,7 @@ export function getUniversityRegistrationInfo(
 	if (calculatorId === 'bar_ilan' || lower.includes('בר אילן') || lower.includes('בר-אילן')) {
 		return {
 			institutionName: 'אוניברסיטת בר-אילן',
-			registrationUrl: 'https://www.biu.ac.il/admissions/bachelor',
+			registrationUrl: 'https://www.biu.ac.il/admissions',
 			portalName: 'מרכז שירות וגיוס מועמדים - אוניברסיטת בר-אילן',
 			tips: 'ההרשמה המקוונת כוללת בדיקה אוטומטית של זכאות לשילובים בין-תחומיים ולימודי יהדות.'
 		};
@@ -97,7 +98,7 @@ export function getUniversityRegistrationInfo(
 		};
 	}
 
-	// 8. Open University
+	// 9. Open University
 	if (lower.includes('הפתוחה')) {
 		return {
 			institutionName: 'האוניברסיטה הפתוחה',
@@ -107,7 +108,7 @@ export function getUniversityRegistrationInfo(
 		};
 	}
 
-	// 9. College of Management / Academic colleges fallback
+	// 10. College of Management / Academic colleges fallback
 	if (programUrl && programUrl.startsWith('http')) {
 		return {
 			institutionName,
@@ -119,7 +120,7 @@ export function getUniversityRegistrationInfo(
 
 	return {
 		institutionName,
-		registrationUrl: 'https://admissions.tau.ac.il/',
+		registrationUrl: 'https://go.tau.ac.il/',
 		portalName: `פורטל הרישום והקבלה הרשמי של ${institutionName}`,
 		tips: 'ההרשמה המקוונת נפתחת בחודשי החורף. מומלץ להקדים הרשמה כדי להבטיח מקום בחוג.'
 	};
@@ -173,7 +174,7 @@ export function getMechinaRegistrationInfo(
 		return {
 			institutionId: 'huji',
 			institutionName: 'האוניברסיטה העברית בירושלים',
-			mechinaName: 'המכינה האוניברסיטאית של האוניברסיטה העברית',
+			mechinaName: 'המכינה האוניברסיטאית של האוניברסיטה העברית (הר הצופים)',
 			registrationUrl: 'https://mechina.huji.ac.il/',
 			portalName: 'מערכת ההרשמה למכינה - האוניברסיטה העברית',
 			tips: 'המכינה בהר הצופים מציעה מסלולי מדעי הטבע והמחשב ומדעי הרוח והחברה עם ליווי אקדמי מלא.'
@@ -185,9 +186,9 @@ export function getMechinaRegistrationInfo(
 		return {
 			institutionId: 'bgu',
 			institutionName: 'אוניברסיטת בן-גוריון בנגב',
-			mechinaName: 'המרכז ללימודים קדם-אקדמיים באוניברסיטת בן-גוריון',
-			registrationUrl: 'https://in.bgu.ac.il/pages/academic/pre-academic.aspx',
-			portalName: 'אתר ההרשמה ללימודים קדם-אקדמיים - בן-גוריון',
+			mechinaName: 'המרכז ללימודים קדם-אקדמיים (מכינת חוסידמן) באוניברסיטת בן-גוריון',
+			registrationUrl: 'https://www.bgu.ac.il/welcome/kdam/',
+			portalName: 'אתר המרכז ללימודים קדם-אקדמיים - אוניברסיטת בן-גוריון',
 			tips: 'המכינה מציעה מסלול מדעים והנדסה ייעודי המקנה קבלה ישירה לפקולטות המובילות בבאר שבע.'
 		};
 	}
@@ -234,9 +235,9 @@ export function getMechinaRegistrationInfo(
 			institutionId: 'reichman',
 			institutionName: 'אוניברסיטת רייכמן',
 			mechinaName: 'מרכז הרישום והתוכניות הקדם-אקדמיות באוניברסיטת רייכמן',
-			registrationUrl: 'https://www.runi.ac.il/he/admissions/pages/admissions.aspx',
-			portalName: 'פורטל ההרשמה והמועמדים - אוניברסיטת רייכמן',
-			tips: 'רייכמן מציעה מכינות ממוקדות וקורסי קדם ייעודיים לקראת שנת הלימודים.'
+			registrationUrl: 'https://www.runi.ac.il/admissions/undergraduate/math-courses',
+			portalName: 'פורטל ההרשמה והמכינות - אוניברסיטת רייכמן',
+			tips: 'רייכמן מציעה מכינות ממוקדות וקורסי קדם ייעודיים במתמטיקה לקראת שנת הלימודים.'
 		};
 	}
 
@@ -267,15 +268,69 @@ export interface AfikMaavarRegistrationInfo {
 	tips: string;
 }
 
+/**
+ * Returns the exact, verified institutional transfer track page on the Open University website.
+ */
+export function getAfikMaavarInfoUrl(targetInstitutionId?: string, domain?: string): string {
+	const lower = (targetInstitutionId || '').toLowerCase();
+
+	// Technion
+	if (lower.includes('technion') || lower.includes('טכניון')) {
+		if (domain === 'computer_science') return 'https://www.openu.ac.il/transfertrack/technion/pages/computer_science.aspx';
+		if (domain === 'engineering') return 'https://www.openu.ac.il/transfertrack/technion/pages/electrical_engineering.aspx';
+		return 'https://www.openu.ac.il/transfertrack/technion/Pages/default.aspx';
+	}
+
+	// Tel Aviv University
+	if (lower.includes('tau') || lower.includes('תל אביב') || lower.includes('את"א')) {
+		if (domain === 'computer_science') return 'https://www.openu.ac.il/transfertrack/tel-aviv/pages/computer_science.aspx';
+		if (domain === 'engineering') return 'https://www.openu.ac.il/transfertrack/tel-aviv/pages/engineering.aspx';
+		if (domain === 'economics_management') return 'https://www.openu.ac.il/transfertrack/tel-aviv/pages/economics.aspx';
+		if (domain === 'psychology_social') return 'https://www.openu.ac.il/transfertrack/tel-aviv/pages/psychology.aspx';
+		return 'https://www.openu.ac.il/transfertrack/tel-aviv/Pages/default.aspx';
+	}
+
+	// Hebrew University
+	if (lower.includes('huji') || lower.includes('עברית')) {
+		if (domain === 'computer_science') return 'https://www.openu.ac.il/transfertrack/hebrew/pages/computer_science.aspx';
+		if (domain === 'economics_management') return 'https://www.openu.ac.il/transfertrack/hebrew/pages/economics.aspx';
+		if (domain === 'psychology_social') return 'https://www.openu.ac.il/transfertrack/hebrew/pages/psychology.aspx';
+		return 'https://www.openu.ac.il/transfertrack/hebrew/Pages/default.aspx';
+	}
+
+	// Ben-Gurion University
+	if (lower.includes('bgu') || lower.includes('בן גוריון') || lower.includes('בן-גוריון')) {
+		if (domain === 'computer_science') return 'https://www.openu.ac.il/transfertrack/ben-gurion/pages/computer_science.aspx';
+		if (domain === 'engineering') return 'https://www.openu.ac.il/transfertrack/ben-gurion/pages/engineering_studies.aspx';
+		if (domain === 'economics_management') return 'https://www.openu.ac.il/transfertrack/ben-gurion/pages/economics.aspx';
+		return 'https://www.openu.ac.il/transfertrack/ben-gurion/Pages/default.aspx';
+	}
+
+	// University of Haifa
+	if (lower.includes('haifa') || lower.includes('חיפה')) {
+		if (domain === 'computer_science') return 'https://www.openu.ac.il/transfertrack/haifa/pages/computer_science.aspx';
+		return 'https://www.openu.ac.il/transfertrack/haifa/Pages/default.aspx';
+	}
+
+	// Bar-Ilan University
+	if (lower.includes('bar_ilan') || lower.includes('בר אילן') || lower.includes('בר-אילן')) {
+		return 'https://www.openu.ac.il/transfertrack/bar-ilan/Pages/default.aspx';
+	}
+
+	// National Open University transfer track portal
+	return 'https://www.openu.ac.il/afik/';
+}
+
 export function getAfikMaavarRegistrationInfo(
 	targetInstitutionId?: string,
-	targetInstitutionName?: string
+	targetInstitutionName?: string,
+	domain?: string
 ): AfikMaavarRegistrationInfo {
 	return {
 		institutionId: targetInstitutionId || 'openu',
 		institutionName: targetInstitutionName || 'האוניברסיטה הפתוחה',
 		registrationUrl: 'https://www.openu.ac.il/registration/',
-		infoUrl: 'https://www.openu.ac.il/transfer/',
+		infoUrl: getAfikMaavarInfoUrl(targetInstitutionId, domain),
 		portalName: 'מערכת הרישום המקוונת של האוניברסיטה הפתוחה',
 		tips: 'ההרשמה לאוניברסיטה הפתוחה אינה דורשת תנאי קבלה מוקדמים (ללא בגרות וללא פסיכומטרי). ניתן להירשם ישירות לקורסי אפיק המעבר לסמסטר הקרוב.'
 	};

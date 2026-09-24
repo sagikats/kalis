@@ -32,6 +32,7 @@ import {
 } from '@/utils/calculators/psychometricHelper';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
+import { cleanGradeInput, cleanNumberInput } from '@/utils/gradeInputHelper';
 
 import DegreeSearchSelector from '@/components/flow/DegreeSearchSelector';
 import PersonalAdmissionReport from '@/components/flow/PersonalAdmissionReport';
@@ -67,13 +68,6 @@ const CLEAN_BLANK_SUBJECTS: SubjectInput[] = [
 	{ name: 'מתמטיקה', units: 5, grade: 0 }
 ];
 
-function cleanNumberInput(rawVal: string, minVal: number = 0, maxVal: number = 100): number | '' {
-	if (rawVal === '') return '';
-	const sanitized = rawVal.replace(/^0+(?=\d)/, '');
-	const num = parseInt(sanitized, 10);
-	if (isNaN(num)) return '';
-	return Math.min(maxVal, Math.max(minVal, num));
-}
 
 export default function AdmissionFlowPage() {
 	const router = useRouter();
@@ -534,7 +528,7 @@ export default function AdmissionFlowPage() {
 		if (field === 'units') {
 			updated[index] = { ...updated[index], units: Number(value) };
 		} else {
-			const cleaned = cleanNumberInput(String(value), 0, 100);
+			const cleaned = cleanGradeInput(String(value));
 			updated[index] = { ...updated[index], grade: cleaned === '' ? 0 : cleaned };
 		}
 		setSubjects(updated);
@@ -1015,9 +1009,10 @@ export default function AdmissionFlowPage() {
 
 											{/* Grade input */}
 											<input
-												type="number"
-												min={0}
-												max={100}
+												type="text"
+												inputMode="numeric"
+												pattern="[0-9]*"
+												maxLength={3}
 												value={sub.grade === 0 ? '' : sub.grade}
 												onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
 												placeholder="ציון"

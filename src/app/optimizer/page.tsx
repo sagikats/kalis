@@ -27,6 +27,7 @@ import { UNIVERSITIES, DEGREES, DEGREE_THRESHOLDS } from '../../data/mockData';
 import { University, Degree, AdmissionTrack, TrackId, BagrutSubject } from '../../types/planner';
 import { academicInstitutions } from '../../data/academicData';
 import { AcademicInstitution, AcademicDegree } from '../../types/academic';
+import { cleanGradeInput } from '@/utils/gradeInputHelper';
 
 export default function OptimizerPage() {
      const router = useRouter();
@@ -669,10 +670,16 @@ export default function OptimizerPage() {
                                                        className="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-indigo-500"
                                                   />
                                                   <input
-                                                       type="number"
+                                                       type="text"
+                                                       inputMode="numeric"
+                                                       pattern="[0-9]*"
+                                                       maxLength={3}
                                                        placeholder="ציון"
-                                                       value={newSubjGrade}
-                                                       onChange={(e) => setNewSubjGrade(Number(e.target.value))}
+                                                       value={newSubjGrade === 0 ? '' : newSubjGrade}
+                                                       onChange={(e) => {
+                                                            const val = cleanGradeInput(e.target.value);
+                                                            setNewSubjGrade(val === '' ? 0 : val);
+                                                       }}
                                                        className="w-16 bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-xs text-center font-bold"
                                                   />
                                                   <button

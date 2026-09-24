@@ -1668,7 +1668,7 @@ export default function RecommendedTracksView({
 											</div>
 											<div className="flex items-center gap-3">
 												<a
-													href={afikSpec?.infoUrl || 'https://www.openu.ac.il/transfer/'}
+													href={afikSpec?.infoUrl || 'https://www.openu.ac.il/afik/'}
 													target="_blank"
 													rel="noopener noreferrer"
 													className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0E7490] hover:underline"
