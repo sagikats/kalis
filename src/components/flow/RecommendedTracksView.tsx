@@ -74,6 +74,7 @@ export default function RecommendedTracksView({
 	const [isPrintMode, setIsPrintMode] = useState(false);
 	const [customScenarioApplied, setCustomScenarioApplied] = useState(false);
 	const [expandedExplanationMap, setExpandedExplanationMap] = useState<Record<string, boolean>>({});
+	const [showRoadmapDetails, setShowRoadmapDetails] = useState<boolean>(false);
 
 	const handleEditTrack = (track: RecommendedTrack) => {
 		setEditingTrack(track);
@@ -994,48 +995,50 @@ export default function RecommendedTracksView({
 			{/* DETAILED ROADMAP FOR SELECTED TRACK */}
 			{/* ========================================================================= */}
 			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative overflow-hidden">
-				<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DFD4] pb-5">
-					<div className="space-y-1">
+				<div className={`flex flex-col lg:flex-row lg:items-center justify-between gap-4 ${showRoadmapDetails ? 'border-b border-[#E5DFD4] pb-5' : ''}`}>
+					<div className="space-y-1.5 max-w-2xl">
 						<div className="flex items-center gap-2">
 							<Award className="h-5 w-5 text-[#222222]" />
-							<h3 className="text-xl font-bold text-[#222222]">
+							<h3 className="text-lg sm:text-xl font-bold text-[#222222]">
 								תוכנית עבודה שבוע-אחר-שבוע: {selectedTrack.title}
 							</h3>
 						</div>
-						<p className="text-xs text-[#66635C]">
+						<p className="text-xs sm:text-sm text-[#66635C]">
 							{selectedTrack.keyAdvantage}
 						</p>
+						<div className="flex items-center gap-2 pt-1 flex-wrap text-xs text-[#66635C]">
+							<span className="bg-[#FAF8F5] px-2.5 py-1 rounded-lg border border-[#E5DFD4] font-medium">
+								משך כולל: <strong className="text-[#222222]">{selectedTrack.estimatedWeeks} שבועות</strong>
+							</span>
+							<span className="bg-[#FAF8F5] px-2.5 py-1 rounded-lg border border-[#E5DFD4] font-medium">
+								עומס שבועי: <strong className="text-[#222222]">{selectedTrack.weeklyHours} ש״ש</strong>
+							</span>
+						</div>
 					</div>
 
-					<div className="flex items-center gap-3 text-xs font-bold text-[#66635C] shrink-0 flex-wrap">
-						<div className="bg-[#FAF8F5] px-3 py-2 rounded-xl border border-[#E5DFD4]">
-							משך כולל: <span className="text-[#222222] font-bold">{selectedTrack.estimatedWeeks} שבועות</span>
-						</div>
-						<div className="bg-[#FAF8F5] px-3 py-2 rounded-xl border border-[#E5DFD4]">
-							עומס שבועי: <span className="text-[#222222] font-bold">{selectedTrack.weeklyHours} ש״ש</span>
-						</div>
+					<div className="flex items-center gap-2.5 text-xs font-bold text-[#66635C] shrink-0 flex-wrap">
 						<button
 							type="button"
 							onClick={() => handleEditTrack(selectedTrack)}
-							className="px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border bg-white hover:bg-[#FAF8F5] text-[#1E597B] border-[#C5DFED] shadow-2xs cursor-pointer"
+							className="px-3.5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 border bg-white hover:bg-[#FAF8F5] text-[#1E597B] border-[#C5DFED] shadow-2xs cursor-pointer"
 						>
 							<Sliders className="h-3.5 w-3.5 text-[#1E597B]" />
-							<span>ערוך מסלול בסימולטור</span>
+							<span>ערוך בסימולטור</span>
 						</button>
 						<button
 							type="button"
 							onClick={() => handleSaveTrack(selectedTrack)}
 							disabled={savingTrackId === selectedTrack.id}
-							className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-sm ${
+							className={`px-3.5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 border shadow-2xs cursor-pointer ${
 								savedTrackMap[selectedTrack.id]
 									? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
-									: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
+									: 'bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] border-[#E5DFD4]'
 							}`}
 						>
 							{savingTrackId === selectedTrack.id ? (
 								<>
-									<Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
-									<span>שומר מסלול...</span>
+									<Loader2 className="h-3.5 w-3.5 animate-spin text-[#222222]" />
+									<span>שומר...</span>
 								</>
 							) : savedTrackMap[selectedTrack.id] ? (
 								<>
@@ -1044,15 +1047,40 @@ export default function RecommendedTracksView({
 								</>
 							) : (
 								<>
-									<Bookmark className="h-3.5 w-3.5 text-white" />
-									<span>שמור מסלול זה</span>
+									<Bookmark className="h-3.5 w-3.5 text-[#66635C]" />
+									<span>שמור מסלול</span>
+								</>
+							)}
+						</button>
+						<button
+							type="button"
+							onClick={() => setShowRoadmapDetails((prev) => !prev)}
+							className={`px-4 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-sm cursor-pointer ${
+								showRoadmapDetails
+									? 'bg-white text-[#222222] border-[#E5DFD4] hover:bg-[#FAF8F5]'
+									: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
+							}`}
+						>
+							{showRoadmapDetails ? (
+								<>
+									<span>הסתר תוכנית עבודה</span>
+									<ChevronUp className="h-4 w-4" />
+								</>
+							) : (
+								<>
+									<Calendar className="h-4 w-4" />
+									<span>הרחב תוכנית עבודה מפורטת</span>
+									<ChevronDown className="h-4 w-4" />
 								</>
 							)}
 						</button>
 					</div>
 				</div>
 
-				{/* Roadmap components summary bar */}
+				{/* Collapsible Roadmap Details */}
+				{showRoadmapDetails && (
+					<div className="space-y-6 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
+						{/* Roadmap components summary bar */}
 				{(() => {
 					const needsPsych = Boolean(
 						selectedTrack.targetPsychometric && (
@@ -1333,6 +1361,8 @@ export default function RecommendedTracksView({
 						</button>
 					</div>
 				</div>
+					</div>
+				)}
 			</div>
 
 				{/* ========================================================================= */}
