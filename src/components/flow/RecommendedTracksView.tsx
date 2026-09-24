@@ -33,6 +33,7 @@ import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
+import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
@@ -1449,6 +1450,17 @@ export default function RecommendedTracksView({
 																<p className="text-[11px] text-[#66635C] leading-normal">
 																	{m.detail}
 																</p>
+																{mIdx === 0 && (
+																	<a
+																		href={mechinaTrack.registrationUrl || getMechinaRegistrationUrl(mechinaTrack.institutionId || analysis.target.institutionId || '')}
+																		target="_blank"
+																		rel="noopener noreferrer"
+																		className="inline-flex items-center gap-1 text-[11px] font-bold text-[#453D78] hover:text-[#2E2855] hover:underline pt-1 cursor-pointer"
+																	>
+																		<span>מעבר לפורטל הרישום של המכינה</span>
+																		<ExternalLink className="h-3 w-3" />
+																	</a>
+																)}
 															</div>
 														);
 													})}
@@ -1469,8 +1481,19 @@ export default function RecommendedTracksView({
 											</span>
 										</div>
 
-										{/* Save Mechina Track Button */}
-										<div className="pt-2 flex justify-end">
+										{/* Bottom Actions: Registration Link & Save Mechina Track Button */}
+										<div className="pt-3 border-t border-[#E5DFD4] flex items-center justify-end gap-3 flex-wrap">
+											<a
+												href={mechinaTrack.registrationUrl || getMechinaRegistrationUrl(mechinaTrack.institutionId || analysis.target.institutionId || '')}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] hover:text-[#000000] border border-[#DDD7CC] shadow-2xs hover:shadow-xs group cursor-pointer"
+												title="מעבר לעמוד ההרשמה הרשמי של המכינה"
+											>
+												<ExternalLink className="h-3.5 w-3.5 text-[#66635C] group-hover:text-[#111111] transition-colors" />
+												<span>הרשמה למכינה באתר המוסד</span>
+											</a>
+
 											<button
 												type="button"
 												onClick={() => handleSaveTrack(mechinaTrack)}
@@ -1618,6 +1641,17 @@ export default function RecommendedTracksView({
 															<p className="text-[11px] text-[#66635C] leading-normal">
 																{m.detail}
 															</p>
+															{mIdx === 0 && (
+																<a
+																	href={afikMaavarTrack.registrationUrl || afikSpec?.registrationUrl || 'https://www.openu.ac.il/registration/'}
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0E7490] hover:text-[#085265] hover:underline pt-1 cursor-pointer"
+																>
+																	<span>מעבר לפורטל הרישום של האו״פ</span>
+																	<ExternalLink className="h-3 w-3" />
+																</a>
+															)}
 														</div>
 													))}
 												</div>
@@ -1632,13 +1666,35 @@ export default function RecommendedTracksView({
 													הסכם אקדמי רשמי (מל״ג): עמידה בממוצע {afikSpec?.requiredGpa || 85}+ ובציוני הסף מבטיחה קבלה ישירה לשנה ב׳ ללא תלות בבגרות או בפסיכומטרי!
 												</span>
 											</div>
-											<span className="text-[11px] font-bold text-[#065F46]">
-												היתכנות: {afikMaavarTrack.feasibilityExplanation}
-											</span>
+											<div className="flex items-center gap-3">
+												<a
+													href={afikSpec?.infoUrl || 'https://www.openu.ac.il/transfer/'}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0E7490] hover:underline"
+												>
+													<span>מתווה אפיקי המעבר באו״פ</span>
+													<ExternalLink className="h-3 w-3" />
+												</a>
+												<span className="text-[11px] font-bold text-[#065F46]">
+													היתכנות: {afikMaavarTrack.feasibilityExplanation}
+												</span>
+											</div>
 										</div>
 
-										{/* Save Afik Ma'avar Track Button */}
-										<div className="pt-2 flex justify-end">
+										{/* Bottom Actions: Registration Link & Save Afik Ma'avar Track Button */}
+										<div className="pt-3 border-t border-[#E5DFD4] flex items-center justify-end gap-3 flex-wrap">
+											<a
+												href={afikMaavarTrack.registrationUrl || afikSpec?.registrationUrl || 'https://www.openu.ac.il/registration/'}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#0E7490] hover:text-[#085265] border border-[#A5F3FC] shadow-2xs hover:shadow-xs group cursor-pointer"
+												title="מעבר לעמוד ההרשמה המקוונת באוניברסיטה הפתוחה"
+											>
+												<ExternalLink className="h-3.5 w-3.5 text-[#0E7490] group-hover:text-[#085265] transition-colors" />
+												<span>הרשמה לאפיק מעבר באו״פ</span>
+											</a>
+
 											<button
 												type="button"
 												onClick={() => handleSaveTrack(afikMaavarTrack)}

@@ -17,6 +17,7 @@ import { ValidatedProgramSearchQuery } from './validation';
 import rawData from '../../data/academicData.json';
 import { prisma } from '../../lib/prisma';
 import { hashPassword, verifyPassword } from '../../lib/authUtils';
+import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '../../utils/universityRegistration';
 
 export interface ProgramSearchFilters {
 	institutionId?: string;
@@ -1016,6 +1017,13 @@ export class KalisDatabaseRepository {
 			}
 		});
 
+		const prog = this.findProgramById(programId);
+		const regUrl = track.registrationUrl || (
+			saved.trackType === 'track-mechina' ? getMechinaRegistrationUrl(prog?.institutionId || '') :
+			saved.trackType === 'track-afik-maavar' ? getAfikMaavarRegistrationUrl(prog?.institutionId || '') :
+			undefined
+		);
+
 		const record: ActionTrackRecord = {
 			id: saved.trackType,
 			userId: saved.userId,
@@ -1036,6 +1044,7 @@ export class KalisDatabaseRepository {
 			keyAdvantage: saved.keyAdvantage || '',
 			milestones: saved.stepsJson ? JSON.parse(saved.stepsJson) : [],
 			recommendedLevers: saved.subjectImprovementsJson ? JSON.parse(saved.subjectImprovementsJson) : [],
+			registrationUrl: regUrl,
 			createdAt: saved.createdAt
 		};
 
@@ -1056,6 +1065,14 @@ export class KalisDatabaseRepository {
 				const mapped: ActionTrackRecord[] = dbTracks.map((dt) => {
 					const prog = this.findProgramById(dt.programId);
 					const inst = prog ? this.getInstitutionById(prog.institutionId) : null;
+					const isMechina = dt.trackType === 'track-mechina' || dt.title?.includes('מכינה');
+					const isAfik = dt.trackType === 'track-afik-maavar' || dt.title?.includes('אפיק מעבר');
+					const regUrl = isMechina
+						? getMechinaRegistrationUrl(prog?.institutionId || '')
+						: isAfik
+						? getAfikMaavarRegistrationUrl(prog?.institutionId || '')
+						: undefined;
+
 					return {
 						id: dt.trackType,
 						savedTrackId: dt.id,
@@ -1083,6 +1100,7 @@ export class KalisDatabaseRepository {
 						fieldOfStudy: prog?.fieldOfStudy,
 						degreeLevel: prog?.degreeLevel,
 						admissionThreshold: prog?.minSekemThreshold,
+						registrationUrl: regUrl,
 						createdAt: dt.createdAt
 					};
 				});

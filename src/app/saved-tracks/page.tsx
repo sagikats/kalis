@@ -22,11 +22,13 @@ import {
 	GraduationCap,
 	Zap,
 	RefreshCw,
-	Layers
+	Layers,
+	ExternalLink
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import UniversityLogo from '@/components/common/UniversityLogo';
 import { ActionTrackRecord } from '@/modules/db/schema';
+import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
 
 export default function SavedTracksPage() {
 	const router = useRouter();
@@ -714,23 +716,48 @@ export default function SavedTracksPage() {
 									</div>
 								)}
 
-								{/* Card Bottom: Saved Date & Flow Link */}
-								<div className="mt-5 pt-4 border-t border-[#EAE5DA] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#88857E]">
-									<div className="flex items-center gap-2">
-										<Calendar className="w-3.5 h-3.5 text-[#88857E]" />
-										<span>נשמר במערכת: {formatDate(track.createdAt)}</span>
-									</div>
+								{/* Card Bottom: Saved Date & Action Links */}
+								{(() => {
+									const isCardAfik = track.id?.includes('afik-maavar') || (track as any).type === 'afik_maavar' || track.title?.includes('אפיק מעבר');
+									const isCardMechina = (track as any).type === 'mechina' || track.id === 'track-mechina' || track.title?.includes('מכינה');
+									const cardRegUrl = track.registrationUrl || (
+										isCardMechina ? getMechinaRegistrationUrl(track.institutionId || '') :
+										isCardAfik ? getAfikMaavarRegistrationUrl(track.institutionId) :
+										null
+									);
 
-									<div className="flex items-center gap-2">
-										<Link
-											href="/flow"
-											className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-semibold text-[#3C3C3C] hover:text-[#111111] bg-[#EFECE6] hover:bg-[#E5DFD4] border border-[#DDD7CC] transition-colors cursor-pointer"
-										>
-											<Sliders className="w-3.5 h-3.5" />
-											<span>פתח בסימולטור</span>
-										</Link>
-									</div>
-								</div>
+									return (
+										<div className="mt-5 pt-4 border-t border-[#EAE5DA] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#88857E]">
+											<div className="flex items-center gap-2">
+												<Calendar className="w-3.5 h-3.5 text-[#88857E]" />
+												<span>נשמר במערכת: {formatDate(track.createdAt)}</span>
+											</div>
+
+											<div className="flex items-center gap-2 flex-wrap">
+												{cardRegUrl && (
+													<a
+														href={cardRegUrl}
+														target="_blank"
+														rel="noopener noreferrer"
+														className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-bold text-xs text-[#222222] hover:text-[#000000] bg-[#FAF8F5] hover:bg-[#F2EFE9] border border-[#DDD7CC] shadow-2xs hover:shadow-xs transition-colors cursor-pointer group"
+														title={isCardAfik ? 'הרשמה לאפיק מעבר באוניברסיטה הפתוחה' : isCardMechina ? 'הרשמה למכינה באתר המוסד' : 'מעבר לעמוד ההרשמה'}
+													>
+														<ExternalLink className="w-3.5 h-3.5 text-[#66635C] group-hover:text-[#111111] transition-colors" />
+														<span>{isCardAfik ? 'הרשמה לאו״פ' : isCardMechina ? 'הרשמה למכינה' : 'מעבר להרשמה'}</span>
+													</a>
+												)}
+
+												<Link
+													href="/flow"
+													className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-semibold text-[#3C3C3C] hover:text-[#111111] bg-[#EFECE6] hover:bg-[#E5DFD4] border border-[#DDD7CC] transition-colors cursor-pointer"
+												>
+													<Sliders className="w-3.5 h-3.5" />
+													<span>פתח בסימולטור</span>
+												</Link>
+											</div>
+										</div>
+									);
+								})()}
 							</div>
 						);
 					})}

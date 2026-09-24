@@ -174,6 +174,7 @@ export interface ActionTrackRecord {
 	fieldOfStudy?: string;
 	degreeLevel?: string;
 	admissionThreshold?: number;
+	registrationUrl?: string;
 	createdAt: Date;
 }
 

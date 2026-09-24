@@ -193,5 +193,60 @@ describe('Bypass Routes Engine: Mechina & Open University Transition Tracks', ()
 			assert.ok(result.afikSpec.requiredCredits >= 24);
 			assert.ok(result.afikSpec.courses.length >= 4);
 		});
+
+		it('should provide official, valid registration URLs for both Mechina and Afik Maavar', () => {
+			const result = getDegreeBypassRoutes(technionCsProgram, mockProfile, mockPreferences);
+
+			// Mechina registration link
+			assert.ok(result.mechinaTrack.registrationUrl, 'Mechina track must have registrationUrl');
+			assert.ok(result.mechinaTrack.registrationUrl.startsWith('https://'), 'Mechina URL must be https');
+			assert.ok(result.mechinaTrack.registrationUrl.includes('kdam.technion.ac.il'), 'Technion mechina URL must be kdam.technion.ac.il');
+
+			// Afik Maavar registration & info links
+			assert.ok(result.afikMaavarTrack.registrationUrl, 'Afik Maavar track must have registrationUrl');
+			assert.strictEqual(result.afikMaavarTrack.registrationUrl, 'https://www.openu.ac.il/registration/');
+			assert.ok(result.afikSpec?.registrationUrl, 'Afik spec must have registrationUrl');
+			assert.ok(result.afikSpec?.infoUrl, 'Afik spec must have infoUrl');
+			assert.strictEqual(result.afikSpec?.infoUrl, 'https://www.openu.ac.il/transfer/');
+		});
+
+		it('should provide correct Mechina registration links across all 8 supported universities', () => {
+			const institutions = [
+				{ id: 'technion', urlPart: 'technion.ac.il' },
+				{ id: 'tau', urlPart: 'mechina-kda.biu.ac.il' },
+				{ id: 'huji', urlPart: 'mechina.huji.ac.il' },
+				{ id: 'bgu', urlPart: 'bgu.ac.il' },
+				{ id: 'haifa', urlPart: 'haifa.ac.il' },
+				{ id: 'ariel', urlPart: 'ariel.ac.il' },
+				{ id: 'bar_ilan', urlPart: 'mechina-kda.biu.ac.il' },
+				{ id: 'reichman', urlPart: 'runi.ac.il' }
+			];
+
+			for (const inst of institutions) {
+				const prog: AcademicProgramRecord = {
+					id: `prog-${inst.id}`,
+					institutionId: inst.id,
+					institutionName: `אוניברסיטת ${inst.id}`,
+					facultyName: 'פקולטה',
+					name: 'מדעי המחשב',
+					fieldOfStudy: 'מדעי המחשב',
+					degreeLevel: 'bachelor',
+					relevantSekemType: 'engineering',
+					minSekemThreshold: 80,
+					requiresPsychometric: true,
+					directBagrutEligible: false,
+					prerequisites: { mustHavePsychometric: true },
+					createdAt: new Date(),
+					updatedAt: new Date()
+				};
+
+				const mechina = generateAccurateMechinaTrack(prog, mockProfile, mockPreferences);
+				assert.ok(mechina.registrationUrl, `Missing registration URL for ${inst.id}`);
+				assert.ok(
+					mechina.registrationUrl.includes(inst.urlPart),
+					`Expected ${inst.urlPart} in ${mechina.registrationUrl} for ${inst.id}`
+				);
+			}
+		});
 	});
 });

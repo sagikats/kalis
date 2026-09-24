@@ -28,6 +28,7 @@ import {
 } from '../db/schema';
 import { toCalculatorSubjects } from './solver';
 import { calculateInstitution } from '../calculators/index';
+import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '../../utils/universityRegistration';
 
 export interface OpenUniversityCourseDetail {
 	courseNumber: string;
@@ -45,6 +46,8 @@ export interface AfikMaavarSpec {
 	courses: OpenUniversityCourseDetail[];
 	specialRequirements?: string;
 	academicAdvantage: string;
+	registrationUrl?: string;
+	infoUrl?: string;
 }
 
 export interface BypassRoutesResult {
@@ -440,6 +443,7 @@ export function generateAccurateMechinaTrack(
 		institutionName: targetProgram.institutionName,
 		programName: targetProgram.name,
 		admissionThreshold: threshold,
+		registrationUrl: getMechinaRegistrationUrl(instId, targetProgram.institutionName),
 		createdAt: new Date()
 	};
 }
@@ -448,7 +452,7 @@ export function generateAccurateMechinaTrack(
 // 3. Open University Transition Track Generator (אפיק מעבר מהאוניברסיטה הפתוחה)
 // ---------------------------------------------------------------------------
 
-export function getAfikMaavarSpecification(
+function buildDomainAfikSpecification(
 	targetProgram: AcademicProgramRecord
 ): AfikMaavarSpec {
 	const domain = categorizeDegreeDomain(targetProgram);
@@ -629,6 +633,17 @@ export function getAfikMaavarSpecification(
 	};
 }
 
+export function getAfikMaavarSpecification(
+	targetProgram: AcademicProgramRecord
+): AfikMaavarSpec {
+	const spec = buildDomainAfikSpecification(targetProgram);
+	return {
+		...spec,
+		registrationUrl: getAfikMaavarRegistrationUrl(targetProgram.institutionId),
+		infoUrl: 'https://www.openu.ac.il/transfer/'
+	};
+}
+
 export function generateDegreeAfikMaavarTrack(
 	targetProgram: AcademicProgramRecord,
 	profile: UserAcademicProfileRecord,
@@ -685,6 +700,7 @@ export function generateDegreeAfikMaavarTrack(
 		id: 'track-afik-maavar',
 		userId: profile.userId,
 		programId: targetProgram.id,
+		type: 'afik_maavar',
 		title: `אפיק מעבר מהאוניברסיטה הפתוחה: ${targetProgram.name}`,
 		badge: 'מסלול אקדמי עוקף • אפיק מעבר מהאוניברסיטה הפתוחה',
 		badgeColor: 'from-cyan-600 to-blue-800',
@@ -709,6 +725,7 @@ export function generateDegreeAfikMaavarTrack(
 		institutionName: targetProgram.institutionName,
 		programName: targetProgram.name,
 		admissionThreshold: targetProgram.minSekemThreshold,
+		registrationUrl: spec.registrationUrl || getAfikMaavarRegistrationUrl(targetProgram.institutionId),
 		createdAt: new Date()
 	};
 }
