@@ -3,17 +3,28 @@
 (function () {
   console.log('[Kalis Extension] Bridge loaded on web app.');
 
-  // Set DOM indicator for instantaneous web-app detection
-  document.documentElement.setAttribute('data-kalis-extension-installed', 'true');
-  document.documentElement.dataset.kalisExtension = 'true';
+  // Set window global without touching HTML DOM attributes prematurely
+  try {
+    window.__kalis_extension_installed = true;
+  } catch (e) {}
 
   // Announce presence via window postMessage
   window.postMessage({ type: 'KALIS_EXTENSION_READY', version: '1.0.0' }, '*');
 
   // Also dispatch a custom DOM event
-  window.dispatchEvent(new CustomEvent('kalis:extension-ready', {
-    detail: { version: '1.0.0' }
-  }));
+  try {
+    window.dispatchEvent(new CustomEvent('kalis:extension-ready', {
+      detail: { version: '1.0.0' }
+    }));
+  } catch (e) {}
+
+  // Delay setting DOM attribute by 600ms so React hydration completes smoothly
+  setTimeout(() => {
+    try {
+      document.documentElement.setAttribute('data-kalis-extension-installed', 'true');
+      document.documentElement.dataset.kalisExtension = 'true';
+    } catch (e) {}
+  }, 600);
 
   // Listen for requests originating from the Kalis web app
   window.addEventListener('message', async (event) => {

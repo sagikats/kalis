@@ -64,9 +64,10 @@ export default function UniversityVerificationModal({
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
 
-		// 1. Check DOM attribute set by extension content script
+		// 1. Check DOM attribute or window global set by extension content script
 		const checkInstalled = () => {
 			const installed =
+				Boolean((window as any).__kalis_extension_installed) ||
 				document.documentElement.getAttribute('data-kalis-extension-installed') === 'true' ||
 				document.documentElement.dataset.kalisExtension === 'true';
 			if (installed) setIsExtensionInstalled(true);
