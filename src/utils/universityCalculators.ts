@@ -28,7 +28,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'huji',
 		name: 'האוניברסיטה העברית בירושלים',
 		shortName: 'האוניברסיטה העברית',
-		calculatorUrl: 'https://info.huji.ac.il/bachelor/chishuv-sekem',
+		calculatorUrl: 'https://go.huji.ac.il/?locale=he',
 		portalName: 'מחשבון סיכויי קבלה — העברית',
 		description: 'חישוב סכם אוניברסיטאי ובדיקת זכאות לקבלה ישירה ללא פסיכומטרי'
 	},

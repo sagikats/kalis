@@ -29,6 +29,7 @@
     "http://127.0.0.1/*",
     "*://*.technion.ac.il/*",
     "*://*.tau.ac.il/*",
+    "*://go.huji.ac.il/*",
     "*://*.huji.ac.il/*",
     "*://*.bgu.ac.il/*",
     "*://apps4cloud.bgu.ac.il/*",
@@ -79,7 +80,15 @@
     },
     {
       "matches": [
-        "*://*.huji.ac.il/*",
+        "*://go.huji.ac.il/*",
+        "*://*.huji.ac.il/*"
+      ],
+      "js": ["content-huji.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
         "*://*.biu.ac.il/*",
         "*://*.haifa.ac.il/*",
         "*://*.ariel.ac.il/*",
