@@ -203,7 +203,10 @@
     // 3. Fill Electives
     updateStatus('מזין מקצועות בחירה...');
     const mandatoryKeywords = ['אנגלית', 'מתמטיקה', 'ספרות', 'תנך', 'תנ"ך', 'אזרחות', 'הבעה', 'לשון', 'היסטוריה'];
-    const electives = subjects.filter((s) => !mandatoryKeywords.some((k) => s.name.includes(k)));
+    const electives = subjects.filter((s) => {
+      const sName = s?.name || s?.subjectName || '';
+      return sName && !mandatoryKeywords.some((k) => sName.includes(k));
+    });
 
     electives.forEach((elec, idx) => {
       const rowIdx = idx + 1;
@@ -216,9 +219,10 @@
       const unitsElem = document.getElementById(`y${rowIdx}`);
       const gradeElem = document.getElementById(`G_${rowIdx}`);
 
-      if (selectElem) {
+      const elecName = elec?.name || elec?.subjectName || '';
+      if (selectElem && elecName) {
         for (let opt of selectElem.options) {
-          if (opt.text.includes(elec.name) || elec.name.includes(opt.text)) {
+          if (opt.text.includes(elecName) || elecName.includes(opt.text)) {
             selectElem.value = opt.value;
             selectElem.dispatchEvent(new Event('change', { bubbles: true }));
             selectElem.style.backgroundColor = '#EBF4EE';

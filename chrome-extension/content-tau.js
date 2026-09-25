@@ -67,21 +67,25 @@
       </div>
       <div>
         <div style="font-weight: 800; font-size: 13px; color: #111;">סייען מתקבלים — מזין ציונים למחשבון תל אביב...</div>
-        <div id="kalis-banner-tau-status" style="font-size: 11px; color: #666; margin-top: 2px;">מאתר שדות במחשבון...</div>
+        <div id="kalis-banner-tau-status" style="font-size: 11px; color: #666; margin-top: 2px;">מאתר את מחשבון ההתאמה בעמוד...</div>
       </div>
     `;
     document.body.appendChild(banner);
   }
 
-  // Polling helper to wait for inputs to be rendered by React
-  const waitForInputs = async (timeout = 8000) => {
+  // Polling helper to wait for the calculator container or inputs to be rendered by React
+  const waitForCalculator = async (timeout = 9000) => {
     const start = Date.now();
     while (Date.now() - start < timeout) {
-      const inputs = document.querySelectorAll('input');
-      if (inputs.length >= 2) return Array.from(inputs);
+      // Look for the specific React container or inputs
+      const calcContainer = document.querySelector('[id*="cr-b918853940b72a520b94ed750266d2af"], .suitability-calc, [data-drupal-selector*="calculator"]');
+      const allInputs = document.querySelectorAll('input:not([type="hidden"])');
+      if (calcContainer || allInputs.length >= 2) {
+        return calcContainer || document;
+      }
       await new Promise((r) => setTimeout(r, 250));
     }
-    return Array.from(document.querySelectorAll('input'));
+    return document;
   };
 
   // Helper for React controlled text/number inputs
@@ -95,9 +99,9 @@
       } else {
         input.value = value;
       }
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-      input.dispatchEvent(new Event('blur', { bubbles: true }));
+      input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      input.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
       input.style.backgroundColor = '#EBF4EE';
       input.style.borderColor = '#22C55E';
       input.style.transition = 'background-color 0.5s ease';
@@ -116,125 +120,142 @@
       } else {
         checkbox.checked = checked;
       }
-      checkbox.dispatchEvent(new Event('click', { bubbles: true }));
-      checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+      checkbox.dispatchEvent(new Event('click', { bubbles: true, composed: true }));
+      checkbox.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     } catch (err) {
       console.error('[Kalis Extension] Error setting React checkbox:', err);
     }
   };
 
   try {
-    updateStatus('מאתר שדות בטופס של אוניברסיטת תל אביב...');
+    updateStatus('מאתר את שדות ממוצע הבגרות והפסיכומטרי...');
 
-    const inputs = await waitForInputs(8000);
+    const rootElement = await waitForCalculator(9000);
     const psychScore = pendingVerification.psychometricScore || 0;
-    const targetBagrut = pendingVerification.targetBagrutAverage || pendingVerification.currentBagrutAverage || 0;
+    const targetBagrut = Number(pendingVerification.targetBagrutAverage || pendingVerification.currentBagrutAverage || 0);
     const subjects = pendingVerification.subjects || [];
 
-    let filledCount = 0;
-    let firstFilledInput = null;
+    // TAU Calculator exclusively uses:
+    // 1. "ממוצע בגרות" (Maturity average)
+    // 2. "ציון פסיכומטרי" (Psychometric score)
+    // 3. "יש לי בגרות בפיזיקה ובמתמטיקה ברמת 5 יחידות" (5u Math + Physics Checkbox)
+    // 4. "חישוב ציון התאמה" (Calculate button)
 
-    // Check if student qualifies for TAU Realit bonus (Math 5u >= 55 and Physics 5u >= 55)
-    const hasMath5 = subjects.some((s) => s.name.includes('מתמטיקה') && Number(s.units) >= 5 && Number(s.grade) >= 55);
-    const hasPhysics5 = subjects.some((s) => s.name.includes('פיזיקה') && Number(s.units) >= 5 && Number(s.grade) >= 55);
-    const shouldCheckMathPhysics = hasMath5 && hasPhysics5;
+    let bagrutInput = null;
+    let psychInput = null;
+    let mathPhysicsCheckbox = null;
+    let calcButton = null;
+
+    // First scan specifically inside the calculator container if found
+    const inputs = Array.from(rootElement.querySelectorAll('input'));
 
     inputs.forEach((inp) => {
       const type = (inp.type || 'text').toLowerCase();
+      if (type === 'hidden') return;
+
       const label = inp.getAttribute('aria-label') || inp.placeholder || inp.name || inp.id || '';
       const parentText = inp.parentElement?.textContent || '';
       const containerText = inp.closest('.form-group, div, label')?.textContent || '';
       const combined = (label + ' ' + parentText + ' ' + containerText).toLowerCase();
 
-      // Checkbox for Math 5 + Physics 5
-      if (type === 'checkbox' && (combined.includes('פיזיקה') || combined.includes('מתמטיקה') || combined.includes('5 יחידות') || combined.includes('math'))) {
-        if (shouldCheckMathPhysics) {
-          setReactCheckbox(inp, true);
-          filledCount++;
+      // Ignore search bar ("מה מעניין אותך?", search, filters)
+      if (combined.includes('מה מעניין') || combined.includes('חיפוש תוכנית') || combined.includes('search') || combined.includes('אימייל') || combined.includes('טלפון')) {
+        return;
+      }
+
+      // Checkbox: Math 5u + Physics 5u
+      if (type === 'checkbox') {
+        if (combined.includes('פיזיקה') || combined.includes('מתמטיקה') || combined.includes('5 יחידות') || combined.includes('math')) {
+          mathPhysicsCheckbox = inp;
         }
         return;
       }
 
-      // Psychometric field
-      if (psychScore > 0 && (combined.includes('פסיכומטרי') || combined.includes('רב תחומי') || combined.includes('כללי') || combined.includes('psycho'))) {
-        setReactInput(inp, psychScore);
-        filledCount++;
-        if (!firstFilledInput) firstFilledInput = inp;
+      // Psychometric Input
+      if (combined.includes('פסיכומטרי') || combined.includes('רב תחומי') || combined.includes('psycho')) {
+        psychInput = inp;
         return;
       }
 
-      // Bagrut average field
-      if (targetBagrut > 0 && (combined.includes('ממוצע בגרות') || combined.includes('בגרות מיטבי') || combined.includes('ממוצע') || combined.includes('maturity') || combined.includes('bagrut'))) {
-        setReactInput(inp, targetBagrut.toFixed(1));
-        filledCount++;
-        if (!firstFilledInput) firstFilledInput = inp;
+      // Bagrut Average Input
+      if (combined.includes('ממוצע בגרות') || combined.includes('בגרות מיטבי') || combined.includes('בגרות') || combined.includes('maturity')) {
+        bagrutInput = inp;
         return;
       }
-
-      // Subject specific inputs (if user is on detailed Bagrut breakdown page)
-      subjects.forEach((sub) => {
-        if (combined.includes(sub.name.toLowerCase())) {
-          setReactInput(inp, sub.grade);
-          filledCount++;
-          if (!firstFilledInput) firstFilledInput = inp;
-        }
-      });
     });
 
-    // Smart fallback if text/label search yielded 0 matches
-    if (filledCount === 0) {
-      const calcContainers = Array.from(document.querySelectorAll('[id*="cr-"], .suitability-calc, form, .calculator, div'));
-      for (const container of calcContainers) {
-        const cInputs = Array.from(container.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"])'));
-        if (cInputs.length >= 2) {
-          cInputs.forEach((inp) => {
-            const min = Number(inp.getAttribute('min') || 0);
-            const max = Number(inp.getAttribute('max') || 0);
-            const placeholder = (inp.placeholder || '').toLowerCase();
-
-            if (max >= 200 || min >= 200 || placeholder.includes('פסיכו')) {
-              if (psychScore > 0) {
-                setReactInput(inp, psychScore);
-                filledCount++;
-                if (!firstFilledInput) firstFilledInput = inp;
-              }
-            } else if ((max > 0 && max <= 150) || (min > 0 && min <= 100) || placeholder.includes('בגרות') || placeholder.includes('ממוצע')) {
-              if (targetBagrut > 0) {
-                setReactInput(inp, targetBagrut.toFixed(1));
-                filledCount++;
-                if (!firstFilledInput) firstFilledInput = inp;
-              }
-            }
-          });
-          if (filledCount > 0) break;
-        }
-      }
-    }
-
-    if (firstFilledInput) {
-      firstFilledInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    // Safely look for calculate button without invalid CSS selectors
-    let calcBtn = document.querySelector('button[type="submit"], input[type="submit"]');
-    if (!calcBtn) {
-      const allButtons = Array.from(document.querySelectorAll('button, a.btn, input[type="button"], span.btn'));
-      calcBtn = allButtons.find((b) => {
-        const text = (b.textContent || b.value || '').trim();
-        return text.includes('חישוב') || text.includes('חשב') || text.includes('בדוק סיכויי קבלה');
+    // Fallback: If not matched by label, match by input attributes or position within calculator
+    if (!bagrutInput || !psychInput) {
+      const candidateNumericInputs = inputs.filter((inp) => {
+        const type = (inp.type || 'text').toLowerCase();
+        if (type === 'checkbox' || type === 'hidden' || type === 'submit') return false;
+        const txt = (inp.placeholder || inp.name || inp.id || inp.parentElement?.textContent || '').toLowerCase();
+        if (txt.includes('search') || txt.includes('חיפוש') || txt.includes('מה מעניין') || txt.includes('אימייל')) return false;
+        return true;
       });
+
+      candidateNumericInputs.forEach((inp) => {
+        const max = Number(inp.getAttribute('max') || 0);
+        const min = Number(inp.getAttribute('min') || 0);
+
+        if (!psychInput && (max >= 200 || min >= 200)) {
+          psychInput = inp;
+        } else if (!bagrutInput && ((max > 0 && max <= 150) || (min > 0 && min <= 100))) {
+          bagrutInput = inp;
+        }
+      });
+
+      // Positional fallback: First numeric is Bagrut, second is Psychometric
+      if (!bagrutInput && candidateNumericInputs[0]) bagrutInput = candidateNumericInputs[0];
+      if (!psychInput && candidateNumericInputs[1]) psychInput = candidateNumericInputs[1];
     }
 
-    if (calcBtn && typeof calcBtn.click === 'function') {
+    let filledCount = 0;
+
+    // 1. Fill Bagrut Average
+    if (bagrutInput && targetBagrut > 0) {
+      setReactInput(bagrutInput, targetBagrut.toFixed(1));
+      filledCount++;
+    }
+
+    // 2. Fill Psychometric Score
+    if (psychInput && psychScore > 0) {
+      setReactInput(psychInput, psychScore);
+      filledCount++;
+    }
+
+    // 3. Set Math 5u + Physics 5u Checkbox (Realit bonus)
+    const hasMath5 = subjects.some((s) => (s?.name || s?.subjectName || '').includes('מתמטיקה') && Number(s.units) >= 5 && Number(s.grade) >= 55);
+    const hasPhysics5 = subjects.some((s) => (s?.name || s?.subjectName || '').includes('פיזיקה') && Number(s.units) >= 5 && Number(s.grade) >= 55);
+    if (mathPhysicsCheckbox && hasMath5 && hasPhysics5) {
+      setReactCheckbox(mathPhysicsCheckbox, true);
+      filledCount++;
+    }
+
+    // Scroll to the calculator
+    if (bagrutInput) {
+      bagrutInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 4. Trigger Calculate Button
+    const allButtons = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="button"], a.btn'));
+    calcButton = allButtons.find((b) => {
+      const text = (b.textContent || b.value || '').trim();
+      return text === 'חישוב ציון התאמה' || text === 'חישוב' || text.includes('חישוב ציון');
+    });
+
+    if (calcButton && typeof calcButton.click === 'function') {
       try {
         await new Promise((r) => setTimeout(r, 400));
-        calcBtn.click();
+        calcButton.click();
       } catch (e) {
         console.log('[Kalis Extension] Click TAU calc skipped:', e);
       }
     }
 
-    updateStatus(`✓ הוזנו נתוני יעד: פסיכומטרי ${psychScore}, ממוצע בגרות ${targetBagrut.toFixed(1)}!`, true);
+    // 5. Update Status Banner
+    const bagrutFormatted = targetBagrut > 0 ? targetBagrut.toFixed(1) : '-';
+    updateStatus(`✓ הוזנו בהצלחה: ממוצע בגרות ${bagrutFormatted} וציון פסיכומטרי ${psychScore}!`, true);
 
     if (banner) {
       const closeBtn = document.createElement('button');
