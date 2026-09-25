@@ -255,7 +255,11 @@
     }
 
     // Try to trigger Technion's "חישוב ממוצע" button if it exists
-    const calcBtn = document.querySelector('#calc_bagrut, #btnCalc, input[value*="חשב ממוצע"], button[type="submit"]');
+    let calcBtn = document.querySelector('#calc_bagrut, #btnCalc, button[type="submit"]');
+    if (!calcBtn) {
+      const allButtons = Array.from(document.querySelectorAll('button, input[type="button"], input[type="submit"]'));
+      calcBtn = allButtons.find((b) => (b.value || b.textContent || '').includes('חשב'));
+    }
     if (calcBtn && typeof calcBtn.click === 'function') {
       try {
         calcBtn.click();
