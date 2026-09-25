@@ -36,7 +36,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'bgu',
 		name: 'אוניברסיטת בן-גוריון בנגב',
 		shortName: 'בן-גוריון',
-		calculatorUrl: 'https://bgu4u.bgu.ac.il/apex/f?p=105:1',
+		calculatorUrl: 'https://www.bgu.ac.il/welcome/ba/calculator/',
 		portalName: 'מחשבון סיכויי קבלה — בן-גוריון',
 		description: 'חישוב סכם הנדסי, סכם כמותי וסכם כללי מול ספי קבלה רשמיים'
 	},
