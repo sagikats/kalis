@@ -70,9 +70,16 @@
     },
     {
       "matches": [
-        "*://*.huji.ac.il/*",
         "*://*.bgu.ac.il/*",
-        "*://apps4cloud.bgu.ac.il/*",
+        "*://apps4cloud.bgu.ac.il/*"
+      ],
+      "js": ["content-bgu.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.huji.ac.il/*",
         "*://*.biu.ac.il/*",
         "*://*.haifa.ac.il/*",
         "*://*.ariel.ac.il/*",
