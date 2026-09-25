@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
 	Zap,
 	ShieldCheck,
@@ -36,6 +36,8 @@ import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAna
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
 import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
+import { getUniversityCalculator } from '@/utils/universityCalculators';
+import UniversityVerificationModal from './UniversityVerificationModal';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
@@ -78,6 +80,18 @@ export default function RecommendedTracksView({
 	const [expandedExplanationMap, setExpandedExplanationMap] = useState<Record<string, boolean>>({});
 	const [expandedTargetsMap, setExpandedTargetsMap] = useState<Record<string, boolean>>({});
 	const [showRoadmapDetails, setShowRoadmapDetails] = useState<boolean>(false);
+	const [verifyingTrack, setVerifyingTrack] = useState<RecommendedTrack | null>(null);
+	const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
+
+	const handleOpenVerifyModal = (track: RecommendedTrack) => {
+		setVerifyingTrack(track);
+		setIsVerifyModalOpen(true);
+	};
+
+	const institutionCalcInfo = useMemo(
+		() => getUniversityCalculator(analysis.target.institutionId || analysis.target.institutionName),
+		[analysis.target.institutionId, analysis.target.institutionName]
+	);
 
 	const handleEditTrack = (track: RecommendedTrack) => {
 		setEditingTrack(track);
@@ -1018,6 +1032,18 @@ export default function RecommendedTracksView({
 										</>
 									)}
 								</button>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.stopPropagation();
+										handleOpenVerifyModal(track);
+									}}
+									className="w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border cursor-pointer bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] hover:text-[#000000] border-[#DDD7CC] shadow-2xs hover:shadow-xs group"
+									title={`אימות חישוב סכם מול מחשבון ${institutionCalcInfo.shortName}`}
+								>
+									<ExternalLink className="h-3.5 w-3.5 text-[#66635C] group-hover:text-[#111111] transition-colors" />
+									<span>אימות מול {institutionCalcInfo.shortName}</span>
+								</button>
 							</div>
 						</div>
 					);
@@ -1076,6 +1102,15 @@ export default function RecommendedTracksView({
 									<span>שמור מסלול</span>
 								</>
 							)}
+						</button>
+						<button
+							type="button"
+							onClick={() => handleOpenVerifyModal(selectedTrack)}
+							className="px-3.5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 border shadow-2xs cursor-pointer bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] border-[#DDD7CC]"
+							title={`אימות חישוב סכם מול מחשבון ${institutionCalcInfo.shortName}`}
+						>
+							<ExternalLink className="h-3.5 w-3.5 text-[#66635C]" />
+							<span>אימות מול {institutionCalcInfo.shortName}</span>
 						</button>
 						<button
 							type="button"
@@ -1975,6 +2010,22 @@ export default function RecommendedTracksView({
 					)}
 				</div>
 			)}
+
+			{/* University Verification Modal */}
+			<UniversityVerificationModal
+				isOpen={isVerifyModalOpen}
+				onClose={() => {
+					setIsVerifyModalOpen(false);
+					setVerifyingTrack(null);
+				}}
+				institutionId={analysis.target.institutionId || ''}
+				institutionName={analysis.target.institutionName || ''}
+				programName={analysis.target.program?.fieldOfStudy || ''}
+				track={verifyingTrack}
+				userProfile={userProfile}
+				threshold={analysis.threshold}
+				isTechnion={isTechnion}
+			/>
 		</div>
 	);
 }
