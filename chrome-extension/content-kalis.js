@@ -32,12 +32,17 @@
     if (event.source !== window) return;
 
     if (event.data?.type === 'KALIS_PING_EXTENSION') {
-      window.postMessage({ type: 'KALIS_PONG_EXTENSION', version: '1.0.0' }, '*');
+      const isAlive = Boolean(chrome?.runtime?.id);
+      window.postMessage({ type: 'KALIS_PONG_EXTENSION', version: '1.0.0', isAlive }, '*');
       return;
     }
 
     if (event.data?.type === 'KALIS_TRIGGER_AUTOFILL') {
       try {
+        if (!chrome?.runtime?.id) {
+          throw new Error('Extension context invalidated');
+        }
+
         const response = await chrome.runtime.sendMessage({
           type: 'KALIS_START_VERIFICATION',
           data: event.data.payload
@@ -49,11 +54,20 @@
           tabId: response?.tabId
         }, '*');
       } catch (err) {
-        console.error('[Kalis Extension] Bridge error sending autofill request:', err);
+        const isInvalidated = (err?.message || '').includes('Extension context invalidated') || !chrome?.runtime?.id;
+        if (isInvalidated) {
+          console.warn('[Kalis Extension] Extension was reloaded in browser. Please refresh the page (F5).');
+        } else {
+          console.error('[Kalis Extension] Bridge error sending autofill request:', err);
+        }
+
         window.postMessage({
           type: 'KALIS_AUTOFILL_STARTED',
           success: false,
-          error: err.message
+          needsReload: isInvalidated,
+          error: isInvalidated
+            ? 'התוסף עודכן בדפדפן. אנא רענן את העמוד (F5) כדי להפעיל אותו מחדש.'
+            : (err?.message || 'שגיאה בהפעלת התוסף')
         }, '*');
       }
     }

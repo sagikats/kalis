@@ -140,54 +140,6 @@
     ).toLowerCase();
   };
 
-  // Direct Vuex store sync in page context
-  const injectVueStoreUpdate = () => {
-    try {
-      const qVal = (psychQuant && Number(psychQuant) >= 200) ? Number(psychQuant) : psychScore;
-      const vVal = (psychVerbal && Number(psychVerbal) >= 200) ? Number(psychVerbal) : psychScore;
-      const script = document.createElement('script');
-      script.textContent = `
-        (function() {
-          try {
-            const root = document.querySelector('#app') || document.querySelector('.main-container') || document.body;
-            let store = null;
-            if (root && root.__vue__ && root.__vue__.$store) {
-              store = root.__vue__.$store;
-            } else if (window.__store__) {
-              store = window.__store__;
-            } else {
-              const all = document.querySelectorAll('*');
-              for (let i = 0; i < Math.min(all.length, 100); i++) {
-                if (all[i].__vue__ && all[i].__vue__.$store) {
-                  store = all[i].__vue__.$store;
-                  break;
-                }
-              }
-            }
-            if (store) {
-              console.log('[Kalis HUJI Page Context] Found Vuex store, committing state...');
-              if (${targetBagrut} > 0) {
-                store.commit('setGradeByKey', { key: 'bagrut', value: '${targetBagrut.toFixed(1)}' });
-              }
-              if (${psychScore} > 0) {
-                store.commit('setGradePetByKey', { key: 'multi', value: '${psychScore}' });
-                store.commit('setGradePetByKey', { key: 'quantity', value: '${qVal}' });
-                store.commit('setGradePetByKey', { key: 'verbal', value: '${vVal}' });
-              }
-              console.log('[Kalis HUJI Page Context] State committed successfully:', store.state?.grades);
-            }
-          } catch(e) {
-            console.warn('[Kalis HUJI Page Context] Injection error:', e);
-          }
-        })();
-      `;
-      (document.head || document.documentElement).appendChild(script);
-      script.remove();
-    } catch (e) {
-      console.warn('[Kalis HUJI] Failed to inject Vuex store update:', e);
-    }
-  };
-
   // Helper to open the admission calculator modal if not already open
   const openAdmissionCalculator = () => {
     if (document.querySelector('#admission-check')) return true;
@@ -202,24 +154,6 @@
     if (openBtn && typeof openBtn.click === 'function') {
       openBtn.click();
     }
-
-    try {
-      const s = document.createElement('script');
-      s.textContent = `
-        (function() {
-          try {
-            const root = document.querySelector('#app') || document.body;
-            const store = root.__vue__?.$store || window.__store__;
-            if (store) {
-              store.commit('setCheckAdmission', true);
-              store.commit('setAdmissionAll', true);
-            }
-          } catch(e) {}
-        })();
-      `;
-      (document.head || document.documentElement).appendChild(s);
-      s.remove();
-    } catch(e) {}
 
     return Boolean(document.querySelector('#admission-check'));
   };
@@ -389,8 +323,6 @@
       hasFilled = true;
       console.log('[Kalis HUJI] Auto-filled successfully: bagrut + psychometric (', filledCount, 'fields, psych:', psychFilledCount, ')');
 
-      // Inject direct Vuex store update for guaranteed reactivity
-      injectVueStoreUpdate();
 
       showBanner(
         '✓ הוזנו נתונים בהצלחה!',

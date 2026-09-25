@@ -15,6 +15,7 @@ import {
 	Zap,
 	Laptop,
 	Loader2,
+	RotateCcw,
 	Sparkles as SparklesIcon
 } from 'lucide-react';
 import UniversityLogo from '../common/UniversityLogo';
@@ -55,6 +56,7 @@ export default function UniversityVerificationModal({
 	const [isAutofilling, setIsAutofilling] = useState(false);
 	const [autofillSuccess, setAutofillSuccess] = useState(false);
 	const [showExtensionHelp, setShowExtensionHelp] = useState(false);
+	const [extensionNeedsReload, setExtensionNeedsReload] = useState(false);
 
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
@@ -74,12 +76,18 @@ export default function UniversityVerificationModal({
 		const handleMessage = (e: MessageEvent) => {
 			if (e.data?.type === 'KALIS_EXTENSION_READY' || e.data?.type === 'KALIS_PONG_EXTENSION') {
 				setIsExtensionInstalled(true);
+				if (e.data?.isAlive === false) {
+					setExtensionNeedsReload(true);
+				}
 			}
 			if (e.data?.type === 'KALIS_AUTOFILL_STARTED') {
 				setIsAutofilling(false);
 				if (e.data.success) {
 					setAutofillSuccess(true);
+					setExtensionNeedsReload(false);
 					setTimeout(() => setAutofillSuccess(false), 5000);
+				} else if (e.data.needsReload) {
+					setExtensionNeedsReload(true);
 				}
 			}
 		};
@@ -343,6 +351,24 @@ export default function UniversityVerificationModal({
 
 						{isExtensionInstalled ? (
 							<div className="bg-white p-3.5 border border-[#C6DFCE] rounded-xl space-y-3 shadow-2xs">
+								{extensionNeedsReload && (
+									<div className="p-3 bg-[#FFF7ED] border border-[#FDBA74] rounded-xl text-xs space-y-1.5 text-[#9A3412] animate-fadeIn">
+										<div className="flex items-center justify-between gap-2 flex-wrap">
+											<div className="flex items-center gap-1.5 font-bold">
+												<RotateCcw className="h-3.5 w-3.5 text-[#EA580C] shrink-0" />
+												<span>התוסף עודכן בדפדפן! יש לרענן את העמוד כדי להפעיל אותו מחדש.</span>
+											</div>
+											<button
+												type="button"
+												onClick={() => window.location.reload()}
+												className="px-2.5 py-1 bg-[#EA580C] hover:bg-[#C2410C] text-white rounded-lg text-xs font-bold transition shrink-0 cursor-pointer shadow-2xs"
+											>
+												רענן עמוד (F5)
+											</button>
+										</div>
+									</div>
+								)}
+
 								<button
 									type="button"
 									onClick={handleTriggerExtensionAutofill}
