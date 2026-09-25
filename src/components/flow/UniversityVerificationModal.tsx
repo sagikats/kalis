@@ -15,8 +15,6 @@ import {
 	Zap,
 	Laptop,
 	Loader2,
-	Bookmark,
-	MousePointerClick,
 	Sparkles as SparklesIcon
 } from 'lucide-react';
 import UniversityLogo from '../common/UniversityLogo';
@@ -26,7 +24,6 @@ import {
 	VerificationSubjectItem,
 	VerificationDataSummary
 } from '@/utils/universityCalculators';
-import { generateUniversityBookmarklet } from '@/utils/bookmarkletGenerator';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 
 interface UniversityVerificationModalProps {
@@ -54,8 +51,6 @@ export default function UniversityVerificationModal({
 }: UniversityVerificationModalProps) {
 	const [copiedAll, setCopiedAll] = useState(false);
 	const [copiedField, setCopiedField] = useState<string | null>(null);
-	const [copiedBookmarklet, setCopiedBookmarklet] = useState(false);
-	const [showBookmarkletHelp, setShowBookmarkletHelp] = useState(false);
 	const [isExtensionInstalled, setIsExtensionInstalled] = useState(false);
 	const [isAutofilling, setIsAutofilling] = useState(false);
 	const [autofillSuccess, setAutofillSuccess] = useState(false);
@@ -231,28 +226,6 @@ export default function UniversityVerificationModal({
 		setTimeout(() => setIsAutofilling(false), 3500);
 	};
 
-	const bookmarkletCode = React.useMemo(() => {
-		if (!track) return '';
-		return generateUniversityBookmarklet({
-			institutionId: institutionId || calcInfo.id,
-			institutionName: calcInfo.shortName,
-			calculatorUrl: calcInfo.calculatorUrl,
-			psychometricScore: targetPsych,
-			targetSekem: track.targetSekem,
-			targetBagrutAverage: track.targetBagrutAverage || track.currentBagrutAverage,
-			subjects: verificationSubjects
-		});
-	}, [institutionId, calcInfo, targetPsych, track, verificationSubjects]);
-
-	const handleCopyBookmarklet = async () => {
-		try {
-			await navigator.clipboard.writeText(bookmarkletCode);
-			setCopiedBookmarklet(true);
-			setTimeout(() => setCopiedBookmarklet(false), 2500);
-		} catch (err) {
-			console.error('Failed to copy bookmarklet', err);
-		}
-	};
 
 	const formattedSekem = track?.targetSekem !== undefined
 		? track.targetSekem.toFixed(isTechnion ? 2 : 1)
@@ -336,149 +309,100 @@ export default function UniversityVerificationModal({
 						)}
 					</div>
 
-					{/* Option 1: Zero-Install Smart Bookmarklet (Immediate 0-Second Setup) */}
-					<div className="p-4 sm:p-5 bg-gradient-to-r from-[#FAF8F5] to-[#F5F2EB] border-2 border-[#3C3C3C] rounded-2xl space-y-3.5 shadow-xs">
+					{/* Chrome Extension AutoFill Card */}
+					<div className="p-4 sm:p-5 bg-gradient-to-r from-[#FAF8F5] to-[#F5F2EB] border-2 border-[#3C3C3C] rounded-2xl space-y-4 shadow-xs">
 						<div className="flex items-center justify-between gap-2 flex-wrap">
-							<div className="flex items-center gap-2">
-								<div className="w-7 h-7 rounded-lg bg-[#3C3C3C] text-white flex items-center justify-center text-xs shrink-0 font-bold shadow-2xs">
+							<div className="flex items-center gap-2.5">
+								<div className="w-8 h-8 rounded-xl bg-[#3C3C3C] text-white flex items-center justify-center text-sm shrink-0 font-bold shadow-2xs">
 									⚡
 								</div>
 								<div>
-									<h3 className="text-xs sm:text-sm font-black text-[#222222]">
-										מילוי אוטומטי מיידי (ללא שום התקנה!)
+									<h3 className="text-xs sm:text-sm font-black text-[#222222] flex items-center gap-2">
+										<span>מילוי אוטומטי במחשבון האוניברסיטה</span>
+										<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EBF4EE] text-[#15803d] border border-[#C6DFCE]">
+											Chrome Extension
+										</span>
 									</h3>
 									<p className="text-[11px] text-[#66635C] mt-0.5">
-										סימנייה חכמה שעובדת בכל דפדפן (Chrome, Edge, Safari) ב-0 שניות
+										תוסף כרום חכם שמזין את כל הציונים, המקצועות והסכם ישירות למחשבון הרשמי
 									</p>
 								</div>
 							</div>
-							<span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EBF4EE] text-[#15803d] border border-[#C6DFCE]">
-								זמין ומיידי לכולם ✓
-							</span>
+							{isExtensionInstalled ? (
+								<div className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#EBF4EE] text-[#15803d] border border-[#C6DFCE]">
+									<span className="w-2 h-2 rounded-full bg-[#15803d] animate-pulse" />
+									<span>התוסף מחובר ופעיל ✓</span>
+								</div>
+							) : (
+								<div className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#FAF8F5] text-[#8A847C] border border-[#E5DFD4]">
+									<span className="w-2 h-2 rounded-full bg-[#C4BFB6]" />
+									<span>התוסף אינו מחובר</span>
+								</div>
+							)}
 						</div>
 
-						<div className="bg-white p-3.5 border border-[#E5DFD4] rounded-xl space-y-3">
-							<div className="flex flex-col sm:flex-row items-center gap-2.5">
-								<a
-									href={bookmarkletCode}
-									draggable={true}
-									onClick={(e) => {
-										e.preventDefault();
-										handleCopyBookmarklet();
-									}}
-									className="w-full sm:flex-1 py-3 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs sm:text-sm font-black transition flex items-center justify-center gap-2 shadow-md cursor-grab active:cursor-grabbing select-none group border border-[#111]"
-									title="גרור כפתור זה ישירות לסרגל הסימניות למעלה בדפדפן"
-								>
-									<Bookmark className="h-4 w-4 text-[#FBBF24] group-hover:scale-110 transition-transform" />
-									<span>🎓 מתקבלים AutoFill (גרור לסרגל הסימניות)</span>
-								</a>
-
+						{isExtensionInstalled ? (
+							<div className="bg-white p-3.5 border border-[#C6DFCE] rounded-xl space-y-3 shadow-2xs">
 								<button
 									type="button"
-									onClick={handleCopyBookmarklet}
-									className={`w-full sm:w-auto py-2.5 px-3.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 border cursor-pointer ${
-										copiedBookmarklet
-											? 'bg-[#EBF4EE] border-[#C6DFCE] text-[#205739]'
-											: 'bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] border-[#DDD7CC]'
-									}`}
-									title="העתק את קוד הסימנייה ללוח"
+									onClick={handleTriggerExtensionAutofill}
+									disabled={isAutofilling}
+									className="w-full py-3 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs sm:text-sm font-black transition flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-70 group border border-[#111]"
 								>
-									{copiedBookmarklet ? (
+									{isAutofilling ? (
 										<>
-											<Check className="h-3.5 w-3.5 text-[#205739]" />
-											<span>הקוד הועתק! ✓</span>
+											<Loader2 className="h-4 w-4 animate-spin text-white" />
+											<span>מזין ציונים למחשבון {calcInfo.shortName}...</span>
+										</>
+									) : autofillSuccess ? (
+										<>
+											<Check className="h-4 w-4 text-[#4ADE80]" />
+											<span>הציונים הוזנו בהצלחה במחשבון! ✓</span>
 										</>
 									) : (
 										<>
-											<Copy className="h-3.5 w-3.5 text-[#66635C]" />
-											<span>העתק קוד סימנייה</span>
+											<Zap className="h-4 w-4 text-[#FBBF24] group-hover:scale-110 transition-transform" />
+											<span>הזן ציונים למחשבון ב-1 קליק ⚡</span>
 										</>
 									)}
 								</button>
+								<p className="text-[11px] text-[#66635C] text-center">
+									בלחיצה ייפתח המחשבון של {calcInfo.shortName} והתוסף ימלא את כל הציונים והסכם באופן אוטומטי
+								</p>
 							</div>
-
-							<div className="text-[11px] text-[#55524B] leading-relaxed flex items-start gap-2 bg-[#FAF8F5] p-2.5 rounded-lg border border-[#EAE5DA]">
-								<MousePointerClick className="h-4 w-4 text-[#3C3C3C] shrink-0 mt-0.5" />
-								<div>
-									<strong>איך זה עובד ב-2 צעדים פשוטים:</strong>
-									<ol className="list-decimal list-inside mt-1 space-y-0.5 text-[#66635C]">
-										<li><strong>גרור את הכפתור השחור למעלה</strong> אל שורת הסימניות של הדפדפן (אם הסרגל מוסתר, הקש במקלדת <kbd className="bg-white border px-1 py-0.5 rounded text-[10px] font-mono">Ctrl+Shift+B</kbd> או <kbd className="bg-white border px-1 py-0.5 rounded text-[10px] font-mono">Cmd+Shift+B</kbd>).</li>
-										<li>פתח את מחשבון {calcInfo.shortName} ולחץ על הסימנייה בסרגל — <strong>כל הציונים יוזנו מיד מעצמם!</strong></li>
-									</ol>
+						) : (
+							<div className="bg-white p-3.5 border border-[#E5DFD4] rounded-xl space-y-3">
+								<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+									<p className="text-xs text-[#55524B] leading-relaxed">
+										כדי להזין את כל הציונים בלחיצה אחת, יש לוודא שתוסף הכרום מותקן ופעיל בדפדפן.
+									</p>
+									<button
+										type="button"
+										onClick={() => setShowExtensionHelp((prev) => !prev)}
+										className="py-2 px-3 rounded-xl bg-[#FAF8F5] border border-[#DDD7CC] text-xs font-bold text-[#3C3C3C] hover:bg-[#F2EFE9] transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5"
+									>
+										<Laptop className="h-3.5 w-3.5 text-[#3C3C3C]" />
+										<span>{showExtensionHelp ? 'סגור הוראות' : 'הוראות התקנה מהירה (30 שניות)'}</span>
+									</button>
 								</div>
-							</div>
-						</div>
-					</div>
 
-					{/* Option 2: Installed Chrome Extension (If active or optional install) */}
-					{isExtensionInstalled ? (
-						<div className="p-4 bg-white border border-[#C6DFCE] rounded-2xl space-y-3 shadow-2xs">
-							<div className="flex items-center justify-between gap-2">
-								<div className="flex items-center gap-2">
-									<div className="w-6 h-6 rounded-lg bg-[#205739] text-white flex items-center justify-center text-xs">
-										✓
+								{showExtensionHelp && (
+									<div className="p-3.5 bg-[#FAF8F5] border border-[#E5DFD4] rounded-xl text-xs space-y-2 text-[#44423D] animate-fadeIn mt-2">
+										<div className="font-bold text-[#222222] flex items-center gap-1.5">
+											<Laptop className="h-3.5 w-3.5 text-[#3C3C3C]" />
+											<span>התקנת התוסף בדפדפן כרום:</span>
+										</div>
+										<ol className="list-decimal list-inside space-y-1.5 text-[11px] text-[#66635C] pr-1 leading-relaxed">
+											<li>פתח לשונית חדשה בכרום והקלד: <code className="bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono text-[10px]">chrome://extensions</code></li>
+											<li>בפינה העליונה הפעל את המתג <strong>״מצב מפתח״ (Developer mode)</strong>.</li>
+											<li>לחץ על <strong>״טעינת תוסף לא ארוז״ (Load unpacked)</strong> ובחר את תיקיית <code className="bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono text-[10px]">chrome-extension</code> שבפרויקט.</li>
+											<li>לאחר מכן רענן דף זה — כפתור המילוי האוטומטי יידלק מיידית!</li>
+										</ol>
 									</div>
-									<span className="text-xs sm:text-sm font-bold text-[#222222]">
-										תוסף כרום מחובר ופעיל בדפדפן
-									</span>
-								</div>
-								<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EBF4EE] text-[#15803d]">
-									מחובר בלייב
-								</span>
-							</div>
-
-							<button
-								type="button"
-								onClick={handleTriggerExtensionAutofill}
-								disabled={isAutofilling}
-								className="w-full py-2.5 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs cursor-pointer disabled:opacity-70"
-							>
-								{isAutofilling ? (
-									<>
-										<Loader2 className="h-4 w-4 animate-spin text-white" />
-										<span>מזין ציונים למחשבון...</span>
-									</>
-								) : autofillSuccess ? (
-									<>
-										<Check className="h-4 w-4 text-[#4ADE80]" />
-										<span>הציונים הוזנו בהצלחה במחשבון! ✓</span>
-									</>
-								) : (
-									<>
-										<Zap className="h-4 w-4 text-[#FBBF24]" />
-										<span>הזן ישירות דרך תוסף הכרום ⚡</span>
-									</>
 								)}
-							</button>
-						</div>
-					) : (
-						<div className="p-3 bg-[#FAF8F5] border border-[#E5DFD4] rounded-xl flex items-center justify-between gap-2 text-xs">
-							<span className="text-[11px] text-[#66635C]">
-								רוצה התקנה קבועה של תוסף כרום במקום סימנייה?
-							</span>
-							<button
-								type="button"
-								onClick={() => setShowExtensionHelp((prev) => !prev)}
-								className="px-2.5 py-1 rounded-lg bg-white border border-[#DDD7CC] text-[11px] font-bold text-[#3C3C3C] hover:bg-[#F2EFE9] transition shrink-0 cursor-pointer"
-							>
-								{showExtensionHelp ? 'סגור' : 'הוראות התקנה (למפתחים)'}
-							</button>
-						</div>
-					)}
-
-					{showExtensionHelp && !isExtensionInstalled && (
-						<div className="p-3.5 bg-white border border-[#E5DFD4] rounded-xl text-xs space-y-2 text-[#44423D] animate-fadeIn">
-							<div className="font-bold text-[#222222] flex items-center gap-1.5">
-								<Laptop className="h-3.5 w-3.5 text-[#3C3C3C]" />
-								<span>הוראות התקנה ידנית של התוסף בדפדפן כרום:</span>
 							</div>
-							<ol className="list-decimal list-inside space-y-1 text-[11px] text-[#66635C] pr-1">
-								<li>פתח בדפדפן כרום את הכתובת: <code className="bg-[#FAF8F5] px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono">chrome://extensions</code></li>
-								<li>הפעל את המתג <strong>״מצב מפתח״ (Developer mode)</strong>.</li>
-								<li>לחץ על <strong>״טעינת תוסף לא ארוז״ (Load unpacked)</strong> ובחר את תיקיית <code className="bg-[#FAF8F5] px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono">chrome-extension</code> שבפרויקט.</li>
-							</ol>
-						</div>
-					)}
+						)}
+					</div>
 
 					{/* Direct Calculator External Link CTA */}
 					<div className="p-4 bg-[#FAF8F5] border border-[#DDD7CC] rounded-2xl space-y-3">
