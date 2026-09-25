@@ -218,6 +218,7 @@ export default function UniversityVerificationModal({
 			payload: {
 				institutionId: institutionId || calcInfo.id,
 				institutionName: calcInfo.shortName,
+				programName: programName || '',
 				calculatorUrl: calcInfo.calculatorUrl,
 				psychometricScore: targetPsych,
 				targetSekem: track.targetSekem,

@@ -26,6 +26,7 @@
   const psychVerbal = pendingVerification.psychVerbal;
   const psychEnglish = pendingVerification.psychEnglish;
   const subjects = pendingVerification.subjects || [];
+  const programName = pendingVerification.programName || '';
 
   // 2. Banner Notification (Top window)
   const showBanner = (title, subtitle, isSuccess = false) => {
@@ -79,7 +80,7 @@
     }
   };
 
-  showBanner('מתקבלים // האוניברסיטה העברית', 'מזין נתוני בגרות ופסיכומטרי אוטומטית...', false);
+  showBanner('מתקבלים // האוניברסיטה העברית', programName ? `מחפש תואר: ${programName} ומזין נתוני קבלה...` : 'מזין נתוני בגרות ופסיכומטרי אוטומטית...', false);
 
   // 3. React/Vue/Native input setter
   const setInputValue = (inp, val) => {
@@ -105,9 +106,25 @@
     }
   };
 
+  // Helper to detect if an input is the degree search bar (NOT a grade field!)
+  const isDegreeSearchInput = (inp) => {
+    if (!inp) return false;
+    const ph = (inp.placeholder || '').toLowerCase();
+    const cls = (inp.className || '').toLowerCase();
+    const type = (inp.getAttribute('type') || '').toLowerCase();
+    return (
+      cls.includes('search-bar') ||
+      ph === 'חוג' ||
+      ph === 'program' ||
+      ph.includes('חוג') ||
+      type === 'search' ||
+      inp.id === 'search' ||
+      Boolean(inp.closest('#admission-nav, #admission-nav-container, .search-results-courses-wrapper'))
+    );
+  };
+
   const getContext = (inp) => {
-    const parent = inp.closest('.form-group, .field, .floating-label, tr, div, label') || inp.parentElement;
-    const grandparent = parent ? parent.parentElement : null;
+    const parent = inp.closest('.form-group, .field, .floating-label, tr, label') || inp.parentElement;
     const labelFor = inp.id ? document.querySelector(`label[for="${inp.id}"]`) : null;
     const prevSibling = inp.previousElementSibling ? inp.previousElementSibling.textContent : '';
     const nextSibling = inp.nextElementSibling ? inp.nextElementSibling.textContent : '';
@@ -119,8 +136,7 @@
       (labelFor ? labelFor.textContent : '') + ' ' +
       prevSibling + ' ' +
       nextSibling + ' ' +
-      (parent ? parent.textContent : '') + ' ' +
-      (grandparent ? grandparent.textContent : '')
+      (parent ? parent.textContent : '')
     ).toLowerCase();
   };
 
@@ -172,17 +188,84 @@
     }
   };
 
+  // Helper to open the admission calculator modal if not already open
+  const openAdmissionCalculator = () => {
+    if (document.querySelector('#admission-check')) return true;
+
+    console.log('[Kalis HUJI] Opening admission calculator modal...');
+    const openBtn = document.querySelector('#admission-all-btn') || 
+      Array.from(document.querySelectorAll('a, button, div, span')).find(el => {
+        const t = (el.textContent || '').trim();
+        return t.includes('בדיקת סיכויי הקבלה לכל החוגים') || t.includes('מחשבון קבלה לכל החוגים');
+      });
+
+    if (openBtn && typeof openBtn.click === 'function') {
+      openBtn.click();
+    }
+
+    try {
+      const s = document.createElement('script');
+      s.textContent = `
+        (function() {
+          try {
+            const root = document.querySelector('#app') || document.body;
+            const store = root.__vue__?.$store || window.__store__;
+            if (store) {
+              store.commit('setCheckAdmission', true);
+              store.commit('setAdmissionAll', true);
+            }
+          } catch(e) {}
+        })();
+      `;
+      (document.head || document.documentElement).appendChild(s);
+      s.remove();
+    } catch(e) {}
+
+    return Boolean(document.querySelector('#admission-check'));
+  };
+
   // 4. Polling fill engine (up to 5 seconds)
   let attempts = 0;
   const maxAttempts = 25;
   let hasFilled = false;
+  let hasTypedProgram = false;
 
   const tryFillHuji = () => {
     if (hasFilled) return;
     attempts++;
 
-    // Only select text and number inputs (exclude hidden, buttons, checkboxes, radio)
-    const allInputs = Array.from(document.querySelectorAll('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"])'));
+    // Step A: Check if degree search bar is present on screen
+    const searchBar = document.querySelector('input.search-bar') ||
+      Array.from(document.querySelectorAll('input')).find(isDegreeSearchInput);
+
+    if (searchBar && programName && !hasTypedProgram && searchBar.value !== programName) {
+      hasTypedProgram = true;
+      console.log('[Kalis HUJI] Typing programName into degree search bar:', programName);
+      setInputValue(searchBar, programName);
+      searchBar.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      searchBar.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+
+      // Wait for matching degree in search results and click it
+      setTimeout(() => {
+        const results = Array.from(document.querySelectorAll('.search-results a, .search-results div, .search-results .result, a[href*="programAdmission"]'));
+        const match = results.find(r => (r.textContent || '').includes(programName)) || results[0];
+        if (match && typeof match.click === 'function') {
+          console.log('[Kalis HUJI] Clicking matching degree result:', match.textContent);
+          match.click();
+        }
+      }, 500);
+    }
+
+    // Step B: Ensure the admission calculator modal is open
+    const isModalOpen = Boolean(document.querySelector('#admission-check'));
+    if (!isModalOpen) {
+      openAdmissionCalculator();
+    }
+
+    // Step C: Look for grade inputs (strictly EXCLUDE degree search bar!)
+    const allInputs = Array.from(document.querySelectorAll('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"])'))
+      .filter(inp => !isDegreeSearchInput(inp));
+
     if (allInputs.length === 0) {
       if (attempts < maxAttempts) setTimeout(tryFillHuji, 200);
       return;
@@ -195,7 +278,6 @@
     let multiInp = null;
     let quantInp = null;
     let verbalInp = null;
-    let generalPsychInp = null;
     let filledCount = 0;
     let psychFilledCount = 0;
 
@@ -267,34 +349,18 @@
           return;
         }
       }
-
-      // 5. Fallback single psychometric input (if portal has only 1 field on another page)
-      if (!generalPsychInp && !multiInp && psychScore > 0) {
-        if (
-          txt.includes('פסיכומטרי') ||
-          txt.includes('psychometric') ||
-          txt.includes('ציון פסיכומטרי')
-        ) {
-          generalPsychInp = inp;
-          if (setInputValue(inp, psychScore)) {
-            filledCount++;
-            psychFilledCount++;
-          }
-          return;
-        }
-      }
     });
 
-    // 6. Positional fallback for the 3 psychometric inputs if individual labels were missed
+    // 5. Positional fallback for the 3 psychometric inputs if individual labels were missed
     if (psychScore > 0 && psychFilledCount === 0) {
       const psychContainers = Array.from(document.querySelectorAll('div, section, form, [class*="container"]')).filter(el => {
         const t = (el.textContent || '').toLowerCase();
-        return t.includes('שלושת הציונים') || (t.includes('פסיכומטרי') && t.includes('דגש')) || t.includes('רב תחומי');
+        return (t.includes('שלושת הציונים') || (t.includes('פסיכומטרי') && t.includes('דגש')) || t.includes('רב תחומי')) && !el.closest('#admission-nav');
       });
 
       for (const container of psychContainers) {
         const containerInputs = Array.from(container.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"])'))
-          .filter(inp => inp !== bagrutInp);
+          .filter(inp => inp !== bagrutInp && !isDegreeSearchInput(inp));
         if (containerInputs.length === 3) {
           console.log('[Kalis HUJI] Found 3 psychometric inputs via positional container:', containerInputs);
           containerInputs.forEach((inp) => {
@@ -349,7 +415,8 @@
               t.includes('המשך')
             ) &&
             !b.closest('#kalis-floating-companion') &&
-            !b.closest('#kalis-autofill-banner')
+            !b.closest('#kalis-autofill-banner') &&
+            !b.closest('#admission-nav-container')
           );
         });
 
@@ -389,7 +456,7 @@
       t.includes('בדיקת סיכויי קבלה') ||
       t.includes('לכל החוגים') ||
       t.includes('מחשבון קבלה') ||
-      e.target?.closest?.('#hamburger, .calc, .help')
+      e.target?.closest?.('#hamburger, .calc, .help, #admission-all-btn')
     ) {
       hasFilled = false;
       attempts = 0;
@@ -445,6 +512,16 @@
         <button id="kalis-close-widget" style="background: none; border: none; font-size: 15px; cursor: pointer; color: #888; padding: 0 4px;">✕</button>
       </div>
 
+      ${programName ? `
+        <div style="background: white; border: 1px solid #E5DFD4; border-radius: 8px; padding: 6px 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 210px;">
+            <span style="font-size: 10px; color: #666; font-weight: bold;">תואר מבוקש: </span>
+            <strong style="font-size: 12px; color: #111;">${programName}</strong>
+          </div>
+          <button class="kalis-copy-btn" data-val="${programName}" style="background: #FAF8F5; border: 1px solid #DDD7CC; border-radius: 4px; padding: 2px 6px; font-size: 10px; cursor: pointer; color: #3C3C3C;">העתק</button>
+        </div>
+      ` : ''}
+
       <div style="display: flex; gap: 6px; margin-bottom: 8px;">
         <div style="flex: 1; background: white; border: 1px solid #E5DFD4; border-radius: 8px; padding: 5px; text-align: center;">
           <div style="font-size: 9.5px; color: #666; font-weight: bold;">סכם צפוי</div>
@@ -462,10 +539,15 @@
         </div>
       </div>
 
-      <div style="margin-bottom: 8px;">
-        <button id="kalis-refill-btn" style="width: 100%; background: #3C3C3C; color: white; border: none; border-radius: 8px; padding: 6px; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-          ⚡ הזן ציונים למחשבון עכשיו
+      <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+        <button id="kalis-open-calc-btn" style="flex: 1; background: #3C3C3C; color: white; border: none; border-radius: 8px; padding: 6px; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+          📊 מחשבון קבלה (הזן ציונים)
         </button>
+        ${programName ? `
+          <button id="kalis-search-degree-btn" style="background: white; border: 1px solid #3C3C3C; color: #3C3C3C; border-radius: 8px; padding: 6px 10px; font-size: 11px; font-weight: bold; cursor: pointer; white-space: nowrap;">
+            🔍 חפש תואר
+          </button>
+        ` : ''}
       </div>
 
       <div style="flex: 1; overflow-y: auto; max-height: 140px; padding-right: 2px;">
@@ -477,10 +559,21 @@
 
     document.getElementById('kalis-close-widget')?.addEventListener('click', () => widget.remove());
 
-    document.getElementById('kalis-refill-btn')?.addEventListener('click', () => {
+    document.getElementById('kalis-open-calc-btn')?.addEventListener('click', () => {
       hasFilled = false;
       attempts = 0;
-      tryFillHuji();
+      openAdmissionCalculator();
+      setTimeout(tryFillHuji, 300);
+    });
+
+    document.getElementById('kalis-search-degree-btn')?.addEventListener('click', () => {
+      const sb = document.querySelector('input.search-bar') ||
+        Array.from(document.querySelectorAll('input')).find(isDegreeSearchInput);
+      if (sb && programName) {
+        setInputValue(sb, programName);
+        sb.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+        sb.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+      }
     });
 
     widget.querySelectorAll('.kalis-copy-btn').forEach((btn) => {
