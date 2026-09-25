@@ -103,13 +103,11 @@ export default function UniversityVerificationModal({
 		};
 	}, []);
 
-	if (!isOpen || !track) return null;
-
 	const calcInfo = getUniversityCalculator(institutionId || institutionName);
 
 	// Assemble complete list of subjects for verification
 	const baseSubjects = userProfile?.bagrutSubjects || [];
-	const improvements = track.recommendedSubjectImprovements || [];
+	const improvements = track?.recommendedSubjectImprovements || [];
 
 	const verificationSubjects: VerificationSubjectItem[] = [];
 	const matchedImpMap = new Set<string>();
@@ -169,16 +167,16 @@ export default function UniversityVerificationModal({
 		return a.name.localeCompare(b.name, 'he');
 	});
 
-	const targetPsych = track.targetPsychometric || userProfile?.psychometricGeneral || 0;
+	const targetPsych = track?.targetPsychometric || userProfile?.psychometricGeneral || 0;
 	const originalPsych = userProfile?.psychometricGeneral || 0;
-	const isPsychUpgraded = Boolean(track.targetPsychometric && track.targetPsychometric > originalPsych);
+	const isPsychUpgraded = Boolean(track?.targetPsychometric && track.targetPsychometric > originalPsych);
 
 	// Summary data for clipboard
 	const summaryData: VerificationDataSummary = {
 		institutionName: calcInfo.shortName,
 		programName,
-		trackTitle: track.title,
-		targetSekem: track.targetSekem,
+		trackTitle: track?.title || '',
+		targetSekem: track?.targetSekem || 0,
 		threshold,
 		isTechnion,
 		psychometricScore: targetPsych,
@@ -213,6 +211,7 @@ export default function UniversityVerificationModal({
 	};
 
 	const handleTriggerExtensionAutofill = () => {
+		if (!track) return;
 		setIsAutofilling(true);
 		window.postMessage({
 			type: 'KALIS_TRIGGER_AUTOFILL',
@@ -232,6 +231,7 @@ export default function UniversityVerificationModal({
 	};
 
 	const bookmarkletCode = React.useMemo(() => {
+		if (!track) return '';
 		return generateUniversityBookmarklet({
 			institutionId: institutionId || calcInfo.id,
 			institutionName: calcInfo.shortName,
@@ -253,11 +253,13 @@ export default function UniversityVerificationModal({
 		}
 	};
 
-	const formattedSekem = track.targetSekem !== undefined
+	const formattedSekem = track?.targetSekem !== undefined
 		? track.targetSekem.toFixed(isTechnion ? 2 : 1)
 		: null;
 
-	const isPassing = threshold && track.targetSekem ? track.targetSekem >= threshold : true;
+	const isPassing = threshold && track?.targetSekem ? track.targetSekem >= threshold : true;
+
+	if (!isOpen || !track) return null;
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-fadeIn">
