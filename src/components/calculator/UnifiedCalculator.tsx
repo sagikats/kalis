@@ -369,7 +369,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                               {/* Card 1: Psychometric Scores */}
                               <div className="bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs space-y-5">
-                                   <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">
+                                   <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-2.5">
                                         <div className="flex items-center gap-3">
                                              <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
                                                   <Brain className="h-5 w-5" />
@@ -680,30 +680,30 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                          </div>
 
                          {/* Right Column: Multi-Institution Comparison Results (6 cols) */}
-                         <div className="lg:col-span-6 space-y-6 lg:sticky lg:top-8" id="results-section">
+                         <div className="lg:col-span-6 space-y-3.5 lg:sticky lg:top-8" id="results-section">
 
-                              <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">
-                                   <h3 className="text-xl font-black text-[#222222] flex items-center gap-2">
-                                        <Award className="h-6 w-6 text-blue-700" />
+                              <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-2.5">
+                                   <h3 className="text-base sm:text-lg font-black text-[#222222] flex items-center gap-2">
+                                        <Award className="h-5 w-5 text-blue-700" />
                                         תוצאות סכם לפי מוסד לימודים
                                    </h3>
-                                   <span className="text-xs text-[#44423D] font-extrabold bg-[#FAF8F5] px-3 py-1 rounded-full border border-[#E5DFD4]">
+                                   <span className="text-[11px] text-[#44423D] font-extrabold bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-[#E5DFD4]">
                                         {institutionResults.length} מוסדות מוצגים
                                    </span>
                               </div>
 
                               {/* Dynamic Grid of Cards per Selected Institution */}
-                              <div className="space-y-4 max-h-[680px] overflow-y-auto pr-1">
+                              <div className="space-y-2.5 max-h-[calc(100vh-140px)] min-h-[500px] overflow-y-auto pr-1">
                                    {institutionResults.map((res) => (
                                         <div
                                              key={res.institutionId}
-                                             className="bg-white rounded-3xl p-5 border border-[#E5DFD4] hover:border-[#CCC5B6] shadow-xs transition space-y-4"
+                                             className="bg-white rounded-2xl p-3 sm:p-3.5 border border-[#E5DFD4] hover:border-[#CCC5B6] shadow-2xs transition space-y-2.5"
                                         >
-                                             <div className="flex items-start justify-between border-b border-[#EAE5DA] pb-3 gap-2">
+                                             <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-2 gap-2">
                                                   <div className="flex items-start gap-3 flex-1 min-w-0">
-                                                       <UniversityLogo institution={res.institutionId} size="md" shape="rounded" />
+                                                       <UniversityLogo institution={res.institutionId} size="sm" shape="rounded" />
                                                        <div className="flex-1 min-w-0">
-                                                            <h4 className="text-base font-bold text-[#222222]">{res.institutionName}</h4>
+                                                            <h4 className="text-sm sm:text-base font-bold text-[#222222] leading-tight">{res.institutionName}</h4>
                                                             {(res.notes || (res.droppedSubjects && res.droppedSubjects.length > 0)) && (
                                                                  <button
                                                                       type="button"
@@ -732,32 +732,32 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   </div>
                                              </div>
 
-                                             <div className={`grid grid-cols-2 ${res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3`}>
+                                             <div className={`grid grid-cols-2 ${res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-2`}>
                                                   {/* Bagrut Avg */}
-                                                  <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-                                                       <span className="text-[11px] text-[#66635C] block font-bold">ממוצע בגרות</span>
-                                                       <span className="text-xl font-black text-[#222222] mt-1 block">{res.bagrutAverage}</span>
+                                                  <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
+                                                       <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">ממוצע בגרות</span>
+                                                       <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.bagrutAverage}</span>
                                                   </div>
 
                                                   {/* General Sekem */}
-                                                  <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-                                                       <span className="text-[11px] text-[#66635C] block font-bold">סכם כללי</span>
-                                                       <span className="text-xl font-black text-[#222222] mt-1 block">{res.generalSekem}</span>
+                                                  <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
+                                                       <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">סכם כללי</span>
+                                                       <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.generalSekem}</span>
                                                   </div>
 
                                                   {/* Engineering Sekem */}
                                                   {res.engineeringSekem !== undefined && (
-                                                       <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-                                                            <span className="text-[11px] text-[#66635C] block font-bold">סכם כמותי/הנדסה</span>
-                                                            <span className="text-xl font-black text-[#222222] mt-1 block">{res.engineeringSekem}</span>
+                                                       <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
+                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">סכם כמותי/הנדסה</span>
+                                                            <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.engineeringSekem}</span>
                                                        </div>
                                                   )}
 
                                                   {/* Management Sekem */}
                                                   {res.managementSekem !== undefined && (
-                                                       <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-                                                            <span className="text-[11px] text-[#66635C] block font-bold">התאמה לניהול</span>
-                                                            <span className="text-xl font-black text-[#222222] mt-1 block">{res.managementSekem}</span>
+                                                       <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
+                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">התאמה לניהול</span>
+                                                            <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.managementSekem}</span>
                                                        </div>
                                                   )}
                                              </div>
@@ -766,14 +766,14 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                              <div className="flex gap-2">
                                                   <button
                                                        onClick={() => setPanelInstitutionId(res.institutionId)}
-                                                       className="flex-1 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
+                                                       className="flex-1 py-1.5 sm:py-2 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
                                                   >
                                                        <GraduationCap className="h-3.5 w-3.5" />
                                                        <span>מה הסיכויים שלי?</span>
                                                   </button>
                                                   <Link
                                                        href="/flow"
-                                                       className="px-3 py-2.5 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] border border-[#DDD7CB] font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
+                                                       className="px-2.5 py-1.5 sm:py-2 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] border border-[#DDD7CB] font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
                                                        title="בדיקת קבלה ופערים"
                                                   >
                                                        <ChevronLeft className="h-4 w-4" />
