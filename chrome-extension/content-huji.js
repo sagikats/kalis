@@ -81,7 +81,7 @@
 
   showBanner('מתקבלים // האוניברסיטה העברית', 'מזין נתוני בגרות ופסיכומטרי אוטומטית...', false);
 
-  // 3. React/Native input setter
+  // 3. React/Vue/Native input setter
   const setInputValue = (inp, val) => {
     if (!inp || val === undefined || val === null) return false;
     try {
@@ -106,16 +106,70 @@
   };
 
   const getContext = (inp) => {
-    const parent = inp.closest('.form-group, .field, tr, div, label') || inp.parentElement;
+    const parent = inp.closest('.form-group, .field, .floating-label, tr, div, label') || inp.parentElement;
+    const grandparent = parent ? parent.parentElement : null;
     const labelFor = inp.id ? document.querySelector(`label[for="${inp.id}"]`) : null;
+    const prevSibling = inp.previousElementSibling ? inp.previousElementSibling.textContent : '';
+    const nextSibling = inp.nextElementSibling ? inp.nextElementSibling.textContent : '';
     return (
       (inp.name || '') + ' ' +
       (inp.id || '') + ' ' +
       (inp.placeholder || '') + ' ' +
       (inp.getAttribute('aria-label') || '') + ' ' +
       (labelFor ? labelFor.textContent : '') + ' ' +
-      (parent ? parent.textContent : '')
+      prevSibling + ' ' +
+      nextSibling + ' ' +
+      (parent ? parent.textContent : '') + ' ' +
+      (grandparent ? grandparent.textContent : '')
     ).toLowerCase();
+  };
+
+  // Direct Vuex store sync in page context
+  const injectVueStoreUpdate = () => {
+    try {
+      const qVal = (psychQuant && Number(psychQuant) >= 200) ? Number(psychQuant) : psychScore;
+      const vVal = (psychVerbal && Number(psychVerbal) >= 200) ? Number(psychVerbal) : psychScore;
+      const script = document.createElement('script');
+      script.textContent = `
+        (function() {
+          try {
+            const root = document.querySelector('#app') || document.querySelector('.main-container') || document.body;
+            let store = null;
+            if (root && root.__vue__ && root.__vue__.$store) {
+              store = root.__vue__.$store;
+            } else if (window.__store__) {
+              store = window.__store__;
+            } else {
+              const all = document.querySelectorAll('*');
+              for (let i = 0; i < Math.min(all.length, 100); i++) {
+                if (all[i].__vue__ && all[i].__vue__.$store) {
+                  store = all[i].__vue__.$store;
+                  break;
+                }
+              }
+            }
+            if (store) {
+              console.log('[Kalis HUJI Page Context] Found Vuex store, committing state...');
+              if (${targetBagrut} > 0) {
+                store.commit('setGradeByKey', { key: 'bagrut', value: '${targetBagrut.toFixed(1)}' });
+              }
+              if (${psychScore} > 0) {
+                store.commit('setGradePetByKey', { key: 'multi', value: '${psychScore}' });
+                store.commit('setGradePetByKey', { key: 'quantity', value: '${qVal}' });
+                store.commit('setGradePetByKey', { key: 'verbal', value: '${vVal}' });
+              }
+              console.log('[Kalis HUJI Page Context] State committed successfully:', store.state?.grades);
+            }
+          } catch(e) {
+            console.warn('[Kalis HUJI Page Context] Injection error:', e);
+          }
+        })();
+      `;
+      (document.head || document.documentElement).appendChild(script);
+      script.remove();
+    } catch (e) {
+      console.warn('[Kalis HUJI] Failed to inject Vuex store update:', e);
+    }
   };
 
   // 4. Polling fill engine (up to 5 seconds)
@@ -127,28 +181,35 @@
     if (hasFilled) return;
     attempts++;
 
-    const allInputs = Array.from(document.querySelectorAll('input:not([type="hidden"]):not([type="submit"]):not([type="button"])'));
+    // Only select text and number inputs (exclude hidden, buttons, checkboxes, radio)
+    const allInputs = Array.from(document.querySelectorAll('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"])'));
     if (allInputs.length === 0) {
       if (attempts < maxAttempts) setTimeout(tryFillHuji, 200);
       return;
     }
 
+    const qVal = (psychQuant && Number(psychQuant) >= 200) ? Number(psychQuant) : psychScore;
+    const vVal = (psychVerbal && Number(psychVerbal) >= 200) ? Number(psychVerbal) : psychScore;
+
     let bagrutInp = null;
-    let psychInp = null;
+    let multiInp = null;
+    let quantInp = null;
+    let verbalInp = null;
+    let generalPsychInp = null;
     let filledCount = 0;
+    let psychFilledCount = 0;
 
     allInputs.forEach((inp) => {
       const txt = getContext(inp);
       if (txt.includes('search') || txt.includes('חיפוש') || txt.includes('סיסמה') || txt.includes('email') || txt.includes('טלפון')) return;
 
-      // Bagrut average
+      // 1. Bagrut average
       if (!bagrutInp && targetBagrut > 0) {
         if (
-          txt.includes('ממוצע') ||
-          txt.includes('בגרות') ||
+          (txt.includes('ממוצע') && txt.includes('בגרות')) ||
+          txt.includes('מותאם') ||
           txt.includes('bagrut') ||
-          txt.includes('average') ||
-          (inp.getAttribute('max') && Number(inp.getAttribute('max')) <= 140 && Number(inp.getAttribute('max')) >= 100)
+          (txt.includes('ממוצע') && !txt.includes('תואר') && !txt.includes('מכינה'))
         ) {
           bagrutInp = inp;
           if (setInputValue(inp, targetBagrut.toFixed(1))) filledCount++;
@@ -156,55 +217,139 @@
         }
       }
 
-      // Psychometric score
-      if (!psychInp && psychScore > 0) {
+      // 2. HUJI Multi-domain / General emphasis (בדגש רב תחומי)
+      if (!multiInp && psychScore > 0) {
         if (
-          txt.includes('פסיכומטרי') ||
-          txt.includes('psychometric') ||
-          txt.includes('סכם') ||
-          txt.includes('ציון פסיכומטרי') ||
-          (inp.getAttribute('max') && Number(inp.getAttribute('max')) >= 700)
+          txt.includes('רב תחומי') ||
+          txt.includes('רב-תחומי') ||
+          txt.includes('general emphasis') ||
+          txt.includes('בדגש רב') ||
+          txt.includes('multi')
         ) {
-          psychInp = inp;
-          if (setInputValue(inp, psychScore)) filledCount++;
+          multiInp = inp;
+          if (setInputValue(inp, psychScore)) {
+            filledCount++;
+            psychFilledCount++;
+          }
           return;
         }
       }
 
-      // Quantitative / Verbal / English
-      if (txt.includes('כמותי') && psychQuant) {
-        if (setInputValue(inp, psychQuant)) filledCount++;
-      } else if (txt.includes('מילולי') && psychVerbal) {
-        if (setInputValue(inp, psychVerbal)) filledCount++;
-      } else if (txt.includes('אנגלית') && psychEnglish) {
-        if (setInputValue(inp, psychEnglish)) filledCount++;
+      // 3. HUJI Quantitative emphasis (דגש כמותי)
+      if (!quantInp && psychScore > 0) {
+        if (
+          txt.includes('דגש כמותי') ||
+          txt.includes('כמותי') ||
+          txt.includes('quantitative') ||
+          txt.includes('quantity')
+        ) {
+          quantInp = inp;
+          if (setInputValue(inp, qVal)) {
+            filledCount++;
+            psychFilledCount++;
+          }
+          return;
+        }
+      }
+
+      // 4. HUJI Verbal emphasis (בדגש מילולי)
+      if (!verbalInp && psychScore > 0) {
+        if (
+          txt.includes('בדגש מילולי') ||
+          txt.includes('מילולי') ||
+          txt.includes('verbal')
+        ) {
+          verbalInp = inp;
+          if (setInputValue(inp, vVal)) {
+            filledCount++;
+            psychFilledCount++;
+          }
+          return;
+        }
+      }
+
+      // 5. Fallback single psychometric input (if portal has only 1 field on another page)
+      if (!generalPsychInp && !multiInp && psychScore > 0) {
+        if (
+          txt.includes('פסיכומטרי') ||
+          txt.includes('psychometric') ||
+          txt.includes('ציון פסיכומטרי')
+        ) {
+          generalPsychInp = inp;
+          if (setInputValue(inp, psychScore)) {
+            filledCount++;
+            psychFilledCount++;
+          }
+          return;
+        }
       }
     });
 
-    if (filledCount > 0 || (bagrutInp && psychInp)) {
+    // 6. Positional fallback for the 3 psychometric inputs if individual labels were missed
+    if (psychScore > 0 && psychFilledCount === 0) {
+      const psychContainers = Array.from(document.querySelectorAll('div, section, form, [class*="container"]')).filter(el => {
+        const t = (el.textContent || '').toLowerCase();
+        return t.includes('שלושת הציונים') || (t.includes('פסיכומטרי') && t.includes('דגש')) || t.includes('רב תחומי');
+      });
+
+      for (const container of psychContainers) {
+        const containerInputs = Array.from(container.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"])'))
+          .filter(inp => inp !== bagrutInp);
+        if (containerInputs.length === 3) {
+          console.log('[Kalis HUJI] Found 3 psychometric inputs via positional container:', containerInputs);
+          containerInputs.forEach((inp) => {
+            const cTxt = getContext(inp);
+            if (cTxt.includes('כמותי')) {
+              setInputValue(inp, qVal);
+            } else if (cTxt.includes('מילולי')) {
+              setInputValue(inp, vVal);
+            } else if (cTxt.includes('רב')) {
+              setInputValue(inp, psychScore);
+            } else {
+              setInputValue(inp, psychScore);
+            }
+            filledCount++;
+            psychFilledCount++;
+          });
+          break;
+        }
+      }
+    }
+
+    const bagrutDone = targetBagrut > 0 ? (bagrutInp !== null) : true;
+    const psychDone = psychScore > 0 ? (psychFilledCount > 0) : true;
+
+    if ((bagrutDone && psychDone) || (attempts >= maxAttempts && filledCount > 0)) {
       hasFilled = true;
-      console.log('[Kalis HUJI] Auto-filled successfully:', filledCount, 'fields.');
+      console.log('[Kalis HUJI] Auto-filled successfully: bagrut + psychometric (', filledCount, 'fields, psych:', psychFilledCount, ')');
+
+      // Inject direct Vuex store update for guaranteed reactivity
+      injectVueStoreUpdate();
 
       showBanner(
         '✓ הוזנו נתונים בהצלחה!',
-        `ממוצע בגרות ${targetBagrut.toFixed(1)} • פסיכומטרי ${psychScore} • בודק קבלה...`,
+        `ממוצע בגרות ${targetBagrut > 0 ? targetBagrut.toFixed(1) : ''} • פסיכומטרי ${psychScore} (3 דגשים) • בודק קבלה...`,
         true
       );
 
       // Trigger Calculate / Check Button
       setTimeout(() => {
-        const buttons = Array.from(document.querySelectorAll('button, input[type="submit"], a.btn, a.button, .btn, .button'));
+        const buttons = Array.from(document.querySelectorAll('button, a, input[type="submit"], [role="button"], div, span'));
         const calcBtn = buttons.find((b) => {
           const t = (b.textContent || b.value || '').trim();
           return (
-            t.includes('בדוק') ||
-            t.includes('חישוב') ||
-            t.includes('חשב') ||
-            t.includes('סיכויי קבלה') ||
-            t.includes('המשך') ||
-            t.includes('התאמה') ||
-            t.includes('Submit') ||
-            t.includes('Calculate')
+            (
+              t.includes('לבדיקת סיכויי קבלה') ||
+              t.includes('ודרישות נוספות') ||
+              t.includes('סיכויי קבלה לכל') ||
+              t.includes('לבדיקת סיכויים') ||
+              t.includes('בדוק') ||
+              t.includes('חשב') ||
+              t.includes('חישוב') ||
+              t.includes('המשך')
+            ) &&
+            !b.closest('#kalis-floating-companion') &&
+            !b.closest('#kalis-autofill-banner')
           );
         });
 
@@ -212,22 +357,46 @@
           console.log('[Kalis HUJI] Clicking check button:', calcBtn);
           calcBtn.click();
         }
-      }, 400);
+      }, 500);
 
       return;
     }
 
     if (attempts < maxAttempts) {
-      setTimeout(tryFillHuji, 250);
+      setTimeout(tryFillHuji, 200);
     }
   };
 
-  // Launch
+  // Launch & Dynamic Modal Watcher
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', tryFillHuji);
   } else {
     tryFillHuji();
   }
+
+  // Watch for dynamic modal insertion / Vue render
+  const modalObserver = new MutationObserver(() => {
+    if (!hasFilled) {
+      tryFillHuji();
+    }
+  });
+  modalObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Listen for clicks on buttons that open the admission modal
+  document.addEventListener('click', (e) => {
+    const t = (e.target?.textContent || '').trim();
+    if (
+      t.includes('בדיקת סיכויי קבלה') ||
+      t.includes('לכל החוגים') ||
+      t.includes('מחשבון קבלה') ||
+      e.target?.closest?.('#hamburger, .calc, .help')
+    ) {
+      hasFilled = false;
+      attempts = 0;
+      setTimeout(tryFillHuji, 300);
+      setTimeout(tryFillHuji, 800);
+    }
+  }, true);
 
   // 5. Floating Companion Card
   if (isTopWindow && !document.getElementById('kalis-floating-companion')) {
@@ -246,7 +415,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Hebrew", sans-serif;
       direction: rtl;
       text-align: right;
-      width: 310px;
+      width: 320px;
       max-width: 90vw;
       max-height: 80vh;
       display: flex;
@@ -284,14 +453,22 @@
         <div style="flex: 1; background: white; border: 1px solid #E5DFD4; border-radius: 8px; padding: 5px; text-align: center;">
           <div style="font-size: 9.5px; color: #666; font-weight: bold;">פסיכומטרי</div>
           <div style="font-size: 14px; font-weight: 900; color: #222;">${psychScore || 'ללא'}</div>
+          ${psychScore ? `<button class="kalis-copy-btn" data-val="${psychScore}" style="margin-top: 2px; background: #FAF8F5; border: 1px solid #DDD7CC; border-radius: 4px; padding: 1px 4px; font-size: 9px; cursor: pointer; color: #3C3C3C;">העתק</button>` : ''}
         </div>
         <div style="flex: 1; background: white; border: 1px solid #E5DFD4; border-radius: 8px; padding: 5px; text-align: center;">
           <div style="font-size: 9.5px; color: #666; font-weight: bold;">ממוצע בגרות</div>
           <div style="font-size: 14px; font-weight: 900; color: #222;">${targetBagrut ? targetBagrut.toFixed(1) : '-'}</div>
+          ${targetBagrut ? `<button class="kalis-copy-btn" data-val="${targetBagrut.toFixed(1)}" style="margin-top: 2px; background: #FAF8F5; border: 1px solid #DDD7CC; border-radius: 4px; padding: 1px 4px; font-size: 9px; cursor: pointer; color: #3C3C3C;">העתק</button>` : ''}
         </div>
       </div>
 
-      <div style="flex: 1; overflow-y: auto; max-height: 150px; padding-right: 2px;">
+      <div style="margin-bottom: 8px;">
+        <button id="kalis-refill-btn" style="width: 100%; background: #3C3C3C; color: white; border: none; border-radius: 8px; padding: 6px; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+          ⚡ הזן ציונים למחשבון עכשיו
+        </button>
+      </div>
+
+      <div style="flex: 1; overflow-y: auto; max-height: 140px; padding-right: 2px;">
         ${subjectsHtml}
       </div>
     `;
@@ -299,6 +476,12 @@
     document.body.appendChild(widget);
 
     document.getElementById('kalis-close-widget')?.addEventListener('click', () => widget.remove());
+
+    document.getElementById('kalis-refill-btn')?.addEventListener('click', () => {
+      hasFilled = false;
+      attempts = 0;
+      tryFillHuji();
+    });
 
     widget.querySelectorAll('.kalis-copy-btn').forEach((btn) => {
       btn.addEventListener('click', async (e) => {
