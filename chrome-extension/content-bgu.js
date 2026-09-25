@@ -123,63 +123,46 @@
       const allInputs = Array.from(document.querySelectorAll('input.simple-input'));
       if (allInputs.length === 0) return;
 
-      let filledPsych = false;
+      console.log('[Kalis BGU] Found psychometry inputs:', allInputs.length);
 
-      allInputs.forEach((inp) => {
-        const id = (inp.id || '').toLowerCase();
-        const parentTxt = (inp.parentElement?.textContent || '').toLowerCase();
-
-        // General Psychometric (200 - 800)
-        if (id.includes('general') || parentTxt.includes('כללי') || parentTxt.includes('פסיכומטרי')) {
-          if (psychScore > 0) {
-            setReactInput(inp, psychScore);
-            filledPsych = true;
-          }
-        }
-        // Quantitative
-        else if (id.includes('quant') || parentTxt.includes('כמותי')) {
-          const val = psychQuant || (psychScore > 0 ? Math.round(psychScore / 5.5) : null);
-          if (val) {
-            setReactInput(inp, val);
-            filledPsych = true;
-          }
-        }
-        // Verbal
-        else if (id.includes('verbal') || parentTxt.includes('מילולי')) {
-          const val = psychVerbal || (psychScore > 0 ? Math.round(psychScore / 5.5) : null);
-          if (val) {
-            setReactInput(inp, val);
-            filledPsych = true;
-          }
-        }
-        // English
-        else if (id.includes('english') || parentTxt.includes('אנגלית')) {
-          const val = psychEnglish || (psychScore > 0 ? Math.round(psychScore / 5.5) : null);
-          if (val) {
-            setReactInput(inp, val);
-            filledPsych = true;
-          }
-        }
-      });
-
-      // Fallback: if only 1 input on page, it is the general psychometric
-      if (!filledPsych && allInputs[0] && psychScore > 0) {
+      // In BGU's Ea component, inputs are ordered:
+      // [0]: psychometryGeneral
+      // [1]: quantitativeReasoning
+      // [2]: verbalReasoning
+      // [3]: english
+      if (psychScore > 0 && allInputs[0]) {
         setReactInput(allInputs[0], psychScore);
-        filledPsych = true;
       }
 
-      if (filledPsych) {
-        psychStepCompleted = true;
-        console.log('[Kalis BGU] Psychometry step filled. Clicking Next to Total Sekem...');
-        setTimeout(() => {
-          const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
-                          Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
-                            const t = (el.textContent || '').trim();
-                            return t.includes('הבא') && !el.classList.contains('disabled-action');
-                          });
-          if (nextBtn) nextBtn.click();
-        }, 500);
+      if (allInputs[1]) {
+        const qVal = psychQuant || (psychScore > 0 ? Math.min(150, Math.max(50, Math.round(psychScore / 5.5))) : 125);
+        setReactInput(allInputs[1], qVal);
       }
+
+      if (allInputs[2]) {
+        const vVal = psychVerbal || (psychScore > 0 ? Math.min(150, Math.max(50, Math.round(psychScore / 5.5))) : 125);
+        setReactInput(allInputs[2], vVal);
+      }
+
+      if (allInputs[3]) {
+        const eVal = psychEnglish || (psychScore > 0 ? Math.min(150, Math.max(50, Math.round(psychScore / 5.5))) : 125);
+        setReactInput(allInputs[3], eVal);
+      }
+
+      psychStepCompleted = true;
+      console.log('[Kalis BGU] Psychometry inputs populated. Advancing to total results...');
+
+      setTimeout(() => {
+        const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
+                        Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
+                          const t = (el.textContent || '').trim();
+                          return t.includes('הבא') && !el.classList.contains('disabled-action');
+                        });
+        if (nextBtn) {
+          console.log('[Kalis BGU] Clicking next to Total Sekem:', nextBtn);
+          nextBtn.click();
+        }
+      }, 500);
     };
 
     // Monitor Hash Changes and Polling in BGU SPA
@@ -188,6 +171,14 @@
 
       if (hash.includes('bagrut') || !hash || hash === '#/') {
         if (!bagrutStepCompleted) fillBguBagrutStep();
+      } else if (hash.includes('mechina')) {
+        // Auto-advance / skip mechina
+        const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
+                        Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
+                          const t = (el.textContent || '').trim();
+                          return (t.includes('הבא') || t.includes('דלג') || t.includes('דילוג')) && !el.classList.contains('disabled-action');
+                        });
+        if (nextBtn) nextBtn.click();
       } else if (hash.includes('psychometry')) {
         if (!psychStepCompleted) fillBguPsychStep();
       }
