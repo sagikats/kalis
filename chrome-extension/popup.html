@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>מתקבלים — אימות סכם אוטומטי</title>
+  <style>
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Hebrew", sans-serif;
+      background-color: #FAF8F5;
+      color: #222222;
+      box-sizing: border-box;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #E5DFD4;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .logo {
+      width: 34px;
+      height: 34px;
+      background: #3C3C3C;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #222;
+    }
+    .subtitle {
+      font-size: 11px;
+      color: #666;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: #EBF4EE;
+      color: #15803d;
+      border: 1px solid #C6DFCE;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #E5DFD4;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px 14px;
+      background: #3C3C3C;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-sizing: border-box;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #2A2A2A;
+    }
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: #888;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🎓</div>
+    <div>
+      <div class="title">מתקבלים // AutoFill</div>
+      <div class="subtitle">סייען אימות סכם אוטומטי</div>
+    </div>
+  </div>
+
+  <div class="status-badge">
+    <span>●</span>
+    <span>התוסף מותקן ופעיל בדפדפן</span>
+  </div>
+
+  <div class="card" id="session-info">
+    <div style="font-weight: bold; margin-bottom: 4px;">איך זה עובד?</div>
+    <div style="color: #666; font-size: 11px;">
+      1. היכנס לאתר מתקבלים ובחר מסלול קבלה.<br>
+      2. לחץ על <strong>״אימות אוטומטי מול המוסד״</strong>.<br>
+      3. האתר של האוניברסיטה ייפתח והתוסף ימלא בו את הציונים שלך אוטומטית!
+    </div>
+  </div>
+
+  <a href="https://mitkablim.co.il/flow" target="_blank" class="btn" id="open-app-btn">
+    <span>מעבר למערכת מתקבלים</span>
+    <span>➔</span>
+  </a>
+
+  <div class="footer">
+    מתקבלים © 2026 • מנוע אופטימיזציה אקדמי
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

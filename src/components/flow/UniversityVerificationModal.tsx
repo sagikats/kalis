@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	X,
 	ExternalLink,
@@ -11,7 +11,11 @@ import {
 	GraduationCap,
 	ShieldCheck,
 	Info,
-	TrendingUp
+	TrendingUp,
+	Zap,
+	Laptop,
+	Loader2,
+	Download
 } from 'lucide-react';
 import UniversityLogo from '../common/UniversityLogo';
 import {
@@ -47,6 +51,51 @@ export default function UniversityVerificationModal({
 }: UniversityVerificationModalProps) {
 	const [copiedAll, setCopiedAll] = useState(false);
 	const [copiedField, setCopiedField] = useState<string | null>(null);
+	const [isExtensionInstalled, setIsExtensionInstalled] = useState(false);
+	const [isAutofilling, setIsAutofilling] = useState(false);
+	const [autofillSuccess, setAutofillSuccess] = useState(false);
+	const [showExtensionHelp, setShowExtensionHelp] = useState(false);
+
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+
+		// 1. Check DOM attribute set by extension content script
+		const checkInstalled = () => {
+			const installed =
+				document.documentElement.getAttribute('data-kalis-extension-installed') === 'true' ||
+				document.documentElement.dataset.kalisExtension === 'true';
+			if (installed) setIsExtensionInstalled(true);
+		};
+
+		checkInstalled();
+
+		// 2. Listen for messages from extension bridge
+		const handleMessage = (e: MessageEvent) => {
+			if (e.data?.type === 'KALIS_EXTENSION_READY' || e.data?.type === 'KALIS_PONG_EXTENSION') {
+				setIsExtensionInstalled(true);
+			}
+			if (e.data?.type === 'KALIS_AUTOFILL_STARTED') {
+				setIsAutofilling(false);
+				if (e.data.success) {
+					setAutofillSuccess(true);
+					setTimeout(() => setAutofillSuccess(false), 5000);
+				}
+			}
+		};
+
+		const handleCustomEvent = () => setIsExtensionInstalled(true);
+
+		window.addEventListener('message', handleMessage);
+		window.addEventListener('kalis:extension-ready', handleCustomEvent);
+
+		// Ping extension
+		window.postMessage({ type: 'KALIS_PING_EXTENSION' }, '*');
+
+		return () => {
+			window.removeEventListener('message', handleMessage);
+			window.removeEventListener('kalis:extension-ready', handleCustomEvent);
+		};
+	}, []);
 
 	if (!isOpen || !track) return null;
 
@@ -157,6 +206,25 @@ export default function UniversityVerificationModal({
 		}
 	};
 
+	const handleTriggerExtensionAutofill = () => {
+		setIsAutofilling(true);
+		window.postMessage({
+			type: 'KALIS_TRIGGER_AUTOFILL',
+			payload: {
+				institutionId: institutionId || calcInfo.id,
+				institutionName: calcInfo.shortName,
+				calculatorUrl: calcInfo.calculatorUrl,
+				psychometricScore: targetPsych,
+				targetSekem: track.targetSekem,
+				targetBagrutAverage: track.targetBagrutAverage || track.currentBagrutAverage,
+				subjects: verificationSubjects
+			}
+		}, '*');
+
+		// In case user doesn't have extension active, timeout back to false
+		setTimeout(() => setIsAutofilling(false), 3500);
+	};
+
 	const formattedSekem = track.targetSekem !== undefined
 		? track.targetSekem.toFixed(isTechnion ? 2 : 1)
 		: null;
@@ -237,6 +305,93 @@ export default function UniversityVerificationModal({
 						)}
 					</div>
 
+					{/* AutoFill Extension Section */}
+					{isExtensionInstalled ? (
+						<div className="p-4 bg-gradient-to-r from-[#FAF8F5] to-[#F5F2EB] border-2 border-[#3C3C3C] rounded-2xl space-y-3 shadow-xs">
+							<div className="flex items-center justify-between gap-2">
+								<div className="flex items-center gap-2">
+									<div className="w-6 h-6 rounded-lg bg-[#3C3C3C] text-white flex items-center justify-center text-xs">
+										⚡
+									</div>
+									<span className="text-xs sm:text-sm font-black text-[#222222]">
+										הזנה אוטומטית במחשבון {calcInfo.shortName}
+									</span>
+								</div>
+								<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EBF4EE] text-[#15803d] border border-[#C6DFCE]">
+									תוסף מחובר ופעיל ✓
+								</span>
+							</div>
+
+							<p className="text-[11px] text-[#66635C] leading-relaxed">
+								בלחיצה על הכפתור, התוסף יפתח את המחשבון הרשמי של {calcInfo.shortName} בלשונית חדשה וימלא בו את כל ציוני הבגרות והפסיכומטרי שלך באופן אוטומטי לחלוטין!
+							</p>
+
+							<button
+								type="button"
+								onClick={handleTriggerExtensionAutofill}
+								disabled={isAutofilling}
+								className="w-full py-3 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs sm:text-sm font-black transition flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-70"
+							>
+								{isAutofilling ? (
+									<>
+										<Loader2 className="h-4 w-4 animate-spin text-white" />
+										<span>מפעיל תוסף ומזין ציונים למחשבון...</span>
+									</>
+								) : autofillSuccess ? (
+									<>
+										<Check className="h-4 w-4 text-[#4ADE80]" />
+										<span>הציונים הועברו לתוסף ונפתחו במחשבון! ✓</span>
+									</>
+								) : (
+									<>
+										<Zap className="h-4 w-4 text-[#FBBF24]" />
+										<span>הזן ציונים ופתח במחשבון {calcInfo.shortName} ⚡</span>
+									</>
+								)}
+							</button>
+						</div>
+					) : (
+						<div className="p-4 bg-[#FAF8F5] border border-[#DDD7CC] rounded-2xl space-y-3">
+							<div className="flex items-start justify-between gap-3">
+								<div className="space-y-1">
+									<div className="flex items-center gap-2">
+										<Zap className="h-4 w-4 text-[#3C3C3C]" />
+										<h3 className="text-xs sm:text-sm font-bold text-[#222222]">
+											רוצה שהציונים יוזנו אוטומטית באתר המוסד?
+										</h3>
+									</div>
+									<p className="text-[11px] text-[#66635C] leading-relaxed">
+										פיתחנו תוסף כרום ייעודי של מתקבלים שממלא במקומך את כל הציונים והפסיכומטרי ישירות בתוך מחשבון האוניברסיטה!
+									</p>
+								</div>
+								<button
+									type="button"
+									onClick={() => setShowExtensionHelp((prev) => !prev)}
+									className="px-2.5 py-1 rounded-lg bg-white border border-[#DDD7CC] text-[11px] font-bold text-[#3C3C3C] hover:bg-[#F2EFE9] transition shrink-0 cursor-pointer"
+								>
+									{showExtensionHelp ? 'סגור הוראות' : 'התקן תוסף (20 שניות)'}
+								</button>
+							</div>
+
+							{showExtensionHelp && (
+								<div className="p-3 bg-white border border-[#E5DFD4] rounded-xl text-xs space-y-2 text-[#44423D] animate-fadeIn">
+									<div className="font-bold text-[#222222] flex items-center gap-1.5">
+										<Laptop className="h-3.5 w-3.5 text-[#3C3C3C]" />
+										<span>הוראות התקנה מהירה של התוסף בדפדפן כרום:</span>
+									</div>
+									<ol className="list-decimal list-inside space-y-1 text-[11px] text-[#66635C] pr-1">
+										<li>פתח בדפדפן כרום את הכתובת: <code className="bg-[#FAF8F5] px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono">chrome://extensions</code></li>
+										<li>הפעל את המתג <strong>״מצב מפתח״ (Developer mode)</strong> בפינה העליונה.</li>
+										<li>לחץ על <strong>״טעינת תוסף לא ארוז״ (Load unpacked)</strong> ובחר את תיקיית <code className="bg-[#FAF8F5] px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono">chrome-extension</code> שבפרויקט.</li>
+									</ol>
+									<p className="text-[10px] text-[#15803d] font-bold pt-1">
+										לאחר הטעינה, רענן עמוד זה ותוכל להזין כל מחשבון בלחיצת כפתור אחת!
+									</p>
+								</div>
+							)}
+						</div>
+					)}
+
 					{/* Direct Calculator External Link CTA */}
 					<div className="p-4 bg-[#FAF8F5] border border-[#DDD7CC] rounded-2xl space-y-3">
 						<div className="flex items-start justify-between gap-3">
@@ -245,7 +400,7 @@ export default function UniversityVerificationModal({
 									פתיחת מחשבון הסכם של {calcInfo.shortName}
 								</h3>
 								<p className="text-[11px] text-[#66635C] mt-0.5 leading-relaxed">
-									בלחיצה ייפתח האתר הרשמי של המוסד בלשונית חדשה. הזן בו את הציונים המרוכזים כאן למטה, ותקבל במחשבון האוניברסיטה בדיוק את אותו הסכם!
+									בלחיצה ייפתח האתר הרשמי של המוסד בלשונית חדשה. תוכל להעתיק את הציונים המרוכזים כאן למטה ולהזין אותם, או להשתמש בתוסף האוטומטי.
 								</p>
 							</div>
 						</div>

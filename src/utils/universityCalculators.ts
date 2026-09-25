@@ -20,7 +20,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'tau',
 		name: 'אוניברסיטת תל אביב',
 		shortName: 'אוניברסיטת תל אביב',
-		calculatorUrl: 'https://go.tau.ac.il/bachelor/calc',
+		calculatorUrl: 'https://go.tau.ac.il/he/calculator',
 		portalName: 'מחשבון סיכויי קבלה — תל אביב',
 		description: 'חישוב ציון התאמה וסכם הנדסי לפי ציוני בגרות ופסיכומטרי רב-תחומי'
 	},

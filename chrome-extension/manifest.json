@@ -1,0 +1,84 @@
+{
+  "manifest_version": 3,
+  "name": "מתקבלים — אימות סכם אוטומטי במחשבוני האוניברסיטאות",
+  "short_name": "מתקבלים AutoFill",
+  "version": "1.0.0",
+  "description": "ממלא אוטומטית ציוני בגרות ופסיכומטרי במחשבוני הסכם של 8 האוניברסיטאות בישראל ישירות מתוך אתר מתקבלים",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "מתקבלים — אימות סכם אוטומטי",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.mitkablim.co.il/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "*://*.technion.ac.il/*",
+    "*://*.tau.ac.il/*",
+    "*://*.huji.ac.il/*",
+    "*://*.bgu.ac.il/*",
+    "*://*.biu.ac.il/*",
+    "*://*.haifa.ac.il/*",
+    "*://*.ariel.ac.il/*",
+    "*://*.runi.ac.il/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.mitkablim.co.il/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": ["content-kalis.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://admissions.technion.ac.il/*",
+        "*://*.technion.ac.il/*"
+      ],
+      "js": ["content-technion.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://go.tau.ac.il/*",
+        "*://*.tau.ac.il/*"
+      ],
+      "js": ["content-tau.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.huji.ac.il/*",
+        "*://*.bgu.ac.il/*",
+        "*://*.biu.ac.il/*",
+        "*://*.haifa.ac.il/*",
+        "*://*.ariel.ac.il/*",
+        "*://*.runi.ac.il/*"
+      ],
+      "js": ["content-general.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}
