@@ -99,6 +99,70 @@ export default function AdmissionFlowPage() {
 	// Validation of matriculation (Bagrut) and psychometric inputs
 	const [showValidationErrors, setShowValidationErrors] = useState<boolean>(false);
 
+	// Sub-step for Step 1: 'bagrut' (matriculation) -> 'psychometric'
+	const [step1SubStep, setStep1SubStep] = useState<'bagrut' | 'psychometric'>('bagrut');
+
+	const bagrutValidation = useMemo(() => {
+		if (!subjects || subjects.length === 0) {
+			return {
+				isValid: false,
+				missingBagrutCount: 0,
+				totalValidUnits: 0,
+				errorMessage: 'לא הוזנו מקצועות בגרות במערכת.'
+			};
+		}
+		const missingSubjects = subjects.filter(
+			(s) => !s.grade || Number(s.grade) <= 0
+		);
+		const validSubjects = subjects.filter(
+			(s) => Boolean(s.grade && Number(s.grade) > 0)
+		);
+		const totalValidUnits = validSubjects.reduce((acc, s) => acc + (s.units || 0), 0);
+
+		if (missingSubjects.length > 0) {
+			const names = missingSubjects.map((s) => s.name);
+			return {
+				isValid: false,
+				missingBagrutCount: missingSubjects.length,
+				totalValidUnits,
+				errorMessage: `חסר ציון ב-${missingSubjects.length} מקצועות בגרות (${names.slice(0, 3).join(', ')}${names.length > 3 ? ' ועוד' : ''}). יש להזין ציון לכל מקצוע ברשימה.`
+			};
+		}
+
+		if (totalValidUnits < 20) {
+			return {
+				isValid: false,
+				missingBagrutCount: 0,
+				totalValidUnits,
+				errorMessage: `סך יחידות הבגרות שהוזנו (${totalValidUnits} יח״ל) אינו מגיע למינימום הנדרש לתעודת בגרות בישראל (20 יח״ל). יש להוסיף מקצוע הגברה או להרחיב יחידות לימוד.`
+			};
+		}
+
+		return {
+			isValid: true,
+			missingBagrutCount: 0,
+			totalValidUnits,
+			errorMessage: undefined
+		};
+	}, [subjects]);
+
+	const psychValidation = useMemo(() => {
+		const isPsychMissing = Boolean(
+			hasTakenPsychometric &&
+				(!psychGeneral || Number(psychGeneral) < 200 || Number(psychGeneral) > 800)
+		);
+		if (isPsychMissing) {
+			return {
+				isValid: false,
+				errorMessage: 'סומן שנבחנת בפסיכומטרי אך לא הוזן ציון תקין (200–800). אנא הזן ציון או סמן "עדיין לא עשיתי פסיכומטרי".'
+			};
+		}
+		return {
+			isValid: true,
+			errorMessage: undefined
+		};
+	}, [hasTakenPsychometric, psychGeneral]);
+
 	const gradeValidation: GradeValidationResult = useMemo(() => {
 		return validateUserGrades(subjects, hasTakenPsychometric, psychGeneral);
 	}, [subjects, hasTakenPsychometric, psychGeneral]);
@@ -106,19 +170,64 @@ export default function AdmissionFlowPage() {
 	const handleStepClick = (targetStep: 1 | 2 | 3 | 4) => {
 		if (targetStep > 1 && !gradeValidation.isValid) {
 			setShowValidationErrors(true);
+			if (!bagrutValidation.isValid) {
+				setStep1SubStep('bagrut');
+			} else {
+				setStep1SubStep('psychometric');
+			}
 			setActiveStep(1);
 			return;
 		}
+		if (targetStep === 1 && activeStep !== 1) {
+			setStep1SubStep('bagrut');
+		}
 		setActiveStep(targetStep);
+	};
+
+	const handleProceedToPsychometric = () => {
+		if (!bagrutValidation.isValid) {
+			setShowValidationErrors(true);
+			if (typeof window !== 'undefined') {
+				const alertEl = document.getElementById('step1-bagrut-validation-alert');
+				if (alertEl) {
+					alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+			}
+			return;
+		}
+		setShowValidationErrors(false);
+		setStep1SubStep('psychometric');
+		if (typeof window !== 'undefined') {
+			window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+		}
+	};
+
+	const handleBackToBagrut = () => {
+		setShowValidationErrors(false);
+		setStep1SubStep('bagrut');
+		if (typeof window !== 'undefined') {
+			window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+		}
 	};
 
 	const handleProceedFromStep1 = () => {
 		if (!gradeValidation.isValid) {
 			setShowValidationErrors(true);
-			if (typeof window !== 'undefined') {
-				const alertEl = document.getElementById('step1-validation-alert');
-				if (alertEl) {
-					alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			if (!bagrutValidation.isValid) {
+				setStep1SubStep('bagrut');
+				if (typeof window !== 'undefined') {
+					const alertEl = document.getElementById('step1-bagrut-validation-alert');
+					if (alertEl) {
+						alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}
+				}
+			} else if (!psychValidation.isValid) {
+				setStep1SubStep('psychometric');
+				if (typeof window !== 'undefined') {
+					const alertEl = document.getElementById('step1-psych-validation-alert');
+					if (alertEl) {
+						alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}
 				}
 			}
 			return;
@@ -139,6 +248,7 @@ export default function AdmissionFlowPage() {
 	// Complete reset function
 	const resetFlowToCleanState = useCallback(() => {
 		setActiveStep(1);
+		setStep1SubStep('bagrut');
 		setShowValidationErrors(false);
 		setSubjects(CLEAN_BLANK_SUBJECTS.map((s) => ({ ...s })));
 		setHasTakenPsychometric(true);
@@ -167,7 +277,7 @@ export default function AdmissionFlowPage() {
 			});
 			return () => cancelAnimationFrame(frame);
 		}
-	}, [activeStep, focusedProgramId]);
+	}, [activeStep, step1SubStep, focusedProgramId]);
 
 	// User lifecycle and data loading effect
 	useEffect(() => {
@@ -204,6 +314,7 @@ export default function AdmissionFlowPage() {
 						if (parsed.showEmphasisInputs !== undefined) setShowEmphasisInputs(parsed.showEmphasisInputs);
 						if (parsed.selectedTargets) setSelectedTargets(parsed.selectedTargets);
 						if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
+						if (parsed.step1SubStep) setStep1SubStep(parsed.step1SubStep);
 						if (parsed.activeStep) setActiveStep(parsed.activeStep);
 						loadedFromStorage = true;
 					}
@@ -269,6 +380,7 @@ export default function AdmissionFlowPage() {
 							if (parsed.showEmphasisInputs !== undefined) setShowEmphasisInputs(parsed.showEmphasisInputs);
 							if (parsed.selectedTargets) setSelectedTargets(parsed.selectedTargets);
 							if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
+							if (parsed.step1SubStep) setStep1SubStep(parsed.step1SubStep);
 							if (parsed.activeStep) setActiveStep(parsed.activeStep);
 						}
 					} catch (e) {
@@ -311,6 +423,7 @@ export default function AdmissionFlowPage() {
 			showEmphasisInputs,
 			selectedTargets,
 			questionnaireAnswers,
+			step1SubStep,
 			activeStep
 		};
 
@@ -635,8 +748,16 @@ export default function AdmissionFlowPage() {
 				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs">
 					<div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
 						<button
-							onClick={() => handleStepClick(1)}
-							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
+							onClick={() => {
+								if (activeStep === 1) {
+									if (step1SubStep === 'psychometric') {
+										handleBackToBagrut();
+									}
+								} else {
+									handleStepClick(1);
+								}
+							}}
+							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border cursor-pointer ${
 								activeStep === 1
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
 									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
@@ -653,7 +774,13 @@ export default function AdmissionFlowPage() {
 							</div>
 							<div className="overflow-hidden">
 								<span className="text-xs font-bold block truncate">הזנת ציונים</span>
-								<span className="text-[10px] text-inherit opacity-80 block truncate">בגרויות ופסיכומטרי</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate">
+									{activeStep === 1
+										? step1SubStep === 'bagrut'
+											? 'בגרויות (שלב 1 מתוך 2)'
+											: 'פסיכומטרי (שלב 2 מתוך 2)'
+										: 'בגרויות ופסיכומטרי'}
+								</span>
 							</div>
 						</button>
 
@@ -730,399 +857,488 @@ export default function AdmissionFlowPage() {
 					</div>
 				</div>
 
-				{/* STEP 1: הזנת ציונים */}
+				{/* STEP 1: הזנת ציונים (מפוצל ל-2 שלבים פנימיים: בגרויות ואז פסיכומטרי) */}
 				{activeStep === 1 && (
 					<div className="space-y-6">
-						<div className="border-b border-[#EAE5DA] pb-4">
-							<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציונים</h2>
-							<p className="text-sm text-[#66635C]">
-								הזן את ציוני הבגרות והפסיכומטרי שלך — המערכת מחשבת אוטומטית ממוצע אופטימלי וסכמים לכל האוניברסיטאות
-							</p>
-						</div>
-
-						<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-							{/* Psychometric Input (5 cols) */}
-							<div className="lg:col-span-5 space-y-5 bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs">
-								<div className="flex items-center gap-3 border-b border-[#EAE5DA] pb-3">
-									<div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
-										<Brain className="h-5 w-5" />
-									</div>
+						{/* SUB-STEP 1A: הזנת ציוני בגרות */}
+						{step1SubStep === 'bagrut' && (
+							<div className="space-y-6">
+								<div className="border-b border-[#EAE5DA] pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 									<div>
-										<h3 className="text-base font-bold text-[#222222]">ציוני בחינה פסיכומטרית</h3>
-										<p className="text-xs text-[#66635C]">ציון רב-תחומי וציוני פרקים (50–150)</p>
-									</div>
-								</div>
-
-								{/* Option: Haven't taken psychometric yet */}
-								<div
-									onClick={() => {
-										const nextVal = !hasTakenPsychometric;
-										setHasTakenPsychometric(nextVal);
-										if (!nextVal) {
-											setPsychGeneral(0);
-											setPsychQuant(0);
-											setPsychVerbal(0);
-											setPsychEnglish(0);
-										} else {
-											setPsychGeneral('');
-											setPsychQuant('');
-											setPsychVerbal('');
-											setPsychEnglish('');
-										}
-									}}
-									className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
-										!hasTakenPsychometric
-											? 'bg-[#F4F0E8] border-[#222222] text-[#222222]'
-											: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#44423D] hover:border-[#CCC5B6]'
-									}`}
-								>
-									<div className="flex items-center gap-3">
-										<input
-											type="checkbox"
-											checked={!hasTakenPsychometric}
-											onChange={() => {}}
-											className="w-4 h-4 rounded border-[#CCC5B6] text-[#222222] focus:ring-[#222222] cursor-pointer"
-										/>
-										<div>
-											<span className="text-xs font-bold block">עדיין לא עשיתי פסיכומטרי</span>
-											<span className="text-[11px] text-[#66635C] block mt-0.5">
-												טרם ניגשתי לבחינה / מעוניין לבדוק קבלה על סמך בגרות בלבד
+										<div className="flex items-center gap-2 mb-1.5">
+											<span className="px-3 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-xs font-bold shadow-2xs">
+												שלב 1 מתוך 2: ציוני בגרות
 											</span>
 										</div>
-									</div>
-									{!hasTakenPsychometric && (
-										<span className="px-2 py-0.5 rounded-lg bg-white text-[#222222] text-[10px] font-bold border border-[#DDD7CB]">
-											פעיל
-										</span>
-									)}
-								</div>
-
-								{!hasTakenPsychometric ? (
-									<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-2">
-										<div className="flex items-center gap-2 text-[#222222] text-xs font-bold">
-											<Sparkles className="h-4 w-4 text-blue-700 shrink-0" />
-											<span>נבדוק קבלה ישירה ונחשב עבורך ציוני יעד!</span>
-										</div>
-										<p className="text-[11px] text-[#55524B] leading-relaxed">
-											המערכת תבדוק אילו תארים מאפשרים קבלה ישירה על סמך ממוצע בגרות בלבד, ובשלב התכנון תחשב בדיוק איזה ציון פסיכומטרי יעד יידרש ממך בבחינה הראשונה לכל תואר מבוקש.
+										<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציוני תעודת בגרות</h2>
+										<p className="text-sm text-[#66635C]">
+											הזן את ציוני ומספרי היחידות בכל מקצועות הבגרות שלך (חובה והרחבות). בסיום נעבור להזנת הפסיכומטרי.
 										</p>
 									</div>
-								) : (
-									<div className="space-y-4">
-										<div className="space-y-1.5">
-											<div className="flex items-center justify-between">
-												<label className="block text-xs font-bold text-[#44423D]">
-													ציון רב-תחומי (200–800):
-												</label>
-												<span className="text-[10px] text-[#66635C]">
-													לפי ספח הציונים הרשמי
-												</span>
-											</div>
-											<input
-												type="number"
-												inputMode="numeric"
-												pattern="[0-9]*"
-												min={200}
-												max={800}
-												value={psychGeneral === 0 ? '' : psychGeneral}
-												onChange={(e) =>
-													setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
-												}
-												placeholder="200-800"
-												className="w-full bg-white border border-[#DDD7CB] rounded-xl px-4 py-2.5 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
-											/>
-										</div>
 
-										{/* Gross Mismatch Warning Banner */}
-										{!psychCoherence.isCoherent && psychCoherence.calculatedGeneral > 0 && (
-											<div className="p-3 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-900 space-y-2">
-												<div className="flex items-center gap-1.5 text-xs font-bold">
-													<AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
-													<span>פער חריג (מעל 30 נקודות) בין הציון הכולל לציוני הפרקים</span>
-												</div>
-												<p className="text-[11px] leading-relaxed text-amber-800">
-													הציון הרב-תחומי שהוזן ({psychGeneral}) סוטה משמעותית מהערכת שקלול הפרקים (סביב {psychCoherence.calculatedGeneral}). אנא ודא שהנתונים שהזנת תואמים במדויק את ספח הציונים הרשמי ממאל״ו.
+									{/* Status summary capsule */}
+									<div className="flex items-center gap-2.5 bg-white px-4 py-2.5 rounded-2xl border border-[#E5DFD4] shadow-2xs self-start sm:self-auto shrink-0">
+										<BookOpen className="h-4 w-4 text-blue-700" />
+										<span className="text-xs font-bold text-[#222222]">
+											{subjects.length} מקצועות
+										</span>
+										<span className="text-[#DDD7CB]">|</span>
+										<span className={`text-xs font-bold ${bagrutValidation.totalValidUnits >= 20 ? 'text-[#205739]' : 'text-amber-700'}`}>
+											{bagrutValidation.totalValidUnits} יח״ל {bagrutValidation.totalValidUnits >= 20 ? '✓' : '(מינימום 20)'}
+										</span>
+									</div>
+								</div>
+
+								<div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E5DFD4] shadow-xs space-y-6">
+									{/* Top Bar inside Card */}
+									<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-4">
+										<div className="flex items-center gap-2.5">
+											<div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
+												<BookOpen className="h-5 w-5 text-blue-700" />
+											</div>
+											<div>
+												<h3 className="text-base font-bold text-[#222222]">
+													מקצועות הלימוד וציוני הבגרות
+												</h3>
+												<p className="text-xs text-[#66635C]">
+													הזן ציון סופי (0–100) ובחר יחידות לימוד לכל מקצוע בתעודה
 												</p>
 											</div>
-										)}
-
-										<div className="grid grid-cols-3 gap-2.5">
-											<div className="space-y-1.5">
-												<label className="block text-[11px] font-bold text-[#44423D]">כמותי:</label>
-												<input
-													type="number"
-													inputMode="numeric"
-													pattern="[0-9]*"
-													min={50}
-													max={150}
-													value={psychQuant === 0 ? '' : psychQuant}
-													onChange={(e) =>
-														handleSubscoreChange('quant', cleanNumberInput(e.target.value, 0, 150) as number)
-													}
-													placeholder="50-150"
-													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
-												/>
-											</div>
-
-											<div className="space-y-1.5">
-												<label className="block text-[11px] font-bold text-[#44423D]">מילולי:</label>
-												<input
-													type="number"
-													inputMode="numeric"
-													pattern="[0-9]*"
-													min={50}
-													max={150}
-													value={psychVerbal === 0 ? '' : psychVerbal}
-													onChange={(e) =>
-														handleSubscoreChange('verbal', cleanNumberInput(e.target.value, 0, 150) as number)
-													}
-													placeholder="50-150"
-													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
-												/>
-											</div>
-
-											<div className="space-y-1.5">
-												<label className="block text-[11px] font-bold text-[#44423D]">אנגלית:</label>
-												<input
-													type="number"
-													inputMode="numeric"
-													pattern="[0-9]*"
-													min={50}
-													max={150}
-													value={psychEnglish === 0 ? '' : psychEnglish}
-													onChange={(e) =>
-														handleSubscoreChange('english', cleanNumberInput(e.target.value, 0, 150) as number)
-													}
-													placeholder="50-150"
-													className="w-full bg-white border border-[#DDD7CB] rounded-xl px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
-												/>
-											</div>
 										</div>
 
-										{/* English Classification */}
-										{psychResolution.englishClassification.level !== 'unknown' && (
-											<div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between text-xs">
-												<span className="text-[#66635C] font-medium">רמת אנגלית אקדמית:</span>
-												<span
-													className={`text-[11px] font-bold px-2.5 py-0.5 rounded-md border shadow-2xs ${psychResolution.englishClassification.color}`}
-												>
-													{psychResolution.englishClassification.label}
-												</span>
-											</div>
-										)}
-
-										{/* Optional NITE Emphasis Scores (200-800) */}
-										<div className="pt-1">
+										<div className="flex items-center gap-2">
 											<button
 												type="button"
-												onClick={() => setShowEmphasisInputs(!showEmphasisInputs)}
-												className="text-[11px] font-bold text-[#3C3C3C] hover:text-black flex items-center gap-1.5 transition underline decoration-dotted cursor-pointer"
+												onClick={() => {
+													setEditingSubjectIndex(null);
+													setIsSubjectModalOpen(true);
+												}}
+												className="px-4 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#EFEAE0] border border-[#DDD7CB] text-[#222222] text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs active:scale-[0.99]"
 											>
-												<span>
-													{showEmphasisInputs
-														? 'הסתר ציוני דגש רשמיים (200–800)'
-														: '+ מתמיין להנדסה / מדעים? הזן ציוני דגש רשמיים מספח מאל״ו'}
-												</span>
+												<Plus className="h-4 w-4" />
+												<span>הוסף מקצוע / הגברה</span>
 											</button>
-
-											{showEmphasisInputs && (
-												<div className="mt-2.5 p-3 rounded-xl bg-white border border-[#E5DFD4] space-y-2.5 shadow-2xs">
-													<div className="flex items-center justify-between">
-														<span className="text-[11px] font-bold text-[#222222]">
-															ציוני דגש רשמיים (מאל״ו)
-														</span>
-														<span className="text-[10px] text-[#77746D]">אופציונלי (200–800)</span>
-													</div>
-													<div className="grid grid-cols-2 gap-2">
-														<div className="space-y-1">
-															<label className="block text-[10px] font-medium text-[#55524B]">
-																דגש כמותי (הנדסה/מדמ״ח):
-															</label>
-															<input
-																type="number"
-																inputMode="numeric"
-																pattern="[0-9]*"
-																min={200}
-																max={800}
-																value={psychQuantEmphasis}
-																onChange={(e) =>
-																	setPsychQuantEmphasis(cleanNumberInput(e.target.value, 0, 800) as number)
-																}
-																placeholder={String(psychResolution.effectiveQuantEmphasis)}
-																className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222]"
-															/>
-														</div>
-														<div className="space-y-1">
-															<label className="block text-[10px] font-medium text-[#55524B]">
-																דגש מילולי (הומני/רפואה):
-															</label>
-															<input
-																type="number"
-																inputMode="numeric"
-																pattern="[0-9]*"
-																min={200}
-																max={800}
-																value={psychVerbalEmphasis}
-																onChange={(e) =>
-																	setPsychVerbalEmphasis(cleanNumberInput(e.target.value, 0, 800) as number)
-																}
-																placeholder={String(psychResolution.effectiveVerbalEmphasis)}
-																className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222]"
-															/>
-														</div>
-													</div>
-												</div>
-											)}
-										</div>
-
-										{/* Calculated Weights info */}
-										<div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[11px] text-[#66635C] space-y-1">
-											<div className="flex justify-between">
-												<span>
-													שקלול מאל״ו בדגש כמותי{' '}
-													{psychQuantEmphasis ? '(רשמי מהספח)' : '(הערכה לפי פרקים)'}:
-												</span>
-												<span className="font-bold text-[#222222]">
-													{psychQuantEmphasis || psychResolution.effectiveQuantEmphasis}
-												</span>
-											</div>
-											<div className="flex justify-between">
-												<span>
-													שקלול מאל״ו בדגש מילולי{' '}
-													{psychVerbalEmphasis ? '(רשמי מהספח)' : '(הערכה לפי פרקים)'}:
-												</span>
-												<span className="font-bold text-[#222222]">
-													{psychVerbalEmphasis || psychResolution.effectiveVerbalEmphasis}
-												</span>
-											</div>
-										</div>
-									</div>
-								)}
-							</div>
-
-							{/* Bagrut Input (7 cols) */}
-							<div className="lg:col-span-7 space-y-4 bg-white rounded-3xl p-6 border border-[#E5DFD4] shadow-xs">
-								<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
-									<div className="flex items-center gap-2.5">
-										<BookOpen className="h-5 w-5 text-blue-700" />
-										<h3 className="text-base font-bold text-[#222222]">
-											ציוני תעודת בגרות ({subjects.length} מקצועות)
-										</h3>
-									</div>
-								</div>
-
-								{/* Subjects List */}
-								<div className="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
-									{subjects.map((sub, idx) => (
-										<div
-											key={idx}
-											className="flex items-center gap-3 p-3 rounded-2xl border transition-all bg-[#FAF8F5] border-[#E5DFD4]"
-										>
-											<div className="flex-1 min-w-0">
-												<span className="text-xs font-bold text-[#222222] block truncate">
-													{sub.name}
-												</span>
-											</div>
-
-											{/* Units selector */}
-											<select
-												value={sub.units}
-												onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
-												className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none"
-											>
-												<option value={2}>2 יח״ל</option>
-												<option value={3}>3 יח״ל</option>
-												<option value={4}>4 יח״ל</option>
-												<option value={5}>5 יח״ל</option>
-											</select>
-
-											{/* Grade input */}
-											<input
-												type="text"
-												inputMode="numeric"
-												pattern="[0-9]*"
-												maxLength={3}
-												value={sub.grade === 0 ? '' : sub.grade}
-												onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
-												placeholder="ציון"
-												className="w-16 bg-white border border-[#DDD7CB] text-xs font-bold text-center rounded-xl px-2 py-1.5 text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
-											/>
 
 											<button
-												onClick={() => handleDeleteSubject(idx)}
-												className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
-												title="מחק מקצוע"
+												type="button"
+												onClick={() => {
+													if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
+														resetFlowToCleanState();
+													}
+												}}
+												className="px-3.5 py-2 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+												title="איפוס כל הנתונים"
 											>
-												<Trash2 className="h-4 w-4" />
+												<RefreshCw className="h-3.5 w-3.5" />
+												<span>איפוס</span>
 											</button>
 										</div>
-									))}
+									</div>
+
+									{/* Subjects Grid: 2 columns on tablet & desktop */}
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+										{subjects.map((sub, idx) => (
+											<div
+												key={idx}
+												className="flex items-center gap-3 p-3.5 rounded-2xl border transition-all bg-[#FAF8F5] border-[#E5DFD4] hover:border-[#DDD7CB]"
+											>
+												<div className="flex-1 min-w-0">
+													<span className="text-xs font-bold text-[#222222] block truncate">
+														{sub.name}
+													</span>
+												</div>
+
+												{/* Units selector */}
+												<select
+													value={sub.units}
+													onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
+													className="bg-white border border-[#DDD7CB] text-xs font-bold text-[#222222] rounded-xl px-2.5 py-1.5 focus:outline-none cursor-pointer"
+												>
+													<option value={2}>2 יח״ל</option>
+													<option value={3}>3 יח״ל</option>
+													<option value={4}>4 יח״ל</option>
+													<option value={5}>5 יח״ל</option>
+												</select>
+
+												{/* Grade input */}
+												<input
+													type="text"
+													inputMode="numeric"
+													pattern="[0-9]*"
+													maxLength={3}
+													value={sub.grade === 0 ? '' : sub.grade}
+													onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
+													placeholder="ציון"
+													className="w-16 bg-white border border-[#DDD7CB] text-xs font-bold text-center rounded-xl px-2 py-1.5 text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+												/>
+
+												<button
+													onClick={() => handleDeleteSubject(idx)}
+													className="p-1 text-[#88857E] hover:text-rose-600 transition cursor-pointer"
+													title="מחק מקצוע"
+												>
+													<Trash2 className="h-4 w-4" />
+												</button>
+											</div>
+										))}
+									</div>
 								</div>
 
-								{/* Bottom Action Buttons: Add Subject & Reset */}
-								<div className="pt-3 border-t border-[#EAE5DA] flex items-center justify-between">
+								{/* Validation alert banner if bagrut has issues */}
+								{showValidationErrors && !bagrutValidation.isValid && (
+									<div id="step1-bagrut-validation-alert" className="p-4 rounded-2xl bg-[#FFF1F2] border border-[#FECDD3] text-[#9F1239] space-y-1.5 shadow-2xs">
+										<div className="flex items-center gap-2 text-xs font-bold text-[#E11D48]">
+											<AlertCircle className="h-4 w-4 shrink-0" />
+											<span>יש להשלים את הזנת ציוני הבגרות כדי שנוכל לחשב עבורך ממוצע מדויק</span>
+										</div>
+										<p className="text-xs text-[#9F1239] leading-relaxed">
+											{bagrutValidation.errorMessage}
+										</p>
+									</div>
+								)}
+
+								{/* ניווט תחתון לתת-שלב 1A */}
+								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
+									<div className="text-xs text-[#66635C]">
+										{bagrutValidation.isValid ? (
+											<span className="text-[#205739] font-bold">✓ ציוני הבגרות מלאים ({bagrutValidation.totalValidUnits} יח״ל)</span>
+										) : showValidationErrors ? (
+											<span className="text-rose-600 font-bold">⚠️ יש להזין ציון לכל מקצוע (לפחות 20 יח״ל)</span>
+										) : (
+											<span>נצברו {bagrutValidation.totalValidUnits} יח״ל בגרות — בסיום נעבור לפסיכומטרי</span>
+										)}
+									</div>
 									<button
 										type="button"
-										onClick={() => {
-											setEditingSubjectIndex(null);
-											setIsSubjectModalOpen(true);
-										}}
-										className="px-4 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#EFEAE0] border border-[#DDD7CB] text-[#222222] text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs active:scale-[0.99]"
+										onClick={handleProceedToPsychometric}
+										className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
 									>
-										<Plus className="h-4 w-4" />
-										<span>הוסף מקצוע / הגברה</span>
-									</button>
-
-									<button
-										type="button"
-										onClick={() => {
-											if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
-												resetFlowToCleanState();
-											}
-										}}
-										className="px-3.5 py-2 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-										title="איפוס כל הנתונים"
-									>
-										<RefreshCw className="h-3.5 w-3.5" />
-										<span>איפוס</span>
+										<span>המשך להזנת פסיכומטרי</span>
+										<ArrowLeft className="h-4 w-4" />
 									</button>
 								</div>
-							</div>
-						</div>
-
-						{/* Validation alert banner if attempting to advance without valid inputs */}
-						{showValidationErrors && !gradeValidation.isValid && (
-							<div id="step1-validation-alert" className="p-4 rounded-2xl bg-[#FFF1F2] border border-[#FECDD3] text-[#9F1239] space-y-1.5 shadow-2xs">
-								<div className="flex items-center gap-2 text-xs font-bold text-[#E11D48]">
-									<AlertCircle className="h-4 w-4 shrink-0" />
-									<span>יש להשלים את הזנת הציונים כדי שנוכל לחשב עבורך נתונים מדויקים</span>
-								</div>
-								<p className="text-xs text-[#9F1239] leading-relaxed">
-									{gradeValidation.errorMessage}
-								</p>
 							</div>
 						)}
 
-						{/* ניווט תחתון לשלב 1 */}
-						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
-							<div className="text-xs text-[#66635C]">
-								{gradeValidation.isValid ? (
-									<span className="text-[#205739] font-bold">✓ ציוני הבגרות והפסיכומטרי תקינים ומאומתים</span>
-								) : showValidationErrors ? (
-									<span className="text-rose-600 font-bold">⚠️ יש להשלים את הזנת הציונים כדי להמשיך</span>
-								) : (
-									<span>ממוצע הבגרות והסכמים מחושבים אוטומטית</span>
+						{/* SUB-STEP 1B: הזנת ציוני פסיכומטרי */}
+						{step1SubStep === 'psychometric' && (
+							<div className="space-y-6 max-w-4xl mx-auto">
+								<div className="border-b border-[#EAE5DA] pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+									<div>
+										<div className="flex items-center gap-2 mb-1.5">
+											<span className="px-3 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-xs font-bold shadow-2xs">
+												שלב 2 מתוך 2: פסיכומטרי
+											</span>
+										</div>
+										<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציוני בחינה פסיכומטרית</h2>
+										<p className="text-sm text-[#66635C]">
+											הזן את הציון הרב-תחומי וציוני הפרקים. אם טרם נבחנת, תוכל לסמן זאת ולבדוק קבלה ישירה על סמך בגרות בלבד.
+										</p>
+									</div>
+
+									<button
+										type="button"
+										onClick={handleBackToBagrut}
+										className="px-3.5 py-2 rounded-xl bg-white border border-[#DDD7CB] text-xs font-bold text-[#44423D] hover:bg-[#FAF8F5] transition flex items-center gap-1.5 shadow-2xs self-start sm:self-auto cursor-pointer"
+									>
+										<ArrowRight className="h-3.5 w-3.5" />
+										<span>חזרה לציוני בגרות</span>
+									</button>
+								</div>
+
+								<div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E5DFD4] shadow-xs space-y-6">
+									<div className="flex items-center gap-3 border-b border-[#EAE5DA] pb-4">
+										<div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
+											<Brain className="h-5 w-5" />
+										</div>
+										<div>
+											<h3 className="text-base font-bold text-[#222222]">פרטי הבחינה הפסיכומטרית</h3>
+											<p className="text-xs text-[#66635C]">ציון רב-תחומי (200–800) וציוני פרקים (50–150)</p>
+										</div>
+									</div>
+
+									{/* Option: Haven't taken psychometric yet */}
+									<div
+										onClick={() => {
+											const nextVal = !hasTakenPsychometric;
+											setHasTakenPsychometric(nextVal);
+											if (!nextVal) {
+												setPsychGeneral(0);
+												setPsychQuant(0);
+												setPsychVerbal(0);
+												setPsychEnglish(0);
+											} else {
+												setPsychGeneral('');
+												setPsychQuant('');
+												setPsychVerbal('');
+												setPsychEnglish('');
+											}
+										}}
+										className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
+											!hasTakenPsychometric
+												? 'bg-[#F4F0E8] border-[#222222] text-[#222222]'
+												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#44423D] hover:border-[#CCC5B6]'
+										}`}
+									>
+										<div className="flex items-center gap-3">
+											<input
+												type="checkbox"
+												checked={!hasTakenPsychometric}
+												onChange={() => {}}
+												className="w-4 h-4 rounded border-[#CCC5B6] text-[#222222] focus:ring-[#222222] cursor-pointer"
+											/>
+											<div>
+												<span className="text-xs font-bold block">עדיין לא עשיתי פסיכומטרי</span>
+												<span className="text-[11px] text-[#66635C] block mt-0.5">
+													טרם ניגשתי לבחינה / מעוניין לבדוק קבלה על סמך בגרות בלבד
+												</span>
+											</div>
+										</div>
+										{!hasTakenPsychometric && (
+											<span className="px-2.5 py-1 rounded-lg bg-white text-[#222222] text-xs font-bold border border-[#DDD7CB]">
+												פעיל
+											</span>
+										)}
+									</div>
+
+									{!hasTakenPsychometric ? (
+										<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-2">
+											<div className="flex items-center gap-2 text-[#222222] text-xs font-bold">
+												<Sparkles className="h-4 w-4 text-blue-700 shrink-0" />
+												<span>נבדוק קבלה ישירה ונחשב עבורך ציוני יעד!</span>
+											</div>
+											<p className="text-xs text-[#55524B] leading-relaxed">
+												המערכת תבדוק אילו תארים מאפשרים קבלה ישירה על סמך ממוצע בגרות בלבד, ובשלב התכנון תחשב בדיוק איזה ציון פסיכומטרי יעד יידרש ממך בבחינה הראשונה לכל תואר מבוקש.
+											</p>
+										</div>
+									) : (
+										<div className="space-y-5">
+											<div className="space-y-1.5">
+												<div className="flex items-center justify-between">
+													<label className="block text-xs font-bold text-[#44423D]">
+														ציון רב-תחומי (200–800):
+													</label>
+													<span className="text-[11px] text-[#66635C]">
+														לפי ספח הציונים הרשמי
+													</span>
+												</div>
+												<input
+													type="number"
+													inputMode="numeric"
+													pattern="[0-9]*"
+													min={200}
+													max={800}
+													value={psychGeneral === 0 ? '' : psychGeneral}
+													onChange={(e) =>
+														setPsychGeneral(cleanNumberInput(e.target.value, 0, 800) as number)
+													}
+													placeholder="200-800"
+													className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-xl px-4 py-3 text-sm font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+												/>
+											</div>
+
+											{/* Gross Mismatch Warning Banner */}
+											{!psychCoherence.isCoherent && psychCoherence.calculatedGeneral > 0 && (
+												<div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-900 space-y-2">
+													<div className="flex items-center gap-1.5 text-xs font-bold">
+														<AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+														<span>פער חריג (מעל 30 נקודות) בין הציון הכולל לציוני הפרקים</span>
+													</div>
+													<p className="text-xs leading-relaxed text-amber-800">
+														הציון הרב-תחומי שהוזן ({psychGeneral}) סוטה משמעותית מהערכת שקלול הפרקים (סביב {psychCoherence.calculatedGeneral}). אנא ודא שהנתונים שהזנת תואמים במדויק את ספח הציונים הרשמי ממאל״ו.
+													</p>
+												</div>
+											)}
+
+											<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+												<div className="space-y-1.5">
+													<label className="block text-xs font-bold text-[#44423D]">כמותי (50–150):</label>
+													<input
+														type="number"
+														inputMode="numeric"
+														pattern="[0-9]*"
+														min={50}
+														max={150}
+														value={psychQuant === 0 ? '' : psychQuant}
+														onChange={(e) =>
+															handleSubscoreChange('quant', cleanNumberInput(e.target.value, 0, 150) as number)
+														}
+														placeholder="50-150"
+														className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-xl px-3.5 py-2.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+													/>
+												</div>
+
+												<div className="space-y-1.5">
+													<label className="block text-xs font-bold text-[#44423D]">מילולי (50–150):</label>
+													<input
+														type="number"
+														inputMode="numeric"
+														pattern="[0-9]*"
+														min={50}
+														max={150}
+														value={psychVerbal === 0 ? '' : psychVerbal}
+														onChange={(e) =>
+															handleSubscoreChange('verbal', cleanNumberInput(e.target.value, 0, 150) as number)
+														}
+														placeholder="50-150"
+														className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-xl px-3.5 py-2.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+													/>
+												</div>
+
+												<div className="space-y-1.5">
+													<label className="block text-xs font-bold text-[#44423D]">אנגלית (50–150):</label>
+													<input
+														type="number"
+														inputMode="numeric"
+														pattern="[0-9]*"
+														min={50}
+														max={150}
+														value={psychEnglish === 0 ? '' : psychEnglish}
+														onChange={(e) =>
+															handleSubscoreChange('english', cleanNumberInput(e.target.value, 0, 150) as number)
+														}
+														placeholder="50-150"
+														className="w-full bg-[#FAF8F5] border border-[#DDD7CB] rounded-xl px-3.5 py-2.5 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222] transition"
+													/>
+												</div>
+											</div>
+
+											{/* English Classification */}
+											{psychResolution.englishClassification.level !== 'unknown' && (
+												<div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-between text-xs">
+													<span className="text-[#66635C] font-medium">סיווג רמת אנגלית אקדמית:</span>
+													<span
+														className={`text-xs font-bold px-3 py-1 rounded-md border shadow-2xs ${psychResolution.englishClassification.color}`}
+													>
+														{psychResolution.englishClassification.label}
+													</span>
+												</div>
+											)}
+
+											{/* Optional NITE Emphasis Scores (200-800) */}
+											<div className="pt-2">
+												<button
+													type="button"
+													onClick={() => setShowEmphasisInputs(!showEmphasisInputs)}
+													className="text-xs font-bold text-[#3C3C3C] hover:text-black flex items-center gap-1.5 transition underline decoration-dotted cursor-pointer"
+												>
+													<span>
+														{showEmphasisInputs
+															? 'הסתר ציוני דגש רשמיים (200–800)'
+															: '+ מתמיין להנדסה / מדעים? הזן ציוני דגש רשמיים מספח מאל״ו'}
+													</span>
+												</button>
+
+												{showEmphasisInputs && (
+													<div className="mt-3 p-4 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-3 shadow-2xs">
+														<div className="flex items-center justify-between">
+															<span className="text-xs font-bold text-[#222222]">
+																ציוני דגש רשמיים (מאל״ו)
+															</span>
+															<span className="text-[11px] text-[#77746D]">אופציונלי (200–800)</span>
+														</div>
+														<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+															<div className="space-y-1">
+																<label className="block text-[11px] font-medium text-[#55524B]">
+																	דגש כמותי (הנדסה/מדמ״ח):
+																</label>
+																<input
+																	type="number"
+																	inputMode="numeric"
+																	pattern="[0-9]*"
+																	min={200}
+																	max={800}
+																	value={psychQuantEmphasis}
+																	onChange={(e) =>
+																		setPsychQuantEmphasis(cleanNumberInput(e.target.value, 0, 800) as number)
+																	}
+																	placeholder={String(psychResolution.effectiveQuantEmphasis)}
+																	className="w-full bg-white border border-[#DDD7CB] rounded-lg px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222]"
+																/>
+															</div>
+															<div className="space-y-1">
+																<label className="block text-[11px] font-medium text-[#55524B]">
+																	דגש מילולי (הומני/רפואה):
+																</label>
+																<input
+																	type="number"
+																	inputMode="numeric"
+																	pattern="[0-9]*"
+																	min={200}
+																	max={800}
+																	value={psychVerbalEmphasis}
+																	onChange={(e) =>
+																		setPsychVerbalEmphasis(cleanNumberInput(e.target.value, 0, 800) as number)
+																	}
+																	placeholder={String(psychResolution.effectiveVerbalEmphasis)}
+																	className="w-full bg-white border border-[#DDD7CB] rounded-lg px-3 py-2 text-xs font-bold text-[#222222] focus:outline-none focus:ring-1 focus:ring-[#222222]"
+																/>
+															</div>
+														</div>
+													</div>
+												)}
+											</div>
+
+											{/* Calculated Weights info */}
+											<div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-xs text-[#66635C] space-y-1.5">
+												<div className="flex justify-between">
+													<span>
+														שקלול מאל״ו בדגש כמותי{' '}
+														{psychQuantEmphasis ? '(רשמי מהספח)' : '(הערכה לפי פרקים)'}:
+													</span>
+													<span className="font-bold text-[#222222]">
+														{psychQuantEmphasis || psychResolution.effectiveQuantEmphasis}
+													</span>
+												</div>
+												<div className="flex justify-between">
+													<span>
+														שקלול מאל״ו בדגש מילולי{' '}
+														{psychVerbalEmphasis ? '(רשמי מהספח)' : '(הערכה לפי פרקים)'}:
+													</span>
+													<span className="font-bold text-[#222222]">
+														{psychVerbalEmphasis || psychResolution.effectiveVerbalEmphasis}
+													</span>
+												</div>
+											</div>
+										</div>
+									)}
+								</div>
+
+								{/* Validation alert banner if attempting to advance without valid psychometric */}
+								{showValidationErrors && !psychValidation.isValid && (
+									<div id="step1-psych-validation-alert" className="p-4 rounded-2xl bg-[#FFF1F2] border border-[#FECDD3] text-[#9F1239] space-y-1.5 shadow-2xs">
+										<div className="flex items-center gap-2 text-xs font-bold text-[#E11D48]">
+											<AlertCircle className="h-4 w-4 shrink-0" />
+											<span>יש להשלים את הזנת הציון הפסיכומטרי</span>
+										</div>
+										<p className="text-xs text-[#9F1239] leading-relaxed">
+											{psychValidation.errorMessage}
+										</p>
+									</div>
 								)}
+
+								{/* ניווט תחתון לתת-שלב 1B */}
+								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
+									<button
+										type="button"
+										onClick={handleBackToBagrut}
+										className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl border border-[#DDD7CB] shadow-2xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+									>
+										<ArrowRight className="h-4 w-4" />
+										<span>חזור להזנת ציוני בגרות</span>
+									</button>
+
+									<button
+										type="button"
+										onClick={handleProceedFromStep1}
+										className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+									>
+										<span>המשך לבחירת תארים מבוקשים</span>
+										<ArrowLeft className="h-4 w-4" />
+									</button>
+								</div>
 							</div>
-							<button
-								type="button"
-								onClick={handleProceedFromStep1}
-								className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-							>
-								<span>המשך לבחירת תארים מבוקשים</span>
-								<ArrowLeft className="h-4 w-4" />
-							</button>
-						</div>
+						)}
 					</div>
 				)}
 
@@ -1148,7 +1364,10 @@ export default function AdmissionFlowPage() {
 						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
 							<button
 								type="button"
-								onClick={() => setActiveStep(1)}
+								onClick={() => {
+									setActiveStep(1);
+									setStep1SubStep('psychometric');
+								}}
 								className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
 							>
 								<ArrowRight className="h-4 w-4" />
@@ -1351,20 +1570,34 @@ export default function AdmissionFlowPage() {
 					{/* --- RIGHT SIDE (RTL START): BACK BUTTON OR STEP BADGE --- */}
 					<div className="flex items-center gap-2 shrink-0">
 						{activeStep === 1 ? (
-							<div className="flex items-center gap-2.5">
-								<span className="w-8 h-8 rounded-xl bg-[#3C3C3C] text-white font-black text-xs flex items-center justify-center shadow-2xs">
-									1
-								</span>
-								<div className="hidden sm:block">
-									<span className="text-xs font-bold text-[#222222] block leading-tight">שלב 1: הזנת ציונים</span>
-									<span className="text-[10px] text-[#66635C] block">בגרות ופסיכומטרי</span>
+							step1SubStep === 'bagrut' ? (
+								<div className="flex items-center gap-2.5">
+									<span className="w-8 h-8 rounded-xl bg-[#3C3C3C] text-white font-black text-xs flex items-center justify-center shadow-2xs">
+										1
+									</span>
+									<div className="hidden sm:block">
+										<span className="text-xs font-bold text-[#222222] block leading-tight">שלב 1: ציוני בגרות</span>
+										<span className="text-[10px] text-[#66635C] block">חלק 1 מתוך 2</span>
+									</div>
 								</div>
-							</div>
+							) : (
+								<button
+									type="button"
+									onClick={handleBackToBagrut}
+									className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
+								>
+									<ArrowRight className="h-4 w-4 shrink-0" />
+									<span>חזור להזנת בגרויות</span>
+								</button>
+							)
 						) : (
 							<button
 								type="button"
 								onClick={() => {
-									if (activeStep === 2) setActiveStep(1);
+									if (activeStep === 2) {
+										setActiveStep(1);
+										setStep1SubStep('psychometric');
+									}
 									else if (activeStep === 3) setActiveStep(2);
 									else if (activeStep === 4) setActiveStep(3);
 								}}
@@ -1383,15 +1616,32 @@ export default function AdmissionFlowPage() {
 					{/* --- CENTER: CONTEXTUAL PROGRESS & STATUS INFO --- */}
 					<div className="hidden md:flex items-center justify-center flex-1 min-w-0 px-2 text-center">
 						{activeStep === 1 && (
-							showValidationErrors && !gradeValidation.isValid ? (
-								<div className="flex items-center gap-1.5 text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
-									<AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
-									<span>יש להשלים את הזנת הציונים כדי להתקדם</span>
-								</div>
+							step1SubStep === 'bagrut' ? (
+								showValidationErrors && !bagrutValidation.isValid ? (
+									<div className="flex items-center gap-1.5 text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
+										<AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
+										<span>יש להשלים את הזנת הבגרויות (לפחות 20 יח״ל)</span>
+									</div>
+								) : (
+									<span className="text-xs text-[#66635C] font-medium truncate">
+										נצברו {bagrutValidation.totalValidUnits} יח״ל בגרות {bagrutValidation.totalValidUnits >= 20 ? '✓' : '(מינימום 20)'} — בסיום נעבור לפסיכומטרי
+									</span>
+								)
 							) : (
-								<span className="text-xs text-[#66635C] font-medium truncate">
-									ממוצע הבגרות והסכמים מחושבים אוטומטית לכל 8 האוניברסיטאות
-								</span>
+								showValidationErrors && !psychValidation.isValid ? (
+									<div className="flex items-center gap-1.5 text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
+										<AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
+										<span>יש להזין ציון פסיכומטרי תקין (200–800) או לסמן טרם נבחנתי</span>
+									</div>
+								) : (
+									<span className="text-xs text-[#66635C] font-medium truncate">
+										{!hasTakenPsychometric
+											? 'נבחרה בדיקת קבלה ישירה (על סמך בגרות בלבד)'
+											: psychGeneral
+											? `ציון פסיכומטרי: ${psychGeneral} | שקלול סכמים אוטומטי`
+											: 'הזן ציון רב-תחומי (200–800) והמשך לבחירת תארים'}
+									</span>
+								)
 							)
 						)}
 
@@ -1441,14 +1691,25 @@ export default function AdmissionFlowPage() {
 					{/* --- LEFT SIDE (RTL END): PRIMARY CONTINUE / ACTION BUTTON --- */}
 					<div className="flex items-center gap-2.5 shrink-0">
 						{activeStep === 1 && (
-							<button
-								type="button"
-								onClick={handleProceedFromStep1}
-								className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-							>
-								<span>המשך לבחירת תארים מבוקשים</span>
-								<ArrowLeft className="h-4 w-4 shrink-0" />
-							</button>
+							step1SubStep === 'bagrut' ? (
+								<button
+									type="button"
+									onClick={handleProceedToPsychometric}
+									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+								>
+									<span>המשך להזנת פסיכומטרי</span>
+									<ArrowLeft className="h-4 w-4 shrink-0" />
+								</button>
+							) : (
+								<button
+									type="button"
+									onClick={handleProceedFromStep1}
+									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+								>
+									<span>המשך לבחירת תארים מבוקשים</span>
+									<ArrowLeft className="h-4 w-4 shrink-0" />
+								</button>
+							)
 						)}
 
 						{activeStep === 2 && (
