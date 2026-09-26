@@ -43,14 +43,22 @@ export function getHujiBonus(subject: CalculatorSubject): number {
 		return 0;
 	}
 
-	const isSci =
+	const isHighBonus =
 		n.includes('פיזיקה') ||
 		n.includes('כימיה') ||
 		n.includes('ביולוגיה') ||
-		n.includes('מדעי המחשב');
+		n.includes('מדעי המחשב') ||
+		n.includes('סייבר') ||
+		n.includes('תוכנה') ||
+		n.includes('אלקטרוניקה') ||
+		n.includes('ספרות') ||
+		n.includes('תנ"ך') ||
+		n.includes('תנ״ך') ||
+		n.includes('היסטוריה') ||
+		n.includes('ערבית');
 
 	if (subject.units >= 5) {
-		if (isSci) return 25;
+		if (isHighBonus) return 25;
 		return 20;
 	}
 

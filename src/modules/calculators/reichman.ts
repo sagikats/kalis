@@ -60,7 +60,14 @@ export function getReichmanBonus(subject: CalculatorSubject): number {
 			n.includes('מדעי המחשב') ||
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
-			n.includes('אלקטרוניקה')
+			n.includes('אלקטרוניקה') ||
+			n.includes('סייבר') ||
+			n.includes('תוכנה') ||
+			n.includes('ערבית') ||
+			n.includes('ספרות') ||
+			n.includes('תנ"ך') ||
+			n.includes('תנ״ך') ||
+			n.includes('היסטוריה')
 		) {
 			return 25;
 		}

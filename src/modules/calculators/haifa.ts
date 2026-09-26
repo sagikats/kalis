@@ -51,6 +51,9 @@ export function getHaifaBonus(subject: CalculatorSubject): number {
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
 			n.includes('מדעי המחשב') ||
+			n.includes('סייבר') ||
+			n.includes('תוכנה') ||
+			n.includes('אלקטרוניקה') ||
 			n.includes('ספרות') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||

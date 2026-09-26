@@ -1,10 +1,12 @@
-// Kalis Content Script: Ben-Gurion University (BGU) Calculator AutoFill
+// Kalis Content Script: Ben-Gurion University (BGU)
 // Target: bgu.ac.il/welcome/ba/calculator/* and apps4cloud.bgu.ac.il/calcprod/*
+// Strictly enforces Zero-Guess policy via KalisDataGuard & integrates with KalisDock
 
 (async function () {
-  console.log('[Kalis BGU] Script initialized on:', window.location.href, 'Frame:', window.self === window.top ? 'top' : 'iframe');
+  'use strict';
+  const isTopWindow = window.self === window.top;
+  console.log('[Kalis BGU] Script initialized on:', window.location.href, 'Frame:', isTopWindow ? 'top' : 'iframe');
 
-  // 1. Fetch pending verification data
   let storageData;
   try {
     storageData = await chrome.storage.local.get('pendingVerification');
@@ -19,30 +21,57 @@
   const isRecent = (Date.now() - (pendingVerification.timestamp || 0)) < 15 * 60 * 1000;
   if (!isRecent) return;
 
-  const isTopWindow = window.self === window.top;
   const targetBagrut = pendingVerification.targetBagrutAverage || pendingVerification.currentBagrutAverage || 0;
-  const psychScore = pendingVerification.psychometricScore || 0;
-  const psychQuant = pendingVerification.psychQuant;
-  const psychVerbal = pendingVerification.psychVerbal;
-  const psychEnglish = pendingVerification.psychEnglish;
-  const subjects = pendingVerification.subjects || [];
+  const psychScore = pendingVerification.psychometricScore || pendingVerification.psychometricGeneral || 0;
+  const subjects = pendingVerification.bagrutSubjects || [];
 
-  // Helper for React synthetic state update
+  // Bulletproof React 15-19 / Controlled Input Setter
   const setReactInput = (inp, val) => {
     if (!inp || val === undefined || val === null) return false;
     try {
       inp.focus();
-      const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+
+      const proto = inp instanceof HTMLSelectElement ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype;
+      const prop = inp.type === 'checkbox' ? 'checked' : 'value';
+      const nativeSetter = Object.getOwnPropertyDescriptor(proto, prop)?.set;
       if (nativeSetter) {
-        nativeSetter.call(inp, val);
+        nativeSetter.call(inp, inp.type === 'checkbox' ? Boolean(val) : String(val));
       } else {
-        inp.value = val;
+        if (inp.type === 'checkbox') inp.checked = Boolean(val);
+        else inp.value = String(val);
       }
+
+      // Reset React 16+ value tracker
+      if (inp._valueTracker) {
+        inp._valueTracker.setValue(inp.type === 'checkbox' ? !val : '');
+      }
+
       inp.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
       inp.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      // Directly invoke React synthetic onChange / onInput props if attached
+      const reactKey = Object.keys(inp).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+      if (reactKey && inp[reactKey]) {
+        const fakeEvt = {
+          target: inp,
+          currentTarget: inp,
+          bubbles: true,
+          defaultPrevented: false,
+          preventDefault: () => {},
+          stopPropagation: () => {}
+        };
+        if (typeof inp[reactKey].onChange === 'function') {
+          try { inp[reactKey].onChange(fakeEvt); } catch (e) {}
+        }
+        if (typeof inp[reactKey].onInput === 'function') {
+          try { inp[reactKey].onInput(fakeEvt); } catch (e) {}
+        }
+      }
+
       inp.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
       inp.style.backgroundColor = '#EBF4EE';
       inp.style.borderColor = '#22C55E';
+      inp.style.transition = 'background-color 0.4s ease, border-color 0.4s ease';
       return true;
     } catch (e) {
       console.warn('[Kalis BGU] Error setting input value:', e);
@@ -59,110 +88,155 @@
     console.log('[Kalis BGU] Running inside BGU Calculator application Frame.');
 
     let bagrutStepCompleted = false;
+    let mechinaStepCompleted = false;
     let psychStepCompleted = false;
 
     const fillBguBagrutStep = () => {
-      // 1. Average input (.my-average input.simple-input)
+      // 1. Ensure we are in "כבר חישבתי ממוצע בגרות" mode
+      const hash = window.location.hash || '';
+      if (!hash.includes('bagrut-average')) {
+        const goToAvgBtn = document.querySelector('.page-link.go-to-average, a[href*="bagrut-average"]') ||
+          Array.from(document.querySelectorAll('a, div.page-link, span')).find(el => {
+            const t = (el.textContent || '').trim();
+            return t.includes('כבר חישבתי') || t.includes('לחישוב ממוצע בגרות');
+          });
+
+        if (goToAvgBtn && typeof goToAvgBtn.click === 'function') {
+          console.log('[Kalis BGU] Clicking tab to switch to bagrut-average mode...');
+          goToAvgBtn.click();
+          return;
+        } else {
+          // Alternatively switch hash directly
+          window.location.hash = '#/bagrut-average';
+          return;
+        }
+      }
+
+      // 2. Average input (.my-average input.simple-input)
       const avgInput = document.querySelector('.my-average input.simple-input') || 
                        document.querySelector('.my-average input') ||
-                       Array.from(document.querySelectorAll('input.simple-input')).find(i => {
+                       Array.from(document.querySelectorAll('input.simple-input')).find((i) => {
                          const parentTxt = (i.parentElement?.textContent || '').toLowerCase();
                          return parentTxt.includes('כבר חישבתי') || parentTxt.includes('ממוצע');
                        });
 
-      if (avgInput && targetBagrut > 0) {
-        const formatted = targetBagrut.toFixed(1);
-        setReactInput(avgInput, formatted);
-        console.log('[Kalis BGU] Filled Bagrut average:', formatted);
+      const avgEval = window.KalisDataGuard
+        ? window.KalisDataGuard.evaluateField({ type: 'BAGRUT_AVERAGE', precision: 1 }, pendingVerification)
+        : { shouldFill: targetBagrut > 0, value: targetBagrut.toFixed(1) };
+
+      let filledAverage = false;
+      if (avgInput && avgEval && avgEval.shouldFill) {
+        filledAverage = setReactInput(avgInput, avgEval.value);
+        console.log('[Kalis BGU] Filled Bagrut average:', avgEval.value);
       }
 
-      // 2. Math & Physics rows
-      const mathSub = subjects.find(s => s.name.includes('מתמטיקה'));
-      const phySub = subjects.find(s => s.name.includes('פיזיקה'));
-
-      // Find all rows or input wrappers
+      // 3. Math & Physics rows
       const allSimpleInputs = Array.from(document.querySelectorAll('input.simple-input'));
-      
-      // BGU items have IDs like item_0_level, item_0_grade
       const mathLevel = document.querySelector('input[id*="0_level"], input[id*="math_level"]') || allSimpleInputs[1];
       const mathGrade = document.querySelector('input[id*="0_grade"], input[id*="math_grade"]') || allSimpleInputs[2];
-      
-      if (mathSub) {
-        if (mathLevel) setReactInput(mathLevel, mathSub.units);
-        if (mathGrade) setReactInput(mathGrade, mathSub.grade);
-        console.log('[Kalis BGU] Filled Math:', mathSub.units, 'units, grade:', mathSub.grade);
+
+      const mathGradeEval = window.KalisDataGuard
+        ? window.KalisDataGuard.evaluateField({ type: 'SUBJECT_GRADE', subjectKey: 'math', subjectNameHe: 'מתמטיקה' }, pendingVerification)
+        : null;
+      const mathUnitsEval = window.KalisDataGuard
+        ? window.KalisDataGuard.evaluateField({ type: 'SUBJECT_UNITS', subjectKey: 'math', subjectNameHe: 'מתמטיקה' }, pendingVerification)
+        : null;
+
+      if (mathUnitsEval && mathUnitsEval.shouldFill && mathLevel) {
+        setReactInput(mathLevel, mathUnitsEval.value);
+      }
+      if (mathGradeEval && mathGradeEval.shouldFill && mathGrade) {
+        setReactInput(mathGrade, mathGradeEval.value);
       }
 
+      // Physics: STRICT ZERO GUESS — only fill if candidate has Physics!
       const phyLevel = document.querySelector('input[id*="1_level"], input[id*="phy_level"]') || allSimpleInputs[3];
       const phyGrade = document.querySelector('input[id*="1_grade"], input[id*="phy_grade"]') || allSimpleInputs[4];
 
-      if (phySub) {
-        if (phyLevel) setReactInput(phyLevel, phySub.units);
-        if (phyGrade) setReactInput(phyGrade, phySub.grade);
-        console.log('[Kalis BGU] Filled Physics:', phySub.units, 'units, grade:', phySub.grade);
+      const phyGradeEval = window.KalisDataGuard
+        ? window.KalisDataGuard.evaluateField({ type: 'SUBJECT_GRADE', subjectKey: 'physics', subjectNameHe: 'פיזיקה' }, pendingVerification)
+        : null;
+      const phyUnitsEval = window.KalisDataGuard
+        ? window.KalisDataGuard.evaluateField({ type: 'SUBJECT_UNITS', subjectKey: 'physics', subjectNameHe: 'פיזיקה' }, pendingVerification)
+        : null;
+
+      if (phyUnitsEval && phyUnitsEval.shouldFill && phyLevel) {
+        setReactInput(phyLevel, phyUnitsEval.value);
+      }
+      if (phyGradeEval && phyGradeEval.shouldFill && phyGrade) {
+        setReactInput(phyGrade, phyGradeEval.value);
       }
 
-      bagrutStepCompleted = true;
-
-      // 3. Click the Next button ('הבא >')
-      setTimeout(() => {
-        const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
-                        Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
-                          const t = (el.textContent || '').trim();
-                          return t.includes('הבא') && !el.classList.contains('disabled-action');
-                        });
-
-        if (nextBtn) {
-          console.log('[Kalis BGU] Clicking Next button to Psychometry step:', nextBtn);
-          nextBtn.click();
-        }
-      }, 500);
+      if (filledAverage) {
+        bagrutStepCompleted = true;
+        // Advance to Mechina step
+        setTimeout(() => {
+          const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
+                          Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
+                            const t = (el.textContent || '').trim();
+                            return t.includes('הבא') && !el.classList.contains('disabled-action');
+                          });
+          if (nextBtn) {
+            console.log('[Kalis BGU] Advancing to Mechina step:', nextBtn);
+            nextBtn.click();
+          }
+        }, 700);
+      }
     };
 
     const fillBguPsychStep = () => {
       const allInputs = Array.from(document.querySelectorAll('input.simple-input'));
       if (allInputs.length === 0) return;
 
-      console.log('[Kalis BGU] Found psychometry inputs:', allInputs.length);
+      console.log('[Kalis BGU] Populating BGU psychometric inputs with candidate data.');
 
-      // In BGU's Ea component, inputs are ordered:
-      // [0]: psychometryGeneral
-      // [1]: quantitativeReasoning
-      // [2]: verbalReasoning
-      // [3]: english
-      if (psychScore > 0 && allInputs[0]) {
-        setReactInput(allInputs[0], psychScore);
+      // BGU inputs in order:
+      // [0]: psychometryGeneral (200-800)
+      // [1]: quantitativeReasoning (50-150)
+      // [2]: verbalReasoning (50-150)
+      // [3]: english (50-150)
+
+      let filledGeneral = false;
+
+      // 1. General psychometric
+      const generalEval = window.KalisDataGuard
+        ? window.KalisDataGuard.evaluateField({ type: 'PSYCHOMETRIC_GENERAL' }, pendingVerification)
+        : { shouldFill: psychScore > 0, value: psychScore };
+
+      if (generalEval && generalEval.shouldFill && allInputs[0]) {
+        filledGeneral = setReactInput(allInputs[0], generalEval.value);
       }
 
-      if (allInputs[1]) {
-        const qVal = psychQuant || (psychScore > 0 ? Math.min(150, Math.max(50, Math.round(psychScore / 5.5))) : 125);
-        setReactInput(allInputs[1], qVal);
+      // 2. Quantitative subscore (50-150) — STRICT ZERO GUESS: only fill if explicitly provided
+      const rawQuant = pendingVerification.psychQuant || pendingVerification.psychometricQuant;
+      if (rawQuant && rawQuant >= 50 && rawQuant <= 150 && allInputs[1]) {
+        setReactInput(allInputs[1], rawQuant);
       }
 
-      if (allInputs[2]) {
-        const vVal = psychVerbal || (psychScore > 0 ? Math.min(150, Math.max(50, Math.round(psychScore / 5.5))) : 125);
-        setReactInput(allInputs[2], vVal);
+      // 3. Verbal subscore (50-150) — STRICT ZERO GUESS: only fill if explicitly provided
+      const rawVerbal = pendingVerification.psychVerbal || pendingVerification.psychometricVerbal;
+      if (rawVerbal && rawVerbal >= 50 && rawVerbal <= 150 && allInputs[2]) {
+        setReactInput(allInputs[2], rawVerbal);
       }
 
-      if (allInputs[3]) {
-        const eVal = psychEnglish || (psychScore > 0 ? Math.min(150, Math.max(50, Math.round(psychScore / 5.5))) : 125);
-        setReactInput(allInputs[3], eVal);
+      // 4. English subscore (50-150) — STRICT ZERO GUESS: only fill if explicitly provided
+      const rawEng = pendingVerification.psychEnglish || pendingVerification.psychometricEnglish;
+      if (rawEng && rawEng >= 50 && rawEng <= 150 && allInputs[3]) {
+        setReactInput(allInputs[3], rawEng);
       }
 
-      psychStepCompleted = true;
-      console.log('[Kalis BGU] Psychometry inputs populated. Advancing to total results...');
-
-      setTimeout(() => {
-        const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
-                        Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
-                          const t = (el.textContent || '').trim();
-                          return t.includes('הבא') && !el.classList.contains('disabled-action');
-                        });
-        if (nextBtn) {
-          console.log('[Kalis BGU] Clicking next to Total Sekem:', nextBtn);
-          nextBtn.click();
-        }
-      }, 500);
+      if (filledGeneral) {
+        psychStepCompleted = true;
+        console.log('[Kalis BGU] Psychometry filled. Advancing to Total Sekem results...');
+        setTimeout(() => {
+          const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
+                          Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
+                            const t = (el.textContent || '').trim();
+                            return t.includes('הבא') && !el.classList.contains('disabled-action');
+                          });
+          if (nextBtn) nextBtn.click();
+        }, 700);
+      }
     };
 
     // Monitor Hash Changes and Polling in BGU SPA
@@ -172,27 +246,59 @@
       if (hash.includes('bagrut') || !hash || hash === '#/') {
         if (!bagrutStepCompleted) fillBguBagrutStep();
       } else if (hash.includes('mechina')) {
-        // Auto-advance / skip mechina
-        const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
-                        Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
-                          const t = (el.textContent || '').trim();
-                          return (t.includes('הבא') || t.includes('דלג') || t.includes('דילוג')) && !el.classList.contains('disabled-action');
-                        });
-        if (nextBtn) nextBtn.click();
+        if (!mechinaStepCompleted) {
+          mechinaStepCompleted = true;
+          setTimeout(() => {
+            const nextBtn = document.querySelector('.bottom-navigation .next-link, a.next-link, .next-link.open-link') ||
+                            Array.from(document.querySelectorAll('a, button, div.page-link')).find(el => {
+                              const t = (el.textContent || '').trim();
+                              return (t.includes('הבא') || t.includes('דלג') || t.includes('דילוג')) && !el.classList.contains('disabled-action');
+                            });
+            if (nextBtn) {
+              console.log('[Kalis BGU] Skipping Mechina step...');
+              nextBtn.click();
+            }
+          }, 400);
+        }
       } else if (hash.includes('psychometry')) {
         if (!psychStepCompleted) fillBguPsychStep();
+      } else if (hash.includes('total')) {
+        // Read calculated Sekem from DOM and report to Top Window Dock
+        const allInputs = Array.from(document.querySelectorAll('input.simple-input, .user-field input, .calculator input'));
+        const sekemBagrut = allInputs[0]?.value;
+        const sekemQuantity = allInputs[1]?.value;
+        const bagrutAvg = allInputs[3]?.value;
+        if (sekemBagrut || sekemQuantity) {
+          window.top?.postMessage({
+            type: 'KALIS_INSTITUTION_CALCULATED_RESULTS',
+            institutionId: 'bgu',
+            sekemBagrut: sekemBagrut || null,
+            sekemQuantity: sekemQuantity && sekemQuantity !== '0' ? sekemQuantity : null,
+            bagrutAverage: bagrutAvg || null
+          }, '*');
+        }
       }
     };
 
-    // Poll for inputs during transitions
-    setInterval(checkBguState, 400);
+    setInterval(checkBguState, 500);
+
+    // Listen for manual trigger from Top Window
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'KALIS_BGU_AUTOFILL') {
+        console.log('[Kalis BGU] Received manual trigger from top dock.');
+        bagrutStepCompleted = false;
+        mechinaStepCompleted = false;
+        psychStepCompleted = false;
+        checkBguState();
+      }
+    });
   }
 
   // -------------------------------------------------------------
-  // B. TOP WINDOW CONTROLLER (Banner & Floating Companion)
+  // B. TOP WINDOW CONTROLLER (Banner, Floating Companion & Cross-Frame Sync)
   // -------------------------------------------------------------
   if (isTopWindow) {
-    // Show Top Banner
+    // 1. Show Top Banner
     const banner = document.createElement('div');
     banner.id = 'kalis-autofill-banner';
     banner.style.cssText = `
@@ -236,7 +342,7 @@
       }
     }, 7000);
 
-    // Floating Companion Widget
+    // 2. Floating Companion Widget with direct "מלא שוב" action
     if (!document.getElementById('kalis-floating-companion')) {
       const widget = document.createElement('div');
       widget.id = 'kalis-floating-companion';
@@ -298,6 +404,26 @@
           </div>
         </div>
 
+        <button id="kalis-trigger-bgu-fill" style="
+          width: 100%;
+          padding: 8px;
+          margin-bottom: 8px;
+          background: #3C3C3C;
+          color: white;
+          border: 1px solid #111;
+          border-radius: 10px;
+          font-size: 11.5px;
+          font-weight: 800;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        ">
+          <span>⚡</span>
+          <span>מלא נתונים שוב במחשבון</span>
+        </button>
+
         <div style="flex: 1; overflow-y: auto; max-height: 150px; padding-right: 2px;">
           ${subjectsHtml}
         </div>
@@ -306,6 +432,24 @@
       document.body.appendChild(widget);
 
       document.getElementById('kalis-close-widget')?.addEventListener('click', () => widget.remove());
+
+      document.getElementById('kalis-trigger-bgu-fill')?.addEventListener('click', () => {
+        const iframes = Array.from(document.querySelectorAll('iframe'));
+        iframes.forEach((ifr) => {
+          try {
+            ifr.contentWindow?.postMessage({ type: 'KALIS_BGU_AUTOFILL', data: pendingVerification }, '*');
+          } catch (e) {}
+        });
+        const btn = document.getElementById('kalis-trigger-bgu-fill');
+        if (btn) {
+          btn.textContent = '✓ פקודת מילוי נשלחה!';
+          btn.style.background = '#15803d';
+          setTimeout(() => {
+            btn.innerHTML = '<span>⚡</span><span>מלא נתונים שוב במחשבון</span>';
+            btn.style.background = '#3C3C3C';
+          }, 2500);
+        }
+      });
 
       widget.querySelectorAll('.kalis-copy-btn').forEach((btn) => {
         btn.addEventListener('click', async (e) => {
@@ -325,4 +469,6 @@
       });
     }
   }
+
+  console.log('[Kalis BGU] Ready and integrated with KalisDock.');
 })();

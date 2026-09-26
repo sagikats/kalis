@@ -162,8 +162,10 @@ export function evaluateSimulatedSekem(
 	const res = calculateInstitution(institutionId, {
 		bagrutSubjects: subjects,
 		psychometricGeneral: simulatedPsych,
-		psychometricQuant: simScores.quantEmphasis,
-		psychometricVerbal: simScores.verbalEmphasis,
+		psychometricQuant: simScores.quantSub,
+		psychometricQuantEmphasis: simScores.quantEmphasis,
+		psychometricVerbal: simScores.verbalSub,
+		psychometricVerbalEmphasis: simScores.verbalEmphasis,
 		psychometricEnglish: simScores.englishSub,
 		mathUnits: mathUnits ?? profile.mathUnits,
 		mathGrade: mathGrade ?? profile.mathGrade,

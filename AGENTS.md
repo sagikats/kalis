@@ -92,13 +92,15 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-17 19:45)
-- **Active Branch:** `up-to-cloude`
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-27 01:38)
+- **Active Branch:** `feature/track-institution-verification`
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
-  - `npx tsx --test src/modules/*/__tests__/*.test.ts`: **115/115 tests passing** across 34 test suites.
-  - `npm run build`: Clean (21/21 static & dynamic routes generated via webpack, zero compile or runtime build errors).
-  - `npx tsx src/modules/qa/run.ts`: **100/100 Quality Score across all 24 archetypes and 49 tracks**.
+  - `node --test --import jiti/register src/modules/calculators/__tests__/*.test.ts`: **45/45 tests passing** (Institutional bonus variance, benchmarks & BGU exact matching).
+  - `node --test src/modules/qa/__tests__/extensionDataGuard.test.ts`: **12/12 tests passing** (Strict Zero-Guess DataGuard & FieldScanner).
+  - `npm run build`: Clean (34/34 static & dynamic routes generated via webpack, zero compile or runtime build errors).
+  - Total verified test suite: **57/57 tests passing**.
+  - Chrome Extension: Upgraded to **v1.1.0** with `KalisDataGuard`, `KalisFieldScanner`, and `KalisDock`.
   - Background processes: Next.js dev server running on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
@@ -293,10 +295,46 @@ npm run build
       - Quality Score: **100 / 100**. Clean Tracks: **100%**. Critical Errors: **0**. Warnings: **0**.
     - **Build & Quality Assurance**:
       - Updated `package.json` build command to `next build --webpack` for stable build compilation.
-      - Full unit test suite passing: **115/115 tests**.
-      - Production build verified: **21/21 static & dynamic routes** generated cleanly.
+26. **Chrome Extension Upgrade v1.1.0: Real-Data Only Guard, Dynamic Field Discovery & Interactive Action Dock (`chrome-extension/`, `UniversityVerificationModal.tsx`, `extensionDataGuard.test.ts`):**
+    - **Strict Real-Data Only Policy (`KalisDataGuard` in `chrome-extension/data-guard.js`)**:
+      - Enforced the user's explicit rule: *"הוא יזין רק את מה שיש לו אם אין לו הוא לא שם נתונים אחרים"*.
+      - Strictly eliminated guessing, hallucinated grades, or arbitrary defaults (e.g. no 0 defaults, no dividing by 5.5, no default 125).
+      - If candidate has no psychometric score -> psychometric fields on university calculators remain 100% untouched and empty.
+      - If candidate has no physics or chemistry -> specific subject fields remain untouched.
+      - If candidate has no quantitative/verbal emphasis -> fields remain untouched.
+      - Evaluates all fields with deterministic status (`FILLED`, `SKIPPED_NO_DATA`, `SKIPPED_PROTECTED`, `SKIPPED_UNKNOWN`).
+    - **Universal Dynamic Field Discovery (`KalisFieldScanner` in `chrome-extension/field-scanner.js`)**:
+      - Scans the DOM dynamically across any university calculator page.
+      - Automatically detects Bagrut average, Psychometric general/quantitative/verbal/English, subject units, subject grades, and Realit bonus checkboxes.
+      - **Strict Protection for Degree Search Inputs**: Automatically excludes degree/major search inputs (such as HUJI's `input.search-bar`), navigation bars, and authentication fields, ensuring degree search inputs NEVER receive score values.
+    - **On-Demand Action Dock & Live Audit Drawer (`KalisDock` in `chrome-extension/kalis-dock.js`)**:
+      - Renders an editorial floating action dock on university calculator pages adhering to the warm canvas `#FAF8F5`, matte anthracite `#3C3C3C` action button, and soft borders `#E5DFD4`.
+      - Displays live detected fields count (`אותרו X שדות במחשבון זה`) and candidate target summary.
+      - **On-Demand Action Button ("מלא נתונים במחשבון")**: User explicitly triggers the fill; upon clicking, inputs are filled using native descriptor setters with synthetic `composed: true` event dispatching, and inputs are highlighted with `#EBF4EE` and `#22C55E`.
+      - **Live Audit Breakdown Drawer**: Displays an exact breakdown of what was filled (green with exact values) vs what was skipped due to missing candidate data (grey/blank with rationale) vs protected fields.
+      - Minimizable to an unobtrusive floating pill (`🎓 סייען מתקבלים`).
+    - **University-Specific Script Refactoring (`content-huji.js`, `content-tau.js`, `content-technion.js`, `content-bgu.js`, `content-general.js`)**:
+      - **HUJI (`go.huji.ac.il`)**: Inputs `programName` into the degree search bar, selects matching degree, ensures the admission modal is open, and coordinates with `KalisDock`.
+      - **TAU (`go.tau.ac.il`)**: React controlled form setter and Realit bonus checkbox coordination.
+      - **Technion (`admissions.technion.ac.il`)**: Form activation (`bagrotYes`) and subject table coordination.
+      - **BGU (`bgu.ac.il`, `apps4cloud.bgu.ac.il`)**: Iframe and SPA state tracking with zero-guess evaluation.
+      - **Universal (`content-general.js`)**: Universal coverage for Haifa, Ariel, Bar-Ilan, and Reichman.
+    - **Payload Enrichment in Web App (`UniversityVerificationModal.tsx`)**:
+      - Passed `hasTakenPsychometric`, `psychQuant`, `psychVerbal`, `psychEnglish`, `psychQuantEmphasis`, `psychVerbalEmphasis` alongside `targetSekem`, `targetBagrutAverage`, and `subjects`.
+    - **Quality & Verification**:
+      - Unit test suite: `src/modules/qa/__tests__/extensionDataGuard.test.ts` (**12/12 tests passing**).
+      - TypeScript: `npx tsc --noEmit` clean (0 errors).
+      - Production Build: `npm run build` clean (**34/34 routes** statically generated with 0 errors).
+
+27. **BGU Quantitative Sekem Exact Match, Subscore Headroom Scaling & Live Verification Synchronization (`bgu.ts`, `multiCalculator.ts`, `psychometricHelper.ts`, `UniversityVerificationModal.tsx`, `bgu_fast_track.test.ts`):**
+    - **Official BGU Quantitative Sekem Formula**: Verified against BGU live calculator (`GetSekemQuantity`) and implemented official formula: $\text{SekemQuantity} = 2.705 Q + 0.715 V + 0.39 E + 6.29 B - 448$ for Computer Science, Bioinformatics, Biophysics, and Natural Sciences.
+    - **Psychometric Subscore Headroom Scaling (`psychometricHelper.ts`)**: Resolved formula mismatch in `simulateRealisticSubscores` where $\Delta W$ previously compared theoretical $W(target)$ with empirical subscores $(2q+2v+e)/5$, which had crushed the effective score delta from 5.5 down to 0.83. Shifted to $\Delta W = \Delta P / 6$, allocating proportional headroom across section scores ($Q, V, E$) so improved general psychometric scores (e.g. 649) properly advance Quantitative ($135 \to 138$), Verbal ($125 \to 130$), and English ($100 \to 111$).
+    - **Dynamic Section Scores in Verification Modal & Chrome Extension (`UniversityVerificationModal.tsx`)**: When a proposed track includes psychometric improvement, the modal now calculates realistic upgraded section subscores in real-time, displays them in the modal with individual copy buttons, and transmits them to the Chrome extension. This eliminates the discrepancy where BGU previously calculated Quantitative Sekem using the candidate's old section scores.
+    - **MultiCalculator Subscore Integrity (`multiCalculator.ts`)**: Separated 50–150 subscores from 200–800 emphasis scores, eliminating potential 800 overflow.
+    - **Quality State**: **57/57 tests passing** (45 calculator & variance tests + 12 Chrome extension data guard tests), clean TypeScript (`tsc --noEmit`), clean Next.js production build (34/34 routes).
 
 ---
+
 
 ## 🛑 6. Mandatory Wrap-Up Protocol: When User Says "סיימנו להיום" / "Done for today"
 Whenever the user says **"סיימנו להיום"**, **"סיימנו"**, **"עוצרים כאן"**, or **"Done for today"**, you MUST automatically and sequentially execute this 4-step wrap-up protocol:

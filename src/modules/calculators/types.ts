@@ -3,6 +3,16 @@
  * Subagent 3: Data Verification & Institution Calculators
  */
 
+export type InstitutionId =
+	| 'technion'
+	| 'tau'
+	| 'huji'
+	| 'bgu'
+	| 'haifa'
+	| 'ariel'
+	| 'bar_ilan'
+	| 'reichman';
+
 export interface CalculatorSubject {
 	name: string;
 	units: number;
@@ -48,6 +58,7 @@ export interface InstitutionCalculatorResult {
 	generalSekem: number;
 	engineeringSekem?: number;
 	managementSekem?: number;
+	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
 	notes: string[];
 	droppedSubjects: string[];

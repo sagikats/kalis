@@ -799,6 +799,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                     onSelectSubject={handleSelectSubjectFromCatalog}
                     existingSubjectNames={subjects.map(s => s.name)}
                     title={editingSubjectIndex !== null ? 'החלפת מקצוע בגרות' : 'הוספת מקצוע בגרות או הגברה'}
+                    targetInstitutionId={selectedInstIds.length === 1 ? (selectedInstIds[0] as any) : undefined}
                />
 
                {/* Admission Panel — slides in from right */}

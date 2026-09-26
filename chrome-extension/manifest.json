@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "מתקבלים — אימות סכם אוטומטי במחשבוני האוניברסיטאות",
   "short_name": "מתקבלים AutoFill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ממלא אוטומטית ציוני בגרות ופסיכומטרי במחשבוני הסכם של 8 האוניברסיטאות בישראל ישירות מתוך אתר מתקבלים",
   "icons": {
     "16": "icons/icon-16.png",
@@ -56,7 +56,12 @@
         "*://admissions.technion.ac.il/*",
         "*://*.technion.ac.il/*"
       ],
-      "js": ["content-technion.js"],
+      "js": [
+        "data-guard.js",
+        "field-scanner.js",
+        "kalis-dock.js",
+        "content-technion.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -65,7 +70,12 @@
         "*://go.tau.ac.il/*",
         "*://*.tau.ac.il/*"
       ],
-      "js": ["content-tau.js"],
+      "js": [
+        "data-guard.js",
+        "field-scanner.js",
+        "kalis-dock.js",
+        "content-tau.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -74,7 +84,12 @@
         "*://*.bgu.ac.il/*",
         "*://apps4cloud.bgu.ac.il/*"
       ],
-      "js": ["content-bgu.js"],
+      "js": [
+        "data-guard.js",
+        "field-scanner.js",
+        "kalis-dock.js",
+        "content-bgu.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -83,7 +98,12 @@
         "*://go.huji.ac.il/*",
         "*://*.huji.ac.il/*"
       ],
-      "js": ["content-huji.js"],
+      "js": [
+        "data-guard.js",
+        "field-scanner.js",
+        "kalis-dock.js",
+        "content-huji.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -94,7 +114,12 @@
         "*://*.ariel.ac.il/*",
         "*://*.runi.ac.il/*"
       ],
-      "js": ["content-general.js"],
+      "js": [
+        "data-guard.js",
+        "field-scanner.js",
+        "kalis-dock.js",
+        "content-general.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     }

@@ -36,7 +36,7 @@ export interface ImprovementOption {
 export interface ProgramGapAnalysis {
 	target: TargetProgramSelection;
 	threshold: number | null;
-	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion';
+	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
 	relevantSekemLabel: string;
 	userSekem: number;
 	gap: number; // positive = surplus, negative = points needed
@@ -76,7 +76,7 @@ export function parseAdmissionThreshold(raw: number | string | undefined | null)
 export function resolveProgramSekemType(
 	calcId: string,
 	programTitle: string
-): { type: 'general' | 'engineering' | 'management' | 'technion'; label: string } {
+): { type: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative'; label: string } {
 	if (calcId === 'technion') {
 		return { type: 'technion', label: 'סכם טכניוני' };
 	}
@@ -109,8 +109,20 @@ export function resolveProgramSekemType(
 	}
 
 	if (calcId === 'bgu') {
-		if (title.includes('הנדס') || isEngineeringOrStem) {
-			return { type: 'engineering', label: 'סכם כמותי / הנדסה (ב"ג)' };
+		const isCS =
+			title.includes('מדעי המחשב') ||
+			title.includes('תוכנה') ||
+			title.includes('סייבר') ||
+			title.includes('מערכות מידע') ||
+			title.includes('נתונים');
+		if (isCS) {
+			return { type: 'quantitative', label: 'סכם כמותי (ב"ג)' };
+		}
+		if (title.includes('הנדס')) {
+			return { type: 'engineering', label: 'סכם הנדסה (ב"ג)' };
+		}
+		if (isEngineeringOrStem) {
+			return { type: 'quantitative', label: 'סכם כמותי (ב"ג)' };
 		}
 		return { type: 'general', label: 'סכם כללי (ב"ג)' };
 	}
@@ -242,7 +254,9 @@ export function analyzeProgramGap(
 
 	// Select relevant Sekem score
 	let userSekem = institutionRes.generalSekem;
-	if (sekemType === 'engineering' && institutionRes.engineeringSekem) {
+	if (sekemType === 'quantitative' && institutionRes.quantitativeSekem) {
+		userSekem = institutionRes.quantitativeSekem;
+	} else if (sekemType === 'engineering' && institutionRes.engineeringSekem) {
 		userSekem = institutionRes.engineeringSekem;
 	} else if (sekemType === 'management' && institutionRes.managementSekem) {
 		userSekem = institutionRes.managementSekem;

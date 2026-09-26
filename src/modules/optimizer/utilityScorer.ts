@@ -198,6 +198,21 @@ export function extractRankedSubjectLevers(
 		});
 	}
 
+	const litSub = profile.bagrutSubjects.find((s) => s.subjectName.includes('ספרות') && s.units >= 2);
+	if (litSub && litSub.units < 5) {
+		candidates.push({
+			id: 'literature_5u_expansion',
+			subjectName: 'ספרות עברית',
+			currentGrade: litSub.grade,
+			currentUnits: litSub.units,
+			targetGrade: 92,
+			targetUnits: 5,
+			priority: 2,
+			reason: 'הרחבה מ-2 ל-5 יח״ל באמצעות שאלון השלמה של 3 יח״ל בלבד: מעניקה בונוס מלא (20–25 נקודות).',
+			leverType: 'bagrut_elective'
+		});
+	}
+
 	// 3. Geography 5 units (High-Yield Standalone Elective)
 	const hasGeo = profile.bagrutSubjects.some((s) => s.subjectName.includes('גיאוגרפיה'));
 	if (!hasGeo) {

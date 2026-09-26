@@ -25,6 +25,7 @@ import {
 	VerificationSubjectItem,
 	VerificationDataSummary
 } from '@/utils/universityCalculators';
+import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 
 interface UniversityVerificationModalProps {
@@ -174,6 +175,30 @@ export default function UniversityVerificationModal({
 	const originalPsych = userProfile?.psychometricGeneral || 0;
 	const isPsychUpgraded = Boolean(track?.targetPsychometric && track.targetPsychometric > originalPsych);
 
+	// Compute upgraded subscores if psychometric is upgraded
+	let effectiveQuant = userProfile?.psychometricQuant;
+	let effectiveVerbal = userProfile?.psychometricVerbal;
+	let effectiveEnglish = userProfile?.psychometricEnglish;
+	let effectiveQuantEmphasis = userProfile?.psychometricQuantEmphasis;
+	let effectiveVerbalEmphasis = userProfile?.psychometricVerbalEmphasis;
+
+	if (isPsychUpgraded && targetPsych > 0) {
+		const sim = simulateRealisticSubscores(
+			targetPsych,
+			originalPsych,
+			userProfile?.psychometricQuant,
+			userProfile?.psychometricVerbal,
+			userProfile?.psychometricEnglish,
+			userProfile?.psychometricQuantEmphasis,
+			userProfile?.psychometricVerbalEmphasis
+		);
+		effectiveQuant = sim.quantSub;
+		effectiveVerbal = sim.verbalSub;
+		effectiveEnglish = sim.englishSub;
+		effectiveQuantEmphasis = sim.quantEmphasis;
+		effectiveVerbalEmphasis = sim.verbalEmphasis;
+	}
+
 	// Summary data for clipboard
 	const summaryData: VerificationDataSummary = {
 		institutionName: calcInfo.shortName,
@@ -185,9 +210,9 @@ export default function UniversityVerificationModal({
 		psychometricScore: targetPsych,
 		isPsychUpgraded,
 		originalPsychometric: originalPsych,
-		psychQuant: userProfile?.psychometricQuant,
-		psychVerbal: userProfile?.psychometricVerbal,
-		psychEnglish: userProfile?.psychometricEnglish,
+		psychQuant: effectiveQuant,
+		psychVerbal: effectiveVerbal,
+		psychEnglish: effectiveEnglish,
 		subjects: verificationSubjects,
 		calculatorUrl: calcInfo.calculatorUrl
 	};
@@ -216,6 +241,7 @@ export default function UniversityVerificationModal({
 	const handleTriggerExtensionAutofill = () => {
 		if (!track) return;
 		setIsAutofilling(true);
+		const hasPsych = Boolean(targetPsych > 0 && (userProfile?.hasTakenPsychometric !== false));
 		window.postMessage({
 			type: 'KALIS_TRIGGER_AUTOFILL',
 			payload: {
@@ -223,9 +249,16 @@ export default function UniversityVerificationModal({
 				institutionName: calcInfo.shortName,
 				programName: programName || '',
 				calculatorUrl: calcInfo.calculatorUrl,
-				psychometricScore: targetPsych,
+				hasTakenPsychometric: hasPsych,
+				psychometricScore: hasPsych ? targetPsych : null,
+				psychQuant: effectiveQuant || null,
+				psychVerbal: effectiveVerbal || null,
+				psychEnglish: effectiveEnglish || null,
+				psychQuantEmphasis: effectiveQuantEmphasis || null,
+				psychVerbalEmphasis: effectiveVerbalEmphasis || null,
 				targetSekem: track.targetSekem,
-				targetBagrutAverage: track.targetBagrutAverage || track.currentBagrutAverage,
+				admissionThreshold: threshold || null,
+				targetBagrutAverage: track.targetBagrutAverage || track.currentBagrutAverage || 0,
 				subjects: verificationSubjects
 			}
 		}, '*');
@@ -495,41 +528,81 @@ export default function UniversityVerificationModal({
 						</div>
 
 						{targetPsych > 0 ? (
-							<div className="p-3.5 bg-white border border-[#E5DFD4] rounded-2xl flex items-center justify-between gap-3 shadow-2xs">
-								<div>
-									<div className="text-xs font-bold text-[#44423D]">
-										פסיכומטרי כללי / רב-תחומי:
-									</div>
-									<div className="flex items-baseline gap-2 mt-0.5">
-										<span className="text-lg font-black text-[#222222] dir-ltr">
-											{targetPsych}
-										</span>
-										{isPsychUpgraded && originalPsych > 0 && (
-											<span className="text-xs font-bold text-[#205739] dir-ltr">
-												(משודרג מ-{originalPsych}, +{targetPsych - originalPsych})
+							<div className="space-y-2">
+								<div className="p-3.5 bg-white border border-[#E5DFD4] rounded-2xl flex items-center justify-between gap-3 shadow-2xs">
+									<div>
+										<div className="text-xs font-bold text-[#44423D]">
+											פסיכומטרי כללי / רב-תחומי:
+										</div>
+										<div className="flex items-baseline gap-2 mt-0.5">
+											<span className="text-lg font-black text-[#222222] dir-ltr">
+												{targetPsych}
 											</span>
-										)}
+											{isPsychUpgraded && originalPsych > 0 && (
+												<span className="text-xs font-bold text-[#205739] dir-ltr">
+													(משודרג מ-{originalPsych}, +{targetPsych - originalPsych})
+												</span>
+											)}
+										</div>
 									</div>
+
+									<button
+										type="button"
+										onClick={() => handleCopyIndividual(String(targetPsych), 'psych')}
+										className="px-3 py-1.5 rounded-lg border border-[#DDD7CC] bg-[#FAF8F5] hover:bg-[#F2EFE9] text-xs font-bold text-[#222222] flex items-center gap-1.5 transition cursor-pointer"
+										title="העתק ציון"
+									>
+										{copiedField === 'psych' ? (
+											<>
+												<Check className="h-3 w-3 text-[#205739]" />
+												<span className="text-[#205739]">הועתק</span>
+											</>
+										) : (
+											<>
+												<Copy className="h-3 w-3 text-[#66635C]" />
+												<span>העתק</span>
+											</>
+										)}
+									</button>
 								</div>
 
-								<button
-									type="button"
-									onClick={() => handleCopyIndividual(String(targetPsych), 'psych')}
-									className="px-3 py-1.5 rounded-lg border border-[#DDD7CC] bg-[#FAF8F5] hover:bg-[#F2EFE9] text-xs font-bold text-[#222222] flex items-center gap-1.5 transition cursor-pointer"
-									title="העתק ציון"
-								>
-									{copiedField === 'psych' ? (
-										<>
-											<Check className="h-3 w-3 text-[#205739]" />
-											<span className="text-[#205739]">הועתק</span>
-										</>
-									) : (
-										<>
-											<Copy className="h-3 w-3 text-[#66635C]" />
-											<span>העתק</span>
-										</>
-									)}
-								</button>
+								{(effectiveQuant || effectiveVerbal || effectiveEnglish) && (
+									<div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-3 bg-[#FAF8F5] border border-[#E5DFD4] rounded-xl text-xs">
+										{effectiveQuant && (
+											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-[#EAE5DA]">
+												<span className="text-[#66635C] font-medium">כמותי:</span>
+												<div className="flex items-center gap-1.5">
+													<span className="font-bold text-[#222222] dir-ltr">{effectiveQuant}</span>
+													{isPsychUpgraded && userProfile?.psychometricQuant && effectiveQuant > userProfile.psychometricQuant && (
+														<span className="text-[10px] text-[#205739] font-bold dir-ltr">(+{effectiveQuant - userProfile.psychometricQuant})</span>
+													)}
+												</div>
+											</div>
+										)}
+										{effectiveVerbal && (
+											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-[#EAE5DA]">
+												<span className="text-[#66635C] font-medium">מילולי:</span>
+												<div className="flex items-center gap-1.5">
+													<span className="font-bold text-[#222222] dir-ltr">{effectiveVerbal}</span>
+													{isPsychUpgraded && userProfile?.psychometricVerbal && effectiveVerbal > userProfile.psychometricVerbal && (
+														<span className="text-[10px] text-[#205739] font-bold dir-ltr">(+{effectiveVerbal - userProfile.psychometricVerbal})</span>
+													)}
+												</div>
+											</div>
+										)}
+										{effectiveEnglish && (
+											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-[#EAE5DA]">
+												<span className="text-[#66635C] font-medium">אנגלית:</span>
+												<div className="flex items-center gap-1.5">
+													<span className="font-bold text-[#222222] dir-ltr">{effectiveEnglish}</span>
+													{isPsychUpgraded && userProfile?.psychometricEnglish && effectiveEnglish > userProfile.psychometricEnglish && (
+														<span className="text-[10px] text-[#205739] font-bold dir-ltr">(+{effectiveEnglish - userProfile.psychometricEnglish})</span>
+													)}
+												</div>
+											</div>
+										)}
+									</div>
+								)}
 							</div>
 						) : (
 							<div className="p-3 bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl text-xs text-[#66635C]">

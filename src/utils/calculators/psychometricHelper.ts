@@ -286,9 +286,9 @@ export function simulateRealisticSubscores(
 	const headE = Math.max(0, 150 - e0);
 	const totalWeightedHead = headQ * 2 + headV * 2 + headE; // NITE weights (2, 2, 1)
 
-	const targetW = 50 + (targetGen - 200) / 6;
-	const currentW = (2 * q0 + 2 * v0 + e0) / 5;
-	const deltaW = targetW - currentW;
+	// Delta in weighted scale (50-150):
+	// A change of (targetGen - currentGen) on the 200-800 scale represents (targetGen - currentGen) / 6 on the 50-150 scale
+	const deltaW = deltaGen / 6;
 
 	let q1 = q0;
 	let v1 = v0;

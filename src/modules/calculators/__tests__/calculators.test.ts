@@ -74,10 +74,9 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 	});
 
 	it('BGU: General Sekem formula calculation', () => {
-		// BT = 105 * 10 - 330 = 720
-		// Sekem = 0.5 * 700 + 0.5 * 720 = 710
+		// Official BGU live formula: 0.62 * 700 + 5.9 * 105.0 - 330 = 434 + 619.5 - 330 = 723.5 -> 724
 		const bguSekem = calculateBguGeneralSekem(105.0, 700);
-		assert.equal(bguSekem, 710);
+		assert.equal(bguSekem, 724);
 	});
 
 	it('Haifa & Ariel: Correct Sekem formulas', () => {

@@ -9,7 +9,7 @@ import {
 	evaluateAriel,
 	evaluateBarIlan,
 	evaluateReichman
-} from '@/modules/calculators';
+} from '../../modules/calculators';
 
 export interface UnifiedCalculationInput {
 	bagrutSubjects: SubjectInput[];
@@ -34,6 +34,7 @@ export interface InstitutionSekemResult {
 	generalSekem: number;
 	engineeringSekem?: number;
 	managementSekem?: number;
+	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
 	notes?: string;
 	droppedSubjects?: string[];
@@ -124,14 +125,24 @@ export function calculateMultiInstitutionSekem(
 		}
 	}
 
+	const resolvedQuantSub = input.psychometricQuant && input.psychometricQuant <= 150
+		? input.psychometricQuant
+		: (psychResolution.rawSubscores?.quant || undefined);
+	const resolvedVerbalSub = input.psychometricVerbal && input.psychometricVerbal <= 150
+		? input.psychometricVerbal
+		: (psychResolution.rawSubscores?.verbal || undefined);
+	const resolvedEnglishSub = input.psychometricEnglish && input.psychometricEnglish <= 150
+		? input.psychometricEnglish
+		: (psychResolution.rawSubscores?.english || undefined);
+
 	const commonCalcInput = {
 		bagrutSubjects: input.bagrutSubjects,
 		psychometricGeneral: psych,
-		psychometricQuant: quant,
-		psychometricVerbal: verbal,
-		psychometricEnglish: input.psychometricEnglish,
-		psychometricQuantEmphasis: input.psychometricQuantEmphasis,
-		psychometricVerbalEmphasis: input.psychometricVerbalEmphasis,
+		psychometricQuant: resolvedQuantSub,
+		psychometricVerbal: resolvedVerbalSub,
+		psychometricEnglish: resolvedEnglishSub,
+		psychometricQuantEmphasis: quant,
+		psychometricVerbalEmphasis: verbal,
 		mathGrade: resolvedMathGrade,
 		mathUnits: resolvedMathUnits,
 		physicsGrade: resolvedPhysicsGrade,
@@ -171,6 +182,7 @@ export function calculateMultiInstitutionSekem(
 			bagrutAverage: bguRes.bagrutAverage,
 			generalSekem: bguRes.generalSekem,
 			engineeringSekem: bguRes.engineeringSekem,
+			quantitativeSekem: bguRes.quantitativeSekem,
 			directBagrutEligible: bguRes.directBagrutEligible,
 			droppedSubjects: bguRes.droppedSubjects,
 			optimalUnits: bguRes.optimalUnits,

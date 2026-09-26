@@ -15,6 +15,7 @@ import {
 	calculateTechnionSekem,
 	calculateBguGeneralSekem,
 	calculateBguEngineeringSekem,
+	calculateBguQuantitativeSekem,
 	calculateHujiSekem,
 	calculateHaifaSekem,
 	calculateArielSekem,
@@ -115,10 +116,10 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 			assert.ok(res.engineeringSekem! < 800, 'BGU Engineering Sekem must not exceed 800');
 		});
 
-		it('Case 2: General Sekem: Bagrut 105.0 + Psychometric 650 -> Exact Sekem 685', () => {
-			// BT = 105 * 10 - 330 = 720; Sekem = 0.5 * 650 + 0.5 * 720 = 325 + 360 = 685
+		it('Case 2: General Sekem: Bagrut 105.0 + Psychometric 650 -> Exact Sekem 693', () => {
+			// Official BGU live formula: 0.62 * 650 + 5.9 * 105.0 - 330 = 403 + 619.5 - 330 = 692.5 -> 693
 			const genSekem = calculateBguGeneralSekem(105.0, 650);
-			assert.equal(genSekem, 685);
+			assert.equal(genSekem, 693);
 		});
 
 		it('Case 3: Direct Bagrut threshold: Bagrut 105.0 -> directBagrutEligible = true', () => {
@@ -129,6 +130,12 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 				mathGrade: 90
 			});
 			assert.equal(res.directBagrutEligible, true, 'BGU direct bagrut threshold is >= 104');
+		});
+
+		it('Case 4: Quantitative Sekem (CS / Natural Sciences): Bagrut 115.0 + Q:135, V:125, E:100 -> Exact Sekem 769', () => {
+			// Verified against BGU live calculator: 2.705 * 135 + 0.715 * 125 + 0.39 * 100 + 6.29 * 115 - 448 = 769.0
+			const quantSekem = calculateBguQuantitativeSekem(115.0, 135, 125, 100);
+			assert.equal(quantSekem, 769, 'BGU Quantitative Sekem must match official BGU calculator 769');
 		});
 	});
 

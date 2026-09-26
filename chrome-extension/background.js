@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'PING') {
-    sendResponse({ status: 'ok', version: '1.0.0' });
+    sendResponse({ status: 'ok', version: '1.1.0' });
     return false;
   }
 });

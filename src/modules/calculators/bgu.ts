@@ -52,6 +52,8 @@ export function getBguBonus(subject: CalculatorSubject): number {
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
 			n.includes('סייבר') ||
+			n.includes('תוכנה') ||
+			n.includes('אלקטרוניקה') ||
 			n.includes('היסטוריה') ||
 			n.includes('אזרחות') ||
 			n.includes('ספרות') ||
@@ -158,8 +160,8 @@ export function calculateBguOptimalBagrut(subjects: CalculatorSubject[]): Optima
 
 export function calculateBguGeneralSekem(bagrutAverage: number, psychometricGeneral: number): number {
 	if (bagrutAverage <= 0 || psychometricGeneral <= 0) return 0;
-	const bt = bagrutAverage * 10 - 330;
-	const rawSekem = 0.5 * psychometricGeneral + 0.5 * bt;
+	// Official BGU General Sekem Formula verified against live institutional calculator (bgucr4u.bgu.ac.il/ords/sc/calculators/GetSekem)
+	const rawSekem = 0.62 * psychometricGeneral + 5.9 * bagrutAverage - 330;
 	return Math.min(800, Math.max(200, Math.round(rawSekem)));
 }
 
@@ -206,6 +208,20 @@ export function calculateBguEngineeringSekem(
 	return Math.min(800, Math.max(200, Math.round(rawSekem * 10) / 10));
 }
 
+export function calculateBguQuantitativeSekem(
+	bagrutAverage: number,
+	quant: number,
+	verbal: number = 0,
+	english: number = 0
+): number {
+	if (bagrutAverage <= 0 || quant <= 0) return 0;
+	const v = verbal > 0 ? verbal : quant;
+	const e = english > 0 ? english : quant;
+	// Official BGU Quantitative Sekem Formula verified against live institutional calculator (GetSekemQuantity)
+	const rawSekem = 2.705 * quant + 0.715 * v + 0.39 * e + 6.29 * bagrutAverage - 448;
+	return Math.min(800, Math.max(200, Math.round(rawSekem)));
+}
+
 export function evaluateBgu(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateBguOptimalBagrut(input.bagrutSubjects);
 	const mathSub = input.bagrutSubjects.find((s) => s.name.includes('מתמטיקה'));
@@ -234,6 +250,26 @@ export function evaluateBgu(input: InstitutionCalculatorInput): InstitutionCalcu
 		optimal.average
 	);
 
+	// Quantitative Sekem (for Computer Science & Natural Sciences at BGU)
+	const rawQ = input.psychometricQuant || 0;
+	const qSub = rawQ > 0 && rawQ <= 150
+		? rawQ
+		: (rawQ > 150 ? Math.round(50 + (rawQ - 200) / 6) : (input.psychometricQuantEmphasis ? Math.round(50 + (input.psychometricQuantEmphasis - 200) / 6) : (psych > 0 ? Math.round(50 + (psych - 200) / 6) : 0)));
+
+	const rawV = input.psychometricVerbal || 0;
+	const vSub = rawV > 0 && rawV <= 150
+		? rawV
+		: (rawV > 150 ? Math.round(50 + (rawV - 200) / 6) : (input.psychometricVerbalEmphasis ? Math.round(50 + (input.psychometricVerbalEmphasis - 200) / 6) : (psych > 0 ? Math.round(50 + (psych - 200) / 6) : 0)));
+
+	const rawE = input.psychometricEnglish || 0;
+	const eSub = rawE > 0 && rawE <= 150
+		? rawE
+		: (rawE > 150 ? Math.round(50 + (rawE - 200) / 6) : (psych > 0 ? Math.round(50 + (psych - 200) / 6) : 0));
+
+	const quantitativeSekem = qSub > 0
+		? calculateBguQuantitativeSekem(optimal.average, qSub, vSub, eSub)
+		: generalSekem;
+
 	const directBagrutEligible = optimal.average >= 104.0;
 
 	return {
@@ -243,6 +279,7 @@ export function evaluateBgu(input: InstitutionCalculatorInput): InstitutionCalcu
 		optimalUnits: optimal.optimalUnits,
 		generalSekem,
 		engineeringSekem,
+		quantitativeSekem,
 		directBagrutEligible,
 		notes: directBagrutEligible
 			? ['ממוצע בגרות עומד ברף קבלה ישירה (104 ומעלה) לחוגים זכאים.']

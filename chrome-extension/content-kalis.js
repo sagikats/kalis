@@ -9,12 +9,12 @@
   } catch (e) {}
 
   // Announce presence via window postMessage
-  window.postMessage({ type: 'KALIS_EXTENSION_READY', version: '1.0.0' }, '*');
+  window.postMessage({ type: 'KALIS_EXTENSION_READY', version: '1.1.0' }, '*');
 
   // Also dispatch a custom DOM event
   try {
     window.dispatchEvent(new CustomEvent('kalis:extension-ready', {
-      detail: { version: '1.0.0' }
+      detail: { version: '1.1.0' }
     }));
   } catch (e) {}
 
@@ -33,7 +33,7 @@
 
     if (event.data?.type === 'KALIS_PING_EXTENSION') {
       const isAlive = Boolean(chrome?.runtime?.id);
-      window.postMessage({ type: 'KALIS_PONG_EXTENSION', version: '1.0.0', isAlive }, '*');
+      window.postMessage({ type: 'KALIS_PONG_EXTENSION', version: '1.1.0', isAlive }, '*');
       return;
     }
 

@@ -47,6 +47,10 @@ export function getTauBonus(subject: CalculatorSubject): number {
 			n.includes('פיזיקה') ||
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
+			n.includes('מדעי המחשב') ||
+			n.includes('סייבר') ||
+			n.includes('תוכנה') ||
+			n.includes('אלקטרוניקה') ||
 			n.includes('ספרות') ||
 			n.includes('היסטוריה') ||
 			n.includes('תע"י') ||
@@ -56,7 +60,7 @@ export function getTauBonus(subject: CalculatorSubject): number {
 		) {
 			return 25;
 		}
-		return 20; // Computer Science, Software, other 5u electives
+		return 20; // Geography, Social sciences, Foreign languages, Arts, other 5u electives
 	}
 
 	if (subject.units === 4) {

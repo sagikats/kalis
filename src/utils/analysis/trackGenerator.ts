@@ -262,7 +262,9 @@ export function evaluateSimulatedSekem(
 	});
 
 	let sekem = instRes.generalSekem;
-	if (relevantSekemType === 'engineering' && instRes.engineeringSekem !== undefined) {
+	if (relevantSekemType === 'quantitative' && instRes.quantitativeSekem !== undefined) {
+		sekem = instRes.quantitativeSekem;
+	} else if (relevantSekemType === 'engineering' && instRes.engineeringSekem !== undefined) {
 		sekem = instRes.engineeringSekem;
 	} else if (relevantSekemType === 'management' && instRes.managementSekem !== undefined) {
 		sekem = instRes.managementSekem;
@@ -1041,6 +1043,7 @@ export function generatePersonalizedTracks(
 	const effectiveGap = Math.max(0, threshold - baselineSekem);
 	const isTechnion = calculatorId === 'technion';
 	const isStemDegree =
+		relevantSekemType === 'quantitative' ||
 		relevantSekemType === 'engineering' ||
 		relevantSekemType === 'technion' ||
 		gapAnalysis.target.program.fieldOfStudy.includes('הנדס') ||

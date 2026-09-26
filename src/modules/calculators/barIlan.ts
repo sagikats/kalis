@@ -62,6 +62,8 @@ export function getBarIlanBonus(subject: CalculatorSubject): number {
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
 			n.includes('אלקטרוניקה') ||
+			n.includes('סייבר') ||
+			n.includes('תוכנה') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
 			n.includes('מחשבת ישראל') ||

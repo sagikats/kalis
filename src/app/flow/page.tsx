@@ -19,7 +19,8 @@ import {
 	RefreshCw,
 	Layers,
 	Target,
-	Search
+	Search,
+	Check
 } from 'lucide-react';
 
 import { useAuth } from '@/context/AuthContext';
@@ -31,7 +32,7 @@ import {
 	checkPsychometricCoherence
 } from '@/utils/calculators/psychometricHelper';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
-import { BagrutSubjectOption } from '@/data/bagrutSubjects';
+import { BagrutSubjectOption, POPULAR_5U_ELECTIVES } from '@/data/bagrutSubjects';
 import { cleanGradeInput, cleanNumberInput } from '@/utils/gradeInputHelper';
 
 import DegreeSearchSelector from '@/components/flow/DegreeSearchSelector';
@@ -982,6 +983,62 @@ export default function AdmissionFlowPage() {
 											</div>
 										))}
 									</div>
+
+									{/* Quick-Add Popular 5U Electives Strip */}
+									<div className="pt-4 border-t border-[#EAE5DA] space-y-2.5">
+										<div className="flex items-center justify-between flex-wrap gap-2">
+											<div className="flex items-center gap-1.5 text-xs font-bold text-[#44423D]">
+												<Sparkles className="h-3.5 w-3.5 text-amber-600" />
+												<span>הוספה מהירה של מקצוע הגברה (5 יח״ל):</span>
+											</div>
+											<button
+												type="button"
+												onClick={() => {
+													setEditingSubjectIndex(null);
+													setIsSubjectModalOpen(true);
+												}}
+												className="text-[11px] font-bold text-[#66635C] hover:text-[#222222] transition flex items-center gap-1 cursor-pointer"
+											>
+												<span>לכל המקצועות בקטלוג הרשמי...</span>
+												<ArrowLeft className="h-3 w-3" />
+											</button>
+										</div>
+
+										<div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+											{POPULAR_5U_ELECTIVES.slice(0, 12).map((pop) => {
+												const isAlreadyAdded = subjects.some(
+													(s) => s.name.trim().toLowerCase() === pop.name.trim().toLowerCase()
+												);
+												return (
+													<button
+														key={pop.id}
+														type="button"
+														disabled={isAlreadyAdded}
+														onClick={() => {
+															setSubjects([
+																...subjects,
+																{ name: pop.name, units: pop.units, grade: 0 }
+															]);
+														}}
+														className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 flex items-center gap-1.5 border cursor-pointer ${
+															isAlreadyAdded
+																? 'bg-[#FAF8F5] text-[#8A847C] border-[#E5DFD4] opacity-60 cursor-not-allowed'
+																: 'bg-white hover:bg-[#FAF8F5] text-[#222222] border-[#DDD7CB] hover:border-[#3C3C3C] shadow-2xs active:scale-95'
+														}`}
+														title={pop.description}
+													>
+														<span>{pop.icon}</span>
+														<span>{pop.shortLabel || pop.name}</span>
+														{isAlreadyAdded ? (
+															<Check className="h-3 w-3 text-emerald-600" />
+														) : (
+															<Plus className="h-3 w-3 text-[#66635C]" />
+														)}
+													</button>
+												);
+											})}
+										</div>
+									</div>
 								</div>
 
 								{/* Validation alert banner if bagrut has issues */}
@@ -1458,6 +1515,7 @@ export default function AdmissionFlowPage() {
 					onSelectSubject={handleAddSubjectFromCatalog}
 					existingSubjectNames={subjects.map((s) => s.name)}
 					title={editingSubjectIndex !== null ? 'החלפת מקצוע בגרות' : 'הוספת מקצוע בגרות או הגברה'}
+					targetInstitutionId={selectedTargets[0]?.calculatorId as any}
 				/>
 			</main>
 

@@ -51,11 +51,14 @@ export function getArielBonus(subject: CalculatorSubject): number {
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
 			n.includes('מדעי המחשב') ||
+			n.includes('סייבר') ||
+			n.includes('אלקטרוניקה') ||
 			n.includes('הנדס') ||
 			n.includes('ספרות') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
-			n.includes('היסטוריה')
+			n.includes('היסטוריה') ||
+			n.includes('ערבית')
 		) {
 			return 25;
 		}

@@ -38,7 +38,7 @@ import { getRealisticPsychometricCeiling, RecommendedTrack, evaluateSimulatedSek
 import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
 import { isSubjectMatch } from '@/modules/optimizer/solver';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
-import { BagrutSubjectOption } from '@/data/bagrutSubjects';
+import { BagrutSubjectOption, POPULAR_5U_ELECTIVES } from '@/data/bagrutSubjects';
 import MultiUniversityAdmissionGrid, { InstitutionSimulatedState } from '@/components/flow/MultiUniversityAdmissionGrid';
 import UniversityLogo from '@/components/common/UniversityLogo';
 import { useAuth } from '@/context/AuthContext';
@@ -63,17 +63,6 @@ interface WhatIfSimulatorProps {
 	onSaveCustomTrack?: (track: any) => Promise<void>;
 	onCancelEdit?: () => void;
 }
-
-// Popular 5-unit electives commonly used by Israeli students to boost Bagrut average
-const POPULAR_5U_ELECTIVES = [
-	{ name: 'גיאוגרפיה', units: 5, defaultGrade: 90, label: '⚡ גיאוגרפיה 5 יח״ל (תוספת פופולרית)' },
-	{ name: 'מדעי המחשב', units: 5, defaultGrade: 88, label: '💻 מדעי המחשב 5 יח״ל' },
-	{ name: 'פיזיקה', units: 5, defaultGrade: 86, label: '⚛️ פיזיקה 5 יח״ל' },
-	{ name: 'כימיה', units: 5, defaultGrade: 88, label: '🧪 כימיה 5 יח״ל' },
-	{ name: 'ביולוגיה', units: 5, defaultGrade: 88, label: '🧬 ביולוגיה 5 יח״ל' },
-	{ name: 'ספרות מורחב', units: 5, defaultGrade: 88, label: '📖 ספרות מורחב 5 יח״ל' },
-	{ name: 'תנ״ך מורחב', units: 5, defaultGrade: 88, label: '📜 תנ״ך מורחב 5 יח״ל' }
-];
 
 /**
  * Pre-loads a recommended track's proposed improvements into What-If Simulator state
@@ -2086,35 +2075,37 @@ export default function WhatIfSimulator({
 								</span>
 							</div>
 
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-								{POPULAR_5U_ELECTIVES.map((elective) => {
-									const isAlreadyActive = simulatedList.some(
-										(s) => s.name === elective.name && s.isActive
-									);
-									return (
-										<button
-											key={elective.name}
-											type="button"
-											disabled={isAlreadyActive}
-											onClick={() => {
-												handleAddPopularElective(elective.name, elective.units, elective.defaultGrade);
-												setIsAddSubjectModalOpen(false);
-											}}
-											className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-between text-right cursor-pointer ${
-												isAlreadyActive
-													? 'bg-[#FAF8F5] text-[#8A847C] border-[#E5DFD4] cursor-not-allowed opacity-60'
-													: 'bg-[#FAF8F5] hover:bg-white text-[#222222] border-[#E5DFD4] hover:border-[#3C3C3C] shadow-2xs'
-											}`}
-										>
-											<span>{elective.label}</span>
-											{isAlreadyActive ? (
-												<span className="text-[10px] text-[#8A847C]">כבר ברשימה</span>
-											) : (
-												<Plus className="h-3.5 w-3.5 text-[#3C3C3C]" />
-											)}
-										</button>
-									);
-								})}
+							<div className="max-h-64 sm:max-h-72 overflow-y-auto pr-1">
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+									{POPULAR_5U_ELECTIVES.map((elective) => {
+										const isAlreadyActive = simulatedList.some(
+											(s) => s.name === elective.name && s.isActive
+										);
+										return (
+											<button
+												key={elective.name}
+												type="button"
+												disabled={isAlreadyActive}
+												onClick={() => {
+													handleAddPopularElective(elective.name, elective.units, elective.defaultGrade);
+													setIsAddSubjectModalOpen(false);
+												}}
+												className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-between text-right cursor-pointer ${
+													isAlreadyActive
+														? 'bg-[#FAF8F5] text-[#8A847C] border-[#E5DFD4] cursor-not-allowed opacity-60'
+														: 'bg-[#FAF8F5] hover:bg-white text-[#222222] border-[#E5DFD4] hover:border-[#3C3C3C] shadow-2xs'
+												}`}
+											>
+												<span>{elective.label}</span>
+												{isAlreadyActive ? (
+													<span className="text-[10px] text-[#8A847C]">כבר ברשימה</span>
+												) : (
+													<Plus className="h-3.5 w-3.5 text-[#3C3C3C]" />
+												)}
+											</button>
+										);
+									})}
+								</div>
 							</div>
 						</div>
 
@@ -2129,7 +2120,7 @@ export default function WhatIfSimulator({
 								className="w-full py-2.5 px-4 bg-white hover:bg-[#FAF8F5] text-[#66635C] hover:text-[#222222] text-xs font-bold rounded-xl border border-dashed border-[#DDD7CC] transition flex items-center justify-center gap-2 cursor-pointer"
 							>
 								<BookOpen className="h-4 w-4" />
-								<span>בחר מקצוע אחר מקטלוג משרד החינוך (40+ מקצועות)...</span>
+								<span>בחר מקצוע אחר מקטלוג משרד החינוך (68 מקצועות מוכרים)...</span>
 							</button>
 						</div>
 					</div>
@@ -2143,6 +2134,7 @@ export default function WhatIfSimulator({
 				onSelectSubject={handleSelectCatalogSubject}
 				existingSubjectNames={simulatedList.map((s) => s.name)}
 				title="הוספת מקצוע בגרות או הגברה לסימולציה"
+				targetInstitutionId={analysis.target.calculatorId as any}
 			/>
 		</div>
 	);
