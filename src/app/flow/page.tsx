@@ -40,6 +40,7 @@ import PreferenceQuestionnaire from '@/components/flow/PreferenceQuestionnaire';
 import RecommendedTracksView from '@/components/flow/RecommendedTracksView';
 import TrackRegistrationGate from '@/components/flow/TrackRegistrationGate';
 import AcceptedRegistrationCard from '@/components/flow/AcceptedRegistrationCard';
+import UniversityLogo from '@/components/common/UniversityLogo';
 import {
 	TargetProgramSelection,
 	ProgramGapAnalysis,
@@ -114,6 +115,12 @@ export default function AdmissionFlowPage() {
 	const handleProceedFromStep1 = () => {
 		if (!gradeValidation.isValid) {
 			setShowValidationErrors(true);
+			if (typeof window !== 'undefined') {
+				const alertEl = document.getElementById('step1-validation-alert');
+				if (alertEl) {
+					alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+			}
 			return;
 		}
 		setShowValidationErrors(false);
@@ -511,6 +518,16 @@ export default function AdmissionFlowPage() {
 		});
 	}, [selectedTargets, userProfile, institutionResultsMap, psychGeneral]);
 
+	// Counts summary for Step 3 status badges in navigation dock
+	const step3Counts = useMemo(() => {
+		return {
+			accepted: gapAnalyses.filter((a) => a.status === 'accepted').length,
+			borderline: gapAnalyses.filter((a) => a.status === 'borderline').length,
+			not_accepted: gapAnalyses.filter((a) => a.status === 'not_accepted').length,
+			no_threshold: gapAnalyses.filter((a) => a.status === 'no_threshold').length
+		};
+	}, [gapAnalyses]);
+
 	// Currently focused gap analysis for Step 4
 	const currentFocusedAnalysis = useMemo(() => {
 		if (focusedProgramId) {
@@ -612,7 +629,7 @@ export default function AdmissionFlowPage() {
 	}, [gradeValidation.isValid, currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
 
 	return (
-		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl">
+		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl pb-28 sm:pb-32">
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 				{/* Top Stepper Navigation */}
 				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs">
@@ -1075,7 +1092,7 @@ export default function AdmissionFlowPage() {
 
 						{/* Validation alert banner if attempting to advance without valid inputs */}
 						{showValidationErrors && !gradeValidation.isValid && (
-							<div className="p-4 rounded-2xl bg-[#FFF1F2] border border-[#FECDD3] text-[#9F1239] space-y-1.5 shadow-2xs">
+							<div id="step1-validation-alert" className="p-4 rounded-2xl bg-[#FFF1F2] border border-[#FECDD3] text-[#9F1239] space-y-1.5 shadow-2xs">
 								<div className="flex items-center gap-2 text-xs font-bold text-[#E11D48]">
 									<AlertCircle className="h-4 w-4 shrink-0" />
 									<span>יש להשלים את הזנת הציונים כדי שנוכל לחשב עבורך נתונים מדויקים</span>
@@ -1085,17 +1102,6 @@ export default function AdmissionFlowPage() {
 								</p>
 							</div>
 						)}
-
-						{/* ניווט תחתון לשלב 1 */}
-						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-end">
-							<button
-								onClick={handleProceedFromStep1}
-								className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
-							>
-								<span>המשך לבחירת תארים מבוקשים</span>
-								<ArrowLeft className="h-4 w-4" />
-							</button>
-						</div>
 					</div>
 				)}
 
@@ -1116,29 +1122,6 @@ export default function AdmissionFlowPage() {
 							onRemoveProgram={handleRemoveTarget}
 							onClearAll={handleClearAllTargets}
 						/>
-
-						{/* ניווט תחתון לשלב 2 */}
-						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between">
-							<button
-								onClick={() => setActiveStep(1)}
-								className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer"
-							>
-								<ArrowRight className="h-4 w-4" />
-								<span>חזור להזנת ציונים</span>
-							</button>
-							<button
-								onClick={() => setActiveStep(3)}
-								disabled={selectedTargets.length === 0}
-								className={`px-6 py-3 font-bold text-xs rounded-xl transition flex items-center gap-2 ${
-									selectedTargets.length > 0
-										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer'
-										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
-								}`}
-							>
-								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
-								<ArrowLeft className="h-4 w-4" />
-							</button>
-						</div>
 					</div>
 				)}
 
@@ -1196,24 +1179,6 @@ export default function AdmissionFlowPage() {
 									onViewGap={handleViewGapForProgram}
 									onAddMorePrograms={() => setActiveStep(2)}
 								/>
-
-								{/* ניווט תחתון לשלב 3 */}
-								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between">
-									<button
-										onClick={() => setActiveStep(2)}
-										className="px-5 py-3 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer"
-									>
-										<ArrowRight className="h-4 w-4" />
-										<span>חזור לבחירת תארים</span>
-									</button>
-									<button
-										onClick={() => setActiveStep(4)}
-										className="px-6 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
-									>
-										<span>לתכנון מסלולי פעולה</span>
-										<ArrowLeft className="h-4 w-4" />
-									</button>
-								</div>
 							</>
 						)}
 					</div>
@@ -1299,6 +1264,189 @@ export default function AdmissionFlowPage() {
 					title={editingSubjectIndex !== null ? 'החלפת מקצוע בגרות' : 'הוספת מקצוע בגרות או הגברה'}
 				/>
 			</main>
+
+			{/* ========================================================================= */}
+			{/* ALWAYS-VISIBLE STICKY BOTTOM NAVIGATION DOCK (סרגל ניווט תחתון קבוע וצף) */}
+			{/* ========================================================================= */}
+			<nav
+				aria-label="ניווט שלבי האשף"
+				className="fixed bottom-0 inset-x-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-[#E2DDD2] shadow-[0_-4px_25px_rgba(0,0,0,0.07)]"
+			>
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3 sm:gap-4">
+					{/* --- RIGHT SIDE (RTL START): BACK BUTTON OR STEP BADGE --- */}
+					<div className="flex items-center gap-2 shrink-0">
+						{activeStep === 1 ? (
+							<div className="flex items-center gap-2.5">
+								<span className="w-8 h-8 rounded-xl bg-[#3C3C3C] text-white font-black text-xs flex items-center justify-center shadow-2xs">
+									1
+								</span>
+								<div className="hidden sm:block">
+									<span className="text-xs font-bold text-[#222222] block leading-tight">שלב 1: הזנת ציונים</span>
+									<span className="text-[10px] text-[#66635C] block">בגרות ופסיכומטרי</span>
+								</div>
+							</div>
+						) : (
+							<button
+								type="button"
+								onClick={() => {
+									if (activeStep === 2) setActiveStep(1);
+									else if (activeStep === 3) setActiveStep(2);
+									else if (activeStep === 4) setActiveStep(3);
+								}}
+								className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
+							>
+								<ArrowRight className="h-4 w-4 shrink-0" />
+								<span>
+									{activeStep === 2 && 'חזור להזנת ציונים'}
+									{activeStep === 3 && 'חזור לבחירת תארים'}
+									{activeStep === 4 && 'חזור לדוח הקבלה'}
+								</span>
+							</button>
+						)}
+					</div>
+
+					{/* --- CENTER: CONTEXTUAL PROGRESS & STATUS INFO --- */}
+					<div className="hidden md:flex items-center justify-center flex-1 min-w-0 px-2 text-center">
+						{activeStep === 1 && (
+							showValidationErrors && !gradeValidation.isValid ? (
+								<div className="flex items-center gap-1.5 text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
+									<AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
+									<span>יש להשלים את הזנת הציונים כדי להתקדם</span>
+								</div>
+							) : (
+								<span className="text-xs text-[#66635C] font-medium truncate">
+									ממוצע הבגרות והסכמים מחושבים אוטומטית לכל 8 האוניברסיטאות
+								</span>
+							)
+						)}
+
+						{activeStep === 2 && (
+							selectedTargets.length === 0 ? (
+								<span className="text-xs text-[#88857E] font-medium">
+									בחר תארים מתוך הקטלוג כדי להמשיך לדוח הקבלה
+								</span>
+							) : (
+								<div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-[#EBF4EE] border border-[#C6DFCE] text-xs font-bold text-[#205739]">
+									<CheckCircle2 className="h-3.5 w-3.5" />
+									<span>נבחרו {selectedTargets.length} תארים בסל המבוקשים שלך</span>
+								</div>
+							)
+						)}
+
+						{activeStep === 3 && (
+							<div className="flex items-center gap-2 text-xs font-medium text-[#66635C]">
+								<span>סיכום דוח קבלה:</span>
+								<span className="font-bold text-[#205739] bg-[#EBF4EE] px-2 py-0.5 rounded-lg border border-[#C6DFCE]">
+									{step3Counts.accepted} התקבלת
+								</span>
+								{step3Counts.borderline > 0 && (
+									<span className="font-bold text-[#825B15] bg-[#FDF6E8] px-2 py-0.5 rounded-lg border border-[#ECDAB6]">
+										{step3Counts.borderline} על הגבול
+									</span>
+								)}
+								{step3Counts.not_accepted > 0 && (
+									<span className="font-bold text-[#9B3327] bg-[#FDF1EE] px-2 py-0.5 rounded-lg border border-[#F1CAC1]">
+										{step3Counts.not_accepted} דורשים שיפור
+									</span>
+								)}
+							</div>
+						)}
+
+						{activeStep === 4 && currentFocusedAnalysis && (
+							<div className="flex items-center gap-2 text-xs font-bold text-[#222222] truncate max-w-md">
+								<UniversityLogo institution={currentFocusedAnalysis.target.institutionId} size="xs" shape="circle" />
+								<span className="truncate">{currentFocusedAnalysis.target.program.fieldOfStudy}</span>
+								<span className="text-[11px] text-[#66635C] font-normal hidden lg:inline">
+									({currentFocusedAnalysis.target.institutionName.replace('אוניברסיטת ', '')})
+								</span>
+							</div>
+						)}
+					</div>
+
+					{/* --- LEFT SIDE (RTL END): PRIMARY CONTINUE / ACTION BUTTON --- */}
+					<div className="flex items-center gap-2.5 shrink-0">
+						{activeStep === 1 && (
+							<button
+								type="button"
+								onClick={handleProceedFromStep1}
+								className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+							>
+								<span>המשך לבחירת תארים מבוקשים</span>
+								<ArrowLeft className="h-4 w-4 shrink-0" />
+							</button>
+						)}
+
+						{activeStep === 2 && (
+							<button
+								type="button"
+								onClick={() => setActiveStep(3)}
+								disabled={selectedTargets.length === 0}
+								className={`px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 ${
+									selectedTargets.length > 0
+										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
+										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+								}`}
+							>
+								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
+								<ArrowLeft className="h-4 w-4 shrink-0" />
+							</button>
+						)}
+
+						{activeStep === 3 && (
+							<button
+								type="button"
+								onClick={() => setActiveStep(4)}
+								disabled={gapAnalyses.length === 0}
+								className={`px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 ${
+									gapAnalyses.length > 0
+										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
+										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+								}`}
+							>
+								<span>לתכנון מסלולי פעולה</span>
+								<ArrowLeft className="h-4 w-4 shrink-0" />
+							</button>
+						)}
+
+						{activeStep === 4 && (
+							currentFocusedAnalysis && !questionnaireAnswers && currentFocusedAnalysis.status !== 'accepted' ? (
+								<button
+									type="submit"
+									form="preference-questionnaire-form"
+									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+								>
+									<Sparkles className="h-4 w-4 text-white shrink-0" />
+									<span>חשב מסלולים מותאמים</span>
+									<ArrowLeft className="h-4 w-4 shrink-0" />
+								</button>
+							) : gapAnalyses.length > 1 ? (
+								<div className="flex items-center gap-2">
+									<span className="text-[11px] text-[#66635C] font-bold hidden sm:inline">החלף תואר:</span>
+									<select
+										value={currentFocusedAnalysis?.target.program.id || ''}
+										onChange={(e) => setFocusedProgramId(e.target.value)}
+										className="text-xs font-bold bg-white border border-[#DDD7CB] rounded-xl px-2.5 sm:px-3 py-2 text-[#222222] cursor-pointer focus:ring-1 focus:ring-[#3C3C3C] shadow-2xs max-w-[160px] sm:max-w-[200px] truncate"
+									>
+										{gapAnalyses.map((ga) => (
+											<option key={ga.target.program.id} value={ga.target.program.id}>
+												{ga.target.program.fieldOfStudy} ({ga.target.institutionName.replace('אוניברסיטת ', '')})
+											</option>
+										))}
+									</select>
+								</div>
+							) : (
+								<button
+									type="button"
+									onClick={() => setActiveStep(2)}
+									className="px-4 py-2 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl border border-[#DDD7CB] transition shadow-2xs cursor-pointer"
+								>
+									<span>הוסף תארים נוספים</span>
+								</button>
+							)
+						)}
+					</div>
+				</div>
+			</nav>
 		</div>
 	);
 }

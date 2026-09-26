@@ -151,7 +151,7 @@ export default function PreferenceQuestionnaire({
 				</div>
 			</div>
 
-			<form onSubmit={handleSubmit} className="space-y-8">
+			<form id="preference-questionnaire-form" onSubmit={handleSubmit} className="space-y-8">
 				{/* ========================================================================= */}
 				{/* PART 1: PSYCHOMETRIC AXIS */}
 				{/* ========================================================================= */}
