@@ -1102,6 +1102,27 @@ export default function AdmissionFlowPage() {
 								</p>
 							</div>
 						)}
+
+						{/* ניווט תחתון לשלב 1 */}
+						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
+							<div className="text-xs text-[#66635C]">
+								{gradeValidation.isValid ? (
+									<span className="text-[#205739] font-bold">✓ ציוני הבגרות והפסיכומטרי תקינים ומאומתים</span>
+								) : showValidationErrors ? (
+									<span className="text-rose-600 font-bold">⚠️ יש להשלים את הזנת הציונים כדי להמשיך</span>
+								) : (
+									<span>ממוצע הבגרות והסכמים מחושבים אוטומטית</span>
+								)}
+							</div>
+							<button
+								type="button"
+								onClick={handleProceedFromStep1}
+								className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+							>
+								<span>המשך לבחירת תארים מבוקשים</span>
+								<ArrowLeft className="h-4 w-4" />
+							</button>
+						</div>
 					</div>
 				)}
 
@@ -1122,6 +1143,31 @@ export default function AdmissionFlowPage() {
 							onRemoveProgram={handleRemoveTarget}
 							onClearAll={handleClearAllTargets}
 						/>
+
+						{/* ניווט תחתון לשלב 2 */}
+						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
+							<button
+								type="button"
+								onClick={() => setActiveStep(1)}
+								className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
+							>
+								<ArrowRight className="h-4 w-4" />
+								<span>חזור להזנת ציונים</span>
+							</button>
+							<button
+								type="button"
+								onClick={() => setActiveStep(3)}
+								disabled={selectedTargets.length === 0}
+								className={`px-6 py-3.5 font-bold text-sm rounded-xl transition flex items-center gap-2 ${
+									selectedTargets.length > 0
+										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
+										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+								}`}
+							>
+								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
+								<ArrowLeft className="h-4 w-4" />
+							</button>
+						</div>
 					</div>
 				)}
 
@@ -1179,6 +1225,26 @@ export default function AdmissionFlowPage() {
 									onViewGap={handleViewGapForProgram}
 									onAddMorePrograms={() => setActiveStep(2)}
 								/>
+
+								{/* ניווט תחתון לשלב 3 */}
+								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
+									<button
+										type="button"
+										onClick={() => setActiveStep(2)}
+										className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
+									>
+										<ArrowRight className="h-4 w-4" />
+										<span>חזור לבחירת תארים</span>
+									</button>
+									<button
+										type="button"
+										onClick={() => setActiveStep(4)}
+										className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+									>
+										<span>לתכנון מסלולי פעולה</span>
+										<ArrowLeft className="h-4 w-4" />
+									</button>
+								</div>
 							</>
 						)}
 					</div>
@@ -1270,7 +1336,16 @@ export default function AdmissionFlowPage() {
 			{/* ========================================================================= */}
 			<nav
 				aria-label="ניווט שלבי האשף"
-				className="fixed bottom-0 inset-x-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-[#E2DDD2] shadow-[0_-4px_25px_rgba(0,0,0,0.07)]"
+				style={{
+					position: 'fixed',
+					bottom: 0,
+					left: 0,
+					right: 0,
+					zIndex: 99999,
+					backgroundColor: 'rgba(250, 248, 245, 0.98)',
+					boxShadow: '0 -4px 25px rgba(0, 0, 0, 0.12)'
+				}}
+				className="border-t border-[#E2DDD2]"
 			>
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3 sm:gap-4">
 					{/* --- RIGHT SIDE (RTL START): BACK BUTTON OR STEP BADGE --- */}
