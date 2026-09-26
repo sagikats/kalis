@@ -996,27 +996,6 @@ export default function AdmissionFlowPage() {
 										</p>
 									</div>
 								)}
-
-								{/* ניווט תחתון לתת-שלב 1A */}
-								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
-									<div className="text-xs text-[#66635C]">
-										{bagrutValidation.isValid ? (
-											<span className="text-[#205739] font-bold">✓ ציוני הבגרות מלאים ({bagrutValidation.totalValidUnits} יח״ל)</span>
-										) : showValidationErrors ? (
-											<span className="text-rose-600 font-bold">⚠️ יש להזין ציון לכל מקצוע (לפחות 20 יח״ל)</span>
-										) : (
-											<span>נצברו {bagrutValidation.totalValidUnits} יח״ל בגרות — בסיום נעבור לפסיכומטרי</span>
-										)}
-									</div>
-									<button
-										type="button"
-										onClick={handleProceedToPsychometric}
-										className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-									>
-										<span>המשך להזנת פסיכומטרי</span>
-										<ArrowLeft className="h-4 w-4" />
-									</button>
-								</div>
 							</div>
 						)}
 
@@ -1316,27 +1295,6 @@ export default function AdmissionFlowPage() {
 										</p>
 									</div>
 								)}
-
-								{/* ניווט תחתון לתת-שלב 1B */}
-								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
-									<button
-										type="button"
-										onClick={handleBackToBagrut}
-										className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl border border-[#DDD7CB] shadow-2xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-									>
-										<ArrowRight className="h-4 w-4" />
-										<span>חזור להזנת ציוני בגרות</span>
-									</button>
-
-									<button
-										type="button"
-										onClick={handleProceedFromStep1}
-										className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-									>
-										<span>המשך לבחירת תארים מבוקשים</span>
-										<ArrowLeft className="h-4 w-4" />
-									</button>
-								</div>
 							</div>
 						)}
 					</div>
@@ -1360,33 +1318,6 @@ export default function AdmissionFlowPage() {
 							onClearAll={handleClearAllTargets}
 						/>
 
-						{/* ניווט תחתון לשלב 2 */}
-						<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
-							<button
-								type="button"
-								onClick={() => {
-									setActiveStep(1);
-									setStep1SubStep('psychometric');
-								}}
-								className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
-							>
-								<ArrowRight className="h-4 w-4" />
-								<span>חזור להזנת ציונים</span>
-							</button>
-							<button
-								type="button"
-								onClick={() => setActiveStep(3)}
-								disabled={selectedTargets.length === 0}
-								className={`px-6 py-3.5 font-bold text-sm rounded-xl transition flex items-center gap-2 ${
-									selectedTargets.length > 0
-										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
-										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
-								}`}
-							>
-								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
-								<ArrowLeft className="h-4 w-4" />
-							</button>
-						</div>
 					</div>
 				)}
 
@@ -1444,26 +1375,6 @@ export default function AdmissionFlowPage() {
 									onViewGap={handleViewGapForProgram}
 									onAddMorePrograms={() => setActiveStep(2)}
 								/>
-
-								{/* ניווט תחתון לשלב 3 */}
-								<div className="pt-6 border-t border-[#EAE5DA] flex items-center justify-between flex-wrap gap-4">
-									<button
-										type="button"
-										onClick={() => setActiveStep(2)}
-										className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm rounded-xl transition flex items-center gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
-									>
-										<ArrowRight className="h-4 w-4" />
-										<span>חזור לבחירת תארים</span>
-									</button>
-									<button
-										type="button"
-										onClick={() => setActiveStep(4)}
-										className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-									>
-										<span>לתכנון מסלולי פעולה</span>
-										<ArrowLeft className="h-4 w-4" />
-									</button>
-								</div>
 							</>
 						)}
 					</div>
