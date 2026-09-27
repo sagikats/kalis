@@ -28,14 +28,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         let tab;
         if (existingTab && existingTab.id) {
-          // Activate existing tab and refresh with new track URL
-          tab = await chrome.tabs.update(existingTab.id, { url: payload.calculatorUrl, active: true });
+          // Activate existing tab
+          tab = await chrome.tabs.update(existingTab.id, { active: true });
+          if (existingTab.url !== payload.calculatorUrl) {
+            tab = await chrome.tabs.update(existingTab.id, { url: payload.calculatorUrl, active: true });
+          }
           try {
             chrome.tabs.sendMessage(existingTab.id, {
               type: 'KALIS_VERIFICATION_UPDATED',
-              data: payload
+              data: payload,
+              autoFill: true
             });
-          } catch (e) {}
+          } catch (e) {
+            // If tab content script is unmounted or disconnected, reload tab
+            chrome.tabs.reload(existingTab.id);
+          }
         } else {
           // Open the university calculator in a new tab
           tab = await chrome.tabs.create({

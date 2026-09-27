@@ -189,6 +189,16 @@
       this.render();
       this.triggerScan();
 
+      // Auto-trigger fill on page arrival if this is a fresh verification session (< 15 mins)
+      const sessionKey = `kalis_autofilled_${this.candidateData.timestamp}`;
+      if (!sessionStorage.getItem(sessionKey)) {
+        sessionStorage.setItem(sessionKey, 'true');
+        setTimeout(() => {
+          console.log('[Kalis Dock] Auto-triggering fill on page load...');
+          this.executeFill();
+        }, 800);
+      }
+
       // Listen for runtime updates to candidate data (e.g. user selected another track in Kalis web app)
       if (typeof chrome !== 'undefined' && chrome.storage?.onChanged) {
         chrome.storage.onChanged.addListener((changes, area) => {
@@ -198,6 +208,10 @@
             this.updateCandidateUI();
             this.triggerScan();
             window.dispatchEvent(new CustomEvent('kalis:data-updated', { detail: this.candidateData }));
+            setTimeout(() => {
+              console.log('[Kalis Dock] Auto-triggering fill on track data change...');
+              this.executeFill();
+            }, 300);
           }
         });
       }
@@ -210,6 +224,10 @@
             this.updateCandidateUI();
             this.triggerScan();
             window.dispatchEvent(new CustomEvent('kalis:data-updated', { detail: this.candidateData }));
+            setTimeout(() => {
+              console.log('[Kalis Dock] Auto-triggering fill on direct message update...');
+              this.executeFill();
+            }, 300);
           }
         });
       }
@@ -614,6 +632,18 @@
 
       this.lastAudit = auditLog;
       this.renderAuditReport(auditLog, filledCount, skippedCount);
+
+      // Auto-trigger calculation button if discovered on page
+      if (scan.calculateButton && typeof scan.calculateButton.click === 'function') {
+        setTimeout(() => {
+          try {
+            console.log('[Kalis Dock] Triggering discovered calculate button...', scan.calculateButton);
+            scan.calculateButton.click();
+          } catch (e) {
+            console.warn('[Kalis Dock] Failed to click calculate button:', e);
+          }
+        }, 500);
+      }
 
       // Reset button state
       setTimeout(() => {

@@ -1,12 +1,11 @@
-import { SubjectInput } from '../calculators/bguCalculator';
-import { AcademicDegree } from '../../types/academic';
-import {
+import type { SubjectInput } from '../calculators/bguCalculator';
+import type { AcademicDegree } from '../../types/academic';
+import type {
 	InstitutionSekemResult,
-	calculateMultiInstitutionSekem,
 	UnifiedCalculationInput
 } from '../calculators/multiCalculator';
 import { calculateInstitution } from '../../modules/calculators/index';
-import { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
+import type { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
 import { normalizeHebrewSubjectKey, isSubjectMatch } from '../../modules/optimizer/solver';
 import { simulateRealisticSubscores } from '../calculators/psychometricHelper';
 import {

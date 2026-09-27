@@ -70,6 +70,24 @@
   function clearTechnionForm() {
     console.log('[Kalis Technion] Resetting form to clean slate...');
 
+    // 0. Trigger native Technion clean_form button if available
+    const nativeClean = document.getElementById('clean_form');
+    if (nativeClean && typeof nativeClean.click === 'function') {
+      try { nativeClean.click(); } catch (e) {}
+    }
+
+    // Close any existing open jQuery UI modal dialog
+    try {
+      if (window.jQuery && window.jQuery('#dialog').length && typeof window.jQuery('#dialog').dialog === 'function') {
+        window.jQuery('#dialog').dialog('close');
+      }
+    } catch (e) {}
+    const dialogEl = document.getElementById('dialog');
+    if (dialogEl) {
+      dialogEl.style.display = 'none';
+      dialogEl.innerHTML = '';
+    }
+
     // 1. Reset Core Subjects
     TECHNION_CORE_FIELDS.forEach((core) => {
       const uEl = document.getElementById(core.unitsId);
@@ -262,6 +280,13 @@
     const psychScore = Number(candidateData.psychometricScore || 0);
     const psychInput = document.getElementById('psychometry');
     if (psychInput) {
+      // Unhide psychometry container if hidden
+      const pContainer = psychInput.closest('.two-column-part-two');
+      if (pContainer) pContainer.style.display = 'block';
+      const pLabel = document.querySelector('.two-column-part-one:has(label[for="psychometry"])') ||
+                     document.querySelector('label[for="psychometry"]')?.closest('.two-column-part-one');
+      if (pLabel) pLabel.style.display = 'block';
+
       if (psychScore >= 200 && psychScore <= 800) {
         setter(psychInput, psychScore);
         filledCount++;
@@ -291,6 +316,12 @@
 
         // Technion unhides #calculate_sum after optimal average is calculated
         setTimeout(() => {
+          // Re-affirm psychometric input right before calculate_sum in case optimal_averaging reset it
+          const psychInputReaffirm = document.getElementById('psychometry');
+          if (psychInputReaffirm && psychScore >= 200 && psychScore <= 800) {
+            setter(psychInputReaffirm, psychScore);
+          }
+
           const calcBtn = document.getElementById('calculate_sum');
           if (calcBtn) {
             console.log('[Kalis Technion] Clicking calculate sum button...');

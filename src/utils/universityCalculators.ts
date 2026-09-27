@@ -28,7 +28,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'huji',
 		name: 'האוניברסיטה העברית בירושלים',
 		shortName: 'האוניברסיטה העברית',
-		calculatorUrl: 'https://go.huji.ac.il/?locale=he',
+		calculatorUrl: 'https://go.huji.ac.il/#/admissioncheck',
 		portalName: 'מחשבון סיכויי קבלה — העברית',
 		description: 'חישוב סכם אוניברסיטאי ובדיקת זכאות לקבלה ישירה ללא פסיכומטרי'
 	},
@@ -44,7 +44,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'bar_ilan',
 		name: 'אוניברסיטת בר-אילן',
 		shortName: 'בר-אילן',
-		calculatorUrl: 'https://shoham.biu.ac.il/kabala',
+		calculatorUrl: 'https://shoham.biu.ac.il/Psychometric.aspx',
 		portalName: 'מחשבון סכם וסיכויי קבלה — בר-אילן',
 		description: 'חישוב סכם משוקלל ובדיקת זכאות למלגות הצטיינות'
 	},

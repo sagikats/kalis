@@ -4,7 +4,7 @@
  * Subagent 3: Data Verification & Institution Calculators
  */
 
-import {
+import type {
 	CalculatorSubject,
 	OptimalBagrutResult,
 	InstitutionCalculatorInput,

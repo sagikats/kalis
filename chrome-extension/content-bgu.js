@@ -23,7 +23,7 @@
 
   const targetBagrut = pendingVerification.targetBagrutAverage || pendingVerification.currentBagrutAverage || 0;
   const psychScore = pendingVerification.psychometricScore || pendingVerification.psychometricGeneral || 0;
-  const subjects = pendingVerification.bagrutSubjects || [];
+  const subjects = pendingVerification.subjects || pendingVerification.bagrutSubjects || [];
 
   // Bulletproof React 15-19 / Controlled Input Setter
   const setReactInput = (inp, val) => {

@@ -118,6 +118,14 @@
 
     console.log('[Kalis HUJI] Opening HUJI admission calculator...');
 
+    // 0. Auto-route via Vue Router Hash if on go.huji.ac.il
+    if (window.location.hostname.includes('go.huji.ac.il') && !window.location.hash.includes('admissioncheck')) {
+      try {
+        window.location.hash = '#/admissioncheck';
+        return true;
+      } catch (e) {}
+    }
+
     // 1. Fallback: Click #admission-all-link or admission-all-btn
     const link = document.getElementById('admission-all-link');
     if (link) {

@@ -4,6 +4,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import {
 	Search,
 	GraduationCap,
+	Landmark,
+	ChevronDown,
 	Check,
 	Plus,
 	X
@@ -89,6 +91,8 @@ export default function DegreeSearchSelector({
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedInstFilter, setSelectedInstFilter] = useState('all');
 	const [selectedDiscipline, setSelectedDiscipline] = useState('all');
+	const [isInstFilterOpen, setIsInstFilterOpen] = useState(false);
+	const [isDisciplineFilterOpen, setIsDisciplineFilterOpen] = useState(false);
 
 	// Dynamic SQLite Data state (fallback to bundled academicInstitutions during initial fetch)
 	const [institutionsList, setInstitutionsList] = useState<AcademicInstitution[]>(academicInstitutions);
@@ -185,63 +189,26 @@ export default function DegreeSearchSelector({
 		return set.size;
 	}, [filteredPrograms]);
 
+	const currentInstName = useMemo(() => {
+		if (selectedInstFilter === 'all') return 'כל המוסדות';
+		const found = MAJOR_INSTITUTION_CHIPS.find((i) => i.id === selectedInstFilter);
+		return found ? found.name : selectedInstFilter;
+	}, [selectedInstFilter]);
+
+	const currentDiscLabel = useMemo(() => {
+		if (selectedDiscipline === 'all') return 'כל התחומים';
+		const found = DISCIPLINE_FILTERS.find((d) => d.id === selectedDiscipline);
+		return found ? found.label : selectedDiscipline;
+	}, [selectedDiscipline]);
+
 	return (
 		<div className="space-y-6">
 			{/* ========================================================================= */}
-			{/* 1. TOP COMPONENT: SEARCH & DETAILED FILTERS (חיפוש וסינון תארים) */}
+			{/* 1. TOP COMPONENT: SEARCH & EXPANDABLE FILTERS (חיפוש וסינון תארים) */}
 			{/* ========================================================================= */}
-			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 shadow-xs space-y-4">
-				{/* Institution Pills */}
-				<div className="space-y-1.5">
-					<span className="text-xs font-bold text-[#66635C] block">סינון לפי מוסד:</span>
-					<div className="flex flex-wrap gap-2">
-						{MAJOR_INSTITUTION_CHIPS.map((inst) => {
-							const isChipSelected = selectedInstFilter === inst.id;
-							return (
-								<button
-									key={inst.id}
-									onClick={() => setSelectedInstFilter(inst.id)}
-									className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border cursor-pointer ${
-										isChipSelected
-											? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
-											: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
-									}`}
-								>
-									{inst.id !== 'all' && (
-										<UniversityLogo institution={inst.id} size="xs" shape="circle" />
-									)}
-									<span>{inst.name}</span>
-								</button>
-							);
-						})}
-					</div>
-				</div>
-
-				{/* Discipline Tabs */}
-				<div className="space-y-1.5">
-					<span className="text-xs font-bold text-[#66635C] block">סינון לפי תחום דעת:</span>
-					<div className="flex flex-wrap gap-2">
-						{DISCIPLINE_FILTERS.map((disc) => {
-							const isDiscSelected = selectedDiscipline === disc.id;
-							return (
-								<button
-									key={disc.id}
-									onClick={() => setSelectedDiscipline(disc.id)}
-									className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border cursor-pointer ${
-										isDiscSelected
-											? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
-											: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
-									}`}
-								>
-									{disc.label}
-								</button>
-							);
-						})}
-					</div>
-				</div>
-
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 shadow-xs space-y-3.5">
 				{/* Search bar */}
-				<div className="relative pt-1">
+				<div className="relative">
 					<Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#8A847C]" />
 					<input
 						type="text"
@@ -259,6 +226,169 @@ export default function DegreeSearchSelector({
 						</button>
 					)}
 				</div>
+
+				{/* Expandable Filter Action Buttons Bar */}
+				<div className="flex flex-wrap items-center gap-2 pt-0.5">
+					{/* Institution Filter Expander Button */}
+					<button
+						type="button"
+						onClick={() => setIsInstFilterOpen(!isInstFilterOpen)}
+						className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border cursor-pointer ${
+							isInstFilterOpen || selectedInstFilter !== 'all'
+								? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
+								: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+						}`}
+					>
+						<Landmark className="w-3.5 h-3.5" />
+						<span>
+							{selectedInstFilter !== 'all' ? `מוסד: ${currentInstName}` : 'סינון לפי מוסד'}
+						</span>
+						{selectedInstFilter !== 'all' && (
+							<span
+								role="button"
+								tabIndex={0}
+								onClick={(e) => {
+									e.stopPropagation();
+									setSelectedInstFilter('all');
+								}}
+								className="p-0.5 hover:bg-white/20 rounded-full transition cursor-pointer"
+								title="נקה סינון מוסד"
+							>
+								<X className="w-3 h-3" />
+							</span>
+						)}
+						<ChevronDown
+							className={`w-3.5 h-3.5 transition-transform duration-200 ${
+								isInstFilterOpen ? 'rotate-180' : ''
+							}`}
+						/>
+					</button>
+
+					{/* Discipline Filter Expander Button */}
+					<button
+						type="button"
+						onClick={() => setIsDisciplineFilterOpen(!isDisciplineFilterOpen)}
+						className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border cursor-pointer ${
+							isDisciplineFilterOpen || selectedDiscipline !== 'all'
+								? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
+								: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+						}`}
+					>
+						<GraduationCap className="w-3.5 h-3.5" />
+						<span>
+							{selectedDiscipline !== 'all' ? `תחום: ${currentDiscLabel}` : 'סינון לפי תחום דעת'}
+						</span>
+						{selectedDiscipline !== 'all' && (
+							<span
+								role="button"
+								tabIndex={0}
+								onClick={(e) => {
+									e.stopPropagation();
+									setSelectedDiscipline('all');
+								}}
+								className="p-0.5 hover:bg-white/20 rounded-full transition cursor-pointer"
+								title="נקה סינון תחום דעת"
+							>
+								<X className="w-3 h-3" />
+							</span>
+						)}
+						<ChevronDown
+							className={`w-3.5 h-3.5 transition-transform duration-200 ${
+								isDisciplineFilterOpen ? 'rotate-180' : ''
+							}`}
+						/>
+					</button>
+
+					{/* Clear all filters if any active */}
+					{(selectedInstFilter !== 'all' || selectedDiscipline !== 'all') && (
+						<button
+							type="button"
+							onClick={() => {
+								setSelectedInstFilter('all');
+								setSelectedDiscipline('all');
+							}}
+							className="text-xs font-semibold text-[#8A847C] hover:text-[#B91C1C] transition cursor-pointer px-2 flex items-center gap-1"
+						>
+							<X className="w-3.5 h-3.5" />
+							<span>איפוס סינונים</span>
+						</button>
+					)}
+				</div>
+
+				{/* Expanded Panel: Institution */}
+				{isInstFilterOpen && (
+					<div className="pt-3 border-t border-[#F0EBE1] space-y-2">
+						<div className="flex items-center justify-between">
+							<span className="text-xs font-bold text-[#66635C] block">סינון לפי מוסד:</span>
+							{selectedInstFilter !== 'all' && (
+								<button
+									type="button"
+									onClick={() => setSelectedInstFilter('all')}
+									className="text-[11px] text-[#8A847C] hover:text-[#222222] font-semibold cursor-pointer"
+								>
+									איפוס לכל המוסדות
+								</button>
+							)}
+						</div>
+						<div className="flex flex-wrap gap-2">
+							{MAJOR_INSTITUTION_CHIPS.map((inst) => {
+								const isChipSelected = selectedInstFilter === inst.id;
+								return (
+									<button
+										key={inst.id}
+										onClick={() => setSelectedInstFilter(inst.id)}
+										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border cursor-pointer ${
+											isChipSelected
+												? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
+												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+										}`}
+									>
+										{inst.id !== 'all' && (
+											<UniversityLogo institution={inst.id} size="xs" shape="circle" />
+										)}
+										<span>{inst.name}</span>
+									</button>
+								);
+							})}
+						</div>
+					</div>
+				)}
+
+				{/* Expanded Panel: Discipline */}
+				{isDisciplineFilterOpen && (
+					<div className="pt-3 border-t border-[#F0EBE1] space-y-2">
+						<div className="flex items-center justify-between">
+							<span className="text-xs font-bold text-[#66635C] block">סינון לפי תחום דעת:</span>
+							{selectedDiscipline !== 'all' && (
+								<button
+									type="button"
+									onClick={() => setSelectedDiscipline('all')}
+									className="text-[11px] text-[#8A847C] hover:text-[#222222] font-semibold cursor-pointer"
+								>
+									איפוס לכל התחומים
+								</button>
+							)}
+						</div>
+						<div className="flex flex-wrap gap-2">
+							{DISCIPLINE_FILTERS.map((disc) => {
+								const isDiscSelected = selectedDiscipline === disc.id;
+								return (
+									<button
+										key={disc.id}
+										onClick={() => setSelectedDiscipline(disc.id)}
+										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border cursor-pointer ${
+											isDiscSelected
+												? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
+												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+										}`}
+									>
+										{disc.label}
+									</button>
+								);
+							})}
+						</div>
+					</div>
+				)}
 			</div>
 
 			{/* ========================================================================= */}
