@@ -67,24 +67,31 @@
   function setHujiInput(el, val, vuexKey, subKey) {
     if (!el || val === undefined || val === null) return false;
     try {
-      el.focus();
+    try {
+      try { el.focus(); } catch (e) {}
 
-      // Native setter on HTMLInputElement prototype
-      const proto = window.HTMLInputElement.prototype;
-      const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
-      if (nativeSetter) {
-        nativeSetter.call(el, String(val));
-      } else {
-        el.value = String(val);
+      const strVal = String(val);
+      let setDone = false;
+      try {
+        const proto = Object.getPrototypeOf(el) || window.HTMLInputElement.prototype;
+        const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
+        if (desc && desc.set) {
+          desc.set.call(el, strVal);
+          setDone = true;
+        }
+      } catch (e) {}
+
+      if (!setDone) {
+        try { el.value = strVal; } catch (e) {}
       }
 
       // Dispatch full input events sequence for Vue 2 v-model / @input
-      el.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      try { el.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
       try {
-        el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: String(val) }));
+        el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal }));
       } catch (e) {}
-      el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-      el.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
+      try { el.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
+      try { el.dispatchEvent(new Event('blur', { bubbles: true, composed: true })); } catch (e) {}
 
       // Direct Vuex store synchronization
       try {

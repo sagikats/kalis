@@ -9,99 +9,138 @@
   function setElementValue(el, val) {
     if (!el || val === undefined || val === null) return false;
     try {
-      el.focus();
+      try { el.focus(); } catch (e) {}
 
       if (el.type === 'checkbox') {
-        const proto = window.HTMLInputElement.prototype;
-        const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'checked')?.set;
-        if (nativeSetter) {
-          nativeSetter.call(el, Boolean(val));
-        } else {
-          el.checked = Boolean(val);
-        }
-        if (el._valueTracker) {
-          el._valueTracker.setValue(!val);
-        }
-        el.dispatchEvent(new Event('click', { bubbles: true, composed: true }));
-        el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+        const boolVal = Boolean(val);
+        let setDone = false;
+        try {
+          const proto = Object.getPrototypeOf(el) || window.HTMLInputElement.prototype;
+          const desc = Object.getOwnPropertyDescriptor(proto, 'checked') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'checked');
+          if (desc && desc.set) {
+            desc.set.call(el, boolVal);
+            setDone = true;
+          }
+        } catch (e) {}
 
-        const rKey = Object.keys(el).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
-        if (rKey && el[rKey] && typeof el[rKey].onChange === 'function') {
-          try { el[rKey].onChange({ target: el, currentTarget: el, bubbles: true }); } catch (e) {}
+        if (!setDone) {
+          try { el.checked = boolVal; } catch (e) {}
         }
+
+        try {
+          if (el._valueTracker && typeof el._valueTracker.setValue === 'function') {
+            el._valueTracker.setValue(!boolVal);
+          }
+        } catch (e) {}
+
+        try { el.dispatchEvent(new Event('click', { bubbles: true, composed: true })); } catch (e) {}
+        try { el.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
+
+        try {
+          const rKey = Object.keys(el).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+          if (rKey && el[rKey] && typeof el[rKey].onChange === 'function') {
+            el[rKey].onChange({ target: el, currentTarget: el, bubbles: true });
+          }
+        } catch (e) {}
         return true;
       }
 
-      if (el instanceof HTMLSelectElement) {
-        const proto = window.HTMLSelectElement.prototype;
-        const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
-        if (nativeSetter) {
-          nativeSetter.call(el, String(val));
-        } else {
-          el.value = String(val);
-        }
-        if (el._valueTracker) {
-          el._valueTracker.setValue('');
-        }
-        el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      if (el instanceof HTMLSelectElement || el.tagName === 'SELECT') {
+        const strVal = String(val);
+        let setDone = false;
+        try {
+          const proto = Object.getPrototypeOf(el) || window.HTMLSelectElement.prototype;
+          const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLSelectElement.prototype, 'value');
+          if (desc && desc.set) {
+            desc.set.call(el, strVal);
+            setDone = true;
+          }
+        } catch (e) {}
 
-        const rKey = Object.keys(el).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
-        if (rKey && el[rKey] && typeof el[rKey].onChange === 'function') {
-          try { el[rKey].onChange({ target: el, currentTarget: el, bubbles: true }); } catch (e) {}
+        if (!setDone) {
+          try { el.value = strVal; } catch (e) {}
         }
-        el.style.backgroundColor = '#EBF4EE';
-        el.style.borderColor = '#22C55E';
+
+        try {
+          if (el._valueTracker && typeof el._valueTracker.setValue === 'function') {
+            el._valueTracker.setValue('');
+          }
+        } catch (e) {}
+
+        try { el.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
+
+        try {
+          const rKey = Object.keys(el).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+          if (rKey && el[rKey] && typeof el[rKey].onChange === 'function') {
+            el[rKey].onChange({ target: el, currentTarget: el, bubbles: true });
+          }
+        } catch (e) {}
+
+        try {
+          el.style.backgroundColor = '#EBF4EE';
+          el.style.borderColor = '#22C55E';
+        } catch (e) {}
         return true;
       }
 
       // Text / Number Input
-      el.focus();
-      const proto = window.HTMLInputElement.prototype;
-      const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
-      if (nativeSetter) {
-        nativeSetter.call(el, String(val));
-      } else {
-        el.value = String(val);
+      const strVal = String(val);
+      let setDone = false;
+      try {
+        const proto = Object.getPrototypeOf(el) || window.HTMLInputElement.prototype;
+        const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
+        if (desc && desc.set) {
+          desc.set.call(el, strVal);
+          setDone = true;
+        }
+      } catch (e) {}
+
+      if (!setDone) {
+        try { el.value = strVal; } catch (e) {}
       }
 
       // Reset React 16+ _valueTracker so React registers programmatic change
-      if (el._valueTracker) {
-        el._valueTracker.setValue('');
-      }
-
-      el.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
       try {
-        el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: String(val) }));
+        if (el._valueTracker && typeof el._valueTracker.setValue === 'function') {
+          el._valueTracker.setValue('');
+        }
       } catch (e) {}
-      el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      try { el.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
+      try { el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal })); } catch (e) {}
+      try { el.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
 
       // Invoke React synthetic event handler directly if present
-      const rKey = Object.keys(el).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
-      if (rKey && el[rKey]) {
-        const fakeEvt = {
-          target: el,
-          currentTarget: el,
-          bubbles: true,
-          defaultPrevented: false,
-          preventDefault: () => {},
-          stopPropagation: () => {}
-        };
-        if (typeof el[rKey].onChange === 'function') {
-          try { el[rKey].onChange(fakeEvt); } catch (e) {}
+      try {
+        const rKey = Object.keys(el).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+        if (rKey && el[rKey]) {
+          const fakeEvt = {
+            target: el,
+            currentTarget: el,
+            bubbles: true,
+            defaultPrevented: false,
+            persist: () => {},
+            preventDefault: () => {},
+            stopPropagation: () => {}
+          };
+          if (typeof el[rKey].onChange === 'function') {
+            el[rKey].onChange(fakeEvt);
+          }
+          if (typeof el[rKey].onInput === 'function') {
+            el[rKey].onInput(fakeEvt);
+          }
         }
-        if (typeof el[rKey].onInput === 'function') {
-          try { el[rKey].onInput(fakeEvt); } catch (e) {}
-        }
-      }
+      } catch (e) {}
 
-      el.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
-      el.style.backgroundColor = '#EBF4EE';
-      el.style.borderColor = '#22C55E';
-      el.style.transition = 'background-color 0.4s ease, border-color 0.4s ease';
+      try { el.dispatchEvent(new Event('blur', { bubbles: true, composed: true })); } catch (e) {}
+      try {
+        el.style.backgroundColor = '#EBF4EE';
+        el.style.borderColor = '#22C55E';
+        el.style.transition = 'background-color 0.4s ease, border-color 0.4s ease';
+      } catch (e) {}
 
       return true;
     } catch (err) {
-      console.warn('[Kalis Dock] Error setting input value:', err);
       return false;
     }
   }

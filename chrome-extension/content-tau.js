@@ -12,53 +12,67 @@
   function setTauReactInput(input, val) {
     if (!input || val === undefined || val === null) return false;
     try {
-      input.focus();
+      try { input.focus(); } catch (e) {}
 
-      const proto = window.HTMLInputElement.prototype;
-      const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
-      if (nativeSetter) {
-        nativeSetter.call(input, String(val));
-      } else {
-        input.value = String(val);
+      const strVal = String(val);
+      let setDone = false;
+      try {
+        const proto = Object.getPrototypeOf(input) || window.HTMLInputElement.prototype;
+        const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
+        if (desc && desc.set) {
+          desc.set.call(input, strVal);
+          setDone = true;
+        }
+      } catch (e) {}
+
+      if (!setDone) {
+        try { input.value = strVal; } catch (e) {}
       }
 
       // Reset React 16+ _valueTracker so React recognizes programmatic change
-      if (input._valueTracker) {
-        input._valueTracker.setValue('');
-      }
+      try {
+        if (input._valueTracker && typeof input._valueTracker.setValue === 'function') {
+          input._valueTracker.setValue('');
+        }
+      } catch (e) {}
 
       // Dispatch native input & change events with bubbles: true
-      input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      try { input.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
       try {
-        input.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: String(val) }));
+        input.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal }));
       } catch (e) {}
-      input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      try { input.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
 
       // Direct React internal props invocation
-      const rKey = Object.keys(input).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
-      if (rKey && input[rKey]) {
-        const fakeEvt = {
-          target: input,
-          currentTarget: input,
-          bubbles: true,
-          defaultPrevented: false,
-          preventDefault: () => {},
-          stopPropagation: () => {}
-        };
-        if (typeof input[rKey].onChange === 'function') {
-          try { input[rKey].onChange(fakeEvt); } catch (e) {}
+      try {
+        const rKey = Object.keys(input).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+        if (rKey && input[rKey]) {
+          const fakeEvt = {
+            target: input,
+            currentTarget: input,
+            bubbles: true,
+            defaultPrevented: false,
+            persist: () => {},
+            preventDefault: () => {},
+            stopPropagation: () => {}
+          };
+          if (typeof input[rKey].onChange === 'function') {
+            input[rKey].onChange(fakeEvt);
+          }
+          if (typeof input[rKey].onInput === 'function') {
+            input[rKey].onInput(fakeEvt);
+          }
         }
-        if (typeof input[rKey].onInput === 'function') {
-          try { input[rKey].onInput(fakeEvt); } catch (e) {}
-        }
-      }
+      } catch (e) {}
 
-      input.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
-      input.style.backgroundColor = '#EBF4EE';
-      input.style.borderColor = '#22C55E';
+      try { input.dispatchEvent(new Event('blur', { bubbles: true, composed: true })); } catch (e) {}
+      try {
+        input.style.backgroundColor = '#EBF4EE';
+        input.style.borderColor = '#22C55E';
+        input.style.transition = 'background-color 0.4s ease, border-color 0.4s ease';
+      } catch (e) {}
       return true;
     } catch (err) {
-      console.warn('[Kalis TAU] Error setting React input:', err);
       return false;
     }
   }
@@ -69,18 +83,38 @@
   function setTauCheckbox(cb, isChecked) {
     if (!cb) return false;
     try {
-      cb.focus();
-      cb.checked = Boolean(isChecked);
-      if (cb._valueTracker) {
-        cb._valueTracker.setValue(!isChecked);
-      }
-      cb.dispatchEvent(new Event('click', { bubbles: true, composed: true }));
-      cb.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      try { cb.focus(); } catch (e) {}
+      const boolVal = Boolean(isChecked);
+      let setDone = false;
 
-      const rKey = Object.keys(cb).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
-      if (rKey && cb[rKey] && typeof cb[rKey].onChange === 'function') {
-        try { cb[rKey].onChange({ target: cb, currentTarget: cb, bubbles: true }); } catch (e) {}
+      try {
+        const proto = Object.getPrototypeOf(cb) || window.HTMLInputElement.prototype;
+        const desc = Object.getOwnPropertyDescriptor(proto, 'checked') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'checked');
+        if (desc && desc.set) {
+          desc.set.call(cb, boolVal);
+          setDone = true;
+        }
+      } catch (e) {}
+
+      if (!setDone) {
+        try { cb.checked = boolVal; } catch (e) {}
       }
+
+      try {
+        if (cb._valueTracker && typeof cb._valueTracker.setValue === 'function') {
+          cb._valueTracker.setValue(!boolVal);
+        }
+      } catch (e) {}
+
+      try { cb.dispatchEvent(new Event('click', { bubbles: true, composed: true })); } catch (e) {}
+      try { cb.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
+
+      try {
+        const rKey = Object.keys(cb).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+        if (rKey && cb[rKey] && typeof cb[rKey].onChange === 'function') {
+          cb[rKey].onChange({ target: cb, currentTarget: cb, bubbles: true });
+        }
+      } catch (e) {}
       return true;
     } catch (e) {
       return false;

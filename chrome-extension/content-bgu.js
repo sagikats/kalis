@@ -29,22 +29,37 @@
   const setReactInput = (inp, val) => {
     if (!inp || val === undefined || val === null) return false;
     try {
-      inp.focus();
+      try { inp.focus(); } catch (e) {}
 
-      const proto = inp instanceof HTMLSelectElement ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype;
-      const prop = inp.type === 'checkbox' ? 'checked' : 'value';
-      const nativeSetter = Object.getOwnPropertyDescriptor(proto, prop)?.set;
-      if (nativeSetter) {
-        nativeSetter.call(inp, inp.type === 'checkbox' ? Boolean(val) : String(val));
-      } else {
-        if (inp.type === 'checkbox') inp.checked = Boolean(val);
-        else inp.value = String(val);
+      const isCb = inp.type === 'checkbox';
+      const isSel = inp instanceof HTMLSelectElement || inp.tagName === 'SELECT';
+      const prop = isCb ? 'checked' : 'value';
+      const realVal = isCb ? Boolean(val) : String(val);
+      let setDone = false;
+
+      try {
+        const proto = Object.getPrototypeOf(inp) || (isSel ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype);
+        const desc = Object.getOwnPropertyDescriptor(proto, prop) || 
+                     Object.getOwnPropertyDescriptor(isSel ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype, prop);
+        if (desc && desc.set) {
+          desc.set.call(inp, realVal);
+          setDone = true;
+        }
+      } catch (e) {}
+
+      if (!setDone) {
+        try {
+          if (isCb) inp.checked = realVal;
+          else inp.value = realVal;
+        } catch (e) {}
       }
 
       // Reset React 16+ value tracker
-      if (inp._valueTracker) {
-        inp._valueTracker.setValue(inp.type === 'checkbox' ? !val : '');
-      }
+      try {
+        if (inp._valueTracker && typeof inp._valueTracker.setValue === 'function') {
+          inp._valueTracker.setValue(isCb ? !realVal : '');
+        }
+      } catch (e) {}
 
       inp.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
       inp.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
