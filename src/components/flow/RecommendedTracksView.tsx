@@ -1032,18 +1032,6 @@ export default function RecommendedTracksView({
 										</>
 									)}
 								</button>
-								<button
-									type="button"
-									onClick={(e) => {
-										e.stopPropagation();
-										handleOpenVerifyModal(track);
-									}}
-									className="w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 border cursor-pointer bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] hover:text-[#000000] border-[#DDD7CC] shadow-2xs hover:shadow-xs group"
-									title={`אימות חישוב סכם מול מחשבון ${institutionCalcInfo.shortName}`}
-								>
-									<ExternalLink className="h-3.5 w-3.5 text-[#66635C] group-hover:text-[#111111] transition-colors" />
-									<span>אימות מול {institutionCalcInfo.shortName}</span>
-								</button>
 							</div>
 						</div>
 					);
@@ -1102,15 +1090,6 @@ export default function RecommendedTracksView({
 									<span>שמור מסלול</span>
 								</>
 							)}
-						</button>
-						<button
-							type="button"
-							onClick={() => handleOpenVerifyModal(selectedTrack)}
-							className="px-3.5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 border shadow-2xs cursor-pointer bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] border-[#DDD7CC]"
-							title={`אימות חישוב סכם מול מחשבון ${institutionCalcInfo.shortName}`}
-						>
-							<ExternalLink className="h-3.5 w-3.5 text-[#66635C]" />
-							<span>אימות מול {institutionCalcInfo.shortName}</span>
 						</button>
 						<button
 							type="button"
