@@ -399,4 +399,30 @@ test('KalisFieldScanner — Classification & Exclusion Tests', async (t) => {
     assert.strictEqual(resNoRaw.shouldFill, false);
     assert.strictEqual(resNoRaw.value, null);
   });
+
+  await t.test('4. Prior Degree & Mechina Exclusion Guard: Strictly returns null, never classifies as BAGRUT_AVERAGE', () => {
+    // HUJI Previous Degree average (ממוצע תואר קודם)
+    const hujiPrevDegree = {
+      id: 'prevDegreeAvg',
+      name: 'prevDegreeAvg',
+      placeholder: 'ממוצע תואר קודם',
+      textContent: 'ממוצע תואר קודם',
+      getAttribute: (k: string) => (k === 'type' ? 'text' : ''),
+      closest: mockContainer('ממוצע תואר קודם')
+    };
+    const resPrev = scanner.classifyField(hujiPrevDegree);
+    assert.strictEqual(resPrev, null, 'Previous degree must be strictly excluded from autofill');
+
+    // HUJI Israeli Mechina grade (ציון מכינה לישראלים)
+    const hujiMechina = {
+      id: 'mechinaGrade',
+      name: 'mechinaGrade',
+      placeholder: 'ציון מכינה לישראלים',
+      textContent: 'ציון מכינה לישראלים',
+      getAttribute: (k: string) => (k === 'type' ? 'text' : ''),
+      closest: mockContainer('ציון מכינה לישראלים')
+    };
+    const resMechina = scanner.classifyField(hujiMechina);
+    assert.strictEqual(resMechina, null, 'Mechina score must be strictly excluded from Bagrut average or subject autofill');
+  });
 });

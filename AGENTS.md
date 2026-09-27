@@ -92,14 +92,14 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-27 11:47)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-27 14:45)
 - **Active Branch:** `feature/track-institution-verification`
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
   - `node --test --import jiti/register src/modules/calculators/__tests__/*.test.ts`: **45/45 tests passing** (Institutional bonus variance, benchmarks & BGU exact matching).
-  - `node --test src/modules/qa/__tests__/extensionDataGuard.test.ts`: **12/12 tests passing** (Strict Zero-Guess DataGuard, FieldScanner & Institutional inputs).
+  - `node --test src/modules/qa/__tests__/extensionDataGuard.test.ts`: **14/14 tests passing** (Strict Zero-Guess DataGuard, Prior Degree & Mechina Exclusion, FieldScanner & Institutional inputs).
   - `npm run build`: Clean (34/34 static & dynamic routes generated via webpack, zero compile or runtime build errors).
-  - Total verified test suite: **57/57 tests passing**.
+  - Total verified test suite: **59/59 tests passing**.
   - Chrome Extension: Upgraded to **v1.2.0** with full 8-university support, dedicated Technion and HUJI autofill engines, live track synchronization, and official direct calculator URLs.
   - Background processes: Next.js dev server running on port 3000.
 
@@ -353,13 +353,15 @@ npm run build
       - Smart tab management in `background.js`: reuses and focuses existing calculator tabs instead of duplicating tabs.
       - Added `customFillHandler` hook in `KalisDock` allowing each university to have customized automation while falling back to universal field scanning.
       - Enhanced `field-scanner.js` with `aria-labelledby` resolution and table row `th` header detection.
-    - **Quality & Verification**:
-      - Upgraded extension to **v1.2.0** across manifest, bridge, popup, and background.
-      - Added unit tests for institutional fields (Technion psychometry, TAU maturity, HUJI petAll/petMath, Hebrew Expression) in `extensionDataGuard.test.ts` (**12/12 tests passing**).
-      - Calculator test suite: **45/45 tests passing**.
-      - Total test suite: **57/57 tests passing**.
-      - TypeScript: `npx tsc --noEmit` clean (0 errors).
-      - Production Build: `npm run build` clean (**34/34 routes**).
+
+21. **Chrome Extension Target Grade Synchronization, Field Exclusion & Framework Persistence (`UniversityVerificationModal.tsx`, `field-scanner.js`, `kalis-dock.js`, `content-tau.js`, `content-huji.js`, `content-biu.js`, `universityCalculators.ts`):**
+    - **Technion Target Grade Sync**: Resolved bug where `track.recommendedSubjectImprovements` was read instead of `track.recommendedLevers`, which previously left `improvements` empty and sent unimproved baseline grades to Technion. Connected `recommendedLevers` and `isSubjectMatch` so that the improved target grades (`targetGrade`, `targetUnits`) of the chosen track are always sent, resulting in exact matching target Sekem (e.g. 94.00).
+    - **Non-Bagrut Field Exclusion Guard**: Added strict exclusion filters in `field-scanner.js` preventing `ממוצע תואר קודם` (previous degree) and `ציון מכינה` from ever being classified as Bagrut average or degree search, eliminating erroneous duplicate fills.
+    - **React & Vue Input Persistence**: Upgraded `setElementValue` in `kalis-dock.js` to simulate native typing via `document.execCommand('insertText')`, preventing React controlled inputs (TAU) and Vue `v-model` bindings (HUJI) from wiping input values back to empty.
+    - **Main-World Reactive Injections**: Added `injectTauMainWorldSync` in `content-tau.js` and `injectHujiMainWorldSync` in `content-huji.js` running in the page's main execution context to sync React state and commit directly to HUJI's Vuex store (`setGradeByKey`, `setGradePetByKey`, `graphGrades`).
+    - **HUJI Single Course Modal Support**: Upgraded `findHujiInputs()` to match inputs by semantic context (`רב תחומי`, `כמותי`, `מילולי`, `בגרות מותאם`) across both general calculator and `/programAdmission_*` modals.
+    - **Bar-Ilan Official Entry Point**: Updated Bar-Ilan official URL to `https://shoham.biu.ac.il/kabala` and added auto-navigation in `content-biu.js` from the portal landing page to the calculator form.
+    - **Quality & Verification**: 59/59 tests passing, `npx tsc --noEmit` clean (0 errors), Next.js production build clean (34/34 routes).
 
 ---
 

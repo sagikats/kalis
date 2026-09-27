@@ -33,6 +33,19 @@
     const id = (el.id || '').toLowerCase();
     const aria = (el.getAttribute('aria-label') || '').toLowerCase();
 
+    // Grade / Score / Average inputs are NEVER degree search inputs!
+    if (
+      ph.includes('ציון') ||
+      ph.includes('ממוצע') ||
+      name.includes('grade') ||
+      name.includes('score') ||
+      id.includes('grade') ||
+      id.includes('score') ||
+      type === 'number'
+    ) {
+      return false;
+    }
+
     // Explicit degree search indicators
     if (
       cls.includes('search-bar') ||
@@ -171,6 +184,19 @@
       context.includes('passport') ||
       context.includes('captcha') ||
       context.includes('csrf')
+    ) {
+      return null;
+    }
+
+    // Skip previous academic degrees / mechina / non-Bagrut averages (e.g. HUJI's "ממוצע תואר קודם", "ציון מכינה לישראלים")
+    if (
+      context.includes('תואר קודם') ||
+      context.includes('תואר ראשון קודם') ||
+      context.includes('לימודים קודמים') ||
+      context.includes('מכינה') ||
+      context.includes('mechina') ||
+      context.includes('prior degree') ||
+      context.includes('previous degree')
     ) {
       return null;
     }

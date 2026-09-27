@@ -236,21 +236,39 @@
     };
   }
 
+  // If on landing portal (/kabala), automatically navigate to calculator form
+  const autoNavigateLanding = () => {
+    if (window.location.pathname.endsWith('/kabala') || window.location.pathname.endsWith('/kabala/')) {
+      const calcLink = document.querySelector('a[href*="Psychometric.aspx"], a[href*="Bagrut.aspx"]') ||
+        Array.from(document.querySelectorAll('a')).find((a) => (a.textContent || '').includes('סיכויי קבלה') || (a.textContent || '').includes('חישוב'));
+      if (calcLink) {
+        console.log('[Kalis BIU] Auto-navigating to calculator from landing page...', calcLink.href);
+        calcLink.click();
+      }
+    }
+  };
+  setTimeout(autoNavigateLanding, 600);
+
   // Hook into KalisDock
   const registerHandler = () => {
-    if (window.KalisDock) {
-      window.KalisDock.customFillHandler = async (candidateData, setter) => {
-        return fillBiuForm(candidateData, setter);
-      };
+    const attachCustomHandler = () => {
+      if (window.KalisDock) {
+        window.KalisDock.customFillHandler = async (candidateData, setter) => {
+          return fillBiuForm(candidateData, setter);
+        };
+      }
+    };
 
-      // Listen for data update events when user switches tracks in web app
-      window.addEventListener('kalis:data-updated', (e) => {
-        if (e.detail) {
-          console.log('[Kalis BIU] Re-filling form with updated track data...');
-          fillBiuForm(e.detail);
-        }
-      });
-    }
+    attachCustomHandler();
+    setTimeout(attachCustomHandler, 300);
+    setTimeout(attachCustomHandler, 1000);
+
+    window.addEventListener('kalis:data-updated', (e) => {
+      if (e.detail) {
+        console.log('[Kalis BIU] Re-filling form with updated track data...');
+        fillBiuForm(e.detail);
+      }
+    });
   };
 
   if (document.readyState === 'loading') {

@@ -12,36 +12,46 @@
   function setTauReactInput(input, val) {
     if (!input || val === undefined || val === null) return false;
     try {
-      try { input.focus(); } catch (e) {}
+      try {
+        input.focus();
+        input.select();
+      } catch (e) {}
 
       const strVal = String(val);
-      let setDone = false;
+      let inserted = false;
       try {
-        const proto = Object.getPrototypeOf(input) || window.HTMLInputElement.prototype;
-        const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
-        if (desc && desc.set) {
-          desc.set.call(input, strVal);
-          setDone = true;
-        }
+        inserted = document.execCommand('insertText', false, strVal);
       } catch (e) {}
 
-      if (!setDone) {
-        try { input.value = strVal; } catch (e) {}
+      if (!inserted || input.value !== strVal) {
+        let setDone = false;
+        try {
+          const proto = Object.getPrototypeOf(input) || window.HTMLInputElement.prototype;
+          const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
+          if (desc && desc.set) {
+            desc.set.call(input, strVal);
+            setDone = true;
+          }
+        } catch (e) {}
+
+        if (!setDone) {
+          try { input.value = strVal; } catch (e) {}
+        }
+
+        // Reset React 16+ _valueTracker so React recognizes programmatic change
+        try {
+          if (input._valueTracker && typeof input._valueTracker.setValue === 'function') {
+            input._valueTracker.setValue('');
+          }
+        } catch (e) {}
+
+        // Dispatch native input & change events with bubbles: true
+        try { input.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
+        try {
+          input.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal }));
+        } catch (e) {}
+        try { input.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
       }
-
-      // Reset React 16+ _valueTracker so React recognizes programmatic change
-      try {
-        if (input._valueTracker && typeof input._valueTracker.setValue === 'function') {
-          input._valueTracker.setValue('');
-        }
-      } catch (e) {}
-
-      // Dispatch native input & change events with bubbles: true
-      try { input.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
-      try {
-        input.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal }));
-      } catch (e) {}
-      try { input.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
 
       // Direct React internal props invocation
       try {
@@ -75,6 +85,51 @@
     } catch (err) {
       return false;
     }
+  }
+
+  /**
+   * Main-World Script Injection for TAU React State Synchronization
+   */
+  function injectTauMainWorldSync(maturity, psycho) {
+    try {
+      const script = document.createElement('script');
+      script.textContent = `
+        (function() {
+          try {
+            const mInput = document.querySelector('input[name="maturity"], input#formmaturityScore, input#formMaturity');
+            const pInput = document.querySelector('input[name="psycho"], input#formpsychoScore, input[name="psychometric"]');
+            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            
+            if (mInput && ${Number(maturity) || 0} > 0) {
+              mInput.focus();
+              if (setter) setter.call(mInput, '${maturity}');
+              else mInput.value = '${maturity}';
+              if (mInput._valueTracker) mInput._valueTracker.setValue('');
+              mInput.dispatchEvent(new Event('input', { bubbles: true }));
+              mInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            
+            if (pInput && ${Number(psycho) || 0} > 0) {
+              pInput.focus();
+              if (setter) setter.call(pInput, '${psycho}');
+              else pInput.value = '${psycho}';
+              if (pInput._valueTracker) pInput._valueTracker.setValue('');
+              pInput.dispatchEvent(new Event('input', { bubbles: true }));
+              pInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            setTimeout(function() {
+              const btn = document.querySelector('button.calc, button[type="submit"]');
+              if (btn) btn.click();
+            }, 300);
+          } catch (e) {
+            console.warn('[Kalis TAU Main World] Sync notice:', e);
+          }
+        })();
+      `;
+      (document.head || document.documentElement).appendChild(script);
+      script.remove();
+    } catch (e) {}
   }
 
   /**
@@ -202,6 +257,11 @@
         reason: isEligible ? 'זכאי לבונוס ריאלי' : 'אינו עומד בתנאי הבונוס'
       });
     }
+
+    // Synchronize directly with React component state via Main World injection
+    const formattedAvg = targetBagrut > 0 ? targetBagrut.toFixed(1) : '';
+    const formattedPsych = (hasPsych && psychScore >= 200) ? String(psychScore) : '';
+    injectTauMainWorldSync(formattedAvg, formattedPsych);
 
     // 4. Trigger TAU Calculate Button (has class .calc and text חישוב)
     setTimeout(() => {

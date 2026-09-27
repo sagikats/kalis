@@ -85,30 +85,44 @@
 
       // Text / Number Input
       const strVal = String(val);
-      let setDone = false;
       try {
-        const proto = Object.getPrototypeOf(el) || window.HTMLInputElement.prototype;
-        const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
-        if (desc && desc.set) {
-          desc.set.call(el, strVal);
-          setDone = true;
-        }
+        el.focus();
+        el.select();
       } catch (e) {}
 
-      if (!setDone) {
-        try { el.value = strVal; } catch (e) {}
+      // Method 1: execCommand('insertText') - authentic typing simulation that React & Vue never revert
+      let inserted = false;
+      try {
+        inserted = document.execCommand('insertText', false, strVal);
+      } catch (e) {}
+
+      // Method 2: Prototype setter if execCommand didn't set exact value
+      if (!inserted || el.value !== strVal) {
+        let setDone = false;
+        try {
+          const proto = Object.getPrototypeOf(el) || window.HTMLInputElement.prototype;
+          const desc = Object.getOwnPropertyDescriptor(proto, 'value') || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
+          if (desc && desc.set) {
+            desc.set.call(el, strVal);
+            setDone = true;
+          }
+        } catch (e) {}
+
+        if (!setDone) {
+          try { el.value = strVal; } catch (e) {}
+        }
+
+        // Reset React 16+ _valueTracker so React registers programmatic change
+        try {
+          if (el._valueTracker && typeof el._valueTracker.setValue === 'function') {
+            el._valueTracker.setValue('');
+          }
+        } catch (e) {}
+
+        try { el.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
+        try { el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal })); } catch (e) {}
+        try { el.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
       }
-
-      // Reset React 16+ _valueTracker so React registers programmatic change
-      try {
-        if (el._valueTracker && typeof el._valueTracker.setValue === 'function') {
-          el._valueTracker.setValue('');
-        }
-      } catch (e) {}
-
-      try { el.dispatchEvent(new Event('input', { bubbles: true, composed: true })); } catch (e) {}
-      try { el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strVal })); } catch (e) {}
-      try { el.dispatchEvent(new Event('change', { bubbles: true, composed: true })); } catch (e) {}
 
       // Invoke React synthetic event handler directly if present
       try {

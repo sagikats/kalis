@@ -27,6 +27,7 @@ import {
 } from '@/utils/universityCalculators';
 import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
+import { isSubjectMatch } from '@/modules/optimizer/solver';
 
 interface UniversityVerificationModalProps {
 	isOpen: boolean;
@@ -109,9 +110,9 @@ export default function UniversityVerificationModal({
 
 	const calcInfo = getUniversityCalculator(institutionId || institutionName);
 
-	// Assemble complete list of subjects for verification
+	// Assemble complete list of subjects for verification - supports both recommendedSubjectImprovements and recommendedLevers
 	const baseSubjects = userProfile?.bagrutSubjects || [];
-	const improvements = track?.recommendedSubjectImprovements || [];
+	const improvements: any[] = (track?.recommendedSubjectImprovements || (track as any)?.recommendedLevers || (track as any)?.subjectImprovements || []) as any[];
 
 	const verificationSubjects: VerificationSubjectItem[] = [];
 	const matchedImpMap = new Set<string>();
@@ -123,18 +124,20 @@ export default function UniversityVerificationModal({
 		const sGrade = Number(sub.grade) || 0;
 
 		const matchingImp = improvements.find((imp) => {
-			const impName = imp.subjectName.trim().toLowerCase();
-			const curName = sName.trim().toLowerCase();
-			return impName === curName || (curName.includes('מתמטיקה') && impName.includes('מתמטיקה')) || (curName.includes('אנגלית') && impName.includes('אנגלית'));
+			const impName = (imp.subjectName || imp.name || '').trim();
+			return isSubjectMatch(sName, impName);
 		});
 
 		if (matchingImp) {
-			matchedImpMap.add(matchingImp.subjectName);
+			const impKey = matchingImp.subjectName || matchingImp.name;
+			matchedImpMap.add(impKey);
+			const targetGrade = Number(matchingImp.targetGrade) || sGrade;
+			const targetUnits = Number(matchingImp.targetUnits) || sUnits;
 			verificationSubjects.push({
 				name: sName,
-				units: matchingImp.targetUnits || sUnits,
-				grade: matchingImp.targetGrade,
-				isUpgraded: matchingImp.targetGrade !== sGrade || (matchingImp.targetUnits || sUnits) !== sUnits,
+				units: targetUnits,
+				grade: targetGrade,
+				isUpgraded: targetGrade !== sGrade || targetUnits !== sUnits,
 				originalGrade: sGrade,
 				originalUnits: sUnits
 			});
@@ -150,9 +153,10 @@ export default function UniversityVerificationModal({
 
 	// 2. Add brand-new subjects proposed in this track
 	improvements.forEach((imp) => {
-		if (!matchedImpMap.has(imp.subjectName)) {
+		const impKey = imp.subjectName || imp.name;
+		if (!matchedImpMap.has(impKey)) {
 			verificationSubjects.push({
-				name: imp.subjectName,
+				name: impKey,
 				units: imp.targetUnits || imp.currentUnits || 5,
 				grade: imp.targetGrade,
 				isNew: true
