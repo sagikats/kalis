@@ -338,17 +338,31 @@
 
     const observer = new MutationObserver(() => {
       const text = dialogEl.textContent || '';
-      if (text.includes('סכם') || text.includes('ממוצע')) {
-        const sekemMatch = text.match(/סכם[:\s]+(\d{2,3}(?:\.\d{1,2})?)/) ||
-          text.match(/(\d{2}\.\d{1,2})/);
-        const avgMatch = text.match(/ממוצע[:\s]+(\d{2,3}(?:\.\d{1,2})?)/);
+      if (text.includes('סכם') || text.includes('הסכם')) {
+        // Strict priority matching for Technion official admission Sekem:
+        let sekemQuantity = null;
 
-        if (sekemMatch) {
-          console.log('[Kalis Technion] Captured calculated Sekem:', sekemMatch[1]);
+        const p1 = text.match(/הסכם לדיוני הקבלה הוא:?\s*(\d{2,3}(?:\.\d{1,2})?)/);
+        const p2 = text.match(/סכם לפי ממוצע בגרות מיטבי והציון הפסיכומטרי הרב תחומי:?\s*(\d{2,3}(?:\.\d{1,2})?)/);
+        const p3 = text.match(/סכם לדיוני הקבלה[:\s]+(\d{2,3}(?:\.\d{1,2})?)/);
+        const p4 = text.match(/הסכם הוא:?\s*(\d{2,3}(?:\.\d{1,2})?)/);
+
+        if (p1 && p1[1]) sekemQuantity = p1[1];
+        else if (p2 && p2[1]) sekemQuantity = p2[1];
+        else if (p3 && p3[1]) sekemQuantity = p3[1];
+        else if (p4 && p4[1]) sekemQuantity = p4[1];
+
+        // Optimal Bagrut average (115.2) vs unweighted average (90.6)
+        const avgOptimal = text.match(/ממוצע בגרות מיטבי:?\s*(\d{2,3}(?:\.\d{1,2})?)/);
+        const avgUnweighted = text.match(/ממוצע ציוני הבגרות ללא בונוסים:?\s*(\d{2,3}(?:\.\d{1,2})?)/);
+        const bagrutAverage = avgOptimal ? avgOptimal[1] : (avgUnweighted ? avgUnweighted[1] : null);
+
+        if (sekemQuantity) {
+          console.log('[Kalis Technion] Captured official Technion Sekem:', sekemQuantity, 'Optimal Average:', bagrutAverage);
           window.postMessage({
             type: 'KALIS_INSTITUTION_CALCULATED_RESULTS',
-            sekemQuantity: sekemMatch[1],
-            bagrutAverage: avgMatch ? avgMatch[1] : null
+            sekemQuantity: sekemQuantity,
+            bagrutAverage: bagrutAverage
           }, '*');
         }
       }

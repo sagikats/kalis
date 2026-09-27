@@ -44,7 +44,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'bar_ilan',
 		name: 'אוניברסיטת בר-אילן',
 		shortName: 'בר-אילן',
-		calculatorUrl: 'https://shoham.biu.ac.il/kabala/',
+		calculatorUrl: 'https://shoham.biu.ac.il/kabala/Psychometric.aspx',
 		portalName: 'מחשבון סכם וסיכויי קבלה — בר-אילן',
 		description: 'חישוב סכם משוקלל ובדיקת זכאות למלגות הצטיינות'
 	},

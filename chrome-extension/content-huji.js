@@ -1,6 +1,6 @@
 // Kalis Dedicated Content Script: Hebrew University of Jerusalem (HUJI)
 // Target: go.huji.ac.il/* and *.huji.ac.il/*
-// Automates: Opening admission calculator modal + live input of Bagrut average & Psychometric scores
+// Automates: Opening admission calculator modal + live input of Bagrut average & Psychometric scores (all 3 emphases)
 
 (function () {
   'use strict';
@@ -25,7 +25,6 @@
         appEl.__vue__.$store.commit('setCheckAdmission', true);
         appEl.__vue__.$store.commit('setAdmissionAll', true);
         console.log('[Kalis HUJI] Dispatched setAdmissionAll to Vuex store.');
-        return true;
       }
     } catch (e) {
       console.warn('[Kalis HUJI] Vuex direct access note:', e);
@@ -63,52 +62,81 @@
   }
 
   /**
-   * Helper to set input value with Vue-compatible events
+   * Bulletproof input setter combining DOM dispatch & Vuex store sync
    */
-  function setVueInput(el, val) {
+  function setHujiInput(el, val, vuexKey, subKey) {
     if (!el || val === undefined || val === null) return false;
-    el.focus();
-    el.value = String(val);
-    el.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-    el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-    el.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
-    el.style.backgroundColor = '#EBF4EE';
-    el.style.borderColor = '#22C55E';
-    return true;
+    try {
+      el.focus();
+
+      // Native setter on HTMLInputElement prototype
+      const proto = window.HTMLInputElement.prototype;
+      const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+      if (nativeSetter) {
+        nativeSetter.call(el, String(val));
+      } else {
+        el.value = String(val);
+      }
+
+      // Dispatch full input events sequence for Vue 2 v-model / @input
+      el.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      try {
+        el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: String(val) }));
+      } catch (e) {}
+      el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      el.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
+
+      // Direct Vuex store synchronization
+      try {
+        const appEl = document.querySelector('#app, [data-v-app]');
+        if (appEl && appEl.__vue__ && appEl.__vue__.$store) {
+          if (vuexKey === 'bagrut') {
+            appEl.__vue__.$store.commit('setGradeByKey', { key: 'bagrut', value: String(val) });
+          } else if (vuexKey === 'pet' && subKey) {
+            appEl.__vue__.$store.commit('setGradePetByKey', { key: subKey, value: String(val) });
+          }
+        }
+      } catch (vueErr) {
+        console.warn('[Kalis HUJI] Vuex direct commit notice:', vueErr);
+      }
+
+      el.style.backgroundColor = '#EBF4EE';
+      el.style.borderColor = '#22C55E';
+      return true;
+    } catch (err) {
+      console.warn('[Kalis HUJI] Error setting input value:', err);
+      return false;
+    }
   }
 
   /**
    * Dedicated HUJI Autofill Engine
    */
-  async function fillHujiForm(candidateData, setValFn) {
+  async function fillHujiForm(candidateData) {
     if (!candidateData) return { handled: false };
 
     console.log('[Kalis HUJI] Executing autofill for:', candidateData.programName || 'HUJI Track');
 
-    const setter = setValFn || setVueInput;
-
     // Step 1: Ensure calculator modal is open
     openHujiCalculator();
 
-    // Step 2: Wait up to 3.5s for #bagrut and #petAll to appear
+    // Step 2: Wait up to 4s for BOTH #bagrut AND #petAll to appear
     const waitForInputs = async () => {
       const start = Date.now();
-      while (Date.now() - start < 3500) {
-        if (document.getElementById('bagrut') || document.getElementById('petAll')) {
+      while (Date.now() - start < 4000) {
+        if (document.getElementById('bagrut') && document.getElementById('petAll')) {
           return true;
         }
         await new Promise((r) => setTimeout(r, 150));
       }
-      return false;
+      // If at least bagrut is ready, proceed
+      return Boolean(document.getElementById('bagrut'));
     };
 
-    const inputsReady = await waitForInputs();
-    if (!inputsReady) {
-      console.warn('[Kalis HUJI] Calculator fields did not appear in time.');
-      // Attempt once more to open
-      openHujiCalculator();
-      await new Promise((r) => setTimeout(r, 400));
-    }
+    await waitForInputs();
+
+    // Small delay to ensure Vue DOM animation settles
+    await new Promise((r) => setTimeout(r, 200));
 
     const auditLog = [];
     let filledCount = 0;
@@ -120,7 +148,7 @@
 
     if (bagrutEl && targetBagrut > 0) {
       const formattedAvg = targetBagrut.toFixed(1);
-      setter(bagrutEl, formattedAvg);
+      setHujiInput(bagrutEl, formattedAvg, 'bagrut');
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -138,16 +166,17 @@
       });
     }
 
-    // 2. Fill Psychometric Scores
-    const petAllEl = document.getElementById('petAll');
-    const petMathEl = document.getElementById('petMath');
-    const petVerbalEl = document.getElementById('petVerbal');
+    // 2. Fill Psychometric Scores (All 3 Fields: General, Quantitative, Verbal)
+    const petAllEl = document.getElementById('petAll') || document.querySelector('input[name="petAll"]');
+    const petMathEl = document.getElementById('petMath') || document.querySelector('input[name="petMath"]');
+    const petVerbalEl = document.getElementById('petVerbal') || document.querySelector('input[name="petVerbal"]');
 
     const psychScore = Number(candidateData.psychometricScore || 0);
     const hasPsych = Boolean(candidateData.hasTakenPsychometric !== false && psychScore >= 200);
 
+    // General / Multi-Domain
     if (petAllEl && hasPsych) {
-      setter(petAllEl, String(psychScore));
+      setHujiInput(petAllEl, String(psychScore), 'pet', 'multi');
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -156,7 +185,7 @@
         reason: `הוזן ציון רב-תחומי: ${psychScore}`
       });
     } else if (petAllEl) {
-      setter(petAllEl, '');
+      setHujiInput(petAllEl, '', 'pet', 'multi');
       skippedCount++;
       auditLog.push({
         status: 'SKIPPED_NO_DATA',
@@ -166,10 +195,10 @@
       });
     }
 
-    // 3. Quantitative Emphasis (petMath)
-    const quantScore = Number(candidateData.psychQuantEmphasis || candidateData.psychQuant || 0);
+    // Quantitative Emphasis (petMath)
+    const quantScore = Number(candidateData.psychQuantEmphasis || candidateData.psychQuant || candidateData.psychometricScore || 0);
     if (petMathEl && hasPsych && quantScore >= 200) {
-      setter(petMathEl, String(quantScore));
+      setHujiInput(petMathEl, String(quantScore), 'pet', 'quantity');
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -179,10 +208,10 @@
       });
     }
 
-    // 4. Verbal Emphasis (petVerbal)
-    const verbalScore = Number(candidateData.psychVerbalEmphasis || candidateData.psychVerbal || 0);
+    // Verbal Emphasis (petVerbal)
+    const verbalScore = Number(candidateData.psychVerbalEmphasis || candidateData.psychVerbal || candidateData.psychometricScore || 0);
     if (petVerbalEl && hasPsych && verbalScore >= 200) {
-      setter(petVerbalEl, String(verbalScore));
+      setHujiInput(petVerbalEl, String(verbalScore), 'pet', 'verbal');
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -192,15 +221,26 @@
       });
     }
 
-    // 5. Filter by degree / program inside results view (WITHOUT navigating away!)
+    // 3. Trigger Calculation Button (submit step / check admission prospects)
+    setTimeout(() => {
+      const submitBtn = document.querySelector(
+        '.submit.submit-SingleCourse-singleCourseResults, .submit-SingleCourse-submitStep-foreign, .submit, button.submit, [role="button"].submit'
+      );
+      if (submitBtn) {
+        console.log('[Kalis HUJI] Clicking submit button...');
+        submitBtn.click();
+      }
+    }, 450);
+
+    // 4. Filter by degree / program inside results view if candidate specified one
     if (candidateData.programName) {
       setTimeout(() => {
         const filterInput = document.querySelector('#admission-container input.search-bar, .search-filters input, .filter-container input');
         if (filterInput && filterInput.value !== candidateData.programName) {
-          setter(filterInput, candidateData.programName);
+          setHujiInput(filterInput, candidateData.programName);
           filterInput.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
         }
-      }, 700);
+      }, 1000);
     }
 
     return {
@@ -217,8 +257,8 @@
     setTimeout(openHujiCalculator, 600);
 
     if (window.KalisDock) {
-      window.KalisDock.customFillHandler = async (candidateData, setter) => {
-        return fillHujiForm(candidateData, setter);
+      window.KalisDock.customFillHandler = async (candidateData) => {
+        return fillHujiForm(candidateData);
       };
 
       // Listen for data update events when user switches tracks in web app
@@ -236,6 +276,28 @@
   } else {
     registerHandler();
   }
+
+  // Watch for HUJI calculation results in DOM
+  const observeResults = () => {
+    const observer = new MutationObserver(() => {
+      const resultsContainer = document.querySelector('.results-container, #admission-container, .course-results');
+      if (resultsContainer) {
+        const text = resultsContainer.textContent || '';
+        if (text.includes('קבלה') || text.includes('דחייה') || text.includes('המתנה')) {
+          const decision = text.includes('קבלה') ? 'ACCEPTED' : (text.includes('דחייה') ? 'REJECTED' : 'WAITLIST');
+          console.log('[Kalis HUJI] Captured admission decision:', decision);
+          window.postMessage({
+            type: 'KALIS_INSTITUTION_CALCULATED_RESULTS',
+            decision: decision
+          }, '*');
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+
+  setTimeout(observeResults, 1200);
 
   console.log('[Kalis HUJI] Dedicated engine initialized.');
 })();

@@ -118,7 +118,7 @@
 
     // Table Row Header (critical for Technion, BIU, etc. where subject name is in sibling <th>)
     const row = el.closest('tr');
-    if (row) {
+    if (row && typeof row.querySelectorAll === 'function') {
       const ths = row.querySelectorAll('th, [scope="row"], td.label, .subject-title');
       ths.forEach((th) => {
         if (th && th.textContent) parts.push(th.textContent);
@@ -197,6 +197,9 @@
 
     // 2. Bagrut Average Field
     if (
+      (context.includes('בגרות') && (context.includes('ממוצע') || context.includes('משוקלל') || context.includes('מותאם') || context.includes('ציון משוקלל'))) ||
+      context.includes('בגרות משוקלל') ||
+      context.includes('ציון בגרות משוקלל') ||
       (context.includes('ממוצע') && (context.includes('בגרות') || context.includes('משוקלל') || context.includes('מותאם') || context.includes('חישבתי') || context.includes('bagrut'))) ||
       context.includes('bagrut average') ||
       context.includes('bagrut_avg') ||
@@ -204,7 +207,7 @@
       context.includes('ציון מותאם') ||
       context.includes('maturity') ||
       (el.id && el.id.toLowerCase() === 'bagrut') ||
-      (el.name && el.name.toLowerCase() === 'maturity') ||
+      (el.name && (el.name.toLowerCase() === 'maturity' || el.name.toLowerCase() === 'txtbagrut' || el.name.toLowerCase() === 'txtmmootza')) ||
       (context.includes('ממוצע') && !context.includes('תואר') && !context.includes('פסיכומטרי'))
     ) {
       return {
@@ -217,10 +220,12 @@
       };
     }
 
-    // 3. Quantitative Emphasis (דגש כמותי)
+    // 3. Quantitative Emphasis or Psychometric Math Subscore (דגש כמותי / מתמטיקה בפסיכומטרי)
     if (
       context.includes('דגש כמותי') ||
       (context.includes('כמותי') && context.includes('פסיכומטרי')) ||
+      (context.includes('מתמטיקה') && context.includes('פסיכומטרי')) ||
+      context.includes('מתמטיקה בפסיכומטרי') ||
       context.includes('quantitative') ||
       context.includes('quant_emphasis') ||
       (el.id && el.id.toLowerCase() === 'petmath')
@@ -273,6 +278,8 @@
 
     // 6. General / Multi-Domain Psychometric
     if (
+      context.includes('בחינה פסיכומטרית') ||
+      context.includes('ציון בחינה פסיכומטרית') ||
       context.includes('רב תחומי') ||
       context.includes('רב-תחומי') ||
       context.includes('פסיכומטרי כללי') ||
@@ -281,6 +288,7 @@
       context.includes('psychometry') ||
       (el.id && el.id.toLowerCase() === 'psychometry') ||
       (el.id && el.id.toLowerCase() === 'petall') ||
+      (el.name && (el.name.toLowerCase() === 'psycho' || el.name.toLowerCase() === 'txtpsychometric')) ||
       (context.includes('פסיכומטרי') && !context.includes('כמותי') && !context.includes('מילולי') && !context.includes('אנגלית'))
     ) {
       return {
@@ -297,19 +305,33 @@
     for (const subj of SUBJECT_DETECTION) {
       const hasSubject = subj.terms.some((term) => context.includes(term));
       if (hasSubject) {
-        const isUnits =
-          context.includes('יחידות') ||
-          context.includes('יח״ל') ||
-          context.includes('רמה') ||
-          context.includes('level') ||
-          context.includes('units') ||
-          (el instanceof HTMLSelectElement && Array.from(el.options).some((o) => ['3', '4', '5'].includes(o.value.trim())));
+        // Disambiguate Select (units) vs Input (grade)
+        const isSelect = el instanceof HTMLSelectElement;
+        const isTextInput = !isSelect && (type === 'number' || type === 'text');
 
-        const isGrade =
-          context.includes('ציון') ||
-          context.includes('grade') ||
-          context.includes('score') ||
-          (!isUnits && (type === 'number' || type === 'text'));
+        // Dropdowns with 3, 4, 5 are strictly units
+        const isSelectUnits = isSelect && Array.from(el.options).some((o) => ['3', '4', '5'].includes(o.value.trim()));
+
+        // Check text hints
+        const has100GradeHint = context.includes('1-100') || context.includes('100 - 1') || context.includes('100');
+        const hasUnitsKeyword = context.includes('יחידות') || context.includes('יח״ל') || context.includes('רמה') || context.includes('level') || context.includes('units');
+        const hasGradeKeyword = context.includes('ציון') || context.includes('grade') || context.includes('score') || has100GradeHint;
+
+        let isUnits = false;
+        let isGrade = false;
+
+        if (isSelectUnits) {
+          isUnits = true;
+        } else if (isTextInput && has100GradeHint) {
+          // If the field specifies 1-100, it can NEVER be units!
+          isGrade = true;
+        } else if (isTextInput && !isSelect && hasGradeKeyword) {
+          isGrade = true;
+        } else if (hasUnitsKeyword && !hasGradeKeyword) {
+          isUnits = true;
+        } else if (isTextInput) {
+          isGrade = true;
+        }
 
         if (isUnits) {
           return {

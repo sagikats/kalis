@@ -55,6 +55,7 @@
       }
 
       // Text / Number Input
+      el.focus();
       const proto = window.HTMLInputElement.prototype;
       const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
       if (nativeSetter) {
@@ -69,6 +70,9 @@
       }
 
       el.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      try {
+        el.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: String(val) }));
+      } catch (e) {}
       el.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
 
       // Invoke React synthetic event handler directly if present
@@ -397,12 +401,13 @@
       if (!this.container) return;
 
       const sekemVal = data.sekemQuantity || data.sekemBagrut;
-      if (!sekemVal) return;
+      const decision = data.decision; // 'ACCEPTED' | 'REJECTED' | 'WAITLIST'
+      if (!sekemVal && !decision) return;
 
       const threshold = this.candidateData?.admissionThreshold || this.candidateData?.targetSekem || 0;
-      const numSekem = Number(sekemVal);
-      const isPassed = threshold > 0 ? numSekem >= Number(threshold) : true;
-      const margin = threshold > 0 ? (numSekem - Number(threshold)).toFixed(1) : null;
+      const numSekem = Number(sekemVal || 0);
+      const isPassed = decision === 'ACCEPTED' || (threshold > 0 && numSekem > 0 ? numSekem >= Number(threshold) : true);
+      const margin = threshold > 0 && numSekem > 0 ? (numSekem - Number(threshold)).toFixed(1) : null;
 
       let resBox = this.container.querySelector('#kalis-dock-live-results');
       if (!resBox) {
@@ -419,21 +424,26 @@
           <div style="font-weight: 900; margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between;">
             <span>${isPassed ? '🎉 תוצאה רשמית במחשבון:' : '📊 תוצאה רשמית במחשבון:'}</span>
             <span style="font-size: 10px; font-weight: bold; background: white; padding: 2px 7px; border-radius: 6px; border: 1px solid ${isPassed ? '#A7F3D0' : '#FDE68A'};">
-              ${isPassed ? 'קבלה מובטחת' : 'נדרש שיפור'}
+              ${decision === 'ACCEPTED' ? 'קבלה מובטחת' : (decision === 'REJECTED' ? 'סף דחייה' : (isPassed ? 'קבלה מובטחת' : 'נדרש שיפור'))}
             </span>
           </div>
+          ${sekemVal ? `
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
             <span>סכם שחושב באתר:</span>
             <span style="font-weight: 900; font-size: 14px; color: ${isPassed ? '#047857' : '#B45309'};">${sekemVal}</span>
-          </div>
+          </div>` : ''}
           ${data.bagrutAverage ? `
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; color: #555; font-size: 10.5px;">
             <span>ממוצע בגרות מוזן:</span>
             <span style="font-weight: 700;">${data.bagrutAverage}</span>
           </div>` : ''}
+          ${margin !== null ? `
           <div style="font-size: 10.5px; font-weight: 700; color: ${isPassed ? '#047857' : '#B45309'}; border-top: 1px dashed ${isPassed ? '#A7F3D0' : '#FDE68A'}; padding-top: 4px; margin-top: 4px;">
             ${isPassed ? `עובר את סף הקבלה (${threshold}) ב-+${margin} נקודות!` : `חסרות ${Math.abs(Number(margin))} נקודות לסף הקבלה (${threshold})`}
-          </div>
+          </div>` : (decision === 'ACCEPTED' ? `
+          <div style="font-size: 10.5px; font-weight: 700; color: #047857; border-top: 1px dashed #A7F3D0; padding-top: 4px; margin-top: 4px;">
+            עומד בתנאי הקבלה הרשמיים של המוסד!
+          </div>` : '')}
         </div>
       `;
 

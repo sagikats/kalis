@@ -1,33 +1,111 @@
 // Kalis Dedicated Content Script: Tel Aviv University (TAU)
 // Target: go.tau.ac.il/he/calculator and *.tau.ac.il/*
-// Automates: Maturity (Bagrut average), Psychometric General, Realit Bonus checkbox, and Calculation
+// Automates: Maturity (Bagrut average), Psychometric General (psycho), Realit Bonus checkbox, and Calculation
 
 (function () {
   'use strict';
   console.log('[Kalis TAU] Dedicated script loaded on:', window.location.href);
 
   /**
+   * Helper: Bulletproof React 16-19 controlled input setter
+   */
+  function setTauReactInput(input, val) {
+    if (!input || val === undefined || val === null) return false;
+    try {
+      input.focus();
+
+      const proto = window.HTMLInputElement.prototype;
+      const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+      if (nativeSetter) {
+        nativeSetter.call(input, String(val));
+      } else {
+        input.value = String(val);
+      }
+
+      // Reset React 16+ _valueTracker so React recognizes programmatic change
+      if (input._valueTracker) {
+        input._valueTracker.setValue('');
+      }
+
+      // Dispatch native input & change events with bubbles: true
+      input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      try {
+        input.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: String(val) }));
+      } catch (e) {}
+      input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      // Direct React internal props invocation
+      const rKey = Object.keys(input).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+      if (rKey && input[rKey]) {
+        const fakeEvt = {
+          target: input,
+          currentTarget: input,
+          bubbles: true,
+          defaultPrevented: false,
+          preventDefault: () => {},
+          stopPropagation: () => {}
+        };
+        if (typeof input[rKey].onChange === 'function') {
+          try { input[rKey].onChange(fakeEvt); } catch (e) {}
+        }
+        if (typeof input[rKey].onInput === 'function') {
+          try { input[rKey].onInput(fakeEvt); } catch (e) {}
+        }
+      }
+
+      input.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
+      input.style.backgroundColor = '#EBF4EE';
+      input.style.borderColor = '#22C55E';
+      return true;
+    } catch (err) {
+      console.warn('[Kalis TAU] Error setting React input:', err);
+      return false;
+    }
+  }
+
+  /**
+   * Helper: Controlled Checkbox Setter
+   */
+  function setTauCheckbox(cb, isChecked) {
+    if (!cb) return false;
+    try {
+      cb.focus();
+      cb.checked = Boolean(isChecked);
+      if (cb._valueTracker) {
+        cb._valueTracker.setValue(!isChecked);
+      }
+      cb.dispatchEvent(new Event('click', { bubbles: true, composed: true }));
+      cb.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      const rKey = Object.keys(cb).find((k) => k.startsWith('__reactProps$') || k.startsWith('__reactEventHandlers$'));
+      if (rKey && cb[rKey] && typeof cb[rKey].onChange === 'function') {
+        try { cb[rKey].onChange({ target: cb, currentTarget: cb, bubbles: true }); } catch (e) {}
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
    * Dedicated TAU Autofill Engine
    */
-  async function fillTauForm(candidateData, setValFn) {
+  async function fillTauForm(candidateData) {
     if (!candidateData) return { handled: false };
 
     console.log('[Kalis TAU] Executing autofill for:', candidateData.programName || 'TAU Track');
-
-    const setter = setValFn || (window.KalisDock && window.KalisDock.setElementValue);
-    if (!setter) return { handled: false };
 
     const auditLog = [];
     let filledCount = 0;
     let skippedCount = 0;
 
-    // 1. Bagrut Average Field (TAU React uses name="maturity")
-    const maturityInput = document.querySelector('input[name="maturity"], input#formMaturity, [aria-label*="בגרות"]');
+    // 1. Bagrut Average Field (TAU React uses name="maturity" and id="formmaturityScore")
+    const maturityInput = document.querySelector('input[name="maturity"], input#formmaturityScore, input#formMaturity, [aria-label*="בגרות"]');
     const targetBagrut = Number(candidateData.targetBagrutAverage || candidateData.currentBagrutAverage || 0);
 
     if (maturityInput && targetBagrut > 0) {
       const formattedAvg = targetBagrut.toFixed(1);
-      setter(maturityInput, formattedAvg);
+      setTauReactInput(maturityInput, formattedAvg);
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -45,13 +123,13 @@
       });
     }
 
-    // 2. Psychometric General Field (TAU React uses name="psychometric")
-    const psychInput = document.querySelector('input[name="psychometric"], input#formPsychometric, [aria-label*="פסיכומטרי"]');
+    // 2. Psychometric General Field (TAU React uses name="psycho" and id="formpsychoScore")
+    const psychInput = document.querySelector('input[name="psycho"], input#formpsychoScore, input[name="psychometric"], input#formPsychometric, [aria-label*="פסיכומטרי"]');
     const psychScore = Number(candidateData.psychometricScore || 0);
     const hasPsych = Boolean(candidateData.hasTakenPsychometric !== false && psychScore >= 200);
 
     if (psychInput && hasPsych) {
-      setter(psychInput, String(psychScore));
+      setTauReactInput(psychInput, String(psychScore));
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -60,7 +138,7 @@
         reason: `הוזן ציון רב-תחומי: ${psychScore}`
       });
     } else if (psychInput) {
-      setter(psychInput, '');
+      setTauReactInput(psychInput, '');
       skippedCount++;
       auditLog.push({
         status: 'SKIPPED_NO_DATA',
@@ -71,7 +149,7 @@
     }
 
     // 3. Realit Bonus Checkbox (5u Math + 5u Physics)
-    const realitCheckbox = document.querySelector('input[type="checkbox"][name*="real"], input[type="checkbox"][id*="real"], input[type="checkbox"][name*="check"]');
+    const realitCheckbox = document.querySelector('input#haveMathPhysics, input[type="checkbox"][id*="MathPhysics"], input[type="checkbox"][name*="real"], input[type="checkbox"][name*="check"]');
     if (realitCheckbox) {
       const subjects = candidateData.subjects || [];
       const mathSub = subjects.find((s) => s.name && s.name.includes('מתמטיקה'));
@@ -81,7 +159,7 @@
         phySub && Number(phySub.units) === 5 && Number(phySub.grade) >= 55
       );
 
-      setter(realitCheckbox, isEligible);
+      setTauCheckbox(realitCheckbox, isEligible);
       filledCount++;
       auditLog.push({
         status: 'FILLED',
@@ -91,9 +169,9 @@
       });
     }
 
-    // 4. Trigger TAU Calculate Button
+    // 4. Trigger TAU Calculate Button (has class .calc and text חישוב)
     setTimeout(() => {
-      const calcBtn = document.querySelector('button.save-btn, button[variant="primary"], button.btn-primary, [role="button"][class*="save"]');
+      const calcBtn = document.querySelector('button.calc, button[variant="dark"].calc, button.btn-dark.calc, button.save-btn, button[variant="primary"], button.btn-primary, [role="button"][class*="save"]');
       if (calcBtn) {
         console.log('[Kalis TAU] Clicking calculate button...');
         calcBtn.click();
@@ -119,8 +197,8 @@
     }
 
     if (window.KalisDock) {
-      window.KalisDock.customFillHandler = async (candidateData, setter) => {
-        return fillTauForm(candidateData, setter);
+      window.KalisDock.customFillHandler = async (candidateData) => {
+        return fillTauForm(candidateData);
       };
 
       // Listen for data update events when user switches tracks in web app
@@ -138,6 +216,28 @@
   } else {
     registerHandler();
   }
+
+  // Watch for TAU calculation results
+  const observeResults = () => {
+    const observer = new MutationObserver(() => {
+      const adapterEl = document.querySelector('.adapter-score, p.adapter-score');
+      if (adapterEl) {
+        const text = (adapterEl.textContent || '').trim();
+        const scoreMatch = text.match(/(\d{3}(?:\.\d{1,2})?)/);
+        if (scoreMatch) {
+          console.log('[Kalis TAU] Captured calculated adapter score:', scoreMatch[1]);
+          window.postMessage({
+            type: 'KALIS_INSTITUTION_CALCULATED_RESULTS',
+            sekemQuantity: scoreMatch[1]
+          }, '*');
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+
+  setTimeout(observeResults, 1200);
 
   console.log('[Kalis TAU] Dedicated engine initialized.');
 })();

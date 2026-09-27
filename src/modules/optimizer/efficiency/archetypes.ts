@@ -738,7 +738,7 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 			name: 'כלכלה וניהול',
 			fieldOfStudy: 'כלכלה',
 			degreeLevel: 'bachelor',
-			minSekemThreshold: 672,
+			minSekemThreshold: 674,
 			relevantSekemType: 'management',
 			directBagrutEligible: true,
 			directBagrutMinAverage: 104.0,

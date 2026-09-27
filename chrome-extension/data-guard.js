@@ -142,24 +142,35 @@
         const qRaw = Number(candidateData.psychQuant || 0);
         const general = Number(candidateData.psychometricScore || 0);
 
+        const ctx = (fieldInfo.contextText || '') + ' ' + (fieldInfo.label || '') + ' ' + (fieldInfo.element?.placeholder || '');
+        const isSubscoreScale = ctx.includes('150') || ctx.includes('1-150') || ctx.includes('150 - 1');
+
         let finalVal = null;
-        if (qEmp >= 200 && qEmp <= 800) finalVal = qEmp;
-        else if (qRaw >= 200 && qRaw <= 800) finalVal = qRaw;
-        else if (hasPsych && general >= 200 && general <= 800) finalVal = general;
+        if (isSubscoreScale) {
+          // Strictly subscore range 50-150
+          if (qRaw >= 50 && qRaw <= 150) {
+            finalVal = qRaw;
+          }
+        } else {
+          // Standard 200-800 emphasis scale
+          if (qEmp >= 200 && qEmp <= 800) finalVal = qEmp;
+          else if (qRaw >= 200 && qRaw <= 800) finalVal = qRaw;
+          else if (hasPsych && general >= 200 && general <= 800) finalVal = general;
+        }
 
         if (finalVal !== null) {
           return {
             shouldFill: true,
             value: String(finalVal),
             status: 'FILLED',
-            reason: `ציון בדגש כמותי: ${finalVal}`
+            reason: isSubscoreScale ? `ציון כמותי בפסיכומטרי (סולם 150): ${finalVal}` : `ציון בדגש כמותי: ${finalVal}`
           };
         }
         return {
           shouldFill: false,
           value: null,
           status: 'SKIPPED_NO_DATA',
-          reason: 'אין ציון בדגש כמותי אצל המועמד — השדה נותר ריק'
+          reason: isSubscoreScale ? 'אין ציון כמותי בסולם 150 אצל המועמד — השדה נותר ריק' : 'אין ציון בדגש כמותי אצל המועמד — השדה נותר ריק'
         };
       }
 

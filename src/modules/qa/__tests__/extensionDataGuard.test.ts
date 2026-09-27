@@ -185,7 +185,15 @@ test('KalisDataGuard — Strict Real-Data Only & Zero-Guess Tests', async (t) =>
 
 test('KalisFieldScanner — Classification & Exclusion Tests', async (t) => {
   const scanner = loadFieldScanner();
+  const guard = loadDataGuard();
   assert.ok(scanner, 'KalisFieldScanner must be loaded');
+
+  const mockContainer = (text: string) => (selector: string) => {
+    if (selector.includes('tr') || selector.includes('field') || selector.includes('form') || selector.includes('td') || selector.includes('label')) {
+      return { textContent: text, querySelectorAll: () => [] };
+    }
+    return null;
+  };
 
   await t.test('1. Degree Search input exclusion', () => {
     // HUJI style degree search bar
@@ -303,5 +311,92 @@ test('KalisFieldScanner — Classification & Exclusion Tests', async (t) => {
     const resHabaa = scanner.classifyField(habaaEl);
     assert.strictEqual(resHabaa.type, 'SUBJECT_GRADE');
     assert.strictEqual(resHabaa.subjectKey, 'hebrew_expression');
+
+    // TAU psycho field
+    const tauPsycho = {
+      id: 'formpsychoScore',
+      name: 'psycho',
+      placeholder: '200-800',
+      getAttribute: (k: string) => k === 'type' ? 'number' : '',
+      closest: () => null
+    };
+    assert.strictEqual(scanner.classifyField(tauPsycho).type, 'PSYCHOMETRIC_GENERAL');
+
+    // BIU weighted average field (ציון בגרות משוקלל 1-130)
+    const biuBagrut = {
+      id: 'txtBagrut',
+      name: 'txtBagrut',
+      placeholder: '',
+      textContent: 'ציון בגרות משוקלל (1-130)',
+      getAttribute: (k: string) => k === 'type' ? 'text' : '',
+      closest: mockContainer('ציון בגרות משוקלל (1-130)')
+    };
+    assert.strictEqual(scanner.classifyField(biuBagrut).type, 'BAGRUT_AVERAGE');
+
+    // BIU general psychometric field (ציון בחינה פסיכומטרית 200-800)
+    const biuPsych = {
+      id: 'txtPsychometric',
+      name: 'txtPsychometric',
+      placeholder: '',
+      textContent: 'ציון בחינה פסיכומטרית (800 - 200)',
+      getAttribute: (k: string) => k === 'type' ? 'text' : '',
+      closest: mockContainer('ציון בחינה פסיכומטרית (800 - 200)')
+    };
+    assert.strictEqual(scanner.classifyField(biuPsych).type, 'PSYCHOMETRIC_GENERAL');
+
+    // BIU psychometric math subscore (ציון מתמטיקה בפסיכומטרי 1-150)
+    const biuPsychMath = {
+      id: 'txtPsychMath',
+      name: 'txtPsychMath',
+      placeholder: '150 - 1',
+      textContent: 'ציון מתמטיקה בפסיכומטרי (150 - 1)',
+      getAttribute: (k: string) => k === 'type' ? 'text' : '',
+      closest: mockContainer('ציון מתמטיקה בפסיכומטרי (150 - 1)')
+    };
+    assert.strictEqual(scanner.classifyField(biuPsychMath).type, 'PSYCHOMETRIC_QUANT');
+
+    // BIU Math grade input in a row that also has a units dropdown
+    const biuMathGrade = {
+      id: 'txtMathGrade',
+      name: 'txtMathGrade',
+      placeholder: '',
+      textContent: 'ציון בגרות במתמטיקה (1-100)',
+      getAttribute: (k: string) => k === 'type' ? 'text' : '',
+      closest: mockContainer('ציון בגרות במתמטיקה (1-100) 5 יחידות')
+    };
+    const resBiuMath = scanner.classifyField(biuMathGrade);
+    assert.strictEqual(resBiuMath.type, 'SUBJECT_GRADE');
+    assert.strictEqual(resBiuMath.subjectKey, 'math');
+  });
+
+  await t.test('3. BIU 1-150 Subscore Guard: Never fills Bagrut grade into psychometric math', () => {
+    const cand = {
+      hasTakenPsychometric: true,
+      psychometricScore: 730,
+      psychQuantEmphasis: 710,
+      psychQuant: 135,
+      subjects: [{ name: 'מתמטיקה', units: 5, grade: 87 }]
+    };
+
+    // Subscore scale field
+    const field150 = {
+      type: 'PSYCHOMETRIC_QUANT',
+      contextText: 'ציון מתמטיקה בפסיכומטרי (150 - 1)',
+      label: 'ציון מתמטיקה בפסיכומטרי'
+    };
+    const res150 = guard.evaluateField(field150, cand);
+    assert.strictEqual(res150.shouldFill, true);
+    assert.strictEqual(res150.value, '135'); // strictly the 135 subscore, NEVER 87!
+
+    // Candidate without 1-150 subscore: must skip, NEVER fill with 87!
+    const candNoRaw = {
+      hasTakenPsychometric: true,
+      psychometricScore: 730,
+      psychQuant: 0,
+      subjects: [{ name: 'מתמטיקה', units: 5, grade: 87 }]
+    };
+    const resNoRaw = guard.evaluateField(field150, candNoRaw);
+    assert.strictEqual(resNoRaw.shouldFill, false);
+    assert.strictEqual(resNoRaw.value, null);
   });
 });

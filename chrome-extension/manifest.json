@@ -109,7 +109,20 @@
     },
     {
       "matches": [
-        "*://*.biu.ac.il/*",
+        "*://shoham.biu.ac.il/*",
+        "*://*.biu.ac.il/*"
+      ],
+      "js": [
+        "data-guard.js",
+        "field-scanner.js",
+        "kalis-dock.js",
+        "content-biu.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
         "*://*.haifa.ac.il/*",
         "*://*.ariel.ac.il/*",
         "*://*.runi.ac.il/*"
