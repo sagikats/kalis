@@ -250,5 +250,58 @@ test('KalisFieldScanner — Classification & Exclusion Tests', async (t) => {
     const resMath = scanner.classifyField(mathEl);
     assert.strictEqual(resMath.type, 'SUBJECT_GRADE');
     assert.strictEqual(resMath.subjectKey, 'math');
+
+    // TAU maturity field (Bagrut average)
+    const tauMaturity = {
+      id: 'formMaturity',
+      name: 'maturity',
+      placeholder: '',
+      getAttribute: (k: string) => k === 'type' ? 'number' : '',
+      closest: () => null
+    };
+    const resTau = scanner.classifyField(tauMaturity);
+    assert.strictEqual(resTau.type, 'BAGRUT_AVERAGE');
+
+    // Technion psychometry field
+    const technionPsych = {
+      id: 'psychometry',
+      name: 'psychometry',
+      placeholder: '',
+      getAttribute: (k: string) => k === 'type' ? 'number' : '',
+      closest: () => null
+    };
+    const resTechPsych = scanner.classifyField(technionPsych);
+    assert.strictEqual(resTechPsych.type, 'PSYCHOMETRIC_GENERAL');
+
+    // HUJI petAll, petMath, petVerbal fields
+    const hujiPetAll = {
+      id: 'petAll',
+      name: 'petAll',
+      placeholder: '200-800',
+      getAttribute: (k: string) => k === 'type' ? 'text' : '',
+      closest: () => null
+    };
+    assert.strictEqual(scanner.classifyField(hujiPetAll).type, 'PSYCHOMETRIC_GENERAL');
+
+    const hujiPetMath = {
+      id: 'petMath',
+      name: 'petMath',
+      placeholder: '200-800',
+      getAttribute: (k: string) => k === 'type' ? 'text' : '',
+      closest: () => null
+    };
+    assert.strictEqual(scanner.classifyField(hujiPetMath).type, 'PSYCHOMETRIC_QUANT');
+
+    // Hebrew Expression (Habaa / Lashon)
+    const habaaEl = {
+      id: 'habaa',
+      name: 'habaa',
+      placeholder: '',
+      getAttribute: (k: string) => k === 'type' ? 'number' : '',
+      closest: () => null
+    };
+    const resHabaa = scanner.classifyField(habaaEl);
+    assert.strictEqual(resHabaa.type, 'SUBJECT_GRADE');
+    assert.strictEqual(resHabaa.subjectKey, 'hebrew_expression');
   });
 });

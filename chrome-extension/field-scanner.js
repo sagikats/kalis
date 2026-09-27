@@ -7,16 +7,17 @@
 
   // Canonical subject matching keywords
   const SUBJECT_DETECTION = [
-    { key: 'math', he: 'מתמטיקה', terms: ['מתמטיקה', 'מתמטי', 'math'] },
+    { key: 'math', he: 'מתמטיקה', terms: ['מתמטיקה', 'מתמטי', 'math', 'mathematic'] },
     { key: 'physics', he: 'פיזיקה', terms: ['פיזיקה', 'פיסיקה', 'physics'] },
     { key: 'english', he: 'אנגלית', terms: ['אנגלית', 'english'] },
     { key: 'cs', he: 'מדעי המחשב', terms: ['מדעי המחשב', 'מדמ״ח', 'מדמח', 'computer science', 'תכנות'] },
     { key: 'chemistry', he: 'כימיה', terms: ['כימיה', 'chemistry'] },
     { key: 'biology', he: 'ביולוגיה', terms: ['ביולוגיה', 'biology'] },
-    { key: 'literature', he: 'ספרות', terms: ['ספרות', 'ספרות עברית', 'literature'] },
+    { key: 'literature', he: 'ספרות', terms: ['ספרות', 'ספרות עברית', 'literature', 'hebrew_lit', 'hebrewlit'] },
     { key: 'bible', he: 'תנ״ך', terms: ['תנ"ך', 'תנך', 'מקרא', 'bible'] },
-    { key: 'history', he: 'היסטוריה', terms: ['היסטוריה', 'history'] },
-    { key: 'civics', he: 'אזרחות', terms: ['אזרחות', 'civics'] },
+    { key: 'history', he: 'היסטוריה', terms: ['היסטוריה', 'history', 'תולדות עם ישראל'] },
+    { key: 'civics', he: 'אזרחות', terms: ['אזרחות', 'civics', 'ezrahut'] },
+    { key: 'hebrew_expression', he: 'עברית (הבעה) / לשון', terms: ['הבעה', 'עברית (הבעה)', 'לשון', 'הבעה עברית', 'habaa'] },
     { key: 'geography', he: 'גיאוגרפיה', terms: ['גיאוגרפיה', 'גאוגרפיה', 'geography'] }
   ];
 
@@ -87,6 +88,20 @@
       el.getAttribute('data-qa') || ''
     ];
 
+    // Check aria-labelledby (e.g. Technion's aria-labelledby="englishsubject bagrotgrades")
+    const ariaLabelledBy = el.getAttribute('aria-labelledby');
+    if (ariaLabelledBy) {
+      const ids = ariaLabelledBy.trim().split(/\s+/);
+      for (const tid of ids) {
+        try {
+          const targetEl = document.getElementById(tid);
+          if (targetEl && targetEl.textContent) {
+            parts.push(targetEl.textContent);
+          }
+        } catch (e) {}
+      }
+    }
+
     // Label via for="id"
     if (el.id) {
       const lbl = document.querySelector(`label[for="${el.id}"]`);
@@ -100,6 +115,15 @@
     // Siblings
     if (el.previousElementSibling) parts.push(el.previousElementSibling.textContent || '');
     if (el.nextElementSibling) parts.push(el.nextElementSibling.textContent || '');
+
+    // Table Row Header (critical for Technion, BIU, etc. where subject name is in sibling <th>)
+    const row = el.closest('tr');
+    if (row) {
+      const ths = row.querySelectorAll('th, [scope="row"], td.label, .subject-title');
+      ths.forEach((th) => {
+        if (th && th.textContent) parts.push(th.textContent);
+      });
+    }
 
     // Form-group or table cell container
     const container = el.closest('.form-group, .field, .input-row, .field-wrapper, td, th, tr, li, [class*="form-item"]');
@@ -178,6 +202,9 @@
       context.includes('bagrut_avg') ||
       context.includes('final_bagrut') ||
       context.includes('ציון מותאם') ||
+      context.includes('maturity') ||
+      (el.id && el.id.toLowerCase() === 'bagrut') ||
+      (el.name && el.name.toLowerCase() === 'maturity') ||
       (context.includes('ממוצע') && !context.includes('תואר') && !context.includes('פסיכומטרי'))
     ) {
       return {
@@ -195,7 +222,8 @@
       context.includes('דגש כמותי') ||
       (context.includes('כמותי') && context.includes('פסיכומטרי')) ||
       context.includes('quantitative') ||
-      context.includes('quant_emphasis')
+      context.includes('quant_emphasis') ||
+      (el.id && el.id.toLowerCase() === 'petmath')
     ) {
       return {
         element: el,
@@ -212,7 +240,8 @@
       context.includes('דגש מילולי') ||
       (context.includes('מילולי') && context.includes('פסיכומטרי')) ||
       context.includes('verbal') ||
-      context.includes('verbal_emphasis')
+      context.includes('verbal_emphasis') ||
+      (el.id && el.id.toLowerCase() === 'petverbal')
     ) {
       return {
         element: el,
@@ -249,6 +278,9 @@
       context.includes('פסיכומטרי כללי') ||
       context.includes('ציון פסיכומטרי') ||
       context.includes('psychometric') ||
+      context.includes('psychometry') ||
+      (el.id && el.id.toLowerCase() === 'psychometry') ||
+      (el.id && el.id.toLowerCase() === 'petall') ||
       (context.includes('פסיכומטרי') && !context.includes('כמותי') && !context.includes('מילולי') && !context.includes('אנגלית'))
     ) {
       return {

@@ -1,5 +1,5 @@
 // Kalis Content Script: Universal AutoFill for Israeli University Calculators
-// Target: Bar-Ilan (BIU), Haifa (UOH), Ariel (AU), Reichman (RUNI), and general portals
+// Target: Bar-Ilan (BIU - Shoham), Haifa (UOH), Ariel (AU), Reichman (RUNI), and general portals
 // Integrates with KalisDataGuard, KalisFieldScanner, and KalisDock
 
 (async function () {
@@ -33,7 +33,14 @@
     onReady();
   }
 
-  setTimeout(onReady, 1000);
+  setTimeout(onReady, 600);
+  setTimeout(onReady, 1800);
+
+  // Listen for data update events when user switches tracks in web app
+  window.addEventListener('kalis:data-updated', () => {
+    console.log('[Kalis General] Received updated track data, re-scanning...');
+    onReady();
+  });
 
   console.log('[Kalis General] Integrated with KalisDock.');
 })();

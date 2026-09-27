@@ -18,11 +18,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           }
         });
 
-        // Open the university calculator in a new tab
-        const tab = await chrome.tabs.create({
-          url: payload.calculatorUrl,
-          active: true
-        });
+        // Check if there is an existing tab already open for this university calculator
+        let existingTab = null;
+        try {
+          const calcUrlObj = new URL(payload.calculatorUrl);
+          const allTabs = await chrome.tabs.query({});
+          existingTab = allTabs.find((t) => t.url && t.url.includes(calcUrlObj.hostname));
+        } catch (e) {}
+
+        let tab;
+        if (existingTab && existingTab.id) {
+          // Activate existing tab and refresh with new track URL
+          tab = await chrome.tabs.update(existingTab.id, { url: payload.calculatorUrl, active: true });
+          try {
+            chrome.tabs.sendMessage(existingTab.id, {
+              type: 'KALIS_VERIFICATION_UPDATED',
+              data: payload
+            });
+          } catch (e) {}
+        } else {
+          // Open the university calculator in a new tab
+          tab = await chrome.tabs.create({
+            url: payload.calculatorUrl,
+            active: true
+          });
+        }
 
         sendResponse({ success: true, tabId: tab.id });
       } catch (err) {
@@ -34,7 +54,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'PING') {
-    sendResponse({ status: 'ok', version: '1.1.0' });
+    sendResponse({ status: 'ok', version: '1.2.0' });
     return false;
   }
 });

@@ -92,15 +92,15 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-27 01:38)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-27 11:47)
 - **Active Branch:** `feature/track-institution-verification`
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
   - `node --test --import jiti/register src/modules/calculators/__tests__/*.test.ts`: **45/45 tests passing** (Institutional bonus variance, benchmarks & BGU exact matching).
-  - `node --test src/modules/qa/__tests__/extensionDataGuard.test.ts`: **12/12 tests passing** (Strict Zero-Guess DataGuard & FieldScanner).
+  - `node --test src/modules/qa/__tests__/extensionDataGuard.test.ts`: **12/12 tests passing** (Strict Zero-Guess DataGuard, FieldScanner & Institutional inputs).
   - `npm run build`: Clean (34/34 static & dynamic routes generated via webpack, zero compile or runtime build errors).
   - Total verified test suite: **57/57 tests passing**.
-  - Chrome Extension: Upgraded to **v1.1.0** with `KalisDataGuard`, `KalisFieldScanner`, and `KalisDock`.
+  - Chrome Extension: Upgraded to **v1.2.0** with full 8-university support, dedicated Technion and HUJI autofill engines, live track synchronization, and official direct calculator URLs.
   - Background processes: Next.js dev server running on port 3000.
 
 ### 🏆 Implemented Milestones in this Phase:
@@ -332,6 +332,34 @@ npm run build
     - **Dynamic Section Scores in Verification Modal & Chrome Extension (`UniversityVerificationModal.tsx`)**: When a proposed track includes psychometric improvement, the modal now calculates realistic upgraded section subscores in real-time, displays them in the modal with individual copy buttons, and transmits them to the Chrome extension. This eliminates the discrepancy where BGU previously calculated Quantitative Sekem using the candidate's old section scores.
     - **MultiCalculator Subscore Integrity (`multiCalculator.ts`)**: Separated 50–150 subscores from 200–800 emphasis scores, eliminating potential 800 overflow.
     - **Quality State**: **57/57 tests passing** (45 calculator & variance tests + 12 Chrome extension data guard tests), clean TypeScript (`tsc --noEmit`), clean Next.js production build (34/34 routes).
+
+28. **Universal Chrome Extension AutoFill Across All 8 Universities & Live Dynamic Track Synchronization (`chrome-extension/`, `universityCalculators.ts`, `extensionDataGuard.test.ts`):**
+    - **Official Institutional Calculator Directory Alignment (`src/utils/universityCalculators.ts`)**:
+      - **Bar-Ilan (`bar_ilan`)**: Corrected URL to official Shoham Admissions Calculator (`https://shoham.biu.ac.il/kabala/`), eliminating broken marketing page redirects.
+      - **Haifa (`haifa`)**: Corrected broken 404 URL to official admissions system (`https://applicants.haifa.ac.il/enrollmentChances/index.html`).
+      - **Ariel (`ariel`)**: Corrected SVG redirect URL to official undergraduate calculator (`https://www.ariel.ac.il/projects/Tzmm/Mark/`).
+    - **Technion Dedicated AutoFill & State Isolation Engine (`content-technion.js`)**:
+      - Solved static/stale track data caching: implemented `clearTechnionForm()` to completely reset core subjects, dynamic elective rows, and psychometric scores before populating, preventing leftover numbers when switching tracks.
+      - Full core subject mapping: Mathematics (`yMathematic`/`mathematic`), English (`yEnglish`/`english`), Bible (`yBible`/`bible`), Civics (`yEzrahut`/`ezrahut`), Hebrew Expression (`yHabaa`/`habaa`), Literature (`yHebrew_lit`/`hebrew_lit`), and History (`yHistory`/`history`).
+      - Dynamic elective row matching: selects matching subject in `#mikztootBhira_1..6` dropdowns (Physics, Chemistry, CS, Biology, Geography), unhides rows `#bhira2..6`, sets units `#y1..6`, and sets grades `#G_1..6`.
+      - Automates `#psychometry`, triggers `#optimal_averaging`, clicks `#calculate_sum`, and captures calculated Sekem from `#dialog` to report to `KalisDock`.
+    - **Hebrew University (HUJI) Dedicated AutoFill Engine (`content-huji.js`)**:
+      - Eliminated destructive portal search navigation that previously hijacked `input.search-bar` and navigated away.
+      - Automatically opens the HUJI admission modal via `#admission-all-link` or direct Vuex store dispatch (`setCheckAdmission: true`, `setAdmissionAll: true`).
+      - Binds Vue-reactive inputs: `#bagrut` (Bagrut average), `#petAll` (General Psychometric), `#petMath` (Quantitative), `#petVerbal` (Verbal).
+      - Applies non-destructive in-modal program filtering.
+    - **Live Dynamic Track Synchronization (`kalis-dock.js`, `background.js`)**:
+      - Added `chrome.storage.onChanged` and runtime message listeners in `KalisDock`: switching tracks in Kalis web app immediately updates open calculator tabs, refreshes target KPIs, and triggers re-fill without manual reload.
+      - Smart tab management in `background.js`: reuses and focuses existing calculator tabs instead of duplicating tabs.
+      - Added `customFillHandler` hook in `KalisDock` allowing each university to have customized automation while falling back to universal field scanning.
+      - Enhanced `field-scanner.js` with `aria-labelledby` resolution and table row `th` header detection.
+    - **Quality & Verification**:
+      - Upgraded extension to **v1.2.0** across manifest, bridge, popup, and background.
+      - Added unit tests for institutional fields (Technion psychometry, TAU maturity, HUJI petAll/petMath, Hebrew Expression) in `extensionDataGuard.test.ts` (**12/12 tests passing**).
+      - Calculator test suite: **45/45 tests passing**.
+      - Total test suite: **57/57 tests passing**.
+      - TypeScript: `npx tsc --noEmit` clean (0 errors).
+      - Production Build: `npm run build` clean (**34/34 routes**).
 
 ---
 

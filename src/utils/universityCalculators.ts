@@ -44,7 +44,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'bar_ilan',
 		name: 'אוניברסיטת בר-אילן',
 		shortName: 'בר-אילן',
-		calculatorUrl: 'https://www.biu.ac.il/calculator',
+		calculatorUrl: 'https://shoham.biu.ac.il/kabala/',
 		portalName: 'מחשבון סכם וסיכויי קבלה — בר-אילן',
 		description: 'חישוב סכם משוקלל ובדיקת זכאות למלגות הצטיינות'
 	},
@@ -52,7 +52,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'haifa',
 		name: 'אוניברסיטת חיפה',
 		shortName: 'אוניברסיטת חיפה',
-		calculatorUrl: 'https://admissions.haifa.ac.il/calculator/',
+		calculatorUrl: 'https://applicants.haifa.ac.il/enrollmentChances/index.html',
 		portalName: 'מחשבון סיכויי קבלה — אוניברסיטת חיפה',
 		description: 'חישוב סכם משולב ובדיקת קבלה ישירה על סמך בגרות'
 	},
@@ -60,7 +60,7 @@ export const UNIVERSITY_CALCULATORS: Record<string, UniversityCalculatorInfo> = 
 		id: 'ariel',
 		name: 'אוניברסיטת אריאל בשומרון',
 		shortName: 'אוניברסיטת אריאל',
-		calculatorUrl: 'https://www.ariel.ac.il/wp/admissions/calculator/',
+		calculatorUrl: 'https://www.ariel.ac.il/projects/Tzmm/Mark/',
 		portalName: 'מחשבון סכם וקבלה — אוניברסיטת אריאל',
 		description: 'חישוב סכם בהנדסה, מדעי הטבע ומדעי החברה'
 	},

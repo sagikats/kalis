@@ -132,6 +132,31 @@
       this.render();
       this.triggerScan();
 
+      // Listen for runtime updates to candidate data (e.g. user selected another track in Kalis web app)
+      if (typeof chrome !== 'undefined' && chrome.storage?.onChanged) {
+        chrome.storage.onChanged.addListener((changes, area) => {
+          if (area === 'local' && changes.pendingVerification?.newValue) {
+            console.log('[Kalis Dock] Received updated verification data:', changes.pendingVerification.newValue);
+            this.candidateData = changes.pendingVerification.newValue;
+            this.updateCandidateUI();
+            this.triggerScan();
+            window.dispatchEvent(new CustomEvent('kalis:data-updated', { detail: this.candidateData }));
+          }
+        });
+      }
+
+      if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
+        chrome.runtime.onMessage.addListener((message) => {
+          if (message.type === 'KALIS_VERIFICATION_UPDATED' && message.data) {
+            console.log('[Kalis Dock] Direct verification update received:', message.data);
+            this.candidateData = message.data;
+            this.updateCandidateUI();
+            this.triggerScan();
+            window.dispatchEvent(new CustomEvent('kalis:data-updated', { detail: this.candidateData }));
+          }
+        });
+      }
+
       // Listen for DOM changes to update available fields count
       let scanTimeout = null;
       const observer = new MutationObserver(() => {
@@ -140,6 +165,42 @@
         scanTimeout = setTimeout(() => this.triggerScan(), 500);
       });
       observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    updateCandidateUI() {
+      if (!this.container || !this.candidateData) {
+        if (!this.container && this.candidateData) this.render();
+        return;
+      }
+
+      const instName = this.candidateData.institutionName || 'האוניברסיטה';
+      const progName = this.candidateData.programName || '';
+      const isTech = Boolean(this.candidateData.institutionId === 'technion' || this.candidateData.isTechnion || instName.includes('טכניון'));
+      const threshold = this.candidateData.admissionThreshold != null ? Number(this.candidateData.admissionThreshold).toFixed(isTech ? 2 : 1) : null;
+      const sekem = this.candidateData.targetSekem != null ? Number(this.candidateData.targetSekem).toFixed(isTech ? 2 : 1) : '-';
+
+      const titleEl = this.container.querySelector('#kalis-dock-inst-title');
+      if (titleEl) titleEl.textContent = `אימות סכם חכם מול ${instName}`;
+
+      const progEl = this.container.querySelector('#kalis-dock-prog-name');
+      if (progEl) progEl.textContent = progName;
+
+      const threshEl = this.container.querySelector('#kalis-dock-threshold-val');
+      if (threshEl) threshEl.textContent = threshold || '-';
+
+      const sekemEl = this.container.querySelector('#kalis-dock-sekem-val');
+      if (sekemEl) sekemEl.textContent = sekem;
+
+      const oldRes = this.container.querySelector('#kalis-dock-live-results');
+      if (oldRes) oldRes.remove();
+
+      const btnText = this.container.querySelector('#kalis-fill-btn-text');
+      const btn = this.container.querySelector('#kalis-dock-fill-btn');
+      if (btnText) btnText.textContent = 'מלא נתונים במחשבון';
+      if (btn) btn.style.background = '#3C3C3C';
+
+      const audit = this.container.querySelector('#kalis-dock-audit');
+      if (audit) audit.style.display = 'none';
     }
 
     triggerScan() {
@@ -210,8 +271,9 @@
 
       const instName = this.candidateData?.institutionName || 'האוניברסיטה';
       const progName = this.candidateData?.programName || '';
-      const threshold = this.candidateData?.admissionThreshold ? Number(this.candidateData.admissionThreshold).toFixed(1) : null;
-      const sekem = this.candidateData?.targetSekem ? Number(this.candidateData.targetSekem).toFixed(1) : '-';
+      const isTech = Boolean(this.candidateData?.institutionId === 'technion' || this.candidateData?.isTechnion || instName.includes('טכניון'));
+      const threshold = this.candidateData?.admissionThreshold != null ? Number(this.candidateData.admissionThreshold).toFixed(isTech ? 2 : 1) : null;
+      const sekem = this.candidateData?.targetSekem != null ? Number(this.candidateData.targetSekem).toFixed(isTech ? 2 : 1) : '-';
 
       this.container.innerHTML = `
         <!-- Top Bar -->
@@ -220,7 +282,7 @@
             <div style="width: 28px; height: 28px; border-radius: 8px; background: #3C3C3C; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px;">🎓</div>
             <div>
               <div style="font-weight: 900; font-size: 13px; color: #111;">סייען מתקבלים</div>
-              <div style="font-size: 10.5px; color: #666;">אימות סכם חכם מול ${instName}</div>
+              <div id="kalis-dock-inst-title" style="font-size: 10.5px; color: #666;">אימות סכם חכם מול ${instName}</div>
             </div>
           </div>
           <button id="kalis-dock-minimize" style="background: transparent; border: none; font-size: 16px; cursor: pointer; color: #888; padding: 2px 6px; border-radius: 6px;" title="מזער">_</button>
@@ -230,16 +292,16 @@
         <div style="padding: 14px 16px; overflow-y: auto; max-height: calc(85vh - 70px); display: flex; flex-direction: column; gap: 12px;">
           <!-- Target Info Box -->
           <div style="background: white; border: 1px solid #E5DFD4; border-radius: 12px; padding: 10px 12px; font-size: 11.5px;">
-            ${progName ? `<div style="font-weight: 800; color: #222; margin-bottom: 6px; line-height: 1.4;">${progName}</div>` : ''}
+            <div id="kalis-dock-prog-name" style="font-weight: 800; color: #222; margin-bottom: 6px; line-height: 1.4;">${progName}</div>
             <div style="display: flex; flex-direction: column; gap: 4px;">
               ${threshold ? `
               <div style="display: flex; align-items: center; justify-content: space-between; color: #666;">
                 <span>סף קבלה נדרש לתואר:</span>
-                <span style="font-weight: 800; font-size: 13px; color: #3C3C3C;">${threshold}</span>
+                <span id="kalis-dock-threshold-val" style="font-weight: 800; font-size: 13px; color: #3C3C3C;">${threshold}</span>
               </div>` : ''}
               <div style="display: flex; align-items: center; justify-content: space-between; color: #555;">
                 <span>${threshold ? 'סכם יעד במסלול:' : 'סף קבלה נדרש לחוג:'}</span>
-                <span style="font-weight: 900; font-size: 14px; color: #15803d;">${sekem}</span>
+                <span id="kalis-dock-sekem-val" style="font-weight: 900; font-size: 14px; color: #15803d;">${sekem}</span>
               </div>
             </div>
           </div>
@@ -421,6 +483,28 @@
       if (btnText) btnText.textContent = 'מזין נתונים במחשבון...';
       if (btn) btn.style.background = '#2A2A2A';
 
+      // 0. Dedicated custom institution handler (e.g. Technion, HUJI, TAU, BGU)
+      if (typeof this.customFillHandler === 'function') {
+        try {
+          const customResult = await this.customFillHandler(this.candidateData, setElementValue);
+          if (customResult && customResult.handled) {
+            this.lastAudit = customResult.auditLog || [];
+            this.renderAuditReport(customResult.auditLog || [], customResult.filledCount || 1, customResult.skippedCount || 0);
+            this.isFilling = false;
+            if (btnText) btnText.textContent = `✓ הוזנו ${customResult.filledCount || 1} נתונים בהצלחה!`;
+            if (btn) btn.style.background = '#15803d';
+
+            setTimeout(() => {
+              if (btnText) btnText.textContent = 'מלא נתונים שוב';
+              if (btn) btn.style.background = '#3C3C3C';
+            }, 4000);
+            return;
+          }
+        } catch (err) {
+          console.warn('[Kalis Dock] Custom fill handler error, falling back to field scanner:', err);
+        }
+      }
+
       // 1. Scan current DOM
       const scan = window.KalisFieldScanner.scan(document);
       this.lastScanResult = scan;
@@ -522,6 +606,7 @@
 
   // Initialize and attach to global
   window.KalisDock = new KalisDockUI();
+  window.KalisDock.setElementValue = setElementValue;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => window.KalisDock.init());
