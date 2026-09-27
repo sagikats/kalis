@@ -6,7 +6,7 @@ export interface QAProgramTarget extends AcademicDegree {
 	institutionId: string;
 	institutionName: string;
 	calculatorId: string;
-	relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion';
+	relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
 	prerequisites?: {
 		minMathUnits?: number;
 		minMathGrade?: number;

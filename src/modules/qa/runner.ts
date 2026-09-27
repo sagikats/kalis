@@ -59,6 +59,8 @@ export function buildProgramIndex(): {
 				minPsychometricFloor: prog.minPsychometricFloor || null,
 				relevantSekemType:
 					calcId === 'technion' ? 'technion' :
+					(calcId === 'bgu' && prog.fieldOfStudy?.includes('הנדס')) ? 'engineering' :
+					(calcId === 'bgu' && (prog.fieldOfStudy?.includes('מחשב') || prog.fieldOfStudy?.includes('מתמטיקה') || prog.fieldOfStudy?.includes('פיזיקה'))) ? 'quantitative' :
 					(prog.fieldOfStudy?.includes('הנדס') || prog.fieldOfStudy?.includes('מחשב')) ? 'engineering' : 'general',
 				prerequisites: {
 					minMathUnits: prog.prerequisites?.minMathUnits || (prog.fieldOfStudy?.includes('הנדס') ? 4 : 3),
@@ -166,7 +168,9 @@ export function runBatchAudit(): BatchAuditSummary {
 		});
 
 		const initialSekem =
-			program.relevantSekemType === 'engineering'
+			program.relevantSekemType === 'quantitative'
+				? (initialRes.quantitativeSekem ?? initialRes.generalSekem)
+				: program.relevantSekemType === 'engineering'
 				? (initialRes.engineeringSekem ?? initialRes.generalSekem)
 				: program.relevantSekemType === 'management'
 				? (initialRes.managementSekem ?? initialRes.generalSekem)

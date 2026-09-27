@@ -69,6 +69,12 @@ export class KalisDatabaseRepository {
 	private determineSekemType(field: string, institutionId: string): SekemType {
 		if (institutionId === 'technion') return 'technion';
 		const lower = field.toLowerCase();
+		if (institutionId === 'bgu') {
+			if (lower.includes('הנדס')) return 'engineering';
+			if (lower.includes('מחשב') || lower.includes('פיזיקה') || lower.includes('מתמטיקה') || lower.includes('סייבר')) {
+				return 'quantitative';
+			}
+		}
 		if (lower.includes('הנדס') || lower.includes('מחשב') || lower.includes('פיזיקה')) {
 			return 'engineering';
 		}

@@ -58,7 +58,7 @@ export interface UserPreferencesRecord {
 	updatedAt: Date;
 }
 
-export type SekemType = 'general' | 'engineering' | 'management' | 'technion';
+export type SekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
 
 export interface ProgramPrerequisites {
 	minMathUnits?: number;

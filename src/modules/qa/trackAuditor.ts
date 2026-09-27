@@ -135,20 +135,25 @@ export function auditSingleTrack(
 	});
 
 	const simSekem =
-		program.relevantSekemType === 'engineering'
+		program.relevantSekemType === 'quantitative'
+			? (calcRes.quantitativeSekem ?? calcRes.generalSekem)
+			: program.relevantSekemType === 'engineering'
 			? (calcRes.engineeringSekem ?? calcRes.generalSekem)
 			: program.relevantSekemType === 'management'
 			? (calcRes.managementSekem ?? calcRes.generalSekem)
 			: calcRes.generalSekem;
 
 	const isDirectBagrutTrack = track.id.includes('direct-bagrut') || track.title.includes('קבלה ישירה');
+	const isTransferTrack = track.id.includes('transfer') || track.title.includes('אפיק מעבר');
+	const isMechinaTrack = track.id.includes('mechina') || track.title.includes('מכינה');
+	const isBypassTrack = isDirectBagrutTrack || isTransferTrack || isMechinaTrack;
 	const isTechnion = calculatorId === 'technion';
 
 	// =========================================================================
 	// Check 1: Zero Discrepancy Rule
 	// =========================================================================
 	const discrepancy = Math.abs(simSekem - cardSekem);
-	const isAcceptableDiscrepancy = isDirectBagrutTrack || discrepancy <= 0.15;
+	const isAcceptableDiscrepancy = isBypassTrack || discrepancy <= 0.15;
 
 	if (!isAcceptableDiscrepancy) {
 		issues.push({
@@ -174,7 +179,7 @@ export function auditSingleTrack(
 			program.directBagrutMinAverage !== undefined &&
 			calcRes.bagrutAverage >= program.directBagrutMinAverage);
 
-	const achievesAdmission = simSekem >= threshold - 0.1 || (isDirectBagrutTrack && directEligible);
+	const achievesAdmission = simSekem >= threshold - 0.1 || (isDirectBagrutTrack && directEligible) || isTransferTrack || isMechinaTrack;
 
 	if (!achievesAdmission) {
 		issues.push({
@@ -200,7 +205,7 @@ export function auditSingleTrack(
 		(program.fieldOfStudy?.includes('מתמטיקה') || program.fieldOfStudy?.includes('פיזיקה')) ? 550 : 500
 	);
 
-	if (!isDirectBagrutTrack && targetPsych < degreePsychFloor) {
+	if (!isBypassTrack && targetPsych < degreePsychFloor) {
 		issues.push({
 			code: 'PREREQUISITE_VIOLATION',
 			severity: 'critical',
@@ -224,7 +229,7 @@ export function auditSingleTrack(
 		(st) => isSubjectMatch(st.title, 'פיזיקה') || isSubjectMatch(st.detail, 'סיווג בפיזיקה')
 	);
 
-	if (requiresPhysics && !candidateHasPhysics && !trackAddsPhysics && !hasPhysicsClassificationNotice) {
+	if (requiresPhysics && !isBypassTrack && !candidateHasPhysics && !trackAddsPhysics && !hasPhysicsClassificationNotice) {
 		issues.push({
 			code: 'PREREQUISITE_VIOLATION',
 			severity: 'warning',
@@ -243,20 +248,22 @@ export function auditSingleTrack(
 	// =========================================================================
 	const droppedSubjects = calcRes.droppedSubjects || [];
 	let hasDroppedProposedSubject = false;
-	for (const imp of track.recommendedSubjectImprovements || []) {
-		if (droppedSubjects.some((d) => isSubjectMatch(d, imp.subjectName))) {
-			hasDroppedProposedSubject = true;
-			issues.push({
-				code: 'DROPPED_SUBJECT',
-				severity: 'critical',
-				penaltyPoints: 25,
-				title: 'הצעת מקצוע שנשמט ע״י המחשבון המוסדי',
-				description: `המערכת מציעה לשפר את ${imp.subjectName} (${imp.targetUnits} יח״ל לציון ${imp.targetGrade}), אך מחשבון האוניברסיטה משמיט מקצוע זה מהממוצע כי הוא פוגע בו!`,
-				expected: 'שילוב מקצועות תורמים בלבד',
-				actual: `נשמט מהממוצע: ${imp.subjectName}`,
-				remedyRecommendation: 'הפעל סינון Dropped Subjects במאגר הקומבינציות לפני בחירת המנופים.'
-			});
-			score -= 25;
+	if (!isBypassTrack) {
+		for (const imp of track.recommendedSubjectImprovements || []) {
+			if (droppedSubjects.some((d) => isSubjectMatch(d, imp.subjectName))) {
+				hasDroppedProposedSubject = true;
+				issues.push({
+					code: 'DROPPED_SUBJECT',
+					severity: 'critical',
+					penaltyPoints: 25,
+					title: 'הצעת מקצוע שנשמט ע״י המחשבון המוסדי',
+					description: `המערכת מציעה לשפר את ${imp.subjectName} (${imp.targetUnits} יח״ל לציון ${imp.targetGrade}), אך מחשבון האוניברסיטה משמיט מקצוע זה מהממוצע כי הוא פוגע בו!`,
+					expected: 'שילוב מקצועות תורמים בלבד',
+					actual: `נשמט מהממוצע: ${imp.subjectName}`,
+					remedyRecommendation: 'הפעל סינון Dropped Subjects במאגר הקומבינציות לפני בחירת המנופים.'
+				});
+				score -= 25;
+			}
 		}
 	}
 

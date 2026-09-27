@@ -109,17 +109,18 @@ export function resolveProgramSekemType(
 	}
 
 	if (calcId === 'bgu') {
-		const isCS =
-			title.includes('מדעי המחשב') ||
-			title.includes('תוכנה') ||
-			title.includes('סייבר') ||
-			title.includes('מערכות מידע') ||
-			title.includes('נתונים');
-		if (isCS) {
-			return { type: 'quantitative', label: 'סכם כמותי (ב"ג)' };
-		}
 		if (title.includes('הנדס')) {
 			return { type: 'engineering', label: 'סכם הנדסה (ב"ג)' };
+		}
+		const isCSOrStem =
+			title.includes('מדעי המחשב') ||
+			title.includes('סייבר') ||
+			title.includes('מתמטיקה') ||
+			title.includes('פיזיקה') ||
+			title.includes('כימיה') ||
+			title.includes('מדעי החיים');
+		if (isCSOrStem) {
+			return { type: 'quantitative', label: 'סכם כמותי (ב"ג)' };
 		}
 		if (isEngineeringOrStem) {
 			return { type: 'quantitative', label: 'סכם כמותי (ב"ג)' };

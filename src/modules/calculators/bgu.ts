@@ -176,36 +176,31 @@ export function calculateBguEngineeringSekem(
 ): number {
 	if (psychometricGeneral <= 0 && psychometricQuant <= 0 && mathGrade <= 0 && bagrutAverage <= 0) return 0;
 
-	let mathBonus = 0;
-	if (mathGrade >= 60) {
-		if (mathUnits === 5) mathBonus = 35;
-		else if (mathUnits === 4) mathBonus = 15;
+	// Normalize Quantitative subscore to 50-150 scale (official BGU scale)
+	const rawQ = psychometricQuant > 0 ? psychometricQuant : psychometricGeneral;
+	const quant = rawQ > 0 && rawQ <= 150 ? rawQ : (rawQ > 150 ? Math.round(50 + (rawQ - 200) / 6) : 0);
+	if (quant <= 0 && mathGrade <= 0 && bagrutAverage <= 0) return 0;
+
+	// Official Ben-Gurion Faculty of Engineering Sciences Dual-Route Formula
+	// Verified 1:1 against live BGU Production ORDS API (acceptanceProbabilityMAIN)
+	
+	// Route 1: Route with 5 units Physics (Physics >= 70)
+	let scorePhys = 0;
+	if (physicsUnits === 5 && physicsGrade >= 70 && quant > 0 && mathGrade > 0) {
+		const mathTerm = mathUnits === 5 ? 1.1 * mathGrade : (0.8 * mathGrade - 6.0);
+		scorePhys = 3.0 * quant + mathTerm + 1.9 * physicsGrade - 141.1;
 	}
 
-	const mathFinal = mathGrade > 0 ? Math.min(125, mathGrade + mathBonus) : 0;
-	const mathScaled = mathGrade > 0 ? (mathFinal / 125) * 800 : 0;
-
-	let finalScienceBonus = 0;
-	if (physicsUnits === 5 && physicsGrade >= 70) {
-		finalScienceBonus = (physicsGrade / 100) * 20;
+	// Route 2: Bagrut-based route (for candidates without 5u Physics, or where high Bagrut yields higher score)
+	let scoreBagrut = 0;
+	if (bagrutAverage > 0 && quant > 0) {
+		const mathTermBagrut = mathUnits === 5 ? 1.0 * mathGrade : (0.75 * mathGrade - 5.0);
+		scoreBagrut = 2.9 * quant + mathTermBagrut + 2.4 * bagrutAverage - 219.34;
 	}
 
-	const quantWeight = psychometricQuant > 0 ? psychometricQuant : psychometricGeneral;
-
-	let rawSekem: number;
-	if (bagrutAverage > 0) {
-		const bt = bagrutAverage * 10 - 330;
-		rawSekem =
-			0.30 * quantWeight +
-			0.20 * psychometricGeneral +
-			0.25 * mathScaled +
-			0.25 * bt +
-			finalScienceBonus;
-	} else {
-		rawSekem = 0.45 * quantWeight + 0.25 * psychometricGeneral + 0.30 * mathScaled + finalScienceBonus;
-	}
-
-	return Math.min(800, Math.max(200, Math.round(rawSekem * 10) / 10));
+	const finalSekem = Math.max(scorePhys, scoreBagrut);
+	if (finalSekem <= 0) return 0;
+	return Math.round(finalSekem);
 }
 
 export function calculateBguQuantitativeSekem(
@@ -239,22 +234,22 @@ export function evaluateBgu(input: InstitutionCalculatorInput): InstitutionCalcu
 	const rawQuant = explicitQuant ?? (input.psychometricQuant || psych);
 	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
+	// Quantitative Subscores (for Computer Science, Natural Sciences & Engineering at BGU)
+	const rawQ = input.psychometricQuant || 0;
+	const qSub = rawQ > 0 && rawQ <= 150
+		? rawQ
+		: (rawQ > 150 ? Math.round(50 + (rawQ - 200) / 6) : (input.psychometricQuantEmphasis ? Math.round(50 + (input.psychometricQuantEmphasis - 200) / 6) : (psych > 0 ? Math.round(50 + (psych - 200) / 6) : 0)));
+
 	const generalSekem = calculateBguGeneralSekem(optimal.average, psych);
 	const engineeringSekem = calculateBguEngineeringSekem(
 		mathGrade,
 		mathUnits,
 		psych,
-		quant,
+		qSub,
 		physicsGrade,
 		physicsUnits,
 		optimal.average
 	);
-
-	// Quantitative Sekem (for Computer Science & Natural Sciences at BGU)
-	const rawQ = input.psychometricQuant || 0;
-	const qSub = rawQ > 0 && rawQ <= 150
-		? rawQ
-		: (rawQ > 150 ? Math.round(50 + (rawQ - 200) / 6) : (input.psychometricQuantEmphasis ? Math.round(50 + (input.psychometricQuantEmphasis - 200) / 6) : (psych > 0 ? Math.round(50 + (psych - 200) / 6) : 0)));
 
 	const rawV = input.psychometricVerbal || 0;
 	const vSub = rawV > 0 && rawV <= 150

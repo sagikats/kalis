@@ -147,10 +147,17 @@ export function generateOptimizedActionTracks(
 		assignSessionToCandidate
 	);
 
+	const degreeRequiresPsychometric =
+		targetProgram.requiresPsychometric === true ||
+		targetProgram.prerequisites?.mustHavePsychometric === true ||
+		institutionId === 'technion';
+
 	const degreeAllowsDirectBagrut =
-		targetProgram.directBagrutEligible ||
-		(!['מדעי המחשב', 'הנדסת', 'רפואה', 'רפואת שיניים'].some((d) => (targetProgram.name || '').includes(d)) &&
-			institutionId !== 'technion');
+		!degreeRequiresPsychometric && (
+			targetProgram.directBagrutEligible ||
+			(!['מדעי המחשב', 'הנדסת', 'רפואה', 'רפואת שיניים'].some((d) => (targetProgram.name || '').includes(d)) &&
+				institutionId !== 'technion')
+		);
 
 	// Degree-specific hard prerequisites
 	const degreePsychFloor = targetProgram.prerequisites?.minPsychometricFloor || (

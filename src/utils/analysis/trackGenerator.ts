@@ -991,6 +991,9 @@ export function extractDegreeHardRequirements(
 	if (directBagrutEligible === undefined) {
 		directBagrutEligible = !requiresPsychometric && isDegreeEligibleForDirectBagrut(progName, calculatorId);
 	}
+	if (requiresPsychometric) {
+		directBagrutEligible = false;
+	}
 
 	let directBagrutMinAverage = program?.directBagrutMinAverage ?? parsedPrereq.directBagrutMinAverage;
 	if (!directBagrutMinAverage && directBagrutEligible) {
@@ -1113,7 +1116,7 @@ export function generatePersonalizedTracks(
 			userProfile,
 			sim.subjects,
 			minPsychSearchFloor,
-			800,
+			psychCeiling,
 			sim.mathUnits,
 			sim.mathGrade,
 			sim.physUnits,
@@ -1143,7 +1146,7 @@ export function generatePersonalizedTracks(
 				userProfile,
 				sim.subjects,
 				minPsychSearchFloor,
-				800,
+				psychCeiling,
 				sim.mathUnits,
 				sim.mathGrade,
 				sim.physUnits,
@@ -1175,7 +1178,7 @@ export function generatePersonalizedTracks(
 					userProfile,
 					sim.subjects,
 					minPsychSearchFloor,
-					800,
+					psychCeiling,
 					sim.mathUnits,
 					sim.mathGrade,
 					sim.physUnits,
@@ -1209,7 +1212,7 @@ export function generatePersonalizedTracks(
 						userProfile,
 						sim.subjects,
 						minPsychSearchFloor,
-						800,
+						psychCeiling,
 						sim.mathUnits,
 						sim.mathGrade,
 						sim.physUnits,
@@ -1245,7 +1248,7 @@ export function generatePersonalizedTracks(
 							userProfile,
 							sim.subjects,
 							minPsychSearchFloor,
-							800,
+							psychCeiling,
 							sim.mathUnits,
 							sim.mathGrade,
 							sim.physUnits,
@@ -1288,7 +1291,7 @@ export function generatePersonalizedTracks(
 			userProfile,
 			simFast.subjects,
 			minPsychSearchFloor,
-			800,
+			psychCeiling,
 			simFast.mathUnits,
 			simFast.mathGrade,
 			simFast.physUnits,
@@ -1365,7 +1368,7 @@ export function generatePersonalizedTracks(
 			userProfile,
 			multiSim.subjects,
 			minPsychSearchFloor,
-			800,
+			psychCeiling,
 			multiSim.mathUnits,
 			multiSim.mathGrade,
 			multiSim.physUnits,
@@ -1431,7 +1434,7 @@ export function generatePersonalizedTracks(
 				userProfile,
 				simMax.subjects,
 				minPsychSearchFloor,
-				800,
+				psychCeiling,
 				simMax.mathUnits,
 				simMax.mathGrade,
 				simMax.physUnits,
@@ -1490,7 +1493,7 @@ export function generatePersonalizedTracks(
 			? (hasTakenPsych ? gapAbs >= 20 : effectiveGap >= 20)
 			: (hasTakenPsych ? gapAbs >= 190 : effectiveGap >= 190);
 
-		if (isTrulyColossalGap) {
+		if (isTrulyColossalGap || tracks.length < 2) {
 			tracks.push({
 				id: 'track-transfer',
 				title: 'מסלול אפיק מעבר: מעקף פסיכומטרי מלא',
@@ -1531,7 +1534,9 @@ export function generatePersonalizedTracks(
 				],
 				keyAdvantage: 'אפס תלות בפסיכומטרי או בבגרויות תיכון, וצבירת נקודות זכות אקדמיות לתואר מהיום הראשון.'
 			});
-		} else {
+		}
+
+		if (!tracks.some((t) => t.id === 'track-mechina')) {
 			// University Mechina
 			const mechinaPsychTarget = Math.min(psychCeiling, Math.max(hasTakenPsych ? currentPsych : baselinePsych, 620));
 			tracks.push({
