@@ -745,118 +745,7 @@ export default function AdmissionFlowPage() {
 	return (
 		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl pb-28 sm:pb-32">
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-				{/* Top Stepper Navigation */}
-				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs">
-					<div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-						<button
-							onClick={() => {
-								if (activeStep === 1) {
-									if (step1SubStep === 'psychometric') {
-										handleBackToBagrut();
-									}
-								} else {
-									handleStepClick(1);
-								}
-							}}
-							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border cursor-pointer ${
-								activeStep === 1
-									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
-							}`}
-						>
-							<div
-								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-									activeStep === 1
-										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
-								}`}
-							>
-								1
-							</div>
-							<div className="overflow-hidden">
-								<span className="text-xs font-bold block truncate">הזנת ציונים</span>
-								<span className="text-[10px] text-inherit opacity-80 block truncate">
-									{activeStep === 1
-										? step1SubStep === 'bagrut'
-											? 'בגרויות (שלב 1 מתוך 2)'
-											: 'פסיכומטרי (שלב 2 מתוך 2)'
-										: 'בגרויות ופסיכומטרי'}
-								</span>
-							</div>
-						</button>
 
-						<button
-							onClick={() => handleStepClick(2)}
-							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
-								activeStep === 2
-									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
-							}`}
-						>
-							<div
-								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-									activeStep === 2
-										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
-								}`}
-							>
-								2
-							</div>
-							<div className="overflow-hidden">
-								<span className="text-xs font-bold block truncate">בחירת תארים</span>
-								<span className="text-[10px] text-inherit opacity-80 block truncate">
-									סל מבוקשים ({selectedTargets.length})
-								</span>
-							</div>
-						</button>
-
-						<button
-							onClick={() => handleStepClick(3)}
-							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
-								activeStep === 3
-									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
-							}`}
-						>
-							<div
-								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-									activeStep === 3
-										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
-								}`}
-							>
-								3
-							</div>
-							<div className="overflow-hidden">
-								<span className="text-xs font-bold block truncate">דוח קבלה אישי</span>
-								<span className="text-[10px] text-inherit opacity-80 block truncate">סטטוסים והערכה</span>
-							</div>
-						</button>
-
-						<button
-							onClick={() => handleStepClick(4)}
-							className={`p-3 rounded-2xl transition flex items-center gap-3 text-right border ${
-								activeStep === 4
-									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:text-[#222222]'
-							}`}
-						>
-							<div
-								className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-									activeStep === 4
-										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
-								}`}
-							>
-								4
-							</div>
-							<div className="overflow-hidden">
-								<span className="text-xs font-bold block truncate">תכנון מסלולי פעולה</span>
-								<span className="text-[10px] text-inherit opacity-80 block truncate">3 מסלולים + מסלול אישי</span>
-							</div>
-						</button>
-					</div>
-				</div>
 
 				{/* STEP 1: הזנת ציונים (מפוצל ל-2 שלבים פנימיים: בגרויות ואז פסיכומטרי) */}
 				{activeStep === 1 && (
@@ -1373,6 +1262,7 @@ export default function AdmissionFlowPage() {
 							onAddMultiplePrograms={handleAddMultipleTargets}
 							onRemoveProgram={handleRemoveTarget}
 							onClearAll={handleClearAllTargets}
+							onProceedToNextStep={() => setActiveStep(3)}
 						/>
 
 					</div>
@@ -1582,79 +1472,131 @@ export default function AdmissionFlowPage() {
 						)}
 					</div>
 
-					{/* --- CENTER: CONTEXTUAL PROGRESS & STATUS INFO --- */}
-					<div className="hidden md:flex items-center justify-center flex-1 min-w-0 px-2 text-center">
-						{activeStep === 1 && (
-							step1SubStep === 'bagrut' ? (
-								showValidationErrors && !bagrutValidation.isValid ? (
-									<div className="flex items-center gap-1.5 text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
-										<AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
-										<span>יש להשלים את הזנת הבגרויות (לפחות 20 יח״ל)</span>
-									</div>
-								) : (
-									<span className="text-xs text-[#66635C] font-medium truncate">
-										נצברו {bagrutValidation.totalValidUnits} יח״ל בגרות {bagrutValidation.totalValidUnits >= 20 ? '✓' : '(מינימום 20)'} — בסיום נעבור לפסיכומטרי
-									</span>
-								)
-							) : (
-								showValidationErrors && !psychValidation.isValid ? (
-									<div className="flex items-center gap-1.5 text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
-										<AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
-										<span>יש להזין ציון פסיכומטרי תקין (200–800) או לסמן טרם נבחנתי</span>
-									</div>
-								) : (
-									<span className="text-xs text-[#66635C] font-medium truncate">
-										{!hasTakenPsychometric
-											? 'נבחרה בדיקת קבלה ישירה (על סמך בגרות בלבד)'
-											: psychGeneral
-											? `ציון פסיכומטרי: ${psychGeneral} | שקלול סכמים אוטומטי`
-											: 'הזן ציון רב-תחומי (200–800) והמשך לבחירת תארים'}
-									</span>
-								)
-							)
-						)}
-
-						{activeStep === 2 && (
-							selectedTargets.length === 0 ? (
-								<span className="text-xs text-[#88857E] font-medium">
-									בחר תארים מתוך הקטלוג כדי להמשיך לדוח הקבלה
-								</span>
-							) : (
-								<div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-[#EBF4EE] border border-[#C6DFCE] text-xs font-bold text-[#205739]">
-									<CheckCircle2 className="h-3.5 w-3.5" />
-									<span>נבחרו {selectedTargets.length} תארים בסל המבוקשים שלך</span>
-								</div>
-							)
-						)}
-
-						{activeStep === 3 && (
-							<div className="flex items-center gap-2 text-xs font-medium text-[#66635C]">
-								<span>סיכום דוח קבלה:</span>
-								<span className="font-bold text-[#205739] bg-[#EBF4EE] px-2 py-0.5 rounded-lg border border-[#C6DFCE]">
-									{step3Counts.accepted} התקבלת
-								</span>
-								{step3Counts.borderline > 0 && (
-									<span className="font-bold text-[#825B15] bg-[#FDF6E8] px-2 py-0.5 rounded-lg border border-[#ECDAB6]">
-										{step3Counts.borderline} על הגבול
-									</span>
-								)}
-								{step3Counts.not_accepted > 0 && (
-									<span className="font-bold text-[#9B3327] bg-[#FDF1EE] px-2 py-0.5 rounded-lg border border-[#F1CAC1]">
-										{step3Counts.not_accepted} דורשים שיפור
-									</span>
-								)}
+					{/* --- CENTER: ALWAYS-VISIBLE 4-STEP STEPPER DOCK (סרגל 4 השלבים המלווה תמיד למטה) --- */}
+					<div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 justify-center min-w-0 max-w-4xl px-1 sm:px-2">
+						{/* Step 1 */}
+						<button
+							type="button"
+							onClick={() => {
+								if (activeStep === 1) {
+									if (step1SubStep === 'psychometric') {
+										handleBackToBagrut();
+									}
+								} else {
+									handleStepClick(1);
+								}
+							}}
+							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
+								activeStep === 1
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+							}`}
+							title="שלב 1: הזנת ציונים (בגרויות ופסיכומטרי)"
+						>
+							<div
+								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+									activeStep === 1
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
+								}`}
+							>
+								1
 							</div>
-						)}
-
-						{activeStep === 4 && currentFocusedAnalysis && (
-							<div className="flex items-center gap-2 text-xs font-bold text-[#222222] truncate max-w-md">
-								<UniversityLogo institution={currentFocusedAnalysis.target.institutionId} size="xs" shape="circle" />
-								<span className="truncate">{currentFocusedAnalysis.target.program.fieldOfStudy}</span>
-								<span className="text-[11px] text-[#66635C] font-normal hidden lg:inline">
-									({currentFocusedAnalysis.target.institutionName.replace('אוניברסיטת ', '')})
+							<div className="overflow-hidden hidden sm:block">
+								<span className="text-xs font-bold block truncate">הזנת ציונים</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate hidden lg:block">
+									{activeStep === 1
+										? step1SubStep === 'bagrut'
+											? 'בגרויות (שלב 1 מתוך 2)'
+											: 'פסיכומטרי (שלב 2 מתוך 2)'
+										: 'בגרויות ופסיכומטרי'}
 								</span>
 							</div>
-						)}
+						</button>
+
+						{/* Step 2 */}
+						<button
+							type="button"
+							onClick={() => handleStepClick(2)}
+							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
+								activeStep === 2
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+							}`}
+							title={`שלב 2: בחירת תארים (${selectedTargets.length} נבחרו)`}
+						>
+							<div
+								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+									activeStep === 2
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
+								}`}
+							>
+								2
+							</div>
+							<div className="overflow-hidden hidden sm:block">
+								<span className="text-xs font-bold block truncate">בחירת תארים</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate hidden lg:block">
+									סל מבוקשים ({selectedTargets.length})
+								</span>
+							</div>
+						</button>
+
+						{/* Step 3 */}
+						<button
+							type="button"
+							onClick={() => handleStepClick(3)}
+							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
+								activeStep === 3
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+							}`}
+							title="שלב 3: דוח קבלה אישי"
+						>
+							<div
+								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+									activeStep === 3
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
+								}`}
+							>
+								3
+							</div>
+							<div className="overflow-hidden hidden sm:block">
+								<span className="text-xs font-bold block truncate">דוח קבלה אישי</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate hidden lg:block">
+									סטטוסים והערכה
+								</span>
+							</div>
+						</button>
+
+						{/* Step 4 */}
+						<button
+							type="button"
+							onClick={() => handleStepClick(4)}
+							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
+								activeStep === 4
+									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
+									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+							}`}
+							title="שלב 4: תכנון מסלולי פעולה"
+						>
+							<div
+								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+									activeStep === 4
+										? 'bg-white text-black shadow-xs'
+										: 'bg-[#E5DFD4] text-[#44423D]'
+								}`}
+							>
+								4
+							</div>
+							<div className="overflow-hidden hidden sm:block">
+								<span className="text-xs font-bold block truncate">תכנון מסלולי פעולה</span>
+								<span className="text-[10px] text-inherit opacity-80 block truncate hidden lg:block">
+									3 מסלולים + מסלול אישי
+								</span>
+							</div>
+						</button>
 					</div>
 
 					{/* --- LEFT SIDE (RTL END): PRIMARY CONTINUE / ACTION BUTTON --- */}

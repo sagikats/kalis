@@ -92,7 +92,7 @@ npm run build
 
 ---
 
-## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-27 14:45)
+## 📍 5. Current Working State & Subagent Roadmap (Last Updated: 2026-09-28 18:15)
 - **Active Branch:** `feature/track-institution-verification`
 - **Current Quality State:**
   - `npx tsc --noEmit`: Clean (0 errors)
@@ -362,6 +362,23 @@ npm run build
     - **HUJI Single Course Modal Support**: Upgraded `findHujiInputs()` to match inputs by semantic context (`רב תחומי`, `כמותי`, `מילולי`, `בגרות מותאם`) across both general calculator and `/programAdmission_*` modals.
     - **Bar-Ilan Official Entry Point**: Updated Bar-Ilan official URL to `https://shoham.biu.ac.il/kabala` and added auto-navigation in `content-biu.js` from the portal landing page to the calculator form.
     - **Quality & Verification**: 59/59 tests passing, `npx tsc --noEmit` clean (0 errors), Next.js production build clean (34/34 routes).
+
+29. **Step 2 Redesign: Compact Degree Cards, Expandable Threshold Drawer, Sticky Left Basket, Multi-Select Filters & Persistent Stepper Dock (`DegreeSearchSelector.tsx`, `flow/page.tsx`):**
+    - **Elimination of Degree Level Tag**: Removed `degreeLevel` badge (״תואר ראשון״) from all degree catalog cards.
+    - **Ultra-Compact Degree Cards (50%+ Height Reduction)**:
+      - Reduced closed card height from ~180px down to ~70px.
+      - Integrated compact add/in-cart button (`+ הוסף` / `נבחר ✓`) in top row.
+      - Second row pairs university logo & short name with expandable threshold toggle.
+    - **Expandable Threshold Accordion Drawer**:
+      - Clicking `סף קבלה: 85 ▾` smoothly expands an inline drawer displaying official admission threshold, psychometric floor, admission pathway (direct bagrut vs weighted composite), prerequisites (5u math/physics), and special comments (internal entrance tests).
+    - **RTL 2-Column Split with Sticky Selected Basket**:
+      - **Right Side (Catalog)**: 2 narrower columns of degree cards (`grid-cols-2`), enabling rapid downward scanning.
+      - **Left Side (Cart)**: Fixed/sticky container (`sticky top-24`) showing selected target degrees in real time with instant remove (`X`), count badge, and direct continue CTA without needing to scroll down.
+    - **Multi-Select Filters**:
+      - Allowed selecting multiple universities (e.g. Technion + TAU + HUJI) and multiple disciplines simultaneously with visual active checkmarks and batch resets.
+    - **Persistent Bottom Stepper Dock**:
+      - Removed the top 4-step progress bar from above the page content.
+      - Integrated the complete 4-step stepper (1: הזנת ציונים, 2: בחירת תארים, 3: דוח קבלה אישי, 4: תכנון מסלולי פעולה) directly into the persistent floating bottom dock between the Back and Continue buttons, featuring the active matte anthracite styling (`#3C3C3C`) and white number badge.
 
 ---
 
