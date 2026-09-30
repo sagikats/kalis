@@ -117,6 +117,24 @@ export default function RecommendedTracksView({
 		}));
 	};
 
+	const primaryRecommendedTrack = useMemo(() => {
+		if (!tracks || tracks.length === 0) return null;
+		return tracks.find((t) => t.badge === 'הכי מומלץ') || tracks[0] || null;
+	}, [tracks]);
+
+	// Synchronize editing track and selection when focused program changes
+	useEffect(() => {
+		setCustomScenarioApplied(false);
+		if (primaryRecommendedTrack) {
+			setSelectedTrackId(primaryRecommendedTrack.id);
+			if (activeTab === 'custom_builder') {
+				setEditingTrack(primaryRecommendedTrack);
+			}
+		} else {
+			setEditingTrack(null);
+		}
+	}, [analysis.target.program.id, primaryRecommendedTrack, activeTab]);
+
 	// Scroll to top when switching between Recommended tracks and Custom builder tabs
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
@@ -1971,7 +1989,8 @@ export default function RecommendedTracksView({
 								userProfile={userProfile}
 								institutionResult={institutionResult}
 								onApplyScenario={handleApplyScenario}
-								initialTrackToEdit={editingTrack}
+								initialTrackToEdit={editingTrack || primaryRecommendedTrack}
+								defaultRecommendedTrack={primaryRecommendedTrack}
 								onCancelEdit={() => {
 									setEditingTrack(null);
 									setActiveTab('recommended');

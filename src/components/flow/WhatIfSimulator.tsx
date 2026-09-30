@@ -60,6 +60,7 @@ interface WhatIfSimulatorProps {
 	institutionResult: InstitutionSekemResult;
 	onApplyScenario?: (customPsych: number, customSubjects: SubjectInput[], simulatedSekem: number) => void;
 	initialTrackToEdit?: RecommendedTrack | null;
+	defaultRecommendedTrack?: RecommendedTrack | null;
 	onSaveCustomTrack?: (track: any) => Promise<void>;
 	onCancelEdit?: () => void;
 }
@@ -152,9 +153,12 @@ export default function WhatIfSimulator({
 	institutionResult,
 	onApplyScenario,
 	initialTrackToEdit,
+	defaultRecommendedTrack,
 	onSaveCustomTrack,
 	onCancelEdit
 }: WhatIfSimulatorProps) {
+	const activeTrack = initialTrackToEdit || defaultRecommendedTrack || null;
+
 	// Baseline values
 	const hasOriginalPsych = (userProfile.psychometricGeneral || 0) > 0;
 	const initialPsych = hasOriginalPsych ? userProfile.psychometricGeneral : 600;
@@ -176,15 +180,15 @@ export default function WhatIfSimulator({
 
 	// Interactive Simulator State
 	const [simulatedPsych, setSimulatedPsych] = useState<number>(() => {
-		if (initialTrackToEdit && initialTrackToEdit.targetPsychometric && initialTrackToEdit.targetPsychometric > 0) {
-			return initialTrackToEdit.targetPsychometric;
+		if (activeTrack && activeTrack.targetPsychometric && activeTrack.targetPsychometric > 0) {
+			return activeTrack.targetPsychometric;
 		}
 		return initialPsych;
 	});
 
 	const [isMathActive, setIsMathActive] = useState<boolean>(() => {
-		if (initialTrackToEdit) {
-			const mathImp = initialTrackToEdit.recommendedSubjectImprovements?.find((imp) =>
+		if (activeTrack) {
+			const mathImp = activeTrack.recommendedSubjectImprovements?.find((imp) =>
 				isSubjectMatch(imp.subjectName, 'מתמטיקה')
 			);
 			return !!mathImp;
@@ -193,8 +197,8 @@ export default function WhatIfSimulator({
 	});
 
 	const [isMathUpgradedTo5, setIsMathUpgradedTo5] = useState<boolean>(() => {
-		if (initialTrackToEdit) {
-			const mathImp = initialTrackToEdit.recommendedSubjectImprovements?.find((imp) =>
+		if (activeTrack) {
+			const mathImp = activeTrack.recommendedSubjectImprovements?.find((imp) =>
 				isSubjectMatch(imp.subjectName, 'מתמטיקה')
 			);
 			if (mathImp) return mathImp.targetUnits === 5;
@@ -203,8 +207,8 @@ export default function WhatIfSimulator({
 	});
 
 	const [simulatedMathGrade, setSimulatedMathGrade] = useState<number>(() => {
-		if (initialTrackToEdit) {
-			const mathImp = initialTrackToEdit.recommendedSubjectImprovements?.find((imp) =>
+		if (activeTrack) {
+			const mathImp = activeTrack.recommendedSubjectImprovements?.find((imp) =>
 				isSubjectMatch(imp.subjectName, 'מתמטיקה')
 			);
 			if (mathImp) return mathImp.targetGrade;
@@ -215,8 +219,8 @@ export default function WhatIfSimulator({
 	// Simulated Subjects List (includes original + custom added)
 	// STRICT RULE: Only active if proposed in track! No auto-activation of weak subjects!
 	const [simulatedList, setSimulatedList] = useState<SimulatedSubjectItem[]>(() => {
-		if (initialTrackToEdit) {
-			return applyTrackToSimulatorState(initialTrackToEdit, userProfile, initialPsych).subjectsList;
+		if (activeTrack) {
+			return applyTrackToSimulatorState(activeTrack, userProfile, initialPsych).subjectsList;
 		}
 		return (userProfile.bagrutSubjects || []).map((s, idx) => ({
 			id: `orig-${idx}-${s.name}`,
@@ -242,23 +246,17 @@ export default function WhatIfSimulator({
 	const [selectedExistingToAdd, setSelectedExistingToAdd] = useState<string>('');
 	const [showAllUniversities, setShowAllUniversities] = useState<boolean>(false);
 
-	// Load track into simulator whenever initialTrackToEdit changes
+	// Synchronize simulator state when program changes or track to edit changes
 	useEffect(() => {
-		if (initialTrackToEdit) {
-			const state = applyTrackToSimulatorState(initialTrackToEdit, userProfile, initialPsych);
+		const targetTrack = initialTrackToEdit || defaultRecommendedTrack;
+		if (targetTrack) {
+			const state = applyTrackToSimulatorState(targetTrack, userProfile, initialPsych);
 			setSimulatedPsych(state.targetPsych);
 			setIsMathActive(state.isMathActive);
 			setIsMathUpgradedTo5(state.isMath5);
 			setSimulatedMathGrade(state.mathGrade);
 			setSimulatedList(state.subjectsList);
-			setSavedCustomTrackSuccess(false);
-			setSavedCustomTrackError(null);
-		}
-	}, [initialTrackToEdit, initialPsych, userProfile]);
-
-	// Reset state when analysis target changes (only if no track is being edited)
-	useEffect(() => {
-		if (!initialTrackToEdit) {
+		} else {
 			setSimulatedPsych(initialPsych);
 			setIsMathActive(false);
 			setIsMathUpgradedTo5(userProfile.mathUnits === 5);
@@ -275,15 +273,16 @@ export default function WhatIfSimulator({
 					isActive: false
 				}))
 			);
-			setSavedCustomTrackSuccess(false);
-			setSavedCustomTrackError(null);
 		}
-	}, [analysis.target.program.id, initialPsych, userProfile, initialTrackToEdit]);
+		setSavedCustomTrackSuccess(false);
+		setSavedCustomTrackError(null);
+	}, [analysis.target.program.id, initialTrackToEdit, defaultRecommendedTrack, initialPsych, userProfile]);
 
 	// Reset to the original proposed targets of the edited track
 	const handleResetToOriginalTrack = () => {
-		if (initialTrackToEdit) {
-			const state = applyTrackToSimulatorState(initialTrackToEdit, userProfile, initialPsych);
+		const targetTrack = initialTrackToEdit || defaultRecommendedTrack;
+		if (targetTrack) {
+			const state = applyTrackToSimulatorState(targetTrack, userProfile, initialPsych);
 			setSimulatedPsych(state.targetPsych);
 			setIsMathActive(state.isMathActive);
 			setIsMathUpgradedTo5(state.isMath5);
@@ -659,8 +658,8 @@ export default function WhatIfSimulator({
 
 			const customTrackPayload = {
 				id: `track-custom-${Date.now()}`,
-				title: initialTrackToEdit
-					? `מסלול מותאם: ${initialTrackToEdit.title}`
+				title: activeTrack
+					? `מסלול מותאם: ${activeTrack.title}`
 					: `מסלול מותאם אישית (${totalExamsCount} בחינות)`,
 				badge: isAccepted ? 'קבלה מובטחת' : isBorderline ? 'על סף קבלה' : 'מסלול מותאם',
 				badgeColor: isAccepted ? 'emerald' : isBorderline ? 'amber' : 'blue',
@@ -905,8 +904,8 @@ export default function WhatIfSimulator({
 
 	return (
 		<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs space-y-8 dir-rtl text-right relative overflow-hidden">
-			{/* Edit Track Banner when initialTrackToEdit is passed */}
-			{initialTrackToEdit && (
+			{/* Edit Track Banner when activeTrack (initialTrackToEdit or defaultRecommendedTrack) is present */}
+			{activeTrack && (
 				<div className="bg-[#FAF8F5] border-2 border-[#1E597B]/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
 					<div className="flex items-start gap-3">
 						<div className="p-2.5 rounded-xl bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] shrink-0 shadow-2xs">
@@ -918,14 +917,14 @@ export default function WhatIfSimulator({
 									מצב עריכת מסלול מומלץ
 								</span>
 								<span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-[#3C3C3C] text-white shadow-2xs">
-									{initialTrackToEdit.title}
+									{activeTrack.title}
 								</span>
 								<span className="text-xs text-[#8A847C]">
-									({initialTrackToEdit.badge})
+									({activeTrack.badge})
 								</span>
 							</div>
 							<p className="text-xs text-[#66635C] leading-relaxed">
-								הסימולטור הוטען מראש עם היעדים והבגרויות שהוצעו במסלול זה. באפשרותך לשנות פרמטרים, לבדוק עמידה בסף הקבלה, ולשמור את המסלול המותאם.
+								הסימולטור הוטען מראש עם היעדים והבגרויות של המסלול המומלץ עבור {analysis.target.program.fieldOfStudy} ({analysis.target.institutionName.replace('אוניברסיטת ', '')}). באפשרותך לשנות פרמטרים, לבדוק עמידה בסף הקבלה, ולשמור את המסלול המותאם.
 							</p>
 						</div>
 					</div>

@@ -1087,8 +1087,10 @@ export function generatePersonalizedTracks(
 	const basePhysU = userProfile.physicsUnits || 0;
 	const basePhysG = userProfile.physicsGrade || 0;
 
-	// Pre-test solutions for 0, 1, 2, 3, 4 levers strictly under psychCeiling
-	// 0 levers: Pure psychometric
+	// =========================================================================
+	// TRACK 1 SEARCH: Pre-test minimal levers up to 800 (without artificial ceiling blocking)
+	// =========================================================================
+	// 0 levers: Pure psychometric search up to 800
 	let purePsychTarget = answers.psychWillingness === 'prefer_bagrut_only'
 		? null
 		: findExactPsychometricTarget(
@@ -1098,17 +1100,32 @@ export function generatePersonalizedTracks(
 				userProfile,
 				userProfile.bagrutSubjects,
 				minPsychSearchFloor,
-				psychCeiling,
+				800,
 				baseMathU,
 				baseMathG,
 				basePhysU,
 				basePhysG
 		  );
 
-	// 1 lever
+	// Degree-specific hard prerequisites gate for 0-lever pure psychometric:
+	if (purePsychTarget !== null) {
+		let purePsychMeetsHardReqs = true;
+		if (hardReqs.minMathUnits && baseMathU < hardReqs.minMathUnits) {
+			purePsychMeetsHardReqs = false;
+		}
+		if (hardReqs.requiresPhysics && basePhysU === 0 && calculatorId !== 'technion') {
+			purePsychMeetsHardReqs = false;
+		}
+		if (!purePsychMeetsHardReqs) {
+			purePsychTarget = null;
+		}
+	}
+
+	// 1 lever search up to 800:
 	let sol1Lever: { lever: SubjectUpgradeAction; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
 	for (const lever of availableLevers) {
 		const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, [lever]);
+		if (hardReqs.minMathUnits && sim.mathUnits < hardReqs.minMathUnits) continue;
 		const psychSol = findExactPsychometricTarget(
 			calculatorId,
 			relevantSekemType,
@@ -1116,7 +1133,7 @@ export function generatePersonalizedTracks(
 			userProfile,
 			sim.subjects,
 			minPsychSearchFloor,
-			psychCeiling,
+			800,
 			sim.mathUnits,
 			sim.mathGrade,
 			sim.physUnits,
@@ -1125,13 +1142,13 @@ export function generatePersonalizedTracks(
 		if (psychSol !== null) {
 			const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 			if (comboHasDroppedSubject([lever], res.droppedSubjects)) continue;
-			if (res.sekem >= threshold && (!sol1Lever || psychSol < sol1Lever.psych)) {
+			if (res.sekem >= threshold - 0.05 && (!sol1Lever || psychSol < sol1Lever.psych)) {
 				sol1Lever = { lever, psych: psychSol, res };
 			}
 		}
 	}
 
-	// 2 levers
+	// 2 levers search up to 800:
 	let sol2Levers: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
 	const pool2 = availableLevers.slice(0, Math.min(8, availableLevers.length));
 	for (let i = 0; i < pool2.length; i++) {
@@ -1139,6 +1156,7 @@ export function generatePersonalizedTracks(
 			const pair = [pool2[i], pool2[j]];
 			if (!isValidSubjectCombo(pair)) continue;
 			const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, pair);
+			if (hardReqs.minMathUnits && sim.mathUnits < hardReqs.minMathUnits) continue;
 			const psychSol = findExactPsychometricTarget(
 				calculatorId,
 				relevantSekemType,
@@ -1146,7 +1164,7 @@ export function generatePersonalizedTracks(
 				userProfile,
 				sim.subjects,
 				minPsychSearchFloor,
-				psychCeiling,
+				800,
 				sim.mathUnits,
 				sim.mathGrade,
 				sim.physUnits,
@@ -1155,439 +1173,13 @@ export function generatePersonalizedTracks(
 			if (psychSol !== null) {
 				const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
 				if (comboHasDroppedSubject(pair, res.droppedSubjects)) continue;
-				if (res.sekem >= threshold && (!sol2Levers || psychSol < sol2Levers.psych)) {
+				if (res.sekem >= threshold - 0.05 && (!sol2Levers || psychSol < sol2Levers.psych)) {
 					sol2Levers = { levers: pair, psych: psychSol, res };
 				}
 			}
 		}
 	}
 
-	// 3 levers
-	let sol3Levers: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
-	const pool3 = availableLevers.slice(0, Math.min(8, availableLevers.length));
-	for (let i = 0; i < pool3.length; i++) {
-		for (let j = i + 1; j < pool3.length; j++) {
-			for (let k = j + 1; k < pool3.length; k++) {
-				const triple = [pool3[i], pool3[j], pool3[k]];
-				if (!isValidSubjectCombo(triple)) continue;
-				const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, triple);
-				const psychSol = findExactPsychometricTarget(
-					calculatorId,
-					relevantSekemType,
-					threshold,
-					userProfile,
-					sim.subjects,
-					minPsychSearchFloor,
-					psychCeiling,
-					sim.mathUnits,
-					sim.mathGrade,
-					sim.physUnits,
-					sim.physGrade
-				);
-				if (psychSol !== null) {
-					const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
-					if (comboHasDroppedSubject(triple, res.droppedSubjects)) continue;
-					if (res.sekem >= threshold && (!sol3Levers || psychSol < sol3Levers.psych)) {
-						sol3Levers = { levers: triple, psych: psychSol, res };
-					}
-				}
-			}
-		}
-	}
-
-	// 4 levers
-	let sol4Levers: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
-	const pool4 = availableLevers.slice(0, Math.min(8, availableLevers.length));
-	for (let i = 0; i < pool4.length; i++) {
-		for (let j = i + 1; j < pool4.length; j++) {
-			for (let k = j + 1; k < pool4.length; k++) {
-				for (let l = k + 1; l < pool4.length; l++) {
-					const quad = [pool4[i], pool4[j], pool4[k], pool4[l]];
-					if (!isValidSubjectCombo(quad)) continue;
-					const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, quad);
-					const psychSol = findExactPsychometricTarget(
-						calculatorId,
-						relevantSekemType,
-						threshold,
-						userProfile,
-						sim.subjects,
-						minPsychSearchFloor,
-						psychCeiling,
-						sim.mathUnits,
-						sim.mathGrade,
-						sim.physUnits,
-						sim.physGrade
-					);
-					if (psychSol !== null) {
-						const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
-						if (comboHasDroppedSubject(quad, res.droppedSubjects)) continue;
-						if (res.sekem >= threshold && (!sol4Levers || psychSol < sol4Levers.psych)) {
-							sol4Levers = { levers: quad, psych: psychSol, res };
-						}
-					}
-				}
-			}
-		}
-	}
-
-	// 5 levers
-	let sol5Levers: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
-	const pool5 = availableLevers.slice(0, Math.min(8, availableLevers.length));
-	for (let i = 0; i < pool5.length; i++) {
-		for (let j = i + 1; j < pool5.length; j++) {
-			for (let k = j + 1; k < pool5.length; k++) {
-				for (let l = k + 1; l < pool5.length; l++) {
-					for (let m = l + 1; m < pool5.length; m++) {
-						const quint = [pool5[i], pool5[j], pool5[k], pool5[l], pool5[m]];
-						if (!isValidSubjectCombo(quint)) continue;
-						const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, quint);
-						const psychSol = findExactPsychometricTarget(
-							calculatorId,
-							relevantSekemType,
-							threshold,
-							userProfile,
-							sim.subjects,
-							minPsychSearchFloor,
-							psychCeiling,
-							sim.mathUnits,
-							sim.mathGrade,
-							sim.physUnits,
-							sim.physGrade
-						);
-						if (psychSol !== null) {
-							const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, psychSol, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
-							if (comboHasDroppedSubject(quint, res.droppedSubjects)) continue;
-							if (res.sekem >= threshold && (!sol5Levers || psychSol < sol5Levers.psych)) {
-								sol5Levers = { levers: quint, psych: psychSol, res };
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	const hasStandardSolution =
-		purePsychTarget !== null ||
-		sol1Lever !== null ||
-		sol2Levers !== null ||
-		sol3Levers !== null ||
-		sol4Levers !== null ||
-		sol5Levers !== null;
-	// =========================================================================
-	// BRANCH 1: NO RETAKE COMBINATION FULLY REACHES THRESHOLD UNDER CEILING
-	// (Even 4 levers + psychometric jump of <= 100 points is insufficient in 1 cycle)
-	// =========================================================================
-	if (!hasStandardSolution) {
-		// Track 1: Fast Hybrid (up to 2 levers) - solve for TRUE psychometric required to reach threshold!
-		const fastCount = Math.min(2, availableLevers.length);
-		const fastLevers = availableLevers.slice(0, fastCount);
-		const simFast = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, fastLevers);
-		
-		const targetP_Fast = findExactPsychometricTarget(
-			calculatorId,
-			relevantSekemType,
-			threshold,
-			userProfile,
-			simFast.subjects,
-			minPsychSearchFloor,
-			psychCeiling,
-			simFast.mathUnits,
-			simFast.mathGrade,
-			simFast.physUnits,
-			simFast.physGrade
-		);
-
-		if (targetP_Fast !== null) {
-			const resFast = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, simFast.subjects, targetP_Fast, simFast.mathUnits, simFast.mathGrade, simFast.physUnits, simFast.physGrade);
-			const fastSubjectNames = fastLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל)`).join(' + ');
-
-			tracks.push({
-				id: 'track-fast-hybrid',
-				title: 'המסלול המהיר: מינוף מקצועות מפתח',
-				badge: 'הכי מהיר',
-				badgeColor: 'from-amber-500 to-orange-600',
-				strategyDescription: hasTakenPsych
-					? `שדרוג ממוקד של ${fastSubjectNames} מעלה את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)}. לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}), נדרש יעד פסיכומטרי של ${targetP_Fast} (+${targetP_Fast - currentPsych} נקודות).`
-					: `שדרוג ממוקד של ${fastSubjectNames} מעלה את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)}. לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}), נדרש יעד פסיכומטרי של ${targetP_Fast}.`,
-				targetSekem: resFast.sekem,
-				targetPsychometric: targetP_Fast,
-				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
-				targetBagrutAverage: resFast.bagrutAverage,
-				currentBagrutAverage: currentBagrut,
-				recommendedSubjectImprovements: fastLevers.map((l) => ({
-					subjectName: l.subjectName,
-					currentGrade: l.currentGrade,
-					currentUnits: l.currentUnits,
-					targetGrade: l.targetGrade,
-					targetUnits: l.targetUnits,
-					reason: l.reason
-				})),
-				estimatedWeeks: 12,
-				weeklyHours: availableWeeklyHours,
-				feasibility: getFeasibilityEvaluation(hasTakenPsych ? targetP_Fast - currentPsych : targetP_Fast - baselinePsych, fastLevers.length).feasibility,
-				feasibilityExplanation: (hasTakenPsych && targetP_Fast - currentPsych > 100)
-					? `סגירת פער של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם במספר בחינות מצומצם דורשת קפיצה מאתגרת של ${targetP_Fast - currentPsych} נקודות בפסיכומטרי.`
-					: 'שדרוג ממוקד של מקצועות בעלי מקדם בונוס גבוה לסגירת מרב הפער במחזור בחינה בודד.',
-				steps: [
-					{
-						title: `הכנה ממוקדת ל-${fastLevers[0]?.subjectName || 'מקצוע בגרות'}`,
-						detail: 'מרתון תרגול ובגרויות עד להשגת ציון היעד',
-						timing: 'שבועות 1–8',
-						type: fastLevers[0]?.isMath ? 'bagrut_core' : 'bagrut_elective'
-					},
-					...(fastLevers.length > 1
-						? [
-								{
-									title: `השלמת ${fastLevers[1].subjectName}`,
-									detail: `הגעה לציון ${fastLevers[1].targetGrade} למיצוי בונוס מוסדי`,
-									timing: 'שבועות 9–10',
-									type: 'bagrut_elective' as const
-								}
-						  ]
-						: []),
-					{
-						title: 'השלמת יעד פסיכומטרי',
-						detail: `הגעה לציון ${targetP_Fast} והגשת מועמדות`,
-						timing: 'שבועות 11–12',
-						type: 'psychometric'
-					}
-				],
-				keyAdvantage: 'סגירת מלוא הפער והגעה מלאה לסכם הקבלה במספר בחינות מינימלי.'
-			});
-		}
-
-		// Track 2: מסלול דו-שלבי רב-שנתי (פיזור עומס מובנה) - solve for TRUE psychometric required!
-		const multiYearLevers = availableLevers.slice(0, Math.min(3, availableLevers.length));
-		const multiSim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, multiYearLevers);
-		
-		const targetP_Multi = findExactPsychometricTarget(
-			calculatorId,
-			relevantSekemType,
-			threshold,
-			userProfile,
-			multiSim.subjects,
-			minPsychSearchFloor,
-			psychCeiling,
-			multiSim.mathUnits,
-			multiSim.mathGrade,
-			multiSim.physUnits,
-			multiSim.physGrade
-		);
-
-		if (targetP_Multi !== null) {
-			const multiRes = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, multiSim.subjects, targetP_Multi, multiSim.mathUnits, multiSim.mathGrade, multiSim.physUnits, multiSim.physGrade);
-			const multiSubjectNames = multiYearLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל)`).join(' + ');
-
-			tracks.push({
-				id: 'track-multi-year',
-				title: 'המסלול הבטוח: פיזור עומס דו-שלבי',
-				badge: 'הכי מומלץ',
-				badgeColor: 'from-emerald-500 to-teal-600',
-				strategyDescription: hasTakenPsych
-					? `פיזור העומס בין שדרוג מקצועות הבגרות (${multiSubjectNames}) לבין הפסיכומטרי מביא לממוצע בגרות של ${multiRes.bagrutAverage.toFixed(1)} ומאפשר לעמוד ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}) עם יעד פסיכומטרי נגיש יותר של ${targetP_Multi} (+${targetP_Multi - currentPsych} נקודות בלבד).`
-					: `פיזור העומס בין שדרוג מקצועות הבגרות (${multiSubjectNames}) לבין הפסיכומטרי מביא לממוצע בגרות של ${multiRes.bagrutAverage.toFixed(1)} ומאפשר לעמוד ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}) עם יעד פסיכומטרי נגיש של ${targetP_Multi}.`,
-				targetSekem: multiRes.sekem,
-				targetPsychometric: targetP_Multi,
-				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
-				targetBagrutAverage: multiRes.bagrutAverage,
-				currentBagrutAverage: currentBagrut,
-				recommendedSubjectImprovements: multiYearLevers.map((l) => ({
-					subjectName: l.subjectName,
-					currentGrade: l.currentGrade,
-					currentUnits: l.currentUnits,
-					targetGrade: l.targetGrade,
-					targetUnits: l.targetUnits,
-					reason: l.reason
-				})),
-				estimatedWeeks: 24,
-				weeklyHours: availableWeeklyHours,
-				feasibility: (hasTakenPsych && targetP_Multi - currentPsych > 100) ? 'challenging' : 'moderate',
-				feasibilityExplanation: 'העלאת 3 בגרויות מקטינה את הנטל מהפסיכומטרי ומביאה לעמידה ודאית בסכם הקבלה.',
-				steps: [
-					{
-						title: 'מחזור א׳: שדרוג מקצועות בגרות מוגברים',
-						detail: `הכנה ופתרון בגרויות עבור ${multiSubjectNames} להעלאת הממוצע`,
-						timing: 'חודשים 1–4',
-						type: 'bagrut_elective'
-					},
-					{
-						title: 'מחזור ב׳: קורס פסיכומטרי ממוקד',
-						detail: `תרגול מעמיק ומרתון סימולציות להגעה ליעד של ${targetP_Multi}`,
-						timing: 'חודשים 5–6',
-						type: 'psychometric'
-					}
-				],
-				keyAdvantage: 'מפזר את הסיכון על פני מספר בחינות ומבטיח עמידה מלאה ברף הקבלה.'
-			});
-		}
-
-		// Optional Track 3 for Branch 1: If 4+ levers are available, offer a comprehensive multi-exam track
-		// to bring psychometric requirement down even further
-		if (availableLevers.length >= 4) {
-			const maxLevers = availableLevers.slice(0, Math.min(5, availableLevers.length));
-			const simMax = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, maxLevers);
-			const targetP_Max = findExactPsychometricTarget(
-				calculatorId,
-				relevantSekemType,
-				threshold,
-				userProfile,
-				simMax.subjects,
-				minPsychSearchFloor,
-				psychCeiling,
-				simMax.mathUnits,
-				simMax.mathGrade,
-				simMax.physUnits,
-				simMax.physGrade
-			);
-			if (targetP_Max !== null) {
-				const maxRes = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, simMax.subjects, targetP_Max, simMax.mathUnits, simMax.mathGrade, simMax.physUnits, simMax.physGrade);
-				if (maxRes.sekem >= threshold - 0.05) {
-					const maxSubjectNames = maxLevers.map((l) => `${l.subjectName} (${l.targetUnits} יח״ל)`).join(' + ');
-					tracks.push({
-						id: 'track-multi-exam',
-						title: 'מסלול רב-שלבי: מקסימום בגרויות והקלה מרבית בפסיכומטרי',
-						badge: 'הקלה מרבית בפסיכומטרי',
-						badgeColor: 'from-blue-600 to-indigo-700',
-						strategyDescription: `שדרוג מקיף של ${maxLevers.length} מקצועות (${maxSubjectNames}) מקפיץ את ממוצע הבגרות ל-${maxRes.bagrutAverage.toFixed(1)} ומוריד את יעד הפסיכומטרי הנדרש ל-${targetP_Max} בלבד לעמידה מלאה ברף הקבלה (${threshold.toFixed(isTechnion ? 2 : 0)}).`,
-						targetSekem: maxRes.sekem,
-						targetPsychometric: targetP_Max,
-						currentPsychometric: hasTakenPsych ? currentPsych : undefined,
-						targetBagrutAverage: maxRes.bagrutAverage,
-						currentBagrutAverage: currentBagrut,
-						recommendedSubjectImprovements: maxLevers.map((l) => ({
-							subjectName: l.subjectName,
-							currentGrade: l.currentGrade,
-							currentUnits: l.currentUnits,
-							targetGrade: l.targetGrade,
-							targetUnits: l.targetUnits,
-							reason: l.reason
-						})),
-						estimatedWeeks: 28,
-						weeklyHours: availableWeeklyHours,
-						feasibility: getFeasibilityEvaluation(hasTakenPsych ? targetP_Max - currentPsych : targetP_Max - baselinePsych, maxLevers.length).feasibility,
-						feasibilityExplanation: 'פריסת המאמץ על פני מספר מועדים מורידה את הלחץ מהפסיכומטרי ומבטיחה עמידה בסכם.',
-						steps: [
-							{
-								title: 'מחזור א׳: שדרוג מקצועות ליבה והרחבות קיץ',
-								detail: `הכנה ופתרון בגרויות להעלאת הממוצע ל-${maxRes.bagrutAverage.toFixed(1)}`,
-								timing: 'חודשים 1–4',
-								type: 'bagrut_elective'
-							},
-							{
-								title: 'מחזור ב׳: פסיכומטרי ברף נגיש',
-								detail: `הגעה לציון ${targetP_Max} והגשת מועמדות`,
-								timing: 'חודשים 5–7',
-								type: 'psychometric'
-							}
-						],
-						keyAdvantage: 'מוריד את הציון הפסיכומטרי הנדרש למינימום האפשרי באמצעות שדרוג בגרות מקיף.'
-					});
-				}
-			}
-		}
-
-		// Track Anchor: מסלול העוגן
-		// ONLY suggest Open University Academic Transfer if the gap is truly colossal (gap >= 190 pts)
-		const isTrulyColossalGap = isTechnion
-			? (hasTakenPsych ? gapAbs >= 20 : effectiveGap >= 20)
-			: (hasTakenPsych ? gapAbs >= 190 : effectiveGap >= 190);
-
-		if (isTrulyColossalGap || tracks.length < 2) {
-			tracks.push({
-				id: 'track-transfer',
-				title: 'מסלול אפיק מעבר: מעקף פסיכומטרי מלא',
-				badge: 'מעקף פסיכומטרי מלא',
-				badgeColor: 'from-blue-600 to-indigo-700',
-				strategyDescription: hasTakenPsych
-					? `בפער חריג של ${gapAbs.toFixed(isTechnion ? 1 : 0)} נקודות סכם, שיפור בגרויות בודדות אינו מספיק. אפיק המעבר של האוניברסיטה הפתוחה עוקף לחלוטין את ציוני התיכון והפסיכומטרי: לומדים 3–4 קורסים אקדמיים בסיסיים (חדו״א, ליניארית, תכנות/פיזיקה) ועוברים ישירות לשנה ב׳ ב${gapAnalysis.target.institutionName} ללא צורך במבחן פסיכומטרי נוסף.`
-					: `עבור סף קבלה גבוה של ${threshold.toFixed(isTechnion ? 2 : 0)} נקודות סכם ללא רקע פסיכומטרי קודם, אפיק המעבר של האוניברסיטה הפתוחה עוקף לחלוטין את ציוני התיכון והפסיכומטרי: לומדים 3–4 קורסים אקדמיים בסיסיים (חדו״א, ליניארית, תכנות/פיזיקה) ועוברים ישירות לשנה ב׳ ב${gapAnalysis.target.institutionName} ללא צורך במבחן פסיכומטרי נוסף.`,
-				targetSekem: threshold,
-				targetPsychometric: undefined,
-				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
-				targetBagrutAverage: currentBagrut,
-				currentBagrutAverage: currentBagrut,
-				recommendedSubjectImprovements: [],
-				estimatedWeeks: 32,
-				weeklyHours: availableWeeklyHours,
-				feasibility: 'high',
-				feasibilityExplanation: 'הקבלה מובטחת על בסיס עמידה בממוצע קורסים אקדמיים (80–85) ללא תלות בציון פסיכומטרי.',
-				steps: [
-					{
-						title: 'הרשמה לאפיק מעבר באוניברסיטה הפתוחה',
-						detail: 'הרשמה לחדו״א 1 ולאלגברה ליניארית 1 (ללא תנאי קבלה מקדימים)',
-						timing: 'סמסטר א׳ (חודשים 1–4)',
-						type: 'mechina'
-					},
-					{
-						title: 'השלמת קורסי הליבה האקדמיים',
-						detail: 'סיום 2 קורסים נוספים בממוצע הנדרש (80–85) לפי הסכם הרשמי',
-						timing: 'סמסטר ב׳ (חודשים 5–8)',
-						type: 'mechina'
-					},
-					{
-						title: 'מעבר ישיר לשנה ב׳ בפקולטה',
-						detail: `הכרה מלאה בכל נקודות הזכות וקליטה ישירה ב${gapAnalysis.target.institutionName}`,
-						timing: 'חודש 9',
-						type: 'mechina'
-					}
-				],
-				keyAdvantage: 'אפס תלות בפסיכומטרי או בבגרויות תיכון, וצבירת נקודות זכות אקדמיות לתואר מהיום הראשון.'
-			});
-		}
-
-		if (!tracks.some((t) => t.id === 'track-mechina')) {
-			// University Mechina
-			const mechinaPsychTarget = Math.min(psychCeiling, Math.max(hasTakenPsych ? currentPsych : baselinePsych, 620));
-			tracks.push({
-				id: 'track-mechina',
-				title: 'מסלול העוגן: מכינה קדם-אקדמית ייעודית',
-				badge: 'המסלול המוסדי הרשמי',
-				badgeColor: 'from-blue-600 to-indigo-700',
-				strategyDescription: `מכינת ${gapAnalysis.target.institutionName} למדעים והנדסה מחליפה את כל ציוני התיכון בתעודת מכינה אחת, מעניקה מקדמי בונוס מוסדיים מרביים (+35) ומכסות קבלה שמורות למסיימים בהצלחה. קבלה למכינה דורשת פסיכומטרי סביב 600–620 בלבד.`,
-				targetSekem: threshold + (isTechnion ? 0.5 : 2),
-				targetPsychometric: mechinaPsychTarget,
-				currentPsychometric: hasTakenPsych ? currentPsych : undefined,
-				targetBagrutAverage: 108.0,
-				currentBagrutAverage: currentBagrut,
-				recommendedSubjectImprovements: [
-					{
-						subjectName: 'מכינה קדם-אקדמית מדעית/הנדסית',
-						currentGrade: Math.round(currentBagrut),
-						currentUnits: 20,
-						targetGrade: 88,
-						targetUnits: 25,
-						reason: 'תעודת המכינה מחליפה את תעודת הבגרות במלואה ומקנה קבלה ישירה למחלקה.'
-					}
-				],
-				estimatedWeeks: 36,
-				weeklyHours: 28,
-				feasibility: 'high',
-				feasibilityExplanation: 'תוכנית לימודים סדורה ומובנית עם מרצים אקדמיים, ליווי צמוד ומבחני מעבר מותאמים.',
-				steps: [
-					{
-						title: 'הרשמה למכינה האוניברסיטאית',
-						detail: `הגשת מועמדות למכינת ${gapAnalysis.target.institutionName} ומבחני מיון`,
-						timing: 'חודשים 1–2',
-						type: 'mechina'
-					},
-					{
-						title: 'סמסטר א׳: מתמטיקה ופיזיקה מוגברים',
-						detail: 'רכישת יסודות חדו״א, אלגברה ופיזיקה קלאסית ברמה אקדמית',
-						timing: 'חודשים 3–6',
-						type: 'mechina'
-					},
-					{
-						title: 'סמסטר ב׳ ומבחני גמר',
-						detail: 'השגת ממוצע מכינה 88+ וזכאות לקבלה ישירה לשנה א׳',
-						timing: 'חודשים 7–9',
-						type: 'mechina'
-					}
-				],
-				keyAdvantage: 'מבטל לחלוטין את ציוני העבר בתיכון ומכין אותך בצורה הטובה ביותר להצלחה בשנה א׳.'
-			});
-		}
-	} else {
 
 	// =========================================================================
 	// Pre-validate purePsychTarget against actual institutional calculator
@@ -1675,17 +1267,14 @@ export function generatePersonalizedTracks(
 		let winningFastPsych: number;
 
 		const currentP = hasTakenPsych ? currentPsych : baselinePsych;
-		if (sol1Lever && ((sol1Lever.psych - currentP <= 80 && sol1Lever.psych <= psychCeiling) || !sol2Levers)) {
+		if (sol1Lever) {
 			winningFastLevers = [sol1Lever.lever];
 			winningFastPsych = sol1Lever.psych;
 		} else if (sol2Levers) {
 			winningFastLevers = sol2Levers.levers;
 			winningFastPsych = sol2Levers.psych;
-		} else if (sol1Lever) {
-			winningFastLevers = [sol1Lever.lever];
-			winningFastPsych = sol1Lever.psych;
 		} else {
-			// Try 2 levers under maxAllowedPsychTarget
+			// Try 2 levers under 800
 			const top2 = availableLevers.slice(0, Math.min(2, availableLevers.length));
 			const sim2 = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, top2);
 			const p2 = findExactPsychometricTarget(
@@ -1735,7 +1324,9 @@ export function generatePersonalizedTracks(
 
 		tracks.push({
 			id: 'track-fast-hybrid',
-			title: 'המסלול המהיר: מינוף ממוקד מקבילי',
+			title: winningFastLevers.length === 1
+				? `המסלול המהיר: שדרוג ${winningFastLevers[0].subjectName} ופסיכומטרי`
+				: 'המסלול המהיר: מינוף מקצועות מפתח',
 			badge: 'הכי מהיר',
 			badgeColor: 'from-amber-500 to-orange-600',
 			strategyDescription: `שדרוג ממוקד של ${fastNamesStr} מקפיץ את ממוצע הבגרות ל-${resFast.bagrutAverage.toFixed(1)}${
@@ -1927,14 +1518,16 @@ export function generatePersonalizedTracks(
 		}
 	} else {
 		// Track 1 target psychometric score:
-		const track1Psych = tracks[0]?.targetPsychometric || (hasTakenPsych ? currentPsych + 50 : Math.min(psychCeiling, baselinePsych + 50));
+		const track1Psych = tracks[0]?.targetPsychometric || (hasTakenPsych ? currentPsych + 50 : Math.min(800, baselinePsych + 50));
 		const track1LeverCount = tracks[0]?.recommendedSubjectImprovements?.length || 0;
 		const track1Sekem = tracks[0]?.targetSekem || threshold;
 		const track1Bagrut = tracks[0]?.targetBagrutAverage || currentBagrut;
 
 		if (track1Psych > 720 && tracks[0]) {
 			tracks[0].badge = 'מיקוד בפסיכומטרי';
-			tracks[0].title = 'המסלול הממוקד: זינוק פסיכומטרי גבוה (בחינה אחת)';
+			tracks[0].title = tracks[0].recommendedSubjectImprovements.length === 0
+				? 'המסלול הממוקד: זינוק פסיכומטרי גבוה (בחינה אחת)'
+				: `המסלול הממוקד: שדרוג ${tracks[0].recommendedSubjectImprovements[0]?.subjectName || 'מקצוע מפתח'} ופסיכומטרי`;
 		}
 
 		// Calculate the maximal Bagrut state with top 5 levers to determine the absolute physical minimum psychometric floor:
@@ -1960,7 +1553,7 @@ export function generatePersonalizedTracks(
 		const searchPool2 = availableLevers.slice(0, Math.min(8, availableLevers.length));
 		let bestBalCombo: { levers: SubjectUpgradeAction[]; psych: number; res: { sekem: number; bagrutAverage: number; droppedSubjects?: string[] } } | null = null;
 
-		const minCount2 = Math.min(searchPool2.length, Math.max(2, track1LeverCount > 0 ? track1LeverCount + 1 : 2));
+		const minCount2 = Math.min(searchPool2.length, Math.max(1, track1LeverCount + 1));
 		const maxCount2 = Math.min(searchPool2.length, 3);
 		const baseP = hasTakenPsych ? currentPsych : baselinePsych;
 		const track1ZeroPsych = track1Psych <= baseP;
@@ -2085,7 +1678,7 @@ export function generatePersonalizedTracks(
 
 		// Phase 2: If NOT single bagrut and NOT already admitted, search remaining combos with ROI Guard:
 		if (!bestBalCombo && !isSingleBagrutAdmissionTrack1 && !isZeroExamsTrack1) {
-			for (let count = Math.min(2, searchPool2.length); count <= Math.min(3, searchPool2.length); count++) {
+			for (let count = minCount2; count <= Math.min(3, searchPool2.length); count++) {
 				const combos = getCombinations(searchPool2, count);
 				for (const combo of combos) {
 					if (!isValidSubjectCombo(combo)) continue;
@@ -2478,7 +2071,6 @@ export function generatePersonalizedTracks(
 			}
 		}
 	}
-	}
 
 	// Final Deduplication: Never return duplicate tracks with identical subject improvements and psychometric target
 	const uniqueTracks: RecommendedTrack[] = [];
@@ -2502,7 +2094,7 @@ export function generatePersonalizedTracks(
 	// =========================================================================
 	const verifiedTracks: RecommendedTrack[] = [];
 	for (const t of uniqueTracks) {
-		if (t.id === 'track-mechina' || t.id === 'track-transfer' || t.id === 'track-direct-bagrut' || t.id === 'track-direct-admit-zero') {
+		if (t.id === 'track-direct-bagrut' || t.id === 'track-direct-admit-zero') {
 			verifiedTracks.push(t);
 			continue;
 		}
@@ -2594,7 +2186,7 @@ export function generatePersonalizedTracks(
 
 		// Hard Prerequisites Gate: If degree requires physics and candidate has 0 units,
 		// and this track doesn't include Physics as a lever, attach the mandatory requirement step:
-		if (hardReqs.requiresPhysics && basePhysU === 0 && t.id !== 'track-transfer' && t.id !== 'track-mechina' && t.id !== 'track-direct-admit-zero') {
+		if (hardReqs.requiresPhysics && basePhysU === 0 && t.id !== 'track-direct-admit-zero') {
 			const hasPhysLever = t.recommendedSubjectImprovements.some((l) => isSubjectMatch(l.subjectName, 'פיזיקה'));
 			if (!hasPhysLever) {
 				const hasPhysStep = t.steps.some((s) => s.title.includes('פיזיקה'));

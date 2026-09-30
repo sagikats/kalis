@@ -62,6 +62,46 @@ const DEFAULT_SUBJECTS: SubjectInput[] = [
      { name: 'פיזיקה', units: 5, grade: 0 }
 ];
 
+function computeMultiResults(
+     currentSubjects: SubjectInput[],
+     general: number | '',
+     quant: number | '',
+     verbal: number | '',
+     english: number | '',
+     instIds: string[]
+): InstitutionSekemResult[] {
+     const mathSubject = currentSubjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 };
+     const physicsSubject = currentSubjects.find(s => s.name.includes('פיזיקה'));
+     return calculateMultiInstitutionSekem(
+          {
+               bagrutSubjects: currentSubjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
+               psychometricGeneral: Number(general) || 0,
+               psychometricQuant: Number(quant) || 0,
+               psychometricVerbal: Number(verbal) || 0,
+               psychometricEnglish: Number(english) || 0,
+               mathGrade: Number(mathSubject.grade) || 0,
+               mathUnits: mathSubject.units,
+               physicsGrade: Number(physicsSubject?.grade) || 0,
+               physicsUnits: physicsSubject?.units || 0
+          },
+          instIds
+     );
+}
+
+function computeAllInstitutionResults(
+     currentSubjects: SubjectInput[],
+     general: number | '',
+     quant: number | '',
+     verbal: number | '',
+     english: number | ''
+): Record<string, InstitutionSekemResult> {
+     const results = computeMultiResults(currentSubjects, general, quant, verbal, english, ALL_INSTITUTION_IDS);
+     const map: Record<string, InstitutionSekemResult> = {};
+     for (const r of results) {
+          map[r.institutionId] = r;
+     }
+     return map;
+}
 
 interface UnifiedCalculatorProps {
      initialInstId?: string | null;
@@ -100,36 +140,63 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
      const [psychVerbal, setPsychVerbal] = useState<number | ''>(0);
      const [psychEnglish, setPsychEnglish] = useState<number | ''>(0);
 
+     // Pending changes flag: true when grades/subjects/psychometric inputs have been modified without clicking "חשב מחדש"
+     const [hasPendingChanges, setHasPendingChanges] = useState<boolean>(false);
+
+     // Calculated results map across all institutions, updated ONLY on "חשב מחדש" or initial profile load
+     const [calculatedMap, setCalculatedMap] = useState<Record<string, InstitutionSekemResult>>(() =>
+          computeAllInstitutionResults(DEFAULT_SUBJECTS, 0, 0, 0, 0)
+     );
+
      // Sync with user profile on login or profile change
      useEffect(() => {
           if (user && profile) {
+               let loadedSubjects = DEFAULT_SUBJECTS;
                if (profile.bagrutSubjects && profile.bagrutSubjects.length > 0) {
-                    setSubjects(profile.bagrutSubjects.map((s: any) => ({
+                    loadedSubjects = profile.bagrutSubjects.map((s: any) => ({
                          name: s.subjectName || s.name,
                          units: s.units,
                          grade: s.grade
-                    })));
+                    }));
+                    setSubjects(loadedSubjects);
                }
-               if (profile.hasTakenPsychometric !== undefined) {
-                    setNoPsychometric(!profile.hasTakenPsychometric);
-               }
-               setPsychGeneral(profile.psychometricGeneral || 0);
-               setPsychQuant(profile.psychometricQuant || 0);
-               setPsychVerbal(profile.psychometricVerbal || 0);
-               setPsychEnglish(profile.psychometricEnglish || 0);
+               const noPsych = profile.hasTakenPsychometric !== undefined ? !profile.hasTakenPsychometric : false;
+               setNoPsychometric(noPsych);
+               const gen = profile.psychometricGeneral || 0;
+               const q = profile.psychometricQuant || 0;
+               const v = profile.psychometricVerbal || 0;
+               const eng = profile.psychometricEnglish || 0;
+               setPsychGeneral(gen);
+               setPsychQuant(q);
+               setPsychVerbal(v);
+               setPsychEnglish(eng);
+
+               // Calculate initial scores for the loaded user profile
+               const initialMap = computeAllInstitutionResults(
+                    loadedSubjects,
+                    noPsych ? 0 : gen,
+                    noPsych ? 0 : q,
+                    noPsych ? 0 : v,
+                    noPsych ? 0 : eng
+               );
+               setCalculatedMap(initialMap);
+               setHasPendingChanges(false);
           }
      }, [user, profile]);
 
      // Listen for logout event to completely reset
      useEffect(() => {
           const handleLogout = () => {
-               setSubjects(DEFAULT_SUBJECTS.map(s => ({ ...s, grade: 0 })));
+               const resetSubs = DEFAULT_SUBJECTS.map(s => ({ ...s, grade: 0 }));
+               setSubjects(resetSubs);
                setNoPsychometric(false);
                setPsychGeneral(0);
                setPsychQuant(0);
                setPsychVerbal(0);
                setPsychEnglish(0);
                setPanelInstitutionId(null);
+               setCalculatedMap(computeAllInstitutionResults(resetSubs, 0, 0, 0, 0));
+               setHasPendingChanges(false);
           };
           window.addEventListener('kalis-logout', handleLogout);
           return () => window.removeEventListener('kalis-logout', handleLogout);
@@ -152,9 +219,6 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
           }));
      };
 
-     const mathSubject = useMemo(() => subjects.find(s => s.name.includes('מתמטיקה')) || { units: 5, grade: 0 }, [subjects]);
-     const physicsSubject = useMemo(() => subjects.find(s => s.name.includes('פיזיקה')), [subjects]);
-
      // Resolved NITE psychometric composite scores and emphasis channels
      const psychResolution = useMemo(() => {
           return resolvePsychometricScores({
@@ -172,23 +236,26 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                : null;
      }, [psychResolution]);
 
-     // Multi-institution calculations
+     // Multi-institution results mapped from calculatedMap based on active selections
      const institutionResults = useMemo(() => {
-          return calculateMultiInstitutionSekem(
-               {
-                    bagrutSubjects: subjects.map(s => ({ ...s, grade: Number(s.grade) || 0 })),
-                    psychometricGeneral: Number(psychGeneral) || 0,
-                    psychometricQuant: Number(psychQuant) || 0,
-                    psychometricVerbal: Number(psychVerbal) || 0,
-                    psychometricEnglish: Number(psychEnglish) || 0,
-                    mathGrade: Number(mathSubject.grade) || 0,
-                    mathUnits: mathSubject.units,
-                    physicsGrade: Number(physicsSubject?.grade) || 0,
-                    physicsUnits: physicsSubject?.units || 0
-               },
-               selectedInstIds
+          return selectedInstIds.map(id => calculatedMap[id]).filter(Boolean);
+     }, [selectedInstIds, calculatedMap]);
+
+     // Handle calculate button click: recalculates all institutions and clears pending flag
+     const handleCalculate = () => {
+          const freshMap = computeAllInstitutionResults(
+               subjects,
+               noPsychometric ? 0 : psychGeneral,
+               noPsychometric ? 0 : psychQuant,
+               noPsychometric ? 0 : psychVerbal,
+               noPsychometric ? 0 : psychEnglish
           );
-     }, [subjects, psychGeneral, psychQuant, psychVerbal, psychEnglish, mathSubject, physicsSubject, selectedInstIds]);
+          setCalculatedMap(freshMap);
+          setHasPendingChanges(false);
+
+          const resultsElem = document.getElementById('results-section');
+          resultsElem?.scrollIntoView({ behavior: 'smooth' });
+     };
 
      const toggleInstitution = (id: string) => {
           if (selectedInstIds.includes(id)) {
@@ -237,10 +304,12 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
           }
           setIsSelectModalOpen(false);
           setEditingSubjectIndex(null);
+          setHasPendingChanges(true);
      };
 
      const handleRemoveSubject = (index: number) => {
           setSubjects(subjects.filter((_, i) => i !== index));
+          setHasPendingChanges(true);
      };
 
      const handleUpdateSubject = (index: number, field: keyof SubjectInput, value: any, event?: React.ChangeEvent<HTMLInputElement>) => {
@@ -254,6 +323,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
           }
           updated[index] = { ...updated[index], [field]: val === '' ? 0 : val };
           setSubjects(updated);
+          setHasPendingChanges(true);
      };
 
      const handleNumberInputChange = (
@@ -265,6 +335,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
           const cleaned = cleanNumberInput(e.target.value, minVal, maxVal);
           e.target.value = String(cleaned);
           setter(cleaned);
+          setHasPendingChanges(true);
      };
 
      const allSelected = selectedInstIds.length === ALL_INSTITUTION_IDS.length;
@@ -402,6 +473,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   setPsychVerbal(130);
                                                   setPsychEnglish(120);
                                              }
+                                             setHasPendingChanges(true);
                                         }}
                                         className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${noPsychometric
                                              ? 'bg-[#F4F0E8] border-[#222222] text-[#222222]'
@@ -667,14 +739,21 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                               {/* Calculate Action Button */}
                               <button
-                                   onClick={() => {
-                                        const resultsElem = document.getElementById('results-section');
-                                        resultsElem?.scrollIntoView({ behavior: 'smooth' });
-                                   }}
-                                   className="w-full py-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 group cursor-pointer"
+                                   type="button"
+                                   onClick={handleCalculate}
+                                   className={`w-full py-4 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 group cursor-pointer ${
+                                        hasPendingChanges
+                                             ? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] ring-2 ring-amber-400'
+                                             : 'bg-[#3C3C3C] hover:bg-[#2A2A2A]'
+                                   }`}
                               >
-                                   <Zap className="h-5 w-5 text-amber-400 group-hover:scale-110 transition-transform" />
-                                   <span>חשב ועדכן תוצאות לכל המוסדות הנבחרים</span>
+                                   <Zap className={`h-5 w-5 text-amber-400 group-hover:scale-110 transition-transform ${hasPendingChanges ? 'animate-bounce' : ''}`} />
+                                   <span>{hasPendingChanges ? 'חשב מחדש את ציוני הסכם וממוצע הבגרות' : 'חשב ועדכן תוצאות לכל המוסדות הנבחרים'}</span>
+                                   {hasPendingChanges && (
+                                        <span className="mr-1.5 text-[11px] bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full font-bold">
+                                             שינויים ממתינים
+                                        </span>
+                                   )}
                               </button>
 
                          </div>
@@ -682,14 +761,34 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                          {/* Right Column: Multi-Institution Comparison Results (6 cols) */}
                          <div className="lg:col-span-6 space-y-3.5 lg:sticky lg:top-8" id="results-section">
 
-                              <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-2.5">
-                                   <h3 className="text-base sm:text-lg font-black text-[#222222] flex items-center gap-2">
+                              <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-2.5 flex-wrap gap-2">
+                                   <div className="flex items-center gap-2 flex-wrap">
                                         <Award className="h-5 w-5 text-blue-700" />
-                                        תוצאות סכם לפי מוסד לימודים
-                                   </h3>
-                                   <span className="text-[11px] text-[#44423D] font-extrabold bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-[#E5DFD4]">
-                                        {institutionResults.length} מוסדות מוצגים
-                                   </span>
+                                        <h3 className="text-base sm:text-lg font-black text-[#222222]">
+                                             תוצאות סכם לפי מוסד לימודים
+                                        </h3>
+                                        {hasPendingChanges && (
+                                             <span className="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1.5">
+                                                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                                  ממתין לחישוב מחדש
+                                             </span>
+                                        )}
+                                   </div>
+                                   <div className="flex items-center gap-2">
+                                        {hasPendingChanges && (
+                                             <button
+                                                  type="button"
+                                                  onClick={handleCalculate}
+                                                  className="text-xs font-bold bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white px-3 py-1 rounded-xl transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                                             >
+                                                  <Zap className="h-3.5 w-3.5 text-amber-400" />
+                                                  <span>חשב מחדש</span>
+                                             </button>
+                                        )}
+                                        <span className="text-[11px] text-[#44423D] font-extrabold bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-[#E5DFD4]">
+                                             {institutionResults.length} מוסדות מוצגים
+                                        </span>
+                                   </div>
                               </div>
 
                               {/* Dynamic Grid of Cards per Selected Institution */}
