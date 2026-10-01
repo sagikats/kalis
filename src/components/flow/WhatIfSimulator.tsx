@@ -904,56 +904,6 @@ export default function WhatIfSimulator({
 
 	return (
 		<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs space-y-8 dir-rtl text-right relative overflow-hidden">
-			{/* Edit Track Banner when activeTrack (initialTrackToEdit or defaultRecommendedTrack) is present */}
-			{activeTrack && (
-				<div className="bg-[#FAF8F5] border-2 border-[#1E597B]/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
-					<div className="flex items-start gap-3">
-						<div className="p-2.5 rounded-xl bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] shrink-0 shadow-2xs">
-							<Sliders className="h-5 w-5" />
-						</div>
-						<div className="space-y-1">
-							<div className="flex items-center gap-2 flex-wrap">
-								<span className="text-xs font-black text-[#1E597B] uppercase tracking-wide">
-									מצב עריכת מסלול מומלץ
-								</span>
-								<span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-[#3C3C3C] text-white shadow-2xs">
-									{activeTrack.title}
-								</span>
-								<span className="text-xs text-[#8A847C]">
-									({activeTrack.badge})
-								</span>
-							</div>
-							<p className="text-xs text-[#66635C] leading-relaxed">
-								הסימולטור הוטען מראש עם היעדים והבגרויות של המסלול המומלץ עבור {analysis.target.program.fieldOfStudy} ({analysis.target.institutionName.replace('אוניברסיטת ', '')}). באפשרותך לשנות פרמטרים, לבדוק עמידה בסף הקבלה, ולשמור את המסלול המותאם.
-							</p>
-						</div>
-					</div>
-
-					<div className="flex items-center gap-2 shrink-0">
-						<button
-							type="button"
-							onClick={handleResetToOriginalTrack}
-							className="px-3 py-2 bg-white hover:bg-[#FAF8F5] text-[#66635C] hover:text-[#222222] text-xs font-bold rounded-xl border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-							title="אפס לנתוני המסלול המוצעים במקור"
-						>
-							<RotateCcw className="h-3.5 w-3.5" />
-							<span>אפס ליעדי המסלול</span>
-						</button>
-
-						{onCancelEdit && (
-							<button
-								type="button"
-								onClick={onCancelEdit}
-								className="px-3 py-2 bg-white hover:bg-[#FAF8F5] text-[#222222] text-xs font-bold rounded-xl border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-							>
-								<ArrowRight className="h-3.5 w-3.5" />
-								<span>חזור למסלולים</span>
-							</button>
-						)}
-					</div>
-				</div>
-			)}
-
 			{/* Section Header */}
 			<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-5">
 				<div className="space-y-1">
@@ -965,8 +915,18 @@ export default function WhatIfSimulator({
 					</p>
 				</div>
 
-				{/* Quick Preset Buttons */}
+				{/* Actions & Quick Preset Buttons */}
 				<div className="flex items-center gap-2 flex-wrap shrink-0">
+					{onCancelEdit && (
+						<button
+							type="button"
+							onClick={onCancelEdit}
+							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] text-xs font-bold rounded-xl border border-[#DDD7CB] transition flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-[0.99]"
+						>
+							<ArrowRight className="h-4 w-4 shrink-0" />
+							<span>חזור למסלולים</span>
+						</button>
+					)}
 					<button
 						type="button"
 						onClick={handlePresetPsychOnly}
