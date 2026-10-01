@@ -743,90 +743,84 @@ export default function AdmissionFlowPage() {
 	}, [gradeValidation.isValid, currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
 
 	return (
-		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl pb-28 sm:pb-32">
-			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+		<div className={`min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
+			activeStep <= 2 ? 'lg:h-screen lg:overflow-hidden pb-20 sm:pb-24' : 'pb-28 sm:pb-32'
+		}`}>
+			<main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
+				activeStep <= 2
+					? 'py-3 sm:py-4 lg:h-[calc(100vh-5.5rem)] lg:overflow-hidden flex flex-col min-h-0'
+					: 'py-8 space-y-8'
+			}`}>
 
 
 				{/* STEP 1: הזנת ציונים (מפוצל ל-2 שלבים פנימיים: בגרויות ואז פסיכומטרי) */}
 				{activeStep === 1 && (
-					<div className="space-y-6">
+					<div className="flex-1 min-h-0 flex flex-col">
 						{/* SUB-STEP 1A: הזנת ציוני בגרות */}
 						{step1SubStep === 'bagrut' && (
-							<div className="space-y-6">
-								<div className="border-b border-[#EAE5DA] pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+							<div className="bg-white rounded-3xl p-4 sm:p-6 border border-[#E5DFD4] shadow-xs flex-1 min-h-0 flex flex-col space-y-3">
+								{/* Integrated Card Top Bar with Prominent Step 1 Title */}
+								<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-3 shrink-0">
 									<div>
-										<div className="flex items-center gap-2 mb-1.5">
-											<span className="px-3 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-xs font-bold shadow-2xs">
-												שלב 1 מתוך 2: ציוני בגרות
+										<div className="flex items-center gap-2 mb-1">
+											<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+												שלב 1 מתוך 4: נתוני פתיחה
+											</span>
+											<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+												בגרויות (חלק 1 מתוך 2)
 											</span>
 										</div>
-										<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציוני תעודת בגרות</h2>
-										<p className="text-sm text-[#66635C]">
-											הזן את ציוני ומספרי היחידות בכל מקצועות הבגרות שלך (חובה והרחבות). בסיום נעבור להזנת הפסיכומטרי.
+										<h2 className="text-xl sm:text-2xl font-black text-[#222222]">
+											שלב 1: הזנת ציוני תעודת בגרות
+										</h2>
+										<p className="text-xs text-[#66635C] mt-0.5">
+											הזן ציון סופי (0–100) ובחר יחידות לימוד לכל מקצוע בתעודה
 										</p>
 									</div>
 
-									{/* Status summary capsule */}
-									<div className="flex items-center gap-2.5 bg-white px-4 py-2.5 rounded-2xl border border-[#E5DFD4] shadow-2xs self-start sm:self-auto shrink-0">
-										<BookOpen className="h-4 w-4 text-blue-700" />
-										<span className="text-xs font-bold text-[#222222]">
-											{subjects.length} מקצועות
-										</span>
-										<span className="text-[#DDD7CB]">|</span>
-										<span className={`text-xs font-bold ${bagrutValidation.totalValidUnits >= 20 ? 'text-[#205739]' : 'text-amber-700'}`}>
-											{bagrutValidation.totalValidUnits} יח״ל {bagrutValidation.totalValidUnits >= 20 ? '✓' : '(מינימום 20)'}
-										</span>
+									<div className="flex items-center flex-wrap gap-2">
+										{/* Status summary capsule */}
+										<div className="flex items-center gap-2 bg-[#FAF8F5] px-3 py-1.5 rounded-xl border border-[#E5DFD4] shadow-2xs">
+											<BookOpen className="h-4 w-4 text-blue-700" />
+											<span className="text-xs font-bold text-[#222222]">
+												{subjects.length} מקצועות
+											</span>
+											<span className="text-[#DDD7CB]">|</span>
+											<span className={`text-xs font-bold ${bagrutValidation.totalValidUnits >= 20 ? 'text-[#205739]' : 'text-amber-700'}`}>
+												{bagrutValidation.totalValidUnits} יח״ל {bagrutValidation.totalValidUnits >= 20 ? '✓' : '(מינימום 20)'}
+											</span>
+										</div>
+
+										<button
+											type="button"
+											onClick={() => {
+												setEditingSubjectIndex(null);
+												setIsSubjectModalOpen(true);
+											}}
+											className="px-3.5 py-1.5 rounded-xl bg-[#FAF8F5] hover:bg-[#EFEAE0] border border-[#DDD7CB] text-[#222222] text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-[0.99]"
+										>
+											<Plus className="h-3.5 w-3.5" />
+											<span>הוסף מקצוע / הגברה</span>
+										</button>
+
+										<button
+											type="button"
+											onClick={() => {
+												if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
+													resetFlowToCleanState();
+												}
+											}}
+											className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+											title="איפוס כל הנתונים"
+										>
+											<RefreshCw className="h-3.5 w-3.5" />
+											<span>איפוס</span>
+										</button>
 									</div>
 								</div>
 
-								<div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E5DFD4] shadow-xs space-y-6">
-									{/* Top Bar inside Card */}
-									<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-4">
-										<div className="flex items-center gap-2.5">
-											<div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
-												<BookOpen className="h-5 w-5 text-blue-700" />
-											</div>
-											<div>
-												<h3 className="text-base font-bold text-[#222222]">
-													מקצועות הלימוד וציוני הבגרות
-												</h3>
-												<p className="text-xs text-[#66635C]">
-													הזן ציון סופי (0–100) ובחר יחידות לימוד לכל מקצוע בתעודה
-												</p>
-											</div>
-										</div>
-
-										<div className="flex items-center gap-2">
-											<button
-												type="button"
-												onClick={() => {
-													setEditingSubjectIndex(null);
-													setIsSubjectModalOpen(true);
-												}}
-												className="px-4 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#EFEAE0] border border-[#DDD7CB] text-[#222222] text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs active:scale-[0.99]"
-											>
-												<Plus className="h-4 w-4" />
-												<span>הוסף מקצוע / הגברה</span>
-											</button>
-
-											<button
-												type="button"
-												onClick={() => {
-													if (typeof window !== 'undefined' && window.confirm('האם לאפס את כל הציונים והנתונים?')) {
-														resetFlowToCleanState();
-													}
-												}}
-												className="px-3.5 py-2 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-[#66635C] hover:text-rose-600 hover:border-rose-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-												title="איפוס כל הנתונים"
-											>
-												<RefreshCw className="h-3.5 w-3.5" />
-												<span>איפוס</span>
-											</button>
-										</div>
-									</div>
-
-									{/* Subjects Grid: 2 columns on tablet & desktop */}
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+								{/* Subjects Grid: 2 columns with internal scroll */}
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 flex-1 min-h-0 overflow-y-auto pr-1 pl-1 py-1 custom-scrollbar">
 										{subjects.map((sub, idx) => (
 											<div
 												key={idx}
@@ -928,7 +922,6 @@ export default function AdmissionFlowPage() {
 											})}
 										</div>
 									</div>
-								</div>
 
 								{/* Validation alert banner if bagrut has issues */}
 								{showValidationErrors && !bagrutValidation.isValid && (
@@ -947,40 +940,35 @@ export default function AdmissionFlowPage() {
 
 						{/* SUB-STEP 1B: הזנת ציוני פסיכומטרי */}
 						{step1SubStep === 'psychometric' && (
-							<div className="space-y-6 max-w-4xl mx-auto">
-								<div className="border-b border-[#EAE5DA] pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+							<div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#E5DFD4] shadow-xs space-y-4 max-w-4xl mx-auto flex-1 min-h-0 flex flex-col justify-between w-full">
+								{/* Integrated Card Top Bar with Prominent Step 1B Title */}
+								<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-3.5 shrink-0">
 									<div>
-										<div className="flex items-center gap-2 mb-1.5">
-											<span className="px-3 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-xs font-bold shadow-2xs">
-												שלב 2 מתוך 2: פסיכומטרי
+										<div className="flex items-center gap-2 mb-1">
+											<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+												שלב 1 מתוך 4: נתוני פתיחה
+											</span>
+											<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+												פסיכומטרי (חלק 2 מתוך 2)
 											</span>
 										</div>
-										<h2 className="text-2xl font-black text-[#222222]">שלב 1: הזנת ציוני בחינה פסיכומטרית</h2>
-										<p className="text-sm text-[#66635C]">
-											הזן את הציון הרב-תחומי וציוני הפרקים. אם טרם נבחנת, תוכל לסמן זאת ולבדוק קבלה ישירה על סמך בגרות בלבד.
+										<h2 className="text-xl sm:text-2xl font-black text-[#222222]">
+											שלב 1: הזנת ציוני בחינה פסיכומטרית
+										</h2>
+										<p className="text-xs text-[#66635C] mt-0.5">
+											ציון רב-תחומי (200–800) וציוני פרקים. אם טרם נבחנת, תוכל לסמן זאת ולבדוק קבלה ישירה.
 										</p>
 									</div>
 
 									<button
 										type="button"
 										onClick={handleBackToBagrut}
-										className="px-3.5 py-2 rounded-xl bg-white border border-[#DDD7CB] text-xs font-bold text-[#44423D] hover:bg-[#FAF8F5] transition flex items-center gap-1.5 shadow-2xs self-start sm:self-auto cursor-pointer"
+										className="px-3.5 py-2 rounded-xl bg-[#FAF8F5] border border-[#DDD7CB] text-xs font-bold text-[#44423D] hover:bg-[#EFEAE0] transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
 									>
 										<ArrowRight className="h-3.5 w-3.5" />
 										<span>חזרה לציוני בגרות</span>
 									</button>
 								</div>
-
-								<div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E5DFD4] shadow-xs space-y-6">
-									<div className="flex items-center gap-3 border-b border-[#EAE5DA] pb-4">
-										<div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
-											<Brain className="h-5 w-5" />
-										</div>
-										<div>
-											<h3 className="text-base font-bold text-[#222222]">פרטי הבחינה הפסיכומטרית</h3>
-											<p className="text-xs text-[#66635C]">ציון רב-תחומי (200–800) וציוני פרקים (50–150)</p>
-										</div>
-									</div>
 
 									{/* Option: Haven't taken psychometric yet */}
 									<div
@@ -1227,7 +1215,6 @@ export default function AdmissionFlowPage() {
 											</div>
 										</div>
 									)}
-								</div>
 
 								{/* Validation alert banner if attempting to advance without valid psychometric */}
 								{showValidationErrors && !psychValidation.isValid && (
@@ -1248,14 +1235,7 @@ export default function AdmissionFlowPage() {
 
 				{/* STEP 2: בחירת תארים מבוקשים */}
 				{activeStep === 2 && (
-					<div className="space-y-6">
-						<div className="border-b border-[#EAE5DA] pb-4">
-							<h2 className="text-2xl font-black text-[#222222]">שלב 2: בחירת תארים מבוקשים</h2>
-							<p className="text-sm text-[#66635C]">
-								בחר את כל התארים והמוסדות שמעניין אותך לבדוק. תוכל להוסיף תארים מרובים מכל מוסד.
-							</p>
-						</div>
-
+					<div className="flex-1 min-h-0 flex flex-col h-full">
 						<DegreeSearchSelector
 							selectedPrograms={selectedTargets}
 							onToggleProgram={handleToggleTarget}
@@ -1264,20 +1244,12 @@ export default function AdmissionFlowPage() {
 							onClearAll={handleClearAllTargets}
 							onProceedToNextStep={() => setActiveStep(3)}
 						/>
-
 					</div>
 				)}
 
 				{/* STEP 3: דוח קבלה אישי */}
 				{activeStep === 3 && (
 					<div className="space-y-6">
-						<div className="border-b border-[#EAE5DA] pb-4">
-							<h2 className="text-2xl font-black text-[#222222]">שלב 3: דוח קבלה אישי</h2>
-							<p className="text-sm text-[#66635C]">
-								סיכום סטטוס הקבלה שלך עבור כל התארים שבחרת
-							</p>
-						</div>
-
 						{!gradeValidation.isValid ? (
 							<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 								<AlertCircle className="h-12 w-12 text-[#E11D48] mx-auto" />

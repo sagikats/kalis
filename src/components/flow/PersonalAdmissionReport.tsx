@@ -69,16 +69,23 @@ export default function PersonalAdmissionReport({
 		<div className="space-y-8">
 			{/* Top Hero Stats */}
 			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-xs space-y-5">
-				<div className="flex items-center justify-between flex-wrap gap-3">
+				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-4">
 					<div>
-						<h2 className="text-xl sm:text-2xl font-black text-[#222222]">דוח סיכויי קבלה אישי</h2>
-						<p className="text-xs sm:text-sm text-[#66635C]">
+						<div className="flex items-center gap-2 mb-1">
+							<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+								שלב 3 מתוך 4: תוצאות קבלה
+							</span>
+						</div>
+						<h2 className="text-2xl sm:text-3xl font-black text-[#222222]">
+							שלב 3: דוח סיכויי קבלה אישי
+						</h2>
+						<p className="text-xs sm:text-sm text-[#66635C] mt-1">
 							הערכה מבוססת מנועי הסכם הרשמיים לכל התארים שבחרת
 						</p>
 					</div>
 					<button
 						onClick={onAddMorePrograms}
-						className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] rounded-xl text-xs font-bold border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer"
+						className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] rounded-xl text-xs font-bold border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
 					>
 						<span>ערוך סל תארים</span>
 					</button>

@@ -97,6 +97,7 @@ export default function DegreeSearchSelector({
 	const [isInstFilterOpen, setIsInstFilterOpen] = useState(false);
 	const [isDisciplineFilterOpen, setIsDisciplineFilterOpen] = useState(false);
 	const [expandedCardIds, setExpandedCardIds] = useState<Record<string, boolean>>({});
+	const [isBasketOpen, setIsBasketOpen] = useState(false);
 
 	// Dynamic SQLite Data state (fallback to bundled academicInstitutions during initial fetch)
 	const [institutionsList, setInstitutionsList] = useState<AcademicInstitution[]>(academicInstitutions);
@@ -245,11 +246,50 @@ export default function DegreeSearchSelector({
 	}, [selectedDisciplines]);
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col h-full space-y-3 min-h-0">
 			{/* ========================================================================= */}
 			{/* 1. TOP COMPONENT: SEARCH & EXPANDABLE FILTERS (חיפוש וסינון תארים) */}
 			{/* ========================================================================= */}
-			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs space-y-3.5">
+			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs space-y-3 shrink-0">
+				{/* Top Integrated Title Bar */}
+				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-3.5">
+					<div>
+						<div className="flex items-center gap-2 mb-1">
+							<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+								שלב 2 מתוך 4: הגדרת מטרות
+							</span>
+						</div>
+						<h2 className="text-xl sm:text-2xl font-black text-[#222222]">
+							שלב 2: בחירת תארים מבוקשים
+						</h2>
+						<p className="text-xs text-[#66635C] mt-0.5">
+							בחר את התארים והמוסדות שמעניין אותך לבדוק. סל היעדים שלך מתעדכן מיידית.
+						</p>
+					</div>
+
+					{/* Expandable Basket Trigger Button */}
+					<button
+						type="button"
+						onClick={() => setIsBasketOpen(!isBasketOpen)}
+						className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs border ${
+							selectedPrograms.length > 0
+								? 'bg-[#3C3C3C] text-white border-[#3C3C3C] hover:bg-[#2A2A2A]'
+								: 'bg-[#FAF8F5] text-[#44423D] border-[#DDD7CB] hover:bg-[#EFEAE0]'
+						}`}
+						title={isBasketOpen ? 'סגור את סל התארים' : 'פתח את סל התארים שנבחרו'}
+					>
+						<GraduationCap className="h-4 w-4" />
+						<span>סל תארים שנבחרו</span>
+						<span
+							className={`px-2 py-0.5 rounded-full text-[11px] font-extrabold ${
+								selectedPrograms.length > 0 ? 'bg-white text-black' : 'bg-[#E5DFD4] text-[#44423D]'
+							}`}
+						>
+							{selectedPrograms.length}
+						</span>
+					</button>
+				</div>
+
 				{/* Search bar */}
 				<div className="relative">
 					<Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#8A847C]" />
@@ -449,212 +489,235 @@ export default function DegreeSearchSelector({
 			</div>
 
 			{/* ========================================================================= */}
-			{/* 2. MAIN 2-COLUMN SECTION:
-			    - RIGHT (Start in RTL): 2 narrower columns of compact degree cards
-			    - LEFT (End in RTL): Sticky Selected Degrees Tray (no scroll down needed!)
-			*/}
+			{/* 2. DEGREE CATALOG: FULL-WIDTH GRID WITH INTERNAL SCROLL */}
 			{/* ========================================================================= */}
-			<div className="flex flex-col lg:flex-row gap-5 items-start">
-				{/* ------------------------------------------------------------------ */}
-				{/* RIGHT COLUMN (RTL START): Degree Catalog in 2 Narrower Columns */}
-				{/* ------------------------------------------------------------------ */}
-				<div className="w-full lg:flex-1 lg:min-w-0 space-y-3">
-					<div className="flex items-center justify-between text-xs text-[#66635C] font-semibold px-1">
-						<span>
-							נמצאו <strong className="text-[#222222]">{filteredPrograms.length}</strong> תוכניות לימוד
-							מתאימות ב-<strong className="text-[#1E597B]">{uniqueInstitutionsCount}</strong> מוסדות
-						</span>
+			<div className="w-full flex-1 min-h-0 flex flex-col space-y-2">
+				<div className="flex items-center justify-between text-xs text-[#66635C] font-semibold px-1 shrink-0">
+					<span>
+						נמצאו <strong className="text-[#222222]">{filteredPrograms.length}</strong> תוכניות לימוד
+						מתאימות ב-<strong className="text-[#1E597B]">{uniqueInstitutionsCount}</strong> מוסדות
+					</span>
+					<div className="flex items-center gap-3">
 						<span>מציג {Math.min(filteredPrograms.length, 80)} ראשונות</span>
-					</div>
-
-					<div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[700px] overflow-y-auto pr-1 pl-1">
-						{filteredPrograms.slice(0, 80).map((item) => {
-							const cardKey = `${item.institutionId}-${item.program.id}`;
-							const selected = isSelected(item.program.id);
-							const threshold = item.program.admissionThreshold;
-							const isExpanded = !!expandedCardIds[cardKey];
-
-							return (
-								<div
-									key={cardKey}
-									className={`p-3 rounded-2xl border transition-all duration-150 flex flex-col justify-between ${
-										selected
-											? 'bg-[#F9F7F2] border-[#3C3C3C] shadow-2xs ring-1 ring-[#3C3C3C]/10'
-											: 'bg-white border-[#E5DFD4] hover:border-[#D5CFC2] hover:shadow-2xs'
-									}`}
-								>
-									{/* Top Line: Field of Study & Compact Action Button */}
-									<div className="flex items-start justify-between gap-2">
-										<div className="min-w-0 flex-1">
-											<h4
-												className="text-xs sm:text-sm font-bold text-[#222222] leading-snug line-clamp-1"
-												title={item.program.fieldOfStudy}
-											>
-												{item.program.fieldOfStudy}
-											</h4>
-										</div>
-
-										<button
-											type="button"
-											onClick={() => onToggleProgram(item)}
-											className={`px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0 cursor-pointer ${
-												selected
-													? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] hover:bg-[#FEE2E2] hover:text-[#991B1B] hover:border-[#FECACA]'
-													: 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4] hover:bg-[#3C3C3C] hover:text-white hover:border-[#3C3C3C]'
-											}`}
-											title={selected ? 'הסר מסל היעדים' : 'הוסף לסל היעדים'}
-										>
-											{selected ? (
-												<>
-													<Check className="h-3 w-3" />
-													<span>נבחר</span>
-												</>
-											) : (
-												<>
-													<Plus className="h-3 w-3" />
-													<span>הוסף</span>
-												</>
-											)}
-										</button>
-									</div>
-
-									{/* Bottom Line: Institution info & Expandable Threshold Button */}
-									<div className="flex items-center justify-between gap-2 mt-2 pt-1.5 border-t border-[#F5F2EB]/90 text-xs">
-										<div className="flex items-center gap-1.5 min-w-0">
-											<UniversityLogo institution={item.institutionId} size="xs" showBadge={false} />
-											<span className="text-[#1E597B] font-bold text-[11px] truncate">
-												{item.institutionName.replace('אוניברסיטת ', '')}
-											</span>
-										</div>
-
-										<button
-											type="button"
-											onClick={() => toggleExpandCard(cardKey)}
-											className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold border transition cursor-pointer shrink-0 ${
-												threshold
-													? 'bg-[#FDF6E8] border-[#ECDAB6] text-[#825B15] hover:bg-[#F9ECCF]'
-													: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:bg-[#F0EBE1]'
-											}`}
-											title="לחץ להרחבת פרטי סף ודרישות קבלה"
-										>
-											<span>{threshold ? `סף: ${threshold}` : 'פרטי סף'}</span>
-											<ChevronDown
-												className={`w-3 h-3 transition-transform duration-200 ${
-													isExpanded ? 'rotate-180' : ''
-												}`}
-											/>
-										</button>
-									</div>
-
-									{/* Expandable Admission Details Drawer */}
-									{isExpanded && (
-										<div className="mt-2.5 pt-2.5 border-t border-[#EAE5DA] space-y-1.5 text-xs bg-[#FAF8F5] -mx-3 -mb-3 p-3 rounded-b-2xl animate-in fade-in-50 duration-200">
-											{threshold && (
-												<div className="flex items-center justify-between text-[#66635C]">
-													<span>ציון סף קבלה:</span>
-													<span className="font-extrabold text-[#222222]">{threshold}</span>
-												</div>
-											)}
-											{item.program.minPsychometricFloor && (
-												<div className="flex items-center justify-between text-[#66635C]">
-													<span>רצפת פסיכומטרי:</span>
-													<span className="font-bold text-[#222222]">{item.program.minPsychometricFloor}</span>
-												</div>
-											)}
-											<div className="flex items-center justify-between text-[#66635C]">
-												<span>אפיק קבלה:</span>
-												<span className="font-bold text-[#222222]">
-													{item.program.requiresPsychometric === false ? 'בגרות ישירה בלבד' : 'שקלול בגרות ופסיכומטרי'}
-												</span>
-											</div>
-											{item.program.directBagrutEligible && item.program.directBagrutMinAverage && (
-												<div className="flex items-center justify-between text-[#66635C]">
-													<span>קבלה ישירה לבגרות:</span>
-													<span className="font-bold text-[#222222]">{item.program.directBagrutMinAverage} ומעלה</span>
-												</div>
-											)}
-											{item.program.comments && (
-												<div className="text-[11px] text-[#66635C] bg-white p-2 rounded-lg border border-[#E5DFD4] leading-relaxed">
-													<span className="font-bold text-[#222222] block mb-0.5">הערות ותנאי קבלה:</span>
-													{item.program.comments}
-												</div>
-											)}
-											{(item.program.mathRequirement || item.program.englishRequirement) && (
-												<div className="text-[10px] text-[#78716C] pt-0.5 space-y-0.5">
-													{item.program.mathRequirement && <div>מתמטיקה: {item.program.mathRequirement}</div>}
-													{item.program.englishRequirement && <div>אנגלית: {item.program.englishRequirement}</div>}
-												</div>
-											)}
-										</div>
-									)}
-								</div>
-							);
-						})}
+						<button
+							type="button"
+							onClick={() => setIsBasketOpen(true)}
+							className="text-xs font-bold text-[#1E597B] hover:underline flex items-center gap-1 cursor-pointer"
+						>
+							<GraduationCap className="w-3.5 h-3.5" />
+							<span>צפה בסל ({selectedPrograms.length})</span>
+						</button>
 					</div>
 				</div>
 
-				{/* ------------------------------------------------------------------ */}
-				{/* LEFT COLUMN (RTL END): Sticky Selected Degrees Tray */}
-				{/* ------------------------------------------------------------------ */}
-				<div className="w-full lg:w-80 xl:w-96 shrink-0 lg:sticky lg:top-24">
-					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col space-y-3.5">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 flex-1 min-h-0 overflow-y-auto pr-1 pl-1 custom-scrollbar">
+					{filteredPrograms.slice(0, 80).map((item) => {
+						const cardKey = `${item.institutionId}-${item.program.id}`;
+						const selected = isSelected(item.program.id);
+						const threshold = item.program.admissionThreshold;
+						const isExpanded = !!expandedCardIds[cardKey];
+
+						return (
+							<div
+								key={cardKey}
+								className={`p-3 rounded-2xl border transition-all duration-150 flex flex-col justify-between ${
+									selected
+										? 'bg-[#F9F7F2] border-[#3C3C3C] shadow-2xs ring-1 ring-[#3C3C3C]/10'
+										: 'bg-white border-[#E5DFD4] hover:border-[#D5CFC2] hover:shadow-2xs'
+								}`}
+							>
+								{/* Top Line: Field of Study & Compact Action Button */}
+								<div className="flex items-start justify-between gap-2">
+									<div className="min-w-0 flex-1">
+										<h4
+											className="text-xs sm:text-sm font-bold text-[#222222] leading-snug line-clamp-1"
+											title={item.program.fieldOfStudy}
+										>
+											{item.program.fieldOfStudy}
+										</h4>
+									</div>
+
+									<button
+										type="button"
+										onClick={() => onToggleProgram(item)}
+										className={`px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0 cursor-pointer ${
+											selected
+												? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] hover:bg-[#FEE2E2] hover:text-[#991B1B] hover:border-[#FECACA]'
+												: 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4] hover:bg-[#3C3C3C] hover:text-white hover:border-[#3C3C3C]'
+										}`}
+										title={selected ? 'הסר מסל היעדים' : 'הוסף לסל היעדים'}
+									>
+										{selected ? (
+											<>
+												<Check className="h-3 w-3" />
+												<span>נבחר</span>
+											</>
+										) : (
+											<>
+												<Plus className="h-3 w-3" />
+												<span>הוסף</span>
+											</>
+										)}
+									</button>
+								</div>
+
+								{/* Bottom Line: Institution info & Expandable Threshold Button */}
+								<div className="flex items-center justify-between gap-2 mt-2 pt-1.5 border-t border-[#F5F2EB]/90 text-xs">
+									<div className="flex items-center gap-1.5 min-w-0">
+										<UniversityLogo institution={item.institutionId} size="xs" showBadge={false} />
+										<span className="text-[#1E597B] font-bold text-[11px] truncate">
+											{item.institutionName.replace('אוניברסיטת ', '')}
+										</span>
+									</div>
+
+									<button
+										type="button"
+										onClick={() => toggleExpandCard(cardKey)}
+										className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold border transition cursor-pointer shrink-0 ${
+											threshold
+												? 'bg-[#FDF6E8] border-[#ECDAB6] text-[#825B15] hover:bg-[#F9ECCF]'
+												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:bg-[#F0EBE1]'
+										}`}
+										title="לחץ להרחבת פרטי סף ודרישות קבלה"
+									>
+										<span>{threshold ? `סף: ${threshold}` : 'פרטי סף'}</span>
+										<ChevronDown
+											className={`w-3 h-3 transition-transform duration-200 ${
+												isExpanded ? 'rotate-180' : ''
+											}`}
+										/>
+									</button>
+								</div>
+
+								{/* Expandable Admission Details Drawer */}
+								{isExpanded && (
+									<div className="mt-2.5 pt-2.5 border-t border-[#EAE5DA] space-y-1.5 text-xs bg-[#FAF8F5] -mx-3 -mb-3 p-3 rounded-b-2xl animate-in fade-in-50 duration-200">
+										{threshold && (
+											<div className="flex items-center justify-between text-[#66635C]">
+												<span>ציון סף קבלה:</span>
+												<span className="font-extrabold text-[#222222]">{threshold}</span>
+											</div>
+										)}
+										{item.program.minPsychometricFloor && (
+											<div className="flex items-center justify-between text-[#66635C]">
+												<span>רצפת פסיכומטרי:</span>
+												<span className="font-bold text-[#222222]">{item.program.minPsychometricFloor}</span>
+											</div>
+										)}
+										<div className="flex items-center justify-between text-[#66635C]">
+											<span>אפיק קבלה:</span>
+											<span className="font-bold text-[#222222]">
+												{item.program.requiresPsychometric === false ? 'בגרות ישירה בלבד' : 'שקלול בגרות ופסיכומטרי'}
+											</span>
+										</div>
+										{item.program.directBagrutEligible && item.program.directBagrutMinAverage && (
+											<div className="flex items-center justify-between text-[#66635C]">
+												<span>קבלה ישירה לבגרות:</span>
+												<span className="font-bold text-[#222222]">{item.program.directBagrutMinAverage} ומעלה</span>
+											</div>
+										)}
+										{item.program.comments && (
+											<div className="text-[11px] text-[#66635C] bg-white p-2 rounded-lg border border-[#E5DFD4] leading-relaxed">
+												<span className="font-bold text-[#222222] block mb-0.5">הערות ותנאי קבלה:</span>
+												{item.program.comments}
+											</div>
+										)}
+										{(item.program.mathRequirement || item.program.englishRequirement) && (
+											<div className="text-[10px] text-[#78716C] pt-0.5 space-y-0.5">
+												{item.program.mathRequirement && <div>מתמטיקה: {item.program.mathRequirement}</div>}
+												{item.program.englishRequirement && <div>אנגלית: {item.program.englishRequirement}</div>}
+											</div>
+										)}
+									</div>
+								)}
+							</div>
+						);
+					})}
+				</div>
+			</div>
+
+			{/* ========================================================================= */}
+			{/* 3. SLIDE-OVER DRAWER: EXPANDABLE SELECTED DEGREES TRAY */}
+			{/* ========================================================================= */}
+			{isBasketOpen && (
+				<div className="fixed inset-0 z-50 overflow-hidden flex justify-start">
+					{/* Backdrop */}
+					<div
+						className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+						onClick={() => setIsBasketOpen(false)}
+					/>
+
+					{/* Drawer Panel */}
+					<div className="relative w-full max-w-md bg-white shadow-2xl border-l border-[#E5DFD4] h-full flex flex-col z-10 p-5 dir-rtl text-right animate-in slide-in-from-left duration-200">
 						{/* Header */}
-						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
+						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4 shrink-0">
 							<div className="flex items-center gap-2">
-								<div className="p-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
-									<GraduationCap className="h-4 w-4" />
+								<div className="p-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
+									<GraduationCap className="h-5 w-5 text-blue-700" />
 								</div>
 								<div>
-									<h3 className="text-sm font-black text-[#222222]">
+									<h3 className="text-base font-black text-[#222222]">
 										סל תארים שנבחרו
 									</h3>
-									<span className="text-[11px] text-[#66635C]">
-										{selectedPrograms.length === 0 ? '0 תארים נבחרו' : `${selectedPrograms.length} תארים בסל`}
+									<span className="text-xs text-[#66635C]">
+										{selectedPrograms.length === 0 ? '0 תארים נבחרו' : `${selectedPrograms.length} תארים בסל היעדים`}
 									</span>
 								</div>
 							</div>
-							{selectedPrograms.length > 0 && (
+
+							<div className="flex items-center gap-2">
+								{selectedPrograms.length > 0 && (
+									<button
+										type="button"
+										onClick={onClearAll}
+										className="text-xs text-[#9B3327] hover:underline font-semibold cursor-pointer px-2"
+									>
+										נקה הכל
+									</button>
+								)}
 								<button
 									type="button"
-									onClick={onClearAll}
-									className="text-xs text-[#9B3327] hover:underline transition font-semibold cursor-pointer"
+									onClick={() => setIsBasketOpen(false)}
+									className="p-1.5 rounded-xl hover:bg-[#FAF8F5] text-[#66635C] hover:text-[#222222] transition border border-transparent hover:border-[#E5DFD4] cursor-pointer"
+									title="סגור סל"
 								>
-									נקה הכל
+									<X className="h-5 w-5" />
 								</button>
-							)}
+							</div>
 						</div>
 
-						{/* Selected List or Friendly Empty State */}
+						{/* Selected Programs List */}
 						{selectedPrograms.length === 0 ? (
-							<div className="text-center py-8 px-4 border-2 border-dashed border-[#E5DFD4] rounded-2xl bg-[#FAF8F5] space-y-1.5">
+							<div className="my-auto text-center py-12 px-4 border-2 border-dashed border-[#E5DFD4] rounded-2xl bg-[#FAF8F5] space-y-2">
+								<GraduationCap className="h-8 w-8 text-[#8A847C] mx-auto opacity-60" />
 								<p className="text-xs font-bold text-[#66635C]">
 									טרם נבחרו תארים
 								</p>
-								<p className="text-[11px] text-[#8A847C] leading-relaxed">
-									לחץ על &quot;+ הוסף&quot; בכרטיסי התארים מימין כדי להוסיף אותם לסל היעדים שלך
+								<p className="text-[11px] text-[#8A847C] leading-relaxed max-w-xs mx-auto">
+									לחץ על &quot;+ הוסף&quot; בכרטיסי התארים כדי להוסיף אותם לסל היעדים שלך
 								</p>
 							</div>
 						) : (
-							<div className="space-y-2 max-h-[380px] overflow-y-auto pr-0.5 pl-0.5">
+							<div className="flex-1 overflow-y-auto py-4 space-y-2.5 custom-scrollbar min-h-0 pr-1 pl-1">
 								{selectedPrograms.map((target) => {
 									const instInfo = INST_BADGE_MAP[target.institutionId];
 									return (
 										<div
 											key={target.program.id}
-											className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] transition flex items-center justify-between gap-2 shadow-2xs group"
+											className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] transition flex items-center justify-between gap-2.5 shadow-2xs group"
 										>
-											<div className="flex items-center gap-2 min-w-0 flex-1">
+											<div className="flex items-center gap-2.5 min-w-0 flex-1">
 												<UniversityLogo institution={target.institutionId} size="xs" shape="circle" />
 												<div className="min-w-0 flex-1">
 													<h5 className="text-xs font-bold text-[#222222] truncate" title={target.program.fieldOfStudy}>
 														{target.program.fieldOfStudy}
 													</h5>
 													<div className="flex items-center gap-1.5 mt-0.5">
-														<span className="text-[10px] text-[#1E597B] font-semibold truncate">
+														<span className="text-[11px] text-[#1E597B] font-semibold truncate">
 															{instInfo?.shortName || target.institutionName.replace('אוניברסיטת ', '')}
 														</span>
 														{target.program.admissionThreshold && (
-															<span className="text-[10px] text-[#825B15] bg-[#FDF6E8] border border-[#ECDAB6] px-1 rounded font-bold">
+															<span className="text-[10px] text-[#825B15] bg-[#FDF6E8] border border-[#ECDAB6] px-1.5 py-0.5 rounded font-bold">
 																סף: {target.program.admissionThreshold}
 															</span>
 														)}
@@ -665,10 +728,10 @@ export default function DegreeSearchSelector({
 											<button
 												type="button"
 												onClick={() => onRemoveProgram(target.program.id)}
-												className="p-1 rounded-lg text-[#8A847C] hover:text-[#9B3327] hover:bg-[#FEE2E2] transition cursor-pointer shrink-0"
+												className="p-1.5 rounded-lg text-[#8A847C] hover:text-[#9B3327] hover:bg-[#FEE2E2] transition cursor-pointer shrink-0"
 												title="הסר מהסל"
 											>
-												<X className="h-3.5 w-3.5" />
+												<X className="h-4 w-4" />
 											</button>
 										</div>
 									);
@@ -676,14 +739,17 @@ export default function DegreeSearchSelector({
 							</div>
 						)}
 
-						{/* Primary Action Button directly inside the Tray */}
-						<div className="pt-2 border-t border-[#EAE5DA] space-y-2">
+						{/* Primary Action Button inside the Drawer */}
+						<div className="pt-4 border-t border-[#EAE5DA] space-y-2 mt-auto shrink-0">
 							{onProceedToNextStep && (
 								<button
 									type="button"
-									onClick={onProceedToNextStep}
+									onClick={() => {
+										setIsBasketOpen(false);
+										onProceedToNextStep();
+									}}
 									disabled={selectedPrograms.length === 0}
-									className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 ${
+									className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 ${
 										selectedPrograms.length > 0
 											? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
 											: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
@@ -694,8 +760,7 @@ export default function DegreeSearchSelector({
 								</button>
 							)}
 
-							{/* SQLite Status */}
-							<div className="flex items-center justify-center gap-1.5 text-[10px] text-[#66635C]">
+							<div className="flex items-center justify-center gap-1.5 text-[11px] text-[#66635C]">
 								{isLoadedFromDb ? (
 									<>
 										<span className="w-1.5 h-1.5 rounded-full bg-[#205739]" />
@@ -708,7 +773,7 @@ export default function DegreeSearchSelector({
 						</div>
 					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }
