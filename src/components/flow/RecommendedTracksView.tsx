@@ -1926,19 +1926,6 @@ export default function RecommendedTracksView({
 								</div>
 
 								<div className="flex items-center gap-3 flex-wrap">
-									{/* Return to Recommended Tracks Button */}
-									<button
-										type="button"
-										onClick={() => {
-											setEditingTrack(null);
-											setActiveTab('recommended');
-										}}
-										className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#F0EBE1] text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] shadow-sm cursor-pointer"
-									>
-										<Sparkles className="h-3.5 w-3.5 text-[#222222]" />
-										<span>חזור ל-3 המסלולים המומלצים</span>
-									</button>
-
 									{/* Degree Selector in Custom Builder */}
 									{allAnalyses && allAnalyses.length > 1 && (
 										<div className="flex items-center gap-2 shrink-0 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4]">
