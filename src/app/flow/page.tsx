@@ -760,11 +760,11 @@ export default function AdmissionFlowPage() {
 
 	return (
 		<div className={`w-full bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
-			activeStep <= 2 ? 'h-[calc(100dvh-4rem)] max-h-[calc(100dvh-4rem)] overflow-hidden' : 'min-h-screen pb-28 sm:pb-32'
+			activeStep <= 2 ? 'h-[calc(100dvh-4rem)] max-h-[calc(100dvh-4rem)] overflow-hidden' : 'min-h-screen pb-32 sm:pb-36'
 		}`}>
 			<main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
 				activeStep <= 2
-					? 'py-2.5 sm:py-3.5 h-[calc(100%-4.25rem)] max-h-[calc(100%-4.25rem)] overflow-hidden flex flex-col min-h-0'
+					? 'py-2 sm:py-3 h-[calc(100%-5.5rem)] max-h-[calc(100%-5.5rem)] overflow-hidden flex flex-col min-h-0'
 					: 'py-8 space-y-8'
 			}`}>
 
@@ -1398,27 +1398,18 @@ export default function AdmissionFlowPage() {
 			</main>
 
 			{/* ========================================================================= */}
-			{/* ALWAYS-VISIBLE STICKY BOTTOM NAVIGATION DOCK (סרגל ניווט תחתון קבוע וצף) */}
+			{/* ALWAYS-VISIBLE FLOATING CAPSULE NAVIGATION DOCK (קפסולה צפה מנותקת ומודגשת) */}
 			{/* ========================================================================= */}
-			<nav
-				aria-label="ניווט שלבי האשף"
-				style={{
-					position: 'fixed',
-					bottom: 0,
-					left: 0,
-					right: 0,
-					zIndex: 99999,
-					backgroundColor: 'rgba(250, 248, 245, 0.98)',
-					boxShadow: '0 -4px 25px rgba(0, 0, 0, 0.12)'
-				}}
-				className="border-t border-[#E2DDD2]"
-			>
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3 sm:gap-4">
+			<div className="fixed bottom-3 sm:bottom-4.5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
+				<nav
+					aria-label="ניווט שלבי האשף"
+					className="pointer-events-auto max-w-6xl w-full bg-white/95 backdrop-blur-xl border border-[#D5CFC2] rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.14),0_3px_12px_rgba(0,0,0,0.06)] px-3.5 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-2.5 sm:gap-4 ring-1 ring-black/5"
+				>
 					{/* --- RIGHT SIDE (RTL START): BACK BUTTON OR STEP BADGE --- */}
 					<div className="flex items-center gap-2 shrink-0">
 						{activeStep === 1 ? (
 							step1SubStep === 'bagrut' ? (
-								<div className="flex items-center gap-2.5">
+								<div className="flex items-center gap-2.5 px-1">
 									<span className="w-8 h-8 rounded-xl bg-[#3C3C3C] text-white font-black text-xs flex items-center justify-center shadow-2xs">
 										1
 									</span>
@@ -1431,7 +1422,7 @@ export default function AdmissionFlowPage() {
 								<button
 									type="button"
 									onClick={handleBackToBagrut}
-									className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
+									className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#D5CFC2] shadow-2xs cursor-pointer active:scale-[0.99]"
 								>
 									<ArrowRight className="h-4 w-4 shrink-0" />
 									<span>חזור להזנת בגרויות</span>
@@ -1448,7 +1439,7 @@ export default function AdmissionFlowPage() {
 									else if (activeStep === 3) setActiveStep(2);
 									else if (activeStep === 4) setActiveStep(3);
 								}}
-								className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#DDD7CB] shadow-2xs cursor-pointer active:scale-[0.99]"
+								className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#D5CFC2] shadow-2xs cursor-pointer active:scale-[0.99]"
 							>
 								<ArrowRight className="h-4 w-4 shrink-0" />
 								<span>
@@ -1477,7 +1468,7 @@ export default function AdmissionFlowPage() {
 							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
 								activeStep === 1
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+									: 'bg-[#F8F6F2] border-[#E2DDD2] text-[#55524B] hover:text-[#111111] hover:bg-white hover:border-[#CCC5B6]'
 							}`}
 							title="שלב 1: הזנת ציונים (בגרויות ופסיכומטרי)"
 						>
@@ -1485,7 +1476,7 @@ export default function AdmissionFlowPage() {
 								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 1
 										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
+										: 'bg-[#EAE5DA] text-[#33312C]'
 								}`}
 							>
 								1
@@ -1509,7 +1500,7 @@ export default function AdmissionFlowPage() {
 							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
 								activeStep === 2
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+									: 'bg-[#F8F6F2] border-[#E2DDD2] text-[#55524B] hover:text-[#111111] hover:bg-white hover:border-[#CCC5B6]'
 							}`}
 							title={`שלב 2: בחירת תארים (${selectedTargets.length} נבחרו)`}
 						>
@@ -1517,7 +1508,7 @@ export default function AdmissionFlowPage() {
 								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 2
 										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
+										: 'bg-[#EAE5DA] text-[#33312C]'
 								}`}
 							>
 								2
@@ -1537,7 +1528,7 @@ export default function AdmissionFlowPage() {
 							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
 								activeStep === 3
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+									: 'bg-[#F8F6F2] border-[#E2DDD2] text-[#55524B] hover:text-[#111111] hover:bg-white hover:border-[#CCC5B6]'
 							}`}
 							title="שלב 3: דוח קבלה אישי"
 						>
@@ -1545,7 +1536,7 @@ export default function AdmissionFlowPage() {
 								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 3
 										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
+										: 'bg-[#EAE5DA] text-[#33312C]'
 								}`}
 							>
 								3
@@ -1565,7 +1556,7 @@ export default function AdmissionFlowPage() {
 							className={`p-1.5 sm:p-2.5 rounded-2xl transition flex items-center gap-2 sm:gap-3 text-right border cursor-pointer min-w-0 flex-1 max-w-[210px] ${
 								activeStep === 4
 									? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-xs'
-									: 'bg-white/80 border-[#E5DFD4] text-[#66635C] hover:text-[#222222] hover:bg-white'
+									: 'bg-[#F8F6F2] border-[#E2DDD2] text-[#55524B] hover:text-[#111111] hover:bg-white hover:border-[#CCC5B6]'
 							}`}
 							title="שלב 4: תכנון מסלולי פעולה"
 						>
@@ -1573,7 +1564,7 @@ export default function AdmissionFlowPage() {
 								className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
 									activeStep === 4
 										? 'bg-white text-black shadow-xs'
-										: 'bg-[#E5DFD4] text-[#44423D]'
+										: 'bg-[#EAE5DA] text-[#33312C]'
 								}`}
 							>
 								4
@@ -1619,7 +1610,7 @@ export default function AdmissionFlowPage() {
 								className={`px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 ${
 									selectedTargets.length > 0
 										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
-										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+										: 'bg-[#EFEAE1] text-[#9E988D] cursor-not-allowed border border-[#DDD7CB]'
 								}`}
 							>
 								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
@@ -1635,7 +1626,7 @@ export default function AdmissionFlowPage() {
 								className={`px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 ${
 									gapAnalyses.length > 0
 										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
-										: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+										: 'bg-[#EFEAE1] text-[#9E988D] cursor-not-allowed border border-[#DDD7CB]'
 								}`}
 							>
 								<span>לתכנון מסלולי פעולה</span>
@@ -1660,7 +1651,7 @@ export default function AdmissionFlowPage() {
 									<select
 										value={currentFocusedAnalysis?.target.program.id || ''}
 										onChange={(e) => setFocusedProgramId(e.target.value)}
-										className="text-xs font-bold bg-white border border-[#DDD7CB] rounded-xl px-2.5 sm:px-3 py-2 text-[#222222] cursor-pointer focus:ring-1 focus:ring-[#3C3C3C] shadow-2xs max-w-[160px] sm:max-w-[200px] truncate"
+										className="text-xs font-bold bg-[#FAF8F5] border border-[#DDD7CB] rounded-xl px-2.5 sm:px-3 py-2 text-[#222222] cursor-pointer focus:ring-1 focus:ring-[#3C3C3C] shadow-2xs max-w-[160px] sm:max-w-[200px] truncate"
 									>
 										{gapAnalyses.map((ga) => (
 											<option key={ga.target.program.id} value={ga.target.program.id}>
@@ -1673,15 +1664,15 @@ export default function AdmissionFlowPage() {
 								<button
 									type="button"
 									onClick={() => setActiveStep(2)}
-									className="px-4 py-2 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl border border-[#DDD7CB] transition shadow-2xs cursor-pointer"
+									className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] font-bold text-xs rounded-xl border border-[#DDD7CB] transition shadow-2xs cursor-pointer"
 								>
 									<span>הוסף תארים נוספים</span>
 								</button>
 							)
 						)}
 					</div>
-				</div>
-			</nav>
+				</nav>
+			</div>
 		</div>
 	);
 }
