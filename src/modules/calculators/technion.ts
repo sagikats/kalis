@@ -1,6 +1,7 @@
 /**
  * Pure Technion (הטכניון - מכון טכנולוגי לישראל) Admission Calculator
- * Official Formula: S = 0.5 * D + 0.075 * P - 19 (Scale 0-100)
+ * Official Formula: S = 0.5 * D + 0.075 * P - 19 (Scale 0-100), D capped at 119
+ * Sources: admissions.technion.ac.il (summary-score-calculation-table, calculation-of-the-median-grade, kizad-mehasvim)
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -8,14 +9,16 @@ import type {
 	CalculatorSubject,
 	OptimalBagrutResult,
 	InstitutionCalculatorInput,
-	InstitutionCalculatorResult,
-	DroppedSubjectInfo
+	InstitutionCalculatorResult
 } from './types';
+import { computeOptimalAverage } from './optimalAverage';
+import { isCoreScience, isMath, isTechSubject } from './subjectMatchers';
 
 const TECHNION_MANDATORY_SUBJECTS = [
 	'מתמטיקה',
 	'אנגלית',
 	'אזרחות',
+	'ידיעת העם',
 	'הבעה עברית',
 	'לשון',
 	'היסטוריה',
@@ -24,185 +27,70 @@ const TECHNION_MANDATORY_SUBJECTS = [
 	'תנ"ך'
 ];
 
+/** Technion caps the optimal bagrut average at 119 (admissions.technion.ac.il — נוסחאות הסכם). */
+export const TECHNION_MAX_AVERAGE = 119;
+
 export function isTechnionMandatorySubject(name: string): boolean {
 	const trimmed = name.trim();
 	return TECHNION_MANDATORY_SUBJECTS.some((m) => trimmed.includes(m));
 }
 
+/**
+ * Enhanced science/technology cluster (מצרף מדעי/טכנולוגי): 5u math plus, at 5 units,
+ * either two of physics/chemistry/biology or one of them and a recognized technological subject.
+ */
 export function detectTechnionScienceCluster(subjects: CalculatorSubject[]): boolean {
-	const fiveUnitSubjects = subjects.filter((s) => s.units >= 5 && s.grade >= 60);
-	const hasCoreScience = fiveUnitSubjects.some(
-		(s) => s.name.includes('פיזיקה') || s.name.includes('כימיה') || s.name.includes('ביולוגיה')
-	);
-	const scienceTechCount = fiveUnitSubjects.filter(
-		(s) =>
-			s.name.includes('פיזיקה') ||
-			s.name.includes('כימיה') ||
-			s.name.includes('ביולוגיה') ||
-			s.name.includes('מדעי המחשב') ||
-			s.name.includes('אלקטרוניקה') ||
-			s.name.includes('ביוטכנולוגיה') ||
-			s.name.includes('סייבר') ||
-			s.name.includes('רובוטיקה') ||
-			s.name.includes('תוכנה') ||
-			s.name.includes('תכנות') ||
-			s.name.includes('הנדס')
-	).length;
-
-	return hasCoreScience && scienceTechCount >= 2;
+	const fiveUnit = subjects.filter((s) => s.units >= 5 && s.grade >= 60);
+	const hasMath5 = fiveUnit.some((s) => isMath(s.name));
+	const scienceCount = fiveUnit.filter((s) => isCoreScience(s.name)).length;
+	const techCount = fiveUnit.filter((s) => !isCoreScience(s.name) && isTechSubject(s.name)).length;
+	return hasMath5 && (scienceCount >= 2 || (scienceCount >= 1 && techCount >= 1));
 }
 
+/**
+ * Official Technion bonus table (admissions.technion.ac.il — מקדמי הטבה):
+ * granted only for a grade of 60+; math 5u +30; physics/chemistry/biology/recognized tech 5u +25
+ * (+30 inside the science cluster); every other bonus subject at 5u (incl. English, literature,
+ * Bible, history, Arabic) +20; any bonus subject at 4u +10.
+ */
 export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: boolean): number {
-	const n = subject.name.trim();
+	if (subject.grade < 60) return 0;
+	const n = subject.name;
 
-	if (n.includes('מתמטיקה')) {
-		if (subject.units === 5) return 35;
-		if (subject.units === 4) return 10;
-		return 0;
+	if (subject.units >= 5) {
+		if (isMath(n)) return 30;
+		if (isCoreScience(n) || isTechSubject(n)) return hasScienceCluster ? 30 : 25;
+		return 20;
 	}
 
-	if (n.includes('אנגלית')) {
-		if (subject.units === 5) return 25;
-		if (subject.units === 4) return 10;
-		return 0;
-	}
-
-	const isSci = n.includes('פיזיקה') || n.includes('כימיה') || n.includes('ביולוגיה');
-	const isTech =
-		n.includes('מדעי המחשב') ||
-		n.includes('אלקטרוניקה') ||
-		n.includes('ביוטכנולוגיה') ||
-		n.includes('סייבר') ||
-		n.includes('רובוטיקה') ||
-		n.includes('תוכנה') ||
-		n.includes('תכנות') ||
-		n.includes('הנדס');
-
-	if (subject.units === 5) {
-		if (hasScienceCluster && (isSci || isTech)) {
-			return 30; // Enhanced science cluster bonus
-		}
-		if (isSci || isTech) return 25;
-		if (
-			n.includes('ספרות') ||
-			n.includes('תנ"ך') ||
-			n.includes('תנ״ך') ||
-			n.includes('היסטוריה') ||
-			n.includes('ערבית') ||
-			n.includes('מזרחנות') ||
-			n.includes('המזרח התיכון')
-		) {
-			return 25;
-		}
-		return 20; // General 5-unit elective bonus
-	}
-
-	if (subject.units === 4) {
-		return 10;
-	}
-
+	if (subject.units === 4) return 10;
 	return 0;
 }
 
+/** Math counts double (4u = 8, 5u = 10) for all tracks except architecture. */
+function getTechnionWeight(subject: CalculatorSubject): number {
+	return isMath(subject.name) && subject.units >= 4 ? subject.units * 2 : subject.units;
+}
+
 export function calculateTechnionOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
-	if (!subjects || subjects.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const activeSubs = subjects.filter((s) => s.units > 0 && s.grade > 0);
-	if (activeSubs.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const totalActiveUnits = activeSubs.reduce((sum, s) => sum + s.units, 0);
+	const activeSubs = (subjects || []).filter((s) => s.units > 0 && s.grade > 0);
 	const hasCluster = detectTechnionScienceCluster(activeSubs);
 
-	const mandatorySubs = activeSubs.filter((s) => isTechnionMandatorySubject(s.name));
-	const droppableSubs = activeSubs.filter((s) => !isTechnionMandatorySubject(s.name));
+	const result = computeOptimalAverage(subjects, {
+		isMandatory: isTechnionMandatorySubject,
+		getBonus: (s) => getTechnionBonus(s, hasCluster),
+		getWeight: getTechnionWeight,
+		cap: TECHNION_MAX_AVERAGE,
+		decimals: 1,
+		dropReason: 'השמטה חוקית: שקלול המקצוע הוריד את הממוצע האופטימלי'
+	});
 
-	const mandatoryUnits = mandatorySubs.reduce((sum, s) => sum + s.units, 0);
-
-	if (totalActiveUnits < 20 || mandatoryUnits >= totalActiveUnits || droppableSubs.length === 0) {
-		let totalScore = 0;
-		let totalWeight = 0;
-		for (const s of activeSubs) {
-			const w = s.name.trim().includes('מתמטיקה') ? s.units * 2 : s.units;
-			totalScore += (s.grade + getTechnionBonus(s, hasCluster)) * w;
-			totalWeight += w;
-		}
-		const avg = Math.round((totalScore / totalWeight) * 10) / 10;
-		return {
-			average: Math.min(125, avg),
-			optimalUnits: totalActiveUnits,
-			totalOriginalUnits: totalActiveUnits,
-			droppedSubjects: [],
-			includedSubjects: activeSubs,
-			hasScienceCluster: hasCluster
-		};
-	}
-
-	let bestAvg = 0;
-	let bestDropped: DroppedSubjectInfo[] = [];
-	let bestIncluded: CalculatorSubject[] = activeSubs;
-	let bestUnits = totalActiveUnits;
-
-	const numSubsets = 1 << droppableSubs.length;
-
-	for (let mask = 0; mask < numSubsets; mask++) {
-		const currentIncluded = [...mandatorySubs];
-		const currentDropped: DroppedSubjectInfo[] = [];
-		let currentUnits = mandatoryUnits;
-
-		for (let i = 0; i < droppableSubs.length; i++) {
-			const sub = droppableSubs[i];
-			if ((mask & (1 << i)) !== 0) {
-				currentIncluded.push(sub);
-				currentUnits += sub.units;
-			} else {
-				const effScore = sub.grade + getTechnionBonus(sub, hasCluster);
-				currentDropped.push({
-					name: sub.name,
-					units: sub.units,
-					grade: sub.grade,
-					effectiveScoreWithBonus: effScore,
-					reason: 'השמטה חוקית: שקלול המקצוע הוריד את הממוצע האופטימלי'
-				});
-			}
-		}
-
-		// Technion minimum unit threshold
-		if (currentUnits < 20) continue;
-
-		let totalScore = 0;
-		let totalWeight = 0;
-		for (const s of currentIncluded) {
-			const w = s.name.trim().includes('מתמטיקה') ? s.units * 2 : s.units;
-			totalScore += (s.grade + getTechnionBonus(s, hasCluster)) * w;
-			totalWeight += w;
-		}
-
-		const avg = Math.round((totalScore / totalWeight) * 10) / 10;
-		if (avg > bestAvg || (avg === bestAvg && currentUnits > bestUnits)) {
-			bestAvg = avg;
-			bestDropped = currentDropped;
-			bestIncluded = currentIncluded;
-			bestUnits = currentUnits;
-		}
-	}
-
-	return {
-		average: Math.min(125, bestAvg),
-		optimalUnits: bestUnits,
-		totalOriginalUnits: totalActiveUnits,
-		droppedSubjects: bestDropped,
-		includedSubjects: bestIncluded,
-		hasScienceCluster: hasCluster
-	};
+	return { ...result, hasScienceCluster: hasCluster };
 }
 
 export function calculateTechnionSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const d = Math.min(125, bagrutAverage);
+	const d = Math.min(TECHNION_MAX_AVERAGE, bagrutAverage);
 	const raw = 0.5 * d + 0.075 * psychometric - 19;
 	return Math.min(100, Math.max(0, Math.round(raw * 10) / 10));
 }
@@ -223,7 +111,7 @@ export function evaluateTechnion(input: InstitutionCalculatorInput): Institution
 
 	const notes: string[] = [];
 	if (optimal.hasScienceCluster) {
-		notes.push('זוהה אשכול מדעי מלא (פיזיקה/כימיה/ביולוגיה + מקצוע טכנולוגי 5 יח״ל) המעניק 30 נקודות בונוס.');
+		notes.push('זוהה מצרף מדעי/טכנולוגי (מתמטיקה 5 יח״ל + שני מדעים, או מדע ומקצוע טכנולוגי, ב-5 יח״ל) — המקצועות המדעיים מקבלים 30 נקודות בונוס.');
 	}
 	if (optimal.droppedSubjects.length > 0) {
 		notes.push(`הושמטו ${optimal.droppedSubjects.length} מקצועות בחירה לטובת מקסום הממוצע האופטימלי.`);

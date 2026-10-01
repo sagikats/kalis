@@ -729,7 +729,7 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 	{
 		id: 'A12_micro_pruning_test',
 		name: 'אלון - מועמד לכלכלה (מבחן צמצום בחינה עודפת)',
-		description: 'פער של 0.8 נקודות סכם בלבד. אסור להמליץ על בחינת בגרות נוספת כשתוספת 2 נקודות במתמטיקה 5 מספיקה.',
+		description: 'פער של כנקודת סכם אחת בלבד. אסור להמליץ על בחינת בגרות נוספת כשתוספת 2 נקודות במתמטיקה 5 מספיקה.',
 		targetProgram: {
 			id: 'prog_bgu_econ',
 			institutionId: 'bgu',
@@ -738,10 +738,11 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 			name: 'כלכלה וניהול',
 			fieldOfStudy: 'כלכלה',
 			degreeLevel: 'bachelor',
-			minSekemThreshold: 674,
+			// BGU drops Bible/literature here (official rule) -> current sekem 686.6; 688 keeps a ~1-point micro gap
+			minSekemThreshold: 688,
 			relevantSekemType: 'management',
 			directBagrutEligible: true,
-			directBagrutMinAverage: 104.0,
+			directBagrutMinAverage: 107.0, // above the official optimal average (106.1) so the micro-gap scenario holds
 			prerequisites: { mustHavePsychometric: false },
 			createdAt: new Date(),
 			updatedAt: new Date()

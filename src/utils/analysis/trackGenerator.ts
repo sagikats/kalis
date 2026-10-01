@@ -1,4 +1,4 @@
-import type { SubjectInput } from '../calculators/bguCalculator';
+import type { SubjectInput } from '../../modules/calculators';
 import type { AcademicDegree } from '../../types/academic';
 import type {
 	InstitutionSekemResult,
@@ -1439,7 +1439,10 @@ export function generatePersonalizedTracks(
 			(baseMathU === 4 && baseMathG >= (hardReqs.directBagrutMath4Min ?? 85)) ||
 			(!hardReqs.directBagrutMath5Min && !hardReqs.directBagrutMath4Min);
 
-		const isDirectEligibleNow = (evalZeroExisting.directBagrutEligible || (hardReqs.directBagrutMinAverage && evalZeroExisting.bagrutAverage >= hardReqs.directBagrutMinAverage)) && meetsMathPrereq;
+		// A program-specific direct-admission average overrides the institution's generic threshold
+		const meetsDirectAverage = (avg: number, instDirectEligible: boolean): boolean =>
+			hardReqs.directBagrutMinAverage ? avg >= hardReqs.directBagrutMinAverage : instDirectEligible;
+		const isDirectEligibleNow = meetsDirectAverage(evalZeroExisting.bagrutAverage, evalZeroExisting.directBagrutEligible) && meetsMathPrereq;
 
 		if (isDirectEligibleNow) {
 			directBagrutSol = { levers: [], res: evalZeroExisting };
@@ -1463,7 +1466,7 @@ export function generatePersonalizedTracks(
 					(testSim.mathUnits === 4 && testSim.mathGrade >= (hardReqs.directBagrutMath4Min ?? 85)) ||
 					(!hardReqs.directBagrutMath5Min && !hardReqs.directBagrutMath4Min);
 
-				if ((evalZero.directBagrutEligible || (hardReqs.directBagrutMinAverage && evalZero.bagrutAverage >= hardReqs.directBagrutMinAverage)) && meetsMathSim) {
+				if (meetsDirectAverage(evalZero.bagrutAverage, evalZero.directBagrutEligible) && meetsMathSim) {
 					directBagrutSol = { levers: testLevers, res: evalZero };
 					break;
 				}

@@ -60,9 +60,14 @@ export interface InstitutionCalculatorResult {
 	managementSekem?: number;
 	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
+	/** The institution's own score on its native scale, when it differs from the 200–800 comparison scale (e.g. HUJI ≈16–27). */
+	officialScore?: number;
 	notes: string[];
 	droppedSubjects: string[];
 }
+
+/** Bagrut subject as entered by the user (same shape as CalculatorSubject). */
+export type SubjectInput = CalculatorSubject;
 
 export interface UniversityBonusRule {
 	subjectNameMatch: string;

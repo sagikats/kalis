@@ -18,7 +18,7 @@ import {
 import { ProgramGapAnalysis, ImprovementOption, UserAcademicProfile } from '../../utils/analysis/gapAnalyzer';
 import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
 import { InstitutionSekemResult } from '../../utils/calculators/multiCalculator';
-import { SubjectInput } from '../../utils/calculators/bguCalculator';
+import { SubjectInput } from '../../modules/calculators';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '@/components/common/UniversityLogo';
 

@@ -8,9 +8,20 @@ import {
 	CalculatorSubject,
 	OptimalBagrutResult,
 	InstitutionCalculatorInput,
-	InstitutionCalculatorResult,
-	DroppedSubjectInfo
+	InstitutionCalculatorResult
 } from './types';
+import { computeOptimalAverage } from './optimalAverage';
+import {
+	isArabic,
+	isBible,
+	isCoreScience,
+	isEnglish,
+	isHebrewExpression,
+	isHistory,
+	isLiterature,
+	isMath
+} from './subjectMatchers';
+
 
 const HAIFA_MANDATORY_SUBJECTS = [
 	'מתמטיקה',
@@ -29,142 +40,70 @@ export function isHaifaMandatorySubject(name: string): boolean {
 	return HAIFA_MANDATORY_SUBJECTS.some((m) => trimmed.includes(m));
 }
 
+/**
+ * Official Haifa bonus table (haifa.ac.il — חישוב סכם), granted for a grade of 60+:
+ * math 5u +35 / 4u +20;
+ * English, physics, chemistry, biology, Bible, history, literature, Arabic, Hebrew 5u +25 / 4u +20;
+ * every other subject 5u +20 / 4u +10.
+ */
 export function getHaifaBonus(subject: CalculatorSubject): number {
 	if (subject.grade < 60) return 0;
-	const n = subject.name.trim();
+	const n = subject.name;
 
-	if (n.includes('מתמטיקה')) {
-		if (subject.units === 5) return 35;
-		if (subject.units === 4) return 15;
+	if (isMath(n)) {
+		if (subject.units >= 5) return 35;
+		if (subject.units === 4) return 20;
 		return 0;
 	}
 
-	if (n.includes('אנגלית')) {
-		if (subject.units === 5) return 25;
-		if (subject.units === 4) return 12.5;
-		return 0;
-	}
+	const isCore =
+		isEnglish(n) ||
+		isCoreScience(n) ||
+		isBible(n) ||
+		isHistory(n) ||
+		isLiterature(n) ||
+		isArabic(n) ||
+		isHebrewExpression(n);
 
-	if (subject.units === 5) {
-		if (
-			n.includes('פיזיקה') ||
-			n.includes('כימיה') ||
-			n.includes('ביולוגיה') ||
-			n.includes('מדעי המחשב') ||
-			n.includes('סייבר') ||
-			n.includes('תוכנה') ||
-			n.includes('תכנות') ||
-			n.includes('אלקטרוניקה') ||
-			n.includes('רובוטיקה') ||
-			n.includes('ספרות') ||
-			n.includes('תנ"ך') ||
-			n.includes('תנ״ך') ||
-			n.includes('הלכה') ||
-			n.includes('היסטוריה') ||
-			n.includes('ערבית')
-		) {
-			return 25;
-		}
-		return 20;
-	}
-
-	if (subject.units === 4) {
-		return 10;
-	}
-
+	if (subject.units >= 5) return isCore ? 25 : 20;
+	if (subject.units === 4) return isCore ? 20 : 10;
 	return 0;
 }
 
 export function calculateHaifaOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
-	if (!subjects || subjects.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const activeSubs = subjects.filter((s) => s.units > 0 && s.grade > 0);
-	if (activeSubs.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const totalActiveUnits = activeSubs.reduce((sum, s) => sum + s.units, 0);
-	const mandatorySubs = activeSubs.filter((s) => isHaifaMandatorySubject(s.name));
-	const droppableSubs = activeSubs.filter((s) => !isHaifaMandatorySubject(s.name));
-
-	const mandatoryUnits = mandatorySubs.reduce((sum, s) => sum + s.units, 0);
-
-	if (totalActiveUnits < 20 || mandatoryUnits >= totalActiveUnits || droppableSubs.length === 0) {
-		let totalScore = 0;
-		for (const s of activeSubs) {
-			totalScore += (s.grade + getHaifaBonus(s)) * s.units;
-		}
-		const avg = Math.round((totalScore / totalActiveUnits) * 100) / 100;
-		return {
-			average: Math.min(125, avg),
-			optimalUnits: totalActiveUnits,
-			totalOriginalUnits: totalActiveUnits,
-			droppedSubjects: [],
-			includedSubjects: activeSubs
-		};
-	}
-
-	let bestAvg = 0;
-	let bestDropped: DroppedSubjectInfo[] = [];
-	let bestIncluded: CalculatorSubject[] = activeSubs;
-	let bestUnits = totalActiveUnits;
-
-	const numSubsets = 1 << droppableSubs.length;
-
-	for (let mask = 0; mask < numSubsets; mask++) {
-		const currentIncluded = [...mandatorySubs];
-		const currentDropped: DroppedSubjectInfo[] = [];
-		let currentUnits = mandatoryUnits;
-
-		for (let i = 0; i < droppableSubs.length; i++) {
-			const sub = droppableSubs[i];
-			if ((mask & (1 << i)) !== 0) {
-				currentIncluded.push(sub);
-				currentUnits += sub.units;
-			} else {
-				const effScore = sub.grade + getHaifaBonus(sub);
-				currentDropped.push({
-					name: sub.name,
-					units: sub.units,
-					grade: sub.grade,
-					effectiveScoreWithBonus: effScore,
-					reason: 'השמטה חוקית באוניברסיטת חיפה'
-				});
-			}
-		}
-
-		if (currentUnits < 20) continue;
-
-		let totalScore = 0;
-		for (const s of currentIncluded) {
-			totalScore += (s.grade + getHaifaBonus(s)) * s.units;
-		}
-
-		const avg = Math.round((totalScore / currentUnits) * 100) / 100;
-		if (avg > bestAvg || (avg === bestAvg && currentUnits > bestUnits)) {
-			bestAvg = avg;
-			bestDropped = currentDropped;
-			bestIncluded = currentIncluded;
-			bestUnits = currentUnits;
-		}
-	}
-
-	return {
-		average: Math.min(125, bestAvg),
-		optimalUnits: bestUnits,
-		totalOriginalUnits: totalActiveUnits,
-		droppedSubjects: bestDropped,
-		includedSubjects: bestIncluded
-	};
+	return computeOptimalAverage(subjects, {
+		isMandatory: isHaifaMandatorySubject,
+		getBonus: getHaifaBonus,
+		dropReason: 'השמטה חוקית בחיפה: שקלול המקצוע הוריד את הממוצע האופטימלי'
+	});
 }
 
+/** BT = bagrut average * 10 - 330 (haifa.ac.il — חישוב סכם). */
+function haifaBagrutStandard(bagrutAverage: number): number {
+	return Math.round((bagrutAverage * 10 - 330) * 10) / 10;
+}
+
+/** Standard Haifa sekem, 1:1 weighting: (BT + PC) / 2. */
 export function calculateHaifaSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const bt = Math.round((bagrutAverage * 10 - 330) * 10) / 10;
-	const rawSekem = 0.5 * bt + 0.5 * psychometric;
+	const rawSekem = 0.5 * haifaBagrutStandard(bagrutAverage) + 0.5 * psychometric;
 	return Math.min(800, Math.max(200, Math.round(rawSekem)));
+}
+
+/**
+ * Haifa math-weighted psychometric score: PM = 0.514554 * (6Q + 4V + 1E) - 65.3,
+ * where Q/V/E are the section scores (50–150).
+ */
+export function calculateHaifaMathPsychometric(quant: number, verbal: number, english: number): number {
+	if (quant <= 0 || verbal <= 0 || english <= 0) return 0;
+	return Math.round(0.514554 * (6 * quant + 4 * verbal + english) - 65.3);
+}
+
+/** Mathematical programs: 1:3 weighting with the math-weighted psychometric — (BT + 3PM) / 4. */
+export function calculateHaifaMathSekem(bagrutAverage: number, mathPsychometric: number): number {
+	if (bagrutAverage <= 0 || mathPsychometric <= 0) return 0;
+	const raw = (haifaBagrutStandard(bagrutAverage) + 3 * mathPsychometric) / 4;
+	return Math.min(800, Math.max(200, Math.round(raw)));
 }
 
 export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
@@ -177,7 +116,12 @@ export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCal
 	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateHaifaSekem(optimal.average, psych);
-	const engineeringSekem = calculateHaifaSekem(optimal.average, quant);
+	// Math programs use PM built from the section scores; fall back to the quantitative-emphasis score
+	const qSub = input.psychometricQuant && input.psychometricQuant <= 150 ? input.psychometricQuant : 0;
+	const vSub = input.psychometricVerbal && input.psychometricVerbal <= 150 ? input.psychometricVerbal : 0;
+	const eSub = input.psychometricEnglish && input.psychometricEnglish <= 150 ? input.psychometricEnglish : 0;
+	const mathPsych = calculateHaifaMathPsychometric(qSub, vSub, eSub) || quant;
+	const engineeringSekem = calculateHaifaMathSekem(optimal.average, mathPsych);
 
 	const directBagrutEligible = optimal.average >= 100;
 

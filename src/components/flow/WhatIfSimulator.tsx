@@ -33,7 +33,7 @@ import {
 	InstitutionSekemResult,
 	UnifiedCalculationInput
 } from '@/utils/calculators/multiCalculator';
-import { SubjectInput } from '@/utils/calculators/bguCalculator';
+import { SubjectInput } from '@/modules/calculators';
 import { getRealisticPsychometricCeiling, RecommendedTrack, evaluateSimulatedSekem } from '@/utils/analysis/trackGenerator';
 import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
 import { isSubjectMatch } from '@/modules/optimizer/solver';

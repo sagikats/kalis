@@ -189,15 +189,19 @@ export function generateOptimizedActionTracks(
 
 	const trackAOptions: CandidateTrackOption[] = [];
 
+	// A program-specific direct-admission average overrides the institution's generic threshold
+	const meetsDirectAverage = (avg: number, instDirectEligible: boolean): boolean =>
+		targetProgram.directBagrutMinAverage !== null && targetProgram.directBagrutMinAverage !== undefined
+			? avg >= targetProgram.directBagrutMinAverage
+			: instDirectEligible || isProgramEligibleForDirectBagrut(institutionId, targetProgram.name, avg);
+
 	// Option A0: Existing Direct Bagrut Qualification (0 Exams, 0 Psychometric)
 	const meetsDirectMath = (profile.mathUnits === 5 && (profile.mathGrade || 0) >= (targetProgram.prerequisites?.directBagrutMath5Min || 75)) ||
 		(profile.mathUnits === 4 && (profile.mathGrade || 0) >= (targetProgram.prerequisites?.directBagrutMath4Min || 85)) ||
 		(!targetProgram.prerequisites?.directBagrutMath5Min && !targetProgram.prerequisites?.directBagrutMath4Min);
 
 	const isDirectEligibleExisting = degreeAllowsDirectBagrut && (
-		initialRes.directBagrutEligible ||
-		isProgramEligibleForDirectBagrut(institutionId, targetProgram.name, currentBagrut) ||
-		(targetProgram.directBagrutMinAverage !== null && targetProgram.directBagrutMinAverage !== undefined && currentBagrut >= targetProgram.directBagrutMinAverage)
+		meetsDirectAverage(currentBagrut, initialRes.directBagrutEligible)
 	) && meetsDirectMath;
 
 	if (isDirectEligibleExisting) {
@@ -283,11 +287,7 @@ export function generateOptimizedActionTracks(
 
 		const isDirect =
 			degreeAllowsDirectBagrut &&
-			(resSingleBagrut.directBagrutEligible ||
-				isProgramEligibleForDirectBagrut(institutionId, targetProgram.name, resSingleBagrut.bagrutAverage) ||
-				(targetProgram.directBagrutMinAverage !== null &&
-					targetProgram.directBagrutMinAverage !== undefined &&
-					resSingleBagrut.bagrutAverage >= targetProgram.directBagrutMinAverage));
+			meetsDirectAverage(resSingleBagrut.bagrutAverage, resSingleBagrut.directBagrutEligible);
 
 		if (resSingleBagrut.sekem >= threshold || isDirect) {
 			trackAOptions.push({
@@ -370,12 +370,7 @@ export function generateOptimizedActionTracks(
 				simState.physicsGrade
 			);
 
-			const satisfiesDirectAverage =
-				evalZero.directBagrutEligible ||
-				isProgramEligibleForDirectBagrut(institutionId, targetProgram.name, evalZero.bagrutAverage) ||
-				(targetProgram.directBagrutMinAverage !== null &&
-					targetProgram.directBagrutMinAverage !== undefined &&
-					evalZero.bagrutAverage >= targetProgram.directBagrutMinAverage);
+			const satisfiesDirectAverage = meetsDirectAverage(evalZero.bagrutAverage, evalZero.directBagrutEligible);
 
 			if (satisfiesDirectAverage) {
 				directBagrutLevers = candidateLevers;

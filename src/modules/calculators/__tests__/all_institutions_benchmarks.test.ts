@@ -16,7 +16,7 @@ import {
 	calculateBguGeneralSekem,
 	calculateBguEngineeringSekem,
 	calculateBguQuantitativeSekem,
-	calculateHujiSekem,
+	calculateHujiSekem, calculateHujiWeightedScore,
 	calculateHaifaSekem,
 	calculateArielSekem,
 	calculateBarIlanGeneralSekem,
@@ -148,11 +148,12 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 			assert.ok(sekem > 600 && sekem < 750, 'HUJI Sekem must be in valid standard range');
 		});
 
-		it('Case 2: STEM Profile: Bagrut 108.0 + Psychometric 730 -> Exact Sekem 690', () => {
-			// zB = (108 - 100) / 8 = 1.0; zP = (730 - 550) / 100 = 1.8
-			// composite = 0.5 * 1.0 + 0.5 * 1.8 = 1.4 -> raw = 1.4 * 100 + 550 = 690
-			const sekem = calculateHujiSekem(108.0, 730);
-			assert.equal(sekem, 690, 'HUJI Sekem for 108 bagrut and 730 psych equals 690');
+		it('Case 2: Bagrut 108.0 + Psychometric 730 -> official weighted score 24.253 (≈692 on 800 scale)', () => {
+			// Official HUJI formula: B = 3.963*10.8 - 20.0621 = 22.738; P = 0.032073*730 + 0.3672 = 23.781
+			// 50/50: 1.2422*23.259 - 4.7609 = 24.132; 30/70: 1.2235*23.468 - 4.4598 = 24.253 -> max = 24.253
+			assert.equal(calculateHujiWeightedScore(108.0, 730), 24.253);
+			// 800-scale equivalent: 25.0998 * 24.253 + 83.72 = 692.4 -> 692
+			assert.equal(calculateHujiSekem(108.0, 730), 692);
 		});
 
 		it('Case 3: Direct Bagrut: Bagrut >= 105.0 -> directBagrutEligible = true', () => {

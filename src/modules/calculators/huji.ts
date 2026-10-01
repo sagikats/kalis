@@ -7,165 +7,99 @@ import {
 	CalculatorSubject,
 	OptimalBagrutResult,
 	InstitutionCalculatorInput,
-	InstitutionCalculatorResult,
-	DroppedSubjectInfo
+	InstitutionCalculatorResult
 } from './types';
+import { computeOptimalAverage } from './optimalAverage';
+import {
+	isArabic,
+	isBible,
+	isCivics,
+	isComputerScience,
+	isCoreScience,
+	isEnglish,
+	isHebrewExpression,
+	isHistory,
+	isJewishThought,
+	isLiterature,
+	isMath
+} from './subjectMatchers';
 
-const HUJI_MANDATORY_SUBJECTS = [
-	'מתמטיקה',
-	'אנגלית',
-	'אזרחות',
-	'הבעה עברית',
-	'לשון',
-	'היסטוריה',
-	'ספרות',
-	'תנ״ך',
-	'תנ"ך'
-];
 
+/**
+ * HUJI always includes English, math, history, civics and Hebrew expression;
+ * all other subjects (incl. literature and Bible) are included only if they raise the average.
+ */
 export function isHujiMandatorySubject(name: string): boolean {
-	const trimmed = name.trim();
-	return HUJI_MANDATORY_SUBJECTS.some((m) => trimmed.includes(m));
+	return isMath(name) || isEnglish(name) || isHistory(name) || isCivics(name) || isHebrewExpression(name);
 }
 
+/**
+ * Official HUJI bonus table (info.huji.ac.il/reception-components/Bagrut), granted for a grade of 60+:
+ * math 5u +35 / 4u +15;
+ * English, physics, chemistry, biology, CS, history, civics, literature, Bible, Arabic, Jewish thought 5u +25 / 4u +15;
+ * every other subject 5u +20 / 4u +10.
+ */
 export function getHujiBonus(subject: CalculatorSubject): number {
-	const n = subject.name.trim();
+	if (subject.grade < 60) return 0;
+	const n = subject.name;
 
-	if (n.includes('מתמטיקה')) {
-		if (subject.units === 5) return 35;
-		if (subject.units === 4) return 15; // HUJI gives 15 for 4u Math
+	if (isMath(n)) {
+		if (subject.units >= 5) return 35;
+		if (subject.units === 4) return 15;
 		return 0;
 	}
 
-	if (n.includes('אנגלית')) {
-		if (subject.units === 5) return 25;
-		if (subject.units === 4) return 12.5;
-		return 0;
-	}
+	const isEnhanced =
+		isEnglish(n) ||
+		isCoreScience(n) ||
+		isComputerScience(n) ||
+		isHistory(n) ||
+		isCivics(n) ||
+		isLiterature(n) ||
+		isBible(n) ||
+		isArabic(n) ||
+		isJewishThought(n);
 
-	const isHighBonus =
-		n.includes('פיזיקה') ||
-		n.includes('כימיה') ||
-		n.includes('ביולוגיה') ||
-		n.includes('מדעי המחשב') ||
-		n.includes('סייבר') ||
-		n.includes('תוכנה') ||
-		n.includes('תכנות') ||
-		n.includes('אלקטרוניקה') ||
-		n.includes('רובוטיקה') ||
-		n.includes('ספרות') ||
-		n.includes('תנ"ך') ||
-		n.includes('תנ״ך') ||
-		n.includes('הלכה') ||
-		n.includes('היסטוריה') ||
-		n.includes('ערבית') ||
-		n.includes('מזרחנות') ||
-		n.includes('המזרח התיכון');
-
-	if (subject.units >= 5) {
-		if (isHighBonus) return 25;
-		return 20;
-	}
-
-	if (subject.units === 4) {
-		return 10;
-	}
-
+	if (subject.units >= 5) return isEnhanced ? 25 : 20;
+	if (subject.units === 4) return isEnhanced ? 15 : 10;
 	return 0;
 }
 
 export function calculateHujiOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
-	if (!subjects || subjects.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const activeSubs = subjects.filter((s) => s.units > 0 && s.grade > 0);
-	if (activeSubs.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const totalActiveUnits = activeSubs.reduce((sum, s) => sum + s.units, 0);
-	const mandatorySubs = activeSubs.filter((s) => isHujiMandatorySubject(s.name));
-	const droppableSubs = activeSubs.filter((s) => !isHujiMandatorySubject(s.name));
-
-	const mandatoryUnits = mandatorySubs.reduce((sum, s) => sum + s.units, 0);
-
-	if (totalActiveUnits < 20 || mandatoryUnits >= totalActiveUnits || droppableSubs.length === 0) {
-		let totalScore = 0;
-		for (const s of activeSubs) {
-			totalScore += (s.grade + getHujiBonus(s)) * s.units;
-		}
-		const avg = Math.round((totalScore / totalActiveUnits) * 100) / 100;
-		return {
-			average: Math.min(125, avg),
-			optimalUnits: totalActiveUnits,
-			totalOriginalUnits: totalActiveUnits,
-			droppedSubjects: [],
-			includedSubjects: activeSubs
-		};
-	}
-
-	let bestAvg = 0;
-	let bestDropped: DroppedSubjectInfo[] = [];
-	let bestIncluded: CalculatorSubject[] = activeSubs;
-	let bestUnits = totalActiveUnits;
-
-	const numSubsets = 1 << droppableSubs.length;
-
-	for (let mask = 0; mask < numSubsets; mask++) {
-		const currentIncluded = [...mandatorySubs];
-		const currentDropped: DroppedSubjectInfo[] = [];
-		let currentUnits = mandatoryUnits;
-
-		for (let i = 0; i < droppableSubs.length; i++) {
-			const sub = droppableSubs[i];
-			if ((mask & (1 << i)) !== 0) {
-				currentIncluded.push(sub);
-				currentUnits += sub.units;
-			} else {
-				const effScore = sub.grade + getHujiBonus(sub);
-				currentDropped.push({
-					name: sub.name,
-					units: sub.units,
-					grade: sub.grade,
-					effectiveScoreWithBonus: effScore,
-					reason: 'השמטה חוקית באוניברסיטה העברית: שקלול המקצוע הוריד את הממוצע האופטימלי'
-				});
-			}
-		}
-
-		if (currentUnits < 20) continue;
-
-		let totalScore = 0;
-		for (const s of currentIncluded) {
-			totalScore += (s.grade + getHujiBonus(s)) * s.units;
-		}
-
-		const avg = Math.round((totalScore / currentUnits) * 100) / 100;
-		if (avg > bestAvg || (avg === bestAvg && currentUnits > bestUnits)) {
-			bestAvg = avg;
-			bestDropped = currentDropped;
-			bestIncluded = currentIncluded;
-			bestUnits = currentUnits;
-		}
-	}
-
-	return {
-		average: Math.min(125, bestAvg),
-		optimalUnits: bestUnits,
-		totalOriginalUnits: totalActiveUnits,
-		droppedSubjects: bestDropped,
-		includedSubjects: bestIncluded
-	};
+	return computeOptimalAverage(subjects, {
+		isMandatory: isHujiMandatorySubject,
+		getBonus: getHujiBonus,
+		dropReason: 'השמטה חוקית באוניברסיטה העברית: שקלול המקצוע הוריד את הממוצע האופטימלי'
+	});
 }
 
-export function calculateHujiSekem(bagrutAverage: number, psychometric: number): number {
+/**
+ * Official HUJI weighted score (info.huji.ac.il — קבלה על סמך בגרות ופסיכומטרי, נוסחת חישוב ציון משוקלל):
+ *   B = 3.963 * (bagrut / 10) - 20.0621        (bagrut on the 11.52 scale, not 115.2)
+ *   P = 0.032073 * psychometric + 0.3672
+ *   50/50: Y = 1.2422 * (0.5B + 0.5P) - 4.7609
+ *   30/70: Y = 1.2235 * (0.3B + 0.7P) - 4.4598
+ * Candidates get the higher of the two ("שקלול מיטבי"). Rounded to 3 decimals; scale ≈ 16–27.
+ */
+export function calculateHujiWeightedScore(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const zB = (bagrutAverage - 100) / 8.0;
-	const zP = (psychometric - 550) / 100.0;
-	const composite = 0.5 * zB + 0.5 * zP;
-	const raw = composite * 100.0 + 550.0;
-	return Math.min(800, Math.max(200, Math.round(raw)));
+	const B = 3.963 * (bagrutAverage / 10) - 20.0621;
+	const P = 0.032073 * psychometric + 0.3672;
+	const y5050 = 1.2422 * (0.5 * B + 0.5 * P) - 4.7609;
+	const y3070 = 1.2235 * (0.3 * B + 0.7 * P) - 4.4598;
+	return Math.round(Math.max(y5050, y3070) * 1000) / 1000;
+}
+
+/**
+ * HUJI sekem on the platform's 200–800 comparison scale (used against the stored program thresholds).
+ * It is an exact linear re-scaling of the official weighted score above
+ * (1 official point = 25.1 psychometric-equivalent points, anchored at bagrut 100 / psychometric 550 → 550),
+ * so rankings and gaps match HUJI's own formula.
+ */
+export function calculateHujiSekem(bagrutAverage: number, psychometric: number): number {
+	const official = calculateHujiWeightedScore(bagrutAverage, psychometric);
+	if (official <= 0) return 0;
+	return Math.round(25.0998 * official + 83.72);
 }
 
 export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
@@ -180,6 +114,15 @@ export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalc
 	const generalSekem = calculateHujiSekem(optimal.average, psych);
 	const engineeringSekem = calculateHujiSekem(optimal.average, quant > psych ? quant : psych);
 	const directBagrutEligible = optimal.average >= 105.0;
+	const officialScore = calculateHujiWeightedScore(optimal.average, psych);
+
+	const notes: string[] = [];
+	if (officialScore > 0) {
+		notes.push(`ציון משוקלל רשמי (נוסחת העברית): ${officialScore.toFixed(3)}`);
+	}
+	if (directBagrutEligible) {
+		notes.push('ממוצע בגרות עומד ברף קבלה ישירה (105 ומעלה) לחוגים זכאים כגון פסיכולוגיה ומדעי החברה.');
+	}
 
 	return {
 		institutionId: 'huji',
@@ -189,9 +132,8 @@ export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalc
 		generalSekem,
 		engineeringSekem,
 		directBagrutEligible,
-		notes: directBagrutEligible
-			? ['ממוצע בגרות עומד ברף קבלה ישירה (105 ומעלה) לחוגים זכאים כגון פסיכולוגיה ומדעי החברה.']
-			: [],
+		officialScore: officialScore || undefined,
+		notes,
 		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
 	};
 }

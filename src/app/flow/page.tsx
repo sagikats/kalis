@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 
 import { useAuth } from '@/context/AuthContext';
-import { SubjectInput } from '@/utils/calculators/bguCalculator';
+import { SubjectInput } from '@/modules/calculators';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import {
 	resolvePsychometricScores,

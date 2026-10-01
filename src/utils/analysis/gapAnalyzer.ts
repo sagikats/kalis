@@ -1,5 +1,5 @@
 import { AcademicDegree } from '../../types/academic';
-import { SubjectInput } from '../calculators/bguCalculator';
+import { SubjectInput } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
 export type AdmissionStatus = 'accepted' | 'borderline' | 'not_accepted' | 'no_threshold';

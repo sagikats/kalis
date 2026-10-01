@@ -8,9 +8,11 @@ import {
 	CalculatorSubject,
 	OptimalBagrutResult,
 	InstitutionCalculatorInput,
-	InstitutionCalculatorResult,
-	DroppedSubjectInfo
+	InstitutionCalculatorResult
 } from './types';
+import { computeOptimalAverage } from './optimalAverage';
+import { isBible, isCoreScience, isEnglish, isHistory, isLiterature, isMath } from './subjectMatchers';
+
 
 /**
  * In TAU official calculator, only Math, English, Civics, Hebrew Expression, and History are strictly non-droppable.
@@ -26,136 +28,43 @@ export function isTauMandatorySubject(name: string): boolean {
 	return false;
 }
 
+/**
+ * Official TAU bonus table (go.tau.ac.il/he/ba/how-to-calculate), granted for a grade of 60+:
+ * math 5u +35 / 4u +12.5; English 5u +25 / 4u +12.5;
+ * physics, chemistry, biology, literature, history, Bible 5u +25 (Arabic +25 only for Arabic-certificate holders);
+ * every other subject 5u +20; any 4u subject +10.
+ */
 export function getTauBonus(subject: CalculatorSubject): number {
 	if (subject.grade < 60) return 0;
-	const n = subject.name.trim();
+	const n = subject.name;
 
-	if (n.includes('מתמטיקה')) {
-		if (subject.units === 5) return 35;
+	if (isMath(n)) {
+		if (subject.units >= 5) return 35;
 		if (subject.units === 4) return 12.5;
 		return 0;
 	}
 
-	if (n.includes('אנגלית')) {
-		if (subject.units === 5) return 25;
+	if (isEnglish(n)) {
+		if (subject.units >= 5) return 25;
 		if (subject.units === 4) return 12.5;
 		return 0;
 	}
 
 	if (subject.units >= 5) {
-		if (
-			n.includes('פיזיקה') ||
-			n.includes('כימיה') ||
-			n.includes('ביולוגיה') ||
-			n.includes('מדעי המחשב') ||
-			n.includes('סייבר') ||
-			n.includes('תוכנה') ||
-			n.includes('תכנות') ||
-			n.includes('אלקטרוניקה') ||
-			n.includes('רובוטיקה') ||
-			n.includes('ספרות') ||
-			n.includes('היסטוריה') ||
-			n.includes('תע"י') ||
-			n.includes('תנ"ך') ||
-			n.includes('תנ״ך') ||
-			n.includes('הלכה') ||
-			n.includes('ערבית')
-		) {
-			return 25;
-		}
-		return 20; // Geography, Social sciences, Foreign languages, Arts, other 5u electives
+		if (isCoreScience(n) || isLiterature(n) || isHistory(n) || isBible(n)) return 25;
+		return 20;
 	}
 
-	if (subject.units === 4) {
-		return 10;
-	}
-
+	if (subject.units === 4) return 10;
 	return 0;
 }
 
 export function calculateTauOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
-	if (!subjects || subjects.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const activeSubs = subjects.filter((s) => s.units > 0 && s.grade > 0);
-	if (activeSubs.length === 0) {
-		return { average: 0, optimalUnits: 0, totalOriginalUnits: 0, droppedSubjects: [], includedSubjects: [] };
-	}
-
-	const totalActiveUnits = activeSubs.reduce((sum, s) => sum + s.units, 0);
-	const mandatorySubs = activeSubs.filter((s) => isTauMandatorySubject(s.name));
-	const droppableSubs = activeSubs.filter((s) => !isTauMandatorySubject(s.name));
-
-	const mandatoryUnits = mandatorySubs.reduce((sum, s) => sum + s.units, 0);
-
-	if (totalActiveUnits < 20 || mandatoryUnits >= totalActiveUnits || droppableSubs.length === 0) {
-		let totalScore = 0;
-		for (const s of activeSubs) {
-			totalScore += (s.grade + getTauBonus(s)) * s.units;
-		}
-		const avg = Math.round((totalScore / totalActiveUnits) * 100) / 100;
-		return {
-			average: Math.min(125, avg),
-			optimalUnits: totalActiveUnits,
-			totalOriginalUnits: totalActiveUnits,
-			droppedSubjects: [],
-			includedSubjects: activeSubs
-		};
-	}
-
-	let bestAvg = 0;
-	let bestDropped: DroppedSubjectInfo[] = [];
-	let bestIncluded: CalculatorSubject[] = activeSubs;
-	let bestUnits = totalActiveUnits;
-
-	const numSubsets = 1 << droppableSubs.length;
-
-	for (let mask = 0; mask < numSubsets; mask++) {
-		const currentIncluded = [...mandatorySubs];
-		const currentDropped: DroppedSubjectInfo[] = [];
-		let currentUnits = mandatoryUnits;
-
-		for (let i = 0; i < droppableSubs.length; i++) {
-			const sub = droppableSubs[i];
-			if ((mask & (1 << i)) !== 0) {
-				currentIncluded.push(sub);
-				currentUnits += sub.units;
-			} else {
-				const effScore = sub.grade + getTauBonus(sub);
-				currentDropped.push({
-					name: sub.name,
-					units: sub.units,
-					grade: sub.grade,
-					effectiveScoreWithBonus: effScore,
-					reason: 'השמטה חוקית באת״א: שיפור הממוצע האופטימלי'
-				});
-			}
-		}
-
-		if (currentUnits < 20) continue;
-
-		let totalScore = 0;
-		for (const s of currentIncluded) {
-			totalScore += (s.grade + getTauBonus(s)) * s.units;
-		}
-
-		const avg = Math.round((totalScore / currentUnits) * 100) / 100;
-		if (avg > bestAvg || (avg === bestAvg && currentUnits > bestUnits)) {
-			bestAvg = avg;
-			bestDropped = currentDropped;
-			bestIncluded = currentIncluded;
-			bestUnits = currentUnits;
-		}
-	}
-
-	return {
-		average: Math.min(125, bestAvg),
-		optimalUnits: bestUnits,
-		totalOriginalUnits: totalActiveUnits,
-		droppedSubjects: bestDropped,
-		includedSubjects: bestIncluded
-	};
+	return computeOptimalAverage(subjects, {
+		isMandatory: isTauMandatorySubject,
+		getBonus: getTauBonus,
+		dropReason: 'השמטה חוקית באת״א: שיפור הממוצע האופטימלי'
+	});
 }
 
 export function calculateTauGeneralSekem(bagrutAverage: number, psychometric: number): number {

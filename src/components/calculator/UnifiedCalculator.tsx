@@ -21,7 +21,7 @@ import {
      Check,
      Filter
 } from 'lucide-react';
-import { SubjectInput } from '@/utils/calculators/bguCalculator';
+import { SubjectInput } from '@/modules/calculators';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import AdmissionPanel from '@/components/calculator/AdmissionPanel';

@@ -1,4 +1,4 @@
-import { SubjectInput } from './bguCalculator';
+import type { SubjectInput } from '../../modules/calculators';
 import { resolvePsychometricScores } from './psychometricHelper';
 import {
 	evaluateTechnion,
@@ -36,52 +36,11 @@ export interface InstitutionSekemResult {
 	managementSekem?: number;
 	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
+	/** Institution's own score on its native scale (HUJI weighted score ≈16–27). */
+	officialScore?: number;
 	notes?: string;
 	droppedSubjects?: string[];
 	optimalUnits?: number;
-}
-
-/**
- * Standard Bagrut Average fallback
- */
-export function calculateStandardBagrutAverage(subjects: SubjectInput[]): number {
-	if (!subjects || subjects.length === 0) return 0;
-
-	let totalWeightedGrades = 0;
-	let totalUnits = 0;
-
-	for (const sub of subjects) {
-		let bonus = 0;
-		const subName = sub.name.trim();
-
-		if (sub.grade >= 60) {
-			if (subName.includes('מתמטיקה')) {
-				if (sub.units === 5) bonus = 35;
-				else if (sub.units === 4) bonus = 15;
-			} else if (subName.includes('אנגלית')) {
-				if (sub.units === 5) bonus = 25;
-				else if (sub.units === 4) bonus = 12.5;
-			} else if (sub.units === 5) {
-				if (
-					subName.includes('פיזיקה') ||
-					subName.includes('מדעי המחשב') ||
-					subName.includes('כימיה') ||
-					subName.includes('ביולוגיה')
-				) {
-					bonus = 25;
-				} else {
-					bonus = 20;
-				}
-			}
-		}
-
-		const adjustedGrade = sub.grade > 0 ? sub.grade + bonus : 0;
-		totalWeightedGrades += adjustedGrade * sub.units;
-		totalUnits += sub.units;
-	}
-
-	if (totalUnits === 0) return 0;
-	return Math.min(125, Math.round((totalWeightedGrades / totalUnits) * 100) / 100);
 }
 
 /**
@@ -237,10 +196,13 @@ export function calculateMultiInstitutionSekem(
 			directBagrutEligible: hujiRes.directBagrutEligible,
 			droppedSubjects: hujiRes.droppedSubjects,
 			optimalUnits: hujiRes.optimalUnits,
-			notes:
-				hujiRes.droppedSubjects.length > 0
-					? `ממוצע אופטימלי (הושמטו: ${hujiRes.droppedSubjects.join(', ')}), ציון קבלה משוקלל`
-					: 'ציון קבלה משוקלל רשמי של האוניברסיטה העברית'
+			officialScore: hujiRes.officialScore,
+			notes: [
+				hujiRes.officialScore ? `ציון משוקלל רשמי: ${hujiRes.officialScore.toFixed(3)}` : '',
+				hujiRes.droppedSubjects.length > 0 ? `ממוצע מיטבי (הושמטו: ${hujiRes.droppedSubjects.join(', ')})` : ''
+			]
+				.filter(Boolean)
+				.join('. ') || 'ציון קבלה משוקלל לפי נוסחת האוניברסיטה העברית'
 		},
 		ariel: {
 			institutionId: 'ariel',
@@ -255,8 +217,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: arielRes.optimalUnits,
 			notes:
 				arielRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${arielRes.droppedSubjects.join(', ')}), ציון קבלה משולב רשמי`
-					: 'ציון קבלה משולב לפי נוסחת אריאל: ((בגרות * 6.666) + פסיכומטרי) / 2'
+					? `ממוצע מיטבי (הושמטו: ${arielRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
+					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
 		},
 		haifa: {
 			institutionId: 'haifa',
@@ -287,8 +249,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: biuRes.optimalUnits,
 			notes:
 				biuRes.droppedSubjects && biuRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}), סכם קבלה משולב רשמי`
-					: 'סכם קבלה משולב לפי נוסחאות בר-אילן'
+					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
+					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
 		},
 		reichman: {
 			institutionId: 'reichman',
@@ -303,8 +265,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: reichmanRes.optimalUnits,
 			notes:
 				reichmanRes.droppedSubjects && reichmanRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${reichmanRes.droppedSubjects.join(', ')}), ציון קבלה משולב רשמי`
-					: 'ציון קבלה משולב לפי נוסחאות אוניברסיטת רייכמן'
+					? `ממוצע מיטבי (הושמטו: ${reichmanRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
+					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
 		}
 	};
 

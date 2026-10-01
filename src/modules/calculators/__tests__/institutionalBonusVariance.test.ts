@@ -65,31 +65,31 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getBguBonus(cs5), 25, 'BGU gives +25 for 5u CS');
 		});
 
-		it('Middle Eastern Studies 5u Bonus: +25 in BIU, HUJI, Technion vs +20 in TAU & BGU', () => {
+		it('Middle Eastern Studies 5u Bonus: standard +20 at Technion/TAU/HUJI/BGU (not in any enhanced official table)', () => {
 			const me5 = { name: 'לימודי המזרח התיכון והאסלאם / מזרחנות', units: 5, grade: 90 };
-			assert.equal(getBarIlanBonus(me5), 25, 'BIU awards +25 for Middle Eastern Studies');
-			assert.equal(getHujiBonus(me5), 25, 'HUJI awards +25 for Middle Eastern Studies');
-			assert.equal(getTechnionBonus(me5, false), 25, 'Technion awards +25 for Middle Eastern Studies');
+			assert.equal(getBarIlanBonus(me5), 25, 'BIU (unverified table) awards +25 for Middle Eastern Studies');
+			assert.equal(getHujiBonus(me5), 20, 'HUJI awards standard +20 (info.huji.ac.il bonus table)');
+			assert.equal(getTechnionBonus(me5, false), 20, 'Technion awards standard +20 (admissions.technion.ac.il)');
 			assert.equal(getTauBonus(me5), 20, 'TAU awards standard +20 elective bonus for Middle Eastern Studies');
 			assert.equal(getBguBonus(me5), 20, 'BGU awards standard +20 elective bonus for Middle Eastern Studies');
 		});
 
-		it('Robotics 5u Bonus: +25 across universities as recognized technological STEM subject', () => {
+		it('Robotics 5u Bonus: +25 only at Technion (recognized tech subject); +20 at TAU/HUJI/BGU', () => {
 			const rob5 = { name: 'רובוטיקה ומערכות אוטונומיות', units: 5, grade: 90 };
 			assert.equal(getTechnionBonus(rob5, false), 25, 'Technion awards +25 for Robotics');
-			assert.equal(getTauBonus(rob5), 25, 'TAU awards +25 for Robotics');
-			assert.equal(getHujiBonus(rob5), 25, 'HUJI awards +25 for Robotics');
-			assert.equal(getBguBonus(rob5), 25, 'BGU awards +25 for Robotics');
+			assert.equal(getTauBonus(rob5), 20, 'TAU: not in the +25 list (go.tau.ac.il)');
+			assert.equal(getHujiBonus(rob5), 20, 'HUJI: not in the +25 list');
+			assert.equal(getBguBonus(rob5), 20, 'BGU: not in the enhanced table (ידיעון תשפ"ז)');
 			assert.equal(getBarIlanBonus(rob5), 25, 'BIU awards +25 for Robotics');
 		});
 
-		it('System Planning & Programming 5u Bonus: +25 across universities as core tech major', () => {
+		it('System Planning & Programming 5u Bonus: +25 at Technion (+30 in cluster), +20 at TAU/HUJI/BGU', () => {
 			const sysProg5 = { name: 'תכנון ותכנות מערכות', units: 5, grade: 90 };
 			assert.equal(getTechnionBonus(sysProg5, false), 25, 'Technion awards +25 for System Planning & Programming');
 			assert.equal(getTechnionBonus(sysProg5, true), 30, 'Technion awards +30 for System Planning & Programming in cluster');
-			assert.equal(getTauBonus(sysProg5), 25, 'TAU awards +25 for System Planning & Programming');
-			assert.equal(getHujiBonus(sysProg5), 25, 'HUJI awards +25 for System Planning & Programming');
-			assert.equal(getBguBonus(sysProg5), 25, 'BGU awards +25 for System Planning & Programming');
+			assert.equal(getTauBonus(sysProg5), 20, 'TAU: not in the +25 list');
+			assert.equal(getHujiBonus(sysProg5), 20, 'HUJI: not in the +25 list');
+			assert.equal(getBguBonus(sysProg5), 20, 'BGU: not in the enhanced table');
 			assert.equal(getBarIlanBonus(sysProg5), 25, 'BIU awards +25 for System Planning & Programming');
 		});
 
@@ -104,10 +104,13 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 	});
 
 	describe('2. BGU Exact Mathematical Verification (User Case)', () => {
-		it('Current Bagrut Average: Exactly 109.06 across 33 units', () => {
+		it('Current Bagrut Average: 112.5 across 24 units (Bible, literature and CS dropped)', () => {
+			// BGU always includes only English, math, history, civics and Hebrew expression (ידיעון תשפ"ז, עמ' 11);
+			// Bible (83), literature (89) and CS (86+25=111) lower the average and are dropped.
 			const bguBagrut = calculateBguOptimalBagrut(candidateSubjects);
-			assert.equal(bguBagrut.average, 109.06);
-			assert.equal(bguBagrut.optimalUnits, 33);
+			assert.equal(bguBagrut.average, 112.5);
+			assert.equal(bguBagrut.optimalUnits, 24);
+			assert.deepEqual(bguBagrut.droppedSubjects.map((s) => s.name).sort(), ['ספרות עברית', 'מדעי המחשב', 'תנ״ך'].sort());
 		});
 
 		it('Current Quantitative Sekem: Exactly 732 at current Bagrut 109.06', () => {
@@ -141,7 +144,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(targetSekem, 750, 'Bagrut 112.0 exactly satisfies 750 admission threshold');
 		});
 
-		it('MultiCalculator Integration: Correctly returns 732 (no 800 overflow)', () => {
+		it('MultiCalculator Integration: returns quantitative 753 / general 716 at optimal average 112.5', () => {
 			const results = calculateMultiInstitutionSekem({
 				bagrutSubjects: candidateSubjects,
 				psychometricGeneral: candidatePsych.general,
@@ -155,9 +158,11 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 				physicsGrade: 96
 			}, ['bgu']);
 
-			assert.equal(results[0].quantitativeSekem, 732);
-			assert.equal(results[0].bagrutAverage, 109.06);
-			assert.equal(results[0].generalSekem, 695);
+			// 2.705*135 + 0.715*125 + 0.39*100 + 6.29*112.5 - 448 = 753.4 -> 753
+			assert.equal(results[0].quantitativeSekem, 753);
+			assert.equal(results[0].bagrutAverage, 112.5);
+			// 0.62*616 + 5.9*112.5 - 330 = 715.67 -> 716
+			assert.equal(results[0].generalSekem, 716);
 		});
 	});
 });
