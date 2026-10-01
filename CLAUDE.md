@@ -1,6 +1,6 @@
 # CLAUDE.md - Instructions for Claude Code
 
-See comprehensive agent instructions and project guidelines in [AGENTS.md](./AGENTS.md).
+See comprehensive agent instructions, architecture, and algorithms in [PROJECT_MASTER_GUIDE.md](./PROJECT_MASTER_GUIDE.md) and [AGENTS.md](./AGENTS.md).
 
 ## Quick Reference
 - **Project**: Kalis (Israeli Academic Admission Planning & Optimization)
