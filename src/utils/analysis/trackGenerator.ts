@@ -642,7 +642,7 @@ export function getAvailableSubjectLevers(
 				id: 'physics_5u',
 				subjectName: 'פיזיקה',
 				currentGrade: currentPhysG,
-				currentUnits: currentPhysU || 2,
+				currentUnits: currentPhysU || 0,
 				targetGrade: 88,
 				targetUnits: 5,
 				reason: 'דרישת קדם הכרחית לפקולטות המובילות, מעניקה בונוס מדעים 25 נקודות ופטור ממבחני סיווג.',
