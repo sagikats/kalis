@@ -53,10 +53,13 @@ export function getArielBonus(subject: CalculatorSubject): number {
 			n.includes('מדעי המחשב') ||
 			n.includes('סייבר') ||
 			n.includes('אלקטרוניקה') ||
+			n.includes('רובוטיקה') ||
+			n.includes('תוכנה') ||
 			n.includes('הנדס') ||
 			n.includes('ספרות') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
+			n.includes('הלכה') ||
 			n.includes('היסטוריה') ||
 			n.includes('ערבית')
 		) {

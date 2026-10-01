@@ -15,11 +15,11 @@ import {
 	getBguBonus
 } from '../bgu';
 import { evaluateTau, calculateTauOptimalBagrut, getTauBonus } from '../tau';
-import { evaluateTechnion, calculateTechnionOptimalBagrut } from '../technion';
+import { evaluateTechnion, calculateTechnionOptimalBagrut, getTechnionBonus } from '../technion';
 import { evaluateHuji, calculateHujiOptimalBagrut, getHujiBonus } from '../huji';
 import { evaluateHaifa, calculateHaifaOptimalBagrut } from '../haifa';
 import { evaluateAriel, calculateArielOptimalBagrut } from '../ariel';
-import { evaluateBarIlan, calculateBarIlanOptimalBagrut } from '../barIlan';
+import { evaluateBarIlan, calculateBarIlanOptimalBagrut, getBarIlanBonus } from '../barIlan';
 import { evaluateReichman, calculateReichmanOptimalBagrut } from '../reichman';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 
@@ -63,6 +63,33 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		it('Computer Science 5u Bonus: BGU gives +25 bonus for 5u CS', () => {
 			const cs5 = { name: 'מדעי המחשב', units: 5, grade: 86 };
 			assert.equal(getBguBonus(cs5), 25, 'BGU gives +25 for 5u CS');
+		});
+
+		it('Middle Eastern Studies 5u Bonus: +25 in BIU, HUJI, Technion vs +20 in TAU & BGU', () => {
+			const me5 = { name: 'לימודי המזרח התיכון והאסלאם / מזרחנות', units: 5, grade: 90 };
+			assert.equal(getBarIlanBonus(me5), 25, 'BIU awards +25 for Middle Eastern Studies');
+			assert.equal(getHujiBonus(me5), 25, 'HUJI awards +25 for Middle Eastern Studies');
+			assert.equal(getTechnionBonus(me5, false), 25, 'Technion awards +25 for Middle Eastern Studies');
+			assert.equal(getTauBonus(me5), 20, 'TAU awards standard +20 elective bonus for Middle Eastern Studies');
+			assert.equal(getBguBonus(me5), 20, 'BGU awards standard +20 elective bonus for Middle Eastern Studies');
+		});
+
+		it('Robotics 5u Bonus: +25 across universities as recognized technological STEM subject', () => {
+			const rob5 = { name: 'רובוטיקה ומערכות אוטונומיות', units: 5, grade: 90 };
+			assert.equal(getTechnionBonus(rob5, false), 25, 'Technion awards +25 for Robotics');
+			assert.equal(getTauBonus(rob5), 25, 'TAU awards +25 for Robotics');
+			assert.equal(getHujiBonus(rob5), 25, 'HUJI awards +25 for Robotics');
+			assert.equal(getBguBonus(rob5), 25, 'BGU awards +25 for Robotics');
+			assert.equal(getBarIlanBonus(rob5), 25, 'BIU awards +25 for Robotics');
+		});
+
+		it('Law & Entrepreneurship 5u Bonus: +20 general elective bonus across institutions', () => {
+			const law5 = { name: 'משפטים / מבוא למשפט ומשפט ציבורי', units: 5, grade: 90 };
+			const ent5 = { name: 'יזמות עסקית וחדשנות / ניהול יזמות', units: 5, grade: 90 };
+			assert.equal(getTauBonus(law5), 20, 'TAU gives +20 for Law');
+			assert.equal(getHujiBonus(law5), 20, 'HUJI gives +20 for Law');
+			assert.equal(getTauBonus(ent5), 20, 'TAU gives +20 for Entrepreneurship');
+			assert.equal(getBguBonus(ent5), 20, 'BGU gives +20 for Entrepreneurship');
 		});
 	});
 

@@ -51,11 +51,13 @@ export function getTauBonus(subject: CalculatorSubject): number {
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
 			n.includes('אלקטרוניקה') ||
+			n.includes('רובוטיקה') ||
 			n.includes('ספרות') ||
 			n.includes('היסטוריה') ||
 			n.includes('תע"י') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
+			n.includes('הלכה') ||
 			n.includes('ערבית')
 		) {
 			return 25;

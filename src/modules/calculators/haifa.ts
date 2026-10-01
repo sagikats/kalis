@@ -54,9 +54,11 @@ export function getHaifaBonus(subject: CalculatorSubject): number {
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
 			n.includes('אלקטרוניקה') ||
+			n.includes('רובוטיקה') ||
 			n.includes('ספרות') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
+			n.includes('הלכה') ||
 			n.includes('היסטוריה') ||
 			n.includes('ערבית')
 		) {

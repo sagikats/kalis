@@ -51,11 +51,15 @@ export function getHujiBonus(subject: CalculatorSubject): number {
 		n.includes('סייבר') ||
 		n.includes('תוכנה') ||
 		n.includes('אלקטרוניקה') ||
+		n.includes('רובוטיקה') ||
 		n.includes('ספרות') ||
 		n.includes('תנ"ך') ||
 		n.includes('תנ״ך') ||
+		n.includes('הלכה') ||
 		n.includes('היסטוריה') ||
-		n.includes('ערבית');
+		n.includes('ערבית') ||
+		n.includes('מזרחנות') ||
+		n.includes('המזרח התיכון');
 
 	if (subject.units >= 5) {
 		if (isHighBonus) return 25;

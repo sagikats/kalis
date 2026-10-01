@@ -54,11 +54,13 @@ export function getBguBonus(subject: CalculatorSubject): number {
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
 			n.includes('אלקטרוניקה') ||
+			n.includes('רובוטיקה') ||
 			n.includes('היסטוריה') ||
 			n.includes('אזרחות') ||
 			n.includes('ספרות') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
+			n.includes('הלכה') ||
 			n.includes('ערבית')
 		) {
 			return 25;
