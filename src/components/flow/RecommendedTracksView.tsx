@@ -127,13 +127,10 @@ export default function RecommendedTracksView({
 		setCustomScenarioApplied(false);
 		if (primaryRecommendedTrack) {
 			setSelectedTrackId(primaryRecommendedTrack.id);
-			if (activeTab === 'custom_builder') {
-				setEditingTrack(primaryRecommendedTrack);
-			}
-		} else {
-			setEditingTrack(null);
 		}
-	}, [analysis.target.program.id, primaryRecommendedTrack, activeTab]);
+		// Always start custom builder with a clean baseline unless explicitly initiated via "ערוך מסלול בסימולטור"
+		setEditingTrack(null);
+	}, [analysis.target.program.id, primaryRecommendedTrack]);
 
 	// Scroll to top when switching between Recommended tracks and Custom builder tabs
 	useEffect(() => {
@@ -543,7 +540,10 @@ export default function RecommendedTracksView({
 					<div className="relative group">
 						<button
 							type="button"
-							onClick={() => setActiveTab('custom_builder')}
+							onClick={() => {
+								setEditingTrack(null);
+								setActiveTab('custom_builder');
+							}}
 							title="בניית מסלול בעצמך"
 							className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
 								activeTab === 'custom_builder'
@@ -602,7 +602,10 @@ export default function RecommendedTracksView({
 								חזור לדוח הקבלה
 							</button>
 							<button
-								onClick={() => setActiveTab('custom_builder')}
+								onClick={() => {
+									setEditingTrack(null);
+									setActiveTab('custom_builder');
+								}}
 								className="px-5 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-xs rounded-xl border border-[#DDD7CB] transition cursor-pointer"
 							>
 								מעבר למסלול בנייה אישי
@@ -1892,7 +1895,10 @@ export default function RecommendedTracksView({
 						</div>
 						<button
 							type="button"
-							onClick={() => setActiveTab('custom_builder')}
+							onClick={() => {
+								setEditingTrack(null);
+								setActiveTab('custom_builder');
+							}}
 							className="px-5 py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shrink-0 shadow-sm"
 						>
 							<span>עבור לחלונית בניית מסלול אישי</span>
@@ -1978,8 +1984,7 @@ export default function RecommendedTracksView({
 								userProfile={userProfile}
 								institutionResult={institutionResult}
 								onApplyScenario={handleApplyScenario}
-								initialTrackToEdit={editingTrack || primaryRecommendedTrack}
-								defaultRecommendedTrack={primaryRecommendedTrack}
+								initialTrackToEdit={editingTrack}
 								onCancelEdit={() => {
 									setEditingTrack(null);
 									setActiveTab('recommended');

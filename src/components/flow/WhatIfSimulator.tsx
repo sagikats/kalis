@@ -157,7 +157,7 @@ export default function WhatIfSimulator({
 	onSaveCustomTrack,
 	onCancelEdit
 }: WhatIfSimulatorProps) {
-	const activeTrack = initialTrackToEdit || defaultRecommendedTrack || null;
+	const activeTrack = initialTrackToEdit || null;
 
 	// Baseline values
 	const hasOriginalPsych = (userProfile.psychometricGeneral || 0) > 0;
@@ -248,7 +248,7 @@ export default function WhatIfSimulator({
 
 	// Synchronize simulator state when program changes or track to edit changes
 	useEffect(() => {
-		const targetTrack = initialTrackToEdit || defaultRecommendedTrack;
+		const targetTrack = initialTrackToEdit || null;
 		if (targetTrack) {
 			const state = applyTrackToSimulatorState(targetTrack, userProfile, initialPsych);
 			setSimulatedPsych(state.targetPsych);
@@ -276,11 +276,11 @@ export default function WhatIfSimulator({
 		}
 		setSavedCustomTrackSuccess(false);
 		setSavedCustomTrackError(null);
-	}, [analysis.target.program.id, initialTrackToEdit, defaultRecommendedTrack, initialPsych, userProfile]);
+	}, [analysis.target.program.id, initialTrackToEdit, initialPsych, userProfile]);
 
 	// Reset to the original proposed targets of the edited track
 	const handleResetToOriginalTrack = () => {
-		const targetTrack = initialTrackToEdit || defaultRecommendedTrack;
+		const targetTrack = initialTrackToEdit || null;
 		if (targetTrack) {
 			const state = applyTrackToSimulatorState(targetTrack, userProfile, initialPsych);
 			setSimulatedPsych(state.targetPsych);
