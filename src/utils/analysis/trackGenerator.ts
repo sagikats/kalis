@@ -1013,6 +1013,17 @@ export function extractDegreeHardRequirements(
 	};
 }
 
+export const DEFAULT_USER_PREFERENCES: UserPreferencesQuestionnaire = {
+	psychExperience: 'once',
+	psychFeeling: 'high_potential',
+	psychStrongestSection: 'balanced',
+	psychStrongestSections: ['balanced'],
+	learningOrientation: 'flexible',
+	learningStrength: 'analytical_quick',
+	weeklyAvailabilityHours: 'part_15_25',
+	targetTimeline: 'immediate_october'
+};
+
 /**
  * Main Closed-Loop Generator producing 3 mathematically guaranteed tailored admission tracks
  */
@@ -1020,8 +1031,13 @@ export function generatePersonalizedTracks(
 	gapAnalysis: ProgramGapAnalysis,
 	userProfile: UserAcademicProfile,
 	institutionRes: InstitutionSekemResult,
-	answers: UserPreferencesQuestionnaire
+	inputAnswers?: Partial<UserPreferencesQuestionnaire>
 ): RecommendedTrack[] {
+	const answers: UserPreferencesQuestionnaire = {
+		...DEFAULT_USER_PREFERENCES,
+		...(inputAnswers || {})
+	};
+
 	// HARD GUARD: If user has not entered valid Bagrut grades (no subjects, total units < 20, or bagrut average <= 0)
 	// NEVER invent fake tracks!
 	const validSubjects = (userProfile.bagrutSubjects || []).filter((s) => (Number(s.grade) || 0) > 0);

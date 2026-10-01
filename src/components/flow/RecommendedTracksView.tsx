@@ -53,7 +53,7 @@ interface RecommendedTracksViewProps {
 	mechinaAvailable?: boolean;
 	mechinaReason?: string;
 	onSelectProgram?: (programId: string) => void;
-	onEditPreferences: () => void;
+	onEditPreferences?: () => void;
 	onBackToReport: () => void;
 	onApplyCustomScenario?: (customPsych: number, customSubjects: any[], simulatedSekem: number) => void;
 }
@@ -381,13 +381,15 @@ export default function RecommendedTracksView({
 					</button>
 
 					<div className="flex items-center gap-2.5 flex-wrap">
-						<button
-							onClick={onEditPreferences}
-							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
-						>
-							<Sparkles className="h-3.5 w-3.5 text-[#1E597B]" />
-							<span>ערוך שאלון העדפות</span>
-						</button>
+						{onEditPreferences && (
+							<button
+								onClick={onEditPreferences}
+								className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
+							>
+								<Sparkles className="h-3.5 w-3.5 text-[#1E597B]" />
+								<span>ערוך שאלון העדפות</span>
+							</button>
+						)}
 						<button
 							onClick={handlePrint}
 							className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"

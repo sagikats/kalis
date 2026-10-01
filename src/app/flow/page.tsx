@@ -37,7 +37,6 @@ import { cleanGradeInput, cleanNumberInput } from '@/utils/gradeInputHelper';
 
 import DegreeSearchSelector from '@/components/flow/DegreeSearchSelector';
 import PersonalAdmissionReport from '@/components/flow/PersonalAdmissionReport';
-import PreferenceQuestionnaire from '@/components/flow/PreferenceQuestionnaire';
 import RecommendedTracksView from '@/components/flow/RecommendedTracksView';
 import TrackRegistrationGate from '@/components/flow/TrackRegistrationGate';
 import AcceptedRegistrationCard from '@/components/flow/AcceptedRegistrationCard';
@@ -747,14 +746,14 @@ export default function AdmissionFlowPage() {
 	// Generate the 3 tailored, realistic tracks for Step 4
 	const recommendedTracks = useMemo(() => {
 		if (!gradeValidation.isValid) return null;
-		if (!currentFocusedAnalysis || !questionnaireAnswers) return null;
+		if (!currentFocusedAnalysis) return null;
 		const instRes = institutionResultsMap[currentFocusedAnalysis.target.calculatorId];
 		if (!instRes || instRes.bagrutAverage <= 0) return null;
 		return generatePersonalizedTracks(
 			currentFocusedAnalysis,
 			userProfile,
 			instRes,
-			questionnaireAnswers
+			questionnaireAnswers || undefined
 		);
 	}, [gradeValidation.isValid, currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
 
@@ -1340,13 +1339,6 @@ export default function AdmissionFlowPage() {
 									onSelectOtherProgram={(programId) => setFocusedProgramId(programId)}
 									onBackToReport={() => setActiveStep(3)}
 								/>
-							) : !questionnaireAnswers || !recommendedTracks ? (
-								<PreferenceQuestionnaire
-									analysis={currentFocusedAnalysis}
-									initialAnswers={questionnaireAnswers || undefined}
-									onSubmit={(answers) => setQuestionnaireAnswers(answers)}
-									onCancel={() => setActiveStep(3)}
-								/>
 							) : !user ? (
 								<TrackRegistrationGate
 									analysis={currentFocusedAnalysis}
@@ -1356,12 +1348,11 @@ export default function AdmissionFlowPage() {
 								<RecommendedTracksView
 									analysis={currentFocusedAnalysis}
 									allAnalyses={gapAnalyses}
-									tracks={recommendedTracks}
+									tracks={recommendedTracks || []}
 									userProfile={userProfile}
 									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
 									mechinaAvailable={currentFocusedAnalysis.status === 'not_accepted' || currentFocusedAnalysis.gap < 0}
 									onSelectProgram={(programId) => setFocusedProgramId(programId)}
-									onEditPreferences={() => setQuestionnaireAnswers(null)}
 									onBackToReport={() => setActiveStep(3)}
 								/>
 							)
@@ -1635,17 +1626,7 @@ export default function AdmissionFlowPage() {
 						)}
 
 						{activeStep === 4 && (
-							currentFocusedAnalysis && !questionnaireAnswers && currentFocusedAnalysis.status !== 'accepted' ? (
-								<button
-									type="submit"
-									form="preference-questionnaire-form"
-									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#EA580C] hover:bg-[#D94E07] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
-								>
-									<Sparkles className="h-4 w-4 text-white shrink-0" />
-									<span>חשב מסלולים מותאמים</span>
-									<ArrowLeft className="h-4 w-4 shrink-0" />
-								</button>
-							) : gapAnalyses.length > 1 ? (
+							gapAnalyses.length > 1 ? (
 								<div className="flex items-center gap-2">
 									<span className="text-[11px] text-[#66635C] font-bold hidden sm:inline">החלף תואר:</span>
 									<select
