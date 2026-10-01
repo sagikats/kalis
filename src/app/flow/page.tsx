@@ -280,6 +280,22 @@ export default function AdmissionFlowPage() {
 		}
 	}, [activeStep, step1SubStep, focusedProgramId]);
 
+	// Lock window scroll completely on steps 1 and 2 to guarantee a rigid, static viewport shell
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+		if (activeStep <= 2) {
+			document.body.style.overflow = 'hidden';
+			document.documentElement.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+			document.documentElement.style.overflow = '';
+		}
+		return () => {
+			document.body.style.overflow = '';
+			document.documentElement.style.overflow = '';
+		};
+	}, [activeStep]);
+
 	// User lifecycle and data loading effect
 	useEffect(() => {
 		if (isAuthLoading) return;
@@ -743,12 +759,12 @@ export default function AdmissionFlowPage() {
 	}, [gradeValidation.isValid, currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
 
 	return (
-		<div className={`min-h-screen bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
-			activeStep <= 2 ? 'lg:h-screen lg:overflow-hidden pb-20 sm:pb-24' : 'pb-28 sm:pb-32'
+		<div className={`w-full bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
+			activeStep <= 2 ? 'h-[calc(100dvh-4rem)] max-h-[calc(100dvh-4rem)] overflow-hidden' : 'min-h-screen pb-28 sm:pb-32'
 		}`}>
 			<main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
 				activeStep <= 2
-					? 'py-3 sm:py-4 lg:h-[calc(100vh-5.5rem)] lg:overflow-hidden flex flex-col min-h-0'
+					? 'py-2.5 sm:py-3.5 h-[calc(100%-4.25rem)] max-h-[calc(100%-4.25rem)] overflow-hidden flex flex-col min-h-0'
 					: 'py-8 space-y-8'
 			}`}>
 
@@ -940,7 +956,7 @@ export default function AdmissionFlowPage() {
 
 						{/* SUB-STEP 1B: הזנת ציוני פסיכומטרי */}
 						{step1SubStep === 'psychometric' && (
-							<div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#E5DFD4] shadow-xs space-y-4 max-w-4xl mx-auto flex-1 min-h-0 flex flex-col justify-between w-full">
+							<div className="bg-white rounded-3xl p-4 sm:p-6 border border-[#E5DFD4] shadow-xs space-y-4 max-w-4xl mx-auto flex-1 min-h-0 flex flex-col w-full overflow-y-auto custom-scrollbar">
 								{/* Integrated Card Top Bar with Prominent Step 1B Title */}
 								<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-3.5 shrink-0">
 									<div>

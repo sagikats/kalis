@@ -2,10 +2,18 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Shield, GraduationCap, Database, ArrowUpLeft } from 'lucide-react';
 import KalisLogo from '../common/KalisLogo';
 
 export default function Footer() {
+     const pathname = usePathname();
+
+     // Do not render marketing footer on admission flow wizard
+     if (pathname?.startsWith('/flow')) {
+          return null;
+     }
+
      return (
           <footer className="border-t border-[#E5DFD4] bg-[#F4F0E8] text-[#66635C] mt-auto relative">
                <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
