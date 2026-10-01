@@ -43,6 +43,7 @@ export function detectTechnionScienceCluster(subjects: CalculatorSubject[]): boo
 			s.name.includes('אלקטרוניקה') ||
 			s.name.includes('ביוטכנולוגיה') ||
 			s.name.includes('סייבר') ||
+			s.name.includes('רובוטיקה') ||
 			s.name.includes('תוכנה') ||
 			s.name.includes('הנדס')
 	).length;
@@ -71,6 +72,7 @@ export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: 
 		n.includes('אלקטרוניקה') ||
 		n.includes('ביוטכנולוגיה') ||
 		n.includes('סייבר') ||
+		n.includes('רובוטיקה') ||
 		n.includes('תוכנה') ||
 		n.includes('הנדס');
 
@@ -79,7 +81,15 @@ export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: 
 			return 30; // Enhanced science cluster bonus
 		}
 		if (isSci || isTech) return 25;
-		if (n.includes('ספרות') || n.includes('תנ"ך') || n.includes('תנ״ך') || n.includes('היסטוריה') || n.includes('ערבית')) {
+		if (
+			n.includes('ספרות') ||
+			n.includes('תנ"ך') ||
+			n.includes('תנ״ך') ||
+			n.includes('היסטוריה') ||
+			n.includes('ערבית') ||
+			n.includes('מזרחנות') ||
+			n.includes('המזרח התיכון')
+		) {
 			return 25;
 		}
 		return 20; // General 5-unit elective bonus

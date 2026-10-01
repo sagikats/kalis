@@ -169,6 +169,7 @@ export function getSubjectBonusSummary(
 			cleanName.includes('סייבר') ||
 			cleanName.includes('תוכנה') ||
 			cleanName.includes('אלקטרוניקה') ||
+			cleanName.includes('רובוטיקה') ||
 			cleanName.includes('ביוטכנולוגיה'));
 
 	if (isStem5) {
@@ -189,6 +190,7 @@ export function getSubjectBonusSummary(
 		(cleanName.includes('מחשבת ישראל') ||
 			cleanName.includes('תושב"ע') ||
 			cleanName.includes('תושבע') ||
+			cleanName.includes('הלכה') ||
 			cleanName.includes('תלמוד'));
 
 	if (isJewishStudies5) {
@@ -216,7 +218,7 @@ export function getSubjectBonusSummary(
 		};
 	}
 
-	// Core Humanities 5 units (Literature, Bible, History, Arabic)
+	// Core Humanities 5 units (Literature, Bible, History, Arabic, Middle East Studies)
 	const isCoreHumanities5 =
 		units >= 5 &&
 		(cleanName.includes('ספרות') ||
@@ -224,7 +226,9 @@ export function getSubjectBonusSummary(
 			cleanName.includes('תנ״ך') ||
 			cleanName.includes('היסטוריה') ||
 			cleanName.includes('תע"י') ||
-			cleanName.includes('ערבית'));
+			cleanName.includes('ערבית') ||
+			cleanName.includes('מזרחנות') ||
+			cleanName.includes('המזרח התיכון'));
 
 	if (isCoreHumanities5) {
 		return {

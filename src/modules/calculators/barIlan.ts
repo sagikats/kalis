@@ -62,16 +62,20 @@ export function getBarIlanBonus(subject: CalculatorSubject): number {
 			n.includes('כימיה') ||
 			n.includes('ביולוגיה') ||
 			n.includes('אלקטרוניקה') ||
+			n.includes('רובוטיקה') ||
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
 			n.includes('מחשבת ישראל') ||
 			n.includes('תושב"ע') ||
+			n.includes('הלכה') ||
 			n.includes('תלמוד') ||
 			n.includes('ספרות') ||
 			n.includes('היסטוריה') ||
-			n.includes('ערבית')
+			n.includes('ערבית') ||
+			n.includes('מזרחנות') ||
+			n.includes('המזרח התיכון')
 		) {
 			return 25;
 		}

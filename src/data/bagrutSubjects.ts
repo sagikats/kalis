@@ -294,6 +294,54 @@ export const POPULAR_5U_ELECTIVES: PopularElectiveOption[] = [
 		description: 'מערכות ספרתיות ומחשוב המעניקות בונוס טכנולוגי של +25 נקודות.'
 	},
 	{
+		id: 'middle_east_studies',
+		name: 'לימודי המזרח התיכון והאסלאם / מזרחנות',
+		units: 5,
+		defaultGrade: 90,
+		label: '🕌 מזרחנות 5 יח״ל',
+		shortLabel: 'מזרחנות',
+		icon: '🕌',
+		bonus: 20,
+		category: 'humanities',
+		description: 'לימודי המזרח התיכון והאסלאם / מזרחנות, מקצוע פופולרי המעניק בונוס אוניברסיטאי של +20 עד +25 נקודות ויתרון במודיעין.'
+	},
+	{
+		id: 'law_adv',
+		name: 'משפטים / מבוא למשפט ומשפט ציבורי',
+		units: 5,
+		defaultGrade: 90,
+		label: '⚖️ משפטים 5 יח״ל',
+		shortLabel: 'משפטים',
+		icon: '⚖️',
+		bonus: 20,
+		category: 'social',
+		description: 'מבוא למשפט, משפט חוקתי ופלילי, מקצוע מבוקש המעניק בונוס אוניברסיטאי של +20 נקודות.'
+	},
+	{
+		id: 'robotics',
+		name: 'רובוטיקה ומערכות אוטונומיות',
+		units: 5,
+		defaultGrade: 90,
+		label: '🤖 רובוטיקה 5 יח״ל',
+		shortLabel: 'רובוטיקה',
+		icon: '🤖',
+		bonus: 25,
+		category: 'stem',
+		description: 'רובוטיקה ובקרה, מעניקה בונוס טכנולוגי מרבי של +25 נקודות וקידום קבלה להנדסה.'
+	},
+	{
+		id: 'entrepreneurship',
+		name: 'יזמות עסקית וחדשנות / ניהול יזמות',
+		units: 5,
+		defaultGrade: 90,
+		label: '💡 יזמות וחדשנות 5 יח״ל',
+		shortLabel: 'יזמות',
+		icon: '💡',
+		bonus: 20,
+		category: 'social',
+		description: 'יזמות, סטארטאפ וניהול עסקי עם בונוס אוניברסיטאי של +20 נקודות.'
+	},
+	{
 		id: 'final_project',
 		name: 'עבודת גמר מחקרית (5 יח"ל)',
 		units: 5,
@@ -638,6 +686,28 @@ export const BAGRUT_SUBJECTS_CATALOG: BagrutSubjectOption[] = [
 		bonus: 25,
 		keywords: ['תקשורת', 'גלים', 'אנטנות', 'טלקום', 'שידור']
 	},
+	{
+		id: 'robotics',
+		name: 'רובוטיקה ומערכות אוטונומיות',
+		category: 'stem',
+		categoryLabel: 'מוגבר הנדסי / STEM',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 25,
+		isPopularElective: true,
+		keywords: ['רובוטיקה', 'רובוטים', 'first robotics', 'בקרה', 'רחפנים', 'מערכות אוטונומיות']
+	},
+	{
+		id: 'software_engineering_project',
+		name: 'הנדסת תוכנה / פרויקט גמר תוכנה',
+		category: 'stem',
+		categoryLabel: 'מוגבר טכנולוגי / STEM',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 25,
+		isPopularElective: true,
+		keywords: ['הנדסת תוכנה', 'פרויקט תוכנה', 'מדמח 5', 'תכנות מתקדם', '10 יחל תוכנה']
+	},
 
 	// =========================================================
 	// מקצועות מוגברים - מדעי החברה, ניהול ומשפטים
@@ -757,6 +827,68 @@ export const BAGRUT_SUBJECTS_CATALOG: BagrutSubjectOption[] = [
 		allowedUnits: [5],
 		bonus: 20,
 		keywords: ['חשבונאות', 'ניהול פיננסי', 'עסקים', 'ספרי חשבונות']
+	},
+	{
+		id: 'law_adv',
+		name: 'משפטים / מבוא למשפט ומשפט ציבורי',
+		category: 'social',
+		categoryLabel: 'מוגבר מדעי החברה ומשפטים',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		isPopularElective: true,
+		keywords: ['משפטים', 'משפט', 'חוק ומשפט', 'משפט פלילי', 'משפט עברי', 'דיני עונשין', 'משפט חוקתי']
+	},
+	{
+		id: 'entrepreneurship',
+		name: 'יזמות עסקית וחדשנות / ניהול יזמות',
+		category: 'social',
+		categoryLabel: 'מוגבר מדעי החברה וניהול',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		isPopularElective: true,
+		keywords: ['יזמות', 'סטארטאפ', 'חדשנות', 'ניהול עסקי', 'יזמות עסקית', 'יזמות חברתית']
+	},
+	{
+		id: 'education_sciences',
+		name: 'מדעי החינוך וההוראה / התפתחות הילד',
+		category: 'social',
+		categoryLabel: 'מוגבר מדעי החברה וחינוך',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['חינוך', 'הוראה', 'פדגוגיה', 'מדעי החינוך', 'הגיל הרך', 'התפתחות הילד']
+	},
+	{
+		id: 'sociology_adv',
+		name: 'סוציולוגיה (מוגבר 5 יח"ל)',
+		category: 'social',
+		categoryLabel: 'מוגבר מדעי החברה',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['סוציולוגיה', 'חברה', 'מדעי החברה', 'סוציולוגיה 5']
+	},
+	{
+		id: 'psychology_adv',
+		name: 'פסיכולוגיה (מוגבר 5 יח"ל)',
+		category: 'social',
+		categoryLabel: 'מוגבר מדעי החברה',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['פסיכולוגיה', 'מדעי ההתנהגות', 'פסיכו', 'פסיכולוגיה 5']
+	},
+	{
+		id: 'economics_adv',
+		name: 'כלכלה (מוגבר 5 יח"ל)',
+		category: 'social',
+		categoryLabel: 'מוגבר מדעי החברה',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['כלכלה', 'שוק ההון', 'מיקרו כלכלה', 'מאקרו', 'כלכלה 5']
 	},
 
 	// =========================================================
@@ -920,6 +1052,97 @@ export const BAGRUT_SUBJECTS_CATALOG: BagrutSubjectOption[] = [
 		bonus: 20,
 		keywords: ['אמהרית', 'שפה אמהרית', 'אתיופיה']
 	},
+	{
+		id: 'middle_east_studies',
+		name: 'לימודי המזרח התיכון והאסלאם / מזרחנות',
+		category: 'humanities',
+		categoryLabel: 'מוגבר הומני / מזרחנות',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		isPopularElective: true,
+		keywords: ['מזרחנות', 'המזרח התיכון', 'אסלאם', 'עולם הערבים והאסלאם', 'חמן', 'מודיעין', 'תרבות האסלאם', 'ערבית ומזרחנות']
+	},
+	{
+		id: 'arabic_lit_adv',
+		name: 'ספרות ערבית (מוגבר 5 יח"ל)',
+		category: 'humanities',
+		categoryLabel: 'מוגבר הומני ושפות',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 25,
+		keywords: ['ספרות ערבית', 'שירה ערבית', 'אדב ערבי', 'מגזר ערבי']
+	},
+	{
+		id: 'druze_heritage',
+		name: 'מורשת דרוזית / תולדות העדה הדרוזית',
+		category: 'humanities',
+		categoryLabel: 'מוגבר מורשת והיסטוריה',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['דרוזים', 'מורשת דרוזית', 'העדה הדרוזית']
+	},
+	{
+		id: 'islam_heritage',
+		name: 'דת ומורשת האסלאם',
+		category: 'humanities',
+		categoryLabel: 'מוגבר מורשת ודתות',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['אסלאם', 'דת האסלאם', 'קוראן', 'שריעה', 'מורשת האסלאם']
+	},
+	{
+		id: 'christian_heritage',
+		name: 'דת ומורשת הנצרות',
+		category: 'humanities',
+		categoryLabel: 'מוגבר מורשת ודתות',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['נצרות', 'דת הנצרות', 'ברית חדשה', 'מורשת הנצרות']
+	},
+	{
+		id: 'japanese_adv',
+		name: 'יפנית (מוגבר 5 יח"ל)',
+		category: 'humanities',
+		categoryLabel: 'מוגבר שפות',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['יפנית', 'japanese', 'שפה יפנית', 'יפן']
+	},
+	{
+		id: 'turkish_adv',
+		name: 'טורקית (מוגבר 5 יח"ל)',
+		category: 'humanities',
+		categoryLabel: 'מוגבר שפות',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['טורקית', 'turkish', 'שפה טורקית', 'טורקיה']
+	},
+	{
+		id: 'halacha_adv',
+		name: 'הלכה ומשפט עברי (מוגבר 5 יח"ל)',
+		category: 'humanities',
+		categoryLabel: 'מוגבר יהדות / חמ"ד',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 25,
+		keywords: ['הלכה', 'דינים', 'משפט עברי', 'חמד', 'תושבע']
+	},
+	{
+		id: 'bible_hamad_5u',
+		name: 'תנ"ך חמ"ד (מוגבר 5 יח"ל)',
+		category: 'humanities',
+		categoryLabel: 'מוגבר יהדות / חמ"ד',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 25,
+		keywords: ['תנך חמד', 'תנ״ך חמ״ד', 'מקרא חמד', 'חמד']
+	},
 
 	// =========================================================
 	// מקצועות מוגברים - אמנויות, עיצוב ומחול
@@ -1019,6 +1242,16 @@ export const BAGRUT_SUBJECTS_CATALOG: BagrutSubjectOption[] = [
 		allowedUnits: [5],
 		bonus: 20,
 		keywords: ['אופנה', 'תפירה', 'סטיילינג', 'תדמיתנות', 'עיצוב בגדים']
+	},
+	{
+		id: 'radio_broadcasting',
+		name: 'תקשורת ורדיו / אמנות השידור',
+		category: 'arts',
+		categoryLabel: 'מוגבר אמנויות ומדיה',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 20,
+		keywords: ['רדיו', 'שידור', 'פודקאסט', 'תקשורת ורדיו', 'אולפן שידור']
 	},
 
 	// =========================================================

@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { Search, X, BookOpen, Atom, BookMarked, Check, Plus, Sparkles, Compass, Palette, Award, Info } from 'lucide-react';
+import { Search, X, BookOpen, Atom, BookMarked, Check, Plus, Sparkles, Compass, Palette, Info } from 'lucide-react';
 import { BAGRUT_SUBJECTS_CATALOG, POPULAR_5U_ELECTIVES, BagrutSubjectOption } from '@/data/bagrutSubjects';
-import { getSubjectBonusSummary } from '@/utils/calculators/bonusHelper';
 import { InstitutionId } from '@/modules/calculators';
 
 interface SubjectSelectModalProps {
@@ -247,7 +246,6 @@ export default function SubjectSelectModal({
 							const isAlreadyAdded = existingSubjectNames.some(
 								(n) => n.trim().toLowerCase() === sub.name.trim().toLowerCase()
 							);
-							const bonusSummary = getSubjectBonusSummary(sub.name, sub.defaultUnits, targetInstitutionId);
 
 							return (
 								<div
@@ -283,19 +281,6 @@ export default function SubjectSelectModal({
 												<span className="text-sm font-bold text-[#222222] truncate">
 													{sub.name}
 												</span>
-												{bonusSummary.badgeLabel && (
-													<span
-														className={`text-[10px] font-bold px-2 py-0.5 rounded-md border flex items-center gap-1 ${
-															bonusSummary.hasVariance
-																? 'text-[#1E40AF] bg-[#EEF2FF] border-[#C7D2FE]'
-																: 'text-[#205739] bg-[#EBF4EE] border-[#C6DFCE]'
-														}`}
-														title={bonusSummary.detailedNote || bonusSummary.badgeLabel}
-													>
-														<Award className="h-2.5 w-2.5 shrink-0" />
-														<span>{bonusSummary.badgeLabel}</span>
-													</span>
-												)}
 												{isAlreadyAdded && (
 													<span className="text-[10px] font-bold text-[#205739] bg-[#EBF4EE] px-2 py-0.5 rounded-md border border-[#C6DFCE] flex items-center gap-1">
 														<Check className="h-2.5 w-2.5" />
@@ -307,11 +292,6 @@ export default function SubjectSelectModal({
 												<span className="text-[11px] text-[#66635C]">
 													{sub.categoryLabel}
 												</span>
-												{bonusSummary.detailedNote && (
-													<span className="text-[10px] text-[#8A847C] hidden sm:inline-block">
-														• {bonusSummary.detailedNote}
-													</span>
-												)}
 											</div>
 										</div>
 									</div>
