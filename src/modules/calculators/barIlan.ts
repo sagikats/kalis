@@ -65,6 +65,7 @@ export function getBarIlanBonus(subject: CalculatorSubject): number {
 			n.includes('רובוטיקה') ||
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
+			n.includes('תכנות') ||
 			n.includes('תנ"ך') ||
 			n.includes('תנ״ך') ||
 			n.includes('מחשבת ישראל') ||

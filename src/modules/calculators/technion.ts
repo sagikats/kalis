@@ -45,6 +45,7 @@ export function detectTechnionScienceCluster(subjects: CalculatorSubject[]): boo
 			s.name.includes('סייבר') ||
 			s.name.includes('רובוטיקה') ||
 			s.name.includes('תוכנה') ||
+			s.name.includes('תכנות') ||
 			s.name.includes('הנדס')
 	).length;
 
@@ -74,6 +75,7 @@ export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: 
 		n.includes('סייבר') ||
 		n.includes('רובוטיקה') ||
 		n.includes('תוכנה') ||
+		n.includes('תכנות') ||
 		n.includes('הנדס');
 
 	if (subject.units === 5) {

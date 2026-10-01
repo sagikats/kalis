@@ -53,6 +53,7 @@ export function getBguBonus(subject: CalculatorSubject): number {
 			n.includes('ביולוגיה') ||
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
+			n.includes('תכנות') ||
 			n.includes('אלקטרוניקה') ||
 			n.includes('רובוטיקה') ||
 			n.includes('היסטוריה') ||

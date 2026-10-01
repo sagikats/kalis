@@ -168,6 +168,7 @@ export function getSubjectBonusSummary(
 			cleanName.includes('ביולוגיה') ||
 			cleanName.includes('סייבר') ||
 			cleanName.includes('תוכנה') ||
+			cleanName.includes('תכנות') ||
 			cleanName.includes('אלקטרוניקה') ||
 			cleanName.includes('רובוטיקה') ||
 			cleanName.includes('ביוטכנולוגיה'));

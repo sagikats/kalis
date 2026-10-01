@@ -83,6 +83,16 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getBarIlanBonus(rob5), 25, 'BIU awards +25 for Robotics');
 		});
 
+		it('System Planning & Programming 5u Bonus: +25 across universities as core tech major', () => {
+			const sysProg5 = { name: 'תכנון ותכנות מערכות', units: 5, grade: 90 };
+			assert.equal(getTechnionBonus(sysProg5, false), 25, 'Technion awards +25 for System Planning & Programming');
+			assert.equal(getTechnionBonus(sysProg5, true), 30, 'Technion awards +30 for System Planning & Programming in cluster');
+			assert.equal(getTauBonus(sysProg5), 25, 'TAU awards +25 for System Planning & Programming');
+			assert.equal(getHujiBonus(sysProg5), 25, 'HUJI awards +25 for System Planning & Programming');
+			assert.equal(getBguBonus(sysProg5), 25, 'BGU awards +25 for System Planning & Programming');
+			assert.equal(getBarIlanBonus(sysProg5), 25, 'BIU awards +25 for System Planning & Programming');
+		});
+
 		it('Law & Entrepreneurship 5u Bonus: +20 general elective bonus across institutions', () => {
 			const law5 = { name: 'משפטים / מבוא למשפט ומשפט ציבורי', units: 5, grade: 90 };
 			const ent5 = { name: 'יזמות עסקית וחדשנות / ניהול יזמות', units: 5, grade: 90 };

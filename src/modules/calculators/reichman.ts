@@ -63,6 +63,7 @@ export function getReichmanBonus(subject: CalculatorSubject): number {
 			n.includes('אלקטרוניקה') ||
 			n.includes('סייבר') ||
 			n.includes('תוכנה') ||
+			n.includes('תכנות') ||
 			n.includes('רובוטיקה') ||
 			n.includes('ערבית') ||
 			n.includes('ספרות') ||

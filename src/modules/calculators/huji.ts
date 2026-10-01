@@ -50,6 +50,7 @@ export function getHujiBonus(subject: CalculatorSubject): number {
 		n.includes('מדעי המחשב') ||
 		n.includes('סייבר') ||
 		n.includes('תוכנה') ||
+		n.includes('תכנות') ||
 		n.includes('אלקטרוניקה') ||
 		n.includes('רובוטיקה') ||
 		n.includes('ספרות') ||

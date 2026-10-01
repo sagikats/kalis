@@ -330,6 +330,18 @@ export const POPULAR_5U_ELECTIVES: PopularElectiveOption[] = [
 		description: 'רובוטיקה ובקרה, מעניקה בונוס טכנולוגי מרבי של +25 נקודות וקידום קבלה להנדסה.'
 	},
 	{
+		id: 'system_programming',
+		name: 'תכנון ותכנות מערכות',
+		units: 5,
+		defaultGrade: 90,
+		label: '💻 תכנון ותכנות מערכות 5 יח״ל',
+		shortLabel: 'תכנון ותכנות',
+		icon: '💻',
+		bonus: 25,
+		category: 'stem',
+		description: 'מקצוע דגל במגמת הנדסת תוכנה (פרויקט תוכנה 5 יח״ל) המעניק בונוס מרבי של +25 נקודות ומקדם קבלה להנדסה ומדעים.'
+	},
+	{
 		id: 'entrepreneurship',
 		name: 'יזמות עסקית וחדשנות / ניהול יזמות',
 		units: 5,
@@ -707,6 +719,17 @@ export const BAGRUT_SUBJECTS_CATALOG: BagrutSubjectOption[] = [
 		bonus: 25,
 		isPopularElective: true,
 		keywords: ['הנדסת תוכנה', 'פרויקט תוכנה', 'מדמח 5', 'תכנות מתקדם', '10 יחל תוכנה']
+	},
+	{
+		id: 'system_programming',
+		name: 'תכנון ותכנות מערכות',
+		category: 'stem',
+		categoryLabel: 'מוגבר טכנולוגי / STEM',
+		defaultUnits: 5,
+		allowedUnits: [5],
+		bonus: 25,
+		isPopularElective: true,
+		keywords: ['תכנון ותכנות', 'תכנות מערכות', 'הנדסת תוכנה', 'פרויקט תוכנה', 'מדמח', '10 יחל', 'c#', 'java', 'oop', 'סייבר ותכנות']
 	},
 
 	// =========================================================

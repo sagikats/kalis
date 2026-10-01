@@ -55,6 +55,7 @@ export function getArielBonus(subject: CalculatorSubject): number {
 			n.includes('אלקטרוניקה') ||
 			n.includes('רובוטיקה') ||
 			n.includes('תוכנה') ||
+			n.includes('תכנות') ||
 			n.includes('הנדס') ||
 			n.includes('ספרות') ||
 			n.includes('תנ"ך') ||

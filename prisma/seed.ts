@@ -29,7 +29,8 @@ const SUBJECT_INTELLIGENCE: Record<string, { friction: number; prepHours: number
 	middle_east_studies: { friction: 0.95, prepHours: 70, sessions: ['summer'] },
 	law_adv: { friction: 1.0, prepHours: 70, sessions: ['summer'] },
 	entrepreneurship: { friction: 0.95, prepHours: 65, sessions: ['summer'] },
-	robotics: { friction: 1.35, prepHours: 130, sessions: ['summer'] }
+	robotics: { friction: 1.35, prepHours: 130, sessions: ['summer'] },
+	system_programming: { friction: 1.25, prepHours: 120, sessions: ['summer'] }
 };
 
 function normalizeInstitutionId(rawName: string): string {
