@@ -751,7 +751,7 @@ export default function DegreeSearchSelector({
 									disabled={selectedPrograms.length === 0}
 									className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 ${
 										selectedPrograms.length > 0
-											? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
+											? 'bg-[#EA580C] hover:bg-[#D94E07] text-white shadow-xs cursor-pointer active:scale-[0.99]'
 											: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
 									}`}
 								>

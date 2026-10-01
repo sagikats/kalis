@@ -1585,7 +1585,7 @@ export default function AdmissionFlowPage() {
 								<button
 									type="button"
 									onClick={handleProceedToPsychometric}
-									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#EA580C] hover:bg-[#D94E07] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
 								>
 									<span>המשך להזנת פסיכומטרי</span>
 									<ArrowLeft className="h-4 w-4 shrink-0" />
@@ -1594,7 +1594,7 @@ export default function AdmissionFlowPage() {
 								<button
 									type="button"
 									onClick={handleProceedFromStep1}
-									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#EA580C] hover:bg-[#D94E07] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
 								>
 									<span>המשך לבחירת תארים מבוקשים</span>
 									<ArrowLeft className="h-4 w-4 shrink-0" />
@@ -1609,7 +1609,7 @@ export default function AdmissionFlowPage() {
 								disabled={selectedTargets.length === 0}
 								className={`px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 ${
 									selectedTargets.length > 0
-										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
+										? 'bg-[#EA580C] hover:bg-[#D94E07] text-white shadow-xs cursor-pointer active:scale-[0.99]'
 										: 'bg-[#EFEAE1] text-[#9E988D] cursor-not-allowed border border-[#DDD7CB]'
 								}`}
 							>
@@ -1625,7 +1625,7 @@ export default function AdmissionFlowPage() {
 								disabled={gapAnalyses.length === 0}
 								className={`px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 ${
 									gapAnalyses.length > 0
-										? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs cursor-pointer active:scale-[0.99]'
+										? 'bg-[#EA580C] hover:bg-[#D94E07] text-white shadow-xs cursor-pointer active:scale-[0.99]'
 										: 'bg-[#EFEAE1] text-[#9E988D] cursor-not-allowed border border-[#DDD7CB]'
 								}`}
 							>
@@ -1639,7 +1639,7 @@ export default function AdmissionFlowPage() {
 								<button
 									type="submit"
 									form="preference-questionnaire-form"
-									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#EA580C] hover:bg-[#D94E07] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
 								>
 									<Sparkles className="h-4 w-4 text-white shrink-0" />
 									<span>חשב מסלולים מותאמים</span>
