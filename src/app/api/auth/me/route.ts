@@ -1,53 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbRepository } from '@/modules/db';
-import { prisma } from '@/lib/prisma';
+import { getSessionUserId, clearSessionCookie } from '@/lib/session';
+import { buildAuthUserResponse, unauthorizedResponse } from '@/lib/authResponse';
 
 export async function GET(req: NextRequest) {
 	try {
-		const { searchParams } = new URL(req.url);
-		const userId = searchParams.get('userId') || req.headers.get('x-user-id');
-
+		// Identity comes only from the signed session cookie — any userId in the query is ignored
+		const userId = getSessionUserId(req);
 		if (!userId) {
-			return NextResponse.json(
-				{ success: false, error: 'לא סופק מזהה משתמש' },
-				{ status: 400 }
-			);
+			return unauthorizedResponse('לא נמצא חיבור פעיל');
 		}
 
 		await dbRepository.ensureSyncedFromSQLite();
 
 		const user = await dbRepository.getUserAsync(userId);
 		if (!user) {
-			return NextResponse.json(
-				{ success: false, error: 'המשתמש לא נמצא' },
-				{ status: 404 }
-			);
+			const res = unauthorizedResponse('המשתמש לא נמצא');
+			clearSessionCookie(res);
+			return res;
 		}
 
-		const savedTracksCount = await prisma.savedTrack.count({
-			where: { userId: user.id }
-		});
-
-		const profile = await dbRepository.getUserProfileAsync(user.id);
-		const preferences = await dbRepository.getUserPreferencesAsync(user.id);
-
-		return NextResponse.json({
-			success: true,
-			user: {
-				id: user.id,
-				name: user.name,
-				email: user.email,
-				phone: user.phone,
-				candidateNumber: user.candidateNumber,
-				savedTracksCount
-			},
-			profile,
-			preferences
-		});
-	} catch (error: any) {
+		return buildAuthUserResponse(user);
+	} catch (error) {
 		console.error('[API /api/auth/me GET] Error:', error);
 		return NextResponse.json(
-			{ success: false, error: error.message || 'שגיאה באחזור נתוני משתמש' },
+			{ success: false, error: 'שגיאה באחזור נתוני משתמש' },
 			{ status: 500 }
 		);
 	}

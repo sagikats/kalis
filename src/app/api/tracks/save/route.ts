@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbRepository } from '@/modules/db';
+import { getSessionUserId } from '@/lib/session';
+import { unauthorizedResponse } from '@/lib/authResponse';
+
+// The owner of every operation here is the session user — userId params from the client are ignored.
 
 export async function POST(req: NextRequest) {
 	try {
+		const userId = getSessionUserId(req);
+		if (!userId) {
+			return unauthorizedResponse('יש להירשם או להתחבר לאתר על מנת לשמור מסלולים');
+		}
+
 		const body = await req.json();
-		const { userId, programId, track } = body;
+		const { programId, track } = body;
 
 		if (!programId || !track) {
 			return NextResponse.json(
@@ -29,26 +38,14 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		// Saving tracks strictly requires a registered user
-		const effectiveUserId = userId && typeof userId === 'string' ? userId.trim() : '';
-		if (!effectiveUserId || effectiveUserId.startsWith('guest_')) {
-			return NextResponse.json(
-				{
-					success: false,
-					error: 'יש להירשם או להתחבר לאתר על מנת לשמור מסלולים'
-				},
-				{ status: 401 }
-			);
-		}
-
-		const result = await dbRepository.saveSingleTrackAsync(effectiveUserId, programId, track);
+		const result = await dbRepository.saveSingleTrackAsync(userId, programId, track);
 
 		return NextResponse.json({
 			success: true,
 			message: 'המסלול נשמר בהצלחה במסד הנתונים',
 			savedTrackId: result.id,
 			candidateNumber: result.candidateNumber,
-			userId: effectiveUserId,
+			userId,
 			track: result.track
 		});
 	} catch (error: any) {
@@ -56,7 +53,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json(
 			{
 				success: false,
-				error: error.message || 'שגיאה בשמירת המסלול במסד הנתונים'
+				error: 'שגיאה בשמירת המסלול במסד הנתונים'
 			},
 			{ status: 500 }
 		);
@@ -65,19 +62,11 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
 	try {
-		const { searchParams } = new URL(req.url);
-		const userId = searchParams.get('userId');
-		const programId = searchParams.get('programId') || undefined;
+		const userId = getSessionUserId(req);
+		if (!userId) return unauthorizedResponse();
 
-		if (!userId) {
-			return NextResponse.json(
-				{
-					success: false,
-					error: 'פרמטר userId נדרש'
-				},
-				{ status: 400 }
-			);
-		}
+		const { searchParams } = new URL(req.url);
+		const programId = searchParams.get('programId') || undefined;
 
 		await dbRepository.ensureSyncedFromSQLite();
 		const tracks = await dbRepository.getActionTracksAsync(userId, programId);
@@ -92,7 +81,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json(
 			{
 				success: false,
-				error: error.message || 'שגיאה באחזור המסלולים השמורים'
+				error: 'שגיאה באחזור המסלולים השמורים'
 			},
 			{ status: 500 }
 		);
@@ -101,16 +90,18 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
 	try {
+		const userId = getSessionUserId(req);
+		if (!userId) return unauthorizedResponse();
+
 		const { searchParams } = new URL(req.url);
-		const userId = searchParams.get('userId');
 		const trackId = searchParams.get('trackId');
 		const programId = searchParams.get('programId') || undefined;
 
-		if (!userId || !trackId) {
+		if (!trackId) {
 			return NextResponse.json(
 				{
 					success: false,
-					error: 'פרמטרים userId ו-trackId נדרשים למחיקת מסלול'
+					error: 'פרמטר trackId נדרש למחיקת מסלול'
 				},
 				{ status: 400 }
 			);
@@ -129,7 +120,7 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json(
 			{
 				success: false,
-				error: error.message || 'שגיאה במחיקת המסלול השמור'
+				error: 'שגיאה במחיקת המסלול השמור'
 			},
 			{ status: 500 }
 		);

@@ -11,6 +11,8 @@ import { prisma } from '../../../lib/prisma';
 import { POST as registerHandler } from '../../../app/api/auth/register/route';
 import { POST as loginHandler } from '../../../app/api/auth/login/route';
 import { GET as meHandler } from '../../../app/api/auth/me/route';
+import { POST as googleHandler } from '../../../app/api/auth/google/route';
+import { createSessionToken, verifySessionToken, SESSION_COOKIE } from '../../../lib/session';
 import { NextRequest } from 'next/server';
 
 describe('Auth & User Registration Engine', () => {
@@ -144,6 +146,9 @@ describe('Auth & User Registration Engine', () => {
 		const validRes = await loginHandler(validReq);
 		assert.equal(validRes.status, 200);
 		const validData = await validRes.json();
+		const setCookie = validRes.headers.get('set-cookie') || '';
+		assert.ok(setCookie.includes(`${SESSION_COOKIE}=`), 'Login must issue a session cookie');
+		assert.ok(/httponly/i.test(setCookie), 'Session cookie must be HttpOnly');
 		assert.equal(validData.success, true);
 		assert.equal(validData.user.id, createdUserId);
 		assert.equal(validData.user.candidateNumber, (await prisma.user.findUnique({ where: { id: createdUserId } }))?.candidateNumber);
@@ -174,7 +179,9 @@ describe('Auth & User Registration Engine', () => {
 			}
 		]);
 
-		const req = new NextRequest(`http://localhost:3000/api/auth/me?userId=${createdUserId}`);
+		const req = new NextRequest('http://localhost:3000/api/auth/me', {
+			headers: { cookie: `${SESSION_COOKIE}=${createSessionToken(createdUserId)}` }
+		});
 		const res = await meHandler(req);
 		const data = await res.json();
 
@@ -185,59 +192,65 @@ describe('Auth & User Registration Engine', () => {
 		assert.equal(data.user.savedTracksCount, 1, 'Saved tracks count must equal 1');
 	});
 
-	test('8. Seamless Guest Migration: re-assigns guest saved tracks to registered user', async () => {
-		const guestUserId = `guest_${Date.now()}`;
-		// Seed a guest track via repository
-		await dbRepository.saveActionTracksAsync(guestUserId, 'prog-inst-4-2', [
-			{
-				id: 'track-guest-1',
-				userId: guestUserId,
-				programId: 'prog-inst-4-2',
-				title: 'מסלול אורח לפני הרשמה',
-				badge: 'אורח',
-				badgeColor: 'amber',
-				strategyDescription: 'תיאור מסלול אורח',
-				targetSekem: 88,
-				targetPsychometric: 680,
-				targetBagrutAverage: 108,
-				estimatedWeeks: 12,
-				weeklyHours: 15,
-				feasibility: 'moderate',
-				feasibilityExplanation: 'הסבר היתכנות בינונית',
-				keyAdvantage: 'יתרון מרכזי מסלול אורח',
-				milestones: [],
-				recommendedLevers: [],
-				createdAt: new Date()
-			}
-		]);
+	test('8. Security: client-supplied guestUserId can no longer steal another user\'s tracks', async () => {
+		// The "victim" is the user created above, who owns a saved track from test 7
+		const victimTracksBefore = await prisma.savedTrack.count({ where: { userId: createdUserId } });
+		assert.ok(victimTracksBefore > 0);
 
-		const migratingEmail = `migrated_${Date.now()}@kalis.test`;
+		const attackerEmail = `attacker_${Date.now()}@kalis.test`;
 		const req = new NextRequest('http://localhost:3000/api/auth/register', {
 			method: 'POST',
 			body: JSON.stringify({
-				name: 'משתמש עם הגירה',
-				email: migratingEmail,
+				name: 'תוקף',
+				email: attackerEmail,
 				password: 'Password123!',
-				guestUserId
+				guestUserId: createdUserId
 			})
 		});
-
 		const res = await registerHandler(req);
 		const data = await res.json();
 		assert.equal(res.status, 200);
-		const newUserId = data.user.id;
 
-		// Verify track was migrated to new user
-		const migratedTrack = await prisma.savedTrack.findFirst({
-			where: { userId: newUserId, title: 'מסלול אורח לפני הרשמה' }
+		const victimTracksAfter = await prisma.savedTrack.count({ where: { userId: createdUserId } });
+		assert.equal(victimTracksAfter, victimTracksBefore, 'Victim tracks must not be migrated');
+		const attackerTracks = await prisma.savedTrack.count({ where: { userId: data.user.id } });
+		assert.equal(attackerTracks, 0);
+
+		await prisma.user.delete({ where: { id: data.user.id } });
+	});
+
+	test('9. Security: /api/auth/me ignores ?userId and requires a valid session', async () => {
+		const noSession = await meHandler(new NextRequest(`http://localhost:3000/api/auth/me?userId=${createdUserId}`));
+		assert.equal(noSession.status, 401);
+
+		const headerOnly = await meHandler(
+			new NextRequest('http://localhost:3000/api/auth/me', { headers: { 'x-user-id': createdUserId } })
+		);
+		assert.equal(headerOnly.status, 401);
+
+		const token = createSessionToken(createdUserId);
+		const [payload, sig] = token.split('.');
+		const forgedPayload = Buffer.from(JSON.stringify({ uid: 'someone-else', exp: 9999999999 })).toString('base64url');
+		const forged = await meHandler(
+			new NextRequest('http://localhost:3000/api/auth/me', {
+				headers: { cookie: `${SESSION_COOKIE}=${forgedPayload}.${sig}` }
+			})
+		);
+		assert.equal(forged.status, 401, 'Tampered session token must be rejected');
+		assert.equal(verifySessionToken(`${payload}.${sig}`), createdUserId);
+		assert.equal(verifySessionToken(createSessionToken(createdUserId, -10)), null, 'Expired token must be rejected');
+	});
+
+	test('10. Security: Google login rejects unverified client-supplied user payload', async () => {
+		process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || 'test-client-id';
+		const req = new NextRequest('http://localhost:3000/api/auth/google', {
+			method: 'POST',
+			body: JSON.stringify({
+				user: { email: testEmail, googleId: 'fake-google-id', name: 'Attacker' }
+			})
 		});
-		assert.ok(migratedTrack, 'Track must now belong to the newly registered user');
-
-		const oldGuestTracks = await prisma.savedTrack.findMany({ where: { userId: guestUserId } });
-		assert.equal(oldGuestTracks.length, 0, 'Guest user must have 0 tracks remaining');
-
-		// Cleanup
-		await prisma.savedTrack.deleteMany({ where: { userId: newUserId } });
-		await prisma.user.delete({ where: { id: newUserId } });
+		const res = await googleHandler(req);
+		assert.equal(res.status, 401);
+		assert.equal(res.headers.get('set-cookie'), null, 'No session may be issued');
 	});
 });

@@ -16,6 +16,10 @@ services:
       - PORT=3000
       - NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      # Optional: if unset, a random secret is generated once and kept in the prisma volume
+      - SESSION_SECRET=${SESSION_SECRET}
+      # Optional: enables GET /api/backup with 'Authorization: Bearer <token>' (min 32 chars)
+      - BACKUP_TOKEN=${BACKUP_TOKEN}
     volumes:
       - kalis_data:/app/prisma
 

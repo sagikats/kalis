@@ -10,6 +10,7 @@ See comprehensive agent instructions, architecture, and algorithms in [PROJECT_M
 - **Typecheck**: `npx tsc --noEmit`
 - **Build**: `npm run build`
 - **UI Language**: Hebrew, RTL (`dir="rtl"`)
+- **Session Log (MANDATORY)**: Keep [SESSION_LOG.md](./SESSION_LOG.md) updated *during* every session (after each meaningful change, not only at the end) so another agent (e.g. Antigravity) can resume if this session stops unexpectedly. Read its latest entry when starting work.
 - **Wrap-up Trigger**: When user says "סיימנו להיום", follow Section 6 in AGENTS.md (Build + Tests + Update AGENTS.md + Git push).
 - **Key Modules**:
   - `src/modules/calculators/` - Pure math calculators for 8 universities

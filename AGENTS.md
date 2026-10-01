@@ -89,6 +89,7 @@ npm run build
 3. **Preserve Documentation & Comments:** Never delete explanatory comments or docstrings unrelated to your changes.
 4. **Subagent Modularity:** Keep calculators pure (no DB/React imports in `src/modules/calculators/`). Keep UI components modular.
 5. **No Broken Builds:** Never end a turn with failing tests or TypeScript compiler errors. Run `npm run build` or `npx tsc --noEmit` before finishing.
+6. **Continuous Session Log (MANDATORY):** Read the latest entry of `SESSION_LOG.md` when starting work, and update the current session's entry *during* the work (after every meaningful change: what was done, why, files touched, what is in progress, next steps). The session may stop at any moment (e.g. token limits), and the next agent (Claude Code / Antigravity / any other) must be able to resume from this file alone.
 
 ---
 
@@ -398,6 +399,7 @@ Whenever the user says **"סיימנו להיום"**, **"סיימנו"**, **"ע�
      - Summary of changes completed in the session.
      - Files modified or created.
      - Clear bullet points for **"Next Steps / הצעד הבא"** so the next agent knows exactly where to resume.
+   - Finalize the current session's entry in `SESSION_LOG.md` (done / files / in progress / next steps).
 
 3. **Step 3: Git Synchronization**
    - Stage all relevant changes: `git add <modified_files>`

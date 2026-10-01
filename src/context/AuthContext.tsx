@@ -31,7 +31,7 @@ interface AuthContextType {
 	openAuthModal: (mode?: 'login' | 'register') => void;
 	closeAuthModal: () => void;
 	login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-	loginWithGoogle: (payload: { credential?: string; accessToken?: string; user?: any }) => Promise<{ success: boolean; error?: string }>;
+	loginWithGoogle: (payload: { credential?: string; accessToken?: string }) => Promise<{ success: boolean; error?: string }>;
 	register: (params: RegisterParams) => Promise<{ success: boolean; error?: string; candidateNumber?: string }>;
 	logout: () => void;
 	refreshUser: () => Promise<void>;
@@ -46,6 +46,13 @@ const STORAGE_KEYS = {
 	USER_ID: 'kalis_user_id',
 	CANDIDATE_NUMBER: 'kalis_candidate_number'
 };
+
+function clearStoredAuth() {
+	if (typeof window === 'undefined') return;
+	localStorage.removeItem(STORAGE_KEYS.USER);
+	localStorage.removeItem(STORAGE_KEYS.USER_ID);
+	localStorage.removeItem(STORAGE_KEYS.CANDIDATE_NUMBER);
+}
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [user, setUser] = useState<AuthUser | null>(null);
@@ -64,9 +71,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 					const parsedUser: AuthUser = JSON.parse(storedUserJson);
 					setUser(parsedUser);
 
-					// Silently fetch fresh user profile & saved tracks count in background
-					fetch(`/api/auth/me?userId=${encodeURIComponent(parsedUser.id)}`)
+					// Silently fetch fresh user profile & saved tracks count in background.
+					// Identity comes from the HttpOnly session cookie; if it's missing/expired
+					// the cached user is stale and must be dropped.
+					fetch('/api/auth/me')
 						.then(async (res) => {
+							if (res.status === 401) {
+								clearStoredAuth();
+								setUser(null);
+								setProfile(null);
+								setPreferences(null);
+								return null;
+							}
 							const contentType = res.headers.get('content-type') || '';
 							if (!contentType.includes('application/json')) return null;
 							return res.json();
@@ -105,12 +121,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 	const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
 		try {
-			const guestUserId = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.USER_ID) || undefined : undefined;
-
 			const res = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email, password, guestUserId })
+				body: JSON.stringify({ email, password })
 			});
 
 			const data = await res.json();
@@ -140,15 +154,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 	const register = useCallback(async (params: RegisterParams): Promise<{ success: boolean; error?: string; candidateNumber?: string }> => {
 		try {
-			const guestUserId = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.USER_ID) || undefined : undefined;
-
 			const res = await fetch('/api/auth/register', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					...params,
-					guestUserId
-				})
+				body: JSON.stringify(params)
 			});
 
 			const data = await res.json();
@@ -179,17 +188,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		}
 	}, []);
 
-	const loginWithGoogle = useCallback(async (payload: { credential?: string; accessToken?: string; user?: any }): Promise<{ success: boolean; error?: string }> => {
+	const loginWithGoogle = useCallback(async (payload: { credential?: string; accessToken?: string }): Promise<{ success: boolean; error?: string }> => {
 		try {
-			const guestUserId = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.USER_ID) || undefined : undefined;
-
 			const res = await fetch('/api/auth/google', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					...payload,
-					guestUserId
-				})
+				body: JSON.stringify(payload)
 			});
 
 			const data = await res.json();
@@ -222,9 +226,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		setProfile(null);
 		setPreferences(null);
 		if (typeof window !== 'undefined') {
-			localStorage.removeItem(STORAGE_KEYS.USER);
-			localStorage.removeItem(STORAGE_KEYS.USER_ID);
-			localStorage.removeItem(STORAGE_KEYS.CANDIDATE_NUMBER);
+			// Invalidate the HttpOnly session cookie on the server
+			fetch('/api/auth/logout', { method: 'POST' }).catch((err) => {
+				console.warn('[AuthContext] Logout request failed:', err);
+			});
+
+			clearStoredAuth();
 
 			// Completely wipe all flow and track state from local storage
 			localStorage.removeItem('kalis_admission_flow_data');
@@ -250,7 +257,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	const refreshUser = useCallback(async () => {
 		if (!user?.id) return;
 		try {
-			const res = await fetch(`/api/auth/me?userId=${encodeURIComponent(user.id)}`);
+			const res = await fetch('/api/auth/me');
+			if (res.status === 401) {
+				clearStoredAuth();
+				setUser(null);
+				setProfile(null);
+				setPreferences(null);
+				return;
+			}
 			const contentType = res.headers.get('content-type') || '';
 			if (!res.ok || !contentType.includes('application/json')) return;
 			const data = await res.json();

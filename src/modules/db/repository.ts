@@ -655,10 +655,14 @@ export class KalisDatabaseRepository {
 			});
 
 			if (user) {
+				// Linking a verified Google identity to an existing email/password account.
+				// The password was set without email verification, so it may belong to someone
+				// who pre-registered this address — drop it to prevent account pre-hijacking.
 				user = await prisma.user.update({
 					where: { id: user.id },
 					data: {
 						googleId: params.googleId,
+						passwordHash: null,
 						image: user.image || params.image || null,
 						name: user.name || params.name || null
 					}
@@ -767,6 +771,8 @@ export class KalisDatabaseRepository {
 				email: u.email ?? undefined,
 				name: u.name ?? undefined,
 				phone: u.phone ?? undefined,
+				image: u.image ?? undefined,
+				authProvider: u.authProvider ?? undefined,
 				createdAt: u.createdAt,
 				updatedAt: u.updatedAt
 			};

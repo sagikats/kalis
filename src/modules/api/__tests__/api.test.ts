@@ -11,6 +11,7 @@ import { POST as calculatePOST } from '../../../app/api/calculate/route';
 import { GET as programsGET } from '../../../app/api/programs/route';
 import { POST as tracksPOST } from '../../../app/api/tracks/generate/route';
 import { dbRepository } from '../../db';
+import { createSessionToken, SESSION_COOKIE } from '../../../lib/session';
 
 describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
 	it('GET /api/health: Returns system status and 8 institutions', async () => {
@@ -192,8 +193,10 @@ describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
 		const realProgram = dbRepository.getProgramsByInstitution('tau')[0];
 		assert.ok(realProgram, 'Real TAU program must exist in DB');
 
+		const authHeaders = { cookie: `${SESSION_COOKIE}=${createSessionToken(testUserId)}` };
 		const saveReq = new NextRequest('http://localhost:3000/api/tracks/save', {
 			method: 'POST',
+			headers: authHeaders,
 			body: JSON.stringify({
 				userId: testUserId,
 				programId: realProgram.id,
@@ -210,7 +213,7 @@ describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
 		assert.ok(saveData.candidateNumber.startsWith('KL-'));
 
 		// Query back
-		const getReq = new NextRequest(`http://localhost:3000/api/tracks/save?userId=${testUserId}`);
+		const getReq = new NextRequest('http://localhost:3000/api/tracks/save', { headers: authHeaders });
 		const getRes = await saveTrackGET(getReq);
 		assert.equal(getRes.status, 200);
 

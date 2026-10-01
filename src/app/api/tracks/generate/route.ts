@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbRepository, GenerateTracksRequestSchema, UserAcademicProfileRecord, UserPreferencesRecord } from '@/modules/db';
 import { generateOptimizedActionTracks } from '@/modules/optimizer';
+import { getSessionUserId } from '@/lib/session';
 
 export async function POST(req: NextRequest) {
 	try {
@@ -32,7 +33,10 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const userId = profile.userId || 'guest_user';
+		// Results are persisted only for a logged-in user (from the session cookie);
+		// a client-supplied profile.userId is never trusted.
+		const sessionUserId = getSessionUserId(req);
+		const userId = sessionUserId || 'guest_user';
 
 		const profileRecord: UserAcademicProfileRecord = {
 			userId,
@@ -73,10 +77,11 @@ export async function POST(req: NextRequest) {
 
 		const solution = generateOptimizedActionTracks(program, profileRecord, preferencesRecord);
 
-		// Persist solution in SQLite repository
-		await dbRepository.saveUserProfileAsync(profileRecord);
-		await dbRepository.saveUserPreferencesAsync(preferencesRecord);
-		await dbRepository.saveActionTracksAsync(userId, programId, solution.tracks);
+		if (sessionUserId) {
+			await dbRepository.saveUserProfileAsync(profileRecord);
+			await dbRepository.saveUserPreferencesAsync(preferencesRecord);
+			await dbRepository.saveActionTracksAsync(sessionUserId, programId, solution.tracks);
+		}
 
 		return NextResponse.json({
 			success: true,

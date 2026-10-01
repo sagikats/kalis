@@ -1,72 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbRepository } from '@/modules/db';
+import { getSessionUserId } from '@/lib/session';
+import { unauthorizedResponse } from '@/lib/authResponse';
 
-export async function POST(request: NextRequest) {
-	try {
-		const body = await request.json();
-		const { email, name, profile, preferences } = body;
-
-		const user = await dbRepository.createUserAsync(email, name);
-
-		let savedProfile = null;
-		if (profile) {
-			profile.userId = user.id;
-			savedProfile = await dbRepository.saveUserProfileAsync(profile);
-		}
-
-		let savedPreferences = null;
-		if (preferences) {
-			preferences.userId = user.id;
-			savedPreferences = await dbRepository.saveUserPreferencesAsync(preferences);
-		}
-
-		return NextResponse.json({
-			success: true,
-			user,
-			profile: savedProfile,
-			preferences: savedPreferences
-		});
-	} catch (error: any) {
-		console.error('[API /api/users POST] Error:', error);
-		return NextResponse.json(
-			{
-				success: false,
-				error: error.message || 'Failed to create user or profile'
-			},
-			{ status: 500 }
-		);
-	}
-}
+/**
+ * Profile & preferences of the CURRENTLY LOGGED-IN user.
+ * The user is identified only by the session cookie; userId fields in the request are ignored.
+ * (Account creation goes through /api/auth/register or /api/auth/google.)
+ */
 
 export async function GET(request: NextRequest) {
 	try {
-		const { searchParams } = new URL(request.url);
-		const userId = searchParams.get('userId');
+		const userId = getSessionUserId(request);
+		if (!userId) return unauthorizedResponse();
 
-		if (!userId) {
-			return NextResponse.json(
-				{ success: false, error: 'Missing required query parameter: userId' },
-				{ status: 400 }
-			);
-		}
+		await dbRepository.ensureSyncedFromSQLite();
 
 		const user = await dbRepository.getUserAsync(userId);
+		if (!user) return unauthorizedResponse();
+
 		const profile = await dbRepository.getUserProfileAsync(userId);
 		const preferences = await dbRepository.getUserPreferencesAsync(userId);
 
 		return NextResponse.json({
 			success: true,
-			user,
+			user: {
+				id: user.id,
+				name: user.name,
+				email: user.email,
+				phone: user.phone,
+				candidateNumber: user.candidateNumber
+			},
 			profile,
 			preferences
 		});
-	} catch (error: any) {
+	} catch (error) {
 		console.error('[API /api/users GET] Error:', error);
 		return NextResponse.json(
-			{
-				success: false,
-				error: error.message || 'Failed to fetch user'
-			},
+			{ success: false, error: 'Failed to fetch user' },
 			{ status: 500 }
 		);
 	}
@@ -74,28 +45,22 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
 	try {
-		const body = await request.json();
-		const { userId, profile, preferences } = body;
+		const userId = getSessionUserId(request);
+		if (!userId) return unauthorizedResponse();
 
-		if (!userId || typeof userId !== 'string') {
-			return NextResponse.json(
-				{ success: false, error: 'Missing required field: userId' },
-				{ status: 400 }
-			);
-		}
+		const body = await request.json();
+		const { profile, preferences } = body;
 
 		await dbRepository.ensureSyncedFromSQLite();
 
 		let savedProfile = null;
-		if (profile) {
-			profile.userId = userId;
-			savedProfile = await dbRepository.saveUserProfileAsync(profile);
+		if (profile && typeof profile === 'object') {
+			savedProfile = await dbRepository.saveUserProfileAsync({ ...profile, userId });
 		}
 
 		let savedPreferences = null;
-		if (preferences) {
-			preferences.userId = userId;
-			savedPreferences = await dbRepository.saveUserPreferencesAsync(preferences);
+		if (preferences && typeof preferences === 'object') {
+			savedPreferences = await dbRepository.saveUserPreferencesAsync({ ...preferences, userId });
 		}
 
 		return NextResponse.json({
@@ -103,15 +68,11 @@ export async function PUT(request: NextRequest) {
 			profile: savedProfile,
 			preferences: savedPreferences
 		});
-	} catch (error: any) {
+	} catch (error) {
 		console.error('[API /api/users PUT] Error:', error);
 		return NextResponse.json(
-			{
-				success: false,
-				error: error.message || 'Failed to update user profile'
-			},
+			{ success: false, error: 'Failed to update user profile' },
 			{ status: 500 }
 		);
 	}
 }
-
