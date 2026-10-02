@@ -292,8 +292,25 @@ function ProgramReportCard({
 							<span className="text-base font-black text-[#222222]">{item.userSekem}</span>
 						</div>
 						<div>
-							<span className="text-[10px] text-[#66635C] block font-medium">סף קבלה נדרש</span>
+							<span className="text-[10px] text-[#66635C] block font-medium">
+								{item.thresholdVerified ? 'סף קבלה רשמי' : 'סף קבלה משוער'}
+							</span>
 							<span className="text-base font-black text-[#825B15]">{item.threshold}</span>
+							{item.officialThreshold !== undefined && item.officialThreshold !== item.threshold && (
+								<span className="text-[10px] text-[#66635C] block">בסולם המוסד: {item.officialThreshold}</span>
+							)}
+							{item.thresholdSource && (
+								<a
+									href={item.thresholdSource.split(' — ')[0]}
+									target="_blank"
+									rel="noopener noreferrer"
+									onClick={(e) => e.stopPropagation()}
+									title={item.thresholdSource.split(' — ').slice(1).join(' — ')}
+									className="text-[10px] text-[#2F6FB0] underline block"
+								>
+									מקור{item.thresholdSource.includes(' — ') ? `: ${item.thresholdSource.split(' — ').slice(1).join(' — ')}` : ''}
+								</a>
+							)}
 						</div>
 					</div>
 				)}

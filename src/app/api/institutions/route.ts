@@ -27,6 +27,10 @@ export async function GET(req: NextRequest) {
 					directBagrutEligible: p.directBagrutEligible,
 					directBagrutMinAverage: p.directBagrutMinAverage,
 					prerequisites: p.prerequisites,
+					// Official-threshold provenance lives in prerequisites in the DB; the gap card reads it top-level
+					officialThreshold: p.prerequisites?.officialThreshold,
+					thresholdSource: p.prerequisites?.thresholdSource,
+					thresholdUpdatedAt: p.prerequisites?.thresholdUpdatedAt,
 					description: p.description,
 					comments: p.comments,
 					url: p.url

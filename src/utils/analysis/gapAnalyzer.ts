@@ -80,11 +80,25 @@ export function parseAdmissionThreshold(raw: number | string | undefined | null)
  */
 function describeSekemType(calcId: string, type: string): string {
 	if (calcId === 'huji') {
-		if (type === 'engineering') return 'ציון משוקלל 50/50 בדגש כמותי (העברית)';
-		if (type === 'quantitative') return 'ציון משוקלל 30/70 (העברית)';
-		if (type === 'management') return 'ציון משוקלל מיטבי, רב-תחומי/כמותי (העברית)';
-		return 'ציון משוקלל מיטבי (העברית)';
+		if (type === 'engineering') return 'העברית: ציון משוקלל 50/50 בדגש כמותי';
+		if (type === 'quantitative') return 'העברית: ציון משוקלל 30/70';
+		if (type === 'management') return 'העברית: ציון משוקלל מיטבי, רב-תחומי/כמותי';
+		return 'העברית: ציון משוקלל מיטבי';
 	}
+	if (type === 'technion' || calcId === 'technion') return 'סכם טכניוני';
+	if (calcId === 'tau') {
+		if (type === 'engineering') return 'ת"א: ציון התאמה מדויקים/הנדסה';
+		if (type === 'management') return 'ת"א: ציון התאמה ניהול';
+		return 'ת"א: ציון התאמה';
+	}
+	if (calcId === 'bgu') {
+		if (type === 'engineering') return 'בן-גוריון: סכם הנדסה';
+		if (type === 'quantitative') return 'בן-גוריון: סכם כמותי';
+		return 'בן-גוריון: סכם';
+	}
+	if (calcId === 'reichman') return 'רייכמן: ציון מתואם';
+	if (type === 'quantitative') return 'סכם כמותי';
+	if (type === 'management') return 'סכם ניהול';
 	return type === 'engineering' ? 'סכם כמותי / הנדסה' : 'סכם כללי';
 }
 
@@ -263,6 +277,9 @@ export function analyzeProgramGap(
 	institutionRes: InstitutionSekemResult
 ): ProgramGapAnalysis {
 	const threshold = parseAdmissionThreshold(target.program.admissionThreshold);
+	// Provenance may arrive top-level (JSON catalog) or inside prerequisites (DB-backed API)
+	const prereq = (target.program as any).prerequisites as { officialThreshold?: number; thresholdSource?: string } | undefined;
+	const thresholdSource: string | undefined = target.program.thresholdSource ?? prereq?.thresholdSource ?? undefined;
 	const guessed = resolveProgramSekemType(target.calculatorId, target.program.fieldOfStudy);
 	// A sourced program type (e.g. from an official threshold table) overrides the name-based guess
 	const sekemType = target.program.relevantSekemType ?? guessed.type;
@@ -398,9 +415,9 @@ export function analyzeProgramGap(
 	return {
 		target,
 		threshold,
-		thresholdVerified: Boolean(target.program.thresholdSource),
-		officialThreshold: target.program.officialThreshold ?? undefined,
-		thresholdSource: target.program.thresholdSource ?? undefined,
+		thresholdVerified: Boolean(thresholdSource),
+		officialThreshold: target.program.officialThreshold ?? prereq?.officialThreshold ?? undefined,
+		thresholdSource,
 		relevantSekemType: sekemType,
 		relevantSekemLabel: sekemLabel,
 		userSekem,
