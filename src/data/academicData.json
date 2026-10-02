@@ -11099,7 +11099,11 @@
         "comments": "נדרש מבחן מיון פנימי בארכיטקטורה/אדריכלות נוף",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 82,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-2",
@@ -11111,7 +11115,11 @@
         "comments": "נדרש מבחן מיון פנימי בארכיטקטורה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 85,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-3",
@@ -11122,7 +11130,11 @@
         "sekemScore": 83,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 83,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-4",
@@ -11133,7 +11145,11 @@
         "sekemScore": 83,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 83,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-5",
@@ -11145,7 +11161,11 @@
         "registrationStatus": "ההרשמה סגורה, קבלה על בסיס מקום פנוי בלבד",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 88,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-6",
@@ -11156,7 +11176,11 @@
         "sekemScore": 87,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-7",
@@ -11167,7 +11191,11 @@
         "sekemScore": 88,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 88,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-8",
@@ -11178,7 +11206,11 @@
         "sekemScore": 85,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 85,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-9",
@@ -11189,7 +11221,11 @@
         "sekemScore": 85,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 85,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-10",
@@ -11200,7 +11236,11 @@
         "sekemScore": 85,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 85,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-11",
@@ -11212,7 +11252,11 @@
         "registrationStatus": "ההרשמה סגורה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-12",
@@ -11224,7 +11268,11 @@
         "registrationStatus": "ההרשמה סגורה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-13",
@@ -11235,7 +11283,11 @@
         "sekemScore": 84,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 84,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-14",
@@ -11246,7 +11298,11 @@
         "sekemScore": 83,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 83,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-15",
@@ -11257,7 +11313,11 @@
         "sekemScore": 86,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 86,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-16",
@@ -11268,7 +11328,11 @@
         "sekemScore": 86,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 86,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-17",
@@ -11279,7 +11343,11 @@
         "sekemScore": 86,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 86,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-18",
@@ -11290,7 +11358,11 @@
         "sekemScore": 86,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 86,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-19",
@@ -11301,7 +11373,11 @@
         "sekemScore": 94,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 94,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-20",
@@ -11312,7 +11388,11 @@
         "sekemScore": 94,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 94,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-21",
@@ -11323,7 +11403,11 @@
         "sekemScore": 94,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 94,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-22",
@@ -11334,7 +11418,11 @@
         "sekemScore": 94,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 94,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-23",
@@ -11345,7 +11433,11 @@
         "sekemScore": 83,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 83,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-24",
@@ -11357,7 +11449,11 @@
         "registrationStatus": "קבלה על בסיס מקום פנוי בלבד",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 92,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-25",
@@ -11368,7 +11464,11 @@
         "sekemScore": 89,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 89,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-26",
@@ -11379,7 +11479,11 @@
         "sekemScore": 91,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 91,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-27",
@@ -11390,7 +11494,11 @@
         "sekemScore": 91,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 91,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-28",
@@ -11401,7 +11509,11 @@
         "sekemScore": 91,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 91,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-29",
@@ -11412,7 +11524,11 @@
         "sekemScore": 89,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 89,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-30",
@@ -11424,7 +11540,11 @@
         "comments": "נדרש מעבר מבחן מסילה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 84,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-31",
@@ -11436,7 +11556,11 @@
         "comments": "נדרש מעבר מבחן מסילה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-32",
@@ -11447,7 +11571,11 @@
         "sekemScore": 83,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 83,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-33",
@@ -11458,7 +11586,11 @@
         "sekemScore": 91,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 91,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-34",
@@ -11469,7 +11601,11 @@
         "sekemScore": 91,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 91,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-35",
@@ -11480,7 +11616,11 @@
         "sekemScore": 91,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 91,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-36",
@@ -11492,7 +11632,11 @@
         "comments": "סף זימון משוער למבחן מו\"ר: 207 | סכם: 92.000",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 92,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-37",
@@ -11504,7 +11648,11 @@
         "comments": "סף זימון משוער למבחן מו\"ר: 207",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 92,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-38",
@@ -11516,7 +11664,11 @@
         "comments": "סף זימון משוער למבחן מו\"ר: 207",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 92,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-39",
@@ -11528,7 +11680,11 @@
         "comments": "סף זימון משוער למבחן מו\"ר: 207",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 92,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-40",
@@ -11539,7 +11695,11 @@
         "sekemScore": 87,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-42",
@@ -11550,7 +11710,11 @@
         "sekemScore": 87,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-43",
@@ -11561,7 +11725,11 @@
         "sekemScore": 87,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-44",
@@ -11572,7 +11740,11 @@
         "sekemScore": 94,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 94,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-41",
@@ -11583,7 +11755,11 @@
         "sekemScore": 87,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 87,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-technion-45",
@@ -11594,7 +11770,11 @@
         "sekemScore": 86,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 86,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-48-46",
@@ -11608,7 +11788,11 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "5 יחידות בציון 70+ או 4 יחידות בציון 80+",
-        "comments": "תואר דוקטור לרפואה (M.D.) בפקולטה לרפואה ע\"ש רפפורט. סכם סף 92 ומעבר מבחני מו\"ר/מרק\"ם"
+        "comments": "תואר דוקטור לרפואה (M.D.) בפקולטה לרפואה ע\"ש רפפורט. סכם סף 92 ומעבר מבחני מו\"ר/מרק\"ם",
+        "officialThreshold": 92,
+        "relevantSekemType": "technion",
+        "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-48-47",
