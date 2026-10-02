@@ -264,7 +264,7 @@ describe('Official admission rules', () => {
 			assert.equal(getHaifaBonus(sub('גאוגרפיה', 4, 80)), 10);
 		});
 
-		it('averages for profiles A (107.1) and B (90.91, 4u math/English +20) match the Haifa calculator (user-verified)', () => {
+		it('averages for profiles A (107.1), B (90.91, 4u math/English +20) and C (103.08) match the Haifa calculator (user-verified)', () => {
 			const A = calculateHaifaOptimalBagrut([
 				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
 				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
@@ -275,6 +275,11 @@ describe('Official admission rules', () => {
 				sub('אזרחות', 2, 80), sub('תנ"ך', 2, 70), sub('ספרות', 2, 72), sub('הבעה עברית', 2, 76)
 			]);
 			assert.equal(B.average, 90.91);
+			const C = calculateHaifaOptimalBagrut([
+				sub('מתמטיקה', 4, 92), sub('אנגלית', 5, 90), sub('גיאוגרפיה', 5, 95), sub('היסטוריה', 2, 88),
+				sub('אזרחות', 2, 90), sub('תנ"ך', 2, 84), sub('ספרות', 2, 86), sub('הבעה עברית', 2, 90)
+			]);
+			assert.equal(C.average, 103.08);
 		});
 
 		it('CS sekem for profile A with Q145/V137/E124 = 731 (user-verified on Haifa calculator)', () => {
