@@ -1259,28 +1259,6 @@ export default function AdmissionFlowPage() {
 													</span>
 												</div>
 											</div>
-
-											{/* Incomplete scores → results will be estimates */}
-											{psychMissingFields.length > 0 && (
-												<div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-900 space-y-1.5">
-													<div className="flex items-center gap-1.5 text-xs font-bold">
-														<AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
-														<span>אפשר להמשיך, אבל התוצאות יהיו הערכה ולא מדויקות</span>
-													</div>
-													<p className="text-xs leading-relaxed text-amber-800">
-														חסרים: {psychMissingFields.join(', ')}. כל אוניברסיטה משקללת פרקים אחרים, והציונים החסרים יוערכו מתוך השאר. את כל הציונים, כולל ציוני הדגש, אפשר למצוא בספח הציונים הרשמי של מאל״ו.
-														{psychMissingFields.some((f) => f.startsWith('דגש')) && !showEmphasisInputs && (
-															<button
-																type="button"
-																onClick={() => setShowEmphasisInputs(true)}
-																className="mr-1 font-bold underline decoration-dotted cursor-pointer"
-															>
-																הזנת ציוני דגש
-															</button>
-														)}
-													</p>
-												</div>
-											)}
 										</div>
 									)}
 
