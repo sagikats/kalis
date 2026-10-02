@@ -1,0 +1,27 @@
+{
+  "source": "https://shoham.biu.ac.il/kabala/ — run manually by the user (site blocks automation); screenshots 2026-10-02",
+  "note": "BIU asks only for the general psychometric score and the quantitative section (no verbal/English sections). Sekem ('שקלול מועמד למסלול') is on a ~0–100 scale.",
+  "baseProfile": {
+    "bagrut": "math 5u 95, English 5u 92, physics 5u 93, CS 5u 90, history 2u 85, civics 2u 88, Bible 2u 80, literature 2u 82, Hebrew expression 2u 84",
+    "bagrutAverage": 112.08, "psychometric": 714, "quant": 145
+  },
+  "runs": [
+    { "change": "none", "avg": 112.08, "scores": { "מדעי המחשב עם פיזיקה": 86.9, "משפטים": 89.61 } },
+    { "change": "quant 125", "avg": 112.08, "scores": { "מדעי המחשב עם פיזיקה": 85.2, "משפטים": 89.61 } },
+    { "change": "math grade 85", "avg": 110.15, "scores": { "מדעי המחשב עם פיזיקה": 84.1, "משפטים": 88.08 } },
+    { "change": "history 65", "avg": 110.54, "scores": { "מדעי המחשב עם פיזיקה": 86.1, "משפטים": 88.59 } }
+  ],
+  "thresholdsBaseProfile": [
+    { "program": "מדעי המחשב עם פיזיקה", "department": "המחלקה למדעי המחשב", "scope": "דו חוגי מובנה", "candidate": 86.9, "accept": 76.0, "reject": 75.99, "conditions": "פסיכומטרי ≥ 690; מכפלה מתמטית (יח' × ציון) ≥ 360" },
+    { "program": "מדעי המחשב", "department": "המחלקה למדעי המחשב", "scope": "חד חוגי", "candidate": 86.9, "accept": 74.0, "reject": 73.99, "conditions": "א: פסיכומטרי ≥ 690, מכפלה מתמטית ≥ 360; ב: כמותי ≥ 130 ומתמטיקה 5 יח' ≥ 90" },
+    { "program": "משפטים", "department": "הפקולטה למשפטים", "scope": "חד חוגי", "candidate": 89.61, "accept": 75.0, "reject": 74.99, "conditions": "פסיכומטרי ≥ 600 וממוצע ≥ 90; פסיכומטרי בלבד ≥ 720; בגרות בלבד ≥ 112 + אנגלית 5 יח' ≥ 90" },
+    { "program": "הנדסת חשמל", "department": "הפקולטה להנדסה ע\"ש אלכסנדר קופקין", "scope": "חד חוגי", "candidate": 82.8, "accept": 66.0, "reject": 64.0, "conditions": "פסיכומטרי ≥ 700; כמותי ≥ 130 + מתמטיקה 5 יח' ≥ 75, או כמותי ≥ 125 + מתמטיקה 5 יח' ≥ 85; פיזיקה 5 יח' ≥ 80" },
+    { "program": "הנדסת מחשבים", "department": "הפקולטה להנדסה ע\"ש אלכסנדר קופקין", "scope": "חד חוגי", "candidate": 82.8, "accept": 66.0, "reject": 64.0, "conditions": "פסיכומטרי ≥ 650; כמותי ≥ 130 + מתמטיקה 5 יח' ≥ 75, או כמותי ≥ 125 + מתמטיקה 5 יח' ≥ 85; פיזיקה 5 יח' ≥ 80" },
+    { "program": "פסיכולוגיה", "department": "המחלקה לפסיכולוגיה", "scope": "חד חוגי", "candidate": 89.61, "accept": 75.0, "reject": 73.0, "conditions": "פסיכומטרי ≥ 680" },
+    { "program": "כלכלה", "department": "המחלקה לכלכלה", "scope": "חד חוגי", "candidate": 86.9, "accept": 72.0, "reject": 69.99, "conditions": "בגרות בלבד: ממוצע ≥ 105 + מתמטיקה 5 יח' ≥ 80 או 4 יח' ≥ 95; כמותי בלבד ≥ 118; פסיכומטרי בלבד ≥ 600 + אותה דרישת מתמטיקה" },
+    { "program": "כלכלה-מינהל עסקים", "department": "המחלקה לכלכלה", "scope": "חד חוגי", "candidate": 86.9, "accept": 72.0, "reject": 69.99, "conditions": "כמו כלכלה" },
+    { "program": "מדעי החיים", "department": "הפקולטה למדעי החיים ע\"ש מינה ואברהם גודמן", "scope": "חד חוגי", "candidate": 86.9, "accept": 60.0, "reject": 57.5, "conditions": "פסיכומטרי ≥ 550, מכפלה מתמטית ≥ 320; בגרות בלבד: ממוצע ≥ 108 + (מכפלה ≥ 320 ו-80 ב-5 יח' בשני מדעים) או מתמטיקה 5 יח' ≥ 85" },
+    { "program": "סוציולוגיה ואנתרופולוגיה", "department": "המחלקה לסוציולוגיה ואנתרופולוגיה", "scope": "חד חוגי", "candidate": 89.61, "accept": 47.0, "reject": 45.0, "conditions": "בגרות בלבד: ממוצע ≥ 98" },
+    { "program": "תקשורת", "department": "ביה\"ס לתקשורת", "scope": "דו חוגי", "candidate": 89.61, "accept": 52.0, "reject": 50.0, "conditions": "בגרות בלבד: ממוצע ≥ 98" }
+  ]
+}
