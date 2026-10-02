@@ -537,7 +537,7 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 	{
 		id: 'A9_medicine_elite',
 		name: 'נועה - מועמדת לרפואה (האוניברסיטה העברית)',
-		description: 'סף 735+ ובגרות 112+. בדיקת סבירות ואי-חריגה מתקרת הפוטנציאל.',
+		description: 'רפואה בעברית: 30/70 עם פסיכומטרי רב-תחומי, סף רשמי 25.186 (=716). בדיקת סבירות ואי-חריגה מתקרת הפוטנציאל.',
 		targetProgram: {
 			id: 'prog_huji_med',
 			institutionId: 'huji',
@@ -546,8 +546,8 @@ export const BENCHMARK_ARCHETYPES: StudentBenchmarkArchetype[] = [
 			name: 'רפואה כללית',
 			fieldOfStudy: 'רפואה',
 			degreeLevel: 'bachelor',
-			minSekemThreshold: 735,
-			relevantSekemType: 'general',
+			minSekemThreshold: 716, // official HUJI threshold 25.186 (תשפ"ו) on the 800 scale
+			relevantSekemType: 'quantitative', // HUJI medicine: 30/70, multi-domain psychometric only
 			directBagrutEligible: false,
 			prerequisites: { mustHavePsychometric: true },
 			createdAt: new Date(),

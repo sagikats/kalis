@@ -5,7 +5,7 @@
 
 import { RecommendedTrack, UserPreferencesQuestionnaire } from '../../utils/analysis/trackGenerator';
 import { UserAcademicProfile } from '../../utils/analysis/gapAnalyzer';
-import { calculateInstitution } from '../calculators';
+import { calculateInstitution, selectProgramSekem } from '../calculators';
 import { CalculatorSubject, InstitutionCalculatorResult } from '../calculators/types';
 import { QAProgramTarget, TrackAuditIssue, TrackAuditMetrics, TrackAuditReport, ScenarioAuditReport, StudentArchetype } from './types';
 import { isSubjectMatch } from '../optimizer/solver';
@@ -134,14 +134,7 @@ export function auditSingleTrack(
 		physicsGrade: simPhysG
 	});
 
-	const simSekem =
-		program.relevantSekemType === 'quantitative'
-			? (calcRes.quantitativeSekem ?? calcRes.generalSekem)
-			: program.relevantSekemType === 'engineering'
-			? (calcRes.engineeringSekem ?? calcRes.generalSekem)
-			: program.relevantSekemType === 'management'
-			? (calcRes.managementSekem ?? calcRes.generalSekem)
-			: calcRes.generalSekem;
+	const simSekem = selectProgramSekem(calcRes, program.relevantSekemType, calculatorId);
 
 	const isDirectBagrutTrack = track.id.includes('direct-bagrut') || track.title.includes('קבלה ישירה');
 	const isTransferTrack = track.id.includes('transfer') || track.title.includes('אפיק מעבר');

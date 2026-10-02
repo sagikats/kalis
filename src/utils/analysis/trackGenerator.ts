@@ -4,7 +4,7 @@ import type {
 	InstitutionSekemResult,
 	UnifiedCalculationInput
 } from '../calculators/multiCalculator';
-import { calculateInstitution } from '../../modules/calculators/index';
+import { calculateInstitution, selectProgramSekem } from '../../modules/calculators/index';
 import type { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
 import { normalizeHebrewSubjectKey, isSubjectMatch } from '../../modules/optimizer/solver';
 import { simulateRealisticSubscores } from '../calculators/psychometricHelper';
@@ -260,16 +260,7 @@ export function evaluateSimulatedSekem(
 		physicsGrade: physGrade
 	});
 
-	let sekem = instRes.generalSekem;
-	if (relevantSekemType === 'quantitative' && instRes.quantitativeSekem !== undefined) {
-		sekem = instRes.quantitativeSekem;
-	} else if (relevantSekemType === 'engineering' && instRes.engineeringSekem !== undefined) {
-		sekem = instRes.engineeringSekem;
-	} else if (relevantSekemType === 'management' && instRes.managementSekem !== undefined) {
-		sekem = instRes.managementSekem;
-	} else if (relevantSekemType === 'technion' || calculatorId === 'technion') {
-		sekem = instRes.engineeringSekem ?? instRes.generalSekem;
-	}
+	const sekem = selectProgramSekem(instRes, relevantSekemType, calculatorId);
 
 	return {
 		sekem,

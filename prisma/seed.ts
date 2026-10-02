@@ -178,7 +178,8 @@ async function main() {
 			seenIds.add(progId);
 
 			const field = p.fieldOfStudy || p.name || 'כללי';
-			const sekemType = determineSekemType(field, instId);
+			// A sourced type (e.g. from an official threshold table) overrides the name-based guess
+			const sekemType = p.relevantSekemType || determineSekemType(field, instId);
 
 			const isStem =
 				field.includes('מחשב') ||
@@ -237,6 +238,11 @@ async function main() {
 				minPsychometricFloor: minPsychFloor,
 				requiresPhysics: requiresPhys
 			};
+			if (p.officialThreshold !== undefined) {
+				prereqObj.officialThreshold = p.officialThreshold;
+				prereqObj.thresholdSource = p.thresholdSource;
+				prereqObj.thresholdUpdatedAt = p.thresholdUpdatedAt;
+			}
 			if (p.id === 'prog-inst-4-49' || p.id === 'prog-inst-4-50') {
 				prereqObj.directBagrutMath5Min = 80;
 				prereqObj.directBagrutMath4Min = 90;

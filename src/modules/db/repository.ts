@@ -184,7 +184,8 @@ export class KalisDatabaseRepository {
 
 				const progId = p.id || `prog_${instId}_${programCount++}`;
 				const field = p.fieldOfStudy || p.name || 'כללי';
-				const sekemType = this.determineSekemType(field, instId);
+				// A sourced type (e.g. from an official threshold table) overrides the name-based guess
+				const sekemType: SekemType = p.relevantSekemType || this.determineSekemType(field, instId);
 
 				const isStem =
 					field.includes('מחשב') ||
@@ -232,10 +233,16 @@ export class KalisDatabaseRepository {
 						mustHavePsychometric: requiresPsych,
 						minPsychometricFloor: (p as any).minPsychometricFloor ?? undefined,
 						minPsychometricQuant: (p as any).minPsychometricQuant ?? undefined,
-						requiresPhysics: (p as any).requiresPhysics ?? (sekemType === 'engineering' || (instId === 'technion' && isStem)),
+						// For sourced types (HUJI) the type describes the scoring rule only, not a physics requirement
+						requiresPhysics:
+							(p as any).requiresPhysics ??
+							((!p.relevantSekemType && sekemType === 'engineering') || (instId === 'technion' && isStem)),
 						directBagrutMath5Min: (p as any).directBagrutMath5Min ?? undefined,
 						directBagrutMath4Min: (p as any).directBagrutMath4Min ?? undefined,
-						directBagrutMinAverage: directThreshold ?? undefined
+						directBagrutMinAverage: directThreshold ?? undefined,
+						officialThreshold: p.officialThreshold ?? undefined,
+						thresholdSource: p.thresholdSource ?? undefined,
+						thresholdUpdatedAt: p.thresholdUpdatedAt ?? undefined
 					},
 					url: p.url,
 					createdAt: new Date(),
@@ -317,7 +324,10 @@ export class KalisDatabaseRepository {
 							directBagrutMath5Min: prereq.directBagrutMath5Min,
 							directBagrutMath4Min: prereq.directBagrutMath4Min,
 							directBagrutMinAverage: prereq.directBagrutMinAverage,
-							mandatorySubjects: prereq.mandatorySubjects
+							mandatorySubjects: prereq.mandatorySubjects,
+							officialThreshold: prereq.officialThreshold,
+							thresholdSource: prereq.thresholdSource,
+							thresholdUpdatedAt: prereq.thresholdUpdatedAt
 						},
 						description: p.description ?? undefined,
 						comments: p.comments ?? undefined,

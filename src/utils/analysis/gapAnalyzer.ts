@@ -1,5 +1,5 @@
 import { AcademicDegree } from '../../types/academic';
-import { SubjectInput } from '../../modules/calculators';
+import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
 export type AdmissionStatus = 'accepted' | 'borderline' | 'not_accepted' | 'no_threshold';
@@ -36,6 +36,11 @@ export interface ImprovementOption {
 export interface ProgramGapAnalysis {
 	target: TargetProgramSelection;
 	threshold: number | null;
+	/** True only when the threshold comes from a cited official source. */
+	thresholdVerified?: boolean;
+	/** Threshold on the institution's own scale (e.g. HUJI 23.75), when sourced. */
+	officialThreshold?: number;
+	thresholdSource?: string;
 	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
 	relevantSekemLabel: string;
 	userSekem: number;
@@ -73,6 +78,16 @@ export function parseAdmissionThreshold(raw: number | string | undefined | null)
 /**
  * Determines which Sekem type and label is applicable for a given program
  */
+function describeSekemType(calcId: string, type: string): string {
+	if (calcId === 'huji') {
+		if (type === 'engineering') return 'ציון משוקלל 50/50 בדגש כמותי (העברית)';
+		if (type === 'quantitative') return 'ציון משוקלל 30/70 (העברית)';
+		if (type === 'management') return 'ציון משוקלל מיטבי, רב-תחומי/כמותי (העברית)';
+		return 'ציון משוקלל מיטבי (העברית)';
+	}
+	return type === 'engineering' ? 'סכם כמותי / הנדסה' : 'סכם כללי';
+}
+
 export function resolveProgramSekemType(
 	calcId: string,
 	programTitle: string
@@ -248,22 +263,12 @@ export function analyzeProgramGap(
 	institutionRes: InstitutionSekemResult
 ): ProgramGapAnalysis {
 	const threshold = parseAdmissionThreshold(target.program.admissionThreshold);
-	const { type: sekemType, label: sekemLabel } = resolveProgramSekemType(
-		target.calculatorId,
-		target.program.fieldOfStudy
-	);
+	const guessed = resolveProgramSekemType(target.calculatorId, target.program.fieldOfStudy);
+	// A sourced program type (e.g. from an official threshold table) overrides the name-based guess
+	const sekemType = target.program.relevantSekemType ?? guessed.type;
+	const sekemLabel = target.program.relevantSekemType ? describeSekemType(target.calculatorId, sekemType) : guessed.label;
 
-	// Select relevant Sekem score
-	let userSekem = institutionRes.generalSekem;
-	if (sekemType === 'quantitative' && institutionRes.quantitativeSekem) {
-		userSekem = institutionRes.quantitativeSekem;
-	} else if (sekemType === 'engineering' && institutionRes.engineeringSekem) {
-		userSekem = institutionRes.engineeringSekem;
-	} else if (sekemType === 'management' && institutionRes.managementSekem) {
-		userSekem = institutionRes.managementSekem;
-	} else if (sekemType === 'technion') {
-		userSekem = institutionRes.engineeringSekem || institutionRes.generalSekem;
-	}
+	const userSekem = selectProgramSekem(institutionRes, sekemType, target.calculatorId);
 
 	const isTechnion = target.calculatorId === 'technion';
 	const borderlineMargin = isTechnion ? 1.5 : 20;
@@ -393,6 +398,9 @@ export function analyzeProgramGap(
 	return {
 		target,
 		threshold,
+		thresholdVerified: Boolean(target.program.thresholdSource),
+		officialThreshold: target.program.officialThreshold ?? undefined,
+		thresholdSource: target.program.thresholdSource ?? undefined,
 		relevantSekemType: sekemType,
 		relevantSekemLabel: sekemLabel,
 		userSekem,

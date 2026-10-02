@@ -193,6 +193,8 @@ export function calculateMultiInstitutionSekem(
 			bagrutAverage: hujiRes.bagrutAverage,
 			generalSekem: hujiRes.generalSekem,
 			engineeringSekem: hujiRes.engineeringSekem,
+			managementSekem: hujiRes.managementSekem,
+			quantitativeSekem: hujiRes.quantitativeSekem,
 			directBagrutEligible: hujiRes.directBagrutEligible,
 			droppedSubjects: hujiRes.droppedSubjects,
 			optimalUnits: hujiRes.optimalUnits,

@@ -19,6 +19,13 @@ export interface AcademicDegree {
      prerequisitesJson?: string | null;
      registrationStatus?: string | null;
      url?: string;
+     /** Which institution score the threshold is compared against (overrides the name-based guess). */
+     relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
+     /** Threshold on the institution's own scale (e.g. HUJI weighted score 23.75), when sourced. */
+     officialThreshold?: number | null;
+     /** Where the threshold was taken from, and when. */
+     thresholdSource?: string | null;
+     thresholdUpdatedAt?: string | null;
 }
 
 export interface AcademicInstitution {

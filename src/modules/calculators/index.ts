@@ -109,6 +109,24 @@ export function isProgramEligibleForDirectBagrut(
 	return false;
 }
 
+export type ProgramSekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
+
+/**
+ * Picks the institution score that a program's threshold is compared against.
+ * Single source of truth for every consumer (optimizer, track engines, gap analysis, QA).
+ */
+export function selectProgramSekem(
+	res: Pick<InstitutionCalculatorResult, 'generalSekem' | 'engineeringSekem' | 'managementSekem' | 'quantitativeSekem'>,
+	sekemType: ProgramSekemType | string | undefined,
+	institutionId?: string
+): number {
+	if (sekemType === 'technion' || institutionId === 'technion') return res.engineeringSekem ?? res.generalSekem;
+	if (sekemType === 'quantitative') return res.quantitativeSekem ?? res.generalSekem;
+	if (sekemType === 'engineering') return res.engineeringSekem ?? res.generalSekem;
+	if (sekemType === 'management') return res.managementSekem ?? res.generalSekem;
+	return res.generalSekem;
+}
+
 /**
  * Executes calculation for a single specific institution
  */

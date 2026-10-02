@@ -5,7 +5,7 @@
  */
 
 import { CalculatorSubject, InstitutionCalculatorResult } from '../calculators/types';
-import { calculateInstitution } from '../calculators/index';
+import { calculateInstitution, selectProgramSekem } from '../calculators/index';
 import { UserAcademicProfileRecord, SekemType } from '../db/schema';
 import { SubjectLeverCandidate } from './types';
 import { simulateRealisticSubscores } from '../../utils/calculators/psychometricHelper';
@@ -173,14 +173,7 @@ export function evaluateSimulatedSekem(
 		physicsGrade: physGrade ?? profile.physicsGrade
 	});
 
-	let sekem = res.generalSekem;
-	if (relevantSekemType === 'engineering' && res.engineeringSekem !== undefined) {
-		sekem = res.engineeringSekem;
-	} else if (relevantSekemType === 'management' && res.managementSekem !== undefined) {
-		sekem = res.managementSekem;
-	} else if (institutionId === 'technion') {
-		sekem = res.engineeringSekem ?? res.generalSekem;
-	}
+	const sekem = selectProgramSekem(res, relevantSekemType, institutionId);
 
 	return {
 		sekem,

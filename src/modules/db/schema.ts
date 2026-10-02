@@ -73,6 +73,10 @@ export interface ProgramPrerequisites {
 	directBagrutMath4Min?: number;
 	directBagrutMinAverage?: number;
 	mandatorySubjects?: string[];
+	/** Threshold on the institution's own scale and where it came from, when sourced. */
+	officialThreshold?: number;
+	thresholdSource?: string;
+	thresholdUpdatedAt?: string;
 }
 
 export interface AcademicProgramRecord {
