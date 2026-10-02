@@ -16,5 +16,11 @@ fi
 # Ensure permissions
 chmod -R 777 /app/prisma 2>/dev/null || true
 
+# Keep the catalog (institutions / programs / subjects) in step with this image's data.
+# User data is untouched; a failure never blocks startup.
+if [ -f /app/prisma_seed/dev.db ] && [ -f /app/syncCatalog.js ]; then
+  node /app/syncCatalog.js || echo "⚠️ [Kalis Cloud] Catalog sync failed — keeping existing catalog."
+fi
+
 echo "✨ [Kalis Cloud] Starting Kalis Next.js server on port 3000..."
 exec node server.js

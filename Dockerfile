@@ -51,6 +51,7 @@ COPY --from=builder /app/prisma/dev.db ./prisma_seed/dev.db
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/scripts/entrypoint.sh ./entrypoint.sh
+COPY --from=builder /app/scripts/syncCatalog.js ./syncCatalog.js
 
 RUN chmod +x ./entrypoint.sh && chown -R nextjs:nodejs /app
 

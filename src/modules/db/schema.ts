@@ -58,7 +58,7 @@ export interface UserPreferencesRecord {
 	updatedAt: Date;
 }
 
-export type SekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
+export type SekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
 
 export interface ProgramPrerequisites {
 	minMathUnits?: number;
@@ -73,6 +73,12 @@ export interface ProgramPrerequisites {
 	directBagrutMath4Min?: number;
 	directBagrutMinAverage?: number;
 	mandatorySubjects?: string[];
+	/** Threshold on the institution's own scale and where it came from, when sourced. */
+	officialThreshold?: number;
+	thresholdSource?: string;
+	thresholdUpdatedAt?: string;
+	/** Official admission routes (see AdmissionRoutes in src/types/academic.ts). */
+	admissionRoutes?: { minPsychometric?: number; psychometricOnlyMin?: number; bagrutOnlyMin?: number };
 }
 
 export interface AcademicProgramRecord {

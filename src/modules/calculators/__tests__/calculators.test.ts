@@ -103,7 +103,7 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 	it('Bar-Ilan: Bonuses, Sekem and Direct Bagrut', () => {
 		// Bonus verification: Math 5u (+35), Bible/Jewish Studies 5u (+25), 4u elective (+10)
 		assert.equal(getBarIlanBonus({ name: 'מתמטיקה', units: 5, grade: 90 }), 35);
-		assert.equal(getBarIlanBonus({ name: 'מתמטיקה', units: 4, grade: 90 }), 12.5);
+		assert.equal(getBarIlanBonus({ name: 'מתמטיקה', units: 4, grade: 90 }), 15); // biu.ac.il bonus table
 		assert.equal(getBarIlanBonus({ name: 'תנ״ך', units: 5, grade: 90 }), 25);
 		assert.equal(getBarIlanBonus({ name: 'מחשבת ישראל', units: 5, grade: 90 }), 25);
 		assert.equal(getBarIlanBonus({ name: 'גיאוגרפיה', units: 4, grade: 80 }), 10);

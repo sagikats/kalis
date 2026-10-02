@@ -94,7 +94,8 @@ describe('Subagent 4: Backend API Endpoints & Route Handlers', () => {
 			text: 'פסיכולוגיה'
 		});
 		assert.ok(searchRes.programs.length > 0);
-		const psychProgram = searchRes.programs[0];
+		// The search also returns combined programs (e.g. פסיכולוגיה ומדעי החיים, which has no bagrut-only route)
+		const psychProgram = searchRes.programs.find((p: any) => p.name === 'פסיכולוגיה' || p.fieldOfStudy === 'פסיכולוגיה') ?? searchRes.programs[0];
 
 		const req = new NextRequest('http://localhost:3000/api/tracks/generate', {
 			method: 'POST',

@@ -109,6 +109,26 @@ export function isProgramEligibleForDirectBagrut(
 	return false;
 }
 
+/** 'psychometric': programs that admit by the general psychometric score alone (e.g. BGU Economics ≥ 600). */
+export type ProgramSekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
+
+/**
+ * Picks the institution score that a program's threshold is compared against.
+ * Single source of truth for every consumer (optimizer, track engines, gap analysis, QA).
+ */
+export function selectProgramSekem(
+	res: Pick<InstitutionCalculatorResult, 'generalSekem' | 'engineeringSekem' | 'managementSekem' | 'quantitativeSekem' | 'psychometricGeneral'>,
+	sekemType: ProgramSekemType | string | undefined,
+	institutionId?: string
+): number {
+	if (sekemType === 'psychometric') return res.psychometricGeneral ?? 0;
+	if (sekemType === 'technion' || institutionId === 'technion') return res.engineeringSekem ?? res.generalSekem;
+	if (sekemType === 'quantitative') return res.quantitativeSekem ?? res.generalSekem;
+	if (sekemType === 'engineering') return res.engineeringSekem ?? res.generalSekem;
+	if (sekemType === 'management') return res.managementSekem ?? res.generalSekem;
+	return res.generalSekem;
+}
+
 /**
  * Executes calculation for a single specific institution
  */
@@ -116,6 +136,10 @@ export function calculateInstitution(
 	institutionId: string,
 	input: InstitutionCalculatorInput
 ): InstitutionCalculatorResult {
+	return { ...evaluateInstitution(institutionId, input), psychometricGeneral: input.psychometricGeneral || 0 };
+}
+
+function evaluateInstitution(institutionId: string, input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	switch (institutionId) {
 		case 'technion':
 			return evaluateTechnion(input);

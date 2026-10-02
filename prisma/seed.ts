@@ -8,7 +8,10 @@ import { PrismaClient } from '@prisma/client';
 import rawData from '../src/data/academicData.json';
 import { BAGRUT_SUBJECTS_CATALOG } from '../src/data/bagrutSubjects';
 
-const prisma = new PrismaClient();
+// SEED_DATABASE_URL lets you seed a copy (schema.prisma pins file:./dev.db, so DATABASE_URL is ignored)
+const prisma = process.env.SEED_DATABASE_URL
+	? new PrismaClient({ datasources: { db: { url: process.env.SEED_DATABASE_URL } } })
+	: new PrismaClient();
 
 // Friction and Prep Hours mapping for Bagrut Subjects
 const SUBJECT_INTELLIGENCE: Record<string, { friction: number; prepHours: number; sessions: string[] }> = {
@@ -178,7 +181,8 @@ async function main() {
 			seenIds.add(progId);
 
 			const field = p.fieldOfStudy || p.name || 'כללי';
-			const sekemType = determineSekemType(field, instId);
+			// A sourced type (e.g. from an official threshold table) overrides the name-based guess
+			const sekemType = p.relevantSekemType || determineSekemType(field, instId);
 
 			const isStem =
 				field.includes('מחשב') ||
@@ -237,6 +241,12 @@ async function main() {
 				minPsychometricFloor: minPsychFloor,
 				requiresPhysics: requiresPhys
 			};
+			if (p.officialThreshold !== undefined) {
+				prereqObj.officialThreshold = p.officialThreshold;
+				prereqObj.thresholdSource = p.thresholdSource;
+				prereqObj.thresholdUpdatedAt = p.thresholdUpdatedAt;
+			}
+			if (p.admissionRoutes) prereqObj.admissionRoutes = p.admissionRoutes;
 			if (p.id === 'prog-inst-4-49' || p.id === 'prog-inst-4-50') {
 				prereqObj.directBagrutMath5Min = 80;
 				prereqObj.directBagrutMath4Min = 90;
@@ -263,13 +273,16 @@ async function main() {
 		}
 	}
 
-	// Clean existing programs before re-seeding
-	await prisma.academicProgram.deleteMany({});
+	// Upsert instead of wiping: SavedTrack → AcademicProgram is onDelete: Cascade, so deleting all programs
+	// would silently erase every user's saved tracks if this ever runs against a database with users.
 	for (const prog of programRecords) {
-		await prisma.academicProgram.create({
-			data: prog
-		});
+		await prisma.academicProgram.upsert({ where: { id: prog.id }, create: prog, update: prog });
 	}
+	const seededIds = programRecords.map((p) => p.id);
+	const retired = await prisma.academicProgram.deleteMany({
+		where: { id: { notIn: seededIds }, savedTracks: { none: {} } }
+	});
+	if (retired.count) console.log(`🧹 Removed ${retired.count} retired programs (none referenced by saved tracks)`);
 	console.log(`✅ Seeded ${programRecords.length} Academic Programs across 8 Universities`);
 
 	// 3. Seed Bagrut Subjects Catalog

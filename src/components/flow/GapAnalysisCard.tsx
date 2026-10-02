@@ -115,10 +115,32 @@ export default function GapAnalysisCard({
 					</div>
 
 					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-						<span className="text-[11px] text-[#66635C] font-bold block">סף קבלה רשמי</span>
+						<span className="text-[11px] text-[#66635C] font-bold block">
+							{analysis.thresholdVerified ? 'סף קבלה רשמי' : 'סף קבלה משוער'}
+						</span>
 						<span className="text-2xl font-bold text-[#222222] mt-1 block">
 							{analysis.threshold ?? 'ללא ציון מספרי'}
 						</span>
+						{analysis.officialThreshold !== undefined && analysis.officialThreshold !== analysis.threshold && (
+							<span className="text-[11px] text-[#66635C] mt-1 block">
+								בסולם המוסד: {analysis.officialThreshold}
+							</span>
+						)}
+						{analysis.thresholdSource && (
+							<a
+								href={analysis.thresholdSource.split(' — ')[0]}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-[11px] text-[#2F6FB0] underline mt-1 inline-block"
+							>
+								מקור
+							</a>
+						)}
+						{analysis.thresholdSource?.includes(' — ') && (
+							<span className="text-[10px] text-[#66635C] mt-0.5 block line-clamp-2">
+								{analysis.thresholdSource.split(' — ').slice(1).join(' — ')}
+							</span>
+						)}
 					</div>
 
 					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">

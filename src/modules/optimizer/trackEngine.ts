@@ -108,6 +108,27 @@ export function generateOptimizedActionTracks(
 	profile: UserAcademicProfileRecord,
 	preferences: UserPreferencesRecord
 ): OptimizationSolution {
+	const solution = generateAllActionTracks(targetProgram, profile, preferences);
+	if (targetProgram.relevantSekemType !== 'psychometric') return solution;
+
+	// Psychometric-only programs: drop plans that rely on bagrut upgrades or stop short of the required score
+	const threshold = targetProgram.minSekemThreshold;
+	const bagrutOnlyMin = targetProgram.prerequisites?.admissionRoutes?.bagrutOnlyMin;
+	const current = profile.hasTakenPsychometric ? profile.psychometricGeneral : 0;
+	const useful = solution.tracks.filter((t) => {
+		if (t.id.includes('direct')) return bagrutOnlyMin !== undefined && (t.targetBagrutAverage ?? 0) >= bagrutOnlyMin;
+		return (t.targetPsychometric ?? current) >= threshold && t.recommendedLevers.length === 0;
+	});
+	if (useful.length > 0) return { ...solution, tracks: useful };
+	const reachesScore = solution.tracks.filter((t) => (t.targetPsychometric ?? 0) >= threshold);
+	return reachesScore.length > 0 ? { ...solution, tracks: reachesScore } : solution;
+}
+
+function generateAllActionTracks(
+	targetProgram: AcademicProgramRecord,
+	profile: UserAcademicProfileRecord,
+	preferences: UserPreferencesRecord
+): OptimizationSolution {
 	const hasTakenPsych = profile.hasTakenPsychometric && profile.psychometricGeneral > 0;
 	const currentPsych = hasTakenPsych ? profile.psychometricGeneral : 0;
 	const threshold = targetProgram.minSekemThreshold;

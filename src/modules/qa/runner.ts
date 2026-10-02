@@ -9,7 +9,7 @@ import { BENCHMARK_ARCHETYPES } from './archetypes';
 import { auditScenario } from './trackAuditor';
 import { generatePersonalizedTracks } from '../../utils/analysis/trackGenerator';
 import { ProgramGapAnalysis } from '../../utils/analysis/gapAnalyzer';
-import { calculateInstitution } from '../calculators';
+import { calculateInstitution, selectProgramSekem } from '../calculators';
 import { AcademicDegree } from '../../types/academic';
 import { BatchAuditSummary, QAProgramTarget, ScenarioAuditReport, TrackAuditPenaltyCategory } from './types';
 import academicData from '../../data/academicData.json';
@@ -167,14 +167,7 @@ export function runBatchAudit(): BatchAuditSummary {
 			physicsGrade: archetype.profile.physicsGrade || 0
 		});
 
-		const initialSekem =
-			program.relevantSekemType === 'quantitative'
-				? (initialRes.quantitativeSekem ?? initialRes.generalSekem)
-				: program.relevantSekemType === 'engineering'
-				? (initialRes.engineeringSekem ?? initialRes.generalSekem)
-				: program.relevantSekemType === 'management'
-				? (initialRes.managementSekem ?? initialRes.generalSekem)
-				: initialRes.generalSekem;
+		const initialSekem = selectProgramSekem(initialRes, program.relevantSekemType, program.institutionId);
 		(initialRes as any).sekem = initialSekem;
 
 		// 2. Build Gap Analysis

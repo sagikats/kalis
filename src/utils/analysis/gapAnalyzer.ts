@@ -1,5 +1,5 @@
-import { AcademicDegree } from '../../types/academic';
-import { SubjectInput } from '../../modules/calculators';
+import { AcademicDegree, AdmissionRoutes } from '../../types/academic';
+import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
 export type AdmissionStatus = 'accepted' | 'borderline' | 'not_accepted' | 'no_threshold';
@@ -36,8 +36,19 @@ export interface ImprovementOption {
 export interface ProgramGapAnalysis {
 	target: TargetProgramSelection;
 	threshold: number | null;
-	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
+	/** True only when the threshold comes from a cited official source. */
+	thresholdVerified?: boolean;
+	/** Threshold on the institution's own scale (e.g. HUJI 23.75), when sourced. */
+	officialThreshold?: number;
+	thresholdSource?: string;
+	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
 	relevantSekemLabel: string;
+	/** Which official route the status rests on, when accepted. */
+	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only';
+	/** One-line explanation when an official route or condition changed the status. */
+	admissionNote?: string;
+	/** Official admission routes of the program, when published. */
+	admissionRoutes?: AdmissionRoutes;
 	userSekem: number;
 	gap: number; // positive = surplus, negative = points needed
 	status: AdmissionStatus;
@@ -73,6 +84,31 @@ export function parseAdmissionThreshold(raw: number | string | undefined | null)
 /**
  * Determines which Sekem type and label is applicable for a given program
  */
+function describeSekemType(calcId: string, type: string): string {
+	if (type === 'psychometric') return 'ציון פסיכומטרי';
+	if (calcId === 'huji') {
+		if (type === 'engineering') return 'העברית: ציון משוקלל 50/50 בדגש כמותי';
+		if (type === 'quantitative') return 'העברית: ציון משוקלל 30/70';
+		if (type === 'management') return 'העברית: ציון משוקלל מיטבי, רב-תחומי/כמותי';
+		return 'העברית: ציון משוקלל מיטבי';
+	}
+	if (type === 'technion' || calcId === 'technion') return 'סכם טכניוני';
+	if (calcId === 'tau') {
+		if (type === 'engineering') return 'ת"א: ציון התאמה מדויקים/הנדסה';
+		if (type === 'management') return 'ת"א: ציון התאמה ניהול';
+		return 'ת"א: ציון התאמה';
+	}
+	if (calcId === 'bgu') {
+		if (type === 'engineering') return 'בן-גוריון: סכם הנדסה';
+		if (type === 'quantitative') return 'בן-גוריון: סכם כמותי';
+		return 'בן-גוריון: סכם';
+	}
+	if (calcId === 'reichman') return 'רייכמן: ציון מתואם';
+	if (type === 'quantitative') return 'סכם כמותי';
+	if (type === 'management') return 'סכם ניהול';
+	return type === 'engineering' ? 'סכם כמותי / הנדסה' : 'סכם כללי';
+}
+
 export function resolveProgramSekemType(
 	calcId: string,
 	programTitle: string
@@ -142,6 +178,12 @@ export function resolveProgramSekemType(
 	return { type: 'general', label: 'סכם כללי' };
 }
 
+/** Official admission routes, whether they arrive top-level (JSON catalog) or inside prerequisites (DB-backed API). */
+function officialRoutesOf(program?: AcademicDegree): AdmissionRoutes | undefined {
+	if (!program) return undefined;
+	return program.admissionRoutes ?? (program as any).prerequisites?.admissionRoutes ?? undefined;
+}
+
 /**
  * Checks academic prerequisites for STEM/Engineering/Management degrees
  */
@@ -158,8 +200,9 @@ export function checkProgramPrerequisites(
 	const isMedicine = title.includes('רפואה') || title.includes('רפואת שיניים');
 	const isExactScience = isEngineering || isCS || title.includes('פיזיקה') || title.includes('מתמטיקה') || title.includes('כימיה');
 
-	// 0. Degree-specific hard psychometric floor
-	let psychFloor = targetProgram?.minPsychometricFloor;
+	// 0. Degree-specific psychometric floor — the official one ("ובנוסף") first, then the catalog's estimate
+	const officialFloor = officialRoutesOf(targetProgram)?.minPsychometric;
+	let psychFloor = officialFloor ?? targetProgram?.minPsychometricFloor;
 	if (!psychFloor && targetProgram?.prerequisitesJson) {
 		try {
 			const parsed = JSON.parse(targetProgram.prerequisitesJson);
@@ -178,7 +221,7 @@ export function checkProgramPrerequisites(
 		const isMet = currPsych >= psychFloor;
 		checks.push({
 			id: 'psych_floor',
-			name: 'רצפת פסיכומטרי מינימלית לתואר',
+			name: officialFloor ? 'פסיכומטרי מינימלי (תנאי רשמי)' : 'רצפת פסיכומטרי מינימלית לתואר',
 			required: `ציון ${psychFloor} ומעלה ברף המינימום המוסדי לתואר`,
 			current: currPsych > 0 ? `ציון ${currPsych}` : 'טרם הוזן ציון פסיכומטרי',
 			isMet,
@@ -248,22 +291,15 @@ export function analyzeProgramGap(
 	institutionRes: InstitutionSekemResult
 ): ProgramGapAnalysis {
 	const threshold = parseAdmissionThreshold(target.program.admissionThreshold);
-	const { type: sekemType, label: sekemLabel } = resolveProgramSekemType(
-		target.calculatorId,
-		target.program.fieldOfStudy
-	);
+	// Provenance may arrive top-level (JSON catalog) or inside prerequisites (DB-backed API)
+	const prereq = (target.program as any).prerequisites as { officialThreshold?: number; thresholdSource?: string } | undefined;
+	const thresholdSource: string | undefined = target.program.thresholdSource ?? prereq?.thresholdSource ?? undefined;
+	const guessed = resolveProgramSekemType(target.calculatorId, target.program.fieldOfStudy);
+	// A sourced program type (e.g. from an official threshold table) overrides the name-based guess
+	const sekemType = target.program.relevantSekemType ?? guessed.type;
+	const sekemLabel = target.program.relevantSekemType ? describeSekemType(target.calculatorId, sekemType) : guessed.label;
 
-	// Select relevant Sekem score
-	let userSekem = institutionRes.generalSekem;
-	if (sekemType === 'quantitative' && institutionRes.quantitativeSekem) {
-		userSekem = institutionRes.quantitativeSekem;
-	} else if (sekemType === 'engineering' && institutionRes.engineeringSekem) {
-		userSekem = institutionRes.engineeringSekem;
-	} else if (sekemType === 'management' && institutionRes.managementSekem) {
-		userSekem = institutionRes.managementSekem;
-	} else if (sekemType === 'technion') {
-		userSekem = institutionRes.engineeringSekem || institutionRes.generalSekem;
-	}
+	const userSekem = selectProgramSekem(institutionRes, sekemType, target.calculatorId);
 
 	const isTechnion = target.calculatorId === 'technion';
 	const borderlineMargin = isTechnion ? 1.5 : 20;
@@ -295,7 +331,9 @@ export function analyzeProgramGap(
 
 		if (currentPsych > 0) {
 			let psychMultiplier = 2.0; // standard 50% weight (e.g. BGU, HUJI, Haifa, Ariel)
-			if (target.calculatorId === 'tau') {
+			if (sekemType === 'psychometric') {
+				psychMultiplier = 1; // the threshold is the psychometric score itself
+			} else if (target.calculatorId === 'tau') {
 				psychMultiplier = sekemType === 'management' ? 1.43 : 1.92;
 			} else if (isTechnion) {
 				psychMultiplier = 13.33; // 0.075 coefficient on 0-100 scale
@@ -305,7 +343,9 @@ export function analyzeProgramGap(
 			targetPsych = Math.min(800, currentPsych + psychNeeded);
 		} else {
 			// Candidate has NOT taken psychometric yet: calculate the exact score needed from scratch
-			if (target.calculatorId === 'technion') {
+			if (sekemType === 'psychometric') {
+				targetPsych = threshold;
+			} else if (target.calculatorId === 'technion') {
 				const d = Math.min(125, bagrutAvg);
 				targetPsych = Math.min(800, Math.max(200, Math.ceil((threshold + 19 - 0.5 * d) / 0.075)));
 			} else if (target.calculatorId === 'tau') {
@@ -356,7 +396,8 @@ export function analyzeProgramGap(
 		const currentBagrut = institutionRes.bagrutAverage;
 		const targetBagrut = Math.min(isTechnion ? 119 : 125, Math.round((currentBagrut + bagrutNeeded) * 10) / 10);
 
-		if (targetBagrut <= (isTechnion ? 119 : 125)) {
+		// A psychometric-only threshold can't be closed through the bagrut average
+		if (sekemType !== 'psychometric' && targetBagrut <= (isTechnion ? 119 : 125)) {
 			improvementOptions.push({
 				id: 'opt-bagrut',
 				type: 'bagrut',
@@ -390,9 +431,87 @@ export function analyzeProgramGap(
 		}
 	}
 
+	// Official admission routes: an extra psychometric minimum can block the sekem route, and a bagrut-only or
+	// psychometric-only route can admit on its own. Only official data (never catalog estimates) changes the status.
+	const routes = officialRoutesOf(target.program);
+	const psych = profile.psychometricGeneral || 0;
+	let admissionRoute: ProgramGapAnalysis['admissionRoute'];
+	let admissionNote: string | undefined;
+
+	if (routes?.minPsychometric && (status === 'accepted' || status === 'borderline') && psych < routes.minPsychometric) {
+		status = 'not_accepted';
+		admissionNote = `הסכם עובר את הסף, אבל המוסד דורש גם פסיכומטרי ${routes.minPsychometric} לפחות${psych ? ` (יש לך ${psych})` : ''}.`;
+		improvementOptions.unshift({
+			id: 'opt-psych-floor',
+			type: 'psychometric',
+			title: `הגעה לפסיכומטרי ${routes.minPsychometric} (תנאי סף רשמי)`,
+			description: `התואר דורש פסיכומטרי ${routes.minPsychometric} לפחות בנוסף לסכם. ${psych ? `חסרות ${routes.minPsychometric - psych} נקודות.` : 'יש לגשת לבחינה.'}`,
+			currentValue: psych || 'טרם נבחנת',
+			targetValue: routes.minPsychometric,
+			gapAmount: psych ? routes.minPsychometric - psych : routes.minPsychometric,
+			effortLevel: routes.minPsychometric - psych <= 30 ? 'easy' : routes.minPsychometric - psych <= 60 ? 'medium' : 'hard',
+			estimatedWeeks: psych ? 8 : 12,
+			potentialSekemGain: 0
+		});
+	} else if (status === 'accepted') {
+		admissionRoute = 'sekem';
+	}
+
+	if (status !== 'accepted') {
+		const bagrutAvg = institutionRes.bagrutAverage || 0;
+		if (routes?.bagrutOnlyMin && bagrutAvg >= routes.bagrutOnlyMin) {
+			status = 'accepted';
+			admissionRoute = 'bagrut_only';
+			admissionNote = `מתקבל/ת באפיק "בגרות בלבד": ממוצע ${bagrutAvg} (נדרש ${routes.bagrutOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
+		} else if (routes?.psychometricOnlyMin && psych >= routes.psychometricOnlyMin) {
+			status = 'accepted';
+			admissionRoute = 'psychometric_only';
+			admissionNote = `מתקבל/ת באפיק "פסיכומטרי בלבד": ${psych} (נדרש ${routes.psychometricOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
+		}
+		if (status === 'accepted') {
+			improvementOptions.length = 0;
+		} else {
+			if (routes?.bagrutOnlyMin && bagrutAvg > 0 && routes.bagrutOnlyMin - bagrutAvg <= 5) {
+				const need = Math.round((routes.bagrutOnlyMin - bagrutAvg) * 10) / 10;
+				improvementOptions.push({
+					id: 'opt-bagrut-only',
+					type: 'bagrut',
+					title: 'קבלה לפי בגרות בלבד (אפיק רשמי)',
+					description: `המוסד מקבל לתואר הזה גם לפי ממוצע בגרות ${routes.bagrutOnlyMin} בלי פסיכומטרי. חסרות ${need} נקודות ממוצע.`,
+					currentValue: bagrutAvg,
+					targetValue: routes.bagrutOnlyMin,
+					gapAmount: need,
+					effortLevel: need <= 2 ? 'easy' : 'medium',
+					estimatedWeeks: need <= 2 ? 8 : 12,
+					potentialSekemGain: 0
+				});
+			}
+			if (routes?.psychometricOnlyMin) {
+				improvementOptions.push({
+					id: 'opt-psych-only',
+					type: 'psychometric',
+					title: `קבלה לפי פסיכומטרי בלבד: ${routes.psychometricOnlyMin} (אפיק רשמי)`,
+					description: `המוסד מקבל לתואר הזה גם לפי ציון פסיכומטרי ${routes.psychometricOnlyMin} לבד.${psych ? ` חסרות ${routes.psychometricOnlyMin - psych} נקודות.` : ''}`,
+					currentValue: psych || 'טרם נבחנת',
+					targetValue: routes.psychometricOnlyMin,
+					gapAmount: psych ? routes.psychometricOnlyMin - psych : routes.psychometricOnlyMin,
+					effortLevel: routes.psychometricOnlyMin - psych <= 30 ? 'easy' : routes.psychometricOnlyMin - psych <= 60 ? 'medium' : 'hard',
+					estimatedWeeks: psych ? 8 : 12,
+					potentialSekemGain: 0
+				});
+			}
+		}
+	}
+
 	return {
 		target,
 		threshold,
+		admissionRoute,
+		admissionNote,
+		admissionRoutes: routes,
+		thresholdVerified: Boolean(thresholdSource),
+		officialThreshold: target.program.officialThreshold ?? prereq?.officialThreshold ?? undefined,
+		thresholdSource,
 		relevantSekemType: sekemType,
 		relevantSekemLabel: sekemLabel,
 		userSekem,

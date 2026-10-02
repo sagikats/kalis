@@ -1,0 +1,20 @@
+{
+  "source": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf",
+  "title": "טבלת ספים לאתר תשפ\"ה — אוניברסיטת רייכמן (latest threshold table published; the תשפ\"ז regulations refer applicants to the registration office)",
+  "transcribedAt": "2026-10-02",
+  "columns": { "matched": "מסלול קבלה על בסיס ציון מתואם", "bagrut": "מסלול קבלה על בסיס בגרות", "psychometric": "מסלול קבלה על בסיס ציון פסיכומטרי", "minPsychInMatched": "ציון פסיכומטרי מינימום במסלול מתואם" },
+  "rows": [
+    { "program": "מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)", "matched": 732, "bagrut": 113, "psychometric": 720, "minPsychInMatched": 660 },
+    { "program": "מנהל עסקים חד חוגי", "matched": 630, "bagrut": 100, "psychometric": 700 },
+    { "program": "מנהל עסקים ופסיכולוגיה", "matched": 630, "bagrut": 100, "psychometric": 700 },
+    { "program": "מנהל עסקים ויזמות", "matched": 630, "bagrut": 100, "psychometric": 650 },
+    { "program": "כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות", "matched": 600, "bagrut": 100, "psychometric": 680 },
+    { "program": "התכנית בחשבונאות", "matched": 640, "bagrut": 103, "psychometric": null, "minPsychInMatched": 620 },
+    { "program": "ממשל / ממשל וקיימות", "matched": 600, "bagrut": 89, "psychometric": 650 },
+    { "program": "תקשורת", "matched": 600, "bagrut": 89, "psychometric": 620 },
+    { "program": "פסיכולוגיה", "matched": 620, "bagrut": 100, "psychometric": 640 },
+    { "program": "פסיכולוגיה עם חטיבה במדעי החיים", "matched": 630, "bagrut": 100, "psychometric": 700 },
+    { "program": "משפטים תארים כפולים", "matched": 650, "bagrut": 100, "psychometric": 700, "minPsychInMatched": 610 },
+    { "program": "משפטים במסלול ישיר לתואר שני", "matched": 672, "bagrut": 105, "psychometric": 710, "minPsychInMatched": 690 }
+  ]
+}

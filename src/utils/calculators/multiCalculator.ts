@@ -36,6 +36,8 @@ export interface InstitutionSekemResult {
 	managementSekem?: number;
 	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
+	/** The applicant's effective general psychometric score (for psychometric-only programs). */
+	psychometricGeneral?: number;
 	/** Institution's own score on its native scale (HUJI weighted score ≈16–27). */
 	officialScore?: number;
 	notes?: string;
@@ -193,6 +195,8 @@ export function calculateMultiInstitutionSekem(
 			bagrutAverage: hujiRes.bagrutAverage,
 			generalSekem: hujiRes.generalSekem,
 			engineeringSekem: hujiRes.engineeringSekem,
+			managementSekem: hujiRes.managementSekem,
+			quantitativeSekem: hujiRes.quantitativeSekem,
 			directBagrutEligible: hujiRes.directBagrutEligible,
 			droppedSubjects: hujiRes.droppedSubjects,
 			optimalUnits: hujiRes.optimalUnits,
@@ -249,8 +253,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: biuRes.optimalUnits,
 			notes:
 				biuRes.droppedSubjects && biuRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
-					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
+					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). ממוצע לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה`
+					: 'ממוצע לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה'
 		},
 		reichman: {
 			institutionId: 'reichman',
@@ -275,5 +279,8 @@ export function calculateMultiInstitutionSekem(
 		}
 	};
 
-	return selectedInstitutionIds.map((id) => allInstitutions[id]).filter(Boolean);
+	return selectedInstitutionIds
+		.map((id) => allInstitutions[id])
+		.filter(Boolean)
+		.map((r) => ({ ...r, psychometricGeneral: psych || 0 }));
 }

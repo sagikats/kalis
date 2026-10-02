@@ -73,52 +73,85 @@ export function calculateHujiOptimalBagrut(subjects: CalculatorSubject[]): Optim
 	});
 }
 
+/** HUJI weighting variants (bagrut / psychometric). */
+export type HujiWeighting = '50/50' | '30/70';
+
+function hujiStandardized(bagrutAverage: number, psychometric: number) {
+	return {
+		B: 3.963 * (bagrutAverage / 10) - 20.0621,
+		P: 0.032073 * psychometric + 0.3672
+	};
+}
+
 /**
- * Official HUJI weighted score (info.huji.ac.il — קבלה על סמך בגרות ופסיכומטרי, נוסחת חישוב ציון משוקלל):
+ * Official HUJI weighted score for one weighting variant
+ * (info.huji.ac.il — קבלה על סמך בגרות ופסיכומטרי; reproduces the official threshold spreadsheet exactly):
  *   B = 3.963 * (bagrut / 10) - 20.0621        (bagrut on the 11.52 scale, not 115.2)
  *   P = 0.032073 * psychometric + 0.3672
  *   50/50: Y = 1.2422 * (0.5B + 0.5P) - 4.7609
  *   30/70: Y = 1.2235 * (0.3B + 0.7P) - 4.4598
- * Candidates get the higher of the two ("שקלול מיטבי"). Rounded to 3 decimals; scale ≈ 16–27.
+ * Rounded to 3 decimals; scale ≈ 16–27.
  */
-export function calculateHujiWeightedScore(bagrutAverage: number, psychometric: number): number {
+export function calculateHujiWeightedScoreFor(
+	bagrutAverage: number,
+	psychometric: number,
+	weighting: HujiWeighting
+): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const B = 3.963 * (bagrutAverage / 10) - 20.0621;
-	const P = 0.032073 * psychometric + 0.3672;
-	const y5050 = 1.2422 * (0.5 * B + 0.5 * P) - 4.7609;
-	const y3070 = 1.2235 * (0.3 * B + 0.7 * P) - 4.4598;
-	return Math.round(Math.max(y5050, y3070) * 1000) / 1000;
+	const { B, P } = hujiStandardized(bagrutAverage, psychometric);
+	const y = weighting === '50/50' ? 1.2422 * (0.5 * B + 0.5 * P) - 4.7609 : 1.2235 * (0.3 * B + 0.7 * P) - 4.4598;
+	return Math.round(y * 1000) / 1000;
+}
+
+/** Best of both weightings ("שקלול מיטבי") — used when a program accepts either. */
+export function calculateHujiWeightedScore(bagrutAverage: number, psychometric: number): number {
+	return Math.max(
+		calculateHujiWeightedScoreFor(bagrutAverage, psychometric, '50/50'),
+		calculateHujiWeightedScoreFor(bagrutAverage, psychometric, '30/70')
+	);
 }
 
 /**
- * HUJI sekem on the platform's 200–800 comparison scale (used against the stored program thresholds).
- * It is an exact linear re-scaling of the official weighted score above
- * (1 official point = 25.1 psychometric-equivalent points, anchored at bagrut 100 / psychometric 550 → 550),
- * so rankings and gaps match HUJI's own formula.
+ * Exact linear map from the official HUJI weighted score to the platform's 200–800 comparison scale
+ * (1 official point = 25.1 psychometric-equivalent points). Program thresholds are stored on the
+ * same scale via the same map, so comparisons are equivalent to comparing official scores.
  */
-export function calculateHujiSekem(bagrutAverage: number, psychometric: number): number {
-	const official = calculateHujiWeightedScore(bagrutAverage, psychometric);
-	if (official <= 0) return 0;
-	return Math.round(25.0998 * official + 83.72);
+export function hujiScoreTo800(official: number): number {
+	return official > 0 ? Math.round(25.0998 * official + 83.72) : 0;
 }
 
+export function calculateHujiSekem(bagrutAverage: number, psychometric: number): number {
+	return hujiScoreTo800(calculateHujiWeightedScore(bagrutAverage, psychometric));
+}
+
+/**
+ * HUJI programs fall into four rule sets (official threshold spreadsheet, 228 tracks). Each maps to one
+ * of the platform's sekem slots, so a program's relevantSekemType selects the right rule set:
+ *   generalSekem       — 50/50 or 30/70, best of general / verbal-emphasis / quant-emphasis psychometric
+ *   managementSekem    — 50/50 or 30/70, best of general / quant-emphasis psychometric
+ *   engineeringSekem   — 50/50 only, quant-emphasis psychometric (sciences, CS, engineering)
+ *   quantitativeSekem  — 30/70 only, general psychometric (medicine, dentistry)
+ */
 export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateHujiOptimalBagrut(input.bagrutSubjects);
-	const psych = input.psychometricGeneral || 0;
-	const explicitQuant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
-		? input.psychometricQuantEmphasis
-		: undefined;
-	const rawQuant = explicitQuant ?? (input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych);
-	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
+	const avg = optimal.average;
+	const general = input.psychometricGeneral || 0;
+	const quantEmphasis = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0 ? input.psychometricQuantEmphasis : general;
+	const verbalEmphasis = input.psychometricVerbalEmphasis && input.psychometricVerbalEmphasis > 0 ? input.psychometricVerbalEmphasis : general;
 
-	const generalSekem = calculateHujiSekem(optimal.average, psych);
-	const engineeringSekem = calculateHujiSekem(optimal.average, quant > psych ? quant : psych);
-	const directBagrutEligible = optimal.average >= 105.0;
-	const officialScore = calculateHujiWeightedScore(optimal.average, psych);
+	const best = (psychs: number[], weightings: HujiWeighting[]) =>
+		Math.max(0, ...psychs.flatMap((p) => weightings.map((w) => calculateHujiWeightedScoreFor(avg, p, w))));
+
+	const officialGeneral = best([general, verbalEmphasis, quantEmphasis], ['50/50', '30/70']);
+	const officialManagement = best([general, quantEmphasis], ['50/50', '30/70']);
+	const officialEngineering = best([quantEmphasis], ['50/50']);
+	const officialMedicine = best([general], ['30/70']);
+
+	const directBagrutEligible = avg >= 105.0;
 
 	const notes: string[] = [];
-	if (officialScore > 0) {
-		notes.push(`ציון משוקלל רשמי (נוסחת העברית): ${officialScore.toFixed(3)}`);
+	if (officialGeneral > 0) {
+		notes.push(`ציון משוקלל רשמי (נוסחת העברית): ${officialGeneral.toFixed(3)}`);
 	}
 	if (directBagrutEligible) {
 		notes.push('ממוצע בגרות עומד ברף קבלה ישירה (105 ומעלה) לחוגים זכאים כגון פסיכולוגיה ומדעי החברה.');
@@ -127,12 +160,14 @@ export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalc
 	return {
 		institutionId: 'huji',
 		institutionName: 'האוניברסיטה העברית בירושלים',
-		bagrutAverage: optimal.average,
+		bagrutAverage: avg,
 		optimalUnits: optimal.optimalUnits,
-		generalSekem,
-		engineeringSekem,
+		generalSekem: hujiScoreTo800(officialGeneral),
+		managementSekem: hujiScoreTo800(officialManagement),
+		engineeringSekem: hujiScoreTo800(officialEngineering),
+		quantitativeSekem: hujiScoreTo800(officialMedicine),
 		directBagrutEligible,
-		officialScore: officialScore || undefined,
+		officialScore: officialGeneral || undefined,
 		notes,
 		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
 	};

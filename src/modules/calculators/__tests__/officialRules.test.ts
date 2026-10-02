@@ -14,8 +14,10 @@ import {
 } from '../technion';
 import { calculateTauGeneralSekem, calculateTauManagementSekem, calculateTauOptimalBagrut, getTauBonus } from '../tau';
 import { calculateReichmanAdjustedScore, calculateReichmanOptimalBagrut } from '../reichman';
+import { calculateBarIlanOptimalBagrut, getBarIlanBonus, isBarIlanMandatorySubject } from '../barIlan';
 import { calculateHujiOptimalBagrut, calculateHujiWeightedScore, getHujiBonus, isHujiMandatorySubject } from '../huji';
 import {
+	calculateBguEngineeringSekem,
 	calculateBguGeneralSekem,
 	calculateBguOptimalBagrut,
 	calculateBguQuantitativeSekem,
@@ -229,6 +231,22 @@ describe('Official admission rules', () => {
 			assert.equal(calculateBguQuantitativeSekem(100, 120, 120, 120), 638);
 		});
 
+		it('BGU engineering sekem (סכם הנדסה) — 24 probes of …/acceptanceProbabilityMAIN', () => {
+			// [avg, Q, math grade, math units, physics grade (0 = none), official]
+			const probes: [number, number, number, number, number, number][] = [
+				[110, 145, 95, 5, 93, 574], [110, 145, 95, 5, 0, 556], [100, 125, 85, 4, 0, 429], [105, 135, 80, 5, 85, 514],
+				[105, 135, 90, 5, 0, 509], [105, 125, 90, 5, 0, 479], [105, 145, 90, 5, 0, 539], [100, 135, 90, 5, 0, 497],
+				[110, 135, 90, 5, 0, 521], [105, 135, 80, 5, 0, 499], [105, 135, 100, 5, 0, 519], [105, 135, 90, 4, 0, 475],
+				[105, 135, 80, 4, 0, 467], [105, 135, 90, 5, 90, 534], [105, 135, 90, 5, 80, 514], [105, 145, 90, 5, 90, 563],
+				[105, 135, 80, 5, 90, 523], [110, 135, 90, 5, 90, 534], [105, 135, 90, 4, 90, 500], [105, 115, 90, 5, 90, 474],
+				[105, 150, 90, 5, 90, 578], [105, 135, 90, 5, 100, 553], [105, 135, 100, 5, 90, 544], [105, 135, 80, 4, 90, 492]
+			];
+			for (const [avg, q, mg, mu, pg, official] of probes) {
+				const ours = calculateBguEngineeringSekem(mg, mu, 680, q, pg, pg ? 5 : 0, avg);
+				assert.equal(ours, official, JSON.stringify({ avg, q, mg, mu, pg }));
+			}
+		});
+
 		it('BGU: standalone sociology/psychology get no bonus, social sciences do', () => {
 			assert.equal(getBguBonus(sub('סוציולוגיה (מוגבר 5 יח"ל)', 5, 90)), 0);
 			assert.equal(getBguBonus(sub('פסיכולוגיה (מוגבר 5 יח"ל)', 5, 90)), 0);
@@ -252,6 +270,39 @@ describe('Official admission rules', () => {
 				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
 			]);
 			assert.equal(res.average, 111.38);
+		});
+	});
+
+	// biu.ac.il/registration-and-admission/information/general-admission-req/matriculation-calculation
+	describe('Bar-Ilan (bagrut average)', () => {
+		it('bonus table: math 35/15, enhanced group 25/12.5 (incl. civics, CS, Talmud), others 20/10', () => {
+			assert.equal(getBarIlanBonus(sub('מתמטיקה', 4, 90)), 15);
+			assert.equal(getBarIlanBonus(sub('אזרחות', 5, 90)), 25);
+			assert.equal(getBarIlanBonus(sub('מדעי המחשב', 4, 90)), 12.5);
+			assert.equal(getBarIlanBonus(sub('תושב"ע / תלמוד (מוגבר 5 יח"ל)', 5, 90)), 25);
+			assert.equal(getBarIlanBonus(sub('גיאוגרפיה', 5, 90)), 20);
+			assert.equal(getBarIlanBonus(sub('גיאוגרפיה', 4, 90)), 10);
+			assert.equal(getBarIlanBonus(sub('אנגלית', 5, 59)), 0);
+		});
+
+		it('profile A = 112.08 over 26 units, Bible+literature dropped (user-verified on shoham.biu.ac.il)', () => {
+			const res = calculateBarIlanOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(res.average, 112.08);
+			assert.equal(res.optimalUnits, 26);
+		});
+
+		it('Bible, literature and Jewish thought are droppable; average is not capped', () => {
+			assert.equal(isBarIlanMandatorySubject('תנ"ך'), false);
+			assert.equal(isBarIlanMandatorySubject('ספרות'), false);
+			assert.equal(isBarIlanMandatorySubject('מחשבת ישראל'), false);
+			assert.equal(isBarIlanMandatorySubject('אזרחות'), true);
+			const res = calculateBarIlanOptimalBagrut([
+				sub('מתמטיקה', 5, 100), sub('אנגלית', 5, 100), sub('היסטוריה', 5, 100), sub('אזרחות', 5, 100)
+			]);
+			assert.ok(res.average > 125);
 		});
 	});
 
