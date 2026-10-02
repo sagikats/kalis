@@ -10,6 +10,22 @@
 
 ---
 
+## 🗓️ 2026-10-02 (סשן 9) — Claude Code (Opus 5.5) — אכיפת תנאי סף + אפיקי "פסיכומטרי בלבד" / "בגרות בלבד"
+
+**בראנץ':** `feat/admission-routes` (מבוסס על `data/tau-thresholds`; נפרד לבקשת המשתמש כדי לא לפגוע במה שמוכן לפריסה)
+
+**מה נעשה:**
+- שדה חדש `admissionRoutes` לתוכנית ({minPsychometric, psychometricOnlyMin, bagrutOnlyMin}) — **רק** סקריפטי הייבוא הרשמיים ממלאים אותו (ב"ש, רייכמן). ניחושי ה-seed (minPsychometricFloor/directBagrutMinAverage גנריים) לא משנים סטטוס. עובר seed → prerequisites → repository → `/api/institutions`.
+- סוג סכם חדש `psychometric`: הסכם = הפסיכומטרי הכללי (`selectProgramSekem`; `calculateInstitution` ו-multiCalculator מצרפים psychometricGeneral). 19 מסלולי ב"ש בקבלה לפי פסיכומטרי בלבד (כלכלה 600, סיעוד 520...) מסומנים עכשיו רשמיים. ב"ש: 181/209.
+- `gapAnalyzer`: (1) minPsychometric רשמי חוסם את אפיק הסכם → "לא התקבלת" + הסבר + אפשרות שיפור; (2) bagrutOnlyMin / psychometricOnlyMin מקבלים לבד → "התקבלת (לפי בגרות/פסיכומטרי)"; (3) תצוגת רצפה רשמית בתנאים.
+- UI (`PersonalAdmissionReport`): שורת הסבר (אפיק/תנאי), תגית מתאימה ("התקבלת (לפי בגרות)", "חסר פסיכומטרי מינימלי"), ותנאי סף חסרים בשמם.
+- מתכנני המסלולים (`trackGenerator` למסך, `trackEngine` ל-API): בתוכניות פסיכומטרי-בלבד נשארים רק מסלולים שמגיעים לפסיכומטרי הנדרש (או לאפיק בגרות-בלבד) — לפני כן הוצע למשל "פסיכומטרי 571" לכלכלה ב"ש (שגוי) או מסלול שלא מגיע לסף.
+- בדיקות: `src/modules/optimizer/__tests__/admissionRoutes.test.ts` (7). סה"כ 219/219, build עובר. נבדק בדפדפן (Playwright).
+
+**הצעד הבא:** הצגה למשתמש + אישור: מיזוג `feat/admission-routes` ל-`data/tau-thresholds` ופריסה (גיבוי DB). אחר כך משימה 8 (המלצה לפסיכומטרי רשמי + שנת מבחן).
+
+---
+
 ## 🗓️ 2026-10-02 (סשן 8) — Claude Code (Opus 5.5) — ספי קבלה רשמיים: תל אביב + בן-גוריון + רייכמן + טכניון
 
 **בראנץ':** `data/tau-thresholds` (מבוסס על `data/huji-thresholds`, לא ממוזג)

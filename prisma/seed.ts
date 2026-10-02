@@ -246,6 +246,7 @@ async function main() {
 				prereqObj.thresholdSource = p.thresholdSource;
 				prereqObj.thresholdUpdatedAt = p.thresholdUpdatedAt;
 			}
+			if (p.admissionRoutes) prereqObj.admissionRoutes = p.admissionRoutes;
 			if (p.id === 'prog-inst-4-49' || p.id === 'prog-inst-4-50') {
 				prereqObj.directBagrutMath5Min = 80;
 				prereqObj.directBagrutMath4Min = 90;

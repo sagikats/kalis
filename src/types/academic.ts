@@ -20,12 +20,27 @@ export interface AcademicDegree {
      registrationStatus?: string | null;
      url?: string;
      /** Which institution score the threshold is compared against (overrides the name-based guess). */
-     relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative';
+     relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
      /** Threshold on the institution's own scale (e.g. HUJI weighted score 23.75), when sourced. */
      officialThreshold?: number | null;
      /** Where the threshold was taken from, and when. */
      thresholdSource?: string | null;
      thresholdUpdatedAt?: string | null;
+     /** Admission routes published by the institution (set only by the official-data importers). */
+     admissionRoutes?: AdmissionRoutes | null;
+}
+
+/**
+ * Official admission routes besides the main threshold, as published by the institution.
+ * Only these (never the seed's name-based guesses) may change the admission status.
+ */
+export interface AdmissionRoutes {
+     /** A minimum general psychometric score required in addition to the main threshold ("ובנוסף"). */
+     minPsychometric?: number;
+     /** Admission on the general psychometric score alone ("או פסיכומטרי X", "קבלה לפי פסיכומטרי"). */
+     psychometricOnlyMin?: number;
+     /** Admission on the institution's bagrut average alone ("קבלה לפי בגרות בלבד"). */
+     bagrutOnlyMin?: number;
 }
 
 export interface AcademicInstitution {

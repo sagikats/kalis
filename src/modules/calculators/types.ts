@@ -60,6 +60,8 @@ export interface InstitutionCalculatorResult {
 	managementSekem?: number;
 	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
+	/** The applicant's general psychometric score — the "score" of programs that admit by psychometric alone. */
+	psychometricGeneral?: number;
 	/** The institution's own score on its native scale, when it differs from the 200–800 comparison scale (e.g. HUJI weighted score ≈16–27, Reichman adjusted score with decimals). */
 	officialScore?: number;
 	notes: string[];

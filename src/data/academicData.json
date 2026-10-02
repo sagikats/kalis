@@ -4457,7 +4457,11 @@
         "officialThreshold": 400,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: אמנויות דו מחלקתי - אמנות חזותית : תכנית משולבת בתולדות האמנות ולימודי יצירה - קמפוס אילת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 400
+        }
       },
       {
         "id": "prog-bgu-34",
@@ -4480,7 +4484,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: אמנויות דו מחלקתי - אמנות חזותית : תכנית משולבת בתולדות האמנות ולימודי יצירה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-36",
@@ -4503,7 +4511,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: אמנויות דו מחלקתי - תולדות האמנות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-52",
@@ -4545,7 +4557,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ארכיאולוגיה דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-33",
@@ -4568,7 +4584,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: בלשנות דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 95,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-22",
@@ -4591,7 +4611,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: היסטוריה כללית דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-20",
@@ -4614,7 +4638,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: היסטוריה של עם ישראל דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-168",
@@ -4638,7 +4666,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסה ביו-רפואית חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-163",
@@ -4662,7 +4693,11 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסה כימית חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 109,
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-162",
@@ -4686,7 +4721,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 640,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסה כימית משולב לתואר כפול - כימיה וננוטכנולוגיה, הנדסה כימית",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 640
+        }
       },
       {
         "id": "prog-bgu-170",
@@ -4729,7 +4767,11 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת ביוטכנולוגיה חד-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 109,
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-177",
@@ -4753,7 +4795,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת בניין חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-176",
@@ -4777,7 +4822,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת בניין משולב לתואר כפול - הנדסת בניין עם מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-165",
@@ -4801,7 +4849,11 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חומרים חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 109,
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-166",
@@ -4825,7 +4877,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חומרים משולב לתואר כפול - חומרים ומכונות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-167",
@@ -4849,7 +4904,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חומרים משולב לתואר כפול - פיסיקה - הנדסת חומרים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-152",
@@ -4892,7 +4950,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חשמל ומחשבים חד מחלקתי - רעמים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-150",
@@ -4916,7 +4977,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חשמל ומחשבים חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-151",
@@ -4940,7 +5004,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חשמל ומחשבים משולב לתואר כפול - הנדסת חשמל ומחשבים והנדסת מכונות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-155",
@@ -4964,7 +5031,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 660,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חשמל ומחשבים משולב לתואר כפול - חשמל מדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        }
       },
       {
         "id": "prog-bgu-154",
@@ -4988,7 +5058,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חשמל ומחשבים משולב לתואר כפול - מתמטיקה והנדסת חשמל ומחשבים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-153",
@@ -5012,7 +5085,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת חשמל ומחשבים משולב לתואר כפול - פיסיקה חשמל",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-178",
@@ -5036,7 +5112,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מחשבים חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-157",
@@ -5060,7 +5139,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מכונות חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-160",
@@ -5084,7 +5166,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מכונות משולב לתואר כפול - הנדסת חשמל ומחשבים והנדסת מכונות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-158",
@@ -5108,7 +5193,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מכונות משולב לתואר כפול - הנדסת מכונות מתמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-161",
@@ -5132,7 +5220,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מכונות משולב לתואר כפול - חומרים ומכונות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-159",
@@ -5156,7 +5247,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מכונות משולב לתואר כפול - מכונות ופיסיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-173",
@@ -5180,7 +5274,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מערכות מידע חד מחלקתי - מסלול מותאם",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-172",
@@ -5204,7 +5301,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מערכות מידע חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-171",
@@ -5228,7 +5328,10 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת מערכות תקשורת חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-179",
@@ -5252,7 +5355,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת נתונים חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-175",
@@ -5276,7 +5382,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת תכנה חד מחלקתי - 1",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-174",
@@ -5300,7 +5409,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת תכנה חד מחלקתי - תכנית פסגות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-164",
@@ -5324,7 +5436,11 @@
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: הנדסת תעשיה וניהול חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 109,
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-189",
@@ -5385,7 +5501,11 @@
         "officialThreshold": 470,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: חינוך דו-מחלקתי - קמפוס אילת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 90,
+          "psychometricOnlyMin": 470
+        }
       },
       {
         "id": "prog-bgu-29",
@@ -5408,7 +5528,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: חינוך דו-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 96,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-27",
@@ -5427,7 +5551,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Education_degree_1.aspx",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 107
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: חינוך ראשי - הוראה, למידה ותוכניות לימודים (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-26",
@@ -5446,7 +5577,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Education_degree_1.aspx",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 107
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: חינוך ראשי - מנהל ומדיניות חינוך (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-30",
@@ -5465,7 +5603,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Education_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 107
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: חינוך ראשי - פסיכולוגיה במערכת החינוכית (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-209",
@@ -5527,7 +5672,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה דו מחלקתי - אינפוכימיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-108",
@@ -5551,7 +5700,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה דו מחלקתי - מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-104",
@@ -5575,7 +5728,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה דו מחלקתי - עם מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-107",
@@ -5599,7 +5756,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה דו מחלקתי - פיזיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-109",
@@ -5623,7 +5784,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה חד מחלקתי - כימיה פיזיקלית קוונטית",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-111",
@@ -5647,7 +5812,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה חד מחלקתי - כימיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-110",
@@ -5671,7 +5840,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 640,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה משולב לתואר כפול - כימיה וננוטכנולוגיה, הנדסה כימית",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 640
+        }
       },
       {
         "id": "prog-bgu-106",
@@ -5695,7 +5867,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה משולב תואר כפול - ביופיזיקה-ביואינפורמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-105",
@@ -5719,7 +5894,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה ראשי - מדעי הטבע",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-112",
@@ -5743,7 +5922,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כימיה ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-41",
@@ -5762,7 +5945,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Economics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 107
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כלכלה דו מחלקתי (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-43",
@@ -5781,7 +5971,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Economics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 620,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כלכלה חד מחלקתי - חשבונאות (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-40",
@@ -5800,7 +5995,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Economics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 107
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כלכלה חד מחלקתי - מנהל עסקים (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-44",
@@ -5819,7 +6021,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Economics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כלכלה חד מחלקתי - מצטיינים - מנהל עסקים (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-42",
@@ -5838,7 +6045,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Economics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 107
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: כלכלה ראשי (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-59",
@@ -5861,7 +6075,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודי אפריקה דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-18",
@@ -5884,7 +6102,11 @@
         "officialThreshold": 470,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודי המזרח התיכון דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 470
+        }
       },
       {
         "id": "prog-bgu-19",
@@ -5907,7 +6129,11 @@
         "officialThreshold": 470,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודי המזרח התיכון ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 470
+        }
       },
       {
         "id": "prog-bgu-54",
@@ -5949,7 +6175,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודי מדינת ישראל דו מחלקתי - לומדים על מדים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-53",
@@ -5972,7 +6202,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודי מדינת ישראל דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-48",
@@ -6014,7 +6248,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודים רב תחומיים דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-50",
@@ -6037,7 +6275,11 @@
         "officialThreshold": 500,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודים רב תחומיים מדעי החברה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 95,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-51",
@@ -6060,7 +6302,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לימודים רב תחומיים מדעי הרוח",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-17",
@@ -6083,7 +6329,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: לשון עברית דו-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-181",
@@ -6102,7 +6352,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/health/Nursing%20degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 520,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי האחיות (סיעוד) חד-מחלקתי - קמפוס אילת (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-182",
@@ -6121,7 +6376,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/health/Nursing%20degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 520,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי האחיות (סיעוד) חד-מחלקתי (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-39",
@@ -6145,7 +6405,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי ההתנהגות חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-127",
@@ -6164,7 +6428,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Life_Sciences_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 106
+        "directBagrutMinAverage": 106,
+        "officialThreshold": 585,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים חד מחלקתי - ביולוגיה וביוטכנולוגיה ימית - קמפוס אילת (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-121",
@@ -6188,7 +6459,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - גיאוגרפיה ופיתוח סביבתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-118",
@@ -6212,7 +6487,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - המחלקה לניהול",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-124",
@@ -6236,7 +6515,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - המחלקה לסטטיסטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-117",
@@ -6260,7 +6543,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - כימיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-115",
@@ -6284,7 +6571,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - מדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-125",
@@ -6308,7 +6598,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - מדעי הקוגניציה והמוח",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-120",
@@ -6332,7 +6626,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - מחלקות הפקולטה למדעי הרוח והחברה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-116",
@@ -6356,7 +6654,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - פיזיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-122",
@@ -6375,7 +6677,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Life_Sciences_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 670,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - פסיכוביולוגיה (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-114",
@@ -6399,7 +6706,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים דו מחלקתי - קיימות ושמירת סביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-119",
@@ -6423,7 +6734,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים חד מחלקתי - מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-126",
@@ -6447,7 +6762,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים משולב לתואר כפול - ביולוגיה וביוטכנולוגיה ימית",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-123",
@@ -6471,7 +6790,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים משולב לתואר כפול - מדעי החיים עם מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-113",
@@ -6495,7 +6818,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים ראשי - עם מדעי הטבע",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-128",
@@ -6519,7 +6846,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי החיים ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-80",
@@ -6543,7 +6874,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - המחלקה לניהול",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-81",
@@ -6567,7 +6901,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - יזמות וחדשנות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-87",
@@ -6591,7 +6928,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-89",
@@ -6615,7 +6955,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - מדעי הקוגניציה והמוח",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-85",
@@ -6639,7 +6982,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - מדעי הרוח והחברה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-76",
@@ -6663,7 +7009,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - מדעי כדור הארץ",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-79",
@@ -6687,7 +7036,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - מתמטיקה ומדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-84",
@@ -6711,7 +7063,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב חד מחלקתי - ביואינפורמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-82",
@@ -6735,7 +7090,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב חד מחלקתי - מדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-83",
@@ -6759,7 +7117,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב חד מחלקתי - מדעי הנתונים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-86",
@@ -6783,7 +7144,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב משולב לתואר כפול - פיסיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-78",
@@ -6807,7 +7171,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב משולב לתואר כפול - ביופיסיקה-ביואינפורמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-74",
@@ -6831,7 +7198,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 660,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב משולב לתואר כפול - הנדסת חשמל ומחשבים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        }
       },
       {
         "id": "prog-bgu-75",
@@ -6855,7 +7225,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב משולב לתואר כפול - מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-88",
@@ -6879,7 +7252,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב ראשי - מחלקות מדעי הטבע",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-77",
@@ -6903,7 +7279,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-184",
@@ -6927,7 +7306,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המעבדה הרפואית חד-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-24",
@@ -6950,7 +7333,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הסביבה, גאואינפורמטיקה ותכנון ערים-גאוגרפיה דו-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-25",
@@ -6973,7 +7360,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הסביבה, גאואינפורמטיקה ותכנון ערים-גאוגרפיה חד-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-23",
@@ -6996,7 +7387,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הסביבה, גאואינפורמטיקה ותכנון ערים-גאוגרפיה ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-4",
@@ -7020,7 +7415,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח דו מחלקתי עם מדעי הטבע - שילוב עם מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-1",
@@ -7063,7 +7462,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח דו מחלקתי עם מדעי הטבע - שילוב עם מתמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-5",
@@ -7106,7 +7509,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח דו מחלקתי עם מדעי הרוח והחברה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-6",
@@ -7130,7 +7537,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-3",
@@ -7154,7 +7565,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-8",
@@ -7178,7 +7593,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-9",
@@ -7202,7 +7621,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-140",
@@ -7225,7 +7648,10 @@
         "officialThreshold": 630,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - המחלקה לסטטיסטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-142",
@@ -7249,7 +7675,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - כימיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-131",
@@ -7273,7 +7703,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - מדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-137",
@@ -7296,7 +7729,10 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - מחלקות הפקולטה למדעי הרוח והחברה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-132",
@@ -7319,7 +7755,10 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - מתמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-129",
@@ -7343,7 +7782,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - פיזיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-136",
@@ -7366,7 +7809,10 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה דו מחלקתי - קיימות ושמירת סביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-130",
@@ -7389,7 +7835,10 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-138",
@@ -7413,14 +7862,18 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה משולב לתואר כפול - מדעי החיים - במגמה לביולוגיה וביוטכנולוגיה ימית",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-135",
         "fieldOfStudy": "מדעי כדור הארץ והסביבה (מדעי כדור הארץ והסביבה משולב לתואר כפול - מדעי כדור הארץ והסביבה והנדסת בניין)",
         "degreeLevel": "תואר ראשון",
         "description": "משולב לתואר כפול",
-        "admissionThreshold": 640,
+        "admissionThreshold": 620,
         "sekemScore": null,
         "psychometricScore": 640,
         "mathRequirement": null,
@@ -7432,7 +7885,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/geology_environment_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 620,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה משולב לתואר כפול - מדעי כדור הארץ והסביבה והנדסת בניין (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-139",
@@ -7456,7 +7914,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה משולב לתואר כפול - מדעי כדור הארץ והסביבה ומדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-134",
@@ -7480,7 +7941,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה משולב לתואר כפול - מדעי כדור הארץ והסביבה עם מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-133",
@@ -7503,7 +7968,10 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה ראשי - מדעי הטבע",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-141",
@@ -7526,7 +7994,10 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי כדור הארץ והסביבה ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-58",
@@ -7568,7 +8039,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מחשבת ישראל דו-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-71",
@@ -7591,7 +8066,8 @@
         "officialThreshold": 630,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מתמטיקה דו מחלקתי - המחלקה לסטטיסטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {}
       },
       {
         "id": "prog-bgu-64",
@@ -7610,7 +8086,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Mathematics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 115
+        "directBagrutMinAverage": 115,
+        "officialThreshold": 620,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מתמטיקה דו מחלקתי - מדעי הקוגניציה והמוח (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-73",
@@ -7652,7 +8135,8 @@
         "officialThreshold": 575,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מתמטיקה דו מחלקתי - מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {}
       },
       {
         "id": "prog-bgu-66",
@@ -7714,7 +8198,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מתמטיקה דו מחלקתי - פיזיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-65",
@@ -7771,7 +8259,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Mathematics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 650,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מתמטיקה משולב לתואר כפול - והנדסת חשמל ומחשבים (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-62",
@@ -7790,7 +8283,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Mathematics_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 650,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מתמטיקה משולב לתואר כפול - והנדסת מכונות (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-68",
@@ -7851,7 +8349,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול דו מחלקתי - קמפוס אילת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 102,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-200",
@@ -7870,14 +8372,21 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/fom/Management_Degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 106
+        "directBagrutMinAverage": 106,
+        "officialThreshold": 600,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול דו מחלקתי - מדעי החיים (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-199",
         "fieldOfStudy": "ניהול (ניהול דו מחלקתי - מדעי המחשב)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 655,
+        "admissionThreshold": 650,
         "sekemScore": null,
         "psychometricScore": 655,
         "mathRequirement": "88/4 או 78/5",
@@ -7889,7 +8398,12 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/fom/Management_Degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 650,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {},
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול דו מחלקתי - מדעי המחשב (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-194",
@@ -7912,7 +8426,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול דו מחלקתי דו שנתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "psychometricOnlyMin": 600
+        }
       },
       {
         "id": "prog-bgu-191",
@@ -7935,7 +8453,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "psychometricOnlyMin": 600
+        }
       },
       {
         "id": "prog-bgu-190",
@@ -7958,7 +8480,11 @@
         "officialThreshold": 580,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול חד מחלקתי - התנהגות ארגונית וניהול משאבי אנוש",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "psychometricOnlyMin": 580
+        }
       },
       {
         "id": "prog-bgu-195",
@@ -7981,7 +8507,11 @@
         "officialThreshold": 580,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול חד מחלקתי - יזמות וחדשנות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "psychometricOnlyMin": 580
+        }
       },
       {
         "id": "prog-bgu-198",
@@ -8004,7 +8534,11 @@
         "officialThreshold": 580,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול חד מחלקתי - מימון",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "psychometricOnlyMin": 580
+        }
       },
       {
         "id": "prog-bgu-192",
@@ -8027,7 +8561,11 @@
         "officialThreshold": 580,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול חד מחלקתי - שיווק",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "psychometricOnlyMin": 580
+        }
       },
       {
         "id": "prog-bgu-193",
@@ -8069,7 +8607,10 @@
         "officialThreshold": 630,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול ניהול מערכות מידע",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "psychometricOnlyMin": 630
+        }
       },
       {
         "id": "prog-bgu-60",
@@ -8111,7 +8652,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול מערכות בריאות דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-207",
@@ -8134,7 +8679,10 @@
         "officialThreshold": 550,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול מערכות בריאות חד מחלקתי - ניהול מחקרים קליניים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "psychometricOnlyMin": 550
+        }
       },
       {
         "id": "prog-bgu-205",
@@ -8157,7 +8705,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול מערכות בריאות חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-204",
@@ -8199,7 +8751,11 @@
         "officialThreshold": 500,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול תיירות ופנאי דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 80,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-201",
@@ -8222,7 +8778,11 @@
         "officialThreshold": 500,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול תיירות ופנאי חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 80,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-202",
@@ -8264,7 +8824,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: סוציולוגיה ואנתרופולוגיה דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-146",
@@ -8306,7 +8870,10 @@
         "officialThreshold": 630,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: סטטיסטיקה וניתוח נתונים דו מחלקתי - שילוב עם כימיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105
+        }
       },
       {
         "id": "prog-bgu-147",
@@ -8330,7 +8897,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 585,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: סטטיסטיקה וניתוח נתונים דו מחלקתי - שילוב עם מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 585
+        }
       },
       {
         "id": "prog-bgu-149",
@@ -8353,7 +8924,10 @@
         "officialThreshold": 630,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: סטטיסטיקה וניתוח נתונים דו מחלקתי - שילוב עם מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        }
       },
       {
         "id": "prog-bgu-145",
@@ -8376,7 +8950,8 @@
         "officialThreshold": 630,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: סטטיסטיקה וניתוח נתונים דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {}
       },
       {
         "id": "prog-bgu-32",
@@ -8399,7 +8974,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ספרויות זרות דו מחלקתי - ספרות אנגלית",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 95,
+          "psychometricOnlyMin": 520
+        }
       },
       {
         "id": "prog-bgu-16",
@@ -8422,7 +9001,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ספרות עברית דו-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-15",
@@ -8445,7 +9028,11 @@
         "officialThreshold": 450,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ספרות עברית ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 450
+        }
       },
       {
         "id": "prog-bgu-45",
@@ -8469,7 +9056,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 500,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: עבודה סוציאלית חד מחלקתי - קמפוס אילת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 95,
+          "minPsychometric": 500
+        }
       },
       {
         "id": "prog-bgu-47",
@@ -8493,7 +9084,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: עבודה סוציאלית חד מחלקתי - לימודי נוער",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 108,
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-46",
@@ -8517,7 +9112,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 550,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: עבודה סוציאלית חד מחלקתי - מסלול רגיל",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 108,
+          "minPsychometric": 550
+        }
       },
       {
         "id": "prog-bgu-38",
@@ -8540,7 +9139,11 @@
         "officialThreshold": 500,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פוליטיקה וממשל דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-183",
@@ -8564,7 +9167,10 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 667,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיותרפיה חד-מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 667
+        }
       },
       {
         "id": "prog-bgu-91",
@@ -8588,7 +9194,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה דו מחלקתי - כימיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-101",
@@ -8612,7 +9222,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה דו מחלקתי - מדעי החיים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-90",
@@ -8636,7 +9250,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה דו מחלקתי - מדעי הקוגניציה והמח",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-bgu-93",
@@ -8660,7 +9278,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה דו מחלקתי - מדעי כדור הארץ והסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-94",
@@ -8684,7 +9306,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה דו מחלקתי - מתמטיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-98",
@@ -8708,7 +9334,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה דו מחלקתי - פסיכולוגיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-100",
@@ -8732,7 +9362,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-96",
@@ -8756,7 +9390,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה משולב לתואר כפול - פיזיקה והנדסת חומרים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-99",
@@ -8780,7 +9417,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה משולב לתואר כפול - פיזיקה והנדסת חשמל",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-97",
@@ -8804,7 +9444,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה משולב לתואר כפול - פיזיקה והנדסת מכונות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-95",
@@ -8828,7 +9471,10 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה משולב לתואר כפול - פיזיקה ומדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-92",
@@ -8852,7 +9498,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה ראשי - מדעי הטבע",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-102",
@@ -8876,7 +9526,11 @@
         "relevantSekemType": "quantitative",
         "minPsychometricFloor": 600,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פיזיקה ראשי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 600
+        }
       },
       {
         "id": "prog-bgu-31",
@@ -8899,7 +9553,11 @@
         "officialThreshold": 500,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פילוסופיה דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "psychometricOnlyMin": 500
+        }
       },
       {
         "id": "prog-bgu-13",
@@ -8922,7 +9580,11 @@
         "officialThreshold": 550,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פסיכולוגיה דו מחלקתי - קמפוס אילת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "psychometricOnlyMin": 550
+        }
       },
       {
         "id": "prog-bgu-11",
@@ -8946,7 +9608,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פסיכולוגיה דו מחלקתי - פיסיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-10",
@@ -8970,7 +9636,10 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 670,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פסיכולוגיה דו מחלקתי - פסיכוביולוגיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 670
+        }
       },
       {
         "id": "prog-bgu-12",
@@ -8994,7 +9663,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 650,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: פסיכולוגיה דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "minPsychometric": 650
+        }
       },
       {
         "id": "prog-bgu-143",
@@ -9056,7 +9729,10 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 580,
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: רוקחות חד מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 580
+        }
       },
       {
         "id": "prog-bgu-188",
@@ -9101,7 +9777,7 @@
         "fieldOfStudy": "רפואת חרום (רפואת חרום חד-מחלקתי)",
         "degreeLevel": "תואר ראשון",
         "description": "חד-מחלקתי",
-        "admissionThreshold": 520,
+        "admissionThreshold": 540,
         "sekemScore": null,
         "psychometricScore": 520,
         "mathRequirement": null,
@@ -9113,7 +9789,14 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/health/Emergency_Medicine_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 540,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100
+        },
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: רפואת חרום חד-מחלקתי (פסיכומטרי בלבד)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-57",
@@ -9136,7 +9819,11 @@
         "officialThreshold": 470,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: תקשורת דו מחלקתי - קמפוס אילת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 90,
+          "psychometricOnlyMin": 470
+        }
       },
       {
         "id": "prog-bgu-56",
@@ -9159,7 +9846,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: תקשורת דו מחלקתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 98,
+          "psychometricOnlyMin": 520
+        }
       }
     ]
   },
@@ -19934,7 +20625,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 680
+        }
       },
       {
         "id": "prog-reichman-2",
@@ -19962,7 +20657,12 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 660,
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "psychometricOnlyMin": 720,
+          "minPsychometric": 660
+        }
       },
       {
         "id": "prog-inst-38-4",
@@ -19977,7 +20677,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: ממשל / ממשל וקיימות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 89,
+          "psychometricOnlyMin": 650
+        }
       },
       {
         "id": "prog-inst-38-5",
@@ -19992,7 +20696,11 @@
         "officialThreshold": 630,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מנהל עסקים חד חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 700
+        }
       },
       {
         "id": "prog-inst-38-6",
@@ -20019,7 +20727,11 @@
         "officialThreshold": 620,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: פסיכולוגיה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 640
+        }
       },
       {
         "id": "prog-inst-38-8",
@@ -20047,7 +20759,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 680
+        }
       },
       {
         "id": "prog-inst-38-11",
@@ -20063,7 +20779,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: ממשל / ממשל וקיימות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 89,
+          "psychometricOnlyMin": 650
+        }
       },
       {
         "id": "prog-inst-38-9",
@@ -20078,7 +20798,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: תקשורת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 89,
+          "psychometricOnlyMin": 620
+        }
       },
       {
         "id": "prog-inst-38-13",
@@ -20112,7 +20836,12 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 660,
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 113,
+          "psychometricOnlyMin": 720,
+          "minPsychometric": 660
+        }
       },
       {
         "id": "prog-inst-38-15",
@@ -20130,7 +20859,12 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 610,
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: משפטים תארים כפולים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 700,
+          "minPsychometric": 610
+        }
       },
       {
         "id": "prog-inst-38-16",
@@ -20148,7 +20882,12 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 610,
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: משפטים תארים כפולים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 700,
+          "minPsychometric": 610
+        }
       },
       {
         "id": "prog-inst-38-17",
@@ -20165,7 +20904,11 @@
         "officialThreshold": 630,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מנהל עסקים ויזמות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 650
+        }
       },
       {
         "id": "prog-inst-38-18",
@@ -20222,7 +20965,11 @@
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: התכנית בחשבונאות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 103,
+          "minPsychometric": 620
+        }
       },
       {
         "id": "prog-inst-38-22",
@@ -20239,7 +20986,11 @@
         "officialThreshold": 600,
         "relevantSekemType": "general",
         "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 680
+        }
       },
       {
         "id": "prog-inst-38-23",

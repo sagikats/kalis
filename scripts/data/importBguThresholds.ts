@@ -8,8 +8,9 @@
  *
  * Per track: psycho_sekem = sekem threshold, sekem_label = which sekem (general / quantitative / engineering),
  * psycho_and_or "ובנוסף" + psycho_value = an extra minimum psychometric, "או" + psycho_value = a psychometric-only
- * route, bagrut_average = bagrut-only route. Tracks admitting by psychometric alone (no sekem) are left unverified:
- * the platform compares a sekem, not a raw psychometric score, against the threshold.
+ * route, bagrut_average = bagrut-only route. Tracks admitting by psychometric alone (no sekem) get the
+ * 'psychometric' score type, so the platform compares the applicant's psychometric score with the threshold.
+ * The routes are stored in `admissionRoutes`, which (unlike the catalog's estimates) may change the admission status.
  */
 
 import fs from 'fs';
@@ -59,15 +60,35 @@ function main() {
 			continue;
 		}
 		p.directBagrutMinAverage = row.bagrut_average ?? null;
+		const routes: Record<string, number> = {};
+		if (row.bagrut_average) routes.bagrutOnlyMin = row.bagrut_average;
+
 		if (!row.psycho_sekem) {
-			psychOnly.push(`${p.fieldOfStudy}: psychometric ${row.psycho_value ?? '—'}, bagrut-only ${row.bagrut_average ?? '—'}`);
+			if (!row.psycho_value) {
+				psychOnly.push(`${p.fieldOfStudy}: no numeric route published (bagrut-only ${row.bagrut_average ?? '—'})`);
+				continue;
+			}
+			// Admission by the general psychometric score alone
+			const old = p.admissionThreshold;
+			p.officialThreshold = row.psycho_value;
+			p.admissionThreshold = row.psycho_value;
+			p.relevantSekemType = 'psychometric';
+			p.admissionRoutes = routes;
+			p.thresholdSource = `${SOURCE} — חתכי קבלה סתו תשפ"ז: ${norm(row.path_dsc)} (פסיכומטרי בלבד)`;
+			p.thresholdUpdatedAt = UPDATED_AT;
+			report.push(`${norm(row.path_dsc)}: ${old} -> psychometric ${row.psycho_value}${row.bagrut_average ? `, bagrut-only ${row.bagrut_average}` : ''}`);
 			continue;
 		}
 		const old = p.admissionThreshold;
 		p.officialThreshold = row.psycho_sekem;
 		p.admissionThreshold = row.psycho_sekem;
 		p.relevantSekemType = sekemTypeFor(row.sekem_label);
-		if (row.psycho_and_or?.includes('ובנוסף') && row.psycho_value) p.minPsychometricFloor = row.psycho_value;
+		if (row.psycho_and_or?.includes('ובנוסף') && row.psycho_value) {
+			p.minPsychometricFloor = row.psycho_value;
+			routes.minPsychometric = row.psycho_value;
+		}
+		if (row.psycho_and_or?.trim() === 'או' && row.psycho_value) routes.psychometricOnlyMin = row.psycho_value;
+		p.admissionRoutes = routes;
 		p.thresholdSource = `${SOURCE} — חתכי קבלה סתו תשפ"ז: ${norm(row.path_dsc)}`;
 		p.thresholdUpdatedAt = UPDATED_AT;
 		report.push(`${norm(row.path_dsc)}: ${old} -> ${row.psycho_sekem} (${p.relevantSekemType}${p.minPsychometricFloor ? `, min psych ${p.minPsychometricFloor}` : ''})`);
@@ -76,7 +97,7 @@ function main() {
 	fs.writeFileSync(JSON_PATH, JSON.stringify(data, null, 2) + '\n');
 	console.log(`Updated ${report.length} BGU programs`);
 	for (const l of report) console.log('  ' + l);
-	console.log(`\nPsychometric-only tracks (${psychOnly.length}) — left unverified:`);
+	console.log(`\nTracks without a numeric route (${psychOnly.length}) — left unverified:`);
 	for (const l of psychOnly) console.log('  ' + l);
 	console.log(`\nUnmatched (${unmatched.length}):`);
 	for (const l of unmatched) console.log('  ' + l);

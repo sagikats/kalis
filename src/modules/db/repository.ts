@@ -242,7 +242,8 @@ export class KalisDatabaseRepository {
 						directBagrutMinAverage: directThreshold ?? undefined,
 						officialThreshold: p.officialThreshold ?? undefined,
 						thresholdSource: p.thresholdSource ?? undefined,
-						thresholdUpdatedAt: p.thresholdUpdatedAt ?? undefined
+						thresholdUpdatedAt: p.thresholdUpdatedAt ?? undefined,
+						admissionRoutes: p.admissionRoutes ?? undefined
 					},
 					url: p.url,
 					createdAt: new Date(),
@@ -327,7 +328,8 @@ export class KalisDatabaseRepository {
 							mandatorySubjects: prereq.mandatorySubjects,
 							officialThreshold: prereq.officialThreshold,
 							thresholdSource: prereq.thresholdSource,
-							thresholdUpdatedAt: prereq.thresholdUpdatedAt
+							thresholdUpdatedAt: prereq.thresholdUpdatedAt,
+							admissionRoutes: prereq.admissionRoutes
 						},
 						description: p.description ?? undefined,
 						comments: p.comments ?? undefined,

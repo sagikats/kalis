@@ -13,11 +13,11 @@ const byId = (id: string) => bgu.find((p) => p.id === id);
 describe('BGU official thresholds', () => {
 	it('every sourced program carries the sekem type from the official label and a source', () => {
 		const sourced = bgu.filter((p) => p.officialThreshold !== undefined);
-		assert.ok(sourced.length >= 150, `expected ~160 sourced programs, got ${sourced.length}`);
+		assert.ok(sourced.length >= 175, `expected ~181 sourced programs, got ${sourced.length}`);
 		for (const p of sourced) {
 			assert.equal(p.admissionThreshold, p.officialThreshold, p.fieldOfStudy);
 			assert.ok(p.thresholdSource?.startsWith('https://apps4cloud.bgu.ac.il/calcprod/'), p.fieldOfStudy);
-			assert.ok(['general', 'quantitative', 'engineering'].includes(p.relevantSekemType), p.fieldOfStudy);
+			assert.ok(['general', 'quantitative', 'engineering', 'psychometric'].includes(p.relevantSekemType), p.fieldOfStudy);
 		}
 	});
 

@@ -256,8 +256,17 @@ function ProgramReportCard({
 		? 'text-[#453D78] bg-[#F2F1F8] border-[#D2CEEB]'
 		: 'text-[#9B3327] bg-[#FDF1EE] border-[#F1CAC1]';
 
+	const blockedByPsychFloor =
+		!isAccepted && item.gap >= 0 && item.improvementOptions.some((o) => o.id === 'opt-psych-floor');
+
 	const badgeText = isAccepted
-		? `התקבלת (+${item.gap})`
+		? item.admissionRoute === 'bagrut_only'
+			? 'התקבלת (לפי בגרות)'
+			: item.admissionRoute === 'psychometric_only'
+			? 'התקבלת (לפי פסיכומטרי)'
+			: `התקבלת (+${item.gap})`
+		: blockedByPsychFloor
+		? 'חסר פסיכומטרי מינימלי'
 		: isBorderline
 		? `על הגבול (${item.gap})`
 		: isNoThreshold
@@ -315,11 +324,24 @@ function ProgramReportCard({
 					</div>
 				)}
 
+				{/* Official admission route / condition that decided the status */}
+				{item.admissionNote && (
+					<div
+						className={`p-2.5 rounded-xl text-[11px] font-medium border ${
+							item.status === 'accepted'
+								? 'bg-[#EEF6EF] border-[#C9E2CD] text-[#2E6B3A]'
+								: 'bg-[#FBEDEC] border-[#EBC5C1] text-[#8A2F26]'
+						}`}
+					>
+						{item.admissionNote}
+					</div>
+				)}
+
 				{/* Prerequisite alerts preview */}
 				{item.missingPrerequisites.length > 0 && (
 					<div className="p-2.5 rounded-xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium flex items-center gap-1.5">
 						<AlertCircle className="h-3.5 w-3.5 shrink-0" />
-						<span>חסרים {item.missingPrerequisites.length} תנאי סף ריאליים (מתמטיקה/פיזיקה)</span>
+						<span>חסרים {item.missingPrerequisites.length} תנאי סף: {item.missingPrerequisites.map((p) => p.name).join(', ')}</span>
 					</div>
 				)}
 			</div>

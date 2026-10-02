@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
 					officialThreshold: p.prerequisites?.officialThreshold,
 					thresholdSource: p.prerequisites?.thresholdSource,
 					thresholdUpdatedAt: p.prerequisites?.thresholdUpdatedAt,
+					admissionRoutes: p.prerequisites?.admissionRoutes,
 					description: p.description,
 					comments: p.comments,
 					url: p.url

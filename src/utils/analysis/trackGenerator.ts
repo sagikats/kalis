@@ -1024,6 +1024,30 @@ export function generatePersonalizedTracks(
 	institutionRes: InstitutionSekemResult,
 	inputAnswers?: Partial<UserPreferencesQuestionnaire>
 ): RecommendedTrack[] {
+	const tracks = generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes, inputAnswers);
+	if (gapAnalysis.relevantSekemType !== 'psychometric' || gapAnalysis.threshold === null) return tracks;
+
+	// Psychometric-only programs: bagrut upgrades can't move the score, so only two plans make sense —
+	// reach the required psychometric, or (when the institution publishes one) the bagrut-only average.
+	const threshold = gapAnalysis.threshold;
+	const bagrutOnlyMin = gapAnalysis.admissionRoutes?.bagrutOnlyMin;
+	const current = userProfile.psychometricGeneral || 0;
+	const useful = tracks.filter((t) => {
+		const isBagrutRoute = t.id.includes('direct');
+		if (isBagrutRoute) return bagrutOnlyMin !== undefined && (t.targetBagrutAverage ?? 0) >= bagrutOnlyMin;
+		return (t.targetPsychometric ?? current) >= threshold && t.recommendedSubjectImprovements.length === 0;
+	});
+	if (useful.length > 0) return useful;
+	const reachesScore = tracks.filter((t) => (t.targetPsychometric ?? 0) >= threshold);
+	return reachesScore.length > 0 ? reachesScore : tracks;
+}
+
+function generateAllPersonalizedTracks(
+	gapAnalysis: ProgramGapAnalysis,
+	userProfile: UserAcademicProfile,
+	institutionRes: InstitutionSekemResult,
+	inputAnswers?: Partial<UserPreferencesQuestionnaire>
+): RecommendedTrack[] {
 	const answers: UserPreferencesQuestionnaire = {
 		...DEFAULT_USER_PREFERENCES,
 		...(inputAnswers || {})

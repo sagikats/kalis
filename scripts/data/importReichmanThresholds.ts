@@ -63,6 +63,12 @@ function main() {
 		p.relevantSekemType = 'general';
 		p.directBagrutMinAverage = row.bagrut;
 		if (row.minPsychInMatched) p.minPsychometricFloor = row.minPsychInMatched;
+		// Official routes: matched score (+ min psychometric), bagrut alone, or psychometric alone
+		p.admissionRoutes = {
+			bagrutOnlyMin: row.bagrut,
+			...(row.psychometric ? { psychometricOnlyMin: row.psychometric } : {}),
+			...(row.minPsychInMatched ? { minPsychometric: row.minPsychInMatched } : {})
+		};
 		p.thresholdSource = `${table.source} — טבלת ספים תשפ"ה: ${row.program}`;
 		p.thresholdUpdatedAt = UPDATED_AT;
 		report.push(`${p.fieldOfStudy}: ${old} -> ${row.matched} (bagrut-only ${row.bagrut})`);

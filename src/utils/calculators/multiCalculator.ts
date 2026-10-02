@@ -36,6 +36,8 @@ export interface InstitutionSekemResult {
 	managementSekem?: number;
 	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
+	/** The applicant's effective general psychometric score (for psychometric-only programs). */
+	psychometricGeneral?: number;
 	/** Institution's own score on its native scale (HUJI weighted score ≈16–27). */
 	officialScore?: number;
 	notes?: string;
@@ -277,5 +279,8 @@ export function calculateMultiInstitutionSekem(
 		}
 	};
 
-	return selectedInstitutionIds.map((id) => allInstitutions[id]).filter(Boolean);
+	return selectedInstitutionIds
+		.map((id) => allInstitutions[id])
+		.filter(Boolean)
+		.map((r) => ({ ...r, psychometricGeneral: psych || 0 }));
 }
