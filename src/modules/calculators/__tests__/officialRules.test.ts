@@ -29,10 +29,10 @@ const sub = (name: string, units: number, grade: number) => ({ name, units, grad
 describe('Official admission rules', () => {
 	// admissions.technion.ac.il — מקדמי הטבה, נוסחאות הסכם, כיצד מחשבים את ממוצע הבגרות המיטבי
 	describe('Technion', () => {
-		it('bonus table: math 5u +30, sciences 5u +25, humanities/English 5u +20, 4u +10', () => {
+		it('bonus table: math 5u +30, English and sciences 5u +25, humanities 5u +20, 4u +10', () => {
 			assert.equal(getTechnionBonus(sub('מתמטיקה', 5, 90), false), 30);
 			assert.equal(getTechnionBonus(sub('פיזיקה', 5, 90), false), 25);
-			assert.equal(getTechnionBonus(sub('אנגלית', 5, 90), false), 20);
+			assert.equal(getTechnionBonus(sub('אנגלית', 5, 90), false), 25);
 			assert.equal(getTechnionBonus(sub('היסטוריה', 5, 90), false), 20);
 			assert.equal(getTechnionBonus(sub('מתמטיקה', 4, 90), false), 10);
 		});
@@ -64,9 +64,9 @@ describe('Official admission rules', () => {
 		});
 
 		it('math counts double for 4u and 5u', () => {
-			// math 5u 100(+30) weight 10, English 5u 60(+20) weight 5, civics 2u 60 weight 2, history 3u 60 weight 3
+			// math 5u 100(+30) weight 10, English 5u 60(+25) weight 5, civics 2u 60 weight 2, history 3u 60 weight 3
 			const subs = [sub('מתמטיקה', 5, 100), sub('אנגלית', 5, 60), sub('אזרחות', 2, 60), sub('היסטוריה', 3, 60)];
-			const expected = Math.round(((130 * 10 + 80 * 5 + 60 * 2 + 60 * 3) / 20) * 10) / 10;
+			const expected = Math.round(((130 * 10 + 85 * 5 + 60 * 2 + 60 * 3) / 20) * 10) / 10;
 			assert.equal(calculateTechnionOptimalBagrut(subs).average, expected);
 		});
 	});
@@ -150,6 +150,23 @@ describe('Official admission rules', () => {
 
 	// Live official calculators (BGU …/GetSekem*, TAU go.tau.ac.il/graphql, Reichman runi.ac.il) — values captured 2026-10-02
 	describe('Live official calculator snapshots', () => {
+		it('Technion profile A (user-verified on admissions.technion.ac.il/sekem-calculator, 2026-10-02): 111.1', () => {
+			const res = calculateTechnionOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(res.average, 111.1);
+			assert.equal(res.droppedSubjects.length, 0);
+		});
+
+		it('Technion profile C (user-verified): math 4u +10 at weight 8, geography 5u +20 -> 101.5', () => {
+			const res = calculateTechnionOptimalBagrut([
+				sub('מתמטיקה', 4, 92), sub('אנגלית', 5, 90), sub('גיאוגרפיה', 5, 95),
+				sub('היסטוריה', 2, 88), sub('אזרחות', 2, 90), sub('תנ"ך', 2, 84), sub('ספרות', 2, 86), sub('הבעה עברית', 2, 90)
+			]);
+			assert.equal(res.average, 101.5);
+		});
+
 		it('BGU general and quantitative sekem', () => {
 			assert.equal(calculateBguGeneralSekem(110, 700), 753);
 			assert.equal(calculateBguGeneralSekem(115, 654), 754);
