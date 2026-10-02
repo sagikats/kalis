@@ -113,6 +113,31 @@ describe('Official admission rules', () => {
 			assert.ok(res.droppedSubjects.some((d) => d.name === 'תנ״ך'));
 		});
 
+		it('profiles A/B/C match the official HUJI calculator (user-verified 2026-10-02)', () => {
+			const A = calculateHujiOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(Math.round(A.average * 10) / 10, 112.1);
+			assert.equal(A.optimalUnits, 26);
+
+			// Literature (72) must stay: dropping it as well as Bible would leave 19 units
+			const B = calculateHujiOptimalBagrut([
+				sub('מתמטיקה', 4, 78), sub('אנגלית', 4, 82), sub('ביולוגיה', 5, 84), sub('היסטוריה', 2, 75),
+				sub('אזרחות', 2, 80), sub('תנ"ך', 2, 70), sub('ספרות', 2, 72), sub('הבעה עברית', 2, 72)
+			]);
+			assert.equal(Math.round(B.average * 10) / 10, 90.6);
+			assert.equal(B.optimalUnits, 21);
+			assert.deepEqual(B.droppedSubjects.map((d) => d.name), ['תנ"ך']);
+
+			const C = calculateHujiOptimalBagrut([
+				sub('מתמטיקה', 4, 92), sub('אנגלית', 5, 90), sub('גיאוגרפיה', 5, 95), sub('היסטוריה', 2, 88),
+				sub('אזרחות', 2, 90), sub('תנ"ך', 2, 84), sub('ספרות', 2, 86), sub('הבעה עברית', 2, 90)
+			]);
+			assert.equal(C.average, 105.7);
+			assert.equal(C.optimalUnits, 20);
+		});
+
 		it('weighted score takes the better of 50/50 and 30/70', () => {
 			// bagrut 115, psychometric 600: 50/50 wins (strong bagrut)
 			const B = 3.963 * 11.5 - 20.0621;
