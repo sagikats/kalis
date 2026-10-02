@@ -1,0 +1,650 @@
+[
+  {
+    "profile": "P1",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 110.4,
+    "official": 110.4,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 90.2,
+    "official": 90.2,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 112.08,
+    "official": 112.08,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 24.937,
+    "official": 24.937,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 107.1,
+    "official": 107.1,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 731,
+    "official": 731,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 725,
+    "official": 725,
+    "match": true
+  },
+  {
+    "profile": "P1",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 735,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P1",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 720,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P2",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 102.3,
+    "official": 102.3,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 80.9,
+    "official": 80.9,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 106.33,
+    "official": 106.33,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 22.127,
+    "official": 22.127,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 104.93,
+    "official": 104.93,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 685,
+    "official": 685,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 655,
+    "official": 655,
+    "match": true
+  },
+  {
+    "profile": "P2",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 685,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P2",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 675,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P3",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 87.5,
+    "official": 87.5,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 69.8,
+    "official": 69.8,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 91,
+    "official": 91,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 18.209,
+    "official": 18.209,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 90.91,
+    "official": 90.91,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 590,
+    "official": 590,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 568,
+    "official": 568,
+    "match": true
+  },
+  {
+    "profile": "P3",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 577,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P3",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 596,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P4",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 69.5,
+    "official": 69.5,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 54.8,
+    "official": 54.8,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 75.67,
+    "official": 75.67,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 13.782,
+    "official": 13.782,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 72.76,
+    "official": 72.76,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 459,
+    "official": 459,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 460,
+    "official": 460,
+    "match": true
+  },
+  {
+    "profile": "P4",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 459,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P4",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 503,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P5",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 118.6,
+    "official": 118.6,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 98.8,
+    "official": 98.8,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 119.52,
+    "official": 119.52,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 27.964,
+    "official": 27.964,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 116.26,
+    "official": 116.26,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 806,
+    "official": 806,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 787,
+    "official": 787,
+    "match": true
+  },
+  {
+    "profile": "P5",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 800,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P5",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 777,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P6",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 104.4,
+    "official": 104.4,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 85,
+    "official": 85,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 107.08,
+    "official": 107.08,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 23.109,
+    "official": 23.109,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 102.17,
+    "official": 102.17,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 691,
+    "official": 691,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 687,
+    "official": 687,
+    "match": true
+  },
+  {
+    "profile": "P6",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 699,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P6",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 691,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P7",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 100.6,
+    "official": 100.6,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 82.3,
+    "official": 82.3,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 105.7,
+    "official": 105.7,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 22.57,
+    "official": 22.57,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 103.08,
+    "official": 103.08,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 690,
+    "official": 690,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 670,
+    "official": 670,
+    "match": true
+  },
+  {
+    "profile": "P7",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 684,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P7",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 681,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P8",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 77.1,
+    "official": 77.1,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "technion",
+    "source": "published-formula",
+    "metric": "סכם",
+    "ours": 61.6,
+    "official": 61.6,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 78.1,
+    "official": 78.1,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "huji",
+    "source": "published-formula",
+    "metric": "ציון משוקלל",
+    "ours": 15.234,
+    "official": 15.234,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "ממוצע",
+    "ours": 79.05,
+    "official": 79.05,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם 1:1",
+    "ours": 510,
+    "official": 510,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "haifa",
+    "source": "published-formula",
+    "metric": "סכם מתמטי 1:3",
+    "ours": 506,
+    "official": 506,
+    "match": true
+  },
+  {
+    "profile": "P8",
+    "institution": "bar_ilan",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 503,
+    "official": null,
+    "match": null
+  },
+  {
+    "profile": "P8",
+    "institution": "ariel",
+    "source": "unverified",
+    "metric": "סכם",
+    "ours": 539,
+    "official": null,
+    "match": null
+  }
+]

@@ -60,7 +60,7 @@ export interface InstitutionCalculatorResult {
 	managementSekem?: number;
 	quantitativeSekem?: number;
 	directBagrutEligible: boolean;
-	/** The institution's own score on its native scale, when it differs from the 200–800 comparison scale (e.g. HUJI ≈16–27). */
+	/** The institution's own score on its native scale, when it differs from the 200–800 comparison scale (e.g. HUJI weighted score ≈16–27, Reichman adjusted score with decimals). */
 	officialScore?: number;
 	notes: string[];
 	droppedSubjects: string[];

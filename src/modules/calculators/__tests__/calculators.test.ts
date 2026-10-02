@@ -125,12 +125,14 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 	it('Reichman: Bonuses, Sekem and Direct Bagrut', () => {
 		assert.equal(getReichmanBonus({ name: 'מתמטיקה', units: 5, grade: 90 }), 35);
 		assert.equal(getReichmanBonus({ name: 'מתמטיקה', units: 4, grade: 90 }), 12.5);
-		assert.equal(getReichmanBonus({ name: 'מדעי המחשב', units: 5, grade: 90 }), 25);
+		// Reichman's own calculator gives CS 5u +20 (sciences +25)
+		assert.equal(getReichmanBonus({ name: 'מדעי המחשב', units: 5, grade: 90 }), 20);
+		assert.equal(getReichmanBonus({ name: 'פיזיקה', units: 5, grade: 90 }), 25);
 		assert.equal(getReichmanBonus({ name: 'ערבית', units: 4, grade: 80 }), 10);
 
-		// General Sekem: BT = 100 * 10 - 330 = 670; Sekem = 0.5 * 600 + 0.5 * 670 = 635
+		// Adjusted score fitted to runi.ac.il calculator: 4.8133*100 + 0.5129*600 - 163.21 = 625.87 -> 626
 		const runiSekem = calculateReichmanGeneralSekem(100.0, 600);
-		assert.equal(runiSekem, 635);
+		assert.equal(runiSekem, 626);
 
 		// Direct Bagrut in Reichman: >= 100.0 for Law, Business, Communications
 		assert.equal(isProgramEligibleForDirectBagrut('reichman', 'משפטים', 101.0), true);

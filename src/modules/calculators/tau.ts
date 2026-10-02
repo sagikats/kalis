@@ -59,10 +59,14 @@ export function getTauBonus(subject: CalculatorSubject): number {
 	return 0;
 }
 
+/** TAU's own calculator caps the optimal average at 117 ("הממוצע הגבוה ביותר האפשרי"). */
+export const TAU_MAX_AVERAGE = 117;
+
 export function calculateTauOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
 	return computeOptimalAverage(subjects, {
 		isMandatory: isTauMandatorySubject,
 		getBonus: getTauBonus,
+		cap: TAU_MAX_AVERAGE,
 		dropReason: 'השמטה חוקית באת״א: שיפור הממוצע האופטימלי'
 	});
 }
@@ -92,10 +96,9 @@ export function calculateTauEngineeringSekem(
 
 export function calculateTauManagementSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const capped = Math.min(bagrutAverage, 117);
-	const step1 = capped * 9.62 - 349.9;
-	const step2 = Math.round(step1 * 100) / 100;
-	const raw = 0.3 * step2 + 0.7 * psychometric - 11.5;
+	const capped = Math.min(bagrutAverage, TAU_MAX_AVERAGE);
+	// Coefficients fitted to TAU's official score service (go.tau.ac.il "hatama_nihul"), exact on 13/13 probes
+	const raw = 2.89559 * capped + 0.6984 * psychometric - 116.73356;
 	return Math.min(800, Math.max(200, Math.round(raw)));
 }
 

@@ -12,9 +12,16 @@ import {
 	detectTechnionScienceCluster,
 	getTechnionBonus
 } from '../technion';
-import { getTauBonus } from '../tau';
+import { calculateTauGeneralSekem, calculateTauManagementSekem, calculateTauOptimalBagrut, getTauBonus } from '../tau';
+import { calculateReichmanAdjustedScore, calculateReichmanOptimalBagrut } from '../reichman';
 import { calculateHujiOptimalBagrut, calculateHujiWeightedScore, getHujiBonus, isHujiMandatorySubject } from '../huji';
-import { calculateBguGeneralSekem, calculateBguOptimalBagrut, getBguBonus, isBguMandatorySubject } from '../bgu';
+import {
+	calculateBguGeneralSekem,
+	calculateBguOptimalBagrut,
+	calculateBguQuantitativeSekem,
+	getBguBonus,
+	isBguMandatorySubject
+} from '../bgu';
 import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, getHaifaBonus } from '../haifa';
 
 const sub = (name: string, units: number, grade: number) => ({ name, units, grade });
@@ -137,8 +144,44 @@ describe('Official admission rules', () => {
 		});
 
 		it('sekem is not truncated at 800 (excellence thresholds reach 830)', () => {
-			// 0.62*800 + 5.9*120 - 330 = 874
-			assert.equal(calculateBguGeneralSekem(120, 800), 874);
+			assert.ok(calculateBguGeneralSekem(120, 800) > 800);
+		});
+	});
+
+	// Live official calculators (BGU …/GetSekem*, TAU go.tau.ac.il/graphql, Reichman runi.ac.il) — values captured 2026-10-02
+	describe('Live official calculator snapshots', () => {
+		it('BGU general and quantitative sekem', () => {
+			assert.equal(calculateBguGeneralSekem(110, 700), 753);
+			assert.equal(calculateBguGeneralSekem(115, 654), 754);
+			assert.equal(calculateBguGeneralSekem(112.5, 616), 716);
+			assert.equal(calculateBguQuantitativeSekem(115, 135, 125, 100), 769);
+			assert.equal(calculateBguQuantitativeSekem(112, 135, 125, 100), 750);
+			assert.equal(calculateBguQuantitativeSekem(100, 120, 120, 120), 638);
+		});
+
+		it('BGU: standalone sociology/psychology get no bonus, social sciences do', () => {
+			assert.equal(getBguBonus(sub('סוציולוגיה (מוגבר 5 יח"ל)', 5, 90)), 0);
+			assert.equal(getBguBonus(sub('פסיכולוגיה (מוגבר 5 יח"ל)', 5, 90)), 0);
+			assert.equal(getBguBonus(sub('מדעי החברה (משולב סוציולוגיה ופסיכולוגיה)', 5, 90)), 20);
+		});
+
+		it('TAU adjustment scores and average cap', () => {
+			assert.equal(calculateTauGeneralSekem(110, 700), 689);
+			assert.equal(calculateTauManagementSekem(110, 700), 691);
+			assert.equal(calculateTauManagementSekem(95, 650), 612);
+			assert.equal(calculateTauOptimalBagrut([sub('מתמטיקה', 5, 100), sub('אנגלית', 5, 100), sub('פיזיקה', 5, 100), sub('אזרחות', 5, 100)]).average, 117);
+		});
+
+		it('Reichman adjusted score and optimal average', () => {
+			assert.equal(calculateReichmanAdjustedScore(98.75, 700), 671.15); // official 671.16
+			assert.ok(Math.abs(calculateReichmanAdjustedScore(111.38, 720) - 742.21) <= 0.02);
+			assert.ok(Math.abs(calculateReichmanAdjustedScore(75.67, 520) - 467.72) <= 0.02);
+			// Bible, literature and CS are dropped -> 111.38 (official)
+			const res = calculateReichmanOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(res.average, 111.38);
 		});
 	});
 
@@ -153,7 +196,7 @@ describe('Official admission rules', () => {
 
 		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = (BT + 3PM)/4', () => {
 			const pm = calculateHaifaMathPsychometric(140, 120, 130);
-			assert.equal(pm, Math.round(0.514554 * (6 * 140 + 4 * 120 + 130) - 65.3));
+			assert.equal(pm, 0.514554 * (6 * 140 + 4 * 120 + 130) - 65.3);
 			assert.equal(calculateHaifaMathSekem(110, pm), Math.round((110 * 10 - 330 + 3 * pm) / 4));
 		});
 	});

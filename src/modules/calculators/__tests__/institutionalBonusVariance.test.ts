@@ -113,15 +113,15 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.deepEqual(bguBagrut.droppedSubjects.map((s) => s.name).sort(), ['ספרות עברית', 'מדעי המחשב', 'תנ״ך'].sort());
 		});
 
-		it('Current Quantitative Sekem: Exactly 732 at current Bagrut 109.06', () => {
-			// Formula: 2.705 * 135 + 0.715 * 125 + 0.39 * 100 + 6.29 * 109.06 - 448 = 731.99 -> 732
+		it('Quantitative Sekem at Bagrut 112.5 matches BGU live calculator (753)', () => {
+			// Verified 2026-10-02 against …/GetSekemQuantity (Q135 V125 E100, bagrut 112.5) -> 753
 			const quantSekem = calculateBguQuantitativeSekem(
-				109.06,
+				112.5,
 				candidatePsych.quant,
 				candidatePsych.verbal,
 				candidatePsych.english
 			);
-			assert.equal(quantSekem, 732, 'Current Quantitative Sekem must be 732 (gap of -18 from 750 threshold)');
+			assert.equal(quantSekem, 753);
 		});
 
 		it('Current General Sekem: Exactly 695 at current Bagrut 109.06', () => {

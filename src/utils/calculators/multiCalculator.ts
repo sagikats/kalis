@@ -263,10 +263,15 @@ export function calculateMultiInstitutionSekem(
 			directBagrutEligible: reichmanRes.directBagrutEligible,
 			droppedSubjects: reichmanRes.droppedSubjects,
 			optimalUnits: reichmanRes.optimalUnits,
-			notes:
+			officialScore: reichmanRes.officialScore,
+			notes: [
+				reichmanRes.officialScore ? `ציון מתואם: ${reichmanRes.officialScore.toFixed(2)}` : '',
 				reichmanRes.droppedSubjects && reichmanRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${reichmanRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
-					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
+					? `ממוצע מיטבי (הושמטו: ${reichmanRes.droppedSubjects.join(', ')})`
+					: ''
+			]
+				.filter(Boolean)
+				.join('. ') || 'ציון מתואם לפי נוסחת אוניברסיטת רייכמן'
 		}
 	};
 

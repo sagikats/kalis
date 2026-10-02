@@ -116,10 +116,10 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 			assert.ok(res.engineeringSekem! < 800, 'BGU Engineering Sekem must not exceed 800');
 		});
 
-		it('Case 2: General Sekem: Bagrut 105.0 + Psychometric 650 -> Exact Sekem 693', () => {
-			// Official BGU live formula: 0.62 * 650 + 5.9 * 105.0 - 330 = 403 + 619.5 - 330 = 692.5 -> 693
+		it('Case 2: General Sekem: Bagrut 105.0 + Psychometric 650 -> 692 (BGU live calculator)', () => {
+			// Verified 2026-10-02 against bgucr4u.bgu.ac.il …/GetSekem?p_bagrut_average=105&p_psychometry=650 -> 692
 			const genSekem = calculateBguGeneralSekem(105.0, 650);
-			assert.equal(genSekem, 693);
+			assert.equal(genSekem, 692);
 		});
 
 		it('Case 3: Direct Bagrut threshold: Bagrut 105.0 -> directBagrutEligible = true', () => {

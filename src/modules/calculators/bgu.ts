@@ -37,10 +37,15 @@ export const BGU_MAX_AVERAGE = 120;
  * default 5u +20 / 4u +10; math 5u +35 / 4u +20; English 5u +25 / 4u +15;
  * physics, chemistry, biology, CS, literature, Bible, history 5u +25
  * (Arabic / Hebrew +25 apply only to Arabic speakers and are not modelled).
+ * Standalone sociology and psychology get no bonus (verified on the live calculator).
  */
 export function getBguBonus(subject: CalculatorSubject): number {
 	if (subject.grade <= 60) return 0;
 	const n = subject.name;
+
+	// Verified on BGU's official calculator: standalone sociology / psychology receive no bonus
+	// (the combined "מדעי החברה" subject does receive the standard bonus)
+	if ((n.includes('סוציולוגיה') || n.includes('פסיכולוגיה')) && !n.includes('מדעי החברה')) return 0;
 
 	if (isMath(n)) {
 		if (subject.units >= 5) return 35;
@@ -75,7 +80,9 @@ export function calculateBguOptimalBagrut(subjects: CalculatorSubject[]): Optima
 export function calculateBguGeneralSekem(bagrutAverage: number, psychometricGeneral: number): number {
 	if (bagrutAverage <= 0 || psychometricGeneral <= 0) return 0;
 	// Official BGU General Sekem Formula verified against live institutional calculator (bgucr4u.bgu.ac.il/ords/sc/calculators/GetSekem)
-	const rawSekem = 0.62 * psychometricGeneral + 5.9 * Math.min(BGU_MAX_AVERAGE, bagrutAverage) - 330;
+	// Coefficients fitted to BGU's official calculator API (…/GetSekem): exact on 21/22 probes, the last ±1
+	// (BGU applies an internal rounding step that is not published)
+	const rawSekem = 0.62087 * psychometricGeneral + 5.91474 * Math.min(BGU_MAX_AVERAGE, bagrutAverage) - 332.1458;
 	// BGU sekem is not bounded at 800 (its own excellence thresholds go up to 830)
 	return Math.max(0, Math.round(rawSekem));
 }
@@ -127,8 +134,10 @@ export function calculateBguQuantitativeSekem(
 	if (bagrutAverage <= 0 || quant <= 0) return 0;
 	const v = verbal > 0 ? verbal : quant;
 	const e = english > 0 ? english : quant;
-	// Official BGU Quantitative Sekem Formula verified against live institutional calculator (GetSekemQuantity)
-	const rawSekem = 2.705 * quant + 0.715 * v + 0.39 * e + 6.29 * Math.min(BGU_MAX_AVERAGE, bagrutAverage) - 448;
+	// Coefficients fitted to BGU's official calculator API (bgucr4u.bgu.ac.il …/GetSekemQuantity):
+	// exact on 30/32 probes, the rest ±1 (internal rounding). Equivalent to weighting Q:V:E as 7:2:1.
+	const rawSekem =
+		2.66943 * quant + 0.76439 * v + 0.3852 * e + 6.27322 * Math.min(BGU_MAX_AVERAGE, bagrutAverage) - 447.17658;
 	return Math.max(0, Math.round(rawSekem));
 }
 

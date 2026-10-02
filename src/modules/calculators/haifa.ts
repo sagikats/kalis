@@ -87,7 +87,8 @@ function haifaBagrutStandard(bagrutAverage: number): number {
 export function calculateHaifaSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
 	const rawSekem = 0.5 * haifaBagrutStandard(bagrutAverage) + 0.5 * psychometric;
-	return Math.min(800, Math.max(200, Math.round(rawSekem)));
+	// The published formula has no upper bound (BT alone reaches 840 at an average of 117)
+	return Math.max(200, Math.round(rawSekem));
 }
 
 /**
@@ -96,14 +97,14 @@ export function calculateHaifaSekem(bagrutAverage: number, psychometric: number)
  */
 export function calculateHaifaMathPsychometric(quant: number, verbal: number, english: number): number {
 	if (quant <= 0 || verbal <= 0 || english <= 0) return 0;
-	return Math.round(0.514554 * (6 * quant + 4 * verbal + english) - 65.3);
+	return 0.514554 * (6 * quant + 4 * verbal + english) - 65.3;
 }
 
 /** Mathematical programs: 1:3 weighting with the math-weighted psychometric — (BT + 3PM) / 4. */
 export function calculateHaifaMathSekem(bagrutAverage: number, mathPsychometric: number): number {
 	if (bagrutAverage <= 0 || mathPsychometric <= 0) return 0;
 	const raw = (haifaBagrutStandard(bagrutAverage) + 3 * mathPsychometric) / 4;
-	return Math.min(800, Math.max(200, Math.round(raw)));
+	return Math.max(200, Math.round(raw));
 }
 
 export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
