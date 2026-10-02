@@ -16,6 +16,7 @@ import { calculateTauGeneralSekem, calculateTauManagementSekem, calculateTauOpti
 import { calculateReichmanAdjustedScore, calculateReichmanOptimalBagrut } from '../reichman';
 import { calculateHujiOptimalBagrut, calculateHujiWeightedScore, getHujiBonus, isHujiMandatorySubject } from '../huji';
 import {
+	calculateBguEngineeringSekem,
 	calculateBguGeneralSekem,
 	calculateBguOptimalBagrut,
 	calculateBguQuantitativeSekem,
@@ -227,6 +228,22 @@ describe('Official admission rules', () => {
 			assert.equal(calculateBguQuantitativeSekem(115, 135, 125, 100), 769);
 			assert.equal(calculateBguQuantitativeSekem(112, 135, 125, 100), 750);
 			assert.equal(calculateBguQuantitativeSekem(100, 120, 120, 120), 638);
+		});
+
+		it('BGU engineering sekem (סכם הנדסה) — 24 probes of …/acceptanceProbabilityMAIN', () => {
+			// [avg, Q, math grade, math units, physics grade (0 = none), official]
+			const probes: [number, number, number, number, number, number][] = [
+				[110, 145, 95, 5, 93, 574], [110, 145, 95, 5, 0, 556], [100, 125, 85, 4, 0, 429], [105, 135, 80, 5, 85, 514],
+				[105, 135, 90, 5, 0, 509], [105, 125, 90, 5, 0, 479], [105, 145, 90, 5, 0, 539], [100, 135, 90, 5, 0, 497],
+				[110, 135, 90, 5, 0, 521], [105, 135, 80, 5, 0, 499], [105, 135, 100, 5, 0, 519], [105, 135, 90, 4, 0, 475],
+				[105, 135, 80, 4, 0, 467], [105, 135, 90, 5, 90, 534], [105, 135, 90, 5, 80, 514], [105, 145, 90, 5, 90, 563],
+				[105, 135, 80, 5, 90, 523], [110, 135, 90, 5, 90, 534], [105, 135, 90, 4, 90, 500], [105, 115, 90, 5, 90, 474],
+				[105, 150, 90, 5, 90, 578], [105, 135, 90, 5, 100, 553], [105, 135, 100, 5, 90, 544], [105, 135, 80, 4, 90, 492]
+			];
+			for (const [avg, q, mg, mu, pg, official] of probes) {
+				const ours = calculateBguEngineeringSekem(mg, mu, 680, q, pg, pg ? 5 : 0, avg);
+				assert.equal(ours, official, JSON.stringify({ avg, q, mg, mu, pg }));
+			}
 		});
 
 		it('BGU: standalone sociology/psychology get no bonus, social sciences do', () => {

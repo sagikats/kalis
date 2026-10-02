@@ -103,21 +103,22 @@ export function calculateBguEngineeringSekem(
 	const quant = rawQ > 0 && rawQ <= 150 ? rawQ : (rawQ > 150 ? Math.round(50 + (rawQ - 200) / 6) : 0);
 	if (quant <= 0 && mathGrade <= 0 && bagrutAverage <= 0) return 0;
 
-	// Official Ben-Gurion Faculty of Engineering Sciences Dual-Route Formula
-	// Verified 1:1 against live BGU Production ORDS API (acceptanceProbabilityMAIN)
-	
-	// Route 1: Route with 5 units Physics (Physics >= 70)
+	// Ben-Gurion Faculty of Engineering "סכם הנדסה" — the higher of two routes.
+	// Fitted to BGU's official service (bgucr4u.bgu.ac.il …/acceptanceProbabilityMAIN, field "handasa"),
+	// exact on 25/25 probes (2026-10-02). Verbal, English and the general psychometric score do not count.
+
+	// Route 1: with 5 units physics (bagrut average does not count)
 	let scorePhys = 0;
 	if (physicsUnits === 5 && physicsGrade >= 70 && quant > 0 && mathGrade > 0) {
-		const mathTerm = mathUnits === 5 ? 1.1 * mathGrade : (0.8 * mathGrade - 6.0);
-		scorePhys = 3.0 * quant + mathTerm + 1.9 * physicsGrade - 141.1;
+		const mathTerm = mathUnits === 5 ? 1.02611 * mathGrade : 0.8 * mathGrade - 13.2;
+		scorePhys = 2.96642 * quant + mathTerm + 1.93766 * physicsGrade - 133.65553;
 	}
 
-	// Route 2: Bagrut-based route (for candidates without 5u Physics, or where high Bagrut yields higher score)
+	// Route 2: bagrut average route
 	let scoreBagrut = 0;
 	if (bagrutAverage > 0 && quant > 0) {
-		const mathTermBagrut = mathUnits === 5 ? 1.0 * mathGrade : (0.75 * mathGrade - 5.0);
-		scoreBagrut = 2.9 * quant + mathTermBagrut + 2.4 * bagrutAverage - 219.34;
+		const mathTermBagrut = mathUnits === 5 ? 1.0 * mathGrade : 0.8 * mathGrade - 16;
+		scoreBagrut = 3.0 * quant + mathTermBagrut + 2.4 * bagrutAverage - 238;
 	}
 
 	const finalSekem = Math.max(scorePhys, scoreBagrut);
