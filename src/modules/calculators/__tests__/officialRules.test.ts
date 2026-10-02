@@ -268,6 +268,15 @@ describe('Official admission rules', () => {
 			assert.equal(getBarIlanBonus(sub('אנגלית', 5, 59)), 0);
 		});
 
+		it('profile A = 112.08 over 26 units, Bible+literature dropped (user-verified on shoham.biu.ac.il)', () => {
+			const res = calculateBarIlanOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(res.average, 112.08);
+			assert.equal(res.optimalUnits, 26);
+		});
+
 		it('Bible, literature and Jewish thought are droppable; average is not capped', () => {
 			assert.equal(isBarIlanMandatorySubject('תנ"ך'), false);
 			assert.equal(isBarIlanMandatorySubject('ספרות'), false);
