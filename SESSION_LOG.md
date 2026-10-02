@@ -10,6 +10,21 @@
 
 ---
 
+## 🗓️ 2026-10-02 (סשן 7) — Claude Code (Opus 5.5) — איסוף ספי קבלה רשמיים (עברית) + סנכרון קטלוג בפריסה
+
+**בראנץ':** `data/huji-thresholds` (לא ממוזג, ממתין לאישור משתמש לפריסה)
+
+**מה נעשה:**
+- ייבוא ספים רשמיים של העברית מהגיליון הרשמי (snapshot: `src/data/sources/huji-thresholds-2026-10-02.csv`) עם `scripts/data/importHujiThresholds.ts` — 95/101 תוכניות עודכנו. 6 ללא התאמה (כנראה תוכניות שבוטלו): prog-inst-1-84, 89, 39, 54, 76, 101.
+- שדות חדשים לתוכנית: `officialThreshold`, `thresholdSource`, `thresholdUpdatedAt`, `relevantSekemType` (נשמרים גם ב-seed וב-repository).
+- 4 כללי שקלול לעברית (50/50 / 30/70 × סוג פסיכומטרי) + `selectProgramSekem` אחיד בכל המערכת (solver, trackGenerator, gapAnalyzer, QA).
+- UI: "סף קבלה רשמי" מול "סף קבלה משוער" + קישור למקור (`GapAnalysisCard.tsx`).
+- **באג פרודקשן שנמצא:** ה-DB בפרודקשן נזרע רק בהרצה ראשונה, כך שעדכוני קטלוג לא הגיעו לשרת. תוקן עם `scripts/syncCatalog.js` שרץ ב-entrypoint (מעדכן רק institutions/programs/subjects, לא נוגע במשתמשים, לא מוחק תוכנית ששמורה אצל משתמש).
+
+**בדיקות:** 195/196 (הכשל הקיים מראש: HUJI Psychology direct track — בעיית דאטה), build עובר.
+
+**הצעד הבא:** אישור פריסה (גיבוי DB לפני!) ל-`data/huji-thresholds` ול-`fix/bar-ilan-bagrut`; ספי ת"א/ב"ש/רייכמן; המשתמש מריץ ידנית את מחשבון בר-אילן (טבלת הרצות נשלחה).
+
 ## 🗓️ 2026-10-02 (סשן 5) — Claude Code (Opus 5.5) — אימות ידני מול טכניון/עברית (צילומים מהמשתמש)
 
 **ענף:** `fix/technion-english-bonus` (לא מוזג, לא נפרס — ממתין לבדיקת חיפה)
