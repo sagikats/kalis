@@ -121,7 +121,7 @@ export default function GapAnalysisCard({
 						<span className="text-2xl font-bold text-[#222222] mt-1 block">
 							{analysis.threshold ?? 'ללא ציון מספרי'}
 						</span>
-						{analysis.officialThreshold !== undefined && (
+						{analysis.officialThreshold !== undefined && analysis.officialThreshold !== analysis.threshold && (
 							<span className="text-[11px] text-[#66635C] mt-1 block">
 								בסולם המוסד: {analysis.officialThreshold}
 							</span>

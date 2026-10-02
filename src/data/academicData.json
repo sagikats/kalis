@@ -2825,12 +2825,16 @@
         "fieldOfStudy": "ביולוגיה ופסיכולוגיה במסגרת ביה\"ס למדעי המוח עם חטיבה בבינה מלאכותית ומדעי הנתונים",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1541",
-        "admissionThreshold": 684,
+        "admissionThreshold": 680,
         "sekemScore": 684,
         "programId": "1541",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/psychology-biology-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0162-14",
@@ -2865,12 +2869,16 @@
         "fieldOfStudy": "התוכנית הדו-חוגית בביולוגיה ומדעי הסביבה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0910",
-        "admissionThreshold": 680,
+        "admissionThreshold": 700,
         "sekemScore": 680,
         "programId": "0910",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 700,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio-environment — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1822-1",
@@ -2989,12 +2997,16 @@
         "fieldOfStudy": "לימודי תואר ראשון בחוג למדעי האחיוּת (Nursing)",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0162",
-        "admissionThreshold": 521,
+        "admissionThreshold": 520,
         "sekemScore": 521,
         "programId": "0162",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 520,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/med/ba/nursing — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0842-102",
@@ -3085,12 +3097,16 @@
         "fieldOfStudy": "תואר ראשון בביולוגיה ובלשנות במסגרת ביה\"ס למדעי המוח עם חטיבה בבינה מלאכותית ומדעי הנתונים",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1541",
-        "admissionThreshold": 680,
+        "admissionThreshold": 700,
         "sekemScore": 680,
         "programId": "1541",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 700,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0627-47",
@@ -3153,36 +3169,48 @@
         "fieldOfStudy": "תואר ראשון בהנדסה ביו-רפואית",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0555",
-        "admissionThreshold": 683,
+        "admissionThreshold": 675,
         "sekemScore": 683,
         "programId": "0555",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 675,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/biomedical — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0542-64",
         "fieldOfStudy": "תואר ראשון בהנדסה מכנית",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0542",
-        "admissionThreshold": 650,
+        "admissionThreshold": 636,
         "sekemScore": 650,
         "programId": "0542",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 636,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/mechanical — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0542-77",
         "fieldOfStudy": "תואר ראשון בהנדסה מכנית וחטיבה בביומכניקה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0542",
-        "admissionThreshold": 660,
+        "admissionThreshold": 658,
         "sekemScore": 660,
         "programId": "0542",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 658,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/bio-mechanical — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0512-74",
@@ -3195,43 +3223,59 @@
         "minPsychometricFloor": 600,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 710,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/electrical — סף קבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0512-79",
         "fieldOfStudy": "תואר ראשון בהנדסת חשמל עם פיזיקה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0512",
-        "admissionThreshold": 715,
+        "admissionThreshold": 705,
         "sekemScore": 715,
         "programId": "0512",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 705,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/electrical-physics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0512-70",
         "fieldOfStudy": "תואר ראשון בהנדסת מחשבים",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0512",
-        "admissionThreshold": 718,
+        "admissionThreshold": 715,
         "sekemScore": 718,
         "programId": "0512",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 715,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/electrical-engineering-computer-science — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0573-66",
         "fieldOfStudy": "תואר ראשון בהנדסת תעשייה וניהול",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0573",
-        "admissionThreshold": 667,
+        "admissionThreshold": 662,
         "sekemScore": 667,
         "programId": "0573",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 662,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/industrial-engineering — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0614-37",
@@ -3257,19 +3301,27 @@
         "programId": "0455",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/biotechnology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0881-12",
         "fieldOfStudy": "תואר ראשון בלימודי אדריכלות",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0881",
-        "admissionThreshold": 629,
+        "admissionThreshold": 614,
         "sekemScore": 629,
         "programId": "0881",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 614,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/arts/ba/arch — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0811-4",
@@ -3295,7 +3347,11 @@
         "programId": "0455",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 576,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0455-72",
@@ -3307,7 +3363,11 @@
         "programId": "0455",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 610,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/ecology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0455-19",
@@ -3328,12 +3388,16 @@
         "fieldOfStudy": "תואר ראשון בלימודי ביולוגיה ופסיכולוגיה במסגרת ביה\"ס למדעי המוח",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1514",
-        "admissionThreshold": 684,
+        "admissionThreshold": 680,
         "sekemScore": 684,
         "programId": "1514",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/bio-psycho — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0631-40",
@@ -3371,7 +3435,11 @@
         "programId": "1211",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 610,
+        "relevantSekemType": "management",
+        "thresholdSource": "https://go.tau.ac.il/he/management/ba/accounting — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1211-75",
@@ -3383,7 +3451,11 @@
         "programId": "1211",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "management",
+        "thresholdSource": "https://go.tau.ac.il/he/management/ba/accounting-law — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0341-30",
@@ -3395,7 +3467,11 @@
         "programId": "0341",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/excel-earth — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0351-84",
@@ -3407,7 +3483,11 @@
         "programId": "0351",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 620,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/chem — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1011-82",
@@ -3419,7 +3499,11 @@
         "programId": "1011",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 610,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/economics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0842-11",
@@ -3459,19 +3543,27 @@
         "programId": "1411",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 647,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/law/ba/law — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0366-23",
         "fieldOfStudy": "תואר ראשון בלימודי מתמטיקה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0366",
-        "admissionThreshold": 640,
+        "admissionThreshold": 645,
         "sekemScore": 640,
         "programId": "0366",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 645,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/math — סף קבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1221-51",
@@ -3483,7 +3575,11 @@
         "programId": "1221",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 610,
+        "relevantSekemType": "management",
+        "thresholdSource": "https://go.tau.ac.il/he/management/ba/management — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0608-80",
@@ -3495,7 +3591,11 @@
         "programId": "0608",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 105
+        "directBagrutMinAverage": 105,
+        "officialThreshold": 520,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/humanities/ba/gender — סף קבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1041-52",
@@ -3507,7 +3607,11 @@
         "programId": "1041",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 520,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/sociology-anthropology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0365-26",
@@ -3519,7 +3623,11 @@
         "programId": "0365",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 635,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/statistics — סף קבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1051-53",
@@ -3531,31 +3639,43 @@
         "programId": "1051",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 520,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/labor-studies — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0321-78",
         "fieldOfStudy": "תואר ראשון בלימודי פיזיקה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0321",
-        "admissionThreshold": 649,
+        "admissionThreshold": 640,
         "sekemScore": 649,
         "programId": "0321",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/physics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1521-62",
         "fieldOfStudy": "תואר ראשון בלימודי פיזיקה עם חטיבה במדעי המוח",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1521",
-        "admissionThreshold": 684,
+        "admissionThreshold": 675,
         "sekemScore": 684,
         "programId": "1521",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 675,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/physics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1071-54",
@@ -3567,19 +3687,27 @@
         "programId": "1071",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1513-60",
         "fieldOfStudy": "תואר ראשון בלימודי פסיכולוגיה ומדעי המחשב במסגרת ביה\"ס למדעי המוח",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1513",
-        "admissionThreshold": 708,
+        "admissionThreshold": 715,
         "sekemScore": 708,
         "programId": "1513",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 715,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/psycho-computers — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0851-8",
@@ -3605,7 +3733,11 @@
         "programId": "0165",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 607,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/med/ba/occu — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0821-10",
@@ -3626,12 +3758,16 @@
         "fieldOfStudy": "תואר ראשון בלימודי תקשורת",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1085",
-        "admissionThreshold": 530,
+        "admissionThreshold": 535,
         "sekemScore": 530,
         "programId": "1085",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 535,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/communications — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0672-34",
@@ -3657,19 +3793,27 @@
         "programId": "1031",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 535,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/political-science — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0581-68",
         "fieldOfStudy": "תואר ראשון במדע והנדסה של חומרים",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0581",
-        "admissionThreshold": 630,
+        "admissionThreshold": 626,
         "sekemScore": 630,
         "programId": "0581",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 626,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/materials — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0368-22",
@@ -3681,19 +3825,27 @@
         "programId": "0368",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 705,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/computer — סף קבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0359-89",
         "fieldOfStudy": "תואר ראשון במדעי הנתונים",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0359",
-        "admissionThreshold": 689,
+        "admissionThreshold": 691,
         "sekemScore": 689,
         "programId": "0359",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 691,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/datascience — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0341-31",
@@ -3705,7 +3857,11 @@
         "programId": "0341",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 620,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/geophysics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0341-99",
@@ -3717,19 +3873,27 @@
         "programId": "0341",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 670,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/excel-earth-AI — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0560-63",
         "fieldOfStudy": "תואר ראשון במדעים דיגיטליים להיי-טק",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0560",
-        "admissionThreshold": 652,
+        "admissionThreshold": 642,
         "sekemScore": 652,
         "programId": "0560",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 642,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/high-tech-plus — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0677-33",
@@ -3750,12 +3914,16 @@
         "fieldOfStudy": "תואר ראשון במסלול מתמטיקה שימושית וסטטיסטיקה להיי-טק",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0366",
-        "admissionThreshold": 651,
+        "admissionThreshold": 646,
         "sekemScore": 651,
         "programId": "0366",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 646,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/machinelearning — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0612-41",
@@ -3804,12 +3972,16 @@
         "fieldOfStudy": "תואר ראשון בעבודה סוציאלית",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1110",
-        "admissionThreshold": 580,
+        "admissionThreshold": 570,
         "sekemScore": 580,
         "programId": "1110",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 105
+        "directBagrutMinAverage": 105,
+        "officialThreshold": 570,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/social-work — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0164-16",
@@ -3873,12 +4045,16 @@
         "fieldOfStudy": "תואר ראשון בתוכנית בביולוגיה ובמדעי המחשב עם התמחות בביואינפורמטיקה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0368",
-        "admissionThreshold": 705,
+        "admissionThreshold": 712,
         "sekemScore": 705,
         "programId": "0368",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 712,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/bioinformatics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0104-20",
@@ -3890,7 +4066,11 @@
         "programId": "0104",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 670,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio-med — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0861-7",
@@ -3930,31 +4110,43 @@
         "programId": "0351",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 700,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/chem-excel — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0323-86",
         "fieldOfStudy": "תואר ראשון בתוכנית משולבת מתמטיקה פיזיקה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0323",
-        "admissionThreshold": 670,
+        "admissionThreshold": 665,
         "sekemScore": 670,
         "programId": "0323",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 665,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/math-physics — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0651-28",
         "fieldOfStudy": "תואר ראשון בתוכנית פכ\"מ - פילוסופיה, כלכלה ומדע المדינה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0651",
-        "admissionThreshold": 680,
+        "admissionThreshold": 673,
         "sekemScore": 680,
         "programId": "0651",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 673,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/humanities/ba/pacam — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0683-36",
@@ -3980,7 +4172,11 @@
         "programId": "1071",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology-biology-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1011-95",
@@ -3992,7 +4188,11 @@
         "programId": "1011",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/economy-political-science-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1564-61",
@@ -4004,7 +4204,11 @@
         "programId": "1564",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0627-58",
@@ -4030,7 +4234,11 @@
         "programId": "1011",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology-economy-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0455-90",
@@ -4042,7 +4250,11 @@
         "programId": "0455",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/life/ba/datascience-biology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1031-94",
@@ -4054,7 +4266,11 @@
         "programId": "1031",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/economy-data-science-one — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1411-93",
@@ -4066,31 +4282,43 @@
         "programId": "1411",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/law/ba/datascience-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1554-69",
         "fieldOfStudy": "תואר ראשון כפול בהנדסה ביו-רפואית ובביולוגיה במסגרת ביה\"ס למדעי המוח",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 1554",
-        "admissionThreshold": 684,
+        "admissionThreshold": 676,
         "sekemScore": 684,
         "programId": "1554",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 676,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/biomedical-biology — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0542-85",
         "fieldOfStudy": "תואר ראשון כפול בהנדסה מכנית ובמדעי כדור הארץ עם הדגש בלימודי סביבה",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0542",
-        "admissionThreshold": 660,
+        "admissionThreshold": 658,
         "sekemScore": 660,
         "programId": "0542",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 658,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/exact/ba/geophysics-mechanical-engineering — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0581-67",
@@ -4102,19 +4330,27 @@
         "programId": "0581",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 642,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/materials-chemistry — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0368-49",
         "fieldOfStudy": "תואר ראשון מובנה ללימודי בלשנות דו-חוגי עם מדעי המחשב",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0368",
-        "admissionThreshold": 705,
+        "admissionThreshold": 712,
         "sekemScore": 705,
         "programId": "0368",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 712,
+        "relevantSekemType": "engineering",
+        "thresholdSource": "https://go.tau.ac.il/he/humanities/ba/linguistics-computers — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1501-106",
@@ -4140,7 +4376,11 @@
         "programId": "1071",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-0662-101",
@@ -4152,7 +4392,11 @@
         "programId": "0662",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 690,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/humanities/ba/accelerated-program — סף קבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1011-104",
@@ -4164,7 +4408,11 @@
         "programId": "1011",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/enviroment/ba/en-eco-pol — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-tau-1031-97",
@@ -4176,7 +4424,11 @@
         "programId": "1031",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/political-science-ai — סף קבלה שנה קודמת",
+        "thresholdUpdatedAt": "2026-10-02"
       }
     ]
   },

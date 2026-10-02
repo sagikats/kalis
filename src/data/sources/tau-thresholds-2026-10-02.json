@@ -1,0 +1,569 @@
+[
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/biotechnology",
+  "title": "תואר ראשון ביולוגיה וביוטכנולוגיה - תנאי קבלה ומידע נוסף - אוניברסיטת ת״א",
+  "dept": "0455",
+  "acc": "640",
+  "rej": "639",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/bioinformatics",
+  "title": "תואר ראשון בביולוגיה ומדעי המחשב עם התמחות בביואינפורמטיקה - אוניברסיטת ת״א",
+  "dept": "0368",
+  "acc": "712",
+  "rej": "711",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/arts/ba/arch",
+  "title": "תואר ראשון באדריכלות ועיצוב פנים - לימודי אדריכלות - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0881",
+  "acc": "614",
+  "rej": "613",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/med/ba/nursing",
+  "title": "לימודי תואר ראשון למדעי האחיוּת (לשעבר סיעוד) ואח / אחות מוסמכת - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0162",
+  "acc": "520",
+  "rej": "519",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/med/ba/occu",
+  "title": "תואר ראשון בלימודי ריפוי בעיסוק - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0165",
+  "acc": "607",
+  "rej": "606",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/bio-med",
+  "title": "תואר ראשון במדעי הרפואה ומדעי החיים - רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0104",
+  "acc": "670",
+  "rej": "669",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/bio",
+  "title": "תואר ראשון בביולוגיה - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0455",
+  "acc": "576",
+  "rej": "575",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/computer",
+  "title": "תואר ראשון במדעי המחשב - לימודי מדעי המחשב - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0368",
+  "acc": "712",
+  "rej": "711",
+  "acc_now": "705",
+  "rej_now": "704"
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/math",
+  "title": "תואר ראשון במתמטיקה - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0366",
+  "acc": "635",
+  "rej": "634",
+  "acc_now": "645",
+  "rej_now": "644"
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/chem-excel",
+  "title": "תואר ראשון בתוכנית מצטיינים חד-חוגית בכימיה",
+  "dept": "0351",
+  "acc": "700",
+  "rej": "699",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/machinelearning",
+  "title": "תואר ראשון במסלול מתמטיקה שימושית וסטטיסטיקה להיי-טק",
+  "dept": "0366",
+  "acc": "646",
+  "rej": "645",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/statistics",
+  "title": "תואר ראשון בסטטיסטיקה וחקר ביצועים - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0365",
+  "acc": "631",
+  "rej": "630",
+  "acc_now": "635",
+  "rej_now": "634"
+ },
+ {
+  "url": "https://go.tau.ac.il/he/humanities/ba/pacam",
+  "title": "תואר בתוכנית פכ״מ: פילוסופיה, כלכלה ומדעי המדינה - אוניברסיטת ת״א",
+  "dept": "0651",
+  "acc": "673",
+  "rej": "672",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/excel-earth",
+  "title": "תואר ראשון בלימודי כדור הארץ - מסלול מחקרי למצטיינים",
+  "dept": "0341",
+  "acc": "680",
+  "rej": "679",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/geophysics",
+  "title": "תואר ראשון במדעי כדור הארץ",
+  "dept": "0341",
+  "acc": "620",
+  "rej": "619",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/humanities/ba/linguistics-computers",
+  "title": "תואר ראשון מובנה ללימודי בלשנות דו-חוגי עם מדעי המחשב",
+  "dept": "0368",
+  "acc": "712",
+  "rej": "711",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/management/ba/management",
+  "title": "תואר ראשון בניהול",
+  "dept": "1221",
+  "acc": "610",
+  "rej": "609",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/sociology-anthropology",
+  "title": "תואר ראשון בלימודי סוציולוגיה ואנתרופולוגיה - רישום תנאי קבלה ומידע - אוניברסיטת ת״א",
+  "dept": "1041",
+  "acc": "520",
+  "rej": "519",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/labor-studies",
+  "title": "תואר ראשון בלימודי עבודה - רישום ומידע נוסף - אוניברסיטת ת״א",
+  "dept": "1051",
+  "acc": "520",
+  "rej": "519",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/psychology",
+  "title": "תואר ראשון בלימודי פסיכולוגיה: תנאי קבלה ומידע - אוניברסיטת ת״א",
+  "dept": "1071",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/political-science",
+  "title": "תואר ראשון במדעי המדינה - רישום ומידע נוסף - אוניברסיטת ת״א",
+  "dept": "1031",
+  "acc": "535",
+  "rej": "534",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/communications",
+  "title": "תואר ראשון בתקשורת - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "1085",
+  "acc": "535",
+  "rej": "534",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/bio-psycho",
+  "title": "תואר ראשון בפסיכולוגיה וביולוגיה בדגש על מדעי המוח - רישום ומידע - אוניברסיטת ת״א",
+  "dept": "1514",
+  "acc": "680",
+  "rej": "679",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/psycho-computers",
+  "title": "תואר ראשון בלימודי פסיכולוגיה ומדעי המחשב בדגש מדעי המוח - רישום ותנאי קבלה - אוניברסיטת ת״א",
+  "dept": "1513",
+  "acc": "715",
+  "rej": "714",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology",
+  "title": "תואר ראשון דו-חוגי בלימודי ביולוגיה ובלשנות במסגרת ביה\"ס למדעי המוח",
+  "dept": "1564",
+  "acc": "680",
+  "rej": "679",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/physics",
+  "title": "תואר ראשון בלימודי פיזיקה עם חטיבה במדעי המוח",
+  "dept": "1521",
+  "acc": "675",
+  "rej": "674",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/high-tech-plus",
+  "title": "לימודי מדעים דיגיטליים להיי-טק - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0560",
+  "acc": "642",
+  "rej": "641",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/mechanical",
+  "title": "תואר ראשון בהנדסה מכנית - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0542",
+  "acc": "636",
+  "rej": "635",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/biomedical",
+  "title": "תואר ראשון בהנדסה ביו-רפואית: רישום, תנאי קבלה ומידע - אוניברסיטת ת״א",
+  "dept": "0555",
+  "acc": "675",
+  "rej": "674",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/industrial-engineering",
+  "title": "תואר ראשון בהנדסת תעשייה וניהול: תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0573",
+  "acc": "662",
+  "rej": "661",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/materials-chemistry",
+  "title": "תואר ראשון כפול בהנדסת חומרים וכימיה - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0581",
+  "acc": "642",
+  "rej": "641",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/materials",
+  "title": "תואר ראשון במדע והנדסת חומרים - רישום ותנאי קבלה - אוניברסיטת ת״א",
+  "dept": "0581",
+  "acc": "626",
+  "rej": "625",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/biomedical-biology",
+  "title": "תואר ראשון כפול בהנדסה ביו-רפואית ובביולוגיה במסגרת ביה\"ס למדעי המוח",
+  "dept": "1554",
+  "acc": "676",
+  "rej": "675",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/electrical-engineering-computer-science",
+  "title": "תואר ראשון בהנדסת מחשבים - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0512",
+  "acc": "715",
+  "rej": "714",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/social-work",
+  "title": "תואר ראשון בעבודה סוציאלית: תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "1110",
+  "acc": "570",
+  "rej": "569",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/ecology",
+  "title": "תואר ראשון בלימודי ביולוגיה - אקולוגיה ואבולוציה",
+  "dept": "0455",
+  "acc": "610",
+  "rej": "609",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/electrical",
+  "title": "תואר ראשון בלימודי הנדסת חשמל - תנאי קבלה, רישום ומידע על התואר - אוניברסיטת ת״א",
+  "dept": "0512",
+  "acc": "705",
+  "rej": "704",
+  "acc_now": "710",
+  "rej_now": "709"
+ },
+ {
+  "url": "https://go.tau.ac.il/he/management/ba/accounting-law",
+  "title": "תואר ראשון בלימודי חשבונאות ומשפטים - תנאי קבלה, רישום ומידע נוסף - אוניברסיטת ת״א",
+  "dept": "1211",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/management/ba/accounting",
+  "title": "תואר ראשון בלימודי חשבונאות - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "1211",
+  "acc": "610",
+  "rej": "609",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/bio-mechanical",
+  "title": "תואר ראשון בהנדסה מכנית וחטיבה בביומכניקה",
+  "dept": "0542",
+  "acc": "658",
+  "rej": "657",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/physics",
+  "title": "תואר ראשון בפיזיקה - תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "0321",
+  "acc": "640",
+  "rej": "639",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/engineering/ba/electrical-physics",
+  "title": "תואר ראשון בהנדסת חשמל ופיזיקה - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0512",
+  "acc": "705",
+  "rej": "704",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/humanities/ba/gender",
+  "title": "תואר ראשון בלימודי נשים ומגדר",
+  "dept": "0608",
+  "acc": "520",
+  "rej": "519",
+  "acc_now": "520",
+  "rej_now": "519"
+ },
+ {
+  "url": "https://go.tau.ac.il/he/law/ba/law",
+  "title": "לימודי משפטים: תואר ראשון, תנאי קבלה ורישום - אוניברסיטת ת״א",
+  "dept": "1411",
+  "acc": "647",
+  "rej": "646",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/economics",
+  "title": "תואר ראשון בלימודי כלכלה - לימודי כלכלה - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "1011",
+  "acc": "610",
+  "rej": "609",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/chem",
+  "title": "לימודי כימיה - תואר ראשון בכימיה - רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0351",
+  "acc": "620",
+  "rej": "619",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/geophysics-mechanical-engineering",
+  "title": "תואר ראשון כפול בהנדסה מכנית ובמדעי כדור הארץ עם הדגש בלימודי סביבה",
+  "dept": "0542",
+  "acc": "658",
+  "rej": "657",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/math-physics",
+  "title": "תואר ראשון בתוכנית משולבת מתמטיקה פיזיקה",
+  "dept": "0323",
+  "acc": "665",
+  "rej": "664",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/datascience",
+  "title": "תואר ראשון במדעי הנתונים - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0359",
+  "acc": "691",
+  "rej": "690",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/datascience-biology",
+  "title": "תואר ראשון חד-חוגי בביולוגיה עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "0455",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/psychology-economy-ai",
+  "title": "תואר ראשון דו-חוגי בפסיכולוגיה ובכלכלה עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "1011",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/psychology-biology-ai",
+  "title": "תואר ראשון דו-חוגי בביולוגיה ובפסיכולוגיה עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "1071",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/law/ba/datascience-ai",
+  "title": "תואר ראשון חד-חוגי במשפטים עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "1411",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/economy-data-science-one",
+  "title": "תואר ראשון חד-חוגי בכלכלה עם חטיבה בבינה מלאכותית ומדעי הנתונים",
+  "dept": "1031",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/economy-political-science-ai",
+  "title": "תואר ראשון דו-חוגי בכלכלה ובמדע המדינה, ממשל ויחב\"ל עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "1011",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/psychology-ai",
+  "title": "תוכנית חד- חוגית בפסיכולוגיה עם חטיבה בבינה מלאכותית ומדעי הנתונים",
+  "dept": "1071",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/social-sciences/ba/political-science-ai",
+  "title": "תכנית לימודים חד-חוגית במדע המדינה, ממשל ויחב\"ל עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "1031",
+  "acc": "660",
+  "rej": "659",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/psychology-biology-ai",
+  "title": "ביולוגיה ופסיכולוגיה במסגרת ביה\"ס למדעי המוח עם חטיבה בבינה מלאכותית ומדעי הנתונים",
+  "dept": "1541",
+  "acc": "680",
+  "rej": "679",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/exact/ba/excel-earth-AI",
+  "title": "תואר ראשון במדעי כדור הארץ עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
+  "dept": "0341",
+  "acc": "670",
+  "rej": "669",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/humanities/ba/accelerated-program",
+  "title": "תואר במדעי הרוח - התוכנית הרב תחומית- רישום ותנאי קבלה - אוניברסיטת ת״א",
+  "dept": "0662",
+  "acc": "685",
+  "rej": "684",
+  "acc_now": "690",
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/life/ba/bio-environment",
+  "title": "תואר ראשון בביולוגיה ובמדעי הסביבה - תנאי קבלה, רישום ומידע - אוניברסיטת ת״א",
+  "dept": "0910",
+  "acc": "700",
+  "rej": "699",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/enviroment/ba/en-eco-pol",
+  "title": "לימודי תואר ראשון בסכ\"מ - סביבה, כלכלה ומדע המדינה",
+  "dept": "1011",
+  "acc": "680",
+  "rej": "679",
+  "acc_now": null,
+  "rej_now": null
+ },
+ {
+  "url": "https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology-ai",
+  "title": "תואר ראשון בביולוגיה ובלשנות במסגרת ביה\"ס למדעי המוח עם חטיבה בבינה מלאכותית ומדעי הנתונים",
+  "dept": "1541",
+  "acc": "700",
+  "rej": "699",
+  "acc_now": null,
+  "rej_now": null
+ }
+]
