@@ -19742,11 +19742,15 @@
         "fieldOfStudy": "כלכלה",
         "degreeLevel": "B.A",
         "description": "עבודת הכלכלן כרוכה בדרך כלל בקריאה וניתוח של דו”חות פיננסים ובהכנת דו”חות שכאלו. הדבר מתבצע תוך שימוש בתוכנת אקסל. חלק מן הכלכלנים עובדים בעיקר מול המחשב ואילו אחרים עובדים מול לקוחות, בתפקידי שירות או שיווק. בארגונים גדולים ובמשרדי ממשלה הכלכלן עובד כחלק מצוות. כלכלנים בעלי יכולת ניהול יכולים להתקד",
-        "admissionThreshold": 610,
+        "admissionThreshold": 600,
         "psychometricScore": 610,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-reichman-2",
@@ -19764,34 +19768,47 @@
         "fieldOfStudy": "מדעי המחשב",
         "degreeLevel": "B.Sc",
         "description": "הלימודים המשולבים מציעים לסטודנטים לרכוש ידע איכותי ומודרני שיאפשר להם להשתלב בהמשך במחקר בסיסי או במחקר ופיתוח יישומיים המשלבים כלים וידע משני התחומים כגון זיהוי מטרות תרופתיות ותכנון תרופות. הביקוש למומחים בשני העולמות הולך וגובר, ובוגרי התכנית יזכו ליתרון משמעותי בהמשך דרכם המקצועית.",
-        "admissionThreshold": 660,
+        "admissionThreshold": 732,
         "psychometricScore": 660,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 113,
+        "officialThreshold": 732,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 660,
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-4",
         "fieldOfStudy": "ממשל",
         "degreeLevel": "B.A",
         "description": "התואר פותח בפניכם אופק תעסוקתי במגוון תחומים המאופיינים ביציבות כלכלית: תפקידים בכנסת, מנהל מקרקעי ישראל, מועצות מקומיות ועיריות, הסקטור הפרטי ועוד. בנוסף, התואר יעניק לכם כלים להתמודד בעתיד במכרזים לתפקידים ממשלתיים ולתפקידים בחברות ציבוריות ופרטיות.",
-        "admissionThreshold": 580,
+        "admissionThreshold": 600,
         "psychometricScore": 580,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 89,
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: ממשל / ממשל וקיימות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-5",
         "fieldOfStudy": "מנהל עסקים",
         "degreeLevel": "B.A",
         "description": "אם אתם חולמים להשתלב במשרות ניהוליות בכירות – או רוצים לרכוש ידע וכלים שיתרמו רבות ליכולותיכם להקים ולנהל עסק עצמאי – לימודי תואר ראשון במנהל עסקים, הידועים גם כלימודי תואר ראשון בניהול – יכולים להיות מסלול הלימודים המתאים עבורכם: לימודים אינטרדיסציפלינריים מרתקים, המספקים לבוגריהם הכשרה איכותית ותו",
-        "admissionThreshold": 610,
+        "admissionThreshold": 630,
         "psychometricScore": 610,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 630,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מנהל עסקים חד חוגי",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-6",
@@ -19810,11 +19827,15 @@
         "fieldOfStudy": "פסיכולוגיה",
         "degreeLevel": "B.A",
         "description": "תכנית הלימודים שלנו לתואר ראשון בפסיכולוגיה תעניק לכם היכרות עם תחומי היסוד מהם מורכבת הפסיכולוגיה, הנותנים פרספקטיבה רחבה על ההתנהגות האנושית ומנגנוניה. בנוסף לכך, תקבלו כלים לחשיבה מדעית ביקורתית שיכשירו אתכם לחשוב כמו חוקרים. בסמינרים ובסדנאות המחקר תשתתפו במחקר עצמאי בקבוצות קטנות ותוך הנחייה אי",
-        "admissionThreshold": 630,
+        "admissionThreshold": 620,
         "psychometricScore": 630,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 620,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: פסיכולוגיה",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-8",
@@ -19833,12 +19854,16 @@
         "fieldOfStudy": "קיימות וכלכלה",
         "degreeLevel": "B.A",
         "description": "מטרת התכנית: להכשיר את הסטודנטים להיות אנליסטים, מקבלי החלטות ומובילים בתחומי הכלכלה תוך התמודדות עם נושאי הקיימות הבוערים הנמצאים על סדר היום הציבורי והעסקי ברמה הגלובלית ולהקנות לבוגריה יתרון במגוון תחומי עיסוק. לפיכך, יש בתוכנית  דגש על שימוש, עיבוד וניתוח נתוני עתק, פיתוח יזמות בתחומי הסביבה ליצ",
-        "admissionThreshold": 630,
+        "admissionThreshold": 600,
         "psychometricScore": 630,
         "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-11",
@@ -19850,18 +19875,26 @@
         "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 89,
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: ממשל / ממשל וקיימות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-9",
         "fieldOfStudy": "תקשורת",
         "degreeLevel": "B.A",
         "description": "בוגר לימודי תקשורת יכול להשתלב בעבודה במספר תחומים: כאיש טלוויזיה, כאיש רדיו, כעיתונאי, כדובר, כאיש פרסום או יחסי ציבור, כקופירייטר, כאיש מדיה דיגיטלית, כעורך תוכן או כמורה לתקשורת בתיכון. חלק מן המקצועות האלו דורשים למידה נוספת: למשל קורס קופירייטינג או לימודים לתעודת הוראה. כל המקצועות המוזכרים לע",
-        "admissionThreshold": 580,
+        "admissionThreshold": 600,
         "psychometricScore": 580,
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 89,
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: תקשורת",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-13",
@@ -19883,14 +19916,19 @@
         "fieldOfStudy": "מדעי המחשב ויזמות",
         "degreeLevel": "B.Sc",
         "description": "תואר כפול במדעי המחשב (B.Sc) ויזמות (B.A) בבית הספר אפי ארזי ואדלסון",
-        "admissionThreshold": 660,
+        "admissionThreshold": 732,
         "psychometricScore": 660,
         "sekemScore": 660,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutMinAverage": 113,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
-        "comments": "תואר כפול במדעי המחשב ויזמות - נדרש פסיכומטרי 660+ ומתמטיקה 4 יח\"ל 85+ או 5 יח\"ל 75+"
+        "comments": "תואר כפול במדעי המחשב ויזמות - נדרש פסיכומטרי 660+ ומתמטיקה 4 יח\"ל 85+ או 5 יח\"ל 75+",
+        "officialThreshold": 732,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 660,
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-15",
@@ -19903,7 +19941,12 @@
         "requiresPsychometric": false,
         "directBagrutEligible": true,
         "directBagrutMinAverage": 100,
-        "comments": "תואר כפול במשפטים (LL.B) ומנהל עסקים (B.A). ציון משולב 650+ או אפיק בגרות 100+"
+        "comments": "תואר כפול במשפטים (LL.B) ומנהל עסקים (B.A). ציון משולב 650+ או אפיק בגרות 100+",
+        "officialThreshold": 650,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 610,
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: משפטים תארים כפולים",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-16",
@@ -19916,20 +19959,29 @@
         "requiresPsychometric": false,
         "directBagrutEligible": true,
         "directBagrutMinAverage": 100,
-        "comments": "תואר כפול במשפטים (LL.B) וממשל, דיפלומטיה ואסטרטגיה (B.A)"
+        "comments": "תואר כפול במשפטים (LL.B) וממשל, דיפלומטיה ואסטרטגיה (B.A)",
+        "officialThreshold": 650,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 610,
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: משפטים תארים כפולים",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-17",
         "fieldOfStudy": "יזמות ומנהל עסקים",
         "degreeLevel": "B.A",
         "description": "תואר ראשון כפול/משולב ביזמות ומנהל עסקים",
-        "admissionThreshold": 640,
+        "admissionThreshold": 630,
         "psychometricScore": 640,
         "sekemScore": 640,
         "requiresPsychometric": false,
         "directBagrutEligible": true,
         "directBagrutMinAverage": 100,
-        "comments": "תואר ראשון כפול/משולב ביזמות ומנהל עסקים"
+        "comments": "תואר ראשון כפול/משולב ביזמות ומנהל עסקים",
+        "officialThreshold": 630,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מנהל עסקים ויזמות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-18",
@@ -19975,26 +20027,35 @@
         "fieldOfStudy": "כלכלה וחשבונאות",
         "degreeLevel": "B.A",
         "description": "תואר ראשון בכלכלה עם חטיבה בחשבונאות לקראת מבחני מועצת רואי חשבון",
-        "admissionThreshold": 610,
+        "admissionThreshold": 640,
         "psychometricScore": 610,
         "sekemScore": 610,
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100,
-        "comments": "תואר ראשון בכלכלה עם חטיבה בחשבונאות"
+        "directBagrutMinAverage": 103,
+        "comments": "תואר ראשון בכלכלה עם חטיבה בחשבונאות",
+        "officialThreshold": 640,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 620,
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: התכנית בחשבונאות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-22",
         "fieldOfStudy": "כלכלה ומנהל עסקים",
         "degreeLevel": "B.A",
         "description": "תואר ראשון דו-חוגי בכלכלה ומנהל עסקים",
-        "admissionThreshold": 610,
+        "admissionThreshold": 600,
         "psychometricScore": 610,
         "sekemScore": 610,
         "requiresPsychometric": false,
         "directBagrutEligible": true,
         "directBagrutMinAverage": 100,
-        "comments": "תואר ראשון דו-חוגי בכלכלה ומנהל עסקים"
+        "comments": "תואר ראשון דו-חוגי בכלכלה ומנהל עסקים",
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-inst-38-23",

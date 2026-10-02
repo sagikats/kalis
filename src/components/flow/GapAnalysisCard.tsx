@@ -136,6 +136,11 @@ export default function GapAnalysisCard({
 								מקור
 							</a>
 						)}
+						{analysis.thresholdSource?.includes(' — ') && (
+							<span className="text-[10px] text-[#66635C] mt-0.5 block line-clamp-2">
+								{analysis.thresholdSource.split(' — ').slice(1).join(' — ')}
+							</span>
+						)}
 					</div>
 
 					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
