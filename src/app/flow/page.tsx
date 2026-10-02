@@ -163,6 +163,46 @@ export default function AdmissionFlowPage() {
 		};
 	}, [hasTakenPsychometric, psychGeneral]);
 
+	// Every psychometric field the institutions' formulas use. Anything left empty is estimated from the
+	// other scores, and the section→general conversion depends on the test date, so results become estimates.
+	const psychMissingFields = useMemo(() => {
+		if (!hasTakenPsychometric) return [] as string[];
+		const missing: string[] = [];
+		if (!psychQuant) missing.push('כמותי');
+		if (!psychVerbal) missing.push('מילולי');
+		if (!psychEnglish) missing.push('אנגלית');
+		if (!psychQuantEmphasis) missing.push('דגש כמותי');
+		if (!psychVerbalEmphasis) missing.push('דגש מילולי');
+		return missing;
+	}, [hasTakenPsychometric, psychQuant, psychVerbal, psychEnglish, psychQuantEmphasis, psychVerbalEmphasis]);
+
+	const goCompletePsychometric = () => {
+		setShowEmphasisInputs(true);
+		setStep1SubStep('psychometric');
+		setActiveStep(1);
+	};
+
+	const renderPsychEstimateBanner = () =>
+		psychMissingFields.length > 0 ? (
+			<div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 flex items-center justify-between flex-wrap gap-3">
+				<div className="flex items-start gap-2.5">
+					<AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+					<div className="text-xs leading-relaxed">
+						<span className="font-bold">התוצאות הן הערכה ולא חישוב מדויק:</span>
+						<span className="text-amber-800 mr-1">
+							לא הוזנו כל ציוני הפסיכומטרי ({psychMissingFields.join(', ')}). הציונים החסרים מוערכים, וההמרה בין ציוני הפרקים לציונים המשוקללים משתנה ממועד למועד. לחישוב מדויק, הזינו את כל הציונים מספח הציונים הרשמי של מאל״ו.
+						</span>
+					</div>
+				</div>
+				<button
+					onClick={goCompletePsychometric}
+					className="text-xs font-bold px-3 py-1.5 bg-amber-200/60 hover:bg-amber-200 text-amber-900 rounded-lg border border-amber-300 transition cursor-pointer"
+				>
+					השלמת ציוני פסיכומטרי
+				</button>
+			</div>
+		) : null;
+
 	const gradeValidation: GradeValidationResult = useMemo(() => {
 		return validateUserGrades(subjects, hasTakenPsychometric, psychGeneral);
 	}, [subjects, hasTakenPsychometric, psychGeneral]);
@@ -1153,7 +1193,7 @@ export default function AdmissionFlowPage() {
 													<span>
 														{showEmphasisInputs
 															? 'הסתר ציוני דגש רשמיים (200–800)'
-															: '+ מתמיין להנדסה / מדעים? הזן ציוני דגש רשמיים מספח מאל״ו'}
+															: '+ הזנת ציוני דגש רשמיים (כמותי ומילולי) מספח מאל״ו — מומלץ לדיוק'}
 													</span>
 												</button>
 
@@ -1163,7 +1203,7 @@ export default function AdmissionFlowPage() {
 															<span className="text-xs font-bold text-[#222222]">
 																ציוני דגש רשמיים (מאל״ו)
 															</span>
-															<span className="text-[11px] text-[#77746D]">אופציונלי (200–800)</span>
+															<span className="text-[11px] text-[#77746D]">מומלץ לדיוק (200–800)</span>
 														</div>
 														<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 															<div className="space-y-1">
@@ -1228,6 +1268,28 @@ export default function AdmissionFlowPage() {
 													</span>
 												</div>
 											</div>
+
+											{/* Incomplete scores → results will be estimates */}
+											{psychMissingFields.length > 0 && (
+												<div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-900 space-y-1.5">
+													<div className="flex items-center gap-1.5 text-xs font-bold">
+														<AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+														<span>אפשר להמשיך, אבל התוצאות יהיו הערכה ולא מדויקות</span>
+													</div>
+													<p className="text-xs leading-relaxed text-amber-800">
+														חסרים: {psychMissingFields.join(', ')}. כל אוניברסיטה משקללת פרקים אחרים, והציונים החסרים יוערכו מתוך השאר. את כל הציונים, כולל ציוני הדגש, אפשר למצוא בספח הציונים הרשמי של מאל״ו.
+														{psychMissingFields.some((f) => f.startsWith('דגש')) && !showEmphasisInputs && (
+															<button
+																type="button"
+																onClick={() => setShowEmphasisInputs(true)}
+																className="mr-1 font-bold underline decoration-dotted cursor-pointer"
+															>
+																הזנת ציוני דגש
+															</button>
+														)}
+													</p>
+												</div>
+											)}
 										</div>
 									)}
 
@@ -1281,28 +1343,7 @@ export default function AdmissionFlowPage() {
 							</div>
 						) : (
 							<>
-								{hasTakenPsychometric && !psychQuantEmphasis && gapAnalyses.some((g) => g.relevantSekemType === 'engineering') && (
-									<div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 flex items-center justify-between flex-wrap gap-3">
-										<div className="flex items-center gap-2.5">
-											<AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
-											<div className="text-xs">
-												<span className="font-bold">נבחר תואר הדורש שקלול בדגש כמותי (הנדסה/מדעי המחשב):</span>
-												<span className="text-amber-800 mr-1">
-													הסכם מחושב כעת לפי הערכת שקלול הפרקים ({psychResolution.effectiveQuantEmphasis}). להבטחת דיוק מוחלט, תוכל להזין את ציון הדגש הרשמי מספח מאל״ו.
-												</span>
-											</div>
-										</div>
-										<button
-											onClick={() => {
-												setShowEmphasisInputs(true);
-												setActiveStep(1);
-											}}
-											className="text-xs font-bold px-3 py-1.5 bg-amber-200/60 hover:bg-amber-200 text-amber-900 rounded-lg border border-amber-300 transition cursor-pointer"
-										>
-											הזן ציון דגש מספח מאל״ו
-										</button>
-									</div>
-								)}
+								{renderPsychEstimateBanner()}
 
 								<PersonalAdmissionReport
 									analyses={gapAnalyses}
@@ -1317,6 +1358,7 @@ export default function AdmissionFlowPage() {
 				{/* STEP 4: תכנון מסלולי פעולה ובניית מסלול אישי */}
 				{activeStep === 4 && (
 					<div className="space-y-6">
+						{gradeValidation.isValid && renderPsychEstimateBanner()}
 						{!gradeValidation.isValid ? (
 							<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 								<AlertCircle className="h-12 w-12 text-[#E11D48] mx-auto" />
