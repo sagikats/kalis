@@ -22,7 +22,7 @@ import {
 	getBguBonus,
 	isBguMandatorySubject
 } from '../bgu';
-import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, getHaifaBonus } from '../haifa';
+import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, calculateHaifaOptimalBagrut, getHaifaBonus } from '../haifa';
 
 const sub = (name: string, units: number, grade: number) => ({ name, units, grade });
 
@@ -262,6 +262,19 @@ describe('Official admission rules', () => {
 			assert.equal(getHaifaBonus(sub('אנגלית', 4, 80)), 20);
 			assert.equal(getHaifaBonus(sub('ביולוגיה', 5, 80)), 25);
 			assert.equal(getHaifaBonus(sub('גאוגרפיה', 4, 80)), 10);
+		});
+
+		it('averages for profiles A (107.1) and B (90.91, 4u math/English +20) match the Haifa calculator (user-verified)', () => {
+			const A = calculateHaifaOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(Math.round(A.average * 10) / 10, 107.1);
+			const B = calculateHaifaOptimalBagrut([
+				sub('מתמטיקה', 4, 78), sub('אנגלית', 4, 82), sub('ביולוגיה', 5, 84), sub('היסטוריה', 2, 75),
+				sub('אזרחות', 2, 80), sub('תנ"ך', 2, 70), sub('ספרות', 2, 72), sub('הבעה עברית', 2, 76)
+			]);
+			assert.equal(B.average, 90.91);
 		});
 
 		it('CS sekem for profile A with Q145/V137/E124 = 731 (user-verified on Haifa calculator)', () => {
