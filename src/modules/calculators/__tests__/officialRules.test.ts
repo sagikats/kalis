@@ -29,11 +29,15 @@ const sub = (name: string, units: number, grade: number) => ({ name, units, grad
 describe('Official admission rules', () => {
 	// admissions.technion.ac.il — מקדמי הטבה, נוסחאות הסכם, כיצד מחשבים את ממוצע הבגרות המיטבי
 	describe('Technion', () => {
-		it('bonus table: math 5u +30, English and sciences 5u +25, humanities 5u +20, 4u +10', () => {
+		it('bonus table: math 5u +30; English, literature, Bible, history, sciences 5u +25; civics/expression 5u +20; 4u +10', () => {
 			assert.equal(getTechnionBonus(sub('מתמטיקה', 5, 90), false), 30);
 			assert.equal(getTechnionBonus(sub('פיזיקה', 5, 90), false), 25);
 			assert.equal(getTechnionBonus(sub('אנגלית', 5, 90), false), 25);
-			assert.equal(getTechnionBonus(sub('היסטוריה', 5, 90), false), 20);
+			assert.equal(getTechnionBonus(sub('היסטוריה', 5, 90), false), 25);
+			assert.equal(getTechnionBonus(sub('ספרות עברית', 5, 90), false), 25);
+			assert.equal(getTechnionBonus(sub('תנ"ך', 5, 90), false), 25);
+			assert.equal(getTechnionBonus(sub('אזרחות', 5, 90), false), 20);
+			assert.equal(getTechnionBonus(sub('הבעה עברית', 5, 90), false), 20);
 			assert.equal(getTechnionBonus(sub('מתמטיקה', 4, 90), false), 10);
 		});
 
@@ -166,6 +170,14 @@ describe('Official admission rules', () => {
 			]);
 			assert.equal(res.average, 85.9);
 			assert.equal(res.droppedSubjects.length, 0);
+		});
+
+		it('Technion profile A, all 5u (user-verified): literature/Bible/history +25, civics/expression +20 -> 114.4', () => {
+			const res = calculateTechnionOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 5, 85), sub('אזרחות', 5, 88), sub('תנ"ך', 5, 80), sub('ספרות עברית', 5, 82), sub('הבעה עברית', 5, 84)
+			]);
+			assert.equal(res.average, 114.4);
 		});
 
 		it('Technion sekem for profiles A/B/C (user-verified): 90.6 / 69 / 82.8 incl. 68.95 -> 69 rounding', () => {

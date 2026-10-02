@@ -109,7 +109,7 @@ function refTechnion(p: Profile) {
 		if (x.units === 4) return 10;
 		if (x.units !== 5) return 0;
 		if (x.name === MAT) return 30;
-		if (x.name === ENG) return 25;
+		if ([ENG, LIT, BIB, HIST].includes(x.name)) return 25;
 		if (SCI.includes(x.name) || TECH.includes(x.name)) return cluster ? 30 : 25;
 		return 20;
 	};

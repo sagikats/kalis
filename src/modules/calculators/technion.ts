@@ -12,7 +12,16 @@ import type {
 	InstitutionCalculatorResult
 } from './types';
 import { computeOptimalAverage } from './optimalAverage';
-import { isCoreScience, isEnglish, isMath, isTechSubject } from './subjectMatchers';
+import {
+	isArabic,
+	isBible,
+	isCoreScience,
+	isEnglish,
+	isHistory,
+	isLiterature,
+	isMath,
+	isTechSubject
+} from './subjectMatchers';
 
 const TECHNION_MANDATORY_SUBJECTS = [
 	'מתמטיקה',
@@ -49,9 +58,10 @@ export function detectTechnionScienceCluster(subjects: CalculatorSubject[]): boo
 
 /**
  * Official Technion bonus table (admissions.technion.ac.il — מקדמי הטבה):
- * granted only for a grade of 60+; math 5u +30; English 5u +25 (confirmed on the official calculator);
+ * granted only for a grade of 60+; math 5u +30;
+ * English, literature, Bible, history (and Arabic, listed in the same group) 5u +25 — confirmed on the official calculator;
  * physics/chemistry/biology/recognized tech 5u +25 (+30 inside the science cluster);
- * every other bonus subject at 5u +20; any bonus subject at 4u +10.
+ * every other bonus subject at 5u (e.g. civics, Hebrew expression, geography) +20; any bonus subject at 4u +10.
  */
 export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: boolean): number {
 	if (subject.grade < 60) return 0;
@@ -59,7 +69,7 @@ export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: 
 
 	if (subject.units >= 5) {
 		if (isMath(n)) return 30;
-		if (isEnglish(n)) return 25;
+		if (isEnglish(n) || isLiterature(n) || isBible(n) || isHistory(n) || isArabic(n)) return 25;
 		if (isCoreScience(n) || isTechSubject(n)) return hasScienceCluster ? 30 : 25;
 		return 20;
 	}
