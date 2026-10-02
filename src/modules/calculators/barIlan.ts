@@ -1,7 +1,8 @@
 /**
  * Pure Bar-Ilan University (אוניברסיטת בר-אילן) Admission Calculator
  * Official Formulas: General Sekem & Exact Sciences/Engineering Sekem
- * ⚠️ NOT VERIFIED against an official source — bonus table, mandatory subjects and sekem formula are estimates.
+ * Bagrut average: verified against the official page (bonus table, droppable subjects, no cap).
+ * ⚠️ Sekem formula NOT verified — Bar-Ilan's real admission score is on a ~0–100 scale; this is an estimate.
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -12,82 +13,63 @@ import {
 	InstitutionCalculatorResult
 } from './types';
 import { computeOptimalAverage } from './optimalAverage';
-
-const BAR_ILAN_MANDATORY_SUBJECTS = [
-	'מתמטיקה',
-	'אנגלית',
-	'אזרחות',
-	'הבעה עברית',
-	'לשון',
-	'היסטוריה',
-	'ספרות',
-	'תנ״ך',
-	'תנ"ך'
-];
-
-export function isBarIlanMandatorySubject(name: string): boolean {
-	const trimmed = name.trim();
-	return BAR_ILAN_MANDATORY_SUBJECTS.some((m) => trimmed.includes(m));
-}
+import {
+	isBible,
+	isCivics,
+	isComputerScience,
+	isCoreScience,
+	isEnglish,
+	isHebrewExpression,
+	isHistory,
+	isJewishThought,
+	isLiterature,
+	isMath
+} from './subjectMatchers';
 
 /**
- * Bar-Ilan Official Bonus Points:
- * Only passing grades (>= 60) are eligible:
- * - Mathematics 5 units: +35 points | 4 units: +12.5 points
- * - English 5 units: +25 points | 4 units: +12.5 points
- * - Sciences & Tech 5 units (Physics, CS, Chemistry, Biology): +25 points
- * - Jewish Studies & Humanities 5 units (Bible, Jewish Philosophy, Talmud, History, Literature, Arabic): +25 points
- * - Other 5 units electives: +20 points
- * - Other 4 units electives: +10 points
+ * Always included at Bar-Ilan: Hebrew, English, math, history, civics.
+ * Bible, literature and Jewish thought may be dropped when they lower the average
+ * (biu.ac.il — חישוב ממוצע בגרות).
+ */
+export function isBarIlanMandatorySubject(name: string): boolean {
+	return isMath(name) || isEnglish(name) || isHistory(name) || isCivics(name) || isHebrewExpression(name);
+}
+
+/** Talmud / Oral Torah / halacha — part of Bar-Ilan's enhanced-bonus group. */
+const isTalmudOrHalacha = (name: string) =>
+	name.includes('תושב"ע') || name.includes('תושב״ע') || name.includes('תלמוד') || name.includes('הלכה');
+
+/**
+ * Official Bar-Ilan bonus table (biu.ac.il/registration-and-admission/information/general-admission-req/matriculation-calculation),
+ * granted for a grade of 60+:
+ * - math: 5u +35 / 4u +15
+ * - Bible, Talmud, halacha, Jewish thought, history, civics, literature, chemistry, biology, physics,
+ *   English, computer science: 5u +25 / 4u +12.5
+ * - any other subject: 5u +20 / 4u +10
  */
 export function getBarIlanBonus(subject: CalculatorSubject): number {
 	if (subject.grade < 60) return 0;
-	const n = subject.name.trim();
+	const n = subject.name;
 
-	if (n.includes('מתמטיקה')) {
-		if (subject.units === 5) return 35;
-		if (subject.units === 4) return 12.5;
+	if (isMath(n)) {
+		if (subject.units >= 5) return 35;
+		if (subject.units === 4) return 15;
 		return 0;
 	}
 
-	if (n.includes('אנגלית')) {
-		if (subject.units === 5) return 25;
-		if (subject.units === 4) return 12.5;
-		return 0;
-	}
+	const isEnhanced =
+		isBible(n) ||
+		isTalmudOrHalacha(n) ||
+		isJewishThought(n) ||
+		isHistory(n) ||
+		isCivics(n) ||
+		isLiterature(n) ||
+		isCoreScience(n) ||
+		isEnglish(n) ||
+		isComputerScience(n);
 
-	if (subject.units === 5) {
-		if (
-			n.includes('פיזיקה') ||
-			n.includes('מדעי המחשב') ||
-			n.includes('כימיה') ||
-			n.includes('ביולוגיה') ||
-			n.includes('אלקטרוניקה') ||
-			n.includes('רובוטיקה') ||
-			n.includes('סייבר') ||
-			n.includes('תוכנה') ||
-			n.includes('תכנות') ||
-			n.includes('תנ"ך') ||
-			n.includes('תנ״ך') ||
-			n.includes('מחשבת ישראל') ||
-			n.includes('תושב"ע') ||
-			n.includes('הלכה') ||
-			n.includes('תלמוד') ||
-			n.includes('ספרות') ||
-			n.includes('היסטוריה') ||
-			n.includes('ערבית') ||
-			n.includes('מזרחנות') ||
-			n.includes('המזרח התיכון')
-		) {
-			return 25;
-		}
-		return 20;
-	}
-
-	if (subject.units === 4) {
-		return 10;
-	}
-
+	if (subject.units >= 5) return isEnhanced ? 25 : 20;
+	if (subject.units === 4) return isEnhanced ? 12.5 : 10;
 	return 0;
 }
 
@@ -95,7 +77,6 @@ export function calculateBarIlanOptimalBagrut(subjects: CalculatorSubject[]): Op
 	return computeOptimalAverage(subjects, {
 		isMandatory: isBarIlanMandatorySubject,
 		getBonus: getBarIlanBonus,
-		cap: 125,
 		dropReason: 'השמטה חוקית בבר-אילן: שקלול המקצוע הוריד את הממוצע האופטימלי'
 	});
 }
@@ -150,7 +131,7 @@ export function evaluateBarIlan(input: InstitutionCalculatorInput): InstitutionC
 	// Bar-Ilan Direct Bagrut Admission: Available for Bagrut >= 102.0 in Humanities, Social Sciences, Jewish Studies
 	const directBagrutEligible = optimal.average >= 102.0;
 
-	const notes: string[] = ['החישוב לבר-אילן הוא הערכה — הנוסחה טרם אומתה מול מקור רשמי של המוסד.'];
+	const notes: string[] = ['ממוצע הבגרות מחושב לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה — נוסחת הסכם טרם אומתה.'];
 	if (directBagrutEligible) {
 		notes.push('ממוצע בגרות עומד ברף קבלה ישירה (102.0 ומעלה) באוניברסיטת בר-אילן לחוגים זכאים.');
 	}
