@@ -264,6 +264,11 @@ describe('Official admission rules', () => {
 			assert.equal(getHaifaBonus(sub('גאוגרפיה', 4, 80)), 10);
 		});
 
+		it('CS sekem for profile A with Q145/V137/E124 = 731 (user-verified on Haifa calculator)', () => {
+			const pm = calculateHaifaMathPsychometric(145, 137, 124);
+			assert.equal(calculateHaifaMathSekem(107.1, pm), 731);
+		});
+
 		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = (BT + 3PM)/4', () => {
 			const pm = calculateHaifaMathPsychometric(140, 120, 130);
 			assert.equal(pm, 0.514554 * (6 * 140 + 4 * 120 + 130) - 65.3);
