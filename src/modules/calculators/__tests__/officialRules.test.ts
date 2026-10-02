@@ -168,6 +168,12 @@ describe('Official admission rules', () => {
 			assert.equal(res.droppedSubjects.length, 0);
 		});
 
+		it('Technion sekem for profiles A/B/C (user-verified): 90.6 / 69 / 82.8 incl. 68.95 -> 69 rounding', () => {
+			assert.equal(calculateTechnionSekem(111.1, 720), 90.6);
+			assert.equal(calculateTechnionSekem(85.9, 600), 69);
+			assert.equal(calculateTechnionSekem(101.5, 680), 82.8);
+		});
+
 		it('Technion profile C (user-verified): math 4u +10 at weight 8, geography 5u +20 -> 101.5', () => {
 			const res = calculateTechnionOptimalBagrut([
 				sub('מתמטיקה', 4, 92), sub('אנגלית', 5, 90), sub('גיאוגרפיה', 5, 95),
