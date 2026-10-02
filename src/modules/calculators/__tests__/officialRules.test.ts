@@ -36,6 +36,7 @@ describe('Official admission rules', () => {
 			assert.equal(getTechnionBonus(sub('היסטוריה', 5, 90), false), 25);
 			assert.equal(getTechnionBonus(sub('ספרות עברית', 5, 90), false), 25);
 			assert.equal(getTechnionBonus(sub('תנ"ך', 5, 90), false), 25);
+			assert.equal(getTechnionBonus(sub('ערבית', 5, 90), false), 25);
 			assert.equal(getTechnionBonus(sub('אזרחות', 5, 90), false), 20);
 			assert.equal(getTechnionBonus(sub('הבעה עברית', 5, 90), false), 20);
 			assert.equal(getTechnionBonus(sub('מתמטיקה', 4, 90), false), 10);

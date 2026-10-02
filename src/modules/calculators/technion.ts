@@ -59,7 +59,7 @@ export function detectTechnionScienceCluster(subjects: CalculatorSubject[]): boo
 /**
  * Official Technion bonus table (admissions.technion.ac.il — מקדמי הטבה):
  * granted only for a grade of 60+; math 5u +30;
- * English, literature, Bible, history (and Arabic, listed in the same group) 5u +25 — confirmed on the official calculator;
+ * English, literature, Bible, history, Arabic 5u +25 — confirmed on the official calculator;
  * physics/chemistry/biology/recognized tech 5u +25 (+30 inside the science cluster);
  * every other bonus subject at 5u (e.g. civics, Hebrew expression, geography) +20; any bonus subject at 4u +10.
  */
