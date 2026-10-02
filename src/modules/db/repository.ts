@@ -494,7 +494,11 @@ export class KalisDatabaseRepository {
 	// Async SQLite / Prisma Persistence Layer
 	// -------------------------------------------------------------------------
 
-	private async generateNextCandidateNumber(): Promise<string> {
+	/**
+	 * Next KL-XXXXX number. With `afterCollision`, skips a random 1–50 ahead so two registrations racing for the
+	 * same number (unique constraint, P2002) both end up with a valid KL-XXXXX instead of a malformed fallback.
+	 */
+	private async generateNextCandidateNumber(afterCollision = false): Promise<string> {
 		const users = await prisma.user.findMany({
 			where: { candidateNumber: { startsWith: 'KL-' } },
 			select: { candidateNumber: true }
@@ -511,7 +515,7 @@ export class KalisDatabaseRepository {
 				}
 			}
 		}
-		return `KL-${maxNum + 1}`;
+		return `KL-${maxNum + 1 + (afterCollision ? 1 + Math.floor(Math.random() * 50) : 0)}`;
 	}
 
 	private async ensureUserExists(userId: string): Promise<UserRecord> {
@@ -527,7 +531,7 @@ export class KalisDatabaseRepository {
 				});
 			} catch (err: any) {
 				if (err?.code === 'P2002') {
-					candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+					candidateNumber = await this.generateNextCandidateNumber(true);
 					existing = await prisma.user.create({
 						data: {
 							id: userId,
@@ -562,7 +566,7 @@ export class KalisDatabaseRepository {
 			});
 		} catch (err: any) {
 			if (err?.code === 'P2002') {
-				candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+				candidateNumber = await this.generateNextCandidateNumber(true);
 				created = await prisma.user.create({
 					data: {
 						candidateNumber,
@@ -615,7 +619,7 @@ export class KalisDatabaseRepository {
 			});
 		} catch (err: any) {
 			if (err?.code === 'P2002') {
-				candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+				candidateNumber = await this.generateNextCandidateNumber(true);
 				created = await prisma.user.create({
 					data: {
 						candidateNumber,
@@ -696,7 +700,7 @@ export class KalisDatabaseRepository {
 				});
 			} catch (err: any) {
 				if (err?.code === 'P2002') {
-					candidateNumber = `KL-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`;
+					candidateNumber = await this.generateNextCandidateNumber(true);
 					user = await prisma.user.create({
 						data: {
 							candidateNumber,
