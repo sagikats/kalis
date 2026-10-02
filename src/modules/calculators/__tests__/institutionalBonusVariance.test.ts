@@ -65,9 +65,9 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getBguBonus(cs5), 25, 'BGU gives +25 for 5u CS');
 		});
 
-		it('Middle Eastern Studies 5u Bonus: standard +20 at Technion/TAU/HUJI/BGU (not in any enhanced official table)', () => {
+		it('Middle Eastern Studies 5u Bonus: standard +20 at Technion/TAU/HUJI/BGU/BIU (not in any enhanced official table)', () => {
 			const me5 = { name: 'לימודי המזרח התיכון והאסלאם / מזרחנות', units: 5, grade: 90 };
-			assert.equal(getBarIlanBonus(me5), 25, 'BIU (unverified table) awards +25 for Middle Eastern Studies');
+			assert.equal(getBarIlanBonus(me5), 20, 'BIU: not in the +25 list (biu.ac.il)');
 			assert.equal(getHujiBonus(me5), 20, 'HUJI awards standard +20 (info.huji.ac.il bonus table)');
 			assert.equal(getTechnionBonus(me5, false), 20, 'Technion awards standard +20 (admissions.technion.ac.il)');
 			assert.equal(getTauBonus(me5), 20, 'TAU awards standard +20 elective bonus for Middle Eastern Studies');
@@ -80,7 +80,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getTauBonus(rob5), 20, 'TAU: not in the +25 list (go.tau.ac.il)');
 			assert.equal(getHujiBonus(rob5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(rob5), 20, 'BGU: not in the enhanced table (ידיעון תשפ"ז)');
-			assert.equal(getBarIlanBonus(rob5), 25, 'BIU awards +25 for Robotics');
+			assert.equal(getBarIlanBonus(rob5), 20, 'BIU: not in the +25 list (biu.ac.il)');
 		});
 
 		it('System Planning & Programming 5u Bonus: +25 at Technion (+30 in cluster), +20 at TAU/HUJI/BGU', () => {
@@ -90,7 +90,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getTauBonus(sysProg5), 20, 'TAU: not in the +25 list');
 			assert.equal(getHujiBonus(sysProg5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(sysProg5), 20, 'BGU: not in the enhanced table');
-			assert.equal(getBarIlanBonus(sysProg5), 25, 'BIU awards +25 for System Planning & Programming');
+			assert.equal(getBarIlanBonus(sysProg5), 20, 'BIU: not in the +25 list (biu.ac.il)');
 		});
 
 		it('Law & Entrepreneurship 5u Bonus: +20 general elective bonus across institutions', () => {

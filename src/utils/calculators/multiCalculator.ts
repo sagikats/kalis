@@ -251,8 +251,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: biuRes.optimalUnits,
 			notes:
 				biuRes.droppedSubjects && biuRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
-					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
+					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). ממוצע לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה`
+					: 'ממוצע לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה'
 		},
 		reichman: {
 			institutionId: 'reichman',

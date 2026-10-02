@@ -14,6 +14,7 @@ import {
 } from '../technion';
 import { calculateTauGeneralSekem, calculateTauManagementSekem, calculateTauOptimalBagrut, getTauBonus } from '../tau';
 import { calculateReichmanAdjustedScore, calculateReichmanOptimalBagrut } from '../reichman';
+import { calculateBarIlanOptimalBagrut, getBarIlanBonus, isBarIlanMandatorySubject } from '../barIlan';
 import { calculateHujiOptimalBagrut, calculateHujiWeightedScore, getHujiBonus, isHujiMandatorySubject } from '../huji';
 import {
 	calculateBguEngineeringSekem,
@@ -269,6 +270,39 @@ describe('Official admission rules', () => {
 				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
 			]);
 			assert.equal(res.average, 111.38);
+		});
+	});
+
+	// biu.ac.il/registration-and-admission/information/general-admission-req/matriculation-calculation
+	describe('Bar-Ilan (bagrut average)', () => {
+		it('bonus table: math 35/15, enhanced group 25/12.5 (incl. civics, CS, Talmud), others 20/10', () => {
+			assert.equal(getBarIlanBonus(sub('מתמטיקה', 4, 90)), 15);
+			assert.equal(getBarIlanBonus(sub('אזרחות', 5, 90)), 25);
+			assert.equal(getBarIlanBonus(sub('מדעי המחשב', 4, 90)), 12.5);
+			assert.equal(getBarIlanBonus(sub('תושב"ע / תלמוד (מוגבר 5 יח"ל)', 5, 90)), 25);
+			assert.equal(getBarIlanBonus(sub('גיאוגרפיה', 5, 90)), 20);
+			assert.equal(getBarIlanBonus(sub('גיאוגרפיה', 4, 90)), 10);
+			assert.equal(getBarIlanBonus(sub('אנגלית', 5, 59)), 0);
+		});
+
+		it('profile A = 112.08 over 26 units, Bible+literature dropped (user-verified on shoham.biu.ac.il)', () => {
+			const res = calculateBarIlanOptimalBagrut([
+				sub('מתמטיקה', 5, 95), sub('אנגלית', 5, 92), sub('פיזיקה', 5, 93), sub('מדעי המחשב', 5, 90),
+				sub('היסטוריה', 2, 85), sub('אזרחות', 2, 88), sub('תנ"ך', 2, 80), sub('ספרות', 2, 82), sub('הבעה עברית', 2, 84)
+			]);
+			assert.equal(res.average, 112.08);
+			assert.equal(res.optimalUnits, 26);
+		});
+
+		it('Bible, literature and Jewish thought are droppable; average is not capped', () => {
+			assert.equal(isBarIlanMandatorySubject('תנ"ך'), false);
+			assert.equal(isBarIlanMandatorySubject('ספרות'), false);
+			assert.equal(isBarIlanMandatorySubject('מחשבת ישראל'), false);
+			assert.equal(isBarIlanMandatorySubject('אזרחות'), true);
+			const res = calculateBarIlanOptimalBagrut([
+				sub('מתמטיקה', 5, 100), sub('אנגלית', 5, 100), sub('היסטוריה', 5, 100), sub('אזרחות', 5, 100)
+			]);
+			assert.ok(res.average > 125);
 		});
 	});
 
