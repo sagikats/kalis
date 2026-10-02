@@ -86,6 +86,9 @@ export default function AdmissionFlowPage() {
 	const [psychQuantEmphasis, setPsychQuantEmphasis] = useState<number | ''>('');
 	const [psychVerbalEmphasis, setPsychVerbalEmphasis] = useState<number | ''>('');
 	const [showEmphasisInputs, setShowEmphasisInputs] = useState<boolean>(false);
+	// The set of missing psychometric fields the user agreed to continue without (so the notice shows once)
+	const [psychEstimateAckKey, setPsychEstimateAckKey] = useState<string>('');
+	const [pendingStepAfterPsychNotice, setPendingStepAfterPsychNotice] = useState<1 | 2 | 3 | 4 | null>(null);
 
 	// Step 2: Target Programs Wishlist
 	const [selectedTargets, setSelectedTargets] = useState<TargetProgramSelection[]>([]);
@@ -176,34 +179,10 @@ export default function AdmissionFlowPage() {
 		return missing;
 	}, [hasTakenPsychometric, psychQuant, psychVerbal, psychEnglish, psychQuantEmphasis, psychVerbalEmphasis]);
 
-	const goCompletePsychometric = () => {
-		setShowEmphasisInputs(true);
-		setStep1SubStep('psychometric');
-		setActiveStep(1);
-	};
+	const psychMissingKey = psychMissingFields.join('|');
+	const needsPsychEstimateNotice = psychMissingFields.length > 0 && psychEstimateAckKey !== psychMissingKey;
 
-	const renderPsychEstimateBanner = () =>
-		psychMissingFields.length > 0 ? (
-			<div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 flex items-center justify-between flex-wrap gap-3">
-				<div className="flex items-start gap-2.5">
-					<AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-					<div className="text-xs leading-relaxed">
-						<span className="font-bold">התוצאות הן הערכה ולא חישוב מדויק:</span>
-						<span className="text-amber-800 mr-1">
-							לא הוזנו כל ציוני הפסיכומטרי ({psychMissingFields.join(', ')}). הציונים החסרים מוערכים, וההמרה בין ציוני הפרקים לציונים המשוקללים משתנה ממועד למועד. לחישוב מדויק, הזינו את כל הציונים מספח הציונים הרשמי של מאל״ו.
-						</span>
-					</div>
-				</div>
-				<button
-					onClick={goCompletePsychometric}
-					className="text-xs font-bold px-3 py-1.5 bg-amber-200/60 hover:bg-amber-200 text-amber-900 rounded-lg border border-amber-300 transition cursor-pointer"
-				>
-					השלמת ציוני פסיכומטרי
-				</button>
-			</div>
-		) : null;
-
-	const gradeValidation: GradeValidationResult = useMemo(() => {
+		const gradeValidation: GradeValidationResult = useMemo(() => {
 		return validateUserGrades(subjects, hasTakenPsychometric, psychGeneral);
 	}, [subjects, hasTakenPsychometric, psychGeneral]);
 
@@ -220,6 +199,10 @@ export default function AdmissionFlowPage() {
 		}
 		if (targetStep === 1 && activeStep !== 1) {
 			setStep1SubStep('bagrut');
+		}
+		if (activeStep === 1 && targetStep > 1 && needsPsychEstimateNotice) {
+			setPendingStepAfterPsychNotice(targetStep);
+			return;
 		}
 		setActiveStep(targetStep);
 	};
@@ -273,6 +256,10 @@ export default function AdmissionFlowPage() {
 			return;
 		}
 		setShowValidationErrors(false);
+		if (needsPsychEstimateNotice) {
+			setPendingStepAfterPsychNotice(2);
+			return;
+		}
 		setActiveStep(2);
 	};
 
@@ -368,6 +355,7 @@ export default function AdmissionFlowPage() {
 						if (parsed.psychQuantEmphasis !== undefined) setPsychQuantEmphasis(parsed.psychQuantEmphasis);
 						if (parsed.psychVerbalEmphasis !== undefined) setPsychVerbalEmphasis(parsed.psychVerbalEmphasis);
 						if (parsed.showEmphasisInputs !== undefined) setShowEmphasisInputs(parsed.showEmphasisInputs);
+						if (parsed.psychEstimateAckKey !== undefined) setPsychEstimateAckKey(parsed.psychEstimateAckKey);
 						if (parsed.selectedTargets) setSelectedTargets(parsed.selectedTargets);
 						if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
 						if (parsed.step1SubStep) setStep1SubStep(parsed.step1SubStep);
@@ -434,6 +422,7 @@ export default function AdmissionFlowPage() {
 							if (parsed.psychQuantEmphasis !== undefined) setPsychQuantEmphasis(parsed.psychQuantEmphasis);
 							if (parsed.psychVerbalEmphasis !== undefined) setPsychVerbalEmphasis(parsed.psychVerbalEmphasis);
 							if (parsed.showEmphasisInputs !== undefined) setShowEmphasisInputs(parsed.showEmphasisInputs);
+						if (parsed.psychEstimateAckKey !== undefined) setPsychEstimateAckKey(parsed.psychEstimateAckKey);
 							if (parsed.selectedTargets) setSelectedTargets(parsed.selectedTargets);
 							if (parsed.questionnaireAnswers) setQuestionnaireAnswers(parsed.questionnaireAnswers);
 							if (parsed.step1SubStep) setStep1SubStep(parsed.step1SubStep);
@@ -477,6 +466,7 @@ export default function AdmissionFlowPage() {
 			psychQuantEmphasis,
 			psychVerbalEmphasis,
 			showEmphasisInputs,
+			psychEstimateAckKey,
 			selectedTargets,
 			questionnaireAnswers,
 			step1SubStep,
@@ -565,6 +555,7 @@ export default function AdmissionFlowPage() {
 		psychQuantEmphasis,
 		psychVerbalEmphasis,
 		showEmphasisInputs,
+		psychEstimateAckKey,
 		selectedTargets,
 		questionnaireAnswers,
 		activeStep
@@ -1343,8 +1334,6 @@ export default function AdmissionFlowPage() {
 							</div>
 						) : (
 							<>
-								{renderPsychEstimateBanner()}
-
 								<PersonalAdmissionReport
 									analyses={gapAnalyses}
 									onViewGap={handleViewGapForProgram}
@@ -1358,7 +1347,6 @@ export default function AdmissionFlowPage() {
 				{/* STEP 4: תכנון מסלולי פעולה ובניית מסלול אישי */}
 				{activeStep === 4 && (
 					<div className="space-y-6">
-						{gradeValidation.isValid && renderPsychEstimateBanner()}
 						{!gradeValidation.isValid ? (
 							<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 								<AlertCircle className="h-12 w-12 text-[#E11D48] mx-auto" />
@@ -1429,6 +1417,64 @@ export default function AdmissionFlowPage() {
 					targetInstitutionId={selectedTargets[0]?.calculatorId as any}
 				/>
 			</main>
+
+			{/* Incomplete psychometric scores: asked once when leaving step 1, then no banners later */}
+			{pendingStepAfterPsychNotice !== null && (
+				<div
+					className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4"
+					role="dialog"
+					aria-modal="true"
+					aria-labelledby="psych-estimate-title"
+					onClick={() => setPendingStepAfterPsychNotice(null)}
+				>
+					<div
+						className="w-full max-w-md bg-white rounded-2xl border border-[#E5DFD4] shadow-xl p-5 space-y-4"
+						dir="rtl"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<div className="flex items-start gap-2.5">
+							<AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+							<div className="space-y-2">
+								<h3 id="psych-estimate-title" className="text-sm font-bold text-[#222222]">
+									התוצאות יהיו הערכה ולא חישוב מדויק
+								</h3>
+								<p className="text-xs leading-relaxed text-[#55524B]">
+									לא הוזנו כל ציוני הפסיכומטרי. חסרים: <span className="font-bold">{psychMissingFields.join(', ')}</span>.
+								</p>
+								<p className="text-xs leading-relaxed text-[#55524B]">
+									כל אוניברסיטה משקללת פרקים אחרים, ולכן הציונים החסרים יוערכו מתוך השאר. ההמרה בין ציוני הפרקים לציונים המשוקללים משתנה ממועד למועד, כך שהסכמים וסיכויי הקבלה עלולים לסטות. את כל הציונים, כולל ציוני הדגש, אפשר למצוא בספח הציונים הרשמי של מאל״ו.
+								</p>
+							</div>
+						</div>
+						<div className="flex flex-col-reverse sm:flex-row gap-2 sm:justify-start">
+							<button
+								type="button"
+								autoFocus
+								onClick={() => {
+									setPendingStepAfterPsychNotice(null);
+									setStep1SubStep('psychometric');
+									setShowEmphasisInputs(true);
+								}}
+								className="px-4 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl transition cursor-pointer"
+							>
+								להשלים את הציונים
+							</button>
+							<button
+								type="button"
+								onClick={() => {
+									const next = pendingStepAfterPsychNotice;
+									setPsychEstimateAckKey(psychMissingKey);
+									setPendingStepAfterPsychNotice(null);
+									setActiveStep(next);
+								}}
+								className="px-4 py-2.5 bg-white hover:bg-[#FAF8F5] text-[#3C3C3C] font-bold text-xs rounded-xl border border-[#DDD7CB] transition cursor-pointer"
+							>
+								להמשיך עם הערכה
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 
 			{/* ========================================================================= */}
 			{/* ALWAYS-VISIBLE FLOATING CAPSULE NAVIGATION DOCK (קפסולה צפה מנותקת ומודגשת) */}
