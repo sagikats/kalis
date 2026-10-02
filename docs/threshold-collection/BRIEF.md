@@ -24,7 +24,8 @@ value is harmful.**
 4. **Do not bypass bot protection.** Several sites block automated access: Technion, Haifa, Bar-Ilan (Radware) and go.huji.ac.il. If you get a block page, a CAPTCHA, "Request Rejected" or a dropped connection, **stop and ask the human** to open the page in a normal browser and paste the text or send screenshots. Don't retry with different headers, proxies or headless browsers.
 5. **Be gentle with official APIs and calculators.** Wait at least 3–5 seconds between requests, and make no more than ~50 requests per site per day. BGU's API rate-limits around 60 calls.
 6. **Keep the institution's own scale.** Don't convert thresholds. Record the scale (see §3).
-7. **Names:** copy the official program/track name exactly as published. Map it to our `program_id` from `missing_programs.csv` when you are confident; otherwise leave `program_id` empty and we'll map it.
+7. **Ignore the repository's `scrapers/` folder.** Most of those files are hard-coded, unsourced numbers (some known to be wrong). Never copy values from them. Program-name lists there may help with recognition only.
+8. **Names:** copy the official program/track name exactly as published. Map it to our `program_id` from `missing_programs.csv` when you are confident; otherwise leave `program_id` empty and we'll map it.
 
 ---
 
