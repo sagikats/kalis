@@ -159,6 +159,15 @@ describe('Official admission rules', () => {
 			assert.equal(res.droppedSubjects.length, 0);
 		});
 
+		it('Technion profile B (user-verified): 4u English/math +10, biology 5u +25, mandatory 54 kept -> 85.9', () => {
+			const res = calculateTechnionOptimalBagrut([
+				sub('מתמטיקה', 4, 78), sub('אנגלית', 4, 82), sub('ביולוגיה', 5, 84), sub('היסטוריה', 2, 75),
+				sub('אזרחות', 2, 80), sub('תנ"ך', 2, 70), sub('ספרות', 2, 72), sub('הבעה עברית', 2, 54)
+			]);
+			assert.equal(res.average, 85.9);
+			assert.equal(res.droppedSubjects.length, 0);
+		});
+
 		it('Technion profile C (user-verified): math 4u +10 at weight 8, geography 5u +20 -> 101.5', () => {
 			const res = calculateTechnionOptimalBagrut([
 				sub('מתמטיקה', 4, 92), sub('אנגלית', 5, 90), sub('גיאוגרפיה', 5, 95),
