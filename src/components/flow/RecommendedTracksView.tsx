@@ -1932,7 +1932,7 @@ export default function RecommendedTracksView({
 			{activeTab === 'custom_builder' && (
 				<div className="space-y-6">
 					{userProfile && institutionResult ? (
-						<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative overflow-hidden">
+						<div className="bg-white border border-[#E5DFD4] rounded-3xl p-3 sm:p-8 space-y-6 shadow-sm relative overflow-hidden">
 							{/* Section Header */}
 							<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DFD4] pb-5">
 								<div className="space-y-1.5">

@@ -918,7 +918,7 @@ export default function WhatIfSimulator({
 	};
 
 	return (
-		<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs space-y-8 dir-rtl text-right relative overflow-hidden">
+		<div className="bg-white border border-[#E5DFD4] rounded-3xl p-3 sm:p-8 shadow-xs space-y-8 dir-rtl text-right relative overflow-hidden">
 			{/* Section Header */}
 			<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EAE5DA] pb-5">
 				<div className="space-y-1">
@@ -986,7 +986,7 @@ export default function WhatIfSimulator({
 				{/* ----------------------------------------------------------------- */}
 				<div className="lg:col-span-7 space-y-6">
 					{/* 1. PSYCHOMETRIC SLIDER CARD */}
-					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 shadow-2xs">
+					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-3.5 sm:p-6 space-y-5 shadow-2xs">
 						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
 							<div className="flex items-center gap-2.5">
 								<div className="p-2 rounded-xl bg-[#EFF6FA] text-[#1E597B] border border-[#C5DFED] shadow-2xs">
@@ -1045,7 +1045,7 @@ export default function WhatIfSimulator({
 					</div>
 
 					{/* 2. BAGRUT LAB: "הבגרויות שאני רוצה לשפר" */}
-					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-5 sm:p-6 space-y-5 shadow-2xs">
+					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-3.5 sm:p-6 space-y-5 shadow-2xs">
 						<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EAE5DA] pb-4">
 							<div className="flex items-center gap-2.5">
 								<div className="p-2 rounded-xl bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] shadow-2xs">
