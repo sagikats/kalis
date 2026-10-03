@@ -10,6 +10,24 @@
 
 ---
 
+## 🗓️ 2026-10-03 (סשן 14) — Antigravity — דוח ביקורת עומק ארכיטקטונית, ליקויים ותוכנית עבודה (CODE_AUDIT_AND_RECOMMENDATIONS.md)
+
+**בראנץ':** `main` (בסנכרון מול `origin/main`)
+
+- בוצעה סקירת עומק מקיפה לכל שכבות הקוד: מחשבונים טהורים, אופטימייזר, בסיס נתונים ו-Prisma, קומפוננטות UI, אבטחה ו-Auth, תוסף כרום ו-Bundle.
+- כל הממצאים רוכזו בקובץ ייעודי ומפורט עבור קלוד: `CODE_AUDIT_AND_RECOMMENDATIONS.md`.
+- **ממצאים מרכזיים שהוגדרו בדוח:**
+  1. **פיצול מנוע אופטימיזציה כפול:** `trackGenerator.ts` (95KB, רץ בקליינט) לעומת `trackEngine.ts` (34KB, רץ ב-API).
+  2. **צוואר בקבוק של ה-Bundle:** טעינת `academicData.json` (1.88MB) ישירות לקליינט ב-`DegreeSearchSelector.tsx` שמנפחת את ה-JS Chunk ל-1.5MB במקום שימוש ב-`GET /api/programs` שכבר קיים.
+  3. **In-Memory Cache Staling ב-DB:** `ensureSyncedFromSQLite` לא מתרענן בזמן ריצה ב-`repository.ts`.
+  4. **קוד זומבי ישן:** דף `/optimizer` ו-`PlannerContext` עם `mockData.ts` שעדיין נבנים לפרודקשן ופעמון ה-Navbar מחובר אליהם.
+  5. **קומפוננטות ענק מונוליתיות:** `RecommendedTracksView` (2,051 שורות), `WhatIfSimulator` (2,143 שורות).
+  6. **נוסחאות סכם לא מאומתות ב-100%:** בר-אילן ואריאל.
+  7. **תקלות טסטי API ב-jiti:** אי-פתרון של נתיב ה-alias `@/modules/db`.
+- **הצעד הבא (עבור קלוד):** לפעול לפי תוכנית העבודה המדורגת ב-`CODE_AUDIT_AND_RECOMMENDATIONS.md` (החל משלב א': הקטנת ה-Bundle וחיבור ה-Search Selector ל-API).
+
+---
+
 ## 🗓️ 2026-10-03 (סשן 13) — Claude Code (Opus 5.5) — טכניון: אפיק "בגרות מצוינת" (קבלה בלי פסיכומטרי)
 
 **בראנץ':** `data/technion-excellent-bagrut` (מ-main; לא נפרס)
