@@ -43,8 +43,8 @@ function assignable(conditions: SubjectCondition[], subjects: CalculatorSubject[
 	return fill(0);
 }
 
-const describe = (c: SubjectCondition) =>
-	`${c.count && c.count > 1 ? `${c.count} מתוך ` : ''}${c.subjects.join(' / ')} ${c.minUnits} יח״ל בציון ${c.minGrade}+`;
+export const describeCondition = (c: SubjectCondition) =>
+	`${c.count && c.count > 1 ? `${c.count} מתוך ` : ''}${c.subjects.join(' / ')} ${c.minUnits} יח״ל ${c.minGrade > 1 ? `בציון ${c.minGrade}+` : 'לפחות'}`;
 
 export function evaluateExcellentBagrut(route: ExcellentBagrutRoute, subjects: CalculatorSubject[]): ExcellentBagrutResult {
 	const missing: string[] = [];
@@ -62,9 +62,9 @@ export function evaluateExcellentBagrut(route: ExcellentBagrutRoute, subjects: C
 	const options = route.anyOf?.length ? route.anyOf : [[]];
 	const subjectsOk = options.some((opt) => assignable([...all, ...opt], subjects));
 	if (!subjectsOk) {
-		for (const c of all) if (!assignable([c], subjects)) missing.push(describe(c));
+		for (const c of all) if (!assignable([c], subjects)) missing.push(describeCondition(c));
 		if (route.anyOf?.length && all.every((c) => assignable([c], subjects))) {
-			missing.push(`אחת האפשרויות: ${route.anyOf.map((opt) => opt.map(describe).join(' + ')).join(' או ')}`);
+			missing.push(`אחת האפשרויות: ${route.anyOf.map((opt) => opt.map(describeCondition).join(' + ')).join(' או ')}`);
 		}
 		if (missing.length === 0) missing.push('שילוב המקצועות הנדרש (כל מקצוע נספר לתנאי אחד בלבד)');
 	}

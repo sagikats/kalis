@@ -1,5 +1,6 @@
 import { AcademicDegree, AdmissionRoutes } from '../../types/academic';
-import { evaluateExcellentBagrut, requiredGesherScore, requiredMathExamScore } from '../../modules/optimizer/excellentBagrut';
+import { evaluateExcellentBagrut } from '../../modules/optimizer/excellentBagrut';
+import { describeOfficialRoutes, OfficialRouteInfo } from '../../modules/optimizer/officialRoutes';
 import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
@@ -52,6 +53,8 @@ export interface ProgramGapAnalysis {
 	admissionRoutes?: AdmissionRoutes;
 	/** Official paths that don't decide the status (e.g. Technion "אפיק מקוצר", or a near-miss "בגרות מצוינת"). */
 	alternativePaths?: { id: string; title: string; description: string }[];
+	/** Every official route other than the sekem, described for this applicant (step-4 bypass tabs). */
+	officialRoutes?: OfficialRouteInfo[];
 	userSekem: number;
 	gap: number; // positive = surplus, negative = points needed
 	status: AdmissionStatus;
@@ -442,6 +445,13 @@ export function analyzeProgramGap(
 	let admissionRoute: ProgramGapAnalysis['admissionRoute'];
 	let admissionNote: string | undefined;
 	const alternativePaths: NonNullable<ProgramGapAnalysis['alternativePaths']> = [];
+	const officialRoutes = describeOfficialRoutes(routes, {
+		subjects: profile.bagrutSubjects || [],
+		bagrutAverage: institutionRes.bagrutAverage || 0,
+		psychometric: psych,
+		userSekem,
+		threshold
+	});
 
 	if (routes?.minPsychometric && (status === 'accepted' || status === 'borderline') && psych < routes.minPsychometric) {
 		status = 'not_accepted';
@@ -482,72 +492,9 @@ export function analyzeProgramGap(
 		if (status === 'accepted') {
 			improvementOptions.length = 0;
 		} else {
-			if (routes?.excellentBagrut) {
-				const eb = evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []);
-				if (eb.missing.length > 0 && eb.missing.length <= 2) {
-					alternativePaths.push({
-						id: 'alt-excellent-bagrut',
-						title: 'בגרות מצוינת (קבלה בלי פסיכומטרי)',
-						description: `התנאים: ${routes.excellentBagrut.summary}. חסר לך: ${eb.missing.join('; ')}.`
-					});
-				}
-			}
-			if (routes?.mathExam && threshold) {
-				const me = routes.mathExam;
-				const elig = evaluateExcellentBagrut(me.eligibility, profile.bagrutSubjects || []);
-				const avg = institutionRes.bagrutAverage || 0;
-				if (elig.met && avg > 0) {
-					const need = requiredMathExamScore(me, avg, threshold);
-					alternativePaths.push({
-						id: 'alt-math-exam',
-						title: 'בגרות + מבחן סיווג במתמטיקה (במקום פסיכומטרי)',
-						description: need
-							? `ציון המבחן מומר לסולם הפסיכומטרי ומחליף אותו בסכם. עם ממוצע הבגרות שלך (${avg}) מספיק ציון ${need.examScore} במבחן הסיווג במתמטיקה (שווה ערך לפסיכומטרי ${need.psychometricEquivalent}) כדי להגיע לסף ${threshold}.${me.note ? ` ${me.note}` : ''}`
-							: `ציון המבחן מחליף את הפסיכומטרי בסכם, אבל עם ממוצע הבגרות הנוכחי (${avg}) גם 100 במבחן לא מגיע לסף ${threshold}.`
-					});
-				} else if (!elig.met && elig.missing.length <= 2) {
-					alternativePaths.push({
-						id: 'alt-math-exam',
-						title: 'בגרות + מבחן סיווג במתמטיקה (במקום פסיכומטרי)',
-						description: `תנאי ההשתתפות: ${me.eligibility.summary}. חסר לך: ${elig.missing.join('; ')}.`
-					});
-				}
-			}
-			if (routes?.promotionBonus && threshold) {
-				const lowered = Math.round((threshold - routes.promotionBonus) * 100) / 100;
-				const wouldPass = userSekem > 0 && userSekem >= lowered;
-				alternativePaths.push({
-					id: 'alt-promotion',
-					title: 'ראויים לקידום (הנחה בסכם)',
-					description: `מי שהוכר/ה ע"י האגודה לקידום החינוך כ"ראוי/ה לקידום" (30 נקודות ומעלה) מקבל/ת הנחה של ${routes.promotionBonus} ${routes.promotionBonus === 1 ? 'נקודה' : 'נקודות'} בסכם בתואר הזה, כלומר סף ${lowered}.${wouldPass ? ` עם ההכרה, הסכם שלך (${userSekem}) עומד בסף.` : ''} הבקשה מוגשת לאגודה (kidum-edu.org.il) לפני ההרשמה לטכניון.`
-				});
-			}
-			if (routes?.gesher && threshold && userSekem > 0) {
-				const gap = Math.round((threshold - userSekem) * 10) / 10;
-				const need = requiredGesherScore(gap, routes.gesher.maxBonus);
-				const elig = evaluateExcellentBagrut(routes.gesher.eligibility, profile.bagrutSubjects || []);
-				if (need !== null && need > 0 && elig.met) {
-					alternativePaths.push({
-						id: 'alt-gesher',
-						title: 'גשר קבלה לטכניון',
-						description: `הסכם שלך חסר ${gap} נק׳ (עד ${routes.gesher.maxBonus} מותר). לומדים סמסטר מתמטיקה ופיזיקה בטכניון (מספטמבר), ולפי הציונים מקבלים עד ${routes.gesher.maxBonus} נקודות לסכם: ציון משוקלל (0.6×מתמטיקה + 0.4×פיזיקה) של ${need} סוגר לך את הפער. נדרשים גם אנגלית 104+ בפסיכומטרי או באמי"ר וידע בעברית.`
-					});
-				}
-			}
-			if (routes?.fromHighSchool) {
-				alternativePaths.push({
-					id: 'alt-from-high-school',
-					title: 'מתיכון לטכניון (לתלמידי תיכון)',
-					description: `תלמידי תיכון עם רקע חזק במתמטיקה לומדים קורסי מתמטיקה בטכניון במקביל לתיכון, ומתקבלים לפי הציונים בקורסים — בלי ציון בגרות או פסיכומטרי (נדרשת זכאות לבגרות מלאה).${routes.fromHighSchool.note ? ` ${routes.fromHighSchool.note}` : ''}`
-				});
-			}
-			if (routes?.shortTrack) {
-				const st = routes.shortTrack;
-				alternativePaths.push({
-					id: 'alt-short-track',
-					title: 'אפיק מקוצר דרך לימודי חוץ בטכניון',
-					description: `לומדים סמסטר א' בבית הספר ללימודי המשך (לפחות 17 נ״ז, בלי פסיכומטרי) ועוברים לסמסטר ב' בממוצע ${st.firstSemesterAverageMin}+ וציון ${st.minCourseGrade}+ בכל קורס. נדרשת זכאות לבגרות מלאה.${st.note ? ` ${st.note}` : ''}`
-				});
+			// Official routes other than the sekem, as alternative paths in the report (where relevant to this applicant)
+			for (const r of officialRoutes) {
+				if (r.reportLine) alternativePaths.push({ id: `alt-${r.id}`, title: r.title, description: r.reportLine });
 			}
 			if (routes?.bagrutOnlyMin && bagrutAvg > 0 && routes.bagrutOnlyMin - bagrutAvg <= 5) {
 				const need = Math.round((routes.bagrutOnlyMin - bagrutAvg) * 10) / 10;
@@ -592,6 +539,7 @@ export function analyzeProgramGap(
 		admissionNote,
 		admissionRoutes: routes,
 		alternativePaths: alternativePaths.length > 0 ? alternativePaths : undefined,
+		officialRoutes: officialRoutes.length > 0 ? officialRoutes : undefined,
 		thresholdVerified: Boolean(thresholdSource),
 		officialThreshold: target.program.officialThreshold ?? prereq?.officialThreshold ?? undefined,
 		thresholdSource,

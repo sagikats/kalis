@@ -40,6 +40,8 @@ import { getUniversityCalculator } from '@/utils/universityCalculators';
 import UniversityVerificationModal from './UniversityVerificationModal';
 import SekemBreakdown from './SekemBreakdown';
 import WhatIfSimulator from './WhatIfSimulator';
+import OfficialRouteDetail, { ROUTE_STATUS_STYLE } from './OfficialRouteDetail';
+import type { OfficialRouteStatus } from '@/modules/optimizer/officialRoutes';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
 import { useAuth } from '@/context/AuthContext';
@@ -279,7 +281,16 @@ export default function RecommendedTracksView({
 	const [afikMaavarTrack, setAfikMaavarTrack] = useState<any | null>(null);
 	const [hasAfikMaavar, setHasAfikMaavar] = useState<boolean>(false);
 	const [afikSpec, setAfikSpec] = useState<any | null>(null);
-	const [activeBypassTab, setActiveBypassTab] = useState<'mechina' | 'afik_maavar'>('mechina');
+	const [activeBypassTab, setActiveBypassTab] = useState<string>('');
+	const [bypassFetched, setBypassFetched] = useState<boolean>(false);
+	const officialRoutes = analysis.officialRoutes ?? [];
+	const bypassTabs: { key: string; label: string; status?: OfficialRouteStatus }[] = [
+		...officialRoutes.map((r) => ({ key: r.id, label: r.tabLabel, status: r.status })),
+		...(mechinaTrack ? [{ key: 'mechina', label: 'מכינה קדם-אקדמית' }] : []),
+		...(hasAfikMaavar && afikMaavarTrack ? [{ key: 'afik_maavar', label: 'אפיק מעבר מהאו״פ' }] : [])
+	];
+	const currentBypassTab = bypassTabs.some((t) => t.key === activeBypassTab) ? activeBypassTab : bypassTabs[0]?.key;
+	const currentOfficialRoute = officialRoutes.find((r) => r.id === currentBypassTab);
 	const [isLoadingMechina, setIsLoadingMechina] = useState<boolean>(false);
 	const [showMechinaDetails, setShowMechinaDetails] = useState<boolean>(false);
 
@@ -290,7 +301,7 @@ export default function RecommendedTracksView({
 			setShowMechinaDetails(false);
 			return;
 		}
-		if (mechinaTrack || afikMaavarTrack) {
+		if (mechinaTrack || afikMaavarTrack || bypassFetched) {
 			setShowMechinaDetails(true);
 			return;
 		}
@@ -346,6 +357,9 @@ export default function RecommendedTracksView({
 			console.error('Failed to load bypass tracks', err);
 		} finally {
 			setIsLoadingMechina(false);
+			setBypassFetched(true);
+			// The institution's official routes are shown even if the mechina service had nothing to add
+			if (officialRoutes.length > 0) setShowMechinaDetails(true);
 		}
 	};
 
@@ -1446,13 +1460,15 @@ export default function RecommendedTracksView({
 				{/* ========================================================================= */}
 				{/* OPT-IN BYPASS ROUTES (מכינה קדם-אקדמית & אפיק מעבר מהאוניברסיטה הפתוחה) */}
 				{/* ========================================================================= */}
-				{(isMechinaApplicable || (analysis.alternativePaths?.length ?? 0) > 0) && (
+				{(isMechinaApplicable || officialRoutes.length > 0) && analysis.status !== 'accepted' && (
 					<div className="bg-white border border-[#D2CEEB] rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative overflow-hidden">
 						<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
 							<div className="space-y-1.5 max-w-2xl">
 								<div className="flex items-center gap-2 flex-wrap">
 									<span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] tracking-wider">
-										מסלולים עוקפים מובנים • מכינה קדם-אקדמית & אפיק מעבר (Opt-In)
+										{officialRoutes.length > 0
+											? `${officialRoutes.length} אפיקי קבלה רשמיים • מכינה • אפיק מעבר`
+											: 'מסלולים עוקפים מובנים • מכינה קדם-אקדמית & אפיק מעבר (Opt-In)'}
 									</span>
 								</div>
 								<h4 className="text-lg sm:text-xl font-bold text-[#222222] flex items-center gap-2.5">
@@ -1460,7 +1476,9 @@ export default function RecommendedTracksView({
 									<span>שוקל מסלול עוקף קבלה ב{analysis.target.institutionName.replace('אוניברסיטת ', '')}?</span>
 								</h4>
 								<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
-									עבור פערים גדולים או למי שמעוניין בנתיב ישיר ללא תלות בבגרויות ובפסיכומטרי: מכינה קדם-אקדמית במוסד (מחליפה את תעודת הבגרות בתוכנית ממוקדת) או אפיק מעבר מהאוניברסיטה הפתוחה (צבירת נקודות זכות אקדמיות ופטור מלא מבגרות ופסיכומטרי).
+									{officialRoutes.length > 0
+										? `לתואר הזה יש גם דרכי קבלה שאינן הסכם הרגיל: ${officialRoutes.map((r) => r.tabLabel).join(', ')}. בנוסף: מכינה קדם-אקדמית ואפיק מעבר מהאוניברסיטה הפתוחה.`
+										: 'עבור פערים גדולים או למי שמעוניין בנתיב ישיר ללא תלות בבגרויות ובפסיכומטרי: מכינה קדם-אקדמית במוסד (מחליפה את תעודת הבגרות בתוכנית ממוקדת) או אפיק מעבר מהאוניברסיטה הפתוחה (צבירת נקודות זכות אקדמיות ופטור מלא מבגרות ופסיכומטרי).'}
 								</p>
 							</div>
 
@@ -1487,67 +1505,44 @@ export default function RecommendedTracksView({
 								) : (
 									<>
 										<GraduationCap className="h-4 w-4" />
-										<span>בדוק מסלולים עוקפים (מכינה / אפיק מעבר)</span>
+										<span>{officialRoutes.length > 0 ? 'לכל דרכי הקבלה' : 'בדוק מסלולים עוקפים (מכינה / אפיק מעבר)'}</span>
 										<ChevronDown className="h-4 w-4" />
 									</>
 								)}
 							</button>
 						</div>
 
-						{/* Official alternative paths of this institution (e.g. Technion "אפיק מקוצר"), always visible */}
-						{analysis.alternativePaths && analysis.alternativePaths.length > 0 && (
-							<div className="relative z-10 space-y-2.5">
-								<span className="text-xs font-black text-[#222222] block">אפיקים רשמיים נוספים לתואר הזה:</span>
-								{analysis.alternativePaths.map((path) => (
-									<div key={path.id} className="p-3.5 rounded-2xl border bg-[#EFF6FA] border-[#C5DFED] text-[#1E597B] space-y-1">
-										<div className="text-sm font-black flex items-center gap-2">
-											<GraduationCap className="h-4 w-4 shrink-0" />
-											<span>{path.title}</span>
-										</div>
-										<p className="text-xs font-medium leading-relaxed">{path.description}</p>
-									</div>
-								))}
-							</div>
-						)}
-
 						{/* Expanded Bypass Routes Details */}
-						{showMechinaDetails && (mechinaTrack || afikMaavarTrack) && (
+						{showMechinaDetails && bypassTabs.length > 0 && (
 							<div className="relative z-10 pt-4 border-t border-[#E5DFD4] space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-								{/* Navigation Sub-Tabs: Mechina vs Open University Transition Route */}
-								{hasAfikMaavar && (
-									<div className="flex items-center gap-2 border-b border-[#E5DFD4] pb-3 flex-wrap">
-										<button
-											type="button"
-											onClick={() => setActiveBypassTab('mechina')}
-											className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 border ${
-												activeBypassTab === 'mechina'
-													? 'bg-[#3C3C3C] text-white border-[#3C3C3C] shadow-xs'
-													: 'bg-white text-[#66635C] border-[#E5DFD4] hover:bg-[#FAF8F5]'
-											}`}
-										>
-											<GraduationCap className="h-4 w-4" />
-											<span>מכינה קדם-אקדמית במוסד</span>
-										</button>
-
-										<button
-											type="button"
-											onClick={() => setActiveBypassTab('afik_maavar')}
-											className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 border ${
-												activeBypassTab === 'afik_maavar'
-													? 'bg-[#3C3C3C] text-white border-[#3C3C3C] shadow-xs'
-													: 'bg-white text-[#66635C] border-[#E5DFD4] hover:bg-[#FAF8F5]'
-											}`}
-										>
-											<Globe className="h-4 w-4 text-[#0E7490]" />
-											<span>אפיק מעבר מהאוניברסיטה הפתוחה</span>
-										</button>
+								{/* Tab bar: every way into this degree other than the regular sekem */}
+								{bypassTabs.length > 1 && (
+									<div className="flex items-center gap-2 border-b border-[#E5DFD4] pb-3 overflow-x-auto scrollbar-none">
+										{bypassTabs.map((tab) => (
+											<button
+												key={tab.key}
+												type="button"
+												onClick={() => setActiveBypassTab(tab.key)}
+												className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border whitespace-nowrap shrink-0 cursor-pointer ${
+													currentBypassTab === tab.key
+														? 'bg-[#3C3C3C] text-white border-[#3C3C3C] shadow-xs'
+														: 'bg-white text-[#66635C] border-[#E5DFD4] hover:bg-[#FAF8F5]'
+												}`}
+											>
+												{tab.status && <span className={`w-2 h-2 rounded-full shrink-0 ${ROUTE_STATUS_STYLE[tab.status].dot}`} />}
+												<span>{tab.label}</span>
+											</button>
+										))}
 									</div>
 								)}
+
+								{/* Official route details */}
+								{currentOfficialRoute && <OfficialRouteDetail route={currentOfficialRoute} />}
 
 								{/* ------------------------------------------------------------- */}
 								{/* TAB 1: MECHINA TRACK (מכינה קדם-אקדמית) */}
 								{/* ------------------------------------------------------------- */}
-								{(activeBypassTab === 'mechina' || !hasAfikMaavar) && mechinaTrack && (
+								{currentBypassTab === 'mechina' && mechinaTrack && (
 									<div className="bg-[#FAF8F5] border border-[#D2CEEB] rounded-2xl p-5 space-y-4">
 										<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E5DFD4] pb-3">
 											<div className="flex items-center gap-3">
@@ -1710,7 +1705,7 @@ export default function RecommendedTracksView({
 								{/* ------------------------------------------------------------- */}
 								{/* TAB 2: OPEN UNIVERSITY TRANSITION ROUTE (אפיק מעבר מהאו״פ) */}
 								{/* ------------------------------------------------------------- */}
-								{activeBypassTab === 'afik_maavar' && hasAfikMaavar && afikMaavarTrack && (
+								{currentBypassTab === 'afik_maavar' && hasAfikMaavar && afikMaavarTrack && (
 									<div className="bg-[#FAF8F5] border border-[#A5F3FC] rounded-2xl p-5 space-y-4 animate-in fade-in duration-200">
 										<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E5DFD4] pb-3">
 											<div className="flex items-center gap-3">
