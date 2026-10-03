@@ -1446,7 +1446,7 @@ export default function RecommendedTracksView({
 				{/* ========================================================================= */}
 				{/* OPT-IN BYPASS ROUTES (מכינה קדם-אקדמית & אפיק מעבר מהאוניברסיטה הפתוחה) */}
 				{/* ========================================================================= */}
-				{isMechinaApplicable && (
+				{(isMechinaApplicable || (analysis.alternativePaths?.length ?? 0) > 0) && (
 					<div className="bg-white border border-[#D2CEEB] rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative overflow-hidden">
 						<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
 							<div className="space-y-1.5 max-w-2xl">
@@ -1493,6 +1493,22 @@ export default function RecommendedTracksView({
 								)}
 							</button>
 						</div>
+
+						{/* Official alternative paths of this institution (e.g. Technion "אפיק מקוצר"), always visible */}
+						{analysis.alternativePaths && analysis.alternativePaths.length > 0 && (
+							<div className="relative z-10 space-y-2.5">
+								<span className="text-xs font-black text-[#222222] block">אפיקים רשמיים נוספים לתואר הזה:</span>
+								{analysis.alternativePaths.map((path) => (
+									<div key={path.id} className="p-3.5 rounded-2xl border bg-[#EFF6FA] border-[#C5DFED] text-[#1E597B] space-y-1">
+										<div className="text-sm font-black flex items-center gap-2">
+											<GraduationCap className="h-4 w-4 shrink-0" />
+											<span>{path.title}</span>
+										</div>
+										<p className="text-xs font-medium leading-relaxed">{path.description}</p>
+									</div>
+								))}
+							</div>
+						)}
 
 						{/* Expanded Bypass Routes Details */}
 						{showMechinaDetails && (mechinaTrack || afikMaavarTrack) && (
