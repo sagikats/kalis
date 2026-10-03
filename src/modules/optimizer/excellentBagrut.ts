@@ -27,7 +27,7 @@ const qualifies = (s: CalculatorSubject, c: SubjectCondition) =>
 	s.units >= c.minUnits && s.grade >= c.minGrade && c.subjects.some((name) => isSameBagrutSubject(name, s.name));
 
 /** Can every condition be met with distinct subjects? (small backtracking search) */
-function assignable(conditions: SubjectCondition[], subjects: CalculatorSubject[]): boolean {
+export function assignable(conditions: SubjectCondition[], subjects: CalculatorSubject[]): boolean {
 	const slots = conditions.flatMap((c) => Array.from({ length: c.count ?? 1 }, () => c));
 	const used = new Set<number>();
 	const fill = (i: number): boolean => {

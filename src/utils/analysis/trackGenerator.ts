@@ -1,6 +1,6 @@
 import type { SubjectInput } from '../../modules/calculators';
 import type { SubjectBreakdownItem } from '../../modules/calculators/types';
-import type { AcademicDegree } from '../../types/academic';
+import type { AcademicDegree, ProgramRequirement } from '../../types/academic';
 import type {
 	InstitutionSekemResult,
 	UnifiedCalculationInput
@@ -8,6 +8,7 @@ import type {
 import { calculateInstitution, selectProgramSekem } from '../../modules/calculators/index';
 import type { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
 import { normalizeHebrewSubjectKey, isSubjectMatch } from '../../modules/optimizer/solver';
+import { evaluateRequirement, requirementSubjects } from '../../modules/optimizer/programRequirements';
 import { simulateRealisticSubscores } from '../calculators/psychometricHelper';
 import {
 	generateConcurrentSchedulePlan,
@@ -935,6 +936,62 @@ export interface DegreeHardRequirements {
 	directBagrutMinAverage?: number;
 	directBagrutMath5Min?: number;
 	directBagrutMath4Min?: number;
+	/** Official program requirements (math, physics, …) — replace the generic math/physics gate when present. */
+	officialRequirements?: ProgramRequirement[];
+	/** Official requirements of the bagrut-only route, when they differ. */
+	bagrutOnlyRequirements?: ProgramRequirement[];
+}
+
+/**
+ * Checks a track's final bagrut against the official program requirements. A requirement the bagrut can't meet blocks
+ * the track; one met only with an institutional exam (or a psychometric section score) becomes an explicit step.
+ */
+export function gateOfficialRequirements(
+	requirements: ProgramRequirement[] | undefined,
+	subjects: SubjectInput[],
+	mathU: number,
+	mathG: number,
+	physU: number,
+	physG: number,
+	userProfile: UserAcademicProfile
+): { blocked: boolean; steps: TrackStep[] } {
+	const steps: TrackStep[] = [];
+	const ctxSubjects = requirementSubjects(subjects, { units: mathU, grade: mathG }, { units: physU, grade: physG });
+	const ctx = {
+		subjects: ctxSubjects,
+		psychQuant: userProfile.psychometricQuant,
+		psychVerbal: userProfile.psychometricVerbal,
+		psychEnglish: userProfile.psychometricEnglish
+	};
+	for (const r of requirements ?? []) {
+		const res = evaluateRequirement(r, ctx);
+		if (res.met) continue;
+		if (res.examOption?.exam) {
+			steps.push({
+				title: `תנאי סף רשמי: ${r.title}`,
+				detail: `התוכנית דורשת ${r.title}. עם הבגרות במסלול הזה עומדים בתנאי בכפוף ל${res.examOption.exam}.`,
+				timing: 'לפני פתיחת שנת הלימודים',
+				type: 'administrative'
+			});
+			continue;
+		}
+		// A psychometric section minimum is part of the psychometric preparation, not a reason to drop the track
+		const psychOnly = r.anyOf.find(
+			(o) => o.psych?.length && !o.exam && evaluateRequirement({ ...r, anyOf: [{ ...o, psych: undefined }] }, { subjects: ctxSubjects }).met
+		);
+		if (psychOnly) {
+			const labels = { quant: 'חשיבה כמותית', verbal: 'חשיבה מילולית', english: 'אנגלית' } as const;
+			steps.push({
+				title: `תנאי סף רשמי: ${r.title}`,
+				detail: `בנוסף לציון הכללי, התוכנית דורשת בפסיכומטרי ${psychOnly.psych!.map((x) => `${labels[x.section]} ${x.min}+`).join(' ו')}.`,
+				timing: 'במועד הפסיכומטרי',
+				type: 'psychometric'
+			});
+			continue;
+		}
+		return { blocked: true, steps: [] };
+	}
+	return { blocked: false, steps };
 }
 
 export function extractDegreeHardRequirements(
@@ -962,7 +1019,8 @@ export function extractDegreeHardRequirements(
 
 	// Degree-specific psychometric floor
 	// An official minimum psychometric (e.g. TAU "דרישות הסף") always wins over catalog estimates
-	const officialPsychMin = (program as any)?.admissionRoutes?.minPsychometric ?? parsedPrereq.admissionRoutes?.minPsychometric;
+	const officialRoutes = (program as any)?.admissionRoutes ?? parsedPrereq.admissionRoutes;
+	const officialPsychMin = officialRoutes?.minPsychometric;
 	let minPsychFloor = officialPsychMin || (parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor);
 	if (!minPsychFloor || minPsychFloor <= 0) {
 		if (isMedicine) minPsychFloor = 700;
@@ -1005,7 +1063,9 @@ export function extractDegreeHardRequirements(
 		directBagrutEligible: Boolean(directBagrutEligible),
 		directBagrutMinAverage: directBagrutMinAverage ?? undefined,
 		directBagrutMath5Min: parsedPrereq.directBagrutMath5Min ?? (isExactScience ? 80 : undefined),
-		directBagrutMath4Min: parsedPrereq.directBagrutMath4Min ?? (isExactScience ? 90 : undefined)
+		directBagrutMath4Min: parsedPrereq.directBagrutMath4Min ?? (isExactScience ? 90 : undefined),
+		officialRequirements: officialRoutes?.requirements,
+		bagrutOnlyRequirements: officialRoutes?.bagrutOnlyRequirements
 	};
 }
 
@@ -1146,22 +1206,30 @@ function generateAllPersonalizedTracks(
 	// Degree-specific hard prerequisites gate for 0-lever pure psychometric:
 	if (purePsychTarget !== null) {
 		let purePsychMeetsHardReqs = true;
-		if (hardReqs.minMathUnits && baseMathU < hardReqs.minMathUnits) {
-			purePsychMeetsHardReqs = false;
-		}
-		if (hardReqs.requiresPhysics && basePhysU === 0 && calculatorId !== 'technion') {
-			purePsychMeetsHardReqs = false;
+		if (hardReqs.officialRequirements) {
+			purePsychMeetsHardReqs = !gateOfficialRequirements(hardReqs.officialRequirements, userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, userProfile).blocked;
+		} else {
+			if (hardReqs.minMathUnits && baseMathU < hardReqs.minMathUnits) {
+				purePsychMeetsHardReqs = false;
+			}
+			if (hardReqs.requiresPhysics && basePhysU === 0 && calculatorId !== 'technion') {
+				purePsychMeetsHardReqs = false;
+			}
 		}
 		if (!purePsychMeetsHardReqs) {
 			purePsychTarget = null;
 		}
 	}
+	const simMeetsHardReqs = (sim: { subjects: SubjectInput[]; mathUnits: number; mathGrade: number; physUnits: number; physGrade: number }) =>
+		hardReqs.officialRequirements
+			? !gateOfficialRequirements(hardReqs.officialRequirements, sim.subjects, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade, userProfile).blocked
+			: !(hardReqs.minMathUnits && sim.mathUnits < hardReqs.minMathUnits);
 
 	// 1 lever search up to 800:
 	let sol1Lever: { lever: SubjectUpgradeAction; psych: number; res: { sekem: number; bagrutAverage: number } } | null = null;
 	for (const lever of availableLevers) {
 		const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, [lever]);
-		if (hardReqs.minMathUnits && sim.mathUnits < hardReqs.minMathUnits) continue;
+		if (!simMeetsHardReqs(sim)) continue;
 		const psychSol = findExactPsychometricTarget(
 			calculatorId,
 			relevantSekemType,
@@ -1192,7 +1260,7 @@ function generateAllPersonalizedTracks(
 			const pair = [pool2[i], pool2[j]];
 			if (!isValidSubjectCombo(pair)) continue;
 			const sim = applyLeversToSubjects(userProfile.bagrutSubjects, baseMathU, baseMathG, basePhysU, basePhysG, pair);
-			if (hardReqs.minMathUnits && sim.mathUnits < hardReqs.minMathUnits) continue;
+			if (!simMeetsHardReqs(sim)) continue;
 			const psychSol = findExactPsychometricTarget(
 				calculatorId,
 				relevantSekemType,
@@ -2133,11 +2201,6 @@ function generateAllPersonalizedTracks(
 	// =========================================================================
 	const verifiedTracks: RecommendedTrack[] = [];
 	for (const t of uniqueTracks) {
-		if (t.id === 'track-direct-bagrut' || t.id === 'track-direct-admit-zero') {
-			verifiedTracks.push(t);
-			continue;
-		}
-
 		const sim = applyLeversToSubjects(
 			userProfile.bagrutSubjects,
 			baseMathU,
@@ -2146,6 +2209,21 @@ function generateAllPersonalizedTracks(
 			basePhysG,
 			t.recommendedSubjectImprovements as any
 		);
+
+		// Official program requirements: drop a track whose bagrut can't meet them; add a step when an exam can
+		const isDirectBagrut = t.id === 'track-direct-bagrut' || t.id === 'track-direct-admit-zero';
+		const reqs = isDirectBagrut ? hardReqs.bagrutOnlyRequirements ?? hardReqs.officialRequirements : hardReqs.officialRequirements;
+		const gate = gateOfficialRequirements(reqs, sim.subjects, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade, userProfile);
+		if (gate.blocked) continue;
+		const addRequirementSteps = () => {
+			for (const step of gate.steps) if (!t.steps.some((s) => s.title === step.title)) t.steps.push(step);
+		};
+
+		if (isDirectBagrut) {
+			addRequirementSteps();
+			verifiedTracks.push(t);
+			continue;
+		}
 
 		let targetP = t.targetPsychometric ?? (hasTakenPsych ? currentPsych : baselinePsych);
 		let instCheck = evaluateSimulatedSekem(
@@ -2223,9 +2301,11 @@ function generateAllPersonalizedTracks(
 		}
 		t.estimatedWeeks = schedulePlan.totalWeeks;
 
-		// Hard Prerequisites Gate: If degree requires physics and candidate has 0 units,
-		// and this track doesn't include Physics as a lever, attach the mandatory requirement step:
-		if (hardReqs.requiresPhysics && basePhysU === 0 && t.id !== 'track-direct-admit-zero') {
+		addRequirementSteps();
+
+		// Hard Prerequisites Gate (generic estimate, only without official requirements): If degree requires physics
+		// and candidate has 0 units, and this track doesn't include Physics as a lever, attach the mandatory requirement step:
+		if (!hardReqs.officialRequirements && hardReqs.requiresPhysics && basePhysU === 0 && t.id !== 'track-direct-admit-zero') {
 			const hasPhysLever = t.recommendedSubjectImprovements.some((l) => isSubjectMatch(l.subjectName, 'פיזיקה'));
 			if (!hasPhysLever) {
 				const hasPhysStep = t.steps.some((s) => s.title.includes('פיזיקה'));

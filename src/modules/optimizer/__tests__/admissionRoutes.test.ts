@@ -30,6 +30,8 @@ const WEAK_BAGRUT = [
 	{ name: 'הבעה עברית', units: 2, grade: 70 }, { name: 'ביולוגיה', units: 5, grade: 75 }
 ];
 
+const WEAK_MATH4 = WEAK_BAGRUT.map((s) => (s.name === 'מתמטיקה' ? { ...s, units: 4, grade: 80 } : s));
+
 function profile(bagrut: any[], psych: number, quant = 0): UserAcademicProfile {
 	const math = bagrut.find((s) => s.name === 'מתמטיקה');
 	const phys = bagrut.find((s) => s.name === 'פיזיקה');
@@ -64,9 +66,20 @@ describe('Official admission routes', () => {
 		assert.equal(below.userSekem, 590);
 		assert.notEqual(below.status, 'accepted');
 
-		const above = analyze('bgu', 'inst-3', 'prog-bgu-42', profile(WEAK_BAGRUT, 610));
+		// BGU's official math requirement for economics (4u 75+ or 5u 65+) applies on this route too
+		const above = analyze('bgu', 'inst-3', 'prog-bgu-42', profile(WEAK_MATH4, 610));
 		assert.equal(above.userSekem, 610);
 		assert.equal(above.status, 'accepted');
+	});
+
+	it('an unmet official subject requirement blocks admission even when the score passes (BGU Economics: math 4u 75+ / 5u 65+)', () => {
+		const gap = analyze('bgu', 'inst-3', 'prog-bgu-42', profile(WEAK_BAGRUT, 650));
+		assert.equal(gap.status, 'not_accepted');
+		assert.match(gap.admissionNote ?? '', /תנאי סף רשמי/);
+		assert.equal(gap.improvementOptions[0].id, 'opt-req-math');
+		const check = gap.prerequisites.find((c) => c.id === 'official-math');
+		assert.ok(check && !check.isMet, 'official math check shown and unmet');
+		assert.ok(!gap.prerequisites.some((c) => c.name.includes('הערכה')), 'no generic estimate when official data exists');
 	});
 
 	it('bagrut-only route admits without a psychometric score (BGU Economics: average 107)', () => {

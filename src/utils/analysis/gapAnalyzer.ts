@@ -1,6 +1,13 @@
-import { AcademicDegree, AdmissionRoutes } from '../../types/academic';
+import { AcademicDegree, AdmissionRoutes, ProgramRequirement } from '../../types/academic';
 import { evaluateExcellentBagrut } from '../../modules/optimizer/excellentBagrut';
 import { describeOfficialRoutes, OfficialRouteInfo } from '../../modules/optimizer/officialRoutes';
+import {
+	evaluateRequirements,
+	describeRequirement,
+	requirementSubjects,
+	RequirementResult
+} from '../../modules/optimizer/programRequirements';
+import { isSameBagrutSubject } from '../../modules/optimizer/solver';
 import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
@@ -190,6 +197,59 @@ function officialRoutesOf(program?: AcademicDegree): AdmissionRoutes | undefined
 	return program.admissionRoutes ?? (program as any).prerequisites?.admissionRoutes ?? undefined;
 }
 
+/** Evaluates official program requirements against the applicant's bagrut and psychometric section scores. */
+export function evaluateProgramRequirements(
+	requirements: ProgramRequirement[] | undefined,
+	profile: UserAcademicProfile
+): RequirementResult[] {
+	return evaluateRequirements(requirements, {
+		subjects: requirementSubjects(
+			profile.bagrutSubjects || [],
+			{ units: profile.mathUnits, grade: profile.mathGrade },
+			{ units: profile.physicsUnits, grade: profile.physicsGrade }
+		),
+		psychQuant: profile.psychometricQuant,
+		psychVerbal: profile.psychometricVerbal,
+		psychEnglish: profile.psychometricEnglish
+	});
+}
+
+/** The applicant's current state for the subjects/sections a requirement mentions, e.g. "מתמטיקה 5 יח״ל בציון 75". */
+function describeCurrentForRequirement(r: ProgramRequirement, profile: UserAcademicProfile): string {
+	const subjects = requirementSubjects(
+		profile.bagrutSubjects || [],
+		{ units: profile.mathUnits, grade: profile.mathGrade },
+		{ units: profile.physicsUnits, grade: profile.physicsGrade }
+	);
+	const names = [...new Set(r.anyOf.flatMap((o) => (o.bagrut ?? []).flatMap((c) => c.subjects)))];
+	const parts: string[] = [];
+	for (const name of names) {
+		const s = subjects.find((x) => isSameBagrutSubject(x.name, name));
+		if (s) parts.push(`${name} ${s.units} יח״ל בציון ${s.grade}`);
+	}
+	const sections = [...new Set(r.anyOf.flatMap((o) => (o.psych ?? []).map((p) => p.section)))];
+	const scores = { quant: profile.psychometricQuant, verbal: profile.psychometricVerbal, english: profile.psychometricEnglish };
+	const labels = { quant: 'חשיבה כמותית', verbal: 'חשיבה מילולית', english: 'אנגלית' };
+	for (const sec of sections) if (scores[sec]) parts.push(`${labels[sec]} ${scores[sec]}`);
+	return parts.length > 0 ? parts.join(', ') : names.length > 0 ? `אין בגרות ב${names.join(' / ')}` : 'טרם הוזן';
+}
+
+/** One prerequisite card per official requirement. */
+export function officialRequirementChecks(results: RequirementResult[], profile: UserAcademicProfile): PrerequisiteCheck[] {
+	return results.map(({ requirement: r, met, examOption }) => ({
+		id: `official-${r.id}`,
+		name: `${r.title} (תנאי סף רשמי)`,
+		required: describeRequirement(r),
+		current: describeCurrentForRequirement(r, profile),
+		isMet: met,
+		notes: met
+			? undefined
+			: examOption
+			? `אפשר לעמוד בתנאי עם ${examOption.exam}, או לשפר את הבגרות לאחת האפשרויות האחרות.`
+			: 'לא מתקיים תנאי הסף הרשמי של התוכנית — בלעדיו אין קבלה גם אם הסכם עובר את הסף.'
+	}));
+}
+
 /**
  * Checks academic prerequisites for STEM/Engineering/Management degrees
  */
@@ -235,15 +295,21 @@ export function checkProgramPrerequisites(
 		});
 	}
 
-	// 1. Math prerequisite
-	if (isExactScience) {
+	// 1–2. Math / physics: the program's official requirements when published, otherwise a generic estimate
+	const officialRequirements = officialRoutesOf(targetProgram)?.requirements;
+	if (officialRequirements) {
+		checks.push(...officialRequirementChecks(evaluateProgramRequirements(officialRequirements, profile), profile));
+	}
+
+	// 1. Math prerequisite (estimate)
+	if (!officialRequirements && isExactScience) {
 		const mathUnits = profile.mathUnits || 0;
 		const mathGrade = profile.mathGrade || 0;
 		const isMet = (mathUnits === 5 && mathGrade >= 70) || (mathUnits === 4 && mathGrade >= 85);
 
 		checks.push({
 			id: 'math',
-			name: 'בגרות במתמטיקה (סף ריאלי)',
+			name: 'בגרות במתמטיקה (הערכה — אין נתון רשמי)',
 			required: '5 יח״ל בציון 70+ או 4 יח״ל בציון 85+',
 			current: mathUnits > 0 ? `${mathUnits} יח״ל בציון ${mathGrade}` : 'לא הוזן ציון',
 			isMet,
@@ -256,14 +322,14 @@ export function checkProgramPrerequisites(
 		(targetProgram as any)?.requiresPhysics ||
 		(targetProgram?.prerequisitesJson?.includes('"requiresPhysics":true'));
 
-	if (requiresPhysics) {
+	if (!officialRequirements && requiresPhysics) {
 		const physicsUnits = profile.physicsUnits || 0;
 		const physicsGrade = profile.physicsGrade || 0;
 		const isMet = physicsUnits === 5 && physicsGrade >= 65;
 
 		checks.push({
 			id: 'physics',
-			name: 'בגרות בפיזיקה (פטור ממכינה / מבחן סיווג)',
+			name: 'בגרות בפיזיקה (הערכה — אין נתון רשמי)',
 			required: '5 יח״ל בציון 65+ או מעבר מבחן סיווג בפיזיקה (70+)',
 			current: physicsUnits > 0 ? `${physicsUnits} יח״ל בציון ${physicsGrade}` : 'ללא בגרות בפיזיקה',
 			isMet,
@@ -453,6 +519,15 @@ export function analyzeProgramGap(
 		threshold
 	});
 
+	// Official program requirements (math, physics, …) apply on every route; BGU's bagrut-only route has its own list
+	const sekemPassed = status === 'accepted' || status === 'borderline';
+	const requirementResults = evaluateProgramRequirements(routes?.requirements, profile);
+	const unmetRequirements = requirementResults.filter((r) => !r.met);
+	const bagrutOnlyResults = routes?.bagrutOnlyRequirements
+		? evaluateProgramRequirements(routes.bagrutOnlyRequirements, profile)
+		: requirementResults;
+	const bagrutOnlyRequirementsMet = bagrutOnlyResults.every((r) => r.met);
+
 	if (routes?.minPsychometric && (status === 'accepted' || status === 'borderline') && psych < routes.minPsychometric) {
 		status = 'not_accepted';
 		admissionNote = `הסכם עובר את הסף, אבל המוסד דורש גם פסיכומטרי ${routes.minPsychometric} לפחות${psych ? ` (יש לך ${psych})` : ''}.`;
@@ -472,17 +547,44 @@ export function analyzeProgramGap(
 		admissionRoute = 'sekem';
 	}
 
+	if (unmetRequirements.length > 0) {
+		if (sekemPassed) {
+			status = 'not_accepted';
+			admissionRoute = undefined;
+			const reqNote = `הסכם עובר את הסף, אבל לא מתקיים תנאי סף רשמי של התוכנית: ${unmetRequirements
+				.map((r) => r.requirement.title)
+				.join(', ')}.`;
+			admissionNote = admissionNote ? `${admissionNote} ${reqNote.replace('הסכם עובר את הסף, אבל ', 'בנוסף, ')}` : reqNote;
+		}
+		for (const { requirement: r, examOption } of [...unmetRequirements].reverse()) {
+			improvementOptions.unshift({
+				id: `opt-req-${r.id}`,
+				type: 'subject',
+				title: `עמידה בתנאי הסף: ${r.title}`,
+				description: examOption
+					? `אפשר לעמוד בתנאי עם ${examOption.exam}. האפשרויות הרשמיות: ${describeRequirement(r)}.`
+					: `התוכנית דורשת: ${describeRequirement(r)}.`,
+				currentValue: describeCurrentForRequirement(r, profile),
+				targetValue: describeRequirement(r),
+				gapAmount: 1,
+				effortLevel: examOption ? 'easy' : 'medium',
+				estimatedWeeks: examOption ? 6 : 12,
+				potentialSekemGain: 0
+			});
+		}
+	}
+
 	if (status !== 'accepted') {
 		const bagrutAvg = institutionRes.bagrutAverage || 0;
-		if (routes?.bagrutOnlyMin && bagrutAvg >= routes.bagrutOnlyMin) {
+		if (routes?.bagrutOnlyMin && bagrutAvg >= routes.bagrutOnlyMin && bagrutOnlyRequirementsMet) {
 			status = 'accepted';
 			admissionRoute = 'bagrut_only';
 			admissionNote = `מתקבל/ת באפיק "בגרות בלבד": ממוצע ${bagrutAvg} (נדרש ${routes.bagrutOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
-		} else if (routes?.psychometricOnlyMin && psych >= routes.psychometricOnlyMin) {
+		} else if (routes?.psychometricOnlyMin && psych >= routes.psychometricOnlyMin && unmetRequirements.length === 0) {
 			status = 'accepted';
 			admissionRoute = 'psychometric_only';
 			admissionNote = `מתקבל/ת באפיק "פסיכומטרי בלבד": ${psych} (נדרש ${routes.psychometricOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
-		} else if (routes?.excellentBagrut && evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []).met) {
+		} else if (unmetRequirements.length === 0 && routes?.excellentBagrut && evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []).met) {
 			status = 'accepted';
 			admissionRoute = 'excellent_bagrut';
 			admissionNote = `מתקבל/ת באפיק "בגרות מצוינת" בלי פסיכומטרי (${routes.excellentBagrut.summary})${
@@ -491,6 +593,11 @@ export function analyzeProgramGap(
 		}
 		if (status === 'accepted') {
 			improvementOptions.length = 0;
+			if (admissionRoute === 'bagrut_only' && routes?.bagrutOnlyRequirements) {
+				const official = officialRequirementChecks(bagrutOnlyResults, profile);
+				prerequisites.splice(0, prerequisites.length, ...prerequisites.filter((c) => !c.id.startsWith('official-')), ...official);
+				missingPrerequisites.splice(0, missingPrerequisites.length, ...prerequisites.filter((c) => !c.isMet));
+			}
 		} else {
 			// Official routes other than the sekem, as alternative paths in the report (where relevant to this applicant)
 			for (const r of officialRoutes) {

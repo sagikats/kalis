@@ -55,6 +55,34 @@ export interface AdmissionRoutes {
      gesher?: GesherRoute;
      /** Informational: Technion "מתיכון לטכניון" — high-school students admitted on Technion math course grades. */
      fromHighSchool?: { note?: string };
+     /**
+      * Official per-program threshold requirements (e.g. TAU "דרישות הסף של התוכנית": ידע במתמטיקה, מקצוע ריאלי נוסף).
+      * Each must be met on every admission route, except the bagrut-only route when `bagrutOnlyRequirements` is set.
+      */
+     requirements?: ProgramRequirement[];
+     /** Requirements of the bagrut-only route when they differ from `requirements` (BGU publishes both). */
+     bagrutOnlyRequirements?: ProgramRequirement[];
+     /** Where the requirements were taken from (URL + date). */
+     requirementsSource?: string;
+}
+
+/** One way to meet a program requirement: every condition holds, plus passing `exam` when set. */
+export interface RequirementOption {
+	bagrut?: SubjectCondition[];
+	/** Psychometric section scores on the 50–150 scale. */
+	psych?: { section: 'quant' | 'verbal' | 'english'; min: number }[];
+	/** An institutional exam that must also be passed, e.g. "בחינת סיווג במתמטיקה בציון 75+". */
+	exam?: string;
+}
+
+/** An official requirement met by any one of `anyOf`. */
+export interface ProgramRequirement {
+	id: string;
+	/** e.g. "ידע במתמטיקה" */
+	title: string;
+	anyOf: RequirementOption[];
+	/** Official alternatives the platform can't evaluate (academic courses, a prior degree), shown as text. */
+	otherOptions?: string;
 }
 
 /** One bagrut condition: `count` distinct subjects from `subjects`, each at `minUnits`+ units and `minGrade`+. */

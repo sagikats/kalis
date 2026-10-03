@@ -27,6 +27,12 @@
 - **שלב 2 (`30abfd3`):** ה-JSON כבר לא בבאנדל. hook חדש `src/hooks/useInstitutionsCatalog.ts` (fetch אחד ל-`/api/institutions`, fallback עצל ל-JSON). `AdmissionPanel` טוען את ה-JSON בטעינה עצלה בפתיחה (ה-API משמיט תוכניות בלי סף, שהפאנל מציג כ"קבלה נפרדת"). JS ראשוני: `/flow` 2633→1033KB, `/calculators` 2313→713KB. נבדק בדפדפן (719 תוכניות בשלב 2, פאנל ת"א 106 חוגים, 0 שגיאות).
 - **שלב 3 (`67a5b12`):** מנוע מסלולים אחד. `trackGenerator.ts` הוא המנוע היחיד. נמחקו `trackEngine.ts`, `utilityScorer.ts`, `reachabilityModel.ts`, `efficiency/`, `/api/tracks/generate` (אף מסך לא קרא לו) + הטסטים שבדקו רק אותם (251→223). `/api/tracks/mechina` (בשימוש!) קורא עכשיו ישירות ל-`generateAccurateMechinaTrack` — נבדק מול build: מחזיר `track-mechina`. עודכנו AGENTS.md, MASTER_GUIDE, API README.
   - **לא בוצע בכוונה:** העברת `trackGenerator.ts` ל-`src/modules/optimizer/` — הוא צמוד ל-`gapAnalyzer.ts` (שניהם ב-`utils/analysis`), והזזה היא churn בלי ערך התנהגותי.
+- **שלב 4 — דרישות קדם רשמיות (בראנץ' `feat/official-prerequisites`, מבוסס על `cleanup/audit-followups`):**
+  - מודל: `AdmissionRoutes.requirements` / `bagrutOnlyRequirements` / `requirementsSource` (`src/types/academic.ts`); מעריך: `src/modules/optimizer/programRequirements.ts` (חלופות בגרות/פרק פסיכומטרי/"+ מבחן סיווג").
+  - `gapAnalyzer`: תנאי רשמי מחליף את הכלל הגנרי (שמסומן עכשיו "הערכה"); תנאי שלא מתקיים → `not_accepted` + הערה + אפשרות שיפור `opt-req-*`; חוסם גם אפיקי בגרות/פסיכומטרי בלבד.
+  - `trackGenerator`: `gateOfficialRequirements` — בחיפוש ובאימות הסופי מסלול שהבגרות שלו לא עומדת בתנאי נפסל; עמידה רק עם מבחן סיווג/פרק פסיכומטרי → צעד מפורש במסלול.
+  - BGU: `scripts/data/importBguRequirements.ts` (130 תוכניות, מ-`psycho_info`/`bagrut_info`). טסט כלכלה עודכן (מתמטיקה 3 יח"ל לא עומדת בתנאי הרשמי).
+  - TAU: דפי "תנאי קבלה" של 87 תוכניות הורדו (cache ב-scratchpad); בתהליך — אוצרות ידנית של הדרישות.
 - ⚠️ לבדיקה בשרת: `/api/institutions` מחזיר 1.27MB ו-`next start` מקומי לא דוחס gzip — לוודא שהפרוקסי בשרת דוחס.
 - הערה: build נכשל לפעמים על `next/font` (כשל רשת מול Google Fonts) — פשוט להריץ שוב.
 

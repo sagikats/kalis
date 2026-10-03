@@ -7,3 +7,4 @@ export * from './types';
 export * from './solver';
 export * from './calendarScheduler';
 export * from './bypassRoutesEngine';
+export * from './programRequirements';
