@@ -2,6 +2,31 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { X, CheckCircle2, AlertCircle, XCircle, GraduationCap } from 'lucide-react';
+import type { AdmissionRoutes } from '@/types/academic';
+import type { SubjectInput } from '@/modules/calculators';
+import { evaluateProgramRequirements, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
+import { isBlocking } from '@/modules/optimizer/programRequirements';
+import { isSameBagrutSubject } from '@/modules/optimizer/solver';
+
+/** The calculator inputs the official conditions are checked against. */
+export type AdmissionPanelProfile = UserAcademicProfile;
+
+export function toPanelProfile(subjects: SubjectInput[], general: number | '', quant: number | '', verbal: number | '', english: number | ''): AdmissionPanelProfile {
+  const valid = subjects.filter((s) => s.units > 0 && s.grade > 0);
+  const math = valid.find((s) => isSameBagrutSubject(s.name, 'מתמטיקה'));
+  const physics = valid.find((s) => isSameBagrutSubject(s.name, 'פיזיקה'));
+  return {
+    bagrutSubjects: valid,
+    psychometricGeneral: Number(general) || 0,
+    psychometricQuant: Number(quant) || 0,
+    psychometricVerbal: Number(verbal) || 0,
+    psychometricEnglish: Number(english) || 0,
+    mathUnits: math?.units ?? 0,
+    mathGrade: math?.grade ?? 0,
+    physicsUnits: physics?.units ?? 0,
+    physicsGrade: physics?.grade ?? 0
+  };
+}
 
 type RawInstitution = { id: string; name: string; programs: Program[] };
 
@@ -38,15 +63,19 @@ interface Program {
   admissionThreshold: number | string;
   psychometricScore?: number | string;
   comments?: string;
+  admissionRoutes?: AdmissionRoutes;
 }
 
-type AdmissionStatus = 'accepted' | 'borderline' | 'not_accepted' | 'no_threshold';
+/** Same meaning as the admission report: missing_requirement = the sekem passes but an official condition is missing. */
+type AdmissionStatus = 'accepted' | 'missing_requirement' | 'not_accepted' | 'no_threshold';
 
 interface ProgramResult {
   program: Program;
   status: AdmissionStatus;
   threshold: number | null;
   gap: number;
+  /** Official conditions the applicant doesn't meet (titles), when the sekem passes. */
+  missing: string[];
 }
 
 interface AdmissionPanelProps {
@@ -58,6 +87,7 @@ interface AdmissionPanelProps {
   userEngineeringSekem?: number;
   userManagementSekem?: number;
   bagrutAverage?: number;
+  profile?: AdmissionPanelProfile;
 }
 
 function parseThreshold(raw: number | string | undefined): number | null {
@@ -67,11 +97,23 @@ function parseThreshold(raw: number | string | undefined): number | null {
   return isNaN(n) ? null : n;
 }
 
-function classifyStatus(gap: number | null, borderlineRange = 20): AdmissionStatus {
+/** Official conditions not met: the minimum psychometric and blocking subject/English requirements. */
+function missingConditions(routes: AdmissionRoutes | undefined, profile: AdmissionPanelProfile | undefined): string[] {
+  if (!routes || !profile) return [];
+  const missing: string[] = [];
+  if (routes.minPsychometric && (profile.psychometricGeneral || 0) < routes.minPsychometric) {
+    missing.push(`פסיכומטרי ${routes.minPsychometric}`);
+  }
+  for (const r of evaluateProgramRequirements(routes.requirements, profile)) {
+    if (isBlocking(r)) missing.push(r.requirement.title);
+  }
+  return missing;
+}
+
+function classifyStatus(gap: number | null, missing: string[]): AdmissionStatus {
   if (gap === null) return 'no_threshold';
-  if (gap >= 0) return 'accepted';
-  if (gap >= -borderlineRange) return 'borderline';
-  return 'not_accepted';
+  if (gap < 0) return 'not_accepted';
+  return missing.length > 0 ? 'missing_requirement' : 'accepted';
 }
 
 export default function AdmissionPanel({
@@ -82,6 +124,7 @@ export default function AdmissionPanel({
   userGeneralSekem,
   userEngineeringSekem,
   userManagementSekem,
+  profile,
 }: AdmissionPanelProps) {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -129,14 +172,15 @@ export default function AdmissionPanel({
       }
 
       const gap = threshold !== null ? programSekem - threshold : null;
-      const status = classifyStatus(gap, isTechnion ? 2 : 20);
-      return { program: prog, status, threshold, gap: gap ?? 0 };
+      const missing = gap !== null && gap >= 0 ? missingConditions(prog.admissionRoutes, profile) : [];
+      const status = classifyStatus(gap, missing);
+      return { program: prog, status, threshold, gap: gap ?? 0, missing };
     });
-  }, [catalog, institutionId, defaultEffectiveSekem, userGeneralSekem, userEngineeringSekem, userManagementSekem, isTechnion]);
+  }, [catalog, institutionId, defaultEffectiveSekem, userGeneralSekem, userEngineeringSekem, userManagementSekem, profile]);
 
   const sorted = useMemo(() => {
     const order: Record<AdmissionStatus, number> = {
-      accepted: 0, borderline: 1, no_threshold: 2, not_accepted: 3,
+      accepted: 0, missing_requirement: 1, no_threshold: 2, not_accepted: 3,
     };
     return [...programs].sort((a, b) => {
       const orderDiff = order[a.status] - order[b.status];
@@ -158,7 +202,7 @@ export default function AdmissionPanel({
   }
 
   const acceptedCount = programs.filter(p => p.status === 'accepted').length;
-  const borderlineCount = programs.filter(p => p.status === 'borderline').length;
+  const missingRequirementCount = programs.filter(p => p.status === 'missing_requirement').length;
   const auditionCount = programs.filter(p => p.status === 'no_threshold').length;
 
   return (
@@ -219,7 +263,7 @@ export default function AdmissionPanel({
           </div>
           <div className="flex items-center gap-1.5 text-[#825B15]">
             <AlertCircle className="h-3.5 w-3.5" />
-            <span className="text-xs font-bold">{borderlineCount} על הגבול</span>
+            <span className="text-xs font-bold">{missingRequirementCount} חסר תנאי סף</span>
           </div>
           {auditionCount > 0 && (
             <div className="flex items-center gap-1.5 text-[#453D78]">
@@ -240,7 +284,7 @@ export default function AdmissionPanel({
           )}
 
           {sorted.map((item) => {
-            const { program, status, threshold, gap } = item;
+            const { program, status, threshold, gap, missing } = item;
 
             const cfg = {
               accepted: {
@@ -251,12 +295,12 @@ export default function AdmissionPanel({
                 gapLabel: gap > 0 ? `+${gap}` : '✓',
                 gapCls: 'text-[#205739]',
               },
-              borderline: {
+              missing_requirement: {
                 icon: <AlertCircle className="h-4 w-4 text-[#825B15] shrink-0" />,
                 rowCls: 'border-[#ECDAB6] bg-[#FDF6E8]/80',
                 nameCls: 'text-[#222222]',
                 barCls: 'bg-[#825B15]',
-                gapLabel: String(gap),
+                gapLabel: 'חסר תנאי',
                 gapCls: 'text-[#825B15]',
               },
               not_accepted: {
@@ -292,6 +336,11 @@ export default function AdmissionPanel({
                       {cfg.gapLabel}
                     </span>
                   </div>
+                  {missing.length > 0 && (
+                    <p className="text-[10px] font-medium text-[#825B15] mt-0.5">
+                      הסכם עובר (+{gap}), חסר תנאי סף רשמי: {missing.join(', ')}
+                    </p>
+                  )}
                   <div className="flex items-center gap-2 mt-1.5">
                     <div className="flex-1 h-1 bg-[#E5DFD4] rounded-full overflow-hidden">
                       <div

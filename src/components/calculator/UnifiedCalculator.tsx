@@ -24,7 +24,7 @@ import {
 import { SubjectInput } from '@/modules/calculators';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
-import AdmissionPanel from '@/components/calculator/AdmissionPanel';
+import AdmissionPanel, { AdmissionPanelProfile, toPanelProfile } from '@/components/calculator/AdmissionPanel';
 import { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { resolvePsychometricScores } from '@/utils/calculators/psychometricHelper';
 import UniversityLogo from '@/components/common/UniversityLogo';
@@ -147,6 +147,8 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
      const [calculatedMap, setCalculatedMap] = useState<Record<string, InstitutionSekemResult>>(() =>
           computeAllInstitutionResults(DEFAULT_SUBJECTS, 0, 0, 0, 0)
      );
+     // The inputs behind calculatedMap — the admission panel checks official conditions against the same snapshot
+     const [calculatedProfile, setCalculatedProfile] = useState<AdmissionPanelProfile>(() => toPanelProfile(DEFAULT_SUBJECTS, 0, 0, 0, 0));
 
      // Sync with user profile on login or profile change
      useEffect(() => {
@@ -180,6 +182,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                     noPsych ? 0 : eng
                );
                setCalculatedMap(initialMap);
+               setCalculatedProfile(toPanelProfile(loadedSubjects, noPsych ? 0 : gen, noPsych ? 0 : q, noPsych ? 0 : v, noPsych ? 0 : eng));
                setHasPendingChanges(false);
           }
      }, [user, profile]);
@@ -196,6 +199,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                setPsychEnglish(0);
                setPanelInstitutionId(null);
                setCalculatedMap(computeAllInstitutionResults(resetSubs, 0, 0, 0, 0));
+               setCalculatedProfile(toPanelProfile(resetSubs, 0, 0, 0, 0));
                setHasPendingChanges(false);
           };
           window.addEventListener('kalis-logout', handleLogout);
@@ -251,6 +255,15 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                noPsychometric ? 0 : psychEnglish
           );
           setCalculatedMap(freshMap);
+          setCalculatedProfile(
+               toPanelProfile(
+                    subjects,
+                    noPsychometric ? 0 : psychGeneral,
+                    noPsychometric ? 0 : psychQuant,
+                    noPsychometric ? 0 : psychVerbal,
+                    noPsychometric ? 0 : psychEnglish
+               )
+          );
           setHasPendingChanges(false);
 
           const resultsElem = document.getElementById('results-section');
@@ -915,6 +928,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                               userEngineeringSekem={res.engineeringSekem}
                               userManagementSekem={res.managementSekem}
                               bagrutAverage={res.bagrutAverage}
+                              profile={calculatedProfile}
                          />
                     );
                })()}
