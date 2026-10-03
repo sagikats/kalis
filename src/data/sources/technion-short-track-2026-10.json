@@ -1,0 +1,203 @@
+{
+ "source": "https://admissions.technion.ac.il/ (אפיק קבלה מקוצר מבית הספר ללימודי המשך בטכניון — דרישות הקבלה מהאפיק המקוצר)",
+ "year": "סמסטר א' תשפ\"ז (אוקטובר 2026)",
+ "captured": "2026-10-03, צילומי מסך של המשתמש (האתר חוסם גישה אוטומטית)",
+ "general_requirements": [
+  "האפיק מתקיים בסמסטר א בלבד, ומיועד לסטודנטים ללא רקע אקדמי קודם.",
+  "נדרשת זכאות לתעודת בגרות מלאה; ידע באנגלית (מבחן עד תום סמסטר א); פטור מבחינת יע\"ל.",
+  "פיזיקה: מי שלא נבחן בבגרות 5 יח\"ל בציון 70+ חייב מבחן סיווג במכניקה לפני תחילת הלימודים.",
+  "כימיה (לחלק מהמסלולים): מי שלא נבחן בבגרות 3 יח\"ל בציון 70+ צריך מבחן סיווג בכימיה.",
+  "השתתפות בקייטנת מתמטיקה בחודש שלפני תחילת הלימודים.",
+  "לצבור לפחות 17 נ\"ז בסמסטר א; הקבלה לסמסטר ב בלבד, לפי ממוצע מינימלי וציון מינימלי בכל קורס; הרישום על בסיס \"כל הקודם זוכה\" (עד 5% ממכסת המסלול)."
+ ],
+ "tracks": [
+  {
+   "page_track": "ביולוגיה",
+   "program_ids": [
+    "prog-technion-3"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "ביולוגיה וכימיה (דו-חוגי)",
+   "program_ids": [
+    "prog-technion-4"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הוראת המדעים",
+   "program_ids": [
+    "prog-technion-30"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70,
+   "note": "יש לעבור בהצלחה מבחן התאמה להוראה ו/או ראיונות כדרישה לקבלה לפקולטה."
+  },
+  {
+   "page_track": "הוראת מדעי המחשב",
+   "program_ids": [
+    "prog-technion-31"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70,
+   "note": "יש לעבור בהצלחה מבחן התאמה להוראה ו/או ראיונות כדרישה לקבלה לפקולטה."
+  },
+  {
+   "page_track": "הנדסה אזרחית",
+   "program_ids": [
+    "prog-technion-5"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסה ביוכימית",
+   "program_ids": [
+    "prog-technion-8"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסה ביו-רפואית",
+   "program_ids": [
+    "prog-technion-6"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסה כימית",
+   "program_ids": [
+    "prog-technion-9"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת אווירונאוטיקה וחלל",
+   "program_ids": [
+    "prog-technion-11"
+   ],
+   "firstSemesterAverageMin": 80,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת אווירונאוטיקה וחלל ופיזיקה",
+   "program_ids": [
+    "prog-technion-12"
+   ],
+   "firstSemesterAverageMin": 80,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת ביוטכנולוגיה ומזון",
+   "program_ids": [
+    "prog-technion-13"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70,
+   "note": "מי שלא עבר מבחן סיווג בפיזיקה צריך לפנות מראש לפקולטה להתאמת מערכת השעות."
+  },
+  {
+   "page_track": "הנדסת הסביבה",
+   "program_ids": [
+    "prog-technion-14"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת חומרים",
+   "program_ids": [
+    "prog-technion-15"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת חומרים עם ביולוגיה",
+   "program_ids": [
+    "prog-technion-16"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת חומרים עם כימיה",
+   "program_ids": [
+    "prog-technion-17"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת חומרים עם פיזיקה",
+   "program_ids": [
+    "prog-technion-18"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת מיפוי וגיאואינפורמציה",
+   "program_ids": [
+    "prog-technion-23"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת מכונות",
+   "program_ids": [
+    "prog-technion-24"
+   ],
+   "firstSemesterAverageMin": 78,
+   "minCourseGrade": 70
+  },
+  {
+   "page_track": "הנדסת מערכות ומידע",
+   "program_ids": [
+    "prog-technion-25"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 65
+  },
+  {
+   "page_track": "הנדסת נתונים ומידע",
+   "program_ids": [
+    "prog-technion-26"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 65
+  },
+  {
+   "page_track": "הנדסת תעשייה וניהול",
+   "program_ids": [
+    "prog-technion-29"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 65
+  },
+  {
+   "page_track": "כימיה",
+   "program_ids": [
+    "prog-technion-32"
+   ],
+   "firstSemesterAverageMin": 75,
+   "minCourseGrade": 65,
+   "note": "מסיימים בממוצע 90+ זכאים להצטרף לתוכנית הזנק (תואר ראשון ושני בארבע שנים)."
+  },
+  {
+   "page_track": "פיזיקה",
+   "program_ids": [
+    "prog-technion-45"
+   ],
+   "firstSemesterAverageMin": 80,
+   "minCourseGrade": 65
+  }
+ ]
+}

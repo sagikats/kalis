@@ -339,6 +339,14 @@ function ProgramReportCard({
 					</div>
 				)}
 
+				{/* Official alternative paths that don't decide the status (Technion short track, near-miss excellent bagrut) */}
+				{item.alternativePaths?.map((path) => (
+					<div key={path.id} className="p-2.5 rounded-xl text-[11px] border bg-[#EFF6FA] border-[#C5DFED] text-[#1E597B] space-y-0.5">
+						<div className="font-black">אפשרות נוספת: {path.title}</div>
+						<div className="font-medium leading-relaxed">{path.description}</div>
+					</div>
+				))}
+
 				{/* Prerequisite alerts preview */}
 				{item.missingPrerequisites.length > 0 && (
 					<div className="p-2.5 rounded-xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium flex items-center gap-1.5">

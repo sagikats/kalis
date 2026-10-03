@@ -43,6 +43,8 @@ export interface AdmissionRoutes {
      bagrutOnlyMin?: number;
      /** Admission without psychometric on per-subject bagrut conditions (Technion "בגרות מצוינת"). */
      excellentBagrut?: ExcellentBagrutRoute;
+     /** Informational: admission to semester B after a semester at the continuing-education school (Technion "אפיק מקוצר"). Never changes the status. */
+     shortTrack?: ShortTrackRoute;
 }
 
 /** One bagrut condition: `count` distinct subjects from `subjects`, each at `minUnits`+ units and `minGrade`+. */
@@ -77,3 +79,12 @@ export interface AcademicInstitution {
      programs: AcademicDegree[];
 }
 
+/** Technion "אפיק קבלה מקוצר": study semester A at the continuing-education school, then transfer on these grades. */
+export interface ShortTrackRoute {
+	/** Minimum average of the first semester's courses. */
+	firstSemesterAverageMin: number;
+	/** Minimum grade in every course. */
+	minCourseGrade: number;
+	/** Extra condition for this track, as published. */
+	note?: string;
+}

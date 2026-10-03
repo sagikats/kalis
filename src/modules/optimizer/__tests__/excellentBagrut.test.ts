@@ -69,4 +69,40 @@ describe('Technion "בגרות מצוינת"', () => {
 		assert.equal(gap.admissionRoute, 'excellent_bagrut');
 		assert.match(gap.admissionNote ?? '', /בגרות מצוינת/);
 	});
+
+	describe('"אפיק מקוצר" (informational alternative path)', () => {
+		const weak: any = {
+			bagrutSubjects: [
+				{ name: 'מתמטיקה', units: 4, grade: 80 }, { name: 'אנגלית', units: 4, grade: 80 },
+				{ name: 'היסטוריה', units: 2, grade: 75 }, { name: 'אזרחות', units: 2, grade: 75 },
+				{ name: 'תנ"ך', units: 2, grade: 75 }, { name: 'ספרות', units: 2, grade: 75 },
+				{ name: 'הבעה עברית', units: 2, grade: 75 }, { name: 'ביולוגיה', units: 5, grade: 80 }
+			],
+			psychometricGeneral: 550, mathUnits: 4, mathGrade: 80, physicsUnits: 0, physicsGrade: 0
+		};
+		const analyze = (id: string, profile: any) => {
+			const res = calculateMultiInstitutionSekem(profile, ['technion'])[0];
+			return analyzeProgramGap({ institutionId: 'inst-48', institutionName: 'הטכניון', calculatorId: 'technion', program: prog(id) }, profile, res);
+		};
+
+		it('is imported for 23 programs with the published numbers', () => {
+			assert.equal(technion.filter((p) => p.admissionRoutes?.shortTrack).length, 23);
+			assert.deepEqual(prog('prog-technion-24').admissionRoutes.shortTrack, { firstSemesterAverageMin: 78, minCourseGrade: 70 });
+			assert.equal(prog('prog-technion-45').admissionRoutes.shortTrack.firstSemesterAverageMin, 80);
+			assert.equal(prog('prog-technion-33').admissionRoutes?.shortTrack, undefined); // CS isn't offered
+		});
+
+		it('is shown to an applicant who is not accepted, without changing the status', () => {
+			const gap = analyze('prog-technion-24', weak);
+			assert.notEqual(gap.status, 'accepted');
+			const path = gap.alternativePaths?.find((p) => p.id === 'alt-short-track');
+			assert.ok(path);
+			assert.match(path!.description, /ממוצע 78\+/);
+		});
+
+		it('is not shown when the applicant is already accepted', () => {
+			const profile: any = { bagrutSubjects: A, psychometricGeneral: 0, mathUnits: 5, mathGrade: 95, physicsUnits: 5, physicsGrade: 93 };
+			assert.equal(analyze('prog-technion-45', profile).alternativePaths, undefined);
+		});
+	});
 });

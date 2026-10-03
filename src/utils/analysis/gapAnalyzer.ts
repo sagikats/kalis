@@ -50,6 +50,8 @@ export interface ProgramGapAnalysis {
 	admissionNote?: string;
 	/** Official admission routes of the program, when published. */
 	admissionRoutes?: AdmissionRoutes;
+	/** Official paths that don't decide the status (e.g. Technion "אפיק מקוצר", or a near-miss "בגרות מצוינת"). */
+	alternativePaths?: { id: string; title: string; description: string }[];
 	userSekem: number;
 	gap: number; // positive = surplus, negative = points needed
 	status: AdmissionStatus;
@@ -438,6 +440,7 @@ export function analyzeProgramGap(
 	const psych = profile.psychometricGeneral || 0;
 	let admissionRoute: ProgramGapAnalysis['admissionRoute'];
 	let admissionNote: string | undefined;
+	const alternativePaths: NonNullable<ProgramGapAnalysis['alternativePaths']> = [];
 
 	if (routes?.minPsychometric && (status === 'accepted' || status === 'borderline') && psych < routes.minPsychometric) {
 		status = 'not_accepted';
@@ -478,6 +481,24 @@ export function analyzeProgramGap(
 		if (status === 'accepted') {
 			improvementOptions.length = 0;
 		} else {
+			if (routes?.excellentBagrut) {
+				const eb = evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []);
+				if (eb.missing.length > 0 && eb.missing.length <= 2) {
+					alternativePaths.push({
+						id: 'alt-excellent-bagrut',
+						title: 'בגרות מצוינת (קבלה בלי פסיכומטרי)',
+						description: `התנאים: ${routes.excellentBagrut.summary}. חסר לך: ${eb.missing.join('; ')}.`
+					});
+				}
+			}
+			if (routes?.shortTrack) {
+				const st = routes.shortTrack;
+				alternativePaths.push({
+					id: 'alt-short-track',
+					title: 'אפיק מקוצר דרך לימודי חוץ בטכניון',
+					description: `לומדים סמסטר א' בבית הספר ללימודי המשך (לפחות 17 נ״ז, בלי פסיכומטרי) ועוברים לסמסטר ב' בממוצע ${st.firstSemesterAverageMin}+ וציון ${st.minCourseGrade}+ בכל קורס. נדרשת זכאות לבגרות מלאה.${st.note ? ` ${st.note}` : ''}`
+				});
+			}
 			if (routes?.bagrutOnlyMin && bagrutAvg > 0 && routes.bagrutOnlyMin - bagrutAvg <= 5) {
 				const need = Math.round((routes.bagrutOnlyMin - bagrutAvg) * 10) / 10;
 				improvementOptions.push({
@@ -516,6 +537,7 @@ export function analyzeProgramGap(
 		admissionRoute,
 		admissionNote,
 		admissionRoutes: routes,
+		alternativePaths: alternativePaths.length > 0 ? alternativePaths : undefined,
 		thresholdVerified: Boolean(thresholdSource),
 		officialThreshold: target.program.officialThreshold ?? prereq?.officialThreshold ?? undefined,
 		thresholdSource,
