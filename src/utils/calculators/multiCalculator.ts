@@ -1,4 +1,5 @@
 import type { SubjectInput } from '../../modules/calculators';
+import type { SubjectBreakdownItem } from '../../modules/calculators/types';
 import { resolvePsychometricScores } from './psychometricHelper';
 import {
 	evaluateTechnion,
@@ -43,6 +44,9 @@ export interface InstitutionSekemResult {
 	notes?: string;
 	droppedSubjects?: string[];
 	optimalUnits?: number;
+	/** Per-subject breakdown of the optimal bagrut average (bonus, effective score, counted or dropped). */
+	subjectBreakdown?: SubjectBreakdownItem[];
+	bagrutCap?: number;
 }
 
 /**
@@ -146,6 +150,8 @@ export function calculateMultiInstitutionSekem(
 			quantitativeSekem: bguRes.quantitativeSekem,
 			directBagrutEligible: bguRes.directBagrutEligible,
 			droppedSubjects: bguRes.droppedSubjects,
+			subjectBreakdown: bguRes.subjectBreakdown,
+			bagrutCap: bguRes.bagrutCap,
 			optimalUnits: bguRes.optimalUnits,
 			notes:
 				bguRes.droppedSubjects && bguRes.droppedSubjects.length > 0
@@ -163,6 +169,8 @@ export function calculateMultiInstitutionSekem(
 			managementSekem: tauRes.managementSekem,
 			directBagrutEligible: tauRes.directBagrutEligible,
 			droppedSubjects: tauRes.droppedSubjects,
+			subjectBreakdown: tauRes.subjectBreakdown,
+			bagrutCap: tauRes.bagrutCap,
 			optimalUnits: tauRes.optimalUnits,
 			notes:
 				tauRes.droppedSubjects && tauRes.droppedSubjects.length > 0
@@ -179,6 +187,8 @@ export function calculateMultiInstitutionSekem(
 			engineeringSekem: techRes.engineeringSekem,
 			directBagrutEligible: techRes.directBagrutEligible,
 			droppedSubjects: techRes.droppedSubjects,
+			subjectBreakdown: techRes.subjectBreakdown,
+			bagrutCap: techRes.bagrutCap,
 			optimalUnits: techRes.optimalUnits,
 			notes:
 				techRes.droppedSubjects && techRes.droppedSubjects.length > 0
@@ -199,6 +209,8 @@ export function calculateMultiInstitutionSekem(
 			quantitativeSekem: hujiRes.quantitativeSekem,
 			directBagrutEligible: hujiRes.directBagrutEligible,
 			droppedSubjects: hujiRes.droppedSubjects,
+			subjectBreakdown: hujiRes.subjectBreakdown,
+			bagrutCap: hujiRes.bagrutCap,
 			optimalUnits: hujiRes.optimalUnits,
 			officialScore: hujiRes.officialScore,
 			notes: [
@@ -218,6 +230,8 @@ export function calculateMultiInstitutionSekem(
 			engineeringSekem: arielRes.engineeringSekem,
 			directBagrutEligible: arielRes.directBagrutEligible,
 			droppedSubjects: arielRes.droppedSubjects,
+			subjectBreakdown: arielRes.subjectBreakdown,
+			bagrutCap: arielRes.bagrutCap,
 			optimalUnits: arielRes.optimalUnits,
 			notes:
 				arielRes.droppedSubjects.length > 0
@@ -234,6 +248,8 @@ export function calculateMultiInstitutionSekem(
 			engineeringSekem: haifaRes.engineeringSekem,
 			directBagrutEligible: haifaRes.directBagrutEligible,
 			droppedSubjects: haifaRes.droppedSubjects,
+			subjectBreakdown: haifaRes.subjectBreakdown,
+			bagrutCap: haifaRes.bagrutCap,
 			optimalUnits: haifaRes.optimalUnits,
 			notes:
 				haifaRes.droppedSubjects.length > 0
@@ -250,6 +266,8 @@ export function calculateMultiInstitutionSekem(
 			engineeringSekem: biuRes.engineeringSekem,
 			directBagrutEligible: biuRes.directBagrutEligible,
 			droppedSubjects: biuRes.droppedSubjects,
+			subjectBreakdown: biuRes.subjectBreakdown,
+			bagrutCap: biuRes.bagrutCap,
 			optimalUnits: biuRes.optimalUnits,
 			notes:
 				biuRes.droppedSubjects && biuRes.droppedSubjects.length > 0
@@ -266,6 +284,8 @@ export function calculateMultiInstitutionSekem(
 			engineeringSekem: reichmanRes.engineeringSekem,
 			directBagrutEligible: reichmanRes.directBagrutEligible,
 			droppedSubjects: reichmanRes.droppedSubjects,
+			subjectBreakdown: reichmanRes.subjectBreakdown,
+			bagrutCap: reichmanRes.bagrutCap,
 			optimalUnits: reichmanRes.optimalUnits,
 			officialScore: reichmanRes.officialScore,
 			notes: [

@@ -1,5 +1,7 @@
 'use client';
 
+import SekemBreakdown from './SekemBreakdown';
+import type { SubjectBreakdownItem } from '../../modules/calculators/types';
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
@@ -64,6 +66,9 @@ interface WhatIfSimulatorProps {
 	onSaveCustomTrack?: (track: any) => Promise<void>;
 	onCancelEdit?: () => void;
 }
+
+/** Lowest grade the simulator's subject sliders allow (bonuses typically start at 60, so going below it matters). */
+const SUBJECT_GRADE_MIN = 40;
 
 /**
  * Pre-loads a recommended track's proposed improvements into What-If Simulator state
@@ -299,7 +304,14 @@ export default function WhatIfSimulator({
 		psych: number,
 		isMath5: boolean,
 		mathGradeVal: number
-	): { sekem: number; bagrutAverage: number; allInstitutions: InstitutionSekemResult[]; droppedSubjects: string[] } => {
+	): {
+		sekem: number;
+		bagrutAverage: number;
+		allInstitutions: InstitutionSekemResult[];
+		droppedSubjects: string[];
+		subjectBreakdown?: SubjectBreakdownItem[];
+		bagrutCap?: number;
+	} => {
 		const updatedSubjects = subjects.map((s) => {
 			if (s.name.includes('מתמטיקה')) {
 				return {
@@ -360,25 +372,27 @@ export default function WhatIfSimulator({
 			sekem: targetEval.sekem,
 			bagrutAverage: targetEval.bagrutAverage,
 			allInstitutions: multiRes,
-			droppedSubjects: targetEval.droppedSubjects || []
+			droppedSubjects: targetEval.droppedSubjects || [],
+			subjectBreakdown: targetEval.subjectBreakdown,
+			bagrutCap: targetEval.bagrutCap
 		};
 	};
 
 	// Baseline results across ALL 6 institutions
-	const baselineAllInstitutions = useMemo(() => {
+	const baselineResult = useMemo(() => {
 		const originalSubjects = (userProfile.bagrutSubjects || []).map((s) => ({
 			name: s.name,
 			units: s.units,
 			grade: s.grade
 		}));
-		const baseRes = calculateSekemForSubjectList(
+		return calculateSekemForSubjectList(
 			originalSubjects,
 			initialPsych,
 			userProfile.mathUnits === 5,
 			userProfile.mathGrade || 80
 		);
-		return baseRes.allInstitutions;
 	}, [userProfile, initialPsych]);
+	const baselineAllInstitutions = baselineResult.allInstitutions;
 
 	const effectiveMath5 = isMathActive ? isMathUpgradedTo5 : userProfile.mathUnits === 5;
 	const effectiveMathGrade = isMathActive ? simulatedMathGrade : userProfile.mathGrade || 80;
@@ -1078,6 +1092,32 @@ export default function WhatIfSimulator({
 							)}
 						</div>
 
+						{/* How the simulated score is computed, and what the edits changed (collapsed by default) */}
+						{simulatedSekemResult.subjectBreakdown && (
+							<SekemBreakdown
+								title="הרכב הסכם בסימולציה ומה השתנה"
+								current={{
+									breakdown: simulatedSekemResult.subjectBreakdown,
+									bagrutAverage: simulatedSekemResult.bagrutAverage,
+									sekem: simulatedSekemResult.sekem,
+									psychometric: simulatedPsych
+								}}
+								baseline={
+									baselineResult.subjectBreakdown
+										? {
+												breakdown: baselineResult.subjectBreakdown,
+												bagrutAverage: baselineResult.bagrutAverage,
+												sekem: baselineResult.sekem,
+												psychometric: initialPsych
+										  }
+										: undefined
+								}
+								sekemLabel={analysis.relevantSekemLabel}
+								bagrutCap={simulatedSekemResult.bagrutCap}
+								psychometricOnly={analysis.relevantSekemType === 'psychometric'}
+							/>
+						)}
+
 						{/* Active Subjects List */}
 						<div className="space-y-2 sm:space-y-2.5">
 							{/* Math Card if Active */}
@@ -1174,7 +1214,7 @@ export default function WhatIfSimulator({
 									{/* Row 3: Slim Slider */}
 									<input
 										type="range"
-										min={60}
+										min={SUBJECT_GRADE_MIN}
 										max={100}
 										step={1}
 										value={simulatedMathGrade}
@@ -1305,7 +1345,7 @@ export default function WhatIfSimulator({
 										{/* Row 3: Slim Slider */}
 										<input
 											type="range"
-											min={item.isCustomAdded ? 60 : Math.min(60, item.originalGrade)}
+											min={SUBJECT_GRADE_MIN}
 											max={100}
 											step={1}
 											value={item.simulatedGrade}

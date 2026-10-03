@@ -112,6 +112,8 @@ export function evaluateReichman(input: InstitutionCalculatorInput): Institution
 		officialScore: officialScore || undefined,
 		directBagrutEligible,
 		notes,
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

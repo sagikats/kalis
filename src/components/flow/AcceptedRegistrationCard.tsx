@@ -14,19 +14,26 @@ import {
 import { ProgramGapAnalysis } from '@/utils/analysis/gapAnalyzer';
 import { getUniversityRegistrationInfo } from '@/utils/universityRegistration';
 import UniversityLogo from '@/components/common/UniversityLogo';
+import SekemBreakdown from '@/components/flow/SekemBreakdown';
+import type { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 
 interface AcceptedRegistrationCardProps {
 	analysis: ProgramGapAnalysis;
 	otherAnalyses?: ProgramGapAnalysis[];
 	onSelectOtherProgram?: (programId: string) => void;
 	onBackToReport?: () => void;
+	/** The applicant's result at this institution, for the "how was my score computed" breakdown. */
+	institutionResult?: InstitutionSekemResult;
+	psychometric?: number;
 }
 
 export default function AcceptedRegistrationCard({
 	analysis,
 	otherAnalyses = [],
 	onSelectOtherProgram,
-	onBackToReport
+	onBackToReport,
+	institutionResult,
+	psychometric
 }: AcceptedRegistrationCardProps) {
 	const regInfo = getUniversityRegistrationInfo(
 		analysis.target.institutionName,
@@ -106,6 +113,20 @@ export default function AcceptedRegistrationCard({
 							</span>
 						</div>
 					</div>
+
+					{institutionResult?.subjectBreakdown && (
+						<SekemBreakdown
+							current={{
+								breakdown: institutionResult.subjectBreakdown,
+								bagrutAverage: institutionResult.bagrutAverage,
+								sekem: analysis.userSekem,
+								psychometric
+							}}
+							sekemLabel={analysis.relevantSekemLabel}
+							bagrutCap={institutionResult.bagrutCap}
+							psychometricOnly={analysis.relevantSekemType === 'psychometric'}
+						/>
+					)}
 
 					{/* Primary Call To Action: Go to University Registration Page */}
 					<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-5 sm:p-6 space-y-4">

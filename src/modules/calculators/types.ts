@@ -27,6 +27,20 @@ export interface DroppedSubjectInfo {
 	reason: string;
 }
 
+/** How one bagrut subject took part in the optimal average (for the "how was my score computed" breakdown). */
+export interface SubjectBreakdownItem {
+	name: string;
+	units: number;
+	grade: number;
+	bonus: number;
+	/** grade + bonus — the score this subject contributes to the average. */
+	effective: number;
+	/** Weight in the average (usually its units; e.g. Technion doubles math). */
+	weight: number;
+	/** mandatory = always counted; included = elective that raises the average; dropped = elective left out; empty = no grade yet. */
+	status: 'mandatory' | 'included' | 'dropped' | 'empty';
+}
+
 export interface OptimalBagrutResult {
 	average: number;
 	optimalUnits: number;
@@ -34,6 +48,10 @@ export interface OptimalBagrutResult {
 	droppedSubjects: DroppedSubjectInfo[];
 	includedSubjects: CalculatorSubject[];
 	hasScienceCluster?: boolean;
+	/** Every subject with its bonus and whether it counted. */
+	breakdown?: SubjectBreakdownItem[];
+	/** Cap applied to the average, if the institution has one. */
+	cap?: number;
 }
 
 export interface InstitutionCalculatorInput {
@@ -66,6 +84,10 @@ export interface InstitutionCalculatorResult {
 	officialScore?: number;
 	notes: string[];
 	droppedSubjects: string[];
+	/** Per-subject breakdown of the optimal bagrut average. */
+	subjectBreakdown?: SubjectBreakdownItem[];
+	/** Cap applied to the bagrut average, if any (e.g. TAU 117). */
+	bagrutCap?: number;
 }
 
 /** Bagrut subject as entered by the user (same shape as CalculatorSubject). */

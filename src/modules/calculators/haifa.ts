@@ -137,6 +137,8 @@ export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCal
 		notes: directBagrutEligible
 			? ['ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת חיפה לחוגים זכאים.']
 			: [],
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

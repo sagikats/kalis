@@ -137,6 +137,8 @@ export function evaluateTechnion(input: InstitutionCalculatorInput): Institution
 		engineeringSekem,
 		directBagrutEligible,
 		notes,
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

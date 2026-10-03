@@ -10,7 +10,7 @@
  * the subject weight (e.g. Technion doubles math), the cap and rounding.
  */
 
-import type { CalculatorSubject, DroppedSubjectInfo, OptimalBagrutResult } from './types';
+import type { CalculatorSubject, DroppedSubjectInfo, OptimalBagrutResult, SubjectBreakdownItem } from './types';
 
 export interface OptimalAverageRules {
 	isMandatory: (name: string) => boolean;
@@ -44,7 +44,37 @@ function applyCap(avg: number, cap?: number): number {
 	return cap !== undefined ? Math.min(cap, avg) : avg;
 }
 
+/** Per-subject view of an optimal-average result: bonus, effective score and whether it counted. */
+function buildBreakdown(
+	subjects: CalculatorSubject[],
+	included: CalculatorSubject[],
+	rules: OptimalAverageRules
+): SubjectBreakdownItem[] {
+	const inSet = new Set(included);
+	return subjects.map((s) => {
+		const empty = !(s.units > 0 && s.grade > 0);
+		const bonus = empty ? 0 : rules.getBonus(s);
+		return {
+			name: s.name,
+			units: s.units,
+			grade: s.grade,
+			bonus,
+			effective: s.grade + bonus,
+			weight: rules.getWeight ? rules.getWeight(s) : s.units,
+			status: empty ? 'empty' : rules.isMandatory(s.name) ? 'mandatory' : inSet.has(s) ? 'included' : 'dropped'
+		};
+	});
+}
+
 export function computeOptimalAverage(
+	subjects: CalculatorSubject[],
+	rules: OptimalAverageRules
+): OptimalBagrutResult {
+	const result = computeOptimalAverageCore(subjects, rules);
+	return { ...result, breakdown: buildBreakdown(subjects || [], result.includedSubjects, rules), cap: rules.cap };
+}
+
+function computeOptimalAverageCore(
 	subjects: CalculatorSubject[],
 	rules: OptimalAverageRules
 ): OptimalBagrutResult {

@@ -38,6 +38,7 @@ import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
 import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
 import { getUniversityCalculator } from '@/utils/universityCalculators';
 import UniversityVerificationModal from './UniversityVerificationModal';
+import SekemBreakdown from './SekemBreakdown';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
@@ -515,6 +516,21 @@ export default function RecommendedTracksView({
 							<strong>תנאי סף נדרשים לתואר זה:</strong> {analysis.missingPrerequisites.map((p) => p.name).join(' | ')}. מומלץ לשלב את השלמתם במסלול העבודה שלך.
 						</span>
 					</div>
+				)}
+
+				{/* How the current score for this program is computed (collapsed by default) */}
+				{institutionResult?.subjectBreakdown && (
+					<SekemBreakdown
+						current={{
+							breakdown: institutionResult.subjectBreakdown,
+							bagrutAverage: institutionResult.bagrutAverage,
+							sekem: analysis.userSekem,
+							psychometric: userProfile?.psychometricGeneral || undefined
+						}}
+						sekemLabel={analysis.relevantSekemLabel}
+						bagrutCap={institutionResult.bagrutCap}
+						psychometricOnly={analysis.relevantSekemType === 'psychometric'}
+					/>
 				)}
 
 			</div>

@@ -169,6 +169,8 @@ export function evaluateHuji(input: InstitutionCalculatorInput): InstitutionCalc
 		directBagrutEligible,
 		officialScore: officialGeneral || undefined,
 		notes,
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

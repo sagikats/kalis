@@ -1346,6 +1346,8 @@ export default function AdmissionFlowPage() {
 							currentFocusedAnalysis.status === 'accepted' ? (
 								<AcceptedRegistrationCard
 									analysis={currentFocusedAnalysis}
+									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
+									psychometric={userProfile?.psychometricGeneral || undefined}
 									otherAnalyses={gapAnalyses}
 									onSelectOtherProgram={(programId) => setFocusedProgramId(programId)}
 									onBackToReport={() => setActiveStep(3)}

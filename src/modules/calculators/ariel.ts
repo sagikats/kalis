@@ -117,6 +117,8 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 		notes: directBagrutEligible
 			? ['החישוב לאריאל הוא הערכה — הנוסחה טרם אומתה מול מקור רשמי של המוסד.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
 			: ['החישוב לאריאל הוא הערכה — הנוסחה טרם אומתה מול מקור רשמי של המוסד.'],
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

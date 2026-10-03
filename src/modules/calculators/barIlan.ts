@@ -148,6 +148,8 @@ export function evaluateBarIlan(input: InstitutionCalculatorInput): InstitutionC
 		engineeringSekem,
 		directBagrutEligible,
 		notes,
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

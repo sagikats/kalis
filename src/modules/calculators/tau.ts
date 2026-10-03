@@ -143,6 +143,8 @@ export function evaluateTau(input: InstitutionCalculatorInput): InstitutionCalcu
 		notes: directBagrutEligible
 			? ['ממוצע בגרות עומד ברף קבלה ישירה (105 ומעלה) לחוגים זכאים.']
 			: [],
-		droppedSubjects: optimal.droppedSubjects.map((s) => s.name)
+		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
+		subjectBreakdown: optimal.breakdown,
+		bagrutCap: optimal.cap
 	};
 }

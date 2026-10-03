@@ -1,4 +1,5 @@
 import type { SubjectInput } from '../../modules/calculators';
+import type { SubjectBreakdownItem } from '../../modules/calculators/types';
 import type { AcademicDegree } from '../../types/academic';
 import type {
 	InstitutionSekemResult,
@@ -214,7 +215,7 @@ export function evaluateSimulatedSekem(
 	simulatedMathGrade?: number,
 	simulatedPhysUnits?: number,
 	simulatedPhysGrade?: number
-): { sekem: number; bagrutAverage: number; directBagrutEligible: boolean; droppedSubjects: string[] } {
+): { sekem: number; bagrutAverage: number; directBagrutEligible: boolean; droppedSubjects: string[]; subjectBreakdown?: SubjectBreakdownItem[]; bagrutCap?: number } {
 	const mathU = simulatedMathUnits ?? baseProfile.mathUnits ?? 4;
 	const mathG = simulatedMathGrade ?? baseProfile.mathGrade ?? 80;
 
@@ -266,7 +267,9 @@ export function evaluateSimulatedSekem(
 		sekem,
 		bagrutAverage: instRes.bagrutAverage,
 		directBagrutEligible: instRes.directBagrutEligible,
-		droppedSubjects: instRes.droppedSubjects ?? []
+		droppedSubjects: instRes.droppedSubjects ?? [],
+		subjectBreakdown: instRes.subjectBreakdown,
+		bagrutCap: instRes.bagrutCap
 	};
 }
 
