@@ -790,11 +790,14 @@ export default function AdmissionFlowPage() {
 
 	return (
 		<div className={`w-full bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
-			activeStep <= 2 ? 'h-[calc(100dvh-4rem)] max-h-[calc(100dvh-4rem)] overflow-hidden' : 'min-h-screen pb-32 sm:pb-36'
+			// Steps 1-2: a fixed-height screen with inner scrolling on desktop; on mobile the page itself scrolls
+			activeStep <= 2
+				? 'min-h-screen pb-28 sm:pb-0 sm:min-h-0 sm:h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-4rem)] sm:overflow-hidden'
+				: 'min-h-screen pb-32 sm:pb-36'
 		}`}>
 			<main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
 				activeStep <= 2
-					? 'py-2 sm:py-3 h-[calc(100%-5.5rem)] max-h-[calc(100%-5.5rem)] overflow-hidden flex flex-col min-h-0'
+					? 'py-2 sm:py-3 flex flex-col sm:h-[calc(100%-5.5rem)] sm:max-h-[calc(100%-5.5rem)] sm:overflow-hidden sm:min-h-0'
 					: 'py-8 space-y-8'
 			}`}>
 
@@ -1482,7 +1485,8 @@ export default function AdmissionFlowPage() {
 									className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#D5CFC2] shadow-2xs cursor-pointer active:scale-[0.99]"
 								>
 									<ArrowRight className="h-4 w-4 shrink-0" />
-									<span>חזור להזנת בגרויות</span>
+									<span className="hidden sm:inline">חזור להזנת בגרויות</span>
+									<span className="sm:hidden">חזרה</span>
 								</button>
 							)
 						) : (
@@ -1499,17 +1503,19 @@ export default function AdmissionFlowPage() {
 								className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#FAF8F5] hover:bg-[#EFEAE0] text-[#222222] font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 sm:gap-2 border border-[#D5CFC2] shadow-2xs cursor-pointer active:scale-[0.99]"
 							>
 								<ArrowRight className="h-4 w-4 shrink-0" />
-								<span>
+								<span className="hidden sm:inline">
 									{activeStep === 2 && 'חזור להזנת ציונים'}
 									{activeStep === 3 && 'חזור לבחירת תארים'}
 									{activeStep === 4 && 'חזור לדוח הקבלה'}
 								</span>
+								<span className="sm:hidden">חזרה</span>
 							</button>
 						)}
 					</div>
 
 					{/* --- CENTER: ALWAYS-VISIBLE 4-STEP STEPPER DOCK (סרגל 4 השלבים המלווה תמיד למטה) --- */}
-					<div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 justify-center min-w-0 max-w-4xl px-1 sm:px-2">
+					{/* Hidden on mobile: only the back / continue buttons fit there */}
+					<div className="hidden sm:flex items-center gap-1.5 sm:gap-2.5 flex-1 justify-center min-w-0 max-w-4xl px-1 sm:px-2">
 						{/* Step 1 */}
 						<button
 							type="button"
@@ -1644,7 +1650,8 @@ export default function AdmissionFlowPage() {
 									onClick={handleProceedToPsychometric}
 									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#EA580C] hover:bg-[#D94E07] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
 								>
-									<span>המשך להזנת פסיכומטרי</span>
+									<span className="hidden sm:inline">המשך להזנת פסיכומטרי</span>
+									<span className="sm:hidden">המשך לפסיכומטרי</span>
 									<ArrowLeft className="h-4 w-4 shrink-0" />
 								</button>
 							) : (
@@ -1653,7 +1660,8 @@ export default function AdmissionFlowPage() {
 									onClick={handleProceedFromStep1}
 									className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#EA580C] hover:bg-[#D94E07] text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer active:scale-[0.99]"
 								>
-									<span>המשך לבחירת תארים מבוקשים</span>
+									<span className="hidden sm:inline">המשך לבחירת תארים מבוקשים</span>
+									<span className="sm:hidden">המשך לבחירת תארים</span>
 									<ArrowLeft className="h-4 w-4 shrink-0" />
 								</button>
 							)
@@ -1670,7 +1678,8 @@ export default function AdmissionFlowPage() {
 										: 'bg-[#EFEAE1] text-[#9E988D] cursor-not-allowed border border-[#DDD7CB]'
 								}`}
 							>
-								<span>המשך לדוח קבלה אישי ({selectedTargets.length})</span>
+								<span className="hidden sm:inline">המשך לדוח קבלה אישי ({selectedTargets.length})</span>
+								<span className="sm:hidden">לדוח הקבלה ({selectedTargets.length})</span>
 								<ArrowLeft className="h-4 w-4 shrink-0" />
 							</button>
 						)}
@@ -1686,7 +1695,8 @@ export default function AdmissionFlowPage() {
 										: 'bg-[#EFEAE1] text-[#9E988D] cursor-not-allowed border border-[#DDD7CB]'
 								}`}
 							>
-								<span>לתכנון מסלולי פעולה</span>
+								<span className="hidden sm:inline">לתכנון מסלולי פעולה</span>
+								<span className="sm:hidden">למסלולי פעולה</span>
 								<ArrowLeft className="h-4 w-4 shrink-0" />
 							</button>
 						)}
