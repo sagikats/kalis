@@ -185,7 +185,7 @@ export default function AcceptedRegistrationCard({
 											{item.target.institutionName}
 										</span>
 										<span className="text-[10px] font-bold text-[#9B3327] bg-[#FDF1EE] px-2 py-0.5 rounded border border-[#F1CAC1]">
-											פער: {Math.abs(item.gap)} נק׳
+											{item.gap >= 0 ? 'חסר תנאי סף רשמי' : `פער: ${Math.abs(item.gap)} נק׳`}
 										</span>
 									</div>
 									<h4 className="text-sm font-bold text-[#222222] leading-snug">

@@ -50,7 +50,7 @@ export default function TrackRegistrationGate({
 								</span>
 								<span className="text-xs text-[#CDC5B6]">•</span>
 								<span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-[#FFFBEB] border border-[#FDE68A] px-2 py-0.5 rounded-full">
-									פער נדרש: {formattedGap} נק'
+									{analysis.status === 'not_accepted' && gap >= 0 ? 'חסר תנאי סף רשמי' : `פער נדרש: ${formattedGap} נק'`}
 								</span>
 							</div>
 							<h2 className="text-xl sm:text-2xl font-black text-[#222222] mt-0.5">

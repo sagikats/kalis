@@ -99,6 +99,8 @@ export default function GapAnalysisCard({
 							? `התקבלת! (+${analysis.gap} נק׳)`
 							: isBorderline
 							? `על הגבול (חסרות ${missingPoints} נק׳)`
+							: analysis.status === 'not_accepted' && analysis.gap >= 0 && analysis.threshold
+							? 'הסכם עובר — חסר תנאי סף רשמי'
 							: `פער נדרש: ${missingPoints} נקודות`}
 					</div>
 				</div>

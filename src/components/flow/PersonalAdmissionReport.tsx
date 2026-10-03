@@ -258,6 +258,8 @@ function ProgramReportCard({
 
 	const blockedByPsychFloor =
 		!isAccepted && item.gap >= 0 && item.improvementOptions.some((o) => o.id === 'opt-psych-floor');
+	// The sekem passes but an official condition (e.g. a math requirement) is missing
+	const blockedByCondition = !isAccepted && !isNoThreshold && item.gap >= 0;
 
 	const badgeText = isAccepted
 		? item.admissionRoute === 'bagrut_only'
@@ -269,6 +271,8 @@ function ProgramReportCard({
 			: `התקבלת (+${item.gap})`
 		: blockedByPsychFloor
 		? 'חסר פסיכומטרי מינימלי'
+		: blockedByCondition
+		? 'חסר תנאי סף רשמי'
 		: isBorderline
 		? `על הגבול (${item.gap})`
 		: isNoThreshold
@@ -349,9 +353,23 @@ function ProgramReportCard({
 
 				{/* Prerequisite alerts preview */}
 				{item.missingPrerequisites.length > 0 && (
-					<div className="p-2.5 rounded-xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium flex items-center gap-1.5">
-						<AlertCircle className="h-3.5 w-3.5 shrink-0" />
-						<span>חסרים {item.missingPrerequisites.length} תנאי סף: {item.missingPrerequisites.map((p) => p.name).join(', ')}</span>
+					<div className="p-2.5 rounded-xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium space-y-1.5">
+						<div className="flex items-center gap-1.5">
+							<AlertCircle className="h-3.5 w-3.5 shrink-0" />
+							<span>חסרים {item.missingPrerequisites.length} תנאי סף: {item.missingPrerequisites.map((p) => p.name).join(', ')}</span>
+						</div>
+						{/* Official requirements: show what's required, what the applicant has, and the exam route when there is one */}
+						{item.missingPrerequisites
+							.filter((p) => p.id.startsWith('official-'))
+							.map((p) => (
+								<div key={p.id} className="pr-5 leading-relaxed text-[#6B4A10]">
+									<span className="font-bold">נדרש:</span> {p.required}
+									<span className="block">
+										<span className="font-bold">יש לך:</span> {p.current}
+									</span>
+									{p.notes && <span className="block">{p.notes}</span>}
+								</div>
+							))}
 					</div>
 				)}
 			</div>

@@ -2878,7 +2878,11 @@
         "officialThreshold": 700,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio-environment — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/bio-environment?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1822-1",
@@ -3006,7 +3010,11 @@
         "officialThreshold": 520,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/med/ba/nursing — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/med/ba/nursing?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0842-102",
@@ -3220,7 +3228,96 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/biomedical — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/biomedical?v=requirements"
         },
         "minPsychometricFloor": 620
       },
@@ -3240,7 +3337,115 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/mechanical — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורסי מתמטיקה אקדמיים (חדו\"א / אלגברה בת\"א או באוניברסיטה הפתוחה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 85
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/mechanical?v=requirements"
         },
         "minPsychometricFloor": 620
       },
@@ -3260,7 +3465,115 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/bio-mechanical — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורסי מתמטיקה אקדמיים (חדו\"א / אלגברה בת\"א או באוניברסיטה הפתוחה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 95
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/bio-mechanical?v=requirements"
         },
         "minPsychometricFloor": 620
       },
@@ -3281,7 +3594,115 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/electrical — סף קבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורסי מתמטיקה אקדמיים (חדו\"א / אלגברה בת\"א או באוניברסיטה הפתוחה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 83
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/electrical?v=requirements"
         }
       },
       {
@@ -3300,7 +3721,115 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/electrical-physics — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורסי מתמטיקה אקדמיים (חדו\"א / אלגברה בת\"א או באוניברסיטה הפתוחה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 83
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/electrical-physics?v=requirements"
         },
         "minPsychometricFloor": 660
       },
@@ -3320,7 +3849,114 @@
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/electrical-engineering-computer-science — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 83
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/electrical-engineering-computer-science?v=requirements"
         },
         "minPsychometricFloor": 660
       },
@@ -3340,7 +3976,115 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/industrial-engineering — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורסי מתמטיקה אקדמיים (חדו\"א / אלגברה בת\"א או באוניברסיטה הפתוחה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה; מקצוע ניהול הייצור / ניהול תעשייתי 5 יח\"ל 80+ עם בחינת סיווג בפיזיקה; ציון התאמה גבוה ב-20 מהסף עם מתמטיקה 5 יח\"ל 90+ ובחינת סיווג בפיזיקה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/industrial-engineering?v=requirements"
         },
         "minPsychometricFloor": 620
       },
@@ -3380,7 +4124,29 @@
         "officialThreshold": 640,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/biotechnology — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/biotechnology?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0881-12",
@@ -3398,7 +4164,49 @@
         "thresholdSource": "https://go.tau.ac.il/he/arts/ba/arch — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 551
+          "minPsychometric": 551,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/arts/ba/arch?v=requirements"
         },
         "minPsychometricFloor": 551
       },
@@ -3437,7 +4245,11 @@
         "officialThreshold": 576,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/bio?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0455-72",
@@ -3453,7 +4265,11 @@
         "officialThreshold": 610,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/ecology — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/ecology?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0455-19",
@@ -3471,7 +4287,9 @@
         "officialThreshold": 670,
         "relevantSekemType": "general",
         "admissionRoutes": {
-          "minPsychometric": 700
+          "minPsychometric": 700,
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/bio-excel?v=requirements"
         },
         "minPsychometricFloor": 700,
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio-excel?v=requirements — תנאי קבלה: ציון התאמה 670 וגם פסיכומטרי 700 וממוצע בגרות 105, וראיון",
@@ -3491,7 +4309,37 @@
         "officialThreshold": 680,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/bio-psycho — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/neuroscience/ba/bio-psycho?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0631-40",
@@ -3529,7 +4377,9 @@
         "officialThreshold": 653,
         "relevantSekemType": "general",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/med/ba/comm-diss?v=requirements"
         },
         "minPsychometricFloor": 620,
         "thresholdSource": "https://go.tau.ac.il/he/med/ba/comm-diss?v=requirements — סף קבלה תשפ\"ז 653; פסיכומטרי 620 לפחות, אנגלית 120, וראיון",
@@ -3551,7 +4401,38 @@
         "officialThreshold": 610,
         "relevantSekemType": "management",
         "thresholdSource": "https://go.tau.ac.il/he/management/ba/accounting — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "תואר מוסמך במנהל עסקים ממוסד מוכר בארץ"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/management/ba/accounting?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1211-75",
@@ -3567,7 +4448,37 @@
         "officialThreshold": 660,
         "relevantSekemType": "management",
         "thresholdSource": "https://go.tau.ac.il/he/management/ba/accounting-law — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/management/ba/accounting-law?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0341-30",
@@ -3585,7 +4496,46 @@
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/excel-earth — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 640
+          "minPsychometric": 640,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "מכינה קדם-אקדמית מוכרת במסלול ריאלי"
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "מכינה קדם-אקדמית מוכרת במסלול ריאלי"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/excel-earth?v=requirements"
         },
         "minPsychometricFloor": 640
       },
@@ -3605,7 +4555,90 @@
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/chem — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 575
+          "minPsychometric": 575,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "בחינת המיון של קורס ההכנה במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורס הכנה מתמטית לכימאים"
+            },
+            {
+              "id": "science",
+              "title": "ידע בפיזיקה / כימיה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת המיון של קורס ההכנה בפיזיקה בציון 75+"
+                },
+                {
+                  "exam": "בחינת המיון של קורס ההכנה בכימיה בציון 80+"
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 110
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "תואר בוגר / 30 ש\"ס אקדמיות במדעים או הנדסה בממוצע 80+ (במקום הפסיכומטרי)"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/chem?v=requirements"
         },
         "minPsychometricFloor": 575
       },
@@ -3623,7 +4656,37 @@
         "officialThreshold": 610,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/economics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 138
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/economics?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0842-11",
@@ -3691,7 +4754,53 @@
         "officialThreshold": 645,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/math — סף קבלה תשפ\"ז",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/math?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1221-51",
@@ -3707,7 +4816,37 @@
         "officialThreshold": 610,
         "relevantSekemType": "management",
         "thresholdSource": "https://go.tau.ac.il/he/management/ba/management — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/management/ba/management?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0608-80",
@@ -3755,7 +4894,53 @@
         "officialThreshold": 635,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/statistics — סף קבלה תשפ\"ז",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/statistics?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1051-53",
@@ -3787,7 +4972,72 @@
         "officialThreshold": 640,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/physics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת הסיווג של קורס ההכנה בפיזיקה בציון 85+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/physics?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1521-62",
@@ -3803,7 +5053,72 @@
         "officialThreshold": 675,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/physics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת הסיווג של קורס ההכנה בפיזיקה בציון 85+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/neuroscience/ba/physics?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1071-54",
@@ -3837,7 +5152,62 @@
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/psycho-computers — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 88
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/neuroscience/ba/psycho-computers?v=requirements"
         },
         "minPsychometricFloor": 660
       },
@@ -3876,7 +5246,54 @@
         "officialThreshold": 607,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/med/ba/occu — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "chemistry",
+              "title": "ידע בכימיה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "exam": "עמידה בדרישות קורס הקיץ של החוג לריפוי בעיסוק"
+                }
+              ],
+              "otherOptions": "מכינה קדם-אקדמית או קורס אקדמי מקביל"
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "exam": "עמידה בדרישות קורס הקיץ של החוג לריפוי בעיסוק"
+                }
+              ],
+              "otherOptions": "מכינה קדם-אקדמית או קורס אקדמי מקביל"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/med/ba/occu?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0821-10",
@@ -3967,7 +5384,116 @@
         "officialThreshold": 626,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/materials — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה; ציון התאמה גבוה ב-20 מהסף עם מתמטיקה 5 יח\"ל 90+ ובחינת סיווג בפיזיקה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/materials?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0368-22",
@@ -3985,7 +5511,62 @@
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/computer — סף קבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 88
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/computer?v=requirements"
         },
         "minPsychometricFloor": 660
       },
@@ -4003,7 +5584,118 @@
         "officialThreshold": 691,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/datascience — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון התאמה גבוה ב-20 מהסף עם מתמטיקה 5 יח\"ל 90+"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/datascience?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0341-31",
@@ -4019,7 +5711,63 @@
         "officialThreshold": 620,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/geophysics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת סיווג במתמטיקה בציון 80+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת המיון של קורס ההכנה בפיזיקה בציון 80+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/geophysics?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0341-99",
@@ -4035,7 +5783,73 @@
         "officialThreshold": 670,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/excel-earth-AI — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת המיון של קורס ההכנה בפיזיקה בציון 80+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/excel-earth-AI?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0560-63",
@@ -4053,7 +5867,40 @@
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/high-tech-plus — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 70+ בכל אחד מהקורסים המקוונים \"גשר למתמטיקה אקדמית\" 1 ו-2 (במקום בחינת הסיווג)"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/high-tech-plus?v=requirements"
         },
         "minPsychometricFloor": 620
       },
@@ -4093,7 +5940,30 @@
         "officialThreshold": 646,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/machinelearning — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "מכינה קדם-אקדמית מוכרת במסלול ריאלי"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/machinelearning?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0612-41",
@@ -4134,7 +6004,9 @@
         "relevantSekemType": "general",
         "admissionRoutes": {
           "psychometricOnlyMin": 450,
-          "bagrutOnlyMin": 102
+          "bagrutOnlyMin": 102,
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/humanities/ba/literature?v=requirements"
         },
         "thresholdSource": "https://go.tau.ac.il/he/humanities/ba/literature?v=requirements — תנאי קבלה: ציון התאמה 500, או פסיכומטרי 450, או ממוצע בגרות 102",
         "thresholdUpdatedAt": "2026-10-03"
@@ -4172,7 +6044,11 @@
         "officialThreshold": 570,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/social-work — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/social-work?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0164-16",
@@ -4263,7 +6139,62 @@
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/bioinformatics — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 88
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "בחינת סיווג במתמטיקה בציון 75+"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/bioinformatics?v=requirements"
         },
         "minPsychometricFloor": 660
       },
@@ -4281,7 +6212,11 @@
         "officialThreshold": 670,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/bio-med — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/bio-med?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0861-7",
@@ -4342,7 +6277,45 @@
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/chem-excel — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 670
+          "minPsychometric": 670,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "ידע בפיזיקה / כימיה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/chem-excel?v=requirements"
         },
         "minPsychometricFloor": 670
       },
@@ -4360,7 +6333,51 @@
         "officialThreshold": 665,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/math-physics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 80+ בחדו\"א 1א' ובמבוא מתמטי לפיזיקאים 1 בת\"א"
+            },
+            {
+              "id": "physics",
+              "title": "ידע בפיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "exam": "בחינת הסיווג של קורס ההכנה בפיזיקה בציון 90+"
+                }
+              ],
+              "otherOptions": "ציון 80+ בפיזיקה קלאסית 1 בת\"א"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/math-physics?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0651-28",
@@ -4376,7 +6393,48 @@
         "officialThreshold": 673,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/humanities/ba/pacam — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 138
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/humanities/ba/pacam?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0683-36",
@@ -4414,7 +6472,46 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology-biology-ai — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/psychology-biology-ai?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1011-95",
@@ -4430,7 +6527,46 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/economy-political-science-ai — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/economy-political-science-ai?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1564-61",
@@ -4446,7 +6582,37 @@
         "officialThreshold": 680,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0627-58",
@@ -4476,7 +6642,46 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology-economy-ai — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/psychology-economy-ai?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0455-90",
@@ -4492,7 +6697,46 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/datascience-biology — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/life/ba/datascience-biology?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1031-94",
@@ -4508,7 +6752,46 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/economy-data-science-one — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/economy-data-science-one?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1411-93",
@@ -4526,7 +6809,44 @@
         "thresholdSource": "https://go.tau.ac.il/he/law/ba/datascience-ai — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 600
+          "minPsychometric": 600,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/law/ba/datascience-ai?v=requirements"
         },
         "minPsychometricFloor": 600
       },
@@ -4544,7 +6864,98 @@
         "officialThreshold": 676,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/biomedical-biology — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/neuroscience/ba/biomedical-biology?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0542-85",
@@ -4562,7 +6973,115 @@
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/geophysics-mechanical-engineering — סף קבלה שנה קודמת",
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ],
+              "otherOptions": "ציון 75+ בקורסי מתמטיקה אקדמיים (חדו\"א / אלגברה בת\"א או באוניברסיטה הפתוחה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 95
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/exact/ba/geophysics-mechanical-engineering?v=requirements"
         },
         "minPsychometricFloor": 620
       },
@@ -4580,7 +7099,116 @@
         "officialThreshold": 642,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/materials-chemistry — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג במתמטיקה"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי נוסף (פיזיקה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "כימיה",
+                        "מדעי המחשב",
+                        "הגנת סייבר",
+                        "מערכות תוכנה וחומרה",
+                        "אלקטרוניקה ומחשבים",
+                        "ביוטכנולוגיה / מערכות ביוטכנולוגיה",
+                        "מדעי ההנדסה",
+                        "מכטרוניקה / בקרת מכונות",
+                        "מערכות תעופה וחלל",
+                        "הנדסת מכונות / מכונות",
+                        "ביו-רפואה ומכשור רפואי",
+                        "תקשורת אלקטרונית וטלקומוניקציה",
+                        "רובוטיקה ומערכות אוטונומיות",
+                        "הנדסת תוכנה / פרויקט גמר תוכנה",
+                        "תכנון ותכנות מערכות",
+                        "מדע חישובי"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ],
+                  "exam": "מעבר בחינת סיווג בפיזיקה"
+                }
+              ],
+              "otherOptions": "ציון 70–75+ בקורס פיזיקה קלאסית 1 בת\"א או מכניקה / חשמל ומגנטיות באוניברסיטה הפתוחה; ציון התאמה גבוה ב-20 מהסף עם מתמטיקה 5 יח\"ל 90+ ובחינת סיווג בפיזיקה"
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/engineering/ba/materials-chemistry?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0368-49",
@@ -4613,7 +7241,36 @@
         "comments": "סף קבלה תשפ\"ו (ציון התאמה מדעים מדויקים)",
         "officialThreshold": 680,
         "relevantSekemType": "engineering",
-        "admissionRoutes": {},
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 140
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/neuroscience/ba/neuroscience-environment-ai?v=requirements"
+        },
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/neuroscience-environment-ai?v=requirements — סף קבלה תשפ\"ו (ציון התאמה מדעים מדויקים)",
         "thresholdUpdatedAt": "2026-10-03"
       },
@@ -4631,7 +7288,46 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/social-sciences/ba/psychology-ai — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/social-sciences/ba/psychology-ai?v=requirements"
+        }
       },
       {
         "id": "prog-tau-0662-101",
@@ -4663,7 +7359,11 @@
         "officialThreshold": 680,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/enviroment/ba/en-eco-pol — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/enviroment/ba/en-eco-pol?v=requirements"
+        }
       },
       {
         "id": "prog-tau-1031-97",
