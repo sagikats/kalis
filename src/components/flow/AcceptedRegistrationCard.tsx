@@ -43,7 +43,7 @@ export default function AcceptedRegistrationCard({
 
 	const surplus = Math.max(0, analysis.gap);
 	const unacceptedOthers = otherAnalyses.filter(
-		(a) => a.target.program.id !== analysis.target.program.id && (a.status === 'not_accepted' || a.status === 'borderline')
+		(a) => a.target.program.id !== analysis.target.program.id && (a.status === 'not_accepted' || a.status === 'missing_requirement')
 	);
 
 	return (

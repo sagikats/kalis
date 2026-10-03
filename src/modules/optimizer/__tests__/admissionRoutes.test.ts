@@ -51,7 +51,7 @@ describe('Official admission routes', () => {
 	it('BGU CS: a quantitative sekem above 720 is not enough without psychometric 600 ("ובנוסף")', () => {
 		const gap = analyze('bgu', 'inst-3', 'prog-bgu-77', profile(STRONG_BAGRUT, 560, 125));
 		assert.ok(gap.userSekem >= 720, `sekem ${gap.userSekem}`);
-		assert.equal(gap.status, 'not_accepted');
+		assert.equal(gap.status, 'missing_requirement');
 		assert.match(gap.admissionNote ?? '', /600/);
 		assert.equal(gap.improvementOptions[0].id, 'opt-psych-floor');
 
@@ -74,7 +74,7 @@ describe('Official admission routes', () => {
 
 	it('an unmet official subject requirement blocks admission even when the score passes (BGU Economics: math 4u 75+ / 5u 65+)', () => {
 		const gap = analyze('bgu', 'inst-3', 'prog-bgu-42', profile(WEAK_BAGRUT, 650));
-		assert.equal(gap.status, 'not_accepted');
+		assert.equal(gap.status, 'missing_requirement');
 		assert.match(gap.admissionNote ?? '', /תנאי סף רשמי/);
 		assert.equal(gap.improvementOptions[0].id, 'opt-req-math');
 		const check = gap.prerequisites.find((c) => c.id === 'official-math');
@@ -108,7 +108,7 @@ describe('Official admission routes', () => {
 			prof,
 			res
 		);
-		assert.equal(gap.status, gap.gap >= 0 ? 'accepted' : gap.gap >= -20 ? 'borderline' : 'not_accepted');
+		assert.equal(gap.status, gap.gap >= 0 ? 'accepted' : 'not_accepted');
 		assert.equal(gap.admissionNote, undefined);
 	});
 

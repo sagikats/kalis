@@ -62,7 +62,7 @@ describe('Technion Electrical Engineering Verification Debug', () => {
 			userSekem: 93.2,
 			threshold: 94.0,
 			gap: -0.8,
-			status: 'borderline',
+			status: 'missing_requirement',
 			relevantSekemType: 'technion',
 			relevantSekemLabel: 'סכם טכניון',
 			prerequisites: [],

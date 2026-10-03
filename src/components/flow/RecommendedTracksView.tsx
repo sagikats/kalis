@@ -448,7 +448,7 @@ export default function RecommendedTracksView({
 											<div className="space-y-1 max-h-64 overflow-y-auto">
 												{allAnalyses.map((a) => {
 													const isSelected = a.target.program.id === analysis.target.program.id;
-													const statusIcon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
+													const statusIcon = a.status === 'accepted' ? '✅' : a.status === 'missing_requirement' ? '⚠️' : '❌';
 													return (
 														<button
 															key={a.target.program.id}
@@ -1971,7 +1971,7 @@ export default function RecommendedTracksView({
 												className="bg-white border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#222222]"
 											>
 												{allAnalyses.map((a) => {
-													const icon = a.status === 'accepted' ? '✅' : a.status === 'borderline' ? '⚠️' : '❌';
+													const icon = a.status === 'accepted' ? '✅' : a.status === 'missing_requirement' ? '⚠️' : '❌';
 													return (
 														<option key={a.target.program.id} value={a.target.program.id}>
 															{icon} {a.target.program.fieldOfStudy} ({a.target.institutionName})

@@ -11,7 +11,11 @@ import { isSameBagrutSubject } from '../../modules/optimizer/solver';
 import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
-export type AdmissionStatus = 'accepted' | 'borderline' | 'not_accepted' | 'no_threshold';
+/**
+ * accepted — admitted on some official route; missing_requirement — the sekem passes the threshold but an official
+ * condition (minimum psychometric, subject requirement) is missing; not_accepted — below the threshold.
+ */
+export type AdmissionStatus = 'accepted' | 'missing_requirement' | 'not_accepted' | 'no_threshold';
 
 export interface TargetProgramSelection {
 	institutionId: string; // e.g. 'inst-6'
@@ -374,16 +378,13 @@ export function analyzeProgramGap(
 	const userSekem = selectProgramSekem(institutionRes, sekemType, target.calculatorId);
 
 	const isTechnion = target.calculatorId === 'technion';
-	const borderlineMargin = isTechnion ? 1.5 : 20;
 
 	let gap = 0;
 	let status: AdmissionStatus = 'no_threshold';
 
 	if (threshold !== null && threshold > 0) {
 		gap = Math.round((userSekem - threshold) * 10) / 10;
-		if (gap >= 0) status = 'accepted';
-		else if (gap >= -borderlineMargin) status = 'borderline';
-		else status = 'not_accepted';
+		status = gap >= 0 ? 'accepted' : 'not_accepted';
 	}
 
 	const prerequisites = checkProgramPrerequisites(target.program.fieldOfStudy, profile, target.program);
@@ -520,7 +521,7 @@ export function analyzeProgramGap(
 	});
 
 	// Official program requirements (math, physics, …) apply on every route; BGU's bagrut-only route has its own list
-	const sekemPassed = status === 'accepted' || status === 'borderline';
+	const sekemPassed = status === 'accepted';
 	const requirementResults = evaluateProgramRequirements(routes?.requirements, profile);
 	const unmetRequirements = requirementResults.filter((r) => !r.met);
 	const bagrutOnlyResults = routes?.bagrutOnlyRequirements
@@ -528,8 +529,8 @@ export function analyzeProgramGap(
 		: requirementResults;
 	const bagrutOnlyRequirementsMet = bagrutOnlyResults.every((r) => r.met);
 
-	if (routes?.minPsychometric && (status === 'accepted' || status === 'borderline') && psych < routes.minPsychometric) {
-		status = 'not_accepted';
+	if (routes?.minPsychometric && status === 'accepted' && psych < routes.minPsychometric) {
+		status = 'missing_requirement';
 		admissionNote = `הסכם עובר את הסף, אבל המוסד דורש גם פסיכומטרי ${routes.minPsychometric} לפחות${psych ? ` (יש לך ${psych})` : ''}.`;
 		improvementOptions.unshift({
 			id: 'opt-psych-floor',
@@ -549,7 +550,7 @@ export function analyzeProgramGap(
 
 	if (unmetRequirements.length > 0) {
 		if (sekemPassed) {
-			status = 'not_accepted';
+			status = 'missing_requirement';
 			admissionRoute = undefined;
 			const reqNote = `הסכם עובר את הסף, אבל לא מתקיים תנאי סף רשמי של התוכנית: ${unmetRequirements
 				.map((r) => r.requirement.title)

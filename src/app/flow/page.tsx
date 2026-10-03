@@ -683,7 +683,7 @@ export default function AdmissionFlowPage() {
 	const step3Counts = useMemo(() => {
 		return {
 			accepted: gapAnalyses.filter((a) => a.status === 'accepted').length,
-			borderline: gapAnalyses.filter((a) => a.status === 'borderline').length,
+			missing_requirement: gapAnalyses.filter((a) => a.status === 'missing_requirement').length,
 			not_accepted: gapAnalyses.filter((a) => a.status === 'not_accepted').length,
 			no_threshold: gapAnalyses.filter((a) => a.status === 'no_threshold').length
 		};
@@ -696,7 +696,7 @@ export default function AdmissionFlowPage() {
 			if (found) return found;
 		}
 		// Fallback to first non-accepted or first program
-		const notAccepted = gapAnalyses.find((a) => a.status === 'not_accepted' || a.status === 'borderline');
+		const notAccepted = gapAnalyses.find((a) => a.status === 'not_accepted' || a.status === 'missing_requirement');
 		return notAccepted || gapAnalyses[0] || null;
 	}, [gapAnalyses, focusedProgramId]);
 

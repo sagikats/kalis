@@ -41,7 +41,7 @@ export default function GapAnalysisCard({
 	onApplyScenario
 }: GapAnalysisCardProps) {
 	const isAccepted = analysis.status === 'accepted';
-	const isBorderline = analysis.status === 'borderline';
+	const isMissingRequirement = analysis.status === 'missing_requirement';
 	const missingPoints = Math.abs(analysis.gap);
 
 	return (
@@ -62,7 +62,7 @@ export default function GapAnalysisCard({
 				className={`p-6 rounded-3xl border shadow-sm space-y-6 bg-white ${
 					isAccepted
 						? 'border-[#C6DFCE]'
-						: isBorderline
+						: isMissingRequirement
 						? 'border-[#ECDAB6]'
 						: 'border-[#F1CAC1]'
 				}`}
@@ -90,16 +90,14 @@ export default function GapAnalysisCard({
 						className={`px-4 py-2 rounded-2xl border text-sm font-bold text-center ${
 							isAccepted
 								? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
-								: isBorderline
+								: isMissingRequirement
 								? 'bg-[#FDF6E8] text-[#825B15] border-[#ECDAB6]'
 								: 'bg-[#FDF1EE] text-[#9B3327] border-[#F1CAC1]'
 						}`}
 					>
 						{isAccepted
 							? `התקבלת! (+${analysis.gap} נק׳)`
-							: isBorderline
-							? `על הגבול (חסרות ${missingPoints} נק׳)`
-							: analysis.status === 'not_accepted' && analysis.gap >= 0 && analysis.threshold
+							: isMissingRequirement
 							? 'הסכם עובר — חסר תנאי סף רשמי'
 							: `פער נדרש: ${missingPoints} נקודות`}
 					</div>
@@ -151,7 +149,7 @@ export default function GapAnalysisCard({
 							className={`text-2xl font-bold mt-1 block ${
 								isAccepted
 									? 'text-[#205739]'
-									: isBorderline
+									: isMissingRequirement
 									? 'text-[#825B15]'
 									: 'text-[#9B3327]'
 							}`}

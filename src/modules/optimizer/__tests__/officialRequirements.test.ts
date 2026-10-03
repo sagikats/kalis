@@ -67,13 +67,27 @@ describe('Official program requirements', () => {
 	it('TAU CS: a passing sekem and psychometric are not enough with math 5u 75 (needs the classification exam)', () => {
 		const { gap } = analyzeTauCs(profile(5, 75, 760));
 		assert.ok(gap.gap >= 0, `sekem should pass the threshold (gap ${gap.gap})`);
-		assert.equal(gap.status, 'not_accepted');
+		assert.equal(gap.status, 'missing_requirement');
 		assert.match(gap.admissionNote ?? '', /ידע במתמטיקה/);
 		assert.equal(gap.improvementOptions[0].id, 'opt-req-math');
 		assert.match(gap.improvementOptions[0].description, /בחינת סיווג במתמטיקה בציון 75\+/);
 		const check = gap.prerequisites.find((c) => c.id === 'official-math');
 		assert.ok(check && !check.isMet);
 		assert.ok(!gap.prerequisites.some((c) => c.id === 'math'), 'the generic math estimate is replaced');
+	});
+
+	it('report statuses: below the sekem threshold is not_accepted even when close; missing_requirement only when the sekem passes', () => {
+		// TAU CS with math 5u 85 meets the math requirement; a low psychometric leaves the sekem just short
+		// psych 650 is 19 points short — formerly "על הגבול", now plainly not accepted
+		for (const psych of [600, 640, 650]) {
+			const { gap } = analyzeTauCs(profile(5, 85, psych));
+			assert.ok(gap.gap < 0, `psych ${psych} should fall short (gap ${gap.gap})`);
+			assert.equal(gap.status, 'not_accepted', `psych ${psych}, gap ${gap.gap}`);
+		}
+		// A passing sekem with a missing condition (math 4u 70 meets neither option nor an exam route)
+		const { gap } = analyzeTauCs(profile(4, 70, 780));
+		assert.ok(gap.gap >= 0, `sekem should pass (gap ${gap.gap})`);
+		assert.equal(gap.status, 'missing_requirement');
 	});
 
 	it('TAU CS: math 5u 85 meets the requirement and keeps the sekem status', () => {

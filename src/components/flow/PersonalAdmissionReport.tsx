@@ -32,7 +32,7 @@ export default function PersonalAdmissionReport({
 	const counts = useMemo(() => {
 		return {
 			accepted: analyses.filter((a) => a.status === 'accepted').length,
-			borderline: analyses.filter((a) => a.status === 'borderline').length,
+			missing_requirement: analyses.filter((a) => a.status === 'missing_requirement').length,
 			not_accepted: analyses.filter((a) => a.status === 'not_accepted').length,
 			no_threshold: analyses.filter((a) => a.status === 'no_threshold').length
 		};
@@ -41,7 +41,7 @@ export default function PersonalAdmissionReport({
 	const grouped = useMemo(() => {
 		return {
 			accepted: analyses.filter((a) => a.status === 'accepted'),
-			borderline: analyses.filter((a) => a.status === 'borderline'),
+			missing_requirement: analyses.filter((a) => a.status === 'missing_requirement'),
 			not_accepted: analyses.filter((a) => a.status === 'not_accepted'),
 			no_threshold: analyses.filter((a) => a.status === 'no_threshold')
 		};
@@ -100,9 +100,9 @@ export default function PersonalAdmissionReport({
 					</div>
 
 					<div className="p-3.5 rounded-2xl bg-[#FDF6E8] border border-[#ECDAB6] text-center">
-						<span className="text-[11px] font-bold text-[#825B15] block">⚠️ על הגבול</span>
-						<span className="text-2xl font-black text-[#825B15] mt-0.5 block">{counts.borderline}</span>
-						<span className="text-[10px] text-[#825B15]/80">פער קל מהסף</span>
+						<span className="text-[11px] font-bold text-[#825B15] block">⚠️ חסר תנאי סף</span>
+						<span className="text-2xl font-black text-[#825B15] mt-0.5 block">{counts.missing_requirement}</span>
+						<span className="text-[10px] text-[#825B15]/80">עומד בסכם, לא בתנאי רשמי</span>
 					</div>
 
 					<div className="p-3.5 rounded-2xl bg-[#FDF1EE] border border-[#F1CAC1] text-center">
@@ -151,18 +151,18 @@ export default function PersonalAdmissionReport({
 				</div>
 			)}
 
-			{/* 2. Borderline Programs */}
-			{grouped.borderline.length > 0 && (
+			{/* 2. Sekem passes, an official condition is missing */}
+			{grouped.missing_requirement.length > 0 && (
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
 						<AlertCircle className="h-5 w-5 text-[#825B15]" />
 						<h3 className="text-base font-black text-[#825B15]">
-							תארים על הגבול — שיפור קל יביא לקבלה ({grouped.borderline.length})
+							עומד/ת בסכם, אבל חסר תנאי סף רשמי ({grouped.missing_requirement.length})
 						</h3>
 					</div>
 
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-						{grouped.borderline.map((item) => (
+						{grouped.missing_requirement.map((item) => (
 							<ProgramReportCard key={item.target.program.id} item={item} onViewGap={onViewGap} />
 						))}
 					</div>
@@ -237,12 +237,12 @@ function ProgramReportCard({
 	onViewGap: (programId: string) => void;
 }) {
 	const isAccepted = item.status === 'accepted';
-	const isBorderline = item.status === 'borderline';
+	const isMissingRequirement = item.status === 'missing_requirement';
 	const isNoThreshold = item.status === 'no_threshold';
 
 	const borderStyle = isAccepted
 		? 'border-[#C6DFCE] bg-[#FBFDFB]'
-		: isBorderline
+		: isMissingRequirement
 		? 'border-[#ECDAB6] bg-[#FDFCF8]'
 		: isNoThreshold
 		? 'border-[#D2CEEB] bg-[#FAF9FD]'
@@ -250,16 +250,13 @@ function ProgramReportCard({
 
 	const badgeStyle = isAccepted
 		? 'text-[#205739] bg-[#EBF4EE] border-[#C6DFCE]'
-		: isBorderline
+		: isMissingRequirement
 		? 'text-[#825B15] bg-[#FDF6E8] border-[#ECDAB6]'
 		: isNoThreshold
 		? 'text-[#453D78] bg-[#F2F1F8] border-[#D2CEEB]'
 		: 'text-[#9B3327] bg-[#FDF1EE] border-[#F1CAC1]';
 
-	const blockedByPsychFloor =
-		!isAccepted && item.gap >= 0 && item.improvementOptions.some((o) => o.id === 'opt-psych-floor');
-	// The sekem passes but an official condition (e.g. a math requirement) is missing
-	const blockedByCondition = !isAccepted && !isNoThreshold && item.gap >= 0;
+	const blockedByPsychFloor = isMissingRequirement && item.improvementOptions.some((o) => o.id === 'opt-psych-floor');
 
 	const badgeText = isAccepted
 		? item.admissionRoute === 'bagrut_only'
@@ -271,10 +268,8 @@ function ProgramReportCard({
 			: `התקבלת (+${item.gap})`
 		: blockedByPsychFloor
 		? 'חסר פסיכומטרי מינימלי'
-		: blockedByCondition
+		: isMissingRequirement
 		? 'חסר תנאי סף רשמי'
-		: isBorderline
-		? `על הגבול (${item.gap})`
 		: isNoThreshold
 		? 'קבלה נפרדת'
 		: `פער: ${Math.abs(item.gap)} נק׳`;
