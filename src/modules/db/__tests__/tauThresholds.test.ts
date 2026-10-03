@@ -1,6 +1,7 @@
 /**
  * TAU thresholds imported from the program pages on go.tau.ac.il
- * (snapshot: src/data/sources/tau-thresholds-2026-10-02.json) and the faculty-based score they use.
+ * (snapshot: src/data/sources/tau-thresholds-2026-10-02.json) and the faculty-based score they use,
+ * plus the admission conditions of programs without a published threshold (tau-requirements-2026-10-03.json).
  */
 
 import { describe, it } from 'node:test';
@@ -8,6 +9,8 @@ import assert from 'node:assert/strict';
 import academicData from '../../../data/academicData.json';
 import { evaluateTau } from '../../calculators/tau';
 import { selectProgramSekem } from '../../calculators';
+import { analyzeProgramGap } from '../../../utils/analysis/gapAnalyzer';
+import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 
 const tau = (academicData as any[]).find((i) => i.id === 'inst-6').programs as any[];
 const byId = (id: string) => tau.find((p) => p.id === id);
@@ -19,7 +22,7 @@ describe('TAU official thresholds', () => {
 		for (const p of sourced) {
 			assert.equal(p.admissionThreshold, p.officialThreshold, p.fieldOfStudy);
 			assert.ok(p.thresholdSource?.startsWith('https://go.tau.ac.il/'), p.fieldOfStudy);
-			assert.ok(['general', 'management', 'engineering'].includes(p.relevantSekemType), p.fieldOfStudy);
+			assert.ok(['general', 'management', 'engineering', 'psychometric'].includes(p.relevantSekemType), p.fieldOfStudy);
 		}
 	});
 
@@ -47,5 +50,42 @@ describe('TAU official thresholds', () => {
 		const score = selectProgramSekem(res, cs.relevantSekemType, 'inst-6')!;
 		assert.equal(score, (res.generalSekem as number) + 10); // +10 for 5u math & physics
 		assert.ok(score >= cs.admissionThreshold);
+	});
+
+	describe('programs admitted by the conditions tab (no published threshold)', () => {
+		const WEAK = [
+			{ name: 'מתמטיקה', units: 3, grade: 65 }, { name: 'אנגלית', units: 3, grade: 65 },
+			{ name: 'היסטוריה', units: 2, grade: 60 }, { name: 'אזרחות', units: 2, grade: 60 },
+			{ name: 'תנ"ך', units: 2, grade: 60 }, { name: 'ספרות', units: 2, grade: 60 },
+			{ name: 'הבעה עברית', units: 2, grade: 60 }
+		];
+		const analyze = (progId: string, psych: number) => {
+			const prof: any = { bagrutSubjects: WEAK, psychometricGeneral: psych, mathUnits: 3, mathGrade: 65, physicsUnits: 0, physicsGrade: 0 };
+			const res = calculateMultiInstitutionSekem(prof, ['tau'])[0];
+			return analyzeProgramGap({ institutionId: 'inst-6', institutionName: '', calculatorId: 'tau', program: byId(progId) }, prof, res);
+		};
+
+		it('humanities: ציון התאמה 500, or psychometric 450 alone, or bagrut 102 alone', () => {
+			const phil = byId('prog-tau-0618-27');
+			assert.equal(phil.officialThreshold, 500);
+			assert.deepEqual(phil.admissionRoutes, { psychometricOnlyMin: 450, bagrutOnlyMin: 102 });
+			assert.equal(analyze('prog-tau-0618-27', 460).status, 'accepted');
+			assert.notEqual(analyze('prog-tau-0618-27', 400).status, 'accepted');
+		});
+
+		it('arts without auditions compare the psychometric score (450) and admit on bagrut alone', () => {
+			const film = byId('prog-tau-0851-8');
+			assert.equal(film.relevantSekemType, 'psychometric');
+			assert.equal(film.officialThreshold, 450);
+			assert.equal(film.admissionRoutes.bagrutOnlyMin, 95);
+			assert.equal(analyze('prog-tau-0851-8', 455).status, 'accepted');
+			assert.notEqual(analyze('prog-tau-0851-8', 440).status, 'accepted');
+		});
+
+		it('communication disorders: 653 (תשפ"ז) with a minimum psychometric of 620', () => {
+			const p = byId('prog-tau-0161-17');
+			assert.equal(p.officialThreshold, 653);
+			assert.equal(p.admissionRoutes.minPsychometric, 620);
+		});
 	});
 });

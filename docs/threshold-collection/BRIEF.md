@@ -35,7 +35,7 @@ value is harmful.**
 |---|---|---|
 | Technion | ✅ 46/48 programs (Oct 2026 table) | https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ |
 | Hebrew University | ✅ 95/101 | Official Google Sheet linked from https://info.huji.ac.il/reception-channels/Kabala_Meshklal |
-| Tel Aviv University | ✅ 63/106 | Each program page on https://go.tau.ac.il (acceptance/rejection threshold) |
+| Tel Aviv University | ✅ 87/106 | Each program page on https://go.tau.ac.il (acceptance/rejection threshold, or the "תנאי קבלה" tab `?v=requirements`) |
 | Ben-Gurion | ✅ 162/209 (סתו תשפ"ז) | https://apps4cloud.bgu.ac.il/calcprod/ → "חתכי קבלה" |
 | Reichman | ⚠️ 14/23, but only from the **תשפ"ה** table | https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf |
 
@@ -47,7 +47,7 @@ Haifa (bagrut average + one CS sekem), Bar-Ilan (bagrut average only).
 ## 3. What is missing: the tasks, in priority order
 
 The full list of programs that still have no official threshold is in **`missing_programs.csv`**
-(308 rows, all at the 8 universities the site covers).
+(284 rows, all at the 8 universities the site covers).
 `current_unverified_threshold` is our old value. Treat it as unreliable, and use it only to help recognise the program.
 
 ### Task A — University of Haifa: all 56 programs (priority 1) — needs the human
@@ -96,15 +96,15 @@ Already recorded (skip these): CS, CS with physics, Law, EE, Computer Eng., Psyc
 - Scale: "ציון מתואם" (~200–800). Columns: matched-score route, bagrut-only route, psychometric-only route, plus a minimum psychometric.
 - Missing programs: Law (single major), Entrepreneurship, Sustainability, Medicine (M.D.), Data Science, Communication + Entrepreneurship, Psychology + Entrepreneurship, Psychology + Cognition, Data Science + Entrepreneurship.
 
-### Task E — TAU: 43 programs without a published threshold (priority 2)
+### Task E — TAU: 19 programs left (priority 2)
 
-- These pages on https://go.tau.ac.il don't show an acceptance threshold, mostly humanities and arts (typically a minimum of ~560), medicine/dentistry (MOR), and excellence programs.
-- Look for the official minimum ("ציון התאמה מינימלי") per program in the "תנאי קבלה" section or the TAU admissions booklet (ידיעון). Scale: 200–800.
+- Done on 2026-10-03 from the "תנאי קבלה" tab (`?v=requirements`): 16 humanities programs (ציון התאמה 500 / psychometric 450 / bagrut 102), English literature, 4 arts programs without auditions, bio research excellence, communication disorders, neuroscience–environment–AI.
+- Left: programs whose tab says "אין מידע להציג" (medicine, dentistry, MD+, excellence programs, quantum computing, behavioral economics, psycho-linguistics, mind studies, HR leadership, teaching certificate, nursing for graduates, physiotherapy), and programs admitted by audition/interview (acting, directing, design, digital media, music). If you find a number for these in the TAU admissions booklet (ידיעון), record it with the page.
 
 ### Task F — BGU: 47 tracks (priority 2)
 
 - 27 tracks admit by **psychometric only** (no sekem), e.g. Economics 600, Education 600, Nursing 520. These are already recorded; nothing to collect.
-- 20 tracks had no published cut for סתו תשפ"ז: Eilat-campus tracks, minors, medicine, occupational therapy, entrepreneurship. Check https://apps4cloud.bgu.ac.il/calcprod/ → "חתכי קבלה" for a later semester, or the program pages on bgu.ac.il.
+- 20 tracks had no published cut for סתו תשפ"ז: Eilat-campus tracks, minors, medicine, occupational therapy, entrepreneurship. The calculator's only semester is סתו תשפ"ז (checked 2026-10-03, `getYearSemList`), so check the program pages on bgu.ac.il instead.
 
 ### Task G — HUJI (6) and Technion (2) leftovers (priority 2)
 
