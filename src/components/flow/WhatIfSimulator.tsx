@@ -29,7 +29,8 @@ import {
 	Calendar,
 	Clock
 } from 'lucide-react';
-import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, UserAcademicProfile, evaluateProgramRequirements } from '@/utils/analysis/gapAnalyzer';
+import { describeRequirement } from '@/modules/optimizer/programRequirements';
 import {
 	calculateMultiInstitutionSekem,
 	InstitutionSekemResult,
@@ -420,8 +421,45 @@ export default function WhatIfSimulator({
 
 	const currentSekem = simulatedSekemResult.sekem;
 	const rawGap = Math.round((currentSekem - threshold) * 10) / 10;
-	const isAccepted = rawGap >= 0;
-	const isBorderline = rawGap >= -15 && rawGap < 0;
+	const passesSekem = rawGap >= 0;
+
+	// Official conditions on the simulated state (same rules as the admission report): the minimum psychometric
+	// against the simulated score, subject requirements against the simulated bagrut (incl. the math slider)
+	const missingConditions = useMemo(() => {
+		const routes = analysis.admissionRoutes;
+		const missing: { title: string; detail: string }[] = [];
+		if (routes?.minPsychometric && simulatedPsych < routes.minPsychometric) {
+			missing.push({ title: `פסיכומטרי ${routes.minPsychometric}`, detail: `התואר דורש פסיכומטרי ${routes.minPsychometric} לפחות בנוסף לסכם.` });
+		}
+		if (routes?.requirements?.length) {
+			const mathUnits = effectiveMath5 ? 5 : userProfile.mathUnits || 0;
+			const results = evaluateProgramRequirements(routes.requirements, {
+				...userProfile,
+				bagrutSubjects: [
+					...activeEffectiveSubjects.filter((sub) => !isSameBagrutSubject(sub.name, 'מתמטיקה')),
+					...(mathUnits > 0 ? [{ name: 'מתמטיקה', units: mathUnits, grade: effectiveMathGrade }] : [])
+				],
+				mathUnits,
+				mathGrade: effectiveMathGrade,
+				psychometricGeneral: simulatedPsych
+			});
+			for (const r of results) {
+				if (r.met) continue;
+				missing.push({
+					title: r.requirement.title,
+					detail: r.examOption?.exam
+						? `אפשר לעמוד בתנאי עם ${r.examOption.exam}. נדרש: ${describeRequirement(r.requirement)}.`
+						: `נדרש: ${describeRequirement(r.requirement)}.`
+				});
+			}
+		}
+		return missing;
+	}, [analysis.admissionRoutes, simulatedPsych, activeEffectiveSubjects, effectiveMath5, effectiveMathGrade, userProfile]);
+
+	const isAccepted = passesSekem && missingConditions.length === 0;
+	// The sekem passes but an official condition is missing (replaces the old near-threshold "על הגבול")
+	const isMissingRequirement = passesSekem && missingConditions.length > 0;
+	const missingTitles = missingConditions.map((m) => m.title).join(', ');
 
 	// Progress bar calculation (0% to 100%)
 	const progressPercent = useMemo(() => {
@@ -675,8 +713,8 @@ export default function WhatIfSimulator({
 				title: activeTrack
 					? `מסלול מותאם: ${activeTrack.title}`
 					: `מסלול מותאם אישית (${totalExamsCount} בחינות)`,
-				badge: isAccepted ? 'קבלה מובטחת' : isBorderline ? 'על סף קבלה' : 'מסלול מותאם',
-				badgeColor: isAccepted ? 'emerald' : isBorderline ? 'amber' : 'blue',
+				badge: isAccepted ? 'קבלה מובטחת' : isMissingRequirement ? 'חסר תנאי סף' : 'מסלול מותאם',
+				badgeColor: isAccepted ? 'emerald' : isMissingRequirement ? 'amber' : 'blue',
 				targetSekem: currentSekem,
 				targetPsychometric: simulatedPsych,
 				targetBagrutAverage: simulatedSekemResult.bagrutAverage,
@@ -685,9 +723,11 @@ export default function WhatIfSimulator({
 				strategyDescription: `מסלול שיפורים מותאם אישית שנבנה בסימולטור עבור ${analysis.target.program.fieldOfStudy} ב${analysis.target.institutionName}.`,
 				estimatedWeeks: estWeeks,
 				weeklyHours: estHours,
-				feasibility: isAccepted ? 'high' : isBorderline ? 'moderate' : 'challenging',
+				feasibility: isAccepted ? 'high' : isMissingRequirement ? 'moderate' : 'challenging',
 				feasibilityExplanation: isAccepted
 					? `הסכם המשוקלל בסימולציה (${currentSekem.toFixed(isTechnion ? 2 : 1)}) עומד בסף הקבלה הנדרש (${threshold.toFixed(isTechnion ? 2 : 1)}).`
+					: isMissingRequirement
+					? `הסכם המשוקלל בסימולציה (${currentSekem.toFixed(isTechnion ? 2 : 1)}) עומד בסף, אבל חסר תנאי סף רשמי: ${missingTitles}.`
 					: `הסכם המשוקלל בסימולציה (${currentSekem.toFixed(isTechnion ? 2 : 1)}) מתחת לסף (${threshold.toFixed(isTechnion ? 2 : 1)}), פער של ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות.`,
 				keyAdvantage: 'הותאם אישית על פי בחירת המקצועות והיעדים שלך בסימולטור',
 				recommendedSubjectImprovements,
@@ -1416,7 +1456,7 @@ export default function WhatIfSimulator({
 								className={`px-3 py-1.5 rounded-xl border text-xs font-black shrink-0 flex items-center gap-1.5 ${
 									isAccepted
 										? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
-										: isBorderline
+										: isMissingRequirement
 										? 'bg-[#FDF6E8] text-[#825B15] border-[#ECDAB6]'
 										: 'bg-[#FDF1EE] text-[#9B3327] border-[#F1CAC1]'
 								}`}
@@ -1426,10 +1466,10 @@ export default function WhatIfSimulator({
 										<CheckCircle2 className="h-4 w-4 text-[#205739]" />
 										<span>התקבלת!</span>
 									</>
-								) : isBorderline ? (
+								) : isMissingRequirement ? (
 									<>
 										<AlertCircle className="h-4 w-4 text-[#825B15]" />
-										<span>על הגבול</span>
+										<span>חסר תנאי סף</span>
 									</>
 								) : (
 									<>
@@ -1465,9 +1505,14 @@ export default function WhatIfSimulator({
 									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#EBF4EE] text-[#205739] text-xs font-bold border border-[#C6DFCE]">
 										<span>+{rawGap.toFixed(isTechnion ? 2 : 1)} נקודות מעל הסף הנדרש 🎉</span>
 									</span>
-								) : isBorderline ? (
-									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#FDF6E8] text-[#825B15] text-xs font-bold border border-[#ECDAB6]">
-										<span>חסרות רק {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות לסף הקבלה</span>
+								) : isMissingRequirement ? (
+									<span className="inline-flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg bg-[#FDF6E8] text-[#825B15] text-xs font-bold border border-[#ECDAB6]">
+										<span>הסכם עובר את הסף ב-{rawGap.toFixed(isTechnion ? 2 : 1)} נקודות — חסר תנאי סף רשמי: {missingTitles}</span>
+										{missingConditions.map((m) => (
+											<span key={m.title} className="font-medium text-[11px] text-[#6B4A10]">
+												{m.detail}
+											</span>
+										))}
 									</span>
 								) : (
 									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#FDF1EE] text-[#9B3327] text-xs font-bold border border-[#F1CAC1]">
@@ -1489,7 +1534,7 @@ export default function WhatIfSimulator({
 									className={`h-full rounded-full transition-all duration-300 ${
 										isAccepted
 											? 'bg-[#205739]'
-											: isBorderline
+											: isMissingRequirement
 											? 'bg-[#825B15]'
 											: 'bg-[#3C3C3C]'
 									}`}
@@ -1725,7 +1770,7 @@ export default function WhatIfSimulator({
 						className={`p-4 rounded-2xl border space-y-2 shadow-2xs ${
 							isAccepted
 								? 'bg-[#EBF4EE] border-[#C6DFCE] text-[#205739]'
-								: isBorderline
+								: isMissingRequirement
 								? 'bg-[#FDF6E8] border-[#ECDAB6] text-[#825B15]'
 								: 'bg-[#FDF1EE] border-[#F1CAC1] text-[#9B3327]'
 						}`}
@@ -1741,13 +1786,13 @@ export default function WhatIfSimulator({
 							</span>
 						</div>
 						<div className="text-base sm:text-lg font-black leading-tight">
-							{isAccepted ? 'קבלה מובטחת 🎉' : isBorderline ? 'על סף הקבלה ⚠️' : 'מתחת לסף הנדרש'}
+							{isAccepted ? 'קבלה מובטחת 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
 						</div>
 						<div className="text-[11px] font-medium opacity-90">
 							{isAccepted
 								? 'עומד בכל תנאי הסף הנדרשים לרישום'
-								: isBorderline
-								? `פער קטן של ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות בלבד`
+								: isMissingRequirement
+								? `חסר: ${missingTitles}`
 								: `נדרש שיפור נוסף של ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נק׳`}
 						</div>
 					</div>
