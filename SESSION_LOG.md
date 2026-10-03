@@ -25,6 +25,8 @@
 ### ✅ מה נעשה
 - **שלב 1 (`38d90d6`):** נמחקו `/optimizer`, `PlannerContext`, `mockData.ts`, `task_for_sonnet.md`; הוסר פעמון ההתראות (הציג התראות דמה) מה-Navbar; נוקו משתנים מתים ב-`tau.ts`; טבלת הבונוסים ב-MASTER_GUIDE הייתה שגויה בהרבה תאים (לא רק חיפה/רייכמן) — נכתבה מחדש מהקוד + הפניה לקוד כמקור אמת.
 - **שלב 2 (`30abfd3`):** ה-JSON כבר לא בבאנדל. hook חדש `src/hooks/useInstitutionsCatalog.ts` (fetch אחד ל-`/api/institutions`, fallback עצל ל-JSON). `AdmissionPanel` טוען את ה-JSON בטעינה עצלה בפתיחה (ה-API משמיט תוכניות בלי סף, שהפאנל מציג כ"קבלה נפרדת"). JS ראשוני: `/flow` 2633→1033KB, `/calculators` 2313→713KB. נבדק בדפדפן (719 תוכניות בשלב 2, פאנל ת"א 106 חוגים, 0 שגיאות).
+- **שלב 3 (`67a5b12`):** מנוע מסלולים אחד. `trackGenerator.ts` הוא המנוע היחיד. נמחקו `trackEngine.ts`, `utilityScorer.ts`, `reachabilityModel.ts`, `efficiency/`, `/api/tracks/generate` (אף מסך לא קרא לו) + הטסטים שבדקו רק אותם (251→223). `/api/tracks/mechina` (בשימוש!) קורא עכשיו ישירות ל-`generateAccurateMechinaTrack` — נבדק מול build: מחזיר `track-mechina`. עודכנו AGENTS.md, MASTER_GUIDE, API README.
+  - **לא בוצע בכוונה:** העברת `trackGenerator.ts` ל-`src/modules/optimizer/` — הוא צמוד ל-`gapAnalyzer.ts` (שניהם ב-`utils/analysis`), והזזה היא churn בלי ערך התנהגותי.
 - ⚠️ לבדיקה בשרת: `/api/institutions` מחזיר 1.27MB ו-`next start` מקומי לא דוחס gzip — לוודא שהפרוקסי בשרת דוחס.
 - הערה: build נכשל לפעמים על `next/font` (כשל רשת מול Google Fonts) — פשוט להריץ שוב.
 
