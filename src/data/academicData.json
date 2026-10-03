@@ -1236,7 +1236,11 @@
         "officialThreshold": 18,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 715-1510 אגרואקולוגיה ובריאות הצמח, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Agroecology-and-Plant-Health"
+        }
       },
       {
         "id": "prog-inst-1-2",
@@ -1252,7 +1256,11 @@
         "officialThreshold": 20.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 715-9512 אגרואקולוגיה ובריאות הצמח וביוטכנולוגיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Agroecology-and-Plant-Health-and-Biotechnology-In-Ag"
+        }
       },
       {
         "id": "prog-inst-1-3",
@@ -1268,7 +1276,11 @@
         "officialThreshold": 23.777,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 255-1500 תוכנית אמירים מדעי הרוח, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Amirim-Honors-Program"
+        }
       },
       {
         "id": "prog-inst-1-4",
@@ -1284,7 +1296,27 @@
         "officialThreshold": 16.25,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 176-1810 אנגלית, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (134)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 134
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "אמי\"ר / אמיר\"ם 134+ או פטור מאנגלית ממוסד מוכר"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/English"
+        }
       },
       {
         "id": "prog-inst-1-5",
@@ -1300,7 +1332,11 @@
         "officialThreshold": 16.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 150-1915 ארכיאולוגיה והמזרח הקרוב הקדום, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Archaeology-and-Ancient-Near-East"
+        }
       },
       {
         "id": "prog-inst-1-6",
@@ -1316,7 +1352,11 @@
         "officialThreshold": 16.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 150-1915 ארכיאולוגיה והמזרח הקרוב הקדום, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Archaeology-and-Ancient-Near-East"
+        }
       },
       {
         "id": "prog-inst-1-7",
@@ -1332,7 +1372,11 @@
         "officialThreshold": 20,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 722-2210 ביוכימיה ומדעי המזון, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Biochemistry-and-Food-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-8",
@@ -1348,7 +1392,11 @@
         "officialThreshold": 22.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 722-9513 ביוכימיה ומדעי המזון וביוטכנולוגיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Biochem-and-Food-Sci-and-Biotech-In-Agriculture"
+        }
       },
       {
         "id": "prog-inst-1-9",
@@ -1364,7 +1412,11 @@
         "officialThreshold": 16.75,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 181-1751 בלשנות, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Linguistics"
+        }
       },
       {
         "id": "prog-inst-1-10",
@@ -1380,7 +1432,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 821-7877 גאוגרפיה, סביבה וגיאואינפורמטיקה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Geography"
+        }
       },
       {
         "id": "prog-inst-1-11",
@@ -1396,7 +1452,11 @@
         "officialThreshold": 16.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 151-1310 היסטוריה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/History"
+        }
       },
       {
         "id": "prog-inst-1-12",
@@ -1412,7 +1472,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 105-1320 היסטוריה של עם ישראל ויהדות זמננו, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/History-Of-Jewish-People-and-Contemporary-Jewry"
+        }
       },
       {
         "id": "prog-inst-1-13",
@@ -1428,7 +1492,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 109-1820 הלשון העברית, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Hebrew-Language-and-Jewish-Languages"
+        }
       },
       {
         "id": "prog-inst-1-14",
@@ -1445,7 +1513,11 @@
         "officialThreshold": 23.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 583-5860 הנדסת חשמל ומדעי המחשב, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Electrical-and-Computer-Engineering"
+        }
       },
       {
         "id": "prog-inst-1-15",
@@ -1462,7 +1534,41 @@
         "officialThreshold": 22.5,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 581-7030 הנדסת חשמל ופיסיקה יישומית, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה) בציון 65+"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Electrical-Engineering-and-Applied-Physics"
+        }
       },
       {
         "id": "prog-huji-3",
@@ -1477,7 +1583,11 @@
         "officialThreshold": 23.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 583-5860 הנדסת חשמל ומדעי המחשב, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Electrical-and-Computer-Engineering"
+        }
       },
       {
         "id": "prog-inst-1-16",
@@ -1493,7 +1603,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 200-1200 חינוך, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Education"
+        }
       },
       {
         "id": "prog-inst-1-17",
@@ -1509,7 +1623,42 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 325-3251 חשבונאות, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מכינה במתמטיקה (ספטמבר) ומעבר בחינת הביניים בציון 60+"
+                }
+              ],
+              "otherOptions": "השלמת בגרות ל-4 יח\"ל; מכינה אוניברסיטאית ברמת 4 יח\"ל; קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Accounting"
+        }
       },
       {
         "id": "prog-inst-1-86",
@@ -1525,7 +1674,42 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 325-3252 חשבונאות, דו-חוגי, בשילוב כלכלה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מכינה במתמטיקה (ספטמבר) ומעבר בחינת הביניים בציון 60+"
+                }
+              ],
+              "otherOptions": "השלמת בגרות ל-4 יח\"ל; מכינה אוניברסיטאית ברמת 4 יח\"ל; קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Accounting"
+        }
       },
       {
         "id": "prog-inst-1-84",
@@ -1564,7 +1748,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 312-7300 יחסים בין-לאומיים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/International-Relations"
+        }
       },
       {
         "id": "prog-inst-1-19",
@@ -1580,7 +1768,11 @@
         "officialThreshold": 19.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 560-5010 כימיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Chemistry"
+        }
       },
       {
         "id": "prog-inst-1-20",
@@ -1595,7 +1787,11 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 321-7500 כלכלה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Economics"
+        }
       },
       {
         "id": "prog-inst-1-82",
@@ -1611,7 +1807,42 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 322-3253 מנהל עסקים, דו-חוגי, בשילוב כלכלה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מכינה במתמטיקה (ספטמבר–אוקטובר) ומעבר בחינת הביניים בציון 60+"
+                }
+              ],
+              "otherOptions": "השלמת בגרות ל-4 יח\"ל; מכינה אוניברסיטאית ברמת 4 יח\"ל; קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Business-Administration"
+        }
       },
       {
         "id": "prog-inst-1-78",
@@ -1627,7 +1858,11 @@
         "officialThreshold": 22.9,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 401-4951 משפטים, חד-חוגי, עם כלכלה כחוג נוסף לתואר",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Law-Combined-Program"
+        }
       },
       {
         "id": "prog-inst-1-79",
@@ -1643,7 +1878,11 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 321-7500 כלכלה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Economics"
+        }
       },
       {
         "id": "prog-inst-1-81",
@@ -1659,7 +1898,11 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 321-7500 כלכלה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Economics"
+        }
       },
       {
         "id": "prog-inst-1-22",
@@ -1675,7 +1918,11 @@
         "officialThreshold": 20.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 717-9515 כלכלת סביבה וניהול וביוטכנולוגיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/environ_economics_manag_and-_biotech_in_agriculture"
+        }
       },
       {
         "id": "prog-inst-1-88",
@@ -1691,7 +1938,11 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 321-7500 כלכלה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Economics"
+        }
       },
       {
         "id": "prog-inst-1-23",
@@ -1707,7 +1958,11 @@
         "officialThreshold": 18,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 717-1710 כלכלת סביבה וניהול, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Agr-Economics-and-Management"
+        }
       },
       {
         "id": "prog-inst-1-21",
@@ -1723,7 +1978,11 @@
         "officialThreshold": 18,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 717-1723 כלכלת סביבה וניהול, חד-חוגי,עם חטיבה בחקלאות ואיכות הסביבה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Agr-Economics-and-Management"
+        }
       },
       {
         "id": "prog-inst-1-24",
@@ -1739,7 +1998,11 @@
         "officialThreshold": 17,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 124-1325 לימודי אסיה, דו-חוגי, מדור קוריאה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Asian-Studies"
+        }
       },
       {
         "id": "prog-inst-1-25",
@@ -1755,7 +2018,11 @@
         "officialThreshold": 16.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 122-1340 לימודי האסלאם והמזרח התיכון, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Islamic-and-Middle-East-Stud"
+        }
       },
       {
         "id": "prog-inst-1-26",
@@ -1771,7 +2038,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 155-1711 לימודים ספרדיים ולטינו אמריקניים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Iberian-and-Latin-American-Studies"
+        }
       },
       {
         "id": "prog-inst-1-27",
@@ -1787,7 +2058,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 172-1815 לימודים קלאסיים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Classical-Studies"
+        }
       },
       {
         "id": "prog-inst-1-28",
@@ -1803,7 +2078,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 179-1703 לימודים רומאניים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Roman-Studies"
+        }
       },
       {
         "id": "prog-inst-1-29",
@@ -1819,7 +2098,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 156-1708 לימודים רוסיים וסלאוויים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Russian-and-Slavic-Studies"
+        }
       },
       {
         "id": "prog-inst-1-30",
@@ -1835,7 +2118,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 141-1419 מדע הדתות, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Comparative-Religion"
+        }
       },
       {
         "id": "prog-inst-1-83",
@@ -1850,7 +2137,30 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 824-7410 סטטיסטיקה ומדע הנתונים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Statistics-And-Data-Science"
+        }
       },
       {
         "id": "prog-inst-1-31",
@@ -1866,7 +2176,11 @@
         "officialThreshold": 18.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 718-1810 מדעי בעלי החיים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Animal-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-32",
@@ -1882,7 +2196,11 @@
         "officialThreshold": 20.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 718-9514 מדעי בעלי החיים וביוטכנולוגיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/animal_sciences_specialization_in_biotechnology"
+        }
       },
       {
         "id": "prog-inst-1-33",
@@ -1897,7 +2215,11 @@
         "officialThreshold": 19,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 570-4010 מדעי החיים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Life-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-80",
@@ -1913,7 +2235,11 @@
         "officialThreshold": 18,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 710-1010 מדעי הצמח בחקלאות, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Plant-Science-In-Agriculture"
+        }
       },
       {
         "id": "prog-inst-1-34",
@@ -1929,7 +2255,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 115-1510 מדעי היהדות, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Jewish-Studies"
+        }
       },
       {
         "id": "prog-inst-1-35",
@@ -1945,7 +2275,11 @@
         "officialThreshold": 20,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 566-8053 מדעי הכימיה והביולוגיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Chemistry-and-Life-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-36",
@@ -1961,7 +2295,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 311-7200 מדע המדינה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Political-Science"
+        }
       },
       {
         "id": "prog-inst-1-37",
@@ -1977,7 +2315,11 @@
         "officialThreshold": 23.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 521-3010 מדעי המחשב, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Computer-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-38",
@@ -1994,7 +2336,11 @@
         "officialThreshold": 24.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 532-3080 מדעי המחשב וביולוגיה חישובית, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Computer-Science-and-Computational-Biology"
+        }
       },
       {
         "id": "prog-inst-1-39",
@@ -2022,7 +2368,11 @@
         "officialThreshold": 18,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 710-1010 מדעי הצמח בחקלאות, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Plant-Science-In-Agriculture"
+        }
       },
       {
         "id": "prog-inst-1-41",
@@ -2038,7 +2388,11 @@
         "officialThreshold": 20.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 710-9511 מדעי הצמח בחקלאות וביוטכנולוגיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Plant-Sciences-In-Agriculture-Special-In-Biotec"
+        }
       },
       {
         "id": "prog-inst-1-42",
@@ -2053,7 +2407,11 @@
         "officialThreshold": 24,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 143-1530 מדעי הקוגניציה והמוח, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Cognitive-Science"
+        }
       },
       {
         "id": "prog-inst-1-43",
@@ -2069,7 +2427,11 @@
         "officialThreshold": 18,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 716-1610 מדעי הקרקע והמים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Soil-And-Water-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-44",
@@ -2086,7 +2448,11 @@
         "officialThreshold": 21.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 602-8602 מדעים ביורפואיים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Bio-Medical-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-45",
@@ -2102,7 +2468,11 @@
         "officialThreshold": 19.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 712-1212 מדעי התזונה, חד-חוגי, ארבע שנתי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Nutrition-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-46",
@@ -2118,7 +2488,11 @@
         "officialThreshold": 18.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 595-6015 מדעי כדור הארץ, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Earth-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-47",
@@ -2134,7 +2508,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 199-1940 מוסיקולוגיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Musicology"
+        }
       },
       {
         "id": "prog-inst-1-48",
@@ -2151,7 +2529,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 113-1440 מחשבת ישראל, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Jewish-Thought"
+        }
       },
       {
         "id": "prog-inst-1-49",
@@ -2167,7 +2549,11 @@
         "officialThreshold": 23.25,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 525-3032 מט\"ר - ממשקי טכנולוגיה, חברה ורשתות, דו-חוגי, בשילוב חוג עיוני",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Internet_Society"
+        }
       },
       {
         "id": "prog-huji-8",
@@ -2181,7 +2567,42 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 322-3221 מנהל עסקים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מכינה במתמטיקה (ספטמבר–אוקטובר) ומעבר בחינת הביניים בציון 60+"
+                }
+              ],
+              "otherOptions": "השלמת בגרות ל-4 יח\"ל; מכינה אוניברסיטאית ברמת 4 יח\"ל; קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Business-Administration"
+        }
       },
       {
         "id": "prog-inst-1-50",
@@ -2197,7 +2618,42 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 322-3221 מנהל עסקים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מכינה במתמטיקה (ספטמבר–אוקטובר) ומעבר בחינת הביניים בציון 60+"
+                }
+              ],
+              "otherOptions": "השלמת בגרות ל-4 יח\"ל; מכינה אוניברסיטאית ברמת 4 יח\"ל; קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Business-Administration"
+        }
       },
       {
         "id": "prog-inst-1-51",
@@ -2213,7 +2669,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 101-1420 מקרא, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Bible"
+        }
       },
       {
         "id": "prog-inst-1-52",
@@ -2229,7 +2689,11 @@
         "officialThreshold": 22.7,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 401-4100 משפטים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Law-Combined-Program"
+        }
       },
       {
         "id": "prog-inst-1-87",
@@ -2245,7 +2709,11 @@
         "officialThreshold": 22.9,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 401-4951 משפטים, חד-חוגי, עם כלכלה כחוג נוסף לתואר",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Law-Combined-Program"
+        }
       },
       {
         "id": "prog-inst-1-53",
@@ -2261,7 +2729,11 @@
         "officialThreshold": 22,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 530-1010 מתמטיקה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Mathematics"
+        }
       },
       {
         "id": "prog-inst-1-54",
@@ -2288,7 +2760,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 301-7100 סוציולוגיה ואנתרופולוגיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Sociology-and-Anthropology"
+        }
       },
       {
         "id": "prog-inst-1-75",
@@ -2304,7 +2780,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 301-7100 סוציולוגיה ואנתרופולוגיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Sociology-and-Anthropology"
+        }
       },
       {
         "id": "prog-inst-1-85",
@@ -2320,7 +2800,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 301-7100 סוציולוגיה ואנתרופולוגיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Sociology-and-Anthropology"
+        }
       },
       {
         "id": "prog-inst-1-56",
@@ -2335,7 +2819,30 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 824-7410 סטטיסטיקה ומדע הנתונים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Statistics-And-Data-Science"
+        }
       },
       {
         "id": "prog-inst-1-57",
@@ -2351,7 +2858,11 @@
         "officialThreshold": 19,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 606-5606 אחיות (סיעוד), חד-חוגי, בי\"ח הדסה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Nursing-Ein-Kerem"
+        }
       },
       {
         "id": "prog-inst-1-58",
@@ -2367,7 +2878,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 180-1801 ספרות כללית והשוואתית, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/General-and-Compar-Literature"
+        }
       },
       {
         "id": "prog-inst-1-59",
@@ -2383,7 +2898,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 108-1840 ספרות עברית, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Hebrew-Literature"
+        }
       },
       {
         "id": "prog-inst-1-60",
@@ -2398,7 +2917,11 @@
         "officialThreshold": 20.25,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 431-9321 עבודה סוציאלית, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Social-Work-Joint-Prog"
+        }
       },
       {
         "id": "prog-inst-1-61",
@@ -2414,7 +2937,65 @@
         "officialThreshold": 21,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 541-2010 פיסיקה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "exam": "סיום מכינת קיץ במתמטיקה בפקולטה לחקלאות (40 שעות) בציון 60+"
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה) בציון 65+"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע מדעי נוסף",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "ביולוגיה",
+                        "מדעי המחשב"
+                      ],
+                      "minUnits": 1,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "הדף הרשמי לא מפרט אילו מקצועות ובאיזה היקף — מתקבל כל מקצוע מדעי בבגרות"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Physics"
+        }
       },
       {
         "id": "prog-inst-1-62",
@@ -2430,7 +3011,51 @@
         "officialThreshold": 20,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 569-2082 תכנית משולבת: פיסיקה-כימיה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע מדעי נוסף",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "ביולוגיה",
+                        "מדעי המחשב"
+                      ],
+                      "minUnits": 1,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "הדף הרשמי לא מפרט אילו מקצועות ובאיזה היקף — מתקבל כל מקצוע מדעי בבגרות"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Exact-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-63",
@@ -2446,7 +3071,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 140-1402 פילוסופיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Philosophy"
+        }
       },
       {
         "id": "prog-huji-10",
@@ -2461,7 +3090,65 @@
         "officialThreshold": 21,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 541-2010 פיסיקה, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "exam": "סיום מכינת קיץ במתמטיקה בפקולטה לחקלאות (40 שעות) בציון 60+"
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה) בציון 65+"
+            },
+            {
+              "id": "science",
+              "title": "מקצוע מדעי נוסף",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "ביולוגיה",
+                        "מדעי המחשב"
+                      ],
+                      "minUnits": 1,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "הדף הרשמי לא מפרט אילו מקצועות ובאיזה היקף — מתקבל כל מקצוע מדעי בבגרות"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Physics"
+        }
       },
       {
         "id": "prog-inst-1-64",
@@ -2477,7 +3164,11 @@
         "officialThreshold": 23,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 326-7800 פילוסופיה, כלכלה, מדע המדינה (פכ\"מ), חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Philosophy-Economics-and-Political-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-77",
@@ -2493,7 +3184,11 @@
         "officialThreshold": 23,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 326-7800 פילוסופיה, כלכלה, מדע המדינה (פכ\"מ), חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Philosophy-Economics-and-Political-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-65",
@@ -2508,7 +3203,11 @@
         "officialThreshold": 23.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 318-4024 צירוף פסיכולוגיה ומדעי החיים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Psycobiology-Program"
+        }
       },
       {
         "id": "prog-inst-1-66",
@@ -2524,7 +3223,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 411-4920 קרימינולוגיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/criminology"
+        }
       },
       {
         "id": "prog-inst-1-76",
@@ -2551,7 +3254,11 @@
         "officialThreshold": 22.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 621-3621 רוקחות, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/School-Of-Pharmacy"
+        }
       },
       {
         "id": "prog-inst-1-68",
@@ -2567,7 +3274,11 @@
         "officialThreshold": 20.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 607-4607 ריפוי בעיסוק, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Occupational-Therapy"
+        }
       },
       {
         "id": "prog-huji-5",
@@ -2582,7 +3293,13 @@
         "officialThreshold": 25.186,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 601-4601 רפואה, חד-חוגי, לימודים פרה קליניים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "minPsychometricFloor": 700,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Medicine",
+          "minPsychometric": 700
+        }
       },
       {
         "id": "prog-huji-6",
@@ -2597,7 +3314,13 @@
         "officialThreshold": 23,
         "relevantSekemType": "quantitative",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 611-5611 רפואת שיניים, חד-חוגי, לימודים פרה קליניים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "minPsychometricFloor": 640,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Dental-Medicine",
+          "minPsychometric": 640
+        }
       },
       {
         "id": "prog-inst-1-69",
@@ -2613,7 +3336,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 157-1709 שפה וספרות גרמנית, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/German-Language-and-Literature"
+        }
       },
       {
         "id": "prog-inst-1-70",
@@ -2629,7 +3356,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 123-1830 שפה וספרות ערבית, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Arabic-Language-and-Literature"
+        }
       },
       {
         "id": "prog-inst-1-71",
@@ -2645,7 +3376,11 @@
         "officialThreshold": 16.25,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 197-1950 תולדות האמנות, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/History-Of-Art"
+        }
       },
       {
         "id": "prog-inst-1-72",
@@ -2661,7 +3396,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 222-1524 התוכנית הרב-תחומית במדעי הרוח, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Interdiciplinary-Studies"
+        }
       },
       {
         "id": "prog-inst-1-73",
@@ -2677,7 +3416,11 @@
         "officialThreshold": 16,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 102-1430 תלמוד, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Talmud-And-Halaha"
+        }
       },
       {
         "id": "prog-inst-1-74",
@@ -2693,7 +3436,11 @@
         "officialThreshold": 17.5,
         "relevantSekemType": "general",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 323-7600 תקשורת ועיתונאות, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Communication-and-Journalism"
+        }
       },
       {
         "id": "prog-inst-1-95",
@@ -2710,7 +3457,11 @@
         "officialThreshold": 22.5,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 300-7000 פסיכולוגיה, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Psychology"
+        }
       },
       {
         "id": "prog-inst-1-96",
@@ -2746,7 +3497,11 @@
         "officialThreshold": 23.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 521-3017 מדעי המחשב דו-חוגי, בשילוב סטטיסטיקה ומדע הנתונים",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Computer-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-98",
@@ -2764,7 +3519,11 @@
         "officialThreshold": 23.75,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 521-8015 מדעי המחשב, דו-חוגי, בשילוב פיסיקה",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Computer-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-99",
@@ -2782,7 +3541,30 @@
         "officialThreshold": 20.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 824-7410 סטטיסטיקה ומדע הנתונים, דו-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "קורסי חשבון דיפרנציאלי ואינטגרלי באוניברסיטה הפתוחה (באישור ועדת הקבלה)"
+            }
+          ],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Statistics-And-Data-Science"
+        }
       },
       {
         "id": "prog-inst-1-100",
@@ -2799,7 +3581,11 @@
         "officialThreshold": 21.75,
         "relevantSekemType": "management",
         "thresholdSource": "https://docs.google.com/spreadsheets/d/1MguS816Ikta9wgpSi4Vv60oAGK2L4Lz5ZbbWycvnlVg — 602-8602 מדעים ביורפואיים, חד-חוגי",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Bio-Medical-Sciences"
+        }
       },
       {
         "id": "prog-inst-1-101",
@@ -33355,7 +34141,41 @@
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
-          "psychometricOnlyMin": 680
+          "psychometricOnlyMin": 680,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 86
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33367,7 +34187,32 @@
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 76
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-38-3",
@@ -33388,7 +34233,30 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 113,
           "psychometricOnlyMin": 720,
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 76
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33426,7 +34294,41 @@
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
-          "psychometricOnlyMin": 700
+          "psychometricOnlyMin": 700,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 81
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33489,7 +34391,41 @@
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
-          "psychometricOnlyMin": 680
+          "psychometricOnlyMin": 680,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 86
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33567,7 +34503,30 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 113,
           "psychometricOnlyMin": 720,
-          "minPsychometric": 660
+          "minPsychometric": 660,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 76
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33590,7 +34549,41 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 700,
-          "minPsychometric": 610
+          "minPsychometric": 610,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 81
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33634,7 +34627,41 @@
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
-          "psychometricOnlyMin": 650
+          "psychometricOnlyMin": 650,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 81
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33695,7 +34722,41 @@
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
           "bagrutOnlyMin": 103,
-          "minPsychometric": 620
+          "minPsychometric": 620,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 86
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33716,7 +34777,41 @@
         "thresholdUpdatedAt": "2026-10-02",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
-          "psychometricOnlyMin": 680
+          "psychometricOnlyMin": 680,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 86
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 66
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
         }
       },
       {
@@ -33731,7 +34826,32 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
-        "comments": "תואר כפול במדע הנתונים (B.Sc) ויזמות (B.A)"
+        "comments": "תואר כפול במדע הנתונים (B.Sc) ויזמות (B.A)",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 76
+                    }
+                  ]
+                },
+                {
+                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+        }
       }
     ]
   },

@@ -126,6 +126,38 @@ describe('Official program requirements', () => {
 		}
 	});
 
+	it('Reichman CS: below math 5u 75 admission depends on passing the math prep course (regulations, section 7)', () => {
+		const program = programOf('inst-38', 'prog-inst-38-3');
+		const [r] = program.admissionRoutes.requirements;
+		const below = evaluateRequirement(r, { subjects: [{ name: 'מתמטיקה', units: 5, grade: 75 }] });
+		assert.equal(below.met, false, '"גבוה מ-75" — 75 itself is not enough');
+		assert.match(below.examOption?.exam ?? '', /קורס ההכנה במתמטיקה/);
+		assert.equal(evaluateRequirement(r, { subjects: [{ name: 'מתמטיקה', units: 5, grade: 76 }] }).met, true);
+		// Economics: 4u above 85 or 5u above 65
+		const [econ] = programOf('inst-38', 'prog-inst-38-2').admissionRoutes.requirements;
+		assert.equal(evaluateRequirement(econ, { subjects: [{ name: 'מתמטיקה', units: 4, grade: 86 }] }).met, true);
+		assert.equal(evaluateRequirement(econ, { subjects: [{ name: 'מתמטיקה', units: 4, grade: 85 }] }).met, false);
+		// Programs outside the regulations' schools carry no math requirement
+		assert.equal(programOf('inst-38', 'prog-inst-38-7').admissionRoutes?.requirements, undefined);
+	});
+
+	it('HUJI: page requirements per program (EE 4u 90 / 5u 70; physics + science subject; agriculture has none)', () => {
+		const [ee] = programOf('inst-1', 'prog-inst-1-15').admissionRoutes.requirements;
+		const ev = (u: number, g: number) => evaluateRequirement(ee, { subjects: [{ name: 'מתמטיקה', units: u, grade: g }] });
+		assert.equal(ev(5, 70).met, true);
+		assert.equal(ev(4, 90).met, true);
+		assert.equal(ev(5, 65).met, false);
+		assert.equal(ev(5, 65).examOption, undefined, 'only Open University courses remain (text), no exam route');
+
+		const phys = programOf('inst-1', 'prog-inst-1-61').admissionRoutes.requirements;
+		assert.deepEqual(phys.map((r: any) => r.id), ['math', 'science']);
+
+		// Agriculture: catching up on math after admission is not an admission condition
+		assert.deepEqual(programOf('inst-1', 'prog-inst-1-1').admissionRoutes.requirements, []);
+		// Medicine: official minimum psychometric 700
+		assert.equal(programOf('inst-1', 'prog-huji-5').admissionRoutes.minPsychometric, 700);
+	});
+
 	it('BGU: each route uses its own published list (psychometric route vs bagrut-only route)', () => {
 		const p = programOf('inst-3', 'prog-bgu-42');
 		assert.ok(p.admissionRoutes.requirements.length > 0);
