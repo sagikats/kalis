@@ -1,0 +1,558 @@
+{
+ "source": "https://admissions.technion.ac.il/acceptance-without-psychometric-exam/",
+ "title": "בגרות מצוינת — דרישות קבלה לפי מסלול, סמסטר א' תשפ\"ז (אוקטובר 2026)",
+ "captured": "2026-10-03, צילומי מסך של המשתמש (האתר חוסם גישה אוטומטית)",
+ "general_requirements": "ידע באנגלית וידע בעברית (כל המסלולים). תלמידי מכינת הטכניון — אותם תנאים, חוץ מביולוגיה ודו-חוגי ביולוגיה-כימיה.",
+ "tracks": [
+  {
+   "page_track": "ביולוגיה",
+   "program_ids": [
+    "prog-technion-3"
+   ],
+   "route": {
+    "all": [
+     {
+      "subjects": [
+       "ביולוגיה",
+       "ביוטכנולוגיה",
+       "מערכות ביוטכנולוגיה",
+       "יישומי ביוטכנולוגיה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "מתמטיקה",
+       "פיזיקה",
+       "כימיה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "mathAnyOf": [
+     {
+      "minUnits": 5,
+      "minGrade": 70
+     },
+     {
+      "minUnits": 4,
+      "minGrade": 80
+     }
+    ],
+    "summary": "ביולוגיה/ביוטכנולוגיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/כימיה 5 יח\"ל 90+; מתמטיקה 5 יח\"ל 70+ או 4 יח\"ל 80+"
+   }
+  },
+  {
+   "page_track": "ביולוגיה וכימיה (דו-חוגי)",
+   "program_ids": [
+    "prog-technion-4"
+   ],
+   "route": {
+    "anyOf": [
+     [
+      {
+       "subjects": [
+        "ביולוגיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      },
+      {
+       "subjects": [
+        "מתמטיקה",
+        "פיזיקה",
+        "כימיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      }
+     ],
+     [
+      {
+       "subjects": [
+        "כימיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      },
+      {
+       "subjects": [
+        "מתמטיקה",
+        "פיזיקה",
+        "ביולוגיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      }
+     ]
+    ],
+    "mathAnyOf": [
+     {
+      "minUnits": 5,
+      "minGrade": 70
+     },
+     {
+      "minUnits": 4,
+      "minGrade": 80
+     }
+    ],
+    "interview": true,
+    "summary": "ביולוגיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/כימיה 5 יח\"ל 90+, או כימיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/ביולוגיה 5 יח\"ל 90+; מתמטיקה 5 יח\"ל 70+ או 4 יח\"ל 80+; ריאיון"
+   }
+  },
+  {
+   "page_track": "כימיה",
+   "program_ids": [
+    "prog-technion-32"
+   ],
+   "route": {
+    "anyOf": [
+     [
+      {
+       "subjects": [
+        "ביולוגיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      },
+      {
+       "subjects": [
+        "מתמטיקה",
+        "פיזיקה",
+        "כימיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      }
+     ],
+     [
+      {
+       "subjects": [
+        "כימיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      },
+      {
+       "subjects": [
+        "מתמטיקה",
+        "פיזיקה",
+        "ביולוגיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      }
+     ]
+    ],
+    "mathAnyOf": [
+     {
+      "minUnits": 5,
+      "minGrade": 70
+     },
+     {
+      "minUnits": 4,
+      "minGrade": 80
+     }
+    ],
+    "interview": true,
+    "summary": "ביולוגיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/כימיה 5 יח\"ל 90+, או כימיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/ביולוגיה 5 יח\"ל 90+; מתמטיקה 5 יח\"ל 70+ או 4 יח\"ל 80+; ריאיון"
+   }
+  },
+  {
+   "page_track": "הנדסת אווירונוטיקה וחלל",
+   "program_ids": [
+    "prog-technion-11"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 90+"
+   }
+  },
+  {
+   "page_track": "הנדסת אווירונוטיקה וחלל ופיזיקה",
+   "program_ids": [
+    "prog-technion-12"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 90+"
+   }
+  },
+  {
+   "page_track": "הנדסה אזרחית",
+   "program_ids": [
+    "prog-technion-5"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     }
+    ],
+    "interview": true,
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 95+; ריאיון בפקולטה"
+   }
+  },
+  {
+   "page_track": "הנדסת הסביבה",
+   "program_ids": [
+    "prog-technion-14"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     }
+    ],
+    "interview": true,
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 95+; ריאיון בפקולטה"
+   }
+  },
+  {
+   "page_track": "הנדסת מיפוי וגיאו-אינפורמציה",
+   "program_ids": [
+    "prog-technion-23"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     }
+    ],
+    "interview": true,
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 95+; ריאיון בפקולטה"
+   }
+  },
+  {
+   "page_track": "הנדסת ביוטכנולוגיה ומזון",
+   "program_ids": [
+    "prog-technion-13"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "anyOf": [
+     [
+      {
+       "subjects": [
+        "פיזיקה",
+        "כימיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 90
+      }
+     ],
+     [
+      {
+       "subjects": [
+        "יישומי ביוטכנולוגיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 95
+      },
+      {
+       "subjects": [
+        "מערכות ביוטכנולוגיה"
+       ],
+       "minUnits": 5,
+       "minGrade": 95
+      }
+     ]
+    ],
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית ומתמטיקה 5 יח\"ל 90+; ועוד פיזיקה או כימיה 5 יח\"ל 90+, או יישומי ביוטכנולוגיה ומערכות ביוטכנולוגיה 5 יח\"ל 95+"
+   }
+  },
+  {
+   "page_track": "הנדסה כימית וביוכימית",
+   "program_ids": [
+    "prog-technion-8",
+    "prog-technion-9",
+    "prog-technion-10"
+   ],
+   "route": {
+    "rawAverageMin": 90,
+    "all": [
+     {
+      "subjects": [
+       "אנגלית"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "פיזיקה",
+       "כימיה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה או כימיה 5 יח\"ל 90+"
+   }
+  },
+  {
+   "page_track": "חינוך למדע וטכנולוגיה (תואר ראשון)",
+   "program_ids": [
+    "prog-technion-30"
+   ],
+   "route": {
+    "all": [
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "כימיה",
+       "פיזיקה",
+       "ביולוגיה",
+       "מדעי המחשב",
+       "אלקטרוניקה ומחשבים",
+       "הנדסת מכונות"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "summary": "מתמטיקה 5 יח\"ל 90+, ועוד מקצוע מדעי/טכנולוגי (כימיה, פיזיקה, ביולוגיה, מדעי המחשב, אלקטרוניקה ומכונות) 5 יח\"ל 90+"
+   }
+  },
+  {
+   "page_track": "חינוך למדע וטכנולוגיה-מדעי המחשב (תואר ראשון)",
+   "program_ids": [
+    "prog-technion-31"
+   ],
+   "route": {
+    "all": [
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "כימיה",
+       "פיזיקה",
+       "ביולוגיה",
+       "מדעי המחשב",
+       "אלקטרוניקה ומחשבים",
+       "הנדסת מכונות"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "summary": "מתמטיקה 5 יח\"ל 90+, ועוד מקצוע מדעי/טכנולוגי (כימיה, פיזיקה, ביולוגיה, מדעי המחשב, אלקטרוניקה ומכונות) 5 יח\"ל 90+"
+   }
+  },
+  {
+   "page_track": "מתמטיקה ומתמטיקה יישומית",
+   "program_ids": [
+    "prog-technion-40",
+    "prog-technion-42"
+   ],
+   "route": {
+    "all": [
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     }
+    ],
+    "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+   }
+  },
+  {
+   "page_track": "מתמטיקה-פיזיקה",
+   "program_ids": [
+    "prog-technion-41"
+   ],
+   "route": {
+    "all": [
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 95
+     }
+    ],
+    "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+   }
+  },
+  {
+   "page_track": "פיזיקה",
+   "program_ids": [
+    "prog-technion-45"
+   ],
+   "route": {
+    "all": [
+     {
+      "subjects": [
+       "מתמטיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     },
+     {
+      "subjects": [
+       "פיזיקה"
+      ],
+      "minUnits": 5,
+      "minGrade": 90
+     }
+    ],
+    "summary": "מתמטיקה ופיזיקה 5 יח\"ל 90+"
+   }
+  }
+ ]
+}

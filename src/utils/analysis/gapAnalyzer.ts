@@ -1,4 +1,5 @@
 import { AcademicDegree, AdmissionRoutes } from '../../types/academic';
+import { evaluateExcellentBagrut } from '../../modules/optimizer/excellentBagrut';
 import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
@@ -44,7 +45,7 @@ export interface ProgramGapAnalysis {
 	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
 	relevantSekemLabel: string;
 	/** Which official route the status rests on, when accepted. */
-	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only';
+	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut';
 	/** One-line explanation when an official route or condition changed the status. */
 	admissionNote?: string;
 	/** Official admission routes of the program, when published. */
@@ -467,6 +468,12 @@ export function analyzeProgramGap(
 			status = 'accepted';
 			admissionRoute = 'psychometric_only';
 			admissionNote = `מתקבל/ת באפיק "פסיכומטרי בלבד": ${psych} (נדרש ${routes.psychometricOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
+		} else if (routes?.excellentBagrut && evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []).met) {
+			status = 'accepted';
+			admissionRoute = 'excellent_bagrut';
+			admissionNote = `מתקבל/ת באפיק "בגרות מצוינת" בלי פסיכומטרי (${routes.excellentBagrut.summary})${
+				routes.excellentBagrut.interview ? '. בכפוף לריאיון קבלה' : ''
+			}, ובכפוף לידע באנגלית ובעברית.`;
 		}
 		if (status === 'accepted') {
 			improvementOptions.length = 0;

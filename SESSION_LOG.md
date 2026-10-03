@@ -10,6 +10,20 @@
 
 ---
 
+## 🗓️ 2026-10-03 (סשן 13) — Claude Code (Opus 5.5) — טכניון: אפיק "בגרות מצוינת" (קבלה בלי פסיכומטרי)
+
+**בראנץ':** `data/technion-excellent-bagrut` (מ-main; לא נפרס)
+
+- מקור: admissions.technion.ac.il/acceptance-without-psychometric-exam/ (סמסטר א' תשפ"ז). האתר חוסם אותנו — המשתמש שמר 18 צילומי מסך ב-`~/Desktop/screenshots for cloud`. Snapshot מתומלל: `src/data/sources/technion-excellent-bagrut-2026-10.json` (15 מסלולים בדף → 18 תוכניות).
+- **זה לא סף ממוצע** — תנאים לפי מקצוע: למשל אווירונוטיקה = ממוצע ללא בונוסים 90 + אנגלית/מתמטיקה/פיזיקה 5 יח"ל 90+; אזרחית/סביבה/מיפוי = 95 + ריאיון; ביולוגיה = ביולוגיה 90 + עוד מדע 90 + מתמטיקה (5 יח"ל 70 / 4 יח"ל 80).
+- סוג חדש `ExcellentBagrutRoute` (`src/types/academic.ts`): rawAverageMin, all, anyOf, mathAnyOf, interview, summary. מעריך: `src/modules/optimizer/excellentBagrut.ts` (כל מקצוע נספר לתנאי אחד, ממוצע רגיל משוקלל יח"ל בלי בונוסים, רשימת חוסרים בעברית).
+- `gapAnalyzer`: אפיק `excellent_bagrut` → "התקבלת (בגרות מצוינת)" + הערה (ריאיון, אנגלית ועברית). ייבוא: `scripts/data/importTechnionExcellentBagrut.ts`.
+- לא מיושם: דרישות אנגלית/עברית הכלליות (רק בהערה); "יישומי ביוטכנולוגיה + מערכות ביוטכנולוגיה" לא יתאים כי בקטלוג זה מקצוע אחד.
+- בדיקות: `excellentBagrut.test.ts` (7). 234/234, build עובר.
+- עוד חסר מהטכניון: אפיקים אחרים (בגרות וסיווג במתמטיקה, אפיק מקוצר, ראויים לקידום, גשר).
+
+---
+
 ## 🗓️ 2026-10-03 (סשן 12) — Claude Code (Opus 5.5) — "איך חושב הסכם שלך": פירוט מקצועות בממוצע המיטבי
 
 **בראנץ':** `feat/sekem-breakdown` (מ-main; לא נפרס)

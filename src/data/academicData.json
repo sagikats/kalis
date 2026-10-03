@@ -12009,7 +12009,43 @@
         "officialThreshold": 83,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "ביולוגיה",
+                  "ביוטכנולוגיה",
+                  "מערכות ביוטכנולוגיה",
+                  "יישומי ביוטכנולוגיה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה",
+                  "פיזיקה",
+                  "כימיה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "mathAnyOf": [
+              {
+                "minUnits": 5,
+                "minGrade": 70
+              },
+              {
+                "minUnits": 4,
+                "minGrade": 80
+              }
+            ],
+            "summary": "ביולוגיה/ביוטכנולוגיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/כימיה 5 יח\"ל 90+; מתמטיקה 5 יח\"ל 70+ או 4 יח\"ל 80+"
+          }
+        }
       },
       {
         "id": "prog-technion-4",
@@ -12024,7 +12060,61 @@
         "officialThreshold": 83,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "anyOf": [
+              [
+                {
+                  "subjects": [
+                    "ביולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                },
+                {
+                  "subjects": [
+                    "מתמטיקה",
+                    "פיזיקה",
+                    "כימיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                }
+              ],
+              [
+                {
+                  "subjects": [
+                    "כימיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                },
+                {
+                  "subjects": [
+                    "מתמטיקה",
+                    "פיזיקה",
+                    "ביולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                }
+              ]
+            ],
+            "mathAnyOf": [
+              {
+                "minUnits": 5,
+                "minGrade": 70
+              },
+              {
+                "minUnits": 4,
+                "minGrade": 80
+              }
+            ],
+            "interview": true,
+            "summary": "ביולוגיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/כימיה 5 יח\"ל 90+, או כימיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/ביולוגיה 5 יח\"ל 90+; מתמטיקה 5 יח\"ל 70+ או 4 יח\"ל 80+; ריאיון"
+          }
+        }
       },
       {
         "id": "prog-technion-5",
@@ -12040,7 +12130,37 @@
         "officialThreshold": 88,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              }
+            ],
+            "interview": true,
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 95+; ריאיון בפקולטה"
+          }
+        }
       },
       {
         "id": "prog-technion-6",
@@ -12085,7 +12205,37 @@
         "officialThreshold": 85,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "פיזיקה",
+                  "כימיה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה או כימיה 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-9",
@@ -12100,7 +12250,37 @@
         "officialThreshold": 85,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "פיזיקה",
+                  "כימיה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה או כימיה 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-10",
@@ -12115,7 +12295,37 @@
         "officialThreshold": 85,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "פיזיקה",
+                  "כימיה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה או כימיה 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-11",
@@ -12131,7 +12341,36 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-12",
@@ -12147,7 +12386,36 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-13",
@@ -12162,7 +12430,57 @@
         "officialThreshold": 84,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "anyOf": [
+              [
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                }
+              ],
+              [
+                {
+                  "subjects": [
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 95
+                },
+                {
+                  "subjects": [
+                    "מערכות ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 95
+                }
+              ]
+            ],
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית ומתמטיקה 5 יח\"ל 90+; ועוד פיזיקה או כימיה 5 יח\"ל 90+, או יישומי ביוטכנולוגיה ומערכות ביוטכנולוגיה 5 יח\"ל 95+"
+          }
+        }
       },
       {
         "id": "prog-technion-14",
@@ -12177,7 +12495,37 @@
         "officialThreshold": 83,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              }
+            ],
+            "interview": true,
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 95+; ריאיון בפקולטה"
+          }
+        }
       },
       {
         "id": "prog-technion-15",
@@ -12312,7 +12660,37 @@
         "officialThreshold": 83,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "rawAverageMin": 90,
+            "all": [
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              }
+            ],
+            "interview": true,
+            "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה 5 יח\"ל 95+; ריאיון בפקולטה"
+          }
+        }
       },
       {
         "id": "prog-technion-24",
@@ -12419,7 +12797,33 @@
         "officialThreshold": 84,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "כימיה",
+                  "פיזיקה",
+                  "ביולוגיה",
+                  "מדעי המחשב",
+                  "אלקטרוניקה ומחשבים",
+                  "הנדסת מכונות"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "מתמטיקה 5 יח\"ל 90+, ועוד מקצוע מדעי/טכנולוגי (כימיה, פיזיקה, ביולוגיה, מדעי המחשב, אלקטרוניקה ומכונות) 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-31",
@@ -12435,7 +12839,33 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "כימיה",
+                  "פיזיקה",
+                  "ביולוגיה",
+                  "מדעי המחשב",
+                  "אלקטרוניקה ומחשבים",
+                  "הנדסת מכונות"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "מתמטיקה 5 יח\"ל 90+, ועוד מקצוע מדעי/טכנולוגי (כימיה, פיזיקה, ביולוגיה, מדעי המחשב, אלקטרוניקה ומכונות) 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-technion-32",
@@ -12450,7 +12880,61 @@
         "officialThreshold": 83,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "anyOf": [
+              [
+                {
+                  "subjects": [
+                    "ביולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                },
+                {
+                  "subjects": [
+                    "מתמטיקה",
+                    "פיזיקה",
+                    "כימיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                }
+              ],
+              [
+                {
+                  "subjects": [
+                    "כימיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                },
+                {
+                  "subjects": [
+                    "מתמטיקה",
+                    "פיזיקה",
+                    "ביולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 90
+                }
+              ]
+            ],
+            "mathAnyOf": [
+              {
+                "minUnits": 5,
+                "minGrade": 70
+              },
+              {
+                "minUnits": 4,
+                "minGrade": 80
+              }
+            ],
+            "interview": true,
+            "summary": "ביולוגיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/כימיה 5 יח\"ל 90+, או כימיה 5 יח\"ל 90+ ועוד מתמטיקה/פיזיקה/ביולוגיה 5 יח\"ל 90+; מתמטיקה 5 יח\"ל 70+ או 4 יח\"ל 80+; ריאיון"
+          }
+        }
       },
       {
         "id": "prog-technion-33",
@@ -12574,7 +13058,28 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              }
+            ],
+            "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+          }
+        }
       },
       {
         "id": "prog-technion-42",
@@ -12589,7 +13094,28 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              }
+            ],
+            "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+          }
+        }
       },
       {
         "id": "prog-technion-43",
@@ -12634,7 +13160,28 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 95
+              }
+            ],
+            "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+          }
+        }
       },
       {
         "id": "prog-technion-45",
@@ -12649,7 +13196,28 @@
         "officialThreshold": 86,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              },
+              {
+                "subjects": [
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 90
+              }
+            ],
+            "summary": "מתמטיקה ופיזיקה 5 יח\"ל 90+"
+          }
+        }
       },
       {
         "id": "prog-inst-48-46",
