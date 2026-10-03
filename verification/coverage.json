@@ -1,0 +1,2922 @@
+{
+  "schema_version": 1,
+  "scope": "Actual bundled catalog, exported eight-engine functions and finite captured synthetic observations; no admission offers or full/current-year verification.",
+  "snapshot_base_commit": "2d621b0ae8de715f106570f1dcc4165a963e409e",
+  "pinned_source_artifacts": [
+    {
+      "path": "src/data/academicData.json",
+      "sha256": "52aa4fb82fba02fccc61f119d6e6736a0aea0cd533ebd609b3e4b480b8afd8a8"
+    },
+    {
+      "path": "docs/threshold-collection/missing_programs.csv",
+      "sha256": "aa76ac2854eb8c75b93adbf8a7787e32cefaffd4994b7db2d06ceac982a11004"
+    },
+    {
+      "path": "verification/research/coverage/official-fixtures.json",
+      "sha256": "45247a964060193398843ab3b6a71fb47bd7f531197a6bc68480a815f6a4da63"
+    },
+    {
+      "path": "src/modules/calculators/barIlan.ts",
+      "sha256": "87594c777a62409d3606936b6e411de8a9da7957965afec877c7990aca50ee82"
+    },
+    {
+      "path": "src/modules/calculators/huji.ts",
+      "sha256": "0eade1cfe6e5203084b5c5ecfdc29aaca4b6e1681b37bbb2d70675d1c241ba0e"
+    },
+    {
+      "path": "src/modules/calculators/tau.ts",
+      "sha256": "e01b6ba1ecd508bae1fbb84a86c62815c062915404f37e9e886872cd3ed89335"
+    },
+    {
+      "path": "src/modules/calculators/bgu.ts",
+      "sha256": "cd36a79343c8943bed432815798d8da19234120ac0250efda93495eb9cdf44fd"
+    },
+    {
+      "path": "src/modules/calculators/haifa.ts",
+      "sha256": "ba74ef87407228c1135a53e65d2dcbe804e9d388381939e97cb67f25c24a10ca"
+    },
+    {
+      "path": "src/modules/calculators/technion.ts",
+      "sha256": "ace342fdd03af7fdd0780576188a2ea8a3b1f9b12ebc726c5745826c93aadf5d"
+    },
+    {
+      "path": "src/modules/calculators/ariel.ts",
+      "sha256": "5162033b86cc9fcbd5e2cf2b10f7eb49fc82120155f40f29744a41779ef18a52"
+    },
+    {
+      "path": "src/modules/calculators/reichman.ts",
+      "sha256": "0bf40cc857380e97be8bb159210d89969173752a9ec9074f4aca9282cadf834b"
+    },
+    {
+      "path": "src/modules/calculators/index.ts",
+      "sha256": "74c230339d3cad6e207832a4f9e3c1b2526b54f91f05dcb8df9ed286c8fb7d8a"
+    },
+    {
+      "path": "src/modules/calculators/optimalAverage.ts",
+      "sha256": "48739d49c876fcf6bd22b4acb0ab59d8d01c5713fc861664c54af09605ff9606"
+    },
+    {
+      "path": "src/modules/calculators/subjectMatchers.ts",
+      "sha256": "b9a0cf4aa8a3b3a8c08d0860e8fff0fdeafa616d0eb349769a281ca630552cb2"
+    },
+    {
+      "path": "src/modules/calculators/types.ts",
+      "sha256": "045ad89b832265267363915a793be0312123b011de31e81b90d2c9b509b2ba30"
+    }
+  ],
+  "counts": {
+    "catalog_institutions": 62,
+    "catalog_programs": 1516,
+    "implemented_engines": 8,
+    "catalog_only_score_unimplemented_institutions": 54,
+    "eight_engine_programs": 688,
+    "csv_data_rows": 284,
+    "csv_physical_lines": 285,
+    "captured_observations": 29,
+    "captured_by_engine": {
+      "tau": 6,
+      "technion": 20,
+      "reichman": 3
+    },
+    "all_captured_academic_years_unknown": true,
+    "full_verified_institutions": 0,
+    "catalog_distinct_program_ids": 1502,
+    "duplicate_program_id_keys": 14,
+    "duplicate_program_id_excess_rows": 14,
+    "repository_numeric_threshold_rows": 1481,
+    "repository_numeric_threshold_distinct_ids": 1467,
+    "ui_bundled_rows_before_user_filters": 1514,
+    "ui_not_offered_declaration_rows": 2
+  },
+  "catalog_source": {
+    "path": "src/data/academicData.json",
+    "sha256": "52aa4fb82fba02fccc61f119d6e6736a0aea0cd533ebd609b3e4b480b8afd8a8",
+    "authority": "Bundled product catalog snapshot; not an authoritative institutional eligibility/year mapping."
+  },
+  "missing_programs_csv": {
+    "path": "docs/threshold-collection/missing_programs.csv",
+    "sha256": "aa76ac2854eb8c75b93adbf8a7787e32cefaffd4994b7db2d06ceac982a11004",
+    "data_rows": 284,
+    "physical_lines": 285,
+    "all_program_ids_and_literal_names_match_catalog": true,
+    "original_1136_csv_equivalence_verified": false,
+    "threshold_authority": "Current prioritization rows explicitly carry current_unverified_threshold."
+  },
+  "fixture_inventory": {
+    "path": "verification/research/coverage/official-fixtures.json",
+    "sha256": "45247a964060193398843ab3b6a71fb47bd7f531197a6bc68480a815f6a4da63",
+    "original_capture_inventory": "coverage/official-fixtures.json in the accepted parent evidence tree",
+    "copy_owner": "Root; original nested paths remain relative to verification/research/",
+    "cases": [
+      {
+        "case_id": "tau-A",
+        "calculator_id": "tau",
+        "function_id": "optimal_bagrut_average",
+        "expected_fields": [
+          "bagrutAverage"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://ims.tau.ac.il/Md/calc/Bagrut_T.aspx",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-ec6eb7ab69e22c93db25b8125503dcd804d15954af100cfc8107269399c56a9e.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-ec6eb7ab69e22c93db25b8125503dcd804d15954af100cfc8107269399c56a9e.html",
+          "sha256": "ec6eb7ab69e22c93db25b8125503dcd804d15954af100cfc8107269399c56a9e"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "tau-B",
+        "calculator_id": "tau",
+        "function_id": "optimal_bagrut_average",
+        "expected_fields": [
+          "bagrutAverage"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://ims.tau.ac.il/Md/calc/Bagrut_T.aspx",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-9c394d3ddd57ffff2229df37fd308c909389da70fbc0ca40328ae8d44e2e8c7f.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-9c394d3ddd57ffff2229df37fd308c909389da70fbc0ca40328ae8d44e2e8c7f.html",
+          "sha256": "9c394d3ddd57ffff2229df37fd308c909389da70fbc0ca40328ae8d44e2e8c7f"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "tau-C",
+        "calculator_id": "tau",
+        "function_id": "optimal_bagrut_average",
+        "expected_fields": [
+          "bagrutAverage"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://ims.tau.ac.il/Md/calc/Bagrut_T.aspx",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-6bcd4c7733b67ea1a57530f892b43840fb909368039d1db33fbd835a4cb83c64.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-6bcd4c7733b67ea1a57530f892b43840fb909368039d1db33fbd835a4cb83c64.html",
+          "sha256": "6bcd4c7733b67ea1a57530f892b43840fb909368039d1db33fbd835a4cb83c64"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-82f52b31f693ae09e0b51c6ddda70200550bc492f4dd38cbde01300ceeee68ef.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-82f52b31f693ae09e0b51c6ddda70200550bc492f4dd38cbde01300ceeee68ef.html",
+          "sha256": "82f52b31f693ae09e0b51c6ddda70200550bc492f4dd38cbde01300ceeee68ef"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-B",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b.html",
+          "sha256": "5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-math4",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-36ca9d8455dc182a20f51e0dd91a90d970f56544d2a367e8eb29a1cee9bbc9ad.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-36ca9d8455dc182a20f51e0dd91a90d970f56544d2a367e8eb29a1cee9bbc9ad.html",
+          "sha256": "36ca9d8455dc182a20f51e0dd91a90d970f56544d2a367e8eb29a1cee9bbc9ad"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-english59",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-1d18542d793ca1f1fa143d3024549fca1ce5d8537d723a5e2b9e154968ac2718.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-1d18542d793ca1f1fa143d3024549fca1ce5d8537d723a5e2b9e154968ac2718.html",
+          "sha256": "1d18542d793ca1f1fa143d3024549fca1ce5d8537d723a5e2b9e154968ac2718"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-english60",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-d3f0a243c58855d697b5a83a40b0f9cb241ea332d064c76344fb4bc9b3f5380d.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-d3f0a243c58855d697b5a83a40b0f9cb241ea332d064c76344fb4bc9b3f5380d.html",
+          "sha256": "d3f0a243c58855d697b5a83a40b0f9cb241ea332d064c76344fb4bc9b3f5380d"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-english61",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-673cd69d3f18d5b3f338f05c52263e9b35d32359086ff7d3cd9dcfba8d5f7779.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-673cd69d3f18d5b3f338f05c52263e9b35d32359086ff7d3cd9dcfba8d5f7779.html",
+          "sha256": "673cd69d3f18d5b3f338f05c52263e9b35d32359086ff7d3cd9dcfba8d5f7779"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-geography40",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-9baa2dfb0f2725372922be00dce35c6b17bba37063223e47e528191cc259f98a.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-9baa2dfb0f2725372922be00dce35c6b17bba37063223e47e528191cc259f98a.html",
+          "sha256": "9baa2dfb0f2725372922be00dce35c6b17bba37063223e47e528191cc259f98a"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-geography100",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-11f742f0c0eef6066f42d8137e704f5b05471930fadc4d70c6a28f9c08ec4de2.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-11f742f0c0eef6066f42d8137e704f5b05471930fadc4d70c6a28f9c08ec4de2.html",
+          "sha256": "11f742f0c0eef6066f42d8137e704f5b05471930fadc4d70c6a28f9c08ec4de2"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-high98",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-3995cbc2f6a1490f2343591992f01352de09121f73833ae2bfbc3a1265b2c23b.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-3995cbc2f6a1490f2343591992f01352de09121f73833ae2bfbc3a1265b2c23b.html",
+          "sha256": "3995cbc2f6a1490f2343591992f01352de09121f73833ae2bfbc3a1265b2c23b"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-high99",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-01b612ef9f4094d03605ce54aa513362dadea351cb8eac277588b720d79028d1.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-01b612ef9f4094d03605ce54aa513362dadea351cb8eac277588b720d79028d1.html",
+          "sha256": "01b612ef9f4094d03605ce54aa513362dadea351cb8eac277588b720d79028d1"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-high100",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-4096c8232fe40c6c54c1aeb42f2c7dc0aa26d1509a0da856071b3e0c7b6da2db.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-4096c8232fe40c6c54c1aeb42f2c7dc0aa26d1509a0da856071b3e0c7b6da2db.html",
+          "sha256": "4096c8232fe40c6c54c1aeb42f2c7dc0aa26d1509a0da856071b3e0c7b6da2db"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-C",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-1220211ae3983c2fff5c9512002341f14e90565e60907b899eb9ef3c19c7afca.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-1220211ae3983c2fff5c9512002341f14e90565e60907b899eb9ef3c19c7afca.html",
+          "sha256": "1220211ae3983c2fff5c9512002341f14e90565e60907b899eb9ef3c19c7afca"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-chemistry100",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/technion-A-chemistry100-response.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/technion-A-chemistry100-response.html",
+          "sha256": "1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-high97",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/technion-high97-response.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/technion-high97-response.html",
+          "sha256": "f85dd628d86c34a3507655016d10bf34521941f7aedd780cc9d2e1deac1f2b05"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-CS-to-chemistry",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-689ba9995c1d604a03f57dad407321d97a611ce05f32f0cf8e9e04a9a761303d.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-689ba9995c1d604a03f57dad407321d97a611ce05f32f0cf8e9e04a9a761303d.html",
+          "sha256": "689ba9995c1d604a03f57dad407321d97a611ce05f32f0cf8e9e04a9a761303d"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "tau-A-scores",
+        "calculator_id": "tau",
+        "function_id": "combined_score_variants",
+        "expected_fields": [
+          "engineeringSekem",
+          "exactSciencesSekem",
+          "generalSekem",
+          "managementSekem",
+          "medicinePreliminary"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://go.tau.ac.il/graphql",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/tau-A-scores-response.json",
+          "repo_path": "verification/research/research/core-universities/snapshots/tau-A-scores-response.json",
+          "sha256": "66af847d22a5459d94260133ff44b7b3ba59a7c2bb5c62795457df3ef97123c5"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "tau-B-scores",
+        "calculator_id": "tau",
+        "function_id": "combined_score_variants",
+        "expected_fields": [
+          "engineeringSekem",
+          "exactSciencesSekem",
+          "generalSekem",
+          "managementSekem",
+          "medicinePreliminary"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://go.tau.ac.il/graphql",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/tau-B-scores-response.json",
+          "repo_path": "verification/research/research/core-universities/snapshots/tau-B-scores-response.json",
+          "sha256": "c8601ccf37c6e7f7379f794704f1f324a4f1dcc8190d4c0c67263488631e1ecb"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "tau-C-scores",
+        "calculator_id": "tau",
+        "function_id": "combined_score_variants",
+        "expected_fields": [
+          "engineeringSekem",
+          "exactSciencesSekem",
+          "generalSekem",
+          "managementSekem",
+          "medicinePreliminary"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://go.tau.ac.il/graphql",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/tau-C-scores-response.json",
+          "repo_path": "verification/research/research/core-universities/snapshots/tau-C-scores-response.json",
+          "sha256": "54c66c7ebea281ade34c35c9102bc34f342d00993b5a85f18992520da40b4ed3"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-A-english61-P620",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-1dbaf31044acd370c2872bd10922257e9cd10462583405c5267d815ca81bd204.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-1dbaf31044acd370c2872bd10922257e9cd10462583405c5267d815ca81bd204.html",
+          "sha256": "1dbaf31044acd370c2872bd10922257e9cd10462583405c5267d815ca81bd204"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-cluster-chemistry100-reordered",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html",
+          "sha256": "1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-cluster-biology100",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-b02bdc279c33edd7988b97087a43d6bf09451a48b9fd348c918f33af924e86e0.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-b02bdc279c33edd7988b97087a43d6bf09451a48b9fd348c918f33af924e86e0.html",
+          "sha256": "b02bdc279c33edd7988b97087a43d6bf09451a48b9fd348c918f33af924e86e0"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-cluster-biology85",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-4b798dd9a4f99b2dabd87ea9da07c99e1eec5874d0221624821afecfe05b4aa7.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-4b798dd9a4f99b2dabd87ea9da07c99e1eec5874d0221624821afecfe05b4aa7.html",
+          "sha256": "4b798dd9a4f99b2dabd87ea9da07c99e1eec5874d0221624821afecfe05b4aa7"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "technion-cluster-chemistry59-first",
+        "calculator_id": "technion",
+        "function_id": "general_sekem",
+        "expected_fields": [
+          "bagrutAverage",
+          "generalSekem"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+        "source_response": {
+          "original_path": "research/core-universities/snapshots/sha256-93addfff06fe8fa9a5434f8a8fd4b9104e22bf5a9d700b7bc78a662c36e34dc0.html",
+          "repo_path": "verification/research/research/core-universities/snapshots/sha256-93addfff06fe8fa9a5434f8a8fd4b9104e22bf5a9d700b7bc78a662c36e34dc0.html",
+          "sha256": "93addfff06fe8fa9a5434f8a8fd4b9104e22bf5a9d700b7bc78a662c36e34dc0"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "reichman-A",
+        "calculator_id": "reichman",
+        "function_id": "adjusted_score_and_average",
+        "expected_fields": [
+          "bagrutAverage",
+          "officialScore"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://www.runi.ac.il/bagrutexamscalculator/default.aspx",
+        "source_response": {
+          "original_path": "research/other-universities/captures/runi-profile-A.html",
+          "repo_path": "verification/research/research/other-universities/captures/runi-profile-A.html",
+          "sha256": "ba91a892da02ee94a33ecedcd02c5bae0d7a0f09e0bfe4ba505a2ea5a44c0e51"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "reichman-B",
+        "calculator_id": "reichman",
+        "function_id": "adjusted_score_and_average",
+        "expected_fields": [
+          "bagrutAverage",
+          "officialScore"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://www.runi.ac.il/bagrutexamscalculator/default.aspx",
+        "source_response": {
+          "original_path": "research/other-universities/captures/runi-profile-B.html",
+          "repo_path": "verification/research/research/other-universities/captures/runi-profile-B.html",
+          "sha256": "1464e80fd49a78740348ec96c68d3481f37f03de25a86ee90c3cb0ed830e018a"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      },
+      {
+        "case_id": "reichman-C",
+        "calculator_id": "reichman",
+        "function_id": "adjusted_score_and_average",
+        "expected_fields": [
+          "bagrutAverage",
+          "officialScore"
+        ],
+        "academic_year": null,
+        "year_status": "not_explicitly_published",
+        "source_url": "https://www.runi.ac.il/bagrutexamscalculator/default.aspx",
+        "source_response": {
+          "original_path": "research/other-universities/captures/runi-profile-C.html",
+          "repo_path": "verification/research/research/other-universities/captures/runi-profile-C.html",
+          "sha256": "65f5dbdc4b528a09d6459dec72465ccdc36f3500bfeb891f253b198111e8e47a"
+        },
+        "finite_capture_only": true,
+        "full_formula_verified": false
+      }
+    ]
+  },
+  "current_finite_numeric_replay": {
+    "scope": "Direct calculateInstitution against the captured input/expected fields, with no current-year promotion or UI/API/route-completeness claim.",
+    "matching_cases": 25,
+    "failing_score_cases": 4,
+    "failures": [
+      {
+        "case_id": "tau-A-scores",
+        "status": "missing_candidate_fields",
+        "missing_fields": [
+          "exactSciencesSekem",
+          "medicinePreliminary"
+        ]
+      },
+      {
+        "case_id": "tau-B-scores",
+        "status": "missing_candidate_fields",
+        "missing_fields": [
+          "exactSciencesSekem",
+          "medicinePreliminary"
+        ]
+      },
+      {
+        "case_id": "tau-C-scores",
+        "status": "missing_candidate_fields",
+        "missing_fields": [
+          "exactSciencesSekem",
+          "medicinePreliminary"
+        ]
+      },
+      {
+        "case_id": "reichman-A",
+        "status": "numeric_mismatch",
+        "mismatch_fields": [
+          "officialScore"
+        ]
+      }
+    ],
+    "technion_ordinary_numeric_matches": 20,
+    "year_verified_cases": 0,
+    "finite_matches_prove_full_formula": false
+  },
+  "tau_missing_result_fields": [
+    {
+      "field": "exactSciencesSekem",
+      "official_response_field": "hatama_meduyakim",
+      "available_captured_score_cases": 3,
+      "implemented_result_field": false,
+      "alias_to_engineering_verified": false
+    },
+    {
+      "field": "medicinePreliminary",
+      "official_response_field": "hatama_refua",
+      "available_captured_score_cases": 3,
+      "implemented_result_field": false,
+      "rounding_or_alias_verified": false
+    }
+  ],
+  "unresolved_contracts": [
+    "Current academic year for all 29 responses; present labels elsewhere do not date these operations.",
+    "Full bonus/omission/legal certificate/sector/route domains are not established by finite captures.",
+    "Exact source-name program joins and route conditions; thresholdSource text alone is not verified evidence.",
+    "UI and planning optimizer estimation/default/subject identity behavior outside the bounded calculator API fix.",
+    "Native official score versus platform comparison scale and exact route selection.",
+    "Catalog-only institutions lack a numerical engine here; this does not assert a score is required for admission.",
+    "Fourteen duplicate global program IDs must not be treated as verified merges; UI row count and repository keyed lookup are different."
+  ],
+  "institutions": [
+    {
+      "institution_id": "inst-4",
+      "institution_name": "אוניברסיטת בר אילן",
+      "program_count": 100,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "bar_ilan",
+      "calculator_source": "src/modules/calculators/barIlan.ts",
+      "exported_functions": [
+        "isBarIlanMandatorySubject",
+        "getBarIlanBonus",
+        "calculateBarIlanOptimalBagrut",
+        "calculateBarIlanGeneralSekem",
+        "calculateBarIlanEngineeringSekem",
+        "evaluateBarIlan"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isBarIlanMandatorySubject",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getBarIlanBonus",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBarIlanOptimalBagrut",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBarIlanGeneralSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBarIlanEngineeringSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateBarIlan",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-1",
+      "institution_name": "האוניברסיטה העברית בירושלים",
+      "program_count": 101,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "huji",
+      "calculator_source": "src/modules/calculators/huji.ts",
+      "exported_functions": [
+        "isHujiMandatorySubject",
+        "getHujiBonus",
+        "calculateHujiOptimalBagrut",
+        "calculateHujiWeightedScoreFor",
+        "calculateHujiWeightedScore",
+        "hujiScoreTo800",
+        "calculateHujiSekem",
+        "evaluateHuji"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 95,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isHujiMandatorySubject",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getHujiBonus",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHujiOptimalBagrut",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHujiWeightedScoreFor",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHujiWeightedScore",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "hujiScoreTo800",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHujiSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateHuji",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-6",
+      "institution_name": "אוניברסיטת תל אביב",
+      "program_count": 106,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "tau",
+      "calculator_source": "src/modules/calculators/tau.ts",
+      "exported_functions": [
+        "isTauMandatorySubject",
+        "getTauBonus",
+        "calculateTauOptimalBagrut",
+        "calculateTauGeneralSekem",
+        "calculateTauEngineeringSekem",
+        "calculateTauManagementSekem",
+        "evaluateTau"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 87,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [
+        "tau-A",
+        "tau-B",
+        "tau-C",
+        "tau-A-scores",
+        "tau-B-scores",
+        "tau-C-scores"
+      ],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isTauMandatorySubject",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getTauBonus",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateTauOptimalBagrut",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateTauGeneralSekem",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateTauEngineeringSekem",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateTauManagementSekem",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateTau",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "tau-A",
+            "tau-B",
+            "tau-C",
+            "tau-A-scores",
+            "tau-B-scores",
+            "tau-C-scores"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-3",
+      "institution_name": "אוניברסיטת בן גוריון בנגב",
+      "program_count": 209,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "bgu",
+      "calculator_source": "src/modules/calculators/bgu.ts",
+      "exported_functions": [
+        "isBguMandatorySubject",
+        "getBguBonus",
+        "calculateBguOptimalBagrut",
+        "calculateBguGeneralSekem",
+        "calculateBguEngineeringSekem",
+        "calculateBguQuantitativeSekem",
+        "evaluateBgu"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 181,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isBguMandatorySubject",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getBguBonus",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBguOptimalBagrut",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBguGeneralSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBguEngineeringSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateBguQuantitativeSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateBgu",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-5",
+      "institution_name": "אוניברסיטת חיפה",
+      "program_count": 56,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "haifa",
+      "calculator_source": "src/modules/calculators/haifa.ts",
+      "exported_functions": [
+        "isHaifaMandatorySubject",
+        "getHaifaBonus",
+        "calculateHaifaOptimalBagrut",
+        "calculateHaifaSekem",
+        "calculateHaifaMathPsychometric",
+        "calculateHaifaMathSekem",
+        "evaluateHaifa"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isHaifaMandatorySubject",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getHaifaBonus",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHaifaOptimalBagrut",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHaifaSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHaifaMathPsychometric",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateHaifaMathSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateHaifa",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-16",
+      "institution_name": "המכללה האקדמית בית ברל",
+      "program_count": 49,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-11",
+      "institution_name": "האוניברסיטה הפתוחה",
+      "program_count": 49,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-48",
+      "institution_name": "הטכניון - מכון טכנולוגי לישראל",
+      "program_count": 48,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "technion",
+      "calculator_source": "src/modules/calculators/technion.ts",
+      "exported_functions": [
+        "isTechnionMandatorySubject",
+        "detectTechnionScienceCluster",
+        "getTechnionBonus",
+        "calculateTechnionOptimalBagrut",
+        "calculateTechnionSekem",
+        "evaluateTechnion"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 46,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [
+        "technion-A",
+        "technion-B",
+        "technion-A-math4",
+        "technion-A-english59",
+        "technion-A-english60",
+        "technion-A-english61",
+        "technion-A-geography40",
+        "technion-A-geography100",
+        "technion-high98",
+        "technion-high99",
+        "technion-high100",
+        "technion-C",
+        "technion-A-chemistry100",
+        "technion-high97",
+        "technion-A-CS-to-chemistry",
+        "technion-A-english61-P620",
+        "technion-cluster-chemistry100-reordered",
+        "technion-cluster-biology100",
+        "technion-cluster-biology85",
+        "technion-cluster-chemistry59-first"
+      ],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isTechnionMandatorySubject",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "technion-A",
+            "technion-B",
+            "technion-A-math4",
+            "technion-A-english59",
+            "technion-A-english60",
+            "technion-A-english61",
+            "technion-A-geography40",
+            "technion-A-geography100",
+            "technion-high98",
+            "technion-high99",
+            "technion-high100",
+            "technion-C",
+            "technion-A-chemistry100",
+            "technion-high97",
+            "technion-A-CS-to-chemistry",
+            "technion-A-english61-P620",
+            "technion-cluster-chemistry100-reordered",
+            "technion-cluster-biology100",
+            "technion-cluster-biology85",
+            "technion-cluster-chemistry59-first"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "detectTechnionScienceCluster",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "technion-A",
+            "technion-B",
+            "technion-A-math4",
+            "technion-A-english59",
+            "technion-A-english60",
+            "technion-A-english61",
+            "technion-A-geography40",
+            "technion-A-geography100",
+            "technion-high98",
+            "technion-high99",
+            "technion-high100",
+            "technion-C",
+            "technion-A-chemistry100",
+            "technion-high97",
+            "technion-A-CS-to-chemistry",
+            "technion-A-english61-P620",
+            "technion-cluster-chemistry100-reordered",
+            "technion-cluster-biology100",
+            "technion-cluster-biology85",
+            "technion-cluster-chemistry59-first"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getTechnionBonus",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "technion-A",
+            "technion-B",
+            "technion-A-math4",
+            "technion-A-english59",
+            "technion-A-english60",
+            "technion-A-english61",
+            "technion-A-geography40",
+            "technion-A-geography100",
+            "technion-high98",
+            "technion-high99",
+            "technion-high100",
+            "technion-C",
+            "technion-A-chemistry100",
+            "technion-high97",
+            "technion-A-CS-to-chemistry",
+            "technion-A-english61-P620",
+            "technion-cluster-chemistry100-reordered",
+            "technion-cluster-biology100",
+            "technion-cluster-biology85",
+            "technion-cluster-chemistry59-first"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateTechnionOptimalBagrut",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "technion-A",
+            "technion-B",
+            "technion-A-math4",
+            "technion-A-english59",
+            "technion-A-english60",
+            "technion-A-english61",
+            "technion-A-geography40",
+            "technion-A-geography100",
+            "technion-high98",
+            "technion-high99",
+            "technion-high100",
+            "technion-C",
+            "technion-A-chemistry100",
+            "technion-high97",
+            "technion-A-CS-to-chemistry",
+            "technion-A-english61-P620",
+            "technion-cluster-chemistry100-reordered",
+            "technion-cluster-biology100",
+            "technion-cluster-biology85",
+            "technion-cluster-chemistry59-first"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateTechnionSekem",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "technion-A",
+            "technion-B",
+            "technion-A-math4",
+            "technion-A-english59",
+            "technion-A-english60",
+            "technion-A-english61",
+            "technion-A-geography40",
+            "technion-A-geography100",
+            "technion-high98",
+            "technion-high99",
+            "technion-high100",
+            "technion-C",
+            "technion-A-chemistry100",
+            "technion-high97",
+            "technion-A-CS-to-chemistry",
+            "technion-A-english61-P620",
+            "technion-cluster-chemistry100-reordered",
+            "technion-cluster-biology100",
+            "technion-cluster-biology85",
+            "technion-cluster-chemistry59-first"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateTechnion",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "technion-A",
+            "technion-B",
+            "technion-A-math4",
+            "technion-A-english59",
+            "technion-A-english60",
+            "technion-A-english61",
+            "technion-A-geography40",
+            "technion-A-geography100",
+            "technion-high98",
+            "technion-high99",
+            "technion-high100",
+            "technion-C",
+            "technion-A-chemistry100",
+            "technion-high97",
+            "technion-A-CS-to-chemistry",
+            "technion-A-english61-P620",
+            "technion-cluster-chemistry100-reordered",
+            "technion-cluster-biology100",
+            "technion-cluster-biology85",
+            "technion-cluster-chemistry59-first"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-29",
+      "institution_name": "המכללה האקדמית לחינוך ע\"ש דוד ילין",
+      "program_count": 42,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-52",
+      "institution_name": "המכללה האקדמית לחינוך אורנים",
+      "program_count": 36,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-2",
+      "institution_name": "אוניברסיטת אריאל בשומרון",
+      "program_count": 45,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "ariel",
+      "calculator_source": "src/modules/calculators/ariel.ts",
+      "exported_functions": [
+        "isArielMandatorySubject",
+        "getArielBonus",
+        "calculateArielOptimalBagrut",
+        "calculateArielSekem",
+        "evaluateAriel"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isArielMandatorySubject",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getArielBonus",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateArielOptimalBagrut",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateArielSekem",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateAriel",
+          "coverage_status": "implemented_without_this_inventory_captured_oracle",
+          "case_ids": [],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-37",
+      "institution_name": "המכללה האקדמית תל חי",
+      "program_count": 34,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-30",
+      "institution_name": "המכללה האקדמית לחינוך ע\"ש קיי בבאר שבע",
+      "program_count": 31,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-51",
+      "institution_name": "מכללה אקדמית לחינוך - אורות ישראל מיסודן של מכללת אורות ישראל ומכללת מורשת יעקב",
+      "program_count": 29,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-40",
+      "institution_name": "המרכז האקדמי לוינסקי-וינגייט",
+      "program_count": 28,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-57",
+      "institution_name": "סמינר הקיבוצים - המכללה לחינוך לטכנולוגיה ולאומנויות",
+      "program_count": 27,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-14",
+      "institution_name": "המכללה האקדמית אחווה",
+      "program_count": 24,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-28",
+      "institution_name": "המכללה האקדמית לחינוך ע\"ש א. ד. גורדון",
+      "program_count": 22,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-18",
+      "institution_name": "המכללה האקדמית הדסה ירושלים",
+      "program_count": 22,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-8",
+      "institution_name": "אמונה-אפרתה - מכללה אקדמית לאמנויות וחינוך",
+      "program_count": 18,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-54",
+      "institution_name": "מכללה ירושלים",
+      "program_count": 18,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-21",
+      "institution_name": "המכללה האקדמית הערבית לחינוך בישראל - חיפה",
+      "program_count": 17,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-23",
+      "institution_name": "המכללה האקדמית חמדת",
+      "program_count": 17,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-34",
+      "institution_name": "המכללה האקדמית עמק יזרעאל",
+      "program_count": 17,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-19",
+      "institution_name": "המכללה האקדמית הדתית לחינוך שאנן",
+      "program_count": 16,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-22",
+      "institution_name": "המכללה האקדמית הרצוג מיסודן של מכללות ליפשיץ והרצוג",
+      "program_count": 16,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-27",
+      "institution_name": "המכללה האקדמית לחינוך גבעת וושינגטון",
+      "program_count": 16,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-7",
+      "institution_name": "אלקאסמי - מכללה אקדמית לחינוך",
+      "program_count": 15,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-15",
+      "institution_name": "המכללה האקדמית אשקלון",
+      "program_count": 15,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-33",
+      "institution_name": "המכללה האקדמית ספיר",
+      "program_count": 18,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-17",
+      "institution_name": "המכללה האקדמית גליל מערבי",
+      "program_count": 14,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-20",
+      "institution_name": "המכללה האקדמית המכללה למנהל",
+      "program_count": 14,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-44",
+      "institution_name": "המרכז האקדמי רופין",
+      "program_count": 14,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-59",
+      "institution_name": "תלפיות - המכללה האקדמית לחינוך",
+      "program_count": 14,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-39",
+      "institution_name": "המרכז האקדמי לב",
+      "program_count": 13,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-24",
+      "institution_name": "המכללה האקדמית כנרת בעמק הירדן",
+      "program_count": 12,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-58",
+      "institution_name": "שנקר - הנדסה. עיצוב. אמנות",
+      "program_count": 12,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-13",
+      "institution_name": "HIT - המכון הטכנולוגי חולון",
+      "program_count": 11,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-38",
+      "institution_name": "אוניברסיטת רייכמן (הבינתחומי הרצליה)",
+      "program_count": 23,
+      "implementation_status": "engine_implemented_parity_incomplete",
+      "calculator_id": "reichman",
+      "calculator_source": "src/modules/calculators/reichman.ts",
+      "exported_functions": [
+        "isReichmanMandatorySubject",
+        "getReichmanBonus",
+        "calculateReichmanOptimalBagrut",
+        "calculateReichmanAdjustedScore",
+        "calculateReichmanGeneralSekem",
+        "evaluateReichman"
+      ],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 14,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [
+        "reichman-A",
+        "reichman-B",
+        "reichman-C"
+      ],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": [
+        {
+          "export": "isReichmanMandatorySubject",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "reichman-A",
+            "reichman-B",
+            "reichman-C"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "getReichmanBonus",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "reichman-A",
+            "reichman-B",
+            "reichman-C"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateReichmanOptimalBagrut",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "reichman-A",
+            "reichman-B",
+            "reichman-C"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateReichmanAdjustedScore",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "reichman-A",
+            "reichman-B",
+            "reichman-C"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "calculateReichmanGeneralSekem",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "reichman-A",
+            "reichman-B",
+            "reichman-C"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        },
+        {
+          "export": "evaluateReichman",
+          "coverage_status": "finite_enclosing_evaluator_observations_not_standalone_equivalence",
+          "case_ids": [
+            "reichman-A",
+            "reichman-B",
+            "reichman-C"
+          ],
+          "standalone_function_verified": false,
+          "all_inputs_verified": false
+        }
+      ]
+    },
+    {
+      "institution_id": "inst-35",
+      "institution_name": "המכללה האקדמית צפת",
+      "program_count": 10,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-41",
+      "institution_name": "המרכז האקדמי למשפט ועסקים",
+      "program_count": 10,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-47",
+      "institution_name": "הקריה האקדמית אונו",
+      "program_count": 12,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-12",
+      "institution_name": "האקדמית למוסיקה ולמחול ירושלים",
+      "program_count": 9,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-26",
+      "institution_name": "SCE - המכללה האקדמית להנדסה סמי שמעון",
+      "program_count": 11,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-31",
+      "institution_name": "המכללה האקדמית לישראל ברמת גן",
+      "program_count": 9,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-32",
+      "institution_name": "המכללה האקדמית נתניה",
+      "program_count": 9,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-25",
+      "institution_name": "המכללה האקדמית להנדסה אורט בראודה",
+      "program_count": 10,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-55",
+      "institution_name": "מכללת סכנין להכשרת עובדי הוראה",
+      "program_count": 8,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-9",
+      "institution_name": "אפקה - המכללה האקדמית להנדסה בתל אביב",
+      "program_count": 8,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-36",
+      "institution_name": "המכללה האקדמית תל אביב יפו",
+      "program_count": 8,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-43",
+      "institution_name": "המרכז האקדמי פרס",
+      "program_count": 7,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-53",
+      "institution_name": "עזריאלי - המכללה האקדמית להנדסה ירושלים",
+      "program_count": 9,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-46",
+      "institution_name": "המרכז האקדמי שערי מדע ומשפט",
+      "program_count": 6,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-10",
+      "institution_name": "בצלאל אקדמיה לעיצוב ואומנות ירושלים",
+      "program_count": 5,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-42",
+      "institution_name": "המרכז האקדמי לעיצוב ולחינוך ויצו - חיפה ע\"ש נרי בלומפילד",
+      "program_count": 5,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-45",
+      "institution_name": "המרכז האקדמי שלם ירושלים",
+      "program_count": 4,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-56",
+      "institution_name": "מכללת שערי משפט",
+      "program_count": 3,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-49",
+      "institution_name": "מכון ויצמן למדע",
+      "program_count": 1,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-50",
+      "institution_name": "מכון שכטר למדעי היהדות",
+      "program_count": 1,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-60",
+      "institution_name": "המועצה האקדמית של מכללת \"הסביבה\"",
+      "program_count": 1,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-61",
+      "institution_name": "המכון המלכותי לטכנולוגיה",
+      "program_count": 1,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    },
+    {
+      "institution_id": "inst-62",
+      "institution_name": "בית הספר הגבוהה לטכנולוגיה ירושלים",
+      "program_count": 1,
+      "implementation_status": "catalog_only_score_unimplemented",
+      "calculator_id": null,
+      "calculator_source": null,
+      "exported_functions": [],
+      "source_provenance": {
+        "catalog_source_path": "src/data/academicData.json",
+        "programs_with_threshold_source": 0,
+        "threshold_source_strings_are_verification": false
+      },
+      "captured_case_ids": [],
+      "full_formula_verified": false,
+      "current_academic_year_verified": false,
+      "admission_conditions_complete": false,
+      "function_level_coverage": []
+    }
+  ],
+  "count_criteria": {
+    "catalog_programs": "Sum of every literal programs-array length in fully parsed JSON, before any UI or repository filtering.",
+    "catalog_distinct_program_ids": "Unique global program id strings. This is the earlier 1502 count; it was incorrectly described as literal catalog row count.",
+    "repository_numeric_threshold_rows": "Static application of repository.ts:172-183 null-coalesced admissionThreshold/sekemScore parsing, excluding parsed zero, before Map insertion. Not a current deployed SQLite/API count.",
+    "repository_numeric_threshold_distinct_ids": "Unique IDs among numeric-threshold rows; repository programsById Map overwrites earlier duplicate IDs, while its institution index retains rows.",
+    "eight_engine_programs": "Literal rows belonging to the eight explicit catalog-to-engine bridge IDs; no ID collisions occur in those eight institutions.",
+    "undefined_or_trailing_data": "JSON parses fully and every counted row is an object with a nonempty string ID. No undefined or trailing JSON values explain the discrepancy.",
+    "ui_bundled_rows_before_user_filters": "Current DegreeSearchSelector.tsx:130-144 skips truthy program.notOffered or prerequisites.notOffered declarations before user search filters. This is product metadata behavior, not proof of current-year availability."
+  },
+  "duplicate_program_ids": [
+    {
+      "program_id": "prog-inst-18-2",
+      "rows": [
+        {
+          "institution_id": "inst-18",
+          "program_array_index_zero_based": 2,
+          "program_name": "הפרעות בתקשורת",
+          "admission_threshold": 630
+        },
+        {
+          "institution_id": "inst-18",
+          "program_array_index_zero_based": 5,
+          "program_name": "מדעי האופטומטריה",
+          "admission_threshold": 600
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-33-1",
+      "rows": [
+        {
+          "institution_id": "inst-33",
+          "program_array_index_zero_based": 0,
+          "program_name": "כלכלה וחשבונאות",
+          "admission_threshold": 500
+        },
+        {
+          "institution_id": "inst-33",
+          "program_array_index_zero_based": 6,
+          "program_name": "מדעי المחשב",
+          "admission_threshold": 590
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-33-2",
+      "rows": [
+        {
+          "institution_id": "inst-33",
+          "program_array_index_zero_based": 1,
+          "program_name": "כלכלה יישומית וניהול",
+          "admission_threshold": 500
+        },
+        {
+          "institution_id": "inst-33",
+          "program_array_index_zero_based": 14,
+          "program_name": "קולנוע וטלוויזיה",
+          "admission_threshold": 550
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-33-5",
+      "rows": [
+        {
+          "institution_id": "inst-33",
+          "program_array_index_zero_based": 4,
+          "program_name": "לימודים רב תחומיים",
+          "admission_threshold": 500
+        },
+        {
+          "institution_id": "inst-33",
+          "program_array_index_zero_based": 11,
+          "program_name": "ניהול ויישוב סכסוכים",
+          "admission_threshold": 530
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-47-4",
+      "rows": [
+        {
+          "institution_id": "inst-47",
+          "program_array_index_zero_based": 3,
+          "program_name": "מדעי המחשב",
+          "admission_threshold": 600
+        },
+        {
+          "institution_id": "inst-47",
+          "program_array_index_zero_based": 11,
+          "program_name": "ריפוי בעיסוק",
+          "admission_threshold": 630
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-47-5",
+      "rows": [
+        {
+          "institution_id": "inst-47",
+          "program_array_index_zero_based": 4,
+          "program_name": "מוסיקה רב תחומית",
+          "admission_threshold": 500
+        },
+        {
+          "institution_id": "inst-47",
+          "program_array_index_zero_based": 10,
+          "program_name": "קלינאות תקשורת",
+          "admission_threshold": 640
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-26-4",
+      "rows": [
+        {
+          "institution_id": "inst-26",
+          "program_array_index_zero_based": 1,
+          "program_name": "הנדסה אזרחית (בניין)",
+          "admission_threshold": 550
+        },
+        {
+          "institution_id": "inst-26",
+          "program_array_index_zero_based": 4,
+          "program_name": "הנדסת חשמל ואלקטרוניקה",
+          "admission_threshold": 560
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-26-5",
+      "rows": [
+        {
+          "institution_id": "inst-26",
+          "program_array_index_zero_based": 5,
+          "program_name": "הנדסת כימיה",
+          "admission_threshold": 550
+        },
+        {
+          "institution_id": "inst-26",
+          "program_array_index_zero_based": 6,
+          "program_name": "הנדסת מכונות",
+          "admission_threshold": 550
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-25-4",
+      "rows": [
+        {
+          "institution_id": "inst-25",
+          "program_array_index_zero_based": 1,
+          "program_name": "הנדסת ביו-רפואית",
+          "admission_threshold": 600
+        },
+        {
+          "institution_id": "inst-25",
+          "program_array_index_zero_based": 5,
+          "program_name": "הנדסת מכונות",
+          "admission_threshold": 570
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-25-5",
+      "rows": [
+        {
+          "institution_id": "inst-25",
+          "program_array_index_zero_based": 2,
+          "program_name": "הנדסת ביוטכנולוגיה",
+          "admission_threshold": 580
+        },
+        {
+          "institution_id": "inst-25",
+          "program_array_index_zero_based": 6,
+          "program_name": "הנדסת מערכות מידע",
+          "admission_threshold": 580
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-9-3",
+      "rows": [
+        {
+          "institution_id": "inst-9",
+          "program_array_index_zero_based": 2,
+          "program_name": "הנדסת חשמל",
+          "admission_threshold": 600
+        },
+        {
+          "institution_id": "inst-9",
+          "program_array_index_zero_based": 3,
+          "program_name": "הנדסת מכונות",
+          "admission_threshold": 580
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-36-4",
+      "rows": [
+        {
+          "institution_id": "inst-36",
+          "program_array_index_zero_based": 3,
+          "program_name": "מערכות מידע",
+          "admission_threshold": 600
+        },
+        {
+          "institution_id": "inst-36",
+          "program_array_index_zero_based": 6,
+          "program_name": "סיעוד",
+          "admission_threshold": 570
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-53-1",
+      "rows": [
+        {
+          "institution_id": "inst-53",
+          "program_array_index_zero_based": 1,
+          "program_name": "הנדסה תוכנה",
+          "admission_threshold": 580
+        },
+        {
+          "institution_id": "inst-53",
+          "program_array_index_zero_based": 6,
+          "program_name": "הנדסת תוכנה",
+          "admission_threshold": 580
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    },
+    {
+      "program_id": "prog-inst-53-5",
+      "rows": [
+        {
+          "institution_id": "inst-53",
+          "program_array_index_zero_based": 2,
+          "program_name": "הנדסה תעשייתית וניהול",
+          "admission_threshold": 560
+        },
+        {
+          "institution_id": "inst-53",
+          "program_array_index_zero_based": 7,
+          "program_name": "הנדסת תעשייה וניהול",
+          "admission_threshold": 580
+        }
+      ],
+      "identity_merge_verified": false,
+      "automatic_merge_authorized": false
+    }
+  ],
+  "snapshot_authority": {
+    "current_parent_commit": "2d621b0ae8de715f106570f1dcc4165a963e409e",
+    "initial_read_only_snapshot_commit": "21e95773a92069f41ba656f5f7768894c8515454",
+    "initial_catalog_sha256": "e648fc8d4498864fc2adc47c76d3522265d98bba97a01a6df53991674f841cae",
+    "inherited_metadata_independently_verified": false,
+    "review_boundary": "Inherited catalog/route changes are counted and hashed; their institutional eligibility/year assertions are not independently approved here."
+  },
+  "inherited_route_metadata": {
+    "source_paths": [
+      {
+        "path": "src/data/sources/tau-min-psychometric-2026-10-03.json",
+        "sha256": "2f8970f54d94dccf45686b38c62d6ee08a71135f62f6df5d704a4b8491e75133",
+        "institutional_authority_independently_verified": false
+      },
+      {
+        "path": "src/data/sources/technion-excellent-bagrut-2026-10.json",
+        "sha256": "9ecc657b297e828baae1fb8c6c949126c58ecb197b636a998e3c4edf2bff4084",
+        "institutional_authority_independently_verified": false
+      },
+      {
+        "path": "src/data/sources/technion-gesher-highschool-2026-10.json",
+        "sha256": "266ed549d33ed2a127be2edaa9bdff7513093d31d17b8ea3e3483ce9cc6c6f72",
+        "institutional_authority_independently_verified": false
+      },
+      {
+        "path": "src/data/sources/technion-math-exam-2026-10.json",
+        "sha256": "be2cfe112690ee5e8bfe35664dad66f2edbab8e60bddd93c5327c76e017f026b",
+        "institutional_authority_independently_verified": false
+      },
+      {
+        "path": "src/data/sources/technion-promotion-2026-10.json",
+        "sha256": "7ccc7ef6514451048bb811662a24733d8dc014e3f9cdf585dfa8f97c5a5bfda6",
+        "institutional_authority_independently_verified": false
+      },
+      {
+        "path": "src/data/sources/technion-short-track-2026-10.json",
+        "sha256": "ec2df436f275941239de64d537d56efdb1876b70b780d226384ee9ba2fe2f854",
+        "institutional_authority_independently_verified": false
+      }
+    ],
+    "declared_route_keys": [
+      "bagrutOnlyMin",
+      "excellentBagrut",
+      "fromHighSchool",
+      "gesher",
+      "mathExam",
+      "minPsychometric",
+      "promotionBonus",
+      "psychometricOnlyMin",
+      "shortTrack"
+    ],
+    "not_offered_program_ids": [
+      "prog-inst-48-47",
+      "prog-inst-48-48"
+    ],
+    "current_year_verified": false
+  },
+  "current_application_status_boundary": {
+    "source_path": "src/utils/analysis/gapAnalyzer.ts",
+    "sha256": "d02dac2098b703bcffc31851988e42bb811b507c13c149a69b1c77bf838bc95a",
+    "rounds_gap_before_acceptance": true,
+    "missing_prerequisites_gate_all_acceptance": false,
+    "threshold_verified_is_source_string_boolean": true,
+    "inherited_excellent_bagrut_can_set_accepted": true,
+    "inherited_route_policy_independently_approved_here": false
+  }
+}

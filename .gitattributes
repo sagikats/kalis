@@ -1,0 +1,4 @@
+# Immutable captured evidence/parsers must retain their exact source bytes.
+verification/research/** -text -whitespace
+verification/research/**/*.html -diff
+src/modules/calculators/__tests__/fixtures/technion-official/*.html -text -diff -whitespace

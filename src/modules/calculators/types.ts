@@ -43,6 +43,8 @@ export interface SubjectBreakdownItem {
 
 export interface OptimalBagrutResult {
 	average: number;
+	/** Optional unrounded institutional mean used internally before displayed rounding. */
+	rawAverage?: number;
 	optimalUnits: number;
 	totalOriginalUnits: number;
 	droppedSubjects: DroppedSubjectInfo[];

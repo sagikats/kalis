@@ -169,13 +169,6 @@ export function calculateAllInstitutions(
 	input: InstitutionCalculatorInput
 ): InstitutionCalculatorResult[] {
 	return [
-		evaluateTechnion(input),
-		evaluateTau(input),
-		evaluateHuji(input),
-		evaluateBgu(input),
-		evaluateHaifa(input),
-		evaluateAriel(input),
-		evaluateBarIlan(input),
-		evaluateReichman(input)
-	];
+		'technion', 'tau', 'huji', 'bgu', 'haifa', 'ariel', 'bar_ilan', 'reichman'
+	].map((id) => calculateInstitution(id, input));
 }

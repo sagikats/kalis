@@ -9,7 +9,11 @@
     "lint": "eslint",
     "db:seed": "npx tsx prisma/seed.ts",
     "db:backup": "npx tsx prisma/backup.ts",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "test": "tsx --test --test-concurrency=1 src/modules/*/__tests__/*.test.ts",
+    "admissions:check": "python3 verification/monitor.py",
+    "admissions:regression": "python3 verification/monitor.py --regression-only",
+    "admissions:test": "python3 -m unittest discover -s verification/tests -v"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -30,8 +34,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
+    "jiti": "2.7.0",
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
+    "tsx": "4.23.15",
     "typescript": "^5"
   }
 }

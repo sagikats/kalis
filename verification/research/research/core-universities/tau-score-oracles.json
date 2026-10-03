@@ -1,0 +1,277 @@
+[
+  {
+    "caseId": "tau-A-scores",
+    "institutionId": "tau",
+    "function": "combined_score_variants",
+    "score_type": "general/management/engineering",
+    "profile": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "academic_year": null,
+    "inputs_entered": {
+      "query": "query getLastScore ($scoresData: JSON!) { getLastScore (scoresData: $scoresData) { body } }",
+      "variables": {
+        "scoresData": {
+          "prog": "calctziun",
+          "out": "json",
+          "reali10": 1,
+          "psicho": 714,
+          "bagrut": 111.38
+        }
+      }
+    },
+    "proof": {
+      "url": "https://go.tau.ac.il/graphql",
+      "method": "POST",
+      "timestamp": "2026-10-02T21:48:35.800342+00:00",
+      "status": 200,
+      "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/tau-A-scores-response.json",
+      "sha256": "66af847d22a5459d94260133ff44b7b3ba59a7c2bb5c62795457df3ef97123c5"
+    },
+    "response": {
+      "data": {
+        "getLastScore": {
+          "body": {
+            "hatama": "703",
+            "bagrut": "111.38",
+            "psicho": "714",
+            "hatama_nihul": "704",
+            "hatama_refua": "703.40",
+            "hatama_handasa": "713",
+            "hatama_meduyakim": "713"
+          }
+        }
+      }
+    }
+  },
+  {
+    "caseId": "tau-B-scores",
+    "institutionId": "tau",
+    "function": "combined_score_variants",
+    "score_type": "general/management/engineering",
+    "profile": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 4,
+          "grade": 78
+        },
+        {
+          "name": "אנגלית",
+          "units": 4,
+          "grade": 82
+        },
+        {
+          "name": "ביולוגיה",
+          "units": 5,
+          "grade": 84
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 75
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 70
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 72
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 76
+        }
+      ],
+      "psychometricGeneral": 620,
+      "psychometricQuant": 120,
+      "psychometricVerbal": 125,
+      "psychometricEnglish": 118
+    },
+    "academic_year": null,
+    "inputs_entered": {
+      "query": "query getLastScore ($scoresData: JSON!) { getLastScore (scoresData: $scoresData) { body } }",
+      "variables": {
+        "scoresData": {
+          "prog": "calctziun",
+          "out": "json",
+          "reali10": 0,
+          "psicho": 620,
+          "bagrut": 90.05
+        }
+      }
+    },
+    "proof": {
+      "url": "https://go.tau.ac.il/graphql",
+      "method": "POST",
+      "timestamp": "2026-10-02T21:48:41.205058+00:00",
+      "status": 200,
+      "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/tau-B-scores-response.json",
+      "sha256": "c8601ccf37c6e7f7379f794704f1f324a4f1dcc8190d4c0c67263488631e1ecb"
+    },
+    "response": {
+      "data": {
+        "getLastScore": {
+          "body": {
+            "hatama": "548",
+            "bagrut": "90.05",
+            "psicho": "620",
+            "hatama_nihul": "577",
+            "hatama_refua": "547.82",
+            "hatama_handasa": "548",
+            "hatama_meduyakim": "548"
+          }
+        }
+      }
+    }
+  },
+  {
+    "caseId": "tau-C-scores",
+    "institutionId": "tau",
+    "function": "combined_score_variants",
+    "score_type": "general/management/engineering",
+    "profile": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 4,
+          "grade": 92
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "גיאוגרפיה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 90
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 86
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 90
+        }
+      ],
+      "psychometricGeneral": 680,
+      "psychometricQuant": 128,
+      "psychometricVerbal": 132,
+      "psychometricEnglish": 130
+    },
+    "academic_year": null,
+    "inputs_entered": {
+      "query": "query getLastScore ($scoresData: JSON!) { getLastScore (scoresData: $scoresData) { body } }",
+      "variables": {
+        "scoresData": {
+          "prog": "calctziun",
+          "out": "json",
+          "reali10": 0,
+          "psicho": 680,
+          "bagrut": 105.2
+        }
+      }
+    },
+    "proof": {
+      "url": "https://go.tau.ac.il/graphql",
+      "method": "POST",
+      "timestamp": "2026-10-02T21:48:46.454209+00:00",
+      "status": 200,
+      "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/tau-C-scores-response.json",
+      "sha256": "54c66c7ebea281ade34c35c9102bc34f342d00993b5a85f18992520da40b4ed3"
+    },
+    "response": {
+      "data": {
+        "getLastScore": {
+          "body": {
+            "hatama": "655",
+            "bagrut": "105.2",
+            "psicho": "680",
+            "hatama_nihul": "663",
+            "hatama_refua": "654.80",
+            "hatama_handasa": "655",
+            "hatama_meduyakim": "655"
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,152 @@
+{
+  "academic_year": null,
+  "caseId": "technion-A-chemistry100",
+  "change": "chemistry100",
+  "function": "general_sekem",
+  "inputs_entered": {
+    "G_1": "93",
+    "G_2": "90",
+    "G_3": "100",
+    "G_4": "",
+    "G_5": "",
+    "G_6": "",
+    "TC_CURRENT_URL": "admissions.technion.ac.il/calculator/",
+    "TC_URL": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/",
+    "academic": "false",
+    "academicGrade": "",
+    "academicHours": "",
+    "arabHistory": "",
+    "arbicLang": "",
+    "arc": "arcNo",
+    "bagrot": "true",
+    "bible": "80",
+    "druze": "",
+    "english": "92",
+    "ezrahut": "88",
+    "habaa": "84",
+    "hand1": "",
+    "hand10": "",
+    "hand2": "",
+    "hand3": "",
+    "hand4": "",
+    "hand5": "",
+    "hand6": "",
+    "hand7": "",
+    "hand8": "",
+    "hand9": "",
+    "handesae": "false",
+    "hebrew": "",
+    "hebrew_lit": "82",
+    "history": "85",
+    "israelPhil": "",
+    "mathclassification": "",
+    "mathematic": "95",
+    "mehinaAca": "",
+    "mehinaAve": "false",
+    "mehinaEng": "",
+    "mehinaMeth": "",
+    "mehinaPhy": "",
+    "memuca": "sehem",
+    "mikztootBhira_1": "פיזיקה",
+    "mikztootBhira_2": "מדעי המחשב",
+    "mikztootBhira_3": "כימיה",
+    "mikztootBhira_4": "0",
+    "mikztootBhira_5": "0",
+    "mikztootBhira_6": "0",
+    "psychometry": "714",
+    "y1": "5",
+    "y2": "5",
+    "y3": "5",
+    "y4": "0",
+    "y5": "0",
+    "y6": "0",
+    "yArabHistory": "0",
+    "yArbicLang": "0",
+    "yBible": "2",
+    "yDruze": "0",
+    "yEnglish": "5",
+    "yEzrahut": "2",
+    "yHabaa": "2",
+    "yHebrew": "0",
+    "yHebrew_lit": "2",
+    "yHistory": "2",
+    "yIsraelPhil": "0",
+    "yMathematic": "5",
+    "yYediat": "0",
+    "yediat": ""
+  },
+  "institutionId": "technion",
+  "method": "official_public_form_post",
+  "outputs": {
+    "bagrutAverage": 112.8,
+    "generalSekem": 91.0
+  },
+  "profile": {
+    "bagrutSubjects": [
+      {
+        "grade": 95,
+        "name": "מתמטיקה",
+        "units": 5
+      },
+      {
+        "grade": 92,
+        "name": "אנגלית",
+        "units": 5
+      },
+      {
+        "grade": 93,
+        "name": "פיזיקה",
+        "units": 5
+      },
+      {
+        "grade": 90,
+        "name": "מדעי המחשב",
+        "units": 5
+      },
+      {
+        "grade": 85,
+        "name": "היסטוריה",
+        "units": 2
+      },
+      {
+        "grade": 88,
+        "name": "אזרחות",
+        "units": 2
+      },
+      {
+        "grade": 80,
+        "name": "תנ\"ך",
+        "units": 2
+      },
+      {
+        "grade": 82,
+        "name": "ספרות",
+        "units": 2
+      },
+      {
+        "grade": 84,
+        "name": "הבעה עברית",
+        "units": 2
+      },
+      {
+        "grade": 100,
+        "name": "כימיה",
+        "units": 5
+      }
+    ],
+    "psychometricEnglish": 124,
+    "psychometricGeneral": 714,
+    "psychometricQuant": 145,
+    "psychometricVerbal": 137
+  },
+  "proof": {
+    "method": "POST",
+    "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/technion-A-chemistry100-response.html",
+    "sha256": "1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c",
+    "status": 200,
+    "timestamp": "2026-10-02T21:49:15.066483+00:00",
+    "url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php"
+  },
+  "response_text": " שימו לב, חישוב זה הוא כלי עזר בלבד. בכל מקרה של אי התאמה בין תוצאות חישוב זה, לבין מידע המתקבל מן הטכניון, קובע המידע שהתקבל מן הטכניון. חישוב ציון סכם לכל המסלולים פרט לארכיטקטורה ולאדריכלות נוף תוצאות חישוב הסכם חישוב סכם מקצוע מספר יחידות ציון בונוס בנקודות ציון עם בונוס ציוני הבגרות מקצועות אשר נכנסו לממוצע אנגלית 5 92 25 117 ספרות עברית 2 82 0 82 מתמטיקה 10 95 30 125 תנ\"ך 2 80 0 80 אזרחות 2 88 0 88 הבעה עברית 2 84 0 84 הסטוריה 2 85 0 85 כימיה 5 100 30 130 פיזיקה 5 93 30 123 מדעי המחשב 5 90 25 115 מקצועות אשר לא נכנסו לממוצע נתונים כללים ציון פסיכומטרי רב תחומי: 714 העתק תוצאות החישוב ממוצע ציוני הבגרות ללא בונוסים: 91.1 העתק ממוצע בגרות מיטבי: 112.8 העתק סכם לפי ממוצע בגרות מיטבי והציון הפסיכומטרי הרב תחומי: 91 העתק הסכם לדיוני הקבלה הוא:91 העתק אם אינכם יכולים להתקבל לעדיפויות המעניינות אתכם, אולי תשקלו ללמוד במכינת הטכניון? ",
+  "score_type": "general"
+}

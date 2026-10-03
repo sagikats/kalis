@@ -1,0 +1,355 @@
+{
+  "academic_year": null,
+  "academic_year_status": "not displayed by oracle",
+  "caseId": "technion-cluster-chemistry100-reordered",
+  "change": "Reorder elective form rows chemistry100/physics93/CS90",
+  "chosen_bonuses": [
+    {
+      "adjustedGrade": "117",
+      "bonus": "25",
+      "grade": "92",
+      "name": "אנגלית",
+      "weightedUnits": "5"
+    },
+    {
+      "adjustedGrade": "82",
+      "bonus": "0",
+      "grade": "82",
+      "name": "ספרות עברית",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "125",
+      "bonus": "30",
+      "grade": "95",
+      "name": "מתמטיקה",
+      "weightedUnits": "10"
+    },
+    {
+      "adjustedGrade": "80",
+      "bonus": "0",
+      "grade": "80",
+      "name": "תנ\"ך",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "88",
+      "bonus": "0",
+      "grade": "88",
+      "name": "אזרחות",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "84",
+      "bonus": "0",
+      "grade": "84",
+      "name": "הבעה עברית",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "85",
+      "bonus": "0",
+      "grade": "85",
+      "name": "הסטוריה",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "130",
+      "bonus": "30",
+      "grade": "100",
+      "name": "כימיה",
+      "weightedUnits": "5"
+    },
+    {
+      "adjustedGrade": "123",
+      "bonus": "30",
+      "grade": "93",
+      "name": "פיזיקה",
+      "weightedUnits": "5"
+    },
+    {
+      "adjustedGrade": "115",
+      "bonus": "25",
+      "grade": "90",
+      "name": "מדעי המחשב",
+      "weightedUnits": "5"
+    }
+  ],
+  "comparison": {
+    "original_mismatches": {
+      "bagrutAverage": {
+        "candidate": 113.5,
+        "official": "112.8"
+      },
+      "generalSekem": {
+        "candidate": 91.3,
+        "official": "91"
+      }
+    },
+    "original_source": {
+      "kind": "mitkablim_shipped_client_behavior",
+      "module": 221,
+      "officiallyVerified": false,
+      "sha256": "a791bb5641638ed160d4e3f0d85afacd9a147ed744772b7cad8668feb128976c"
+    },
+    "precision_proposal_mismatches": {}
+  },
+  "function": "general_sekem",
+  "input_order": [
+    {
+      "grade": "100",
+      "subject": "כימיה",
+      "units": "5"
+    },
+    {
+      "grade": "93",
+      "subject": "פיזיקה",
+      "units": "5"
+    },
+    {
+      "grade": "90",
+      "subject": "מדעי המחשב",
+      "units": "5"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    }
+  ],
+  "inputs_entered": {
+    "G_1": "100",
+    "G_2": "93",
+    "G_3": "90",
+    "G_4": "",
+    "G_5": "",
+    "G_6": "",
+    "TC_CURRENT_URL": "admissions.technion.ac.il/calculator/",
+    "TC_URL": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/",
+    "academic": "false",
+    "academicGrade": "",
+    "academicHours": "",
+    "arabHistory": "",
+    "arbicLang": "",
+    "arc": "arcNo",
+    "bagrot": "true",
+    "bible": "80",
+    "druze": "",
+    "english": "92",
+    "ezrahut": "88",
+    "habaa": "84",
+    "hand1": "",
+    "hand10": "",
+    "hand2": "",
+    "hand3": "",
+    "hand4": "",
+    "hand5": "",
+    "hand6": "",
+    "hand7": "",
+    "hand8": "",
+    "hand9": "",
+    "handesae": "false",
+    "hebrew": "",
+    "hebrew_lit": "82",
+    "history": "85",
+    "israelPhil": "",
+    "mathclassification": "",
+    "mathematic": "95",
+    "mehinaAca": "",
+    "mehinaAve": "false",
+    "mehinaEng": "",
+    "mehinaMeth": "",
+    "mehinaPhy": "",
+    "memuca": "sehem",
+    "mikztootBhira_1": "כימיה",
+    "mikztootBhira_2": "פיזיקה",
+    "mikztootBhira_3": "מדעי המחשב",
+    "mikztootBhira_4": "0",
+    "mikztootBhira_5": "0",
+    "mikztootBhira_6": "0",
+    "psychometry": "714",
+    "y1": "5",
+    "y2": "5",
+    "y3": "5",
+    "y4": "0",
+    "y5": "0",
+    "y6": "0",
+    "yArabHistory": "0",
+    "yArbicLang": "0",
+    "yBible": "2",
+    "yDruze": "0",
+    "yEnglish": "5",
+    "yEzrahut": "2",
+    "yHabaa": "2",
+    "yHebrew": "0",
+    "yHebrew_lit": "2",
+    "yHistory": "2",
+    "yIsraelPhil": "0",
+    "yMathematic": "5",
+    "yYediat": "0",
+    "yediat": ""
+  },
+  "institutionId": "technion",
+  "method": "official_public_form_post",
+  "outputs": {
+    "bagrutAverage": "112.8",
+    "generalSekem": "91",
+    "intermediates": {
+      "cappedUnroundedAverage": "112.825",
+      "includedSubjects": [
+        {
+          "adjustedGrade": "117",
+          "bonus": "25",
+          "grade": "92",
+          "name": "אנגלית",
+          "weightedUnits": "5"
+        },
+        {
+          "adjustedGrade": "82",
+          "bonus": "0",
+          "grade": "82",
+          "name": "ספרות עברית",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "125",
+          "bonus": "30",
+          "grade": "95",
+          "name": "מתמטיקה",
+          "weightedUnits": "10"
+        },
+        {
+          "adjustedGrade": "80",
+          "bonus": "0",
+          "grade": "80",
+          "name": "תנ\"ך",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "88",
+          "bonus": "0",
+          "grade": "88",
+          "name": "אזרחות",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "84",
+          "bonus": "0",
+          "grade": "84",
+          "name": "הבעה עברית",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "85",
+          "bonus": "0",
+          "grade": "85",
+          "name": "הסטוריה",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "130",
+          "bonus": "30",
+          "grade": "100",
+          "name": "כימיה",
+          "weightedUnits": "5"
+        },
+        {
+          "adjustedGrade": "123",
+          "bonus": "30",
+          "grade": "93",
+          "name": "פיזיקה",
+          "weightedUnits": "5"
+        },
+        {
+          "adjustedGrade": "115",
+          "bonus": "25",
+          "grade": "90",
+          "name": "מדעי המחשב",
+          "weightedUnits": "5"
+        }
+      ],
+      "uncappedUnroundedAverage": "112.825",
+      "weightSum": "40",
+      "weightedSum": "4513"
+    }
+  },
+  "profile": {
+    "bagrutSubjects": [
+      {
+        "grade": 95,
+        "name": "מתמטיקה",
+        "units": 5
+      },
+      {
+        "grade": 92,
+        "name": "אנגלית",
+        "units": 5
+      },
+      {
+        "grade": 93,
+        "name": "פיזיקה",
+        "units": 5
+      },
+      {
+        "grade": 90,
+        "name": "מדעי המחשב",
+        "units": 5
+      },
+      {
+        "grade": 85,
+        "name": "היסטוריה",
+        "units": 2
+      },
+      {
+        "grade": 88,
+        "name": "אזרחות",
+        "units": 2
+      },
+      {
+        "grade": 80,
+        "name": "תנ\"ך",
+        "units": 2
+      },
+      {
+        "grade": 82,
+        "name": "ספרות",
+        "units": 2
+      },
+      {
+        "grade": 84,
+        "name": "הבעה עברית",
+        "units": 2
+      },
+      {
+        "grade": 100,
+        "name": "כימיה",
+        "units": 5
+      }
+    ],
+    "psychometricEnglish": 124,
+    "psychometricGeneral": 714,
+    "psychometricQuant": 145,
+    "psychometricVerbal": 137
+  },
+  "proof": {
+    "method": "POST",
+    "original_path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/sha256-1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html",
+    "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/sha256-1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html",
+    "sha256": "1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c",
+    "status": 200,
+    "timestamp": "2026-10-02T22:01:33.140208+00:00",
+    "url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php"
+  },
+  "response_text": "שימו לב, חישוב זה הוא כלי עזר בלבד. בכל מקרה של אי התאמה בין תוצאות חישוב זה, לבין מידע המתקבל מן הטכניון, קובע המידע שהתקבל מן הטכניון. חישוב ציון סכם לכל המסלולים פרט לארכיטקטורה ולאדריכלות נוף תוצאות חישוב הסכם חישוב סכם מקצוע מספר יחידות ציון בונוס בנקודות ציון עם בונוס ציוני הבגרות מקצועות אשר נכנסו לממוצע אנגלית 5 92 25 117 ספרות עברית 2 82 0 82 מתמטיקה 10 95 30 125 תנ\"ך 2 80 0 80 אזרחות 2 88 0 88 הבעה עברית 2 84 0 84 הסטוריה 2 85 0 85 כימיה 5 100 30 130 פיזיקה 5 93 30 123 מדעי המחשב 5 90 25 115 מקצועות אשר לא נכנסו לממוצע נתונים כללים ציון פסיכומטרי רב תחומי: 714 העתק תוצאות החישוב ממוצע ציוני הבגרות ללא בונוסים: 91.1 העתק ממוצע בגרות מיטבי: 112.8 העתק סכם לפי ממוצע בגרות מיטבי והציון הפסיכומטרי הרב תחומי: 91 העתק הסכם לדיוני הקבלה הוא:91 העתק אם אינכם יכולים להתקבל לעדיפויות המעניינות אתכם, אולי תשקלו ללמוד במכינת הטכניון?",
+  "score_type": "general"
+}

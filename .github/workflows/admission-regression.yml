@@ -1,0 +1,50 @@
+name: Admission historical regression
+
+on:
+  pull_request:
+    paths:
+      - 'src/modules/calculators/**'
+      - 'src/modules/db/validation.ts'
+      - 'src/app/api/calculate/**'
+      - 'src/data/academicData.json'
+      - 'docs/threshold-collection/missing_programs.csv'
+      - 'verification/**'
+      - 'package*.json'
+      - '.github/workflows/admission-regression.yml'
+  workflow_dispatch:
+    inputs:
+      cadence:
+        type: choice
+        options: [daily, weekly]
+        default: weekly
+  schedule:
+    - cron: '17 2 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: admission-regression-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  historical-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '25.6.1'
+      - run: npm ci --ignore-scripts
+      - run: npm run admissions:test
+      - run: npm run admissions:regression -- --cadence "$CADENCE"
+        env:
+          CADENCE: ${{ inputs.cadence || 'weekly' }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: admission-historical-regression
+          path: .admission-validation/latest.json
+          include-hidden-files: true
+          retention-days: 7

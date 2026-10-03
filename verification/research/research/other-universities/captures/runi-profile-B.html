@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he">
+<head>
+     <!-- Version: 1.0.0.6 S:B03-->
+
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,9" /><title>
+	תוצאות חישוב נתוני בגרויות ופסיכומטרי
+</title><link rel="canonical" href="https://www.runi.ac.il/bagrutexamscalculator/default.aspx" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" /><meta name="description" content="מחשבון בגרויות חישוב ממוצע תעודת בגרות" /><link href="Content/bootstrap.min.css" rel="stylesheet" /><link href="Content/bootstrap-rtl.min.css" rel="stylesheet" />   
+    <!-- Latest compiled and minified CSS -->
+    
+    <link href="Content/Styles/bootstrap-select.min.css" rel="stylesheet" /><link href="Content/Styles/BagrutExamsCalculator.css" rel="stylesheet" />     
+    <script type="text/javascript" src="Scripts/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>  
+    <script type="text/javascript" src="Scripts/jquery.placeholder.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    
+    <script src="Scripts/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            var iscontrastColor = localStorage.getItem('contrastColors');
+            if(iscontrastColor != null && iscontrastColor != undefined){
+                $('body').toggleClass('contrastColors');
+            }
+          
+        };
+        //$(document).ready(function() {
+        //    $('select').selectpicker();
+        //});
+    </script>  
+</head>
+<body>    
+    <form method="post" action="./default.aspx" id="firstDegreeLeadform">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+
+<script src="/BagrutExamsCalculator/Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A7B77951" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="oozoKgbME+FqYGQDyxRUJWeRrmTqjNVDjHYTLS8x49jxl6ElV79oZYU8mByRLT2ydpTLVMteqO518Dl+7KvABasqWsI8vYpn+mkvyDgpNT8KYS3ztF2NrLd5LctJ/PPUzNoB7yU+PiHebdI0+fo1FFnRfcRWr9Nn5wM8/6WOdjFLGq92CPWc7JNkP2HiJPz4e/86p9CaullIHmH+hiQhlUZq8qrsemgZQYdCZePpnl7Su6SVeMoQ1p7IR9JTnkn4myYPJmEnIXBCra1gzOqRP18X7uTNDR3b6CuM2V4eqyDGlFDo6AtIHfS1BTLB47DrzJIgsFlKOFtptMQ0juTyKyW27PpcX/PDDOYs3JDlh5ZVGluD9LVbF/7j7KKrbMoo+c648RadQ8rIjOxcXyCdVPfZQZXrPsFxEHPu9IDH7N6btPYFfm3kXcxBrnrswynN" />
+        <div>
+            &nbsp;
+
+<div id="resultsContainer" class="container">
+        <div class="page-header">
+            <h2 id="calculated-results-header" tabindex="-1">תוצאות חישוב נתוני בגרויות ופסיכומטרי</h2>
+        </div>
+        <div class="panel panel-default">
+            <div id="resultsPanelBody" class="panel-body" role="table" tabindex="0" aria-live="polite" aria-label="תוצאות חישוב נתוני בגרויות ופסיכומטרי">
+                
+                        <div class="row" role="row">
+                            <div class="col-md-4 col-xs-4" role="columnheader" aria-hidden="true">
+                                <strong id="MandatoryCoursesTitle">מקצועות חובה</strong>
+
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="columnheader" aria-hidden="true">
+                                ציון
+                                
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="columnheader" aria-hidden="true">
+                                ציון + בונוס
+                                
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="columnheader" aria-hidden="true">
+                                יחידות
+                                
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="columnheader" aria-hidden="true">
+                                חסר
+                                
+                            </div>
+                        </div>
+                        <div class="row" aria-hidden="true">
+                            <div class="col-md-12 col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="1">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                תנ"ך
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון בתנ"ך - מקצוע חובה:</span>
+                                70
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                70
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                2
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="2">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                ספרות
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון בספרות - מקצוע חובה:</span>
+                                72
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                72
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                2
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="3">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                הבעה עברית
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון בהבעה עברית - מקצוע חובה:</span>
+                                76
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                76
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                2
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="4">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                אנגלית
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון באנגלית - מקצוע חובה:</span>
+                                82
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                94.5
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                4
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="5">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                ערבית לערבים
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון בערבית לערבים - מקצוע חובה:</span>
+                                0
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                0
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                0
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-remove xmark' aria-label='לא הוזן ציון למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="6">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                הסטוריה
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון בהסטוריה - מקצוע חובה:</span>
+                                75
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                75
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                2
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="7">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                אזרחות
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון באזרחות - מקצוע חובה:</span>
+                                80
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                80
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                2
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="8">
+                            <div class="col-md-4 col-xs-4">
+                                <span class="sr-only">מקצוע חובה</span>
+                                מתמטיקה
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון במתמטיקה - מקצוע חובה:</span>
+                                78
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                90.5
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                4
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                    
+                <div class="row" aria-hidden="true">
+                    <div class="col-md-12 col-xs-12">&nbsp;</div>
+                </div>
+                
+                        <div class="row" role="row" aria-hidden="true">
+                            <div class="col-md-4 col-xs-4" role="cell">
+                                <strong>מקצועות בחירה</strong>
+
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                ציון
+                                
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                ציון + בונוס
+                                
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                יחידות
+                                
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                חסר
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12" role="cell">&nbsp;</div>
+                        </div>
+                    
+                        <div class="row" role="row" aria-rowindex="1">
+                            <div class="col-md-4 col-xs-4" role="cell">
+                                <span class="sr-only">מקצוע בחירה</span>
+                                ביולוגיה
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון בביולוגיה - מקצוע בחירה:</span>
+                                84
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">ציון + בונוס</span>
+                                109
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">יחידות</span>
+                                5
+                            </div>
+                            <div class="col-md-2 col-xs-2" role="cell">
+                                <span class="sr-only">חסר</span>
+                                <span class='glyphicon glyphicon-ok vmark' aria-label='ציון הוזן למקצוע זה' />
+
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm" aria-hidden="true">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                    
+                    
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <h3>
+                            <strong>ממוצע משוקלל:</strong>
+
+                        </h3>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+
+                        <span id="lblAvg">90.05</span>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <h3>
+                            <strong>ציון מתואם</strong> (בגרות + פסיכומטרי):
+                            
+                        </h3>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+
+                        <span id="lblMetoam">588.24</span>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-xs-2"></div>
+                <div class="col-md-2 col-xs-8">
+                    
+                    <a onclick="window.history.back()" class="submit-btn btn" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') { window.history.back(); return false; }"><span class="glyphicon glyphicon-refresh"></span>&nbsp;חישוב מחדש</a>
+                </div>
+                <div class="col-md-5 col-xs-2"></div>
+            </div>
+            <br />
+        </div>
+
+        <!-- Lead Form -->
+
+        <div id="LeadForm" class="formContainer">
+            <h3>
+                רוצים לדעת מהם סיכויי הקבלה שלכם לאוניברסיטת רייכמן?<br />
+                השאירו פרטים ונחזור אליכם בהקדם
+            </h3>
+
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label id="lblFullName" for="FullName" class="label">
+                            *
+                            שם מלא (פרטי ומשפחה)
+                            
+                            &nbsp;
+                        </label>
+                        <input name="Calculator$FullName" type="text" id="FullName" class="form-control text-right leads-form-control" aria-describedby="RegularExpressionValidatorFullName" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label id="lblPhone" for="Phone" class="label">
+                            *
+                            טלפון
+                            
+                            &nbsp;
+                        </label>
+                        <input name="Calculator$Phone" type="text" id="Phone" class="form-control text-left leads-form-control" aria-describedby="ReqPhone" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 hidden-xs">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+
+                        <label id="lblEmail" for="Email" class="label">
+                            *
+                            מייל
+                            
+                            
+                        </label>
+                        <input name="Calculator$Email" type="text" id="Email" class="form-control text-left leads-form-control" aria-describedby="valRegEmail" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label id="lblStudyField" for="StudyField" class="label">
+                            *
+                            מה מעניין אותך ללמוד?
+                            
+                        </label>
+                        <select name="Calculator$StudyField" id="StudyField" class="form-control leads-form-control" data-size="3" data-width="100%" data-label="בחר תחום לימוד">
+	<option selected="selected" value="-1" aria-hidden="true"></option>
+	<option value="משפטים">משפטים</option>
+	<option value="מנהל עסקים">מנהל עסקים</option>
+	<option value="חשבונאות">חשבונאות</option>
+	<option value="מדעי המחשב">מדעי המחשב</option>
+	<option value="ממשל">ממשל</option>
+	<option value="תקשורת">תקשורת</option>
+	<option value="פסיכולוגיה">פסיכולוגיה</option>
+	<option value="כלכלה">כלכלה</option>
+	<option value="קיימות">קיימות</option>
+	<option value="יזמות">יזמות</option>
+	<option value="עוד לא החלטתי">עוד לא החלטתי</option>
+
+</select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 hidden-xs">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <div class="checkboxRadioContainer" data-toggle="buttons">
+                            <label for="approve">
+                                
+                                <span class="checkboxPic"></span>
+                                <span class="checkboxText" tabindex="0">
+                                    פנייתך ומילוי הטופס מהווים הסכמה כי הפרטים ישמשו את אוניברסיטת רייכמן לשליחת מידע ועדכונים</span>
+                            </label>
+                            <a href="https://www.runi.ac.il/privacy-policy/" id="privacylink" class="privacylink" target="_blank">מדיניות הפרטיות שלנו</a><br />
+                            <div>* - שדה חובה</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <input type="submit" name="Calculator$Submit" value="שליחה" onclick="this.disabled = true;__doPostBack(&#39;Calculator$Submit&#39;,&#39;&#39;);WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;Calculator$Submit&quot;, &quot;&quot;, true, &quot;LeadForm&quot;, &quot;&quot;, false, false))" id="Submit" class="btn btn-primary confirmationBtn float-left" />
+                </div>
+            </div>
+        </div>
+        <div id="LeadSubmissionMessagesContainer" class="panel panel-default text- center hidden">
+            <div class="panel-body">
+                
+                <h3>
+                    לצערנו משהו השתבש בשליחת הפרטים שלך.
+                </h3>
+                <div>
+                     נשמח אם תנסו אותנו בוואטסאפ שמספרו <a href="https://api.whatsapp.com/send?phone=952547318396">054-7318396</a> או במייל <a href="mailto:rishum@runi.ac.il">rishum@runi.ac.il</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="Scripts/validations.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+    function registerRadio_toggle(objLink) {
+        var ulObj = objLink.parentNode;
+        ulObj = ulObj.parentNode;
+        var ulObjLinks = ulObj.getElementsByTagName("A");
+
+        for (var i = 0; i < ulObjLinks.length; i++)
+            ulObjLinks[i].className = "";
+        objLink.className = "registerRadio_selected";
+        var hdnIsExternal = document.getElementById("hdnIsExternal");
+        if ((hdnIsExternal.value === "false") || (hdnIsExternal.value === "")) {
+            hdnIsExternal.value = "true";
+        }
+        else {
+            hdnIsExternal.value = "false";
+        }
+    }
+    function setIsExternal(status) {
+        var hdnIsExternal = document.getElementById("hdnIsExternal");
+        var bagrutTypeRegular = document.getElementById("bagrutTypeRegular");
+        var bagrutTypeExterni = document.getElementById("bagrutTypeExterni");
+        if (status) {
+            bagrutTypeRegular.checked = false;
+            bagrutTypeExterni.checked = true;
+            hdnIsExternal.value = "true";
+        } else {
+            bagrutTypeRegular.checked = true;
+            bagrutTypeExterni.checked = false;
+            hdnIsExternal.value = "false";
+        }
+    }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    function goBack() {
+        window.history.back();
+    }
+    function setCalcResultsFocus() {
+        document.getElementById('resultsPanelBody').focus();
+        //document.getElementById('calculated-results-header').focus();
+    }
+    function ValidateMinimalPoints() {
+        const inputElementsMandatory = document.querySelectorAll('input[id*="txt_mandatory_units"]');
+        const inputElementsMandatoryGrades = document.querySelectorAll('input[id*="txt_mandatory_grade"]');
+        const inputElementsChoice = document.querySelectorAll('input[id*="txt_choice_units"]');
+        const inputElementsChoiceGrades = document.querySelectorAll('input[id*="txt_choice_grade"]');
+        let totalSum = 0;
+        let totalMissingGrades = 0;
+        let indexMandatoryFields = 0;
+        let indexChoiceFields = 0;
+        inputElementsMandatory.forEach(input => {
+            const value = parseFloat(input.value) || 0; // Parse value as a float or default to 0 if not a number
+            const gradeValue = parseFloat(inputElementsMandatoryGrades[indexMandatoryFields].value) || 0;
+            if (gradeValue !== 0 && value === 0) {
+                input.classList.toggle('input-has-error');
+                input.ariaInvalid = true;
+                input.ariaRequired = true;
+                input.required = true;
+                input.setCustomValidity('יש להזין את מספר יחידות הבגרות ');
+            }
+            if (gradeValue > 0 && gradeValue <= 100) {
+                totalSum += value;
+            }
+            else if ((gradeValue <= 0 || gradeValue > 100) && value !== 0) {
+                totalMissingGrades++;
+                inputElementsMandatoryGrades[indexMandatoryFields].classList.toggle('input-has-error');
+                inputElementsMandatoryGrades[indexMandatoryFields].ariaInvalid = true;
+                inputElementsMandatoryGrades[indexMandatoryFields].ariaRequired = true;
+                inputElementsMandatoryGrades[indexMandatoryFields].required = true;
+
+            }
+            else if (gradeValue > 0 && gradeValue <= 100 && value === 0) {
+                input.classList.toggle('input-has-error');
+                input.ariaInvalid = true;
+                input.ariaRequired = true;
+                input.required = true;
+                inputElementsMandatoryGrades[indexMandatoryFields].classList.remove('input-has-error');
+                inputElementsMandatoryGrades[indexMandatoryFields].ariaInvalid = false;
+            }
+            else if (gradeValue > 0 && gradeValue <= 100 && value > 0) {
+                input.classList.remove('input-has-error');
+                input.ariaInvalid = false;
+                //document.getElementById(inputElementsMandatoryGrades[indexMandatoryFields].id).setCustomValidity('');
+                inputElementsMandatoryGrades[indexMandatoryFields].classList.remove('input-has-error');
+                inputElementsMandatoryGrades[indexMandatoryFields].ariaInvalid = false;
+            }
+            indexMandatoryFields++;
+        });
+        inputElementsChoice.forEach(input => {
+            const value = parseFloat(input.value) || 0; // Parse value as a float or default to 0 if not a number
+            const gradeValue = parseFloat(inputElementsChoiceGrades[indexChoiceFields].value) || 0;
+            if (gradeValue !== 0 && value === 0) {
+                input.classList.toggle('input-has-error');
+                input.ariaInvalid = true;
+                input.ariaRequired = true;
+                input.required = true;
+                input.setCustomValidity('יש להזין את מספר יחידות הבגרות ');
+            }
+            if (gradeValue > 0) {
+                totalSum += value;
+            }
+            else if (gradeValue === 0 && value !== 0) {
+                totalMissingGrades++;
+                inputElementsChoiceGrades[indexChoiceFields].classList.toggle('input-has-error');
+                inputElementsChoiceGrades[indexChoiceFields].ariaInvalid = true;
+                inputElementsChoiceGrades[indexChoiceFields].ariaRequired = true;
+                inputElementsChoiceGrades[indexChoiceFields].required = true;
+            }
+            else if (gradeValue > 0 && value === 0) {
+                input.classList.toggle('input-has-error');
+                input.ariaInvalid = true;
+                input.ariaRequired = true;
+                input.required = true;
+            }
+            else if (gradeValue > 0 && value > 0) {
+                input.classList.remove('input-has-error');
+                input.ariaInvalid = false;
+            }
+            indexChoiceFields++;
+        });
+        const ipe = document.getElementById('invalid-points-error');
+        if (totalSum < 20 && totalMissingGrades === 0) {
+            if (ipe.classList.contains('hidden')) {
+                ipe.classList.remove('hidden');
+            }
+            return false;
+        }
+        else {
+            if (!ipe.classList.contains('hidden')) {
+                ipe.classList.add('hidden');
+            }
+            return true;
+        }
+    }
+    function validateGrade(source, arguments) {
+        if (isNaN(arguments.Value)) {
+            arguments.IsValid = false;
+        }
+        else if (parseInt(arguments.Value) < 0 || parseInt(arguments.Value) > 100) {
+            arguments.IsValid = false;
+        } else {
+            arguments.IsValid = true;
+        }
+    }
+    window.onload = function () {
+        const perfEntries = performance.getEntriesByType('navigation');
+        if (perfEntries.length && perfEntries[0].type === 'back_forward') {
+            console.log('User got here from Back or Forward button.');
+
+            // Access the parent document
+            //const parentDocument = parent.document;
+
+            // Set focus to the heading element in the parent document
+            //const pageTitle = parentDocument.querySelector('.pageTitle');
+            //if (pageTitle) {
+            //pageTitle.style.border = "solid 1px red";
+            //pageTitle.setAttribute('tabindex', '-1'); // Make it focusable
+            //pageTitle.focus();
+
+            // Use ARIA live region to notify screen readers
+            const liveRegion = document.createElement('div');
+            liveRegion.setAttribute('role', 'alert');
+            liveRegion.setAttribute('aria-live', 'assertive');
+            liveRegion.style.position = 'absolute';
+            liveRegion.style.width = '1px';
+            liveRegion.style.height = '1px';
+            liveRegion.style.margin = '-1px';
+            liveRegion.style.border = '0';
+            liveRegion.style.padding = '0';
+            liveRegion.style.overflow = 'hidden';
+            liveRegion.style.clip = 'rect(0, 0, 0, 0)';
+            liveRegion.innerText = 'חזרת למחשבון בגרויות חישוב ממוצע תעודת בגרות';//'חזרת ל ' + pageTitle.innerText;
+            document.body.appendChild(liveRegion);
+
+            // Remove the live region after it has been read
+            setTimeout(() => {
+                document.body.removeChild(liveRegion);
+            }, 1000);
+            //}
+        }
+        const inputElementsMandatory = document.querySelectorAll('input[id*="txt_mandatory_units"]');
+        const inputElementsMandatoryGrades = document.querySelectorAll('input[id*="txt_mandatory_grade"]');
+        const inputElementsChoice = document.querySelectorAll('input[id*="txt_choice_units"]');
+        const inputElementsChoiceGrades = document.querySelectorAll('input[id*="txt_choice_grade"]');
+        inputElementsMandatory.forEach(input => {
+            input.setCustomValidity('');
+            input.addEventListener('invalid', function (event) {
+                if (event.target.validity.valueMissing) {
+                    event.target.setCustomValidity('יש להזין את מספר יחידות הבגרות ');
+                }
+                if (event.target.validity.rangeOverflow || event.target.validity.rangeUnderflow) {
+                    event.target.setCustomValidity('יש להקליד יחידות בתחום (0-21)');
+                }
+            });
+            input.addEventListener('change', function (event) {
+                event.target.classList.remove('input-has-error');
+                event.target.setCustomValidity('');
+            })
+        });
+        inputElementsChoice.forEach(input => {
+            input.setCustomValidity('');
+            input.addEventListener('invalid', function (event) {
+                if (event.target.validity.valueMissing) {
+                    event.target.setCustomValidity('יש להזין את מספר יחידות הבגרות ');
+                }
+                if (event.target.validity.rangeOverflow || event.target.validity.rangeUnderflow) {
+                    event.target.setCustomValidity('יש להקליד יחידות בתחום (0-21)');
+                }
+            });
+            input.addEventListener('change', function (event) {
+                event.target.classList.remove('input-has-error');
+                event.target.setCustomValidity('');
+            })
+        });
+        inputElementsMandatoryGrades.forEach(input => {
+            input.setCustomValidity('');
+            input.addEventListener('invalid', function (event) {
+                if (event.target.validity.valueMissing) {
+                    event.target.setCustomValidity('יש להזין את ציון הבגרות שהתקבל ');
+                }
+                if (event.target.validity.rangeOverflow || event.target.validity.rangeUnderflow) {
+                    event.target.setCustomValidity('יש להקליד ציון בתחום (0-100)');
+                }
+            });
+            input.addEventListener('change', function (event) {
+                event.target.classList.remove('input-has-error');
+                event.target.setCustomValidity('');
+            })
+        });
+        inputElementsChoiceGrades.forEach(input => {
+            input.setCustomValidity('');
+            input.addEventListener('invalid', function (event) {
+                if (event.target.validity.valueMissing) {
+                    event.target.setCustomValidity('יש להזין את ציון הבגרות שהתקבל ');
+                }
+                if (event.target.validity.rangeOverflow || event.target.validity.rangeUnderflow) {
+                    event.target.setCustomValidity('יש להקליד ציון בתחום (0-100)');
+                }
+            });
+            input.addEventListener('change', function (event) {
+                event.target.classList.remove('input-has-error');
+                event.target.setCustomValidity('');
+            })
+        });
+    };
+
+    window.addEventListener("pageshow", function (event) {
+        // Check if the event's persisted property is false
+        // This indicates that the page is being loaded from the session history
+        if (event.persisted) {
+            // If persisted is true, it means the page is not from the cache
+            // You may not want to set focus in this case, as the page is being reloaded           
+            return;
+        }
+        //this.document.getElementById("calculator-panel").scrollIntoView();
+        setTimeout(function () {
+            // Scroll to the top of the page
+            window.scrollTo(0, 0);
+        }, 5);
+    });
+</script>
+
+        </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+setCalcResultsFocus();//]]>
+</script>
+</form>
+</body>
+</html>

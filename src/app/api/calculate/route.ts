@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { CalculateSekemRequestSchema } from '@/modules/db';
-import { calculateAllInstitutions, calculateInstitution } from '@/modules/calculators';
+import { CalculateSekemRequestSchema, calculatorInputFromProfile } from '../../../modules/db/validation';
+import { calculateAllInstitutions, calculateInstitution } from '../../../modules/calculators';
 
 export async function POST(req: NextRequest) {
 	try {
@@ -20,21 +20,7 @@ export async function POST(req: NextRequest) {
 
 		const { profile, institutionIds } = parseResult.data;
 
-		const calcInput = {
-			bagrutSubjects: profile.bagrutSubjects.map((s) => ({
-				name: s.name,
-				units: s.units,
-				grade: s.grade
-			})),
-			psychometricGeneral: profile.psychometricGeneral,
-			psychometricQuant: profile.psychometricQuant,
-			psychometricVerbal: profile.psychometricVerbal,
-			psychometricEnglish: profile.psychometricEnglish,
-			mathUnits: profile.mathUnits,
-			mathGrade: profile.mathGrade,
-			physicsUnits: profile.physicsUnits,
-			physicsGrade: profile.physicsGrade
-		};
+		const calcInput = calculatorInputFromProfile(profile);
 
 		if (institutionIds && institutionIds.length > 0) {
 			const results = institutionIds.map((id) => calculateInstitution(id, calcInput));

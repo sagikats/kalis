@@ -1,0 +1,657 @@
+{
+  "schema_version": 1,
+  "scope": "Historical exact numeric regression, 25/29 matches; no current-year/all-input verification",
+  "cases": [
+    {
+      "caseId": "tau-A",
+      "institutionId": "tau",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.38",
+          "actual": 111.38,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "tau-B",
+      "institutionId": "tau",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "90.05",
+          "actual": 90.05,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "tau-C",
+      "institutionId": "tau",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "105.2",
+          "actual": 105.2,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.1",
+          "actual": 111.1,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "90.1",
+          "actual": 90.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-B",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "87.5",
+          "actual": 87.5,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "71.3",
+          "actual": 71.3,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-math4",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "103.9",
+          "actual": 103.9,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "86.5",
+          "actual": 86.5,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-english59",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "102.8",
+          "actual": 102.8,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "86",
+          "actual": 86,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-english60",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "106.5",
+          "actual": 106.5,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "87.8",
+          "actual": 87.8,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-english61",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "106.7",
+          "actual": 106.7,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "87.9",
+          "actual": 87.9,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-geography40",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.1",
+          "actual": 111.1,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "90.1",
+          "actual": 90.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-geography100",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "112.2",
+          "actual": 112.2,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "90.7",
+          "actual": 90.7,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-high98",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "119",
+          "actual": 119,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "94.1",
+          "actual": 94.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-high99",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "119",
+          "actual": 119,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "94.1",
+          "actual": 94.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-high100",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "119",
+          "actual": 119,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "94.1",
+          "actual": 94.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-C",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "101.5",
+          "actual": 101.5,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "82.8",
+          "actual": 82.8,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-chemistry100",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": 112.8,
+          "actual": 112.8,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": 91.0,
+          "actual": 91,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-high97",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": 118.3,
+          "actual": 118.3,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": 93.7,
+          "actual": 93.7,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-CS-to-chemistry",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.1",
+          "actual": 111.1,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "90.1",
+          "actual": 90.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "tau-A-scores",
+      "institutionId": "tau",
+      "numeric_parity": false,
+      "comparisons": [
+        {
+          "field": "generalSekem",
+          "expected": "703",
+          "actual": 703,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "managementSekem",
+          "expected": "704",
+          "actual": 704,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "engineeringSekem",
+          "expected": "713",
+          "actual": 713,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "exactSciencesSekem",
+          "expected": "713",
+          "actual": null,
+          "match": false,
+          "decimal_places": null
+        },
+        {
+          "field": "medicinePreliminary",
+          "expected": "703.40",
+          "actual": null,
+          "match": false,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "tau-B-scores",
+      "institutionId": "tau",
+      "numeric_parity": false,
+      "comparisons": [
+        {
+          "field": "generalSekem",
+          "expected": "548",
+          "actual": 548,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "managementSekem",
+          "expected": "577",
+          "actual": 577,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "engineeringSekem",
+          "expected": "548",
+          "actual": 548,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "exactSciencesSekem",
+          "expected": "548",
+          "actual": null,
+          "match": false,
+          "decimal_places": null
+        },
+        {
+          "field": "medicinePreliminary",
+          "expected": "547.82",
+          "actual": null,
+          "match": false,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "tau-C-scores",
+      "institutionId": "tau",
+      "numeric_parity": false,
+      "comparisons": [
+        {
+          "field": "generalSekem",
+          "expected": "655",
+          "actual": 655,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "managementSekem",
+          "expected": "663",
+          "actual": 663,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "engineeringSekem",
+          "expected": "655",
+          "actual": 655,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "exactSciencesSekem",
+          "expected": "655",
+          "actual": null,
+          "match": false,
+          "decimal_places": null
+        },
+        {
+          "field": "medicinePreliminary",
+          "expected": "654.80",
+          "actual": null,
+          "match": false,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-A-english61-P620",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "106.7",
+          "actual": 106.7,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "80.8",
+          "actual": 80.8,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-cluster-chemistry100-reordered",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "112.8",
+          "actual": 112.8,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "91",
+          "actual": 91,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-cluster-biology100",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "112.8",
+          "actual": 112.8,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "91",
+          "actual": 91,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-cluster-biology85",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.1",
+          "actual": 111.1,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "90.1",
+          "actual": 90.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "technion-cluster-chemistry59-first",
+      "institutionId": "technion",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.1",
+          "actual": 111.1,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "generalSekem",
+          "expected": "90.1",
+          "actual": 90.1,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "reichman-A",
+      "institutionId": "reichman",
+      "numeric_parity": false,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "111.38",
+          "actual": 111.38,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "officialScore",
+          "expected": "739.13",
+          "actual": 739.12,
+          "match": false,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "reichman-B",
+      "institutionId": "reichman",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "90.05",
+          "actual": 90.05,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "officialScore",
+          "expected": "588.24",
+          "actual": 588.24,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    },
+    {
+      "caseId": "reichman-C",
+      "institutionId": "reichman",
+      "numeric_parity": true,
+      "comparisons": [
+        {
+          "field": "bagrutAverage",
+          "expected": "105.2",
+          "actual": 105.2,
+          "match": true,
+          "decimal_places": null
+        },
+        {
+          "field": "officialScore",
+          "expected": "691.94",
+          "actual": 691.94,
+          "match": true,
+          "decimal_places": null
+        }
+      ]
+    }
+  ]
+}

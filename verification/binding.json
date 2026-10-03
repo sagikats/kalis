@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "reference_max_age_days": 7,
+  "candidate_binding": {
+    "command": [
+      "node",
+      "verification/candidate.cjs"
+    ],
+    "source_artifact": "src/modules/calculators/index.ts",
+    "source_sha256": "74c230339d3cad6e207832a4f9e3c1b2526b54f91f05dcb8df9ed286c8fb7d8a",
+    "artifacts": [
+      {
+        "path": "src/modules/calculators/ariel.ts",
+        "sha256": "5162033b86cc9fcbd5e2cf2b10f7eb49fc82120155f40f29744a41779ef18a52"
+      },
+      {
+        "path": "src/modules/calculators/barIlan.ts",
+        "sha256": "87594c777a62409d3606936b6e411de8a9da7957965afec877c7990aca50ee82"
+      },
+      {
+        "path": "src/modules/calculators/bgu.ts",
+        "sha256": "cd36a79343c8943bed432815798d8da19234120ac0250efda93495eb9cdf44fd"
+      },
+      {
+        "path": "src/modules/calculators/haifa.ts",
+        "sha256": "ba74ef87407228c1135a53e65d2dcbe804e9d388381939e97cb67f25c24a10ca"
+      },
+      {
+        "path": "src/modules/calculators/huji.ts",
+        "sha256": "0eade1cfe6e5203084b5c5ecfdc29aaca4b6e1681b37bbb2d70675d1c241ba0e"
+      },
+      {
+        "path": "src/modules/calculators/index.ts",
+        "sha256": "74c230339d3cad6e207832a4f9e3c1b2526b54f91f05dcb8df9ed286c8fb7d8a"
+      },
+      {
+        "path": "src/modules/calculators/optimalAverage.ts",
+        "sha256": "48739d49c876fcf6bd22b4acb0ab59d8d01c5713fc861664c54af09605ff9606"
+      },
+      {
+        "path": "src/modules/calculators/reichman.ts",
+        "sha256": "0bf40cc857380e97be8bb159210d89969173752a9ec9074f4aca9282cadf834b"
+      },
+      {
+        "path": "src/modules/calculators/subjectMatchers.ts",
+        "sha256": "b9a0cf4aa8a3b3a8c08d0860e8fff0fdeafa616d0eb349769a281ca630552cb2"
+      },
+      {
+        "path": "src/modules/calculators/tau.ts",
+        "sha256": "e01b6ba1ecd508bae1fbb84a86c62815c062915404f37e9e886872cd3ed89335"
+      },
+      {
+        "path": "src/modules/calculators/technion.ts",
+        "sha256": "ace342fdd03af7fdd0780576188a2ea8a3b1f9b12ebc726c5745826c93aadf5d"
+      },
+      {
+        "path": "src/modules/calculators/types.ts",
+        "sha256": "045ad89b832265267363915a793be0312123b011de31e81b90d2c9b509b2ba30"
+      },
+      {
+        "path": "verification/candidate.cjs",
+        "sha256": "cf11dab666516085975bc321ac9c796a286a2939b66ed91c0d3173bea978790a"
+      },
+      {
+        "path": "package.json",
+        "sha256": "6a9b2345309757e1908caadc39f654035d90f665092738b213c2d55e22a97c75"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "9d8d992361089a88078cd1dbf214d9c91f7331e6beb781300697af9783e2ff8d"
+      },
+      {
+        "path": "node_modules/jiti/package.json",
+        "sha256": "aab8aafc42d9aeec14a6e2fe0e15ea1514c0c205a624055a7e776f2ec456283c"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti-cli.mjs",
+        "sha256": "8829aad7e953f97ef9e25782c99eafa013efa0c36db7c2ffebcc140bd8eeaf54"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti-hooks.mjs",
+        "sha256": "77ae6f21746a3fe3ab7897f3c6ebf38d1b880720cf588a66aa8fc85c5afa7fb7"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti-native.mjs",
+        "sha256": "041dbe425c05afb43cbc4d3058dc1d74e420660d1b33d415a190e7480ef11587"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti-register.mjs",
+        "sha256": "11e95e8927697942853bc80599c990c000be9a0000156043d5fe920e1f9dabfc"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti-static.mjs",
+        "sha256": "0d873b8be0c9e08e1136ea428175de8cf8a200c67b6b83283a009b3f46ff4a3a"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti.cjs",
+        "sha256": "a80e7f04d21d4ef5c540287e41d6ab36dbff73132620e1894cd83425bb1e62a7"
+      },
+      {
+        "path": "node_modules/jiti/lib/jiti.mjs",
+        "sha256": "48a7909df16a2a93e814d2c7a6f105eea7b291ae6bcb968fb2ca21a37cb61b1e"
+      },
+      {
+        "path": "node_modules/jiti/dist/babel.cjs",
+        "sha256": "b3bc89a8dc40860fb6a7a78512bdfe5976c6253e6ded74b7d96ece803cac8701"
+      },
+      {
+        "path": "node_modules/jiti/dist/jiti.cjs",
+        "sha256": "a0b3b8d5e06a0519c66b62179e29200533057920f6f11370546e979dacd24c49"
+      }
+    ]
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "verification/monitor.py",
+      "sha256": "d0c6556c8763686587843c355434f0c49d9872585690824f5f1734cbe06286e7"
+    },
+    {
+      "path": "verification/numeric-baseline.json",
+      "sha256": "dd3ea2d446429f4fcf8728607d4ce5335a7700eab636d2b5a919b118fcb81f5d"
+    },
+    {
+      "path": "verification/coverage.json",
+      "sha256": "596798a031b5a8536d2b28682662c0fdb19afc93000f0edab9873c01eb1cb73c"
+    },
+    {
+      "path": "verification/research/manifest.json",
+      "sha256": "9c29912a913daff04c0ff514760c9eaf7f61098eb45c8ca502ad9ea29ec8895d"
+    },
+    {
+      "path": "src/modules/db/validation.ts",
+      "sha256": "43e495745f18d611e987a5141a9d965f94d3cdb025f49dd4524baa54463ff7ea"
+    },
+    {
+      "path": "src/app/api/calculate/route.ts",
+      "sha256": "a3b09c0bbff4c4ca4797254e8e9290b4753654b04634fd113e40d66b45f8557f"
+    },
+    {
+      "path": "src/utils/calculators/multiCalculator.ts",
+      "sha256": "90086d10e7e4cb7445475340fb679148bb58cf483c28104d3d65992081d2bd0a"
+    }
+  ],
+  "approval_boundary": "Exact branch bytes subject to independent staged-tree review. No automatic re-pinning, formula repair or source publication."
+}

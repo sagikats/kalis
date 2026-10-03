@@ -1,0 +1,12 @@
+{
+  "source_url": "https://admissions.technion.ac.il/calculation-of-the-median-grade/",
+  "snapshot_path": "src/modules/calculators/__tests__/fixtures/technion-official/source-rules.html",
+  "sha256": "03fdcfbed330181115c164a559752788def22665cee1d00905e37287f8b5f93b",
+  "source_quote": "שני מקצועות מדעיים ברמה של 5 יח\"ל או לחילופין מקצוע מדעי אחד ומקצוע טכנולוגי ושניהם ברמה של 5 יח\"ל",
+  "selection_limit_claim": "Published two-science or one-science+one-technology cluster and optimal-average rule. Highest-grade valid pair is a restricted-domain derived consequence, supported by bounded probes and exact exchange proof; internal backend tie order remains unknown.",
+  "quote_word_count": 19,
+  "academic_year": null,
+  "official_server_parity_scope": "20 captured synthetic ordinary examination profiles only",
+  "backend_tie_identity_verified": false,
+  "new_http_requests": 0
+}

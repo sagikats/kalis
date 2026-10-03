@@ -1,0 +1,106 @@
+{
+  "capture": "captures/runi-profile-C.html",
+  "caseId": "C",
+  "oracle": {
+    "academic_year_context": "תשפ\"ז",
+    "admission_decision": null,
+    "average_label": "ממוצע משוקלל",
+    "bagrut_average_shown": "105.2",
+    "calculator_year_status": "undated_with_2026_10_03_capture",
+    "score_label": "ציון מתואם (בגרות + פסיכומטרי)",
+    "score_shown": "691.94"
+  },
+  "original_request_record": {
+    "accessed_at": "2026-10-02T21:43:12.592097+00:00",
+    "file": "captures/runi-profile-C.html",
+    "final_url": "https://www.runi.ac.il/bagrutexamscalculator/default.aspx",
+    "inputs": {
+      "אזרחות": [
+        2,
+        90
+      ],
+      "אנגלית": [
+        5,
+        90
+      ],
+      "גיאוגרפיה": [
+        5,
+        95
+      ],
+      "הבעה עברית": [
+        2,
+        90
+      ],
+      "היסטוריה": [
+        2,
+        88
+      ],
+      "מתמטיקה": [
+        4,
+        92
+      ],
+      "ספרות": [
+        2,
+        86
+      ],
+      "תנ\"ך": [
+        2,
+        84
+      ]
+    },
+    "method": "POST",
+    "profile": "C",
+    "psychometric": 680,
+    "sha256": "65f5dbdc4b528a09d6459dec72465ccdc36f3500bfeb891f253b198111e8e47a",
+    "status": 200,
+    "url": "https://www.runi.ac.il/bagrutexamscalculator/default.aspx"
+  },
+  "profile": {
+    "bagrutSubjects": [
+      {
+        "grade": 92,
+        "name": "מתמטיקה",
+        "units": 4
+      },
+      {
+        "grade": 90,
+        "name": "אנגלית",
+        "units": 5
+      },
+      {
+        "grade": 95,
+        "name": "גיאוגרפיה",
+        "units": 5
+      },
+      {
+        "grade": 88,
+        "name": "היסטוריה",
+        "units": 2
+      },
+      {
+        "grade": 90,
+        "name": "אזרחות",
+        "units": 2
+      },
+      {
+        "grade": 84,
+        "name": "תנ\"ך",
+        "units": 2
+      },
+      {
+        "grade": 86,
+        "name": "ספרות",
+        "units": 2
+      },
+      {
+        "grade": 90,
+        "name": "הבעה עברית",
+        "units": 2
+      }
+    ],
+    "psychometricEnglish": 130,
+    "psychometricGeneral": 680,
+    "psychometricQuant": 128,
+    "psychometricVerbal": 132
+  }
+}

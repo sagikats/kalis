@@ -1,0 +1,1707 @@
+[
+  {
+    "caseId": "technion-A",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "111.1",
+      "generalSekem": "90.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-82f52b31f693ae09e0b51c6ddda70200550bc492f4dd38cbde01300ceeee68ef.html",
+      "sha256": "82f52b31f693ae09e0b51c6ddda70200550bc492f4dd38cbde01300ceeee68ef",
+      "captured_at": "2026-10-02T21:46:20.839506+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/0b5d99a1de6d33875c424788ff199a543c5688c0f985d7ae1505aa5be7a0127c.json",
+        "sha256": "0b5d99a1de6d33875c424788ff199a543c5688c0f985d7ae1505aa5be7a0127c",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/82f52b31f693ae09e0b51c6ddda70200550bc492f4dd38cbde01300ceeee68ef.html"
+  },
+  {
+    "caseId": "technion-B",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 4,
+          "grade": 78
+        },
+        {
+          "name": "אנגלית",
+          "units": 4,
+          "grade": 82
+        },
+        {
+          "name": "ביולוגיה",
+          "units": 5,
+          "grade": 84
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 75
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 70
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 72
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 76
+        }
+      ],
+      "psychometricGeneral": 620,
+      "psychometricQuant": 120,
+      "psychometricVerbal": 125,
+      "psychometricEnglish": 118
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "87.5",
+      "generalSekem": "71.3"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b.html",
+      "sha256": "5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b",
+      "captured_at": "2026-10-02T21:46:25.850144+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/f759adf8998ae44c3bb81336e1beb84033e778049145fd5536fb2eb4466c579d.json",
+        "sha256": "f759adf8998ae44c3bb81336e1beb84033e778049145fd5536fb2eb4466c579d",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b.html"
+  },
+  {
+    "caseId": "technion-A-math4",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 4,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "103.9",
+      "generalSekem": "86.5"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-36ca9d8455dc182a20f51e0dd91a90d970f56544d2a367e8eb29a1cee9bbc9ad.html",
+      "sha256": "36ca9d8455dc182a20f51e0dd91a90d970f56544d2a367e8eb29a1cee9bbc9ad",
+      "captured_at": "2026-10-02T21:46:30.859822+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/0134cb9c09d5640f833482591d693c4a2b1fd57ca397e1d00a358223cb9d1fe1.json",
+        "sha256": "0134cb9c09d5640f833482591d693c4a2b1fd57ca397e1d00a358223cb9d1fe1",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/36ca9d8455dc182a20f51e0dd91a90d970f56544d2a367e8eb29a1cee9bbc9ad.html"
+  },
+  {
+    "caseId": "technion-A-english59",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 59
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "102.8",
+      "generalSekem": "86"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-1d18542d793ca1f1fa143d3024549fca1ce5d8537d723a5e2b9e154968ac2718.html",
+      "sha256": "1d18542d793ca1f1fa143d3024549fca1ce5d8537d723a5e2b9e154968ac2718",
+      "captured_at": "2026-10-02T21:46:35.869858+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/39b6e5fdd6d052a8c339ed87581894c6d2b7cf682526721085fb59f6aa15f938.json",
+        "sha256": "39b6e5fdd6d052a8c339ed87581894c6d2b7cf682526721085fb59f6aa15f938",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/1d18542d793ca1f1fa143d3024549fca1ce5d8537d723a5e2b9e154968ac2718.html"
+  },
+  {
+    "caseId": "technion-A-english60",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 60
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "106.5",
+      "generalSekem": "87.8"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-d3f0a243c58855d697b5a83a40b0f9cb241ea332d064c76344fb4bc9b3f5380d.html",
+      "sha256": "d3f0a243c58855d697b5a83a40b0f9cb241ea332d064c76344fb4bc9b3f5380d",
+      "captured_at": "2026-10-02T21:46:40.880158+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/587090b9a7f1c8a016effb273f7a5792f1ca8ee24e082c145f0a087ffe4866ee.json",
+        "sha256": "587090b9a7f1c8a016effb273f7a5792f1ca8ee24e082c145f0a087ffe4866ee",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/d3f0a243c58855d697b5a83a40b0f9cb241ea332d064c76344fb4bc9b3f5380d.html"
+  },
+  {
+    "caseId": "technion-A-english61",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 61
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "106.7",
+      "generalSekem": "87.9"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-673cd69d3f18d5b3f338f05c52263e9b35d32359086ff7d3cd9dcfba8d5f7779.html",
+      "sha256": "673cd69d3f18d5b3f338f05c52263e9b35d32359086ff7d3cd9dcfba8d5f7779",
+      "captured_at": "2026-10-02T21:46:45.890167+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/c409a6eeab974367b4d5ab5721b130723511691dbbf87bc9edc612b8b9f07514.json",
+        "sha256": "c409a6eeab974367b4d5ab5721b130723511691dbbf87bc9edc612b8b9f07514",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/673cd69d3f18d5b3f338f05c52263e9b35d32359086ff7d3cd9dcfba8d5f7779.html"
+  },
+  {
+    "caseId": "technion-A-geography40",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "גיאוגרפיה",
+          "units": 5,
+          "grade": 40
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "111.1",
+      "generalSekem": "90.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-9baa2dfb0f2725372922be00dce35c6b17bba37063223e47e528191cc259f98a.html",
+      "sha256": "9baa2dfb0f2725372922be00dce35c6b17bba37063223e47e528191cc259f98a",
+      "captured_at": "2026-10-02T21:46:50.900272+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/4f2b4b74fdca9b4a3fd578a390bf399036a348b511e2e6ebe4d13b9c4dc3b822.json",
+        "sha256": "4f2b4b74fdca9b4a3fd578a390bf399036a348b511e2e6ebe4d13b9c4dc3b822",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/9baa2dfb0f2725372922be00dce35c6b17bba37063223e47e528191cc259f98a.html"
+  },
+  {
+    "caseId": "technion-A-geography100",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "גיאוגרפיה",
+          "units": 5,
+          "grade": 100
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "112.2",
+      "generalSekem": "90.7"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-11f742f0c0eef6066f42d8137e704f5b05471930fadc4d70c6a28f9c08ec4de2.html",
+      "sha256": "11f742f0c0eef6066f42d8137e704f5b05471930fadc4d70c6a28f9c08ec4de2",
+      "captured_at": "2026-10-02T21:46:55.910038+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/ba93d34db1da970c2033ac7f8f8d458b028cda9544120713ff943a69f65d48ba.json",
+        "sha256": "ba93d34db1da970c2033ac7f8f8d458b028cda9544120713ff943a69f65d48ba",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/11f742f0c0eef6066f42d8137e704f5b05471930fadc4d70c6a28f9c08ec4de2.html"
+  },
+  {
+    "caseId": "technion-high98",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 98
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 98
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 98
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 98
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 98
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 98
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 98
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 98
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 98
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 98
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "119",
+      "generalSekem": "94.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-3995cbc2f6a1490f2343591992f01352de09121f73833ae2bfbc3a1265b2c23b.html",
+      "sha256": "3995cbc2f6a1490f2343591992f01352de09121f73833ae2bfbc3a1265b2c23b",
+      "captured_at": "2026-10-02T21:47:00.919870+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/29212b9a7aa97ebfddedd9c2aae039c95d81d93c171dfca0ef21bbda0527e65d.json",
+        "sha256": "29212b9a7aa97ebfddedd9c2aae039c95d81d93c171dfca0ef21bbda0527e65d",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/3995cbc2f6a1490f2343591992f01352de09121f73833ae2bfbc3a1265b2c23b.html"
+  },
+  {
+    "caseId": "technion-high99",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 99
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 99
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 99
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 99
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 99
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 99
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 99
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 99
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 99
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 99
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "119",
+      "generalSekem": "94.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-01b612ef9f4094d03605ce54aa513362dadea351cb8eac277588b720d79028d1.html",
+      "sha256": "01b612ef9f4094d03605ce54aa513362dadea351cb8eac277588b720d79028d1",
+      "captured_at": "2026-10-02T21:47:05.929950+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/140bdbf6b21a259af90ba8d6e9354b66bda09370bfa1d3d9397064223fc371d1.json",
+        "sha256": "140bdbf6b21a259af90ba8d6e9354b66bda09370bfa1d3d9397064223fc371d1",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/01b612ef9f4094d03605ce54aa513362dadea351cb8eac277588b720d79028d1.html"
+  },
+  {
+    "caseId": "technion-high100",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 100
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 100
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 100
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 100
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 100
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 100
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 100
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 100
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 100
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 100
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "119",
+      "generalSekem": "94.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-4096c8232fe40c6c54c1aeb42f2c7dc0aa26d1509a0da856071b3e0c7b6da2db.html",
+      "sha256": "4096c8232fe40c6c54c1aeb42f2c7dc0aa26d1509a0da856071b3e0c7b6da2db",
+      "captured_at": "2026-10-02T21:47:10.939881+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/0a47a260f0f081111605cd0b38fde819fc62b7a103d66fb96db4af54646930f8.json",
+        "sha256": "0a47a260f0f081111605cd0b38fde819fc62b7a103d66fb96db4af54646930f8",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/4096c8232fe40c6c54c1aeb42f2c7dc0aa26d1509a0da856071b3e0c7b6da2db.html"
+  },
+  {
+    "caseId": "technion-C",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 4,
+          "grade": 92
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "גיאוגרפיה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 90
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 86
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 90
+        }
+      ],
+      "psychometricGeneral": 680,
+      "psychometricQuant": 128,
+      "psychometricVerbal": 132,
+      "psychometricEnglish": 130
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "101.5",
+      "generalSekem": "82.8"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-1220211ae3983c2fff5c9512002341f14e90565e60907b899eb9ef3c19c7afca.html",
+      "sha256": "1220211ae3983c2fff5c9512002341f14e90565e60907b899eb9ef3c19c7afca",
+      "captured_at": "2026-10-02T21:41:04.031311+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/3fc2b2cc93d4e132fc5cf3d224ee4cba4f3cb4979b79a142a49de5efa11b1384.json",
+        "sha256": "3fc2b2cc93d4e132fc5cf3d224ee4cba4f3cb4979b79a142a49de5efa11b1384",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/1220211ae3983c2fff5c9512002341f14e90565e60907b899eb9ef3c19c7afca.html"
+  },
+  {
+    "caseId": "technion-A-chemistry100",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 100
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": 112.8,
+      "generalSekem": 91.0
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/technion-A-chemistry100-response.html",
+      "sha256": "1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c",
+      "captured_at": "2026-10-02T21:49:15.066483+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/db84b77500de7333addb9ccc939316c17d55b3b26282adf19895892e6133691b.json",
+        "sha256": "db84b77500de7333addb9ccc939316c17d55b3b26282adf19895892e6133691b",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/followup-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html"
+  },
+  {
+    "caseId": "technion-high97",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 97
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 97
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 97
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 97
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 97
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 97
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 97
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 97
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 97
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 97
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": 118.3,
+      "generalSekem": 93.7
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/technion-high97-response.html",
+      "sha256": "f85dd628d86c34a3507655016d10bf34521941f7aedd780cc9d2e1deac1f2b05",
+      "captured_at": "2026-10-02T21:49:20.426682+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/1f7221090a1b14a6da3b917265a0567c70931eeee40bd9953db9b4d66281b053.json",
+        "sha256": "1f7221090a1b14a6da3b917265a0567c70931eeee40bd9953db9b4d66281b053",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/followup-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/f85dd628d86c34a3507655016d10bf34521941f7aedd780cc9d2e1deac1f2b05.html"
+  },
+  {
+    "caseId": "technion-A-CS-to-chemistry",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "111.1",
+      "generalSekem": "90.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-689ba9995c1d604a03f57dad407321d97a611ce05f32f0cf8e9e04a9a761303d.html",
+      "sha256": "689ba9995c1d604a03f57dad407321d97a611ce05f32f0cf8e9e04a9a761303d",
+      "captured_at": "2026-10-02T21:51:42.620161+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/4fe36cf56ae386b1e938c5feda32f81e89694b38863336b73bc066135d970f3c.json",
+        "sha256": "4fe36cf56ae386b1e938c5feda32f81e89694b38863336b73bc066135d970f3c",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/689ba9995c1d604a03f57dad407321d97a611ce05f32f0cf8e9e04a9a761303d.html"
+  },
+  {
+    "caseId": "technion-A-english61-P620",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 61
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        }
+      ],
+      "psychometricGeneral": 620,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "106.7",
+      "generalSekem": "80.8"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-1dbaf31044acd370c2872bd10922257e9cd10462583405c5267d815ca81bd204.html",
+      "sha256": "1dbaf31044acd370c2872bd10922257e9cd10462583405c5267d815ca81bd204",
+      "captured_at": "2026-10-02T21:54:10.466348+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/8751fbdc371b7b54c881f4fd3b3f8c3b79e8312761846f291c55241eced8e447.json",
+        "sha256": "8751fbdc371b7b54c881f4fd3b3f8c3b79e8312761846f291c55241eced8e447",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/1dbaf31044acd370c2872bd10922257e9cd10462583405c5267d815ca81bd204.html"
+  },
+  {
+    "caseId": "technion-cluster-chemistry100-reordered",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 100
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "112.8",
+      "generalSekem": "91"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html",
+      "sha256": "1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c",
+      "captured_at": "2026-10-02T22:01:33.140208+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/088d190976fbed356ef2ca9ab334b48b94d0380369359a79b941bb6f5afd1141.json",
+        "sha256": "088d190976fbed356ef2ca9ab334b48b94d0380369359a79b941bb6f5afd1141",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/1a55f82b93343b7b866a3a172a82e9e6c6befc633f935a35b54fa4ccf264574c.html"
+  },
+  {
+    "caseId": "technion-cluster-biology100",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "ביולוגיה",
+          "units": 5,
+          "grade": 100
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "112.8",
+      "generalSekem": "91"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-b02bdc279c33edd7988b97087a43d6bf09451a48b9fd348c918f33af924e86e0.html",
+      "sha256": "b02bdc279c33edd7988b97087a43d6bf09451a48b9fd348c918f33af924e86e0",
+      "captured_at": "2026-10-02T22:01:38.518307+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/54589705d36d84240f2e9515641a0a9671fe8722c0a82bbaa39b3aced5867763.json",
+        "sha256": "54589705d36d84240f2e9515641a0a9671fe8722c0a82bbaa39b3aced5867763",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/b02bdc279c33edd7988b97087a43d6bf09451a48b9fd348c918f33af924e86e0.html"
+  },
+  {
+    "caseId": "technion-cluster-biology85",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "ביולוגיה",
+          "units": 5,
+          "grade": 85
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "111.1",
+      "generalSekem": "90.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-4b798dd9a4f99b2dabd87ea9da07c99e1eec5874d0221624821afecfe05b4aa7.html",
+      "sha256": "4b798dd9a4f99b2dabd87ea9da07c99e1eec5874d0221624821afecfe05b4aa7",
+      "captured_at": "2026-10-02T22:01:43.876580+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/15e473cb49a9571132c19fd48e4bc1fc72b68627a2ce0b61bf92447f7f915593.json",
+        "sha256": "15e473cb49a9571132c19fd48e4bc1fc72b68627a2ce0b61bf92447f7f915593",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/4b798dd9a4f99b2dabd87ea9da07c99e1eec5874d0221624821afecfe05b4aa7.html"
+  },
+  {
+    "caseId": "technion-cluster-chemistry59-first",
+    "institutionId": "technion",
+    "input": {
+      "bagrutSubjects": [
+        {
+          "name": "מתמטיקה",
+          "units": 5,
+          "grade": 95
+        },
+        {
+          "name": "אנגלית",
+          "units": 5,
+          "grade": 92
+        },
+        {
+          "name": "פיזיקה",
+          "units": 5,
+          "grade": 93
+        },
+        {
+          "name": "מדעי המחשב",
+          "units": 5,
+          "grade": 90
+        },
+        {
+          "name": "היסטוריה",
+          "units": 2,
+          "grade": 85
+        },
+        {
+          "name": "אזרחות",
+          "units": 2,
+          "grade": 88
+        },
+        {
+          "name": "תנ\"ך",
+          "units": 2,
+          "grade": 80
+        },
+        {
+          "name": "ספרות",
+          "units": 2,
+          "grade": 82
+        },
+        {
+          "name": "הבעה עברית",
+          "units": 2,
+          "grade": 84
+        },
+        {
+          "name": "כימיה",
+          "units": 5,
+          "grade": 59
+        }
+      ],
+      "psychometricGeneral": 714,
+      "psychometricQuant": 145,
+      "psychometricVerbal": 137,
+      "psychometricEnglish": 124
+    },
+    "function_id": "general_sekem",
+    "academic_year": null,
+    "year_status": "not_explicitly_published",
+    "expected": {
+      "bagrutAverage": "111.1",
+      "generalSekem": "90.1"
+    },
+    "provenance": {
+      "kind": "official_calculator_response",
+      "source_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+      "artifact": "research/core-universities/snapshots/sha256-93addfff06fe8fa9a5434f8a8fd4b9104e22bf5a9d700b7bc78a662c36e34dc0.html",
+      "sha256": "93addfff06fe8fa9a5434f8a8fd4b9104e22bf5a9d700b7bc78a662c36e34dc0",
+      "captured_at": "2026-10-02T22:01:49.224432+00:00",
+      "input_record": {
+        "artifact": "coverage/input-records/0b491fd6c976767fd61ce897904c24a273244355f76032d878e6c76bb6c589d8.json",
+        "sha256": "0b491fd6c976767fd61ce897904c24a273244355f76032d878e6c76bb6c589d8",
+        "input_path": "profile"
+      }
+    },
+    "fixture_source": "research/core-universities/oracle-fixtures.json",
+    "reference_binding": {
+      "kind": "technion",
+      "parser_file": "research/core-universities/oracle_adapters.py",
+      "parser_sha256": "ec6079efe2bc4b6fa9cb840c993462dd5287b3f152d81b785ae8e256a83be50e"
+    },
+    "test_response_artifact": "src/modules/calculators/__tests__/fixtures/technion-official/93addfff06fe8fa9a5434f8a8fd4b9104e22bf5a9d700b7bc78a662c36e34dc0.html"
+  }
+]

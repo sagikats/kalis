@@ -1,0 +1,90 @@
+{
+  "academic_year": null,
+  "caseId": "tau-B-scores",
+  "function": "combined_score_variants",
+  "inputs_entered": {
+    "query": "query getLastScore ($scoresData: JSON!) { getLastScore (scoresData: $scoresData) { body } }",
+    "variables": {
+      "scoresData": {
+        "bagrut": 90.05,
+        "out": "json",
+        "prog": "calctziun",
+        "psicho": 620,
+        "reali10": 0
+      }
+    }
+  },
+  "institutionId": "tau",
+  "profile": {
+    "bagrutSubjects": [
+      {
+        "grade": 78,
+        "name": "מתמטיקה",
+        "units": 4
+      },
+      {
+        "grade": 82,
+        "name": "אנגלית",
+        "units": 4
+      },
+      {
+        "grade": 84,
+        "name": "ביולוגיה",
+        "units": 5
+      },
+      {
+        "grade": 75,
+        "name": "היסטוריה",
+        "units": 2
+      },
+      {
+        "grade": 80,
+        "name": "אזרחות",
+        "units": 2
+      },
+      {
+        "grade": 70,
+        "name": "תנ\"ך",
+        "units": 2
+      },
+      {
+        "grade": 72,
+        "name": "ספרות",
+        "units": 2
+      },
+      {
+        "grade": 76,
+        "name": "הבעה עברית",
+        "units": 2
+      }
+    ],
+    "psychometricEnglish": 118,
+    "psychometricGeneral": 620,
+    "psychometricQuant": 120,
+    "psychometricVerbal": 125
+  },
+  "proof": {
+    "method": "POST",
+    "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/tau-B-scores-response.json",
+    "sha256": "c8601ccf37c6e7f7379f794704f1f324a4f1dcc8190d4c0c67263488631e1ecb",
+    "status": 200,
+    "timestamp": "2026-10-02T21:48:41.205058+00:00",
+    "url": "https://go.tau.ac.il/graphql"
+  },
+  "response": {
+    "data": {
+      "getLastScore": {
+        "body": {
+          "bagrut": "90.05",
+          "hatama": "548",
+          "hatama_handasa": "548",
+          "hatama_meduyakim": "548",
+          "hatama_nihul": "577",
+          "hatama_refua": "547.82",
+          "psicho": "620"
+        }
+      }
+    }
+  },
+  "score_type": "general/management/engineering"
+}

@@ -48,3 +48,7 @@ next-env.d.ts
 
 # session signing secret (auto-generated if SESSION_SECRET is unset)
 prisma/.session_secret
+
+# Local admission evidence reports; never candidate/private data
+.admission-validation/
+__pycache__/

@@ -4,6 +4,12 @@
  */
 
 import { z } from 'zod';
+import type { InstitutionCalculatorInput } from '../calculators/types';
+
+// Zero is the existing missing-score sentinel, not an actual exam score.
+const psychometricGeneralInput = z.union([z.literal(0), z.number().int().min(200).max(800)]);
+const psychometricSectionInput = z.union([z.literal(0), z.number().int().min(50).max(150)]);
+const psychometricEmphasisInput = z.number().int().min(200).max(800);
 
 export const SubjectGradeInputSchema = z.object({
 	name: z.string().min(1, 'שם המקצוע נדרש'),
@@ -18,10 +24,12 @@ export const UserAcademicProfileInputSchema = z.object({
 	mathGrade: z.number().min(0).max(100).default(80),
 	physicsUnits: z.number().int().min(0).max(5).default(0),
 	physicsGrade: z.number().min(0).max(100).default(0),
-	psychometricGeneral: z.number().int().min(0).max(800).default(0),
-	psychometricQuant: z.number().int().min(0).max(150).default(0),
-	psychometricVerbal: z.number().int().min(0).max(150).default(0),
-	psychometricEnglish: z.number().int().min(0).max(150).default(0),
+	psychometricGeneral: psychometricGeneralInput.default(0),
+	psychometricQuant: psychometricSectionInput.default(0),
+	psychometricVerbal: psychometricSectionInput.default(0),
+	psychometricEnglish: psychometricSectionInput.default(0),
+	psychometricQuantEmphasis: psychometricEmphasisInput.optional(),
+	psychometricVerbalEmphasis: psychometricEmphasisInput.optional(),
 	hasTakenPsychometric: z.boolean().default(false)
 });
 
@@ -49,8 +57,39 @@ export const ProgramSearchQuerySchema = z.object({
 	offset: z.number().int().min(0).default(0)
 });
 
+// Calculation requests preserve absent values. The legacy planning profile above
+// retains its existing defaults; they must not invent scores in this endpoint.
+export const CalculatorProfileInputSchema = UserAcademicProfileInputSchema.extend({
+	mathUnits: z.number().int().min(3).max(5).optional(),
+	mathGrade: z.number().min(0).max(100).optional(),
+	physicsUnits: z.number().int().min(0).max(5).optional(),
+	physicsGrade: z.number().min(0).max(100).optional(),
+	psychometricGeneral: psychometricGeneralInput.optional(),
+	psychometricQuant: psychometricSectionInput.optional(),
+	psychometricVerbal: psychometricSectionInput.optional(),
+	psychometricEnglish: psychometricSectionInput.optional()
+});
+
+export function calculatorInputFromProfile(
+	profile: z.infer<typeof CalculatorProfileInputSchema>
+): InstitutionCalculatorInput {
+	return {
+		bagrutSubjects: profile.bagrutSubjects.map(({ name, units, grade }) => ({ name, units, grade })),
+		psychometricGeneral: profile.psychometricGeneral,
+		psychometricQuant: profile.psychometricQuant,
+		psychometricVerbal: profile.psychometricVerbal,
+		psychometricEnglish: profile.psychometricEnglish,
+		psychometricQuantEmphasis: profile.psychometricQuantEmphasis,
+		psychometricVerbalEmphasis: profile.psychometricVerbalEmphasis,
+		mathUnits: profile.mathUnits,
+		mathGrade: profile.mathGrade,
+		physicsUnits: profile.physicsUnits,
+		physicsGrade: profile.physicsGrade
+	};
+}
+
 export const CalculateSekemRequestSchema = z.object({
-	profile: UserAcademicProfileInputSchema,
+	profile: CalculatorProfileInputSchema,
 	institutionIds: z.array(z.string()).optional()
 });
 

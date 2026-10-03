@@ -1,0 +1,309 @@
+{
+  "academic_year": null,
+  "academic_year_status": "not displayed by oracle",
+  "caseId": "technion-B",
+  "change": "",
+  "chosen_bonuses": [
+    {
+      "adjustedGrade": "92",
+      "bonus": "10",
+      "grade": "82",
+      "name": "אנגלית",
+      "weightedUnits": "4"
+    },
+    {
+      "adjustedGrade": "72",
+      "bonus": "0",
+      "grade": "72",
+      "name": "ספרות עברית",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "88",
+      "bonus": "10",
+      "grade": "78",
+      "name": "מתמטיקה",
+      "weightedUnits": "8"
+    },
+    {
+      "adjustedGrade": "70",
+      "bonus": "0",
+      "grade": "70",
+      "name": "תנ\"ך",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "80",
+      "bonus": "0",
+      "grade": "80",
+      "name": "אזרחות",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "76",
+      "bonus": "0",
+      "grade": "76",
+      "name": "הבעה עברית",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "75",
+      "bonus": "0",
+      "grade": "75",
+      "name": "הסטוריה",
+      "weightedUnits": "2"
+    },
+    {
+      "adjustedGrade": "109",
+      "bonus": "25",
+      "grade": "84",
+      "name": "ביולוגיה",
+      "weightedUnits": "5"
+    }
+  ],
+  "comparison": {
+    "original_mismatches": {},
+    "original_source": {
+      "kind": "mitkablim_shipped_client_behavior",
+      "module": 221,
+      "officiallyVerified": false,
+      "sha256": "a791bb5641638ed160d4e3f0d85afacd9a147ed744772b7cad8668feb128976c"
+    },
+    "precision_proposal_mismatches": {}
+  },
+  "function": "general_sekem",
+  "input_order": [
+    {
+      "grade": "84",
+      "subject": "ביולוגיה",
+      "units": "5"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    },
+    {
+      "grade": "",
+      "subject": "0",
+      "units": "0"
+    }
+  ],
+  "inputs_entered": {
+    "G_1": "84",
+    "G_2": "",
+    "G_3": "",
+    "G_4": "",
+    "G_5": "",
+    "G_6": "",
+    "TC_CURRENT_URL": "admissions.technion.ac.il/calculator/",
+    "TC_URL": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/",
+    "academic": "false",
+    "academicGrade": "",
+    "academicHours": "",
+    "arabHistory": "",
+    "arbicLang": "",
+    "arc": "arcNo",
+    "bagrot": "true",
+    "bible": "70",
+    "druze": "",
+    "english": "82",
+    "ezrahut": "80",
+    "habaa": "76",
+    "hand1": "",
+    "hand10": "",
+    "hand2": "",
+    "hand3": "",
+    "hand4": "",
+    "hand5": "",
+    "hand6": "",
+    "hand7": "",
+    "hand8": "",
+    "hand9": "",
+    "handesae": "false",
+    "hebrew": "",
+    "hebrew_lit": "72",
+    "history": "75",
+    "israelPhil": "",
+    "mathclassification": "",
+    "mathematic": "78",
+    "mehinaAca": "",
+    "mehinaAve": "false",
+    "mehinaEng": "",
+    "mehinaMeth": "",
+    "mehinaPhy": "",
+    "memuca": "sehem",
+    "mikztootBhira_1": "ביולוגיה",
+    "mikztootBhira_2": "0",
+    "mikztootBhira_3": "0",
+    "mikztootBhira_4": "0",
+    "mikztootBhira_5": "0",
+    "mikztootBhira_6": "0",
+    "psychometry": "620",
+    "y1": "5",
+    "y2": "0",
+    "y3": "0",
+    "y4": "0",
+    "y5": "0",
+    "y6": "0",
+    "yArabHistory": "0",
+    "yArbicLang": "0",
+    "yBible": "2",
+    "yDruze": "0",
+    "yEnglish": "4",
+    "yEzrahut": "2",
+    "yHabaa": "2",
+    "yHebrew": "0",
+    "yHebrew_lit": "2",
+    "yHistory": "2",
+    "yIsraelPhil": "0",
+    "yMathematic": "4",
+    "yYediat": "0",
+    "yediat": ""
+  },
+  "institutionId": "technion",
+  "method": "official_public_form_post",
+  "outputs": {
+    "bagrutAverage": "87.5",
+    "generalSekem": "71.3",
+    "intermediates": {
+      "cappedUnroundedAverage": "87.51851851851851851851851852",
+      "includedSubjects": [
+        {
+          "adjustedGrade": "92",
+          "bonus": "10",
+          "grade": "82",
+          "name": "אנגלית",
+          "weightedUnits": "4"
+        },
+        {
+          "adjustedGrade": "72",
+          "bonus": "0",
+          "grade": "72",
+          "name": "ספרות עברית",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "88",
+          "bonus": "10",
+          "grade": "78",
+          "name": "מתמטיקה",
+          "weightedUnits": "8"
+        },
+        {
+          "adjustedGrade": "70",
+          "bonus": "0",
+          "grade": "70",
+          "name": "תנ\"ך",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "80",
+          "bonus": "0",
+          "grade": "80",
+          "name": "אזרחות",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "76",
+          "bonus": "0",
+          "grade": "76",
+          "name": "הבעה עברית",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "75",
+          "bonus": "0",
+          "grade": "75",
+          "name": "הסטוריה",
+          "weightedUnits": "2"
+        },
+        {
+          "adjustedGrade": "109",
+          "bonus": "25",
+          "grade": "84",
+          "name": "ביולוגיה",
+          "weightedUnits": "5"
+        }
+      ],
+      "uncappedUnroundedAverage": "87.51851851851851851851851852",
+      "weightSum": "27",
+      "weightedSum": "2363"
+    }
+  },
+  "profile": {
+    "bagrutSubjects": [
+      {
+        "grade": 78,
+        "name": "מתמטיקה",
+        "units": 4
+      },
+      {
+        "grade": 82,
+        "name": "אנגלית",
+        "units": 4
+      },
+      {
+        "grade": 84,
+        "name": "ביולוגיה",
+        "units": 5
+      },
+      {
+        "grade": 75,
+        "name": "היסטוריה",
+        "units": 2
+      },
+      {
+        "grade": 80,
+        "name": "אזרחות",
+        "units": 2
+      },
+      {
+        "grade": 70,
+        "name": "תנ\"ך",
+        "units": 2
+      },
+      {
+        "grade": 72,
+        "name": "ספרות",
+        "units": 2
+      },
+      {
+        "grade": 76,
+        "name": "הבעה עברית",
+        "units": 2
+      }
+    ],
+    "psychometricEnglish": 118,
+    "psychometricGeneral": 620,
+    "psychometricQuant": 120,
+    "psychometricVerbal": 125
+  },
+  "proof": {
+    "final_url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+    "method": "POST",
+    "original_path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/technion-B-response.html",
+    "path": "/Users/yoavsela/Desktop/Python/Sagi/research/core-universities/snapshots/sha256-5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b.html",
+    "sha256": "5f299273da5db6ea5099ecf27243ba7204d154a1100ead64b43294a235ad3c8b",
+    "status": 200,
+    "timestamp": "2026-10-02T21:46:25.850144+00:00",
+    "url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php"
+  },
+  "response_text": " שימו לב, חישוב זה הוא כלי עזר בלבד. בכל מקרה של אי התאמה בין תוצאות חישוב זה, לבין מידע המתקבל מן הטכניון, קובע המידע שהתקבל מן הטכניון. חישוב ציון סכם לכל המסלולים פרט לארכיטקטורה ולאדריכלות נוף תוצאות חישוב הסכם חישוב סכם מקצוע מספר יחידות ציון בונוס בנקודות ציון עם בונוס ציוני הבגרות מקצועות אשר נכנסו לממוצע אנגלית 4 82 10 92 ספרות עברית 2 72 0 72 מתמטיקה 8 78 10 88 תנ\"ך 2 70 0 70 אזרחות 2 80 0 80 הבעה עברית 2 76 0 76 הסטוריה 2 75 0 75 ביולוגיה 5 84 25 109 מקצועות אשר לא נכנסו לממוצע נתונים כללים ציון פסיכומטרי רב תחומי: 620 העתק תוצאות החישוב ממוצע ציוני הבגרות ללא בונוסים: 78.5 העתק ממוצע בגרות מיטבי: 87.5 העתק סכם לפי ממוצע בגרות מיטבי והציון הפסיכומטרי הרב תחומי: 71.3 העתק הסכם לדיוני הקבלה הוא:71.3 העתק אם אינכם יכולים להתקבל לעדיפויות המעניינות אתכם, אולי תשקלו ללמוד במכינת הטכניון? ",
+  "score_type": "general"
+}
