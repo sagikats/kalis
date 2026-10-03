@@ -537,6 +537,10 @@ export function analyzeProgramGap(
 		? evaluateProgramRequirements(routes.bagrutOnlyRequirements, profile)
 		: requirementResults;
 	const bagrutOnlyRequirementsMet = !bagrutOnlyResults.some(isBlocking);
+	const psychOnlyResults = routes?.psychometricOnlyRequirements
+		? evaluateProgramRequirements(routes.psychometricOnlyRequirements, profile)
+		: requirementResults;
+	const psychOnlyRequirementsMet = !psychOnlyResults.some(isBlocking);
 
 	if (routes?.minPsychometric && status === 'accepted' && psych < routes.minPsychometric) {
 		status = 'missing_requirement';
@@ -590,7 +594,7 @@ export function analyzeProgramGap(
 			status = 'accepted';
 			admissionRoute = 'bagrut_only';
 			admissionNote = `מתקבל/ת באפיק "בגרות בלבד": ממוצע ${bagrutAvg} (נדרש ${routes.bagrutOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
-		} else if (routes?.psychometricOnlyMin && psych >= routes.psychometricOnlyMin && unmetRequirements.length === 0) {
+		} else if (routes?.psychometricOnlyMin && psych >= routes.psychometricOnlyMin && psychOnlyRequirementsMet) {
 			status = 'accepted';
 			admissionRoute = 'psychometric_only';
 			admissionNote = `מתקבל/ת באפיק "פסיכומטרי בלבד": ${psych} (נדרש ${routes.psychometricOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
@@ -603,8 +607,14 @@ export function analyzeProgramGap(
 		}
 		if (status === 'accepted') {
 			improvementOptions.length = 0;
-			if (admissionRoute === 'bagrut_only' && routes?.bagrutOnlyRequirements) {
-				const official = officialRequirementChecks(bagrutOnlyResults, profile);
+			const routeResults =
+				admissionRoute === 'bagrut_only' && routes?.bagrutOnlyRequirements
+					? bagrutOnlyResults
+					: admissionRoute === 'psychometric_only' && routes?.psychometricOnlyRequirements
+					? psychOnlyResults
+					: undefined;
+			if (routeResults) {
+				const official = officialRequirementChecks(routeResults, profile);
 				prerequisites.splice(0, prerequisites.length, ...prerequisites.filter((c) => !c.id.startsWith('official-')), ...official);
 				missingPrerequisites.splice(0, missingPrerequisites.length, ...prerequisites.filter((c) => !c.isMet && !c.unknown));
 			}

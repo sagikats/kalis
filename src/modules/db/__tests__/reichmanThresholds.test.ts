@@ -1,5 +1,5 @@
 /**
- * Reichman thresholds from the official threshold table (src/data/sources/reichman-thresholds-tashpah.json).
+ * Reichman thresholds from the official תשפ"ז table (src/data/sources/reichman-admission-table-tashpaz.json).
  */
 
 import { describe, it } from 'node:test';
@@ -14,13 +14,14 @@ const byId = (id: string) => runi.find((p) => p.id === id);
 describe('Reichman official thresholds', () => {
 	it('sourced programs use the ציון מתואם scale and name the table year', () => {
 		const sourced = runi.filter((p) => p.officialThreshold !== undefined);
-		assert.ok(sourced.length >= 14);
+		assert.ok(sourced.length >= 15);
 		for (const p of sourced) {
 			assert.equal(p.admissionThreshold, p.officialThreshold, p.fieldOfStudy);
-			assert.ok(p.thresholdSource?.includes('תשפ"ה'), p.fieldOfStudy);
+			assert.ok(p.thresholdSource?.includes('תשפ"ז'), p.fieldOfStudy);
 		}
-		assert.equal(byId('prog-inst-38-3').admissionThreshold, 732); // מדעי המחשב
-		assert.equal(byId('prog-inst-38-3').directBagrutMinAverage, 113);
+		assert.equal(byId('prog-inst-38-3').admissionThreshold, 705); // מדעי המחשב
+		assert.equal(byId('prog-inst-38-3').directBagrutMinAverage, 110);
+		assert.equal(byId('prog-inst-38-3').admissionRoutes.psychometricOnlyMin, 720);
 		assert.equal(byId('prog-inst-38-3').minPsychometricFloor, 660);
 	});
 

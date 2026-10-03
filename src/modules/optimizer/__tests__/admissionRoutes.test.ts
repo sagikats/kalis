@@ -90,7 +90,11 @@ describe('Official admission routes', () => {
 	});
 
 	it('psychometric-only route admits when the sekem falls short (Reichman psychology: 640)', () => {
-		const prof = profile(WEAK_BAGRUT, 650);
+		// Reichman psychology also requires English 4u 90 and math 3u 85 (תשפ"ז table) — this applicant meets both
+		const bagrut = WEAK_BAGRUT.map((s) =>
+			s.name === 'אנגלית' ? { ...s, units: 4, grade: 90 } : s.name === 'מתמטיקה' ? { ...s, units: 3, grade: 85 } : s
+		);
+		const prof = profile(bagrut, 650);
 		const gap = analyze('reichman', 'inst-38', 'prog-inst-38-7', prof);
 		assert.ok(gap.userSekem < 620, `sekem ${gap.userSekem}`);
 		assert.equal(gap.status, 'accepted');

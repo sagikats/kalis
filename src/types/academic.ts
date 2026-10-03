@@ -62,6 +62,8 @@ export interface AdmissionRoutes {
      requirements?: ProgramRequirement[];
      /** Requirements of the bagrut-only route when they differ from `requirements` (BGU publishes both). */
      bagrutOnlyRequirements?: ProgramRequirement[];
+     /** Requirements of the psychometric-only route when they differ from `requirements` (Reichman publishes per route). */
+     psychometricOnlyRequirements?: ProgramRequirement[];
      /**
       * Where the program's subject requirements were taken from (URL + date). Present = the program page was checked,
       * so the generic math/physics estimate no longer applies (even when `requirements` has no subject entry).

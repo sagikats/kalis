@@ -38444,12 +38444,29 @@
         "directBagrutMinAverage": 100,
         "officialThreshold": 600,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 680,
           "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "math",
               "title": "ידע במתמטיקה",
@@ -38461,7 +38478,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 86
+                      "minGrade": 85
                     }
                   ]
                 },
@@ -38472,17 +38489,194 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
                 },
                 {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות (2026-10-04)"
         }
       },
       {
@@ -38495,50 +38689,26 @@
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "math",
-              "title": "ידע במתמטיקה",
-              "anyOf": [
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 76
-                    }
-                  ]
-                },
-                {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
-                }
-              ]
-            }
-          ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
-        }
+        "admissionRoutes": {}
       },
       {
         "id": "prog-inst-38-3",
         "fieldOfStudy": "מדעי המחשב",
         "degreeLevel": "B.Sc",
         "description": "הלימודים המשולבים מציעים לסטודנטים לרכוש ידע איכותי ומודרני שיאפשר להם להשתלב בהמשך במחקר בסיסי או במחקר ופיתוח יישומיים המשלבים כלים וידע משני התחומים כגון זיהוי מטרות תרופתיות ותכנון תרופות. הביקוש למומחים בשני העולמות הולך וגובר, ובוגרי התכנית יזכו ליתרון משמעותי בהמשך דרכם המקצועית.",
-        "admissionThreshold": 732,
+        "admissionThreshold": 705,
         "psychometricScore": 660,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 113,
-        "officialThreshold": 732,
+        "directBagrutMinAverage": 110,
+        "officialThreshold": 705,
         "relevantSekemType": "general",
         "minPsychometricFloor": 660,
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: מדעי המחשב / מדעי המחשב יזמות / מדעי המחשב עם חטיבה בקוגניציה וחקר המח / מדעי המחשב עם חטיבה במדעי החיים (קדם רפואה)",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
-          "bagrutOnlyMin": 113,
+          "bagrutOnlyMin": 110,
           "psychometricOnlyMin": 720,
           "minPsychometric": 660,
           "requirements": [
@@ -38553,17 +38723,73 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 76
+                      "minGrade": 85
                     }
                   ]
-                },
-                {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע מדעי (5 יח\"ל)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "ביולוגיה",
+                        "מדעי המחשב"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "לא כולל תכנון מערכות"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: מדעי המחשב / מדעי המחשב יזמות / מדעי המחשב עם חטיבה בקוגניציה וחקר המח / מדעי המחשב עם חטיבה במדעי החיים (קדם רפואה) (2026-10-04)"
         }
       },
       {
@@ -38575,14 +38801,36 @@
         "psychometricScore": 580,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 89,
+        "directBagrutMinAverage": 90,
         "officialThreshold": 600,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: ממשל / ממשל וקיימות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: ממשל / ממשל וקיימות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
-          "bagrutOnlyMin": 89,
-          "psychometricOnlyMin": 650
+          "bagrutOnlyMin": 90,
+          "psychometricOnlyMin": 650,
+          "requirements": [],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: ממשל / ממשל וקיימות (2026-10-04)"
         }
       },
       {
@@ -38597,12 +38845,29 @@
         "directBagrutMinAverage": 100,
         "officialThreshold": 630,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מנהל עסקים חד חוגי",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: מנהל עסקים (מסלול מורחב)",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 700,
           "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "math",
               "title": "ידע במתמטיקה",
@@ -38614,7 +38879,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 81
+                      "minGrade": 80
                     }
                   ]
                 },
@@ -38625,17 +38890,230 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
                 },
                 {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 100
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 100
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 100
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: מנהל עסקים (מסלול מורחב) (2026-10-04)"
         }
       },
       {
@@ -38643,12 +39121,26 @@
         "fieldOfStudy": "משפטים",
         "degreeLevel": "LL.B.",
         "description": "לימודי תואר ראשון במשפטים עוסקים במהותם בחקר החוק ואכיפתו, אך מדובר בתחום אינטרדיסציפלינרי המקושר למגוון תחומי לימוד: מדעי החברה, המדינה והרוח אשר משפיעים ומושפעים מעולם המשפט. בהתאם לכך, תואר ראשון במשפטים LLB במרכז האקדמי למשפט ולעסקים משלב למידה, העמקה והכרות עם עולמות ידע נוספים. לכן תואר ראשון ",
-        "admissionThreshold": 620,
+        "admissionThreshold": 650,
         "psychometricScore": 620,
         "comments": "אפיק בגרות בלבד: ממוצע 100+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 650,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 610,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 700,
+          "minPsychometric": 610,
+          "requirements": [],
+          "bagrutOnlyRequirements": [],
+          "psychometricOnlyRequirements": [],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: משפטים תארים כפולים / משפטים בדגש בינלאומי (2026-10-04)"
+        },
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: משפטים תארים כפולים / משפטים בדגש בינלאומי",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-38-7",
@@ -38662,11 +39154,120 @@
         "directBagrutMinAverage": 100,
         "officialThreshold": 620,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: פסיכולוגיה",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: פסיכולוגיה",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
-          "psychometricOnlyMin": 640
+          "psychometricOnlyMin": 640,
+          "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 85
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 85
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 85
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: פסיכולוגיה (2026-10-04)"
         }
       },
       {
@@ -38694,12 +39295,29 @@
         "directBagrutMinAverage": 100,
         "officialThreshold": 600,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 680,
           "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "math",
               "title": "ידע במתמטיקה",
@@ -38711,7 +39329,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 86
+                      "minGrade": 85
                     }
                   ]
                 },
@@ -38722,17 +39340,194 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
                 },
                 {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות (2026-10-04)"
         }
       },
       {
@@ -38745,14 +39540,36 @@
         "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 89,
+        "directBagrutMinAverage": 90,
         "officialThreshold": 600,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: ממשל / ממשל וקיימות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: ממשל / ממשל וקיימות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
-          "bagrutOnlyMin": 89,
-          "psychometricOnlyMin": 650
+          "bagrutOnlyMin": 90,
+          "psychometricOnlyMin": 650,
+          "requirements": [],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: ממשל / ממשל וקיימות (2026-10-04)"
         }
       },
       {
@@ -38764,14 +39581,99 @@
         "psychometricScore": 580,
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 89,
+        "directBagrutMinAverage": 91,
         "officialThreshold": 600,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: תקשורת",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: תקשורת",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
-          "bagrutOnlyMin": 89,
-          "psychometricOnlyMin": 620
+          "bagrutOnlyMin": 91,
+          "psychometricOnlyMin": 620,
+          "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: תקשורת (2026-10-04)"
         }
       },
       {
@@ -38794,21 +39696,21 @@
         "fieldOfStudy": "מדעי המחשב ויזמות",
         "degreeLevel": "B.Sc",
         "description": "תואר כפול במדעי המחשב (B.Sc) ויזמות (B.A) בבית הספר אפי ארזי ואדלסון",
-        "admissionThreshold": 732,
+        "admissionThreshold": 705,
         "psychometricScore": 660,
         "sekemScore": 660,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": 113,
+        "directBagrutMinAverage": 110,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "comments": "תואר כפול במדעי המחשב ויזמות - נדרש פסיכומטרי 660+ ומתמטיקה 4 יח\"ל 85+ או 5 יח\"ל 75+",
-        "officialThreshold": 732,
+        "officialThreshold": 705,
         "relevantSekemType": "general",
         "minPsychometricFloor": 660,
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מדעי המחשב / מדעי המחשב ויזמות (וכל מסלולי מדמ\"ח)",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: מדעי המחשב / מדעי המחשב יזמות / מדעי המחשב עם חטיבה בקוגניציה וחקר המח / מדעי המחשב עם חטיבה במדעי החיים (קדם רפואה)",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
-          "bagrutOnlyMin": 113,
+          "bagrutOnlyMin": 110,
           "psychometricOnlyMin": 720,
           "minPsychometric": 660,
           "requirements": [
@@ -38823,17 +39725,73 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 76
+                      "minGrade": 85
                     }
                   ]
-                },
-                {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע מדעי (5 יח\"ל)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "כימיה",
+                        "ביולוגיה",
+                        "מדעי המחשב"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "לא כולל תכנון מערכות"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: מדעי המחשב / מדעי המחשב יזמות / מדעי המחשב עם חטיבה בקוגניציה וחקר המח / מדעי המחשב עם חטיבה במדעי החיים (קדם רפואה) (2026-10-04)"
         }
       },
       {
@@ -38851,8 +39809,8 @@
         "officialThreshold": 650,
         "relevantSekemType": "general",
         "minPsychometricFloor": 610,
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: משפטים תארים כפולים",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: משפטים תארים כפולים / משפטים בדגש בינלאומי",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 700,
@@ -38869,7 +39827,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 81
+                      "minGrade": 80
                     }
                   ]
                 },
@@ -38880,17 +39838,74 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
-                },
-                {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: משפטים תארים כפולים / משפטים בדגש בינלאומי (2026-10-04)"
         }
       },
       {
@@ -38908,12 +39923,16 @@
         "officialThreshold": 650,
         "relevantSekemType": "general",
         "minPsychometricFloor": 610,
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: משפטים תארים כפולים",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: משפטים תארים כפולים / משפטים בדגש בינלאומי",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 700,
-          "minPsychometric": 610
+          "minPsychometric": 610,
+          "requirements": [],
+          "bagrutOnlyRequirements": [],
+          "psychometricOnlyRequirements": [],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: משפטים תארים כפולים / משפטים בדגש בינלאומי (2026-10-04)"
         }
       },
       {
@@ -38930,12 +39949,40 @@
         "comments": "תואר ראשון כפול/משולב ביזמות ומנהל עסקים",
         "officialThreshold": 630,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: מנהל עסקים ויזמות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: מנהל עסקים ויזמות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 650,
           "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "math",
               "title": "ידע במתמטיקה",
@@ -38947,7 +39994,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 81
+                      "minGrade": 80
                     }
                   ]
                 },
@@ -38958,17 +40005,238 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
                 },
                 {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 100
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 100
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 100
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: מנהל עסקים ויזמות (2026-10-04)"
         }
       },
       {
@@ -39025,12 +40293,29 @@
         "officialThreshold": 640,
         "relevantSekemType": "general",
         "minPsychometricFloor": 620,
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: התכנית בחשבונאות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: התכנית בחשבונאות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 103,
           "minPsychometric": 620,
           "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "math",
               "title": "ידע במתמטיקה",
@@ -39042,7 +40327,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 86
+                      "minGrade": 85
                     }
                   ]
                 },
@@ -39053,17 +40338,98 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
                 },
                 {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: התכנית בחשבונאות (2026-10-04)"
         }
       },
       {
@@ -39080,12 +40446,29 @@
         "comments": "תואר ראשון דו-חוגי בכלכלה ומנהל עסקים",
         "officialThreshold": 600,
         "relevantSekemType": "general",
-        "thresholdSource": "https://www.runi.ac.il/media/rooocfxp/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%94.pdf — טבלת ספים תשפ\"ה: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
-        "thresholdUpdatedAt": "2026-10-02",
+        "thresholdSource": "https://www.runi.ac.il/media/rzpfaakh/%D7%98%D7%91%D7%9C%D7%AA-%D7%A1%D7%A4%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%93%D7%9B%D7%A0%D7%AA-%D7%9C%D7%90%D7%AA%D7%A8-%D7%AA%D7%A9%D7%A4%D7%96.pdf — טבלת ספים תשפ\"ז: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות",
+        "thresholdUpdatedAt": "2026-10-04",
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "psychometricOnlyMin": 680,
           "requirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "math",
               "title": "ידע במתמטיקה",
@@ -39097,7 +40480,7 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 4,
-                      "minGrade": 86
+                      "minGrade": 85
                     }
                   ]
                 },
@@ -39108,17 +40491,194 @@
                         "מתמטיקה"
                       ],
                       "minUnits": 5,
-                      "minGrade": 66
+                      "minGrade": 65
                     }
                   ]
                 },
                 {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
                 }
               ]
             }
           ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ],
+                  "exam": "מעבר קורס ההכנה במתמטיקה של רייכמן (קבלה על תנאי)"
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "runi.ac.il — טבלת ספים מעודכנת תשפ\"ז: כלכלה ויזמות / כלכלה ומנהל עסקים / כלכלה וקיימות (2026-10-04)"
         }
       },
       {
@@ -39134,31 +40694,7 @@
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "comments": "תואר כפול במדע הנתונים (B.Sc) ויזמות (B.A)",
-        "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "math",
-              "title": "ידע במתמטיקה",
-              "anyOf": [
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 76
-                    }
-                  ]
-                },
-                {
-                  "exam": "מעבר בחינת הסיום של קורס ההכנה במתמטיקה של רייכמן (יוני–יולי)"
-                }
-              ]
-            }
-          ],
-          "requirementsSource": "runi.ac.il — תקנון רישום וקבלה תואר ראשון תשפ\"ו, סעיף 7 \"קורס הכנה במתמטיקה\" (2026-10-04)"
-        }
+        "admissionRoutes": {}
       }
     ]
   },

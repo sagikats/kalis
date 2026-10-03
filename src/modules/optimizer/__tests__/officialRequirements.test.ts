@@ -125,19 +125,30 @@ describe('Official program requirements', () => {
 		}
 	});
 
-	it('Reichman CS: below math 5u 75 admission depends on passing the math prep course (regulations, section 7)', () => {
-		const program = programOf('inst-38', 'prog-inst-38-3');
-		const [r] = program.admissionRoutes.requirements;
-		const below = evaluateRequirement(r, { subjects: [{ name: 'מתמטיקה', units: 5, grade: 75 }] });
-		assert.equal(below.met, false, '"גבוה מ-75" — 75 itself is not enough');
-		assert.match(below.examOption?.exam ?? '', /קורס ההכנה במתמטיקה/);
-		assert.equal(evaluateRequirement(r, { subjects: [{ name: 'מתמטיקה', units: 5, grade: 76 }] }).met, true);
-		// Economics: 4u above 85 or 5u above 65
-		const [econ] = programOf('inst-38', 'prog-inst-38-2').admissionRoutes.requirements;
-		assert.equal(evaluateRequirement(econ, { subjects: [{ name: 'מתמטיקה', units: 4, grade: 86 }] }).met, true);
-		assert.equal(evaluateRequirement(econ, { subjects: [{ name: 'מתמטיקה', units: 4, grade: 85 }] }).met, false);
-		// Programs outside the regulations' schools carry no math requirement
-		assert.equal(programOf('inst-38', 'prog-inst-38-7').admissionRoutes?.requirements, undefined);
+	it('Reichman (תשפ"ז table): requirements per route, and the prep course below the school level', () => {
+		const ev = (r: any, subjects: any[]) => evaluateRequirement(r, { subjects });
+		const cs = programOf('inst-38', 'prog-inst-38-3').admissionRoutes;
+		const csMath = (route: any[]) => route.find((r: any) => r.id === 'math');
+		// Matched route 5u 85; bagrut route 5u 90 + a science subject 5u 90; psychometric route 5u 80
+		assert.equal(ev(csMath(cs.requirements), [{ name: 'מתמטיקה', units: 5, grade: 84 }]).met, false);
+		assert.equal(ev(csMath(cs.requirements), [{ name: 'מתמטיקה', units: 5, grade: 85 }]).met, true);
+		assert.equal(ev(csMath(cs.psychometricOnlyRequirements), [{ name: 'מתמטיקה', units: 5, grade: 80 }]).met, true);
+		assert.deepEqual(cs.bagrutOnlyRequirements.map((r: any) => r.id), ['math', 'science']);
+		assert.equal(cs.minPsychometric, 660);
+
+		// Economics: minimum 4u 75 / 5u 60; below 4u 85 / 5u 65 only with the prep course
+		const econ = csMath(programOf('inst-38', 'prog-inst-38-2').admissionRoutes.requirements);
+		assert.equal(ev(econ, [{ name: 'מתמטיקה', units: 4, grade: 85 }]).met, true);
+		const viaPrep = ev(econ, [{ name: 'מתמטיקה', units: 4, grade: 78 }]);
+		assert.equal(viaPrep.met, false);
+		assert.match(viaPrep.examOption?.exam ?? '', /קורס ההכנה/);
+		assert.equal(ev(econ, [{ name: 'מתמטיקה', units: 4, grade: 70 }]).examOption, undefined, 'below the minimum: no route');
+
+		// Psychology: English 4u 90 and math 3u 85 on every route
+		const psy = programOf('inst-38', 'prog-inst-38-7').admissionRoutes.requirements;
+		assert.deepEqual(psy.map((r: any) => r.id), ['english', 'math']);
+		// Programs not in the תשפ"ז table carry nothing official
+		assert.equal(programOf('inst-38', 'prog-reichman-2').admissionRoutes?.requirements, undefined);
 	});
 
 	it('HUJI: page requirements per program (EE 4u 90 / 5u 70; physics + science subject; agriculture has none)', () => {
