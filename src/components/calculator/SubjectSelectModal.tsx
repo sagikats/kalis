@@ -1,5 +1,6 @@
 'use client';
 
+import { isSameBagrutSubject } from '@/modules/optimizer/solver';
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Search, X, BookOpen, Atom, BookMarked, Check, Plus, Sparkles, Compass, Palette, Info } from 'lucide-react';
 import { BAGRUT_SUBJECTS_CATALOG, POPULAR_5U_ELECTIVES, BagrutSubjectOption } from '@/data/bagrutSubjects';
@@ -125,9 +126,7 @@ export default function SubjectSelectModal({
 							</div>
 							<div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
 								{POPULAR_5U_ELECTIVES.slice(0, 10).map((pop) => {
-									const isAlreadyAdded = existingSubjectNames.some(
-										(n) => n.trim().toLowerCase() === pop.name.trim().toLowerCase()
-									);
+									const isAlreadyAdded = existingSubjectNames.some((n) => isSameBagrutSubject(n, pop.name));
 									const catalogItem = BAGRUT_SUBJECTS_CATALOG.find((s) => s.name === pop.name) || {
 										id: pop.id,
 										name: pop.name,
@@ -243,21 +242,22 @@ export default function SubjectSelectModal({
 						</div>
 					) : (
 						filteredSubjects.map((sub) => {
-							const isAlreadyAdded = existingSubjectNames.some(
-								(n) => n.trim().toLowerCase() === sub.name.trim().toLowerCase()
-							);
+							const isAlreadyAdded = existingSubjectNames.some((n) => isSameBagrutSubject(n, sub.name));
 
 							return (
 								<div
 									key={sub.id}
 									onClick={() => {
+										// A subject already on the list can't be added again (edit its units/grade instead)
+										if (isAlreadyAdded) return;
 										onSelectSubject(sub);
 										onClose();
 									}}
-									className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-4 cursor-pointer group ${
+									aria-disabled={isAlreadyAdded}
+									className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-4 group ${
 										isAlreadyAdded
-											? 'bg-white/60 border-[#E5DFD4]'
-											: 'bg-[#FAF8F5] border-[#E5DFD4] hover:border-[#DDD7CC] hover:bg-white shadow-2xs'
+											? 'bg-white/60 border-[#E5DFD4] cursor-not-allowed opacity-70'
+											: 'bg-[#FAF8F5] border-[#E5DFD4] hover:border-[#DDD7CC] hover:bg-white shadow-2xs cursor-pointer'
 									}`}
 								>
 									<div className="flex items-center gap-3 min-w-0">
@@ -296,10 +296,14 @@ export default function SubjectSelectModal({
 										</div>
 									</div>
 
-									<button className="px-3.5 py-1.5 rounded-xl bg-white group-hover:bg-[#3C3C3C] text-[#222222] group-hover:text-white text-xs font-bold transition flex items-center gap-1 shrink-0 border border-[#E5DFD4] shadow-2xs">
-										<Plus className="h-3.5 w-3.5" />
-										<span>בחר</span>
-									</button>
+									{isAlreadyAdded ? (
+										<span className="text-[11px] text-[#8A847C] shrink-0">כבר ברשימה</span>
+									) : (
+										<button className="px-3.5 py-1.5 rounded-xl bg-white group-hover:bg-[#3C3C3C] text-[#222222] group-hover:text-white text-xs font-bold transition flex items-center gap-1 shrink-0 border border-[#E5DFD4] shadow-2xs">
+											<Plus className="h-3.5 w-3.5" />
+											<span>בחר</span>
+										</button>
+									)}
 								</div>
 							);
 						})

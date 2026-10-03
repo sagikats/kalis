@@ -1,5 +1,6 @@
 'use client';
 
+import { isSameBagrutSubject } from '@/modules/optimizer/solver';
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -938,9 +939,7 @@ export default function AdmissionFlowPage() {
 
 										<div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
 											{POPULAR_5U_ELECTIVES.slice(0, 12).map((pop) => {
-												const isAlreadyAdded = subjects.some(
-													(s) => s.name.trim().toLowerCase() === pop.name.trim().toLowerCase()
-												);
+												const isAlreadyAdded = subjects.some((s) => isSameBagrutSubject(s.name, pop.name));
 												return (
 													<button
 														key={pop.id}

@@ -90,6 +90,32 @@ export function isSubjectMatch(nameA: string, nameB: string): boolean {
 	return false;
 }
 
+/** Names that mean the same bagrut subject after normalisation (variants, tracks, old names). */
+const SAME_SUBJECT_ALIASES: Record<string, string> = {
+	'תנך חמד': 'תנך',
+	'ספרות': 'ספרות עברית',
+	'הבעה': 'הבעה עברית',
+	'לשון': 'הבעה עברית',
+	'לשון עברית': 'הבעה עברית',
+	'תעי': 'היסטוריה',
+	'תולדות עם ישראל': 'היסטוריה'
+};
+
+/**
+ * Strict "is this the same bagrut subject" check, for preventing duplicates when adding subjects.
+ * Unlike isSubjectMatch (deliberately loose, for lever matching), it never pairs different subjects
+ * that share a word — e.g. מדעי המחשב / מחשבת ישראל, ספרות עברית / ספרות ערבית.
+ * "היסטוריה (מוגבר 5 יח"ל)" and "היסטוריה / תע"י" are the same subject.
+ */
+export function isSameBagrutSubject(nameA: string, nameB: string): boolean {
+	const canon = (n: string) => {
+		const k = normalizeHebrewSubjectKey(n).replace(/\s+/g, ' ');
+		return SAME_SUBJECT_ALIASES[k] ?? k;
+	};
+	const a = canon(nameA);
+	return !!a && a === canon(nameB);
+}
+
 export function applyLeversToCandidateState(
 	profile: UserAcademicProfileRecord,
 	levers: SubjectLeverCandidate[]

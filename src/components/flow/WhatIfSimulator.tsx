@@ -38,7 +38,7 @@ import {
 import { SubjectInput } from '@/modules/calculators';
 import { getRealisticPsychometricCeiling, RecommendedTrack, evaluateSimulatedSekem } from '@/utils/analysis/trackGenerator';
 import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
-import { isSubjectMatch } from '@/modules/optimizer/solver';
+import { isSubjectMatch, isSameBagrutSubject } from '@/modules/optimizer/solver';
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import { BagrutSubjectOption, POPULAR_5U_ELECTIVES } from '@/data/bagrutSubjects';
 import MultiUniversityAdmissionGrid, { InstitutionSimulatedState } from '@/components/flow/MultiUniversityAdmissionGrid';
@@ -771,7 +771,8 @@ export default function WhatIfSimulator({
 
 	// Add popular 5-unit elective
 	const handleAddPopularElective = (name: string, units: number, defaultGrade: number) => {
-		const existingIndex = simulatedList.findIndex((s) => s.name === name);
+		// The same subject already on the list (e.g. "היסטוריה (מוגבר)" for an existing history) is upgraded, never duplicated
+		const existingIndex = simulatedList.findIndex((s) => isSameBagrutSubject(s.name, name));
 		if (existingIndex >= 0) {
 			const updated = [...simulatedList];
 			updated[existingIndex] = {
@@ -2077,9 +2078,8 @@ export default function WhatIfSimulator({
 							<div className="max-h-64 sm:max-h-72 overflow-y-auto pr-1">
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
 									{POPULAR_5U_ELECTIVES.map((elective) => {
-										const isAlreadyActive = simulatedList.some(
-											(s) => s.name === elective.name && s.isActive
-										);
+										const existing = simulatedList.find((s) => isSameBagrutSubject(s.name, elective.name));
+										const isAlreadyActive = !!existing;
 										return (
 											<button
 												key={elective.name}
@@ -2097,7 +2097,9 @@ export default function WhatIfSimulator({
 											>
 												<span>{elective.label}</span>
 												{isAlreadyActive ? (
-													<span className="text-[10px] text-[#8A847C]">כבר ברשימה</span>
+													<span className="text-[10px] text-[#8A847C]">
+														{existing && !existing.isCustomAdded ? 'כבר בתעודה' : 'כבר ברשימה'}
+													</span>
 												) : (
 													<Plus className="h-3.5 w-3.5 text-[#3C3C3C]" />
 												)}
