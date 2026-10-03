@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
 	Search,
 	GraduationCap,
@@ -11,8 +11,7 @@ import {
 	X,
 	ArrowLeft
 } from 'lucide-react';
-import { academicInstitutions } from '../../data/academicData';
-import { AcademicInstitution } from '../../types/academic';
+import { useInstitutionsCatalog } from '../../hooks/useInstitutionsCatalog';
 import { TargetProgramSelection } from '../../utils/analysis/gapAnalyzer';
 import UniversityLogo from '../common/UniversityLogo';
 
@@ -99,31 +98,8 @@ export default function DegreeSearchSelector({
 	const [expandedCardIds, setExpandedCardIds] = useState<Record<string, boolean>>({});
 	const [isBasketOpen, setIsBasketOpen] = useState(false);
 
-	// Dynamic SQLite Data state (fallback to bundled academicInstitutions during initial fetch)
-	const [institutionsList, setInstitutionsList] = useState<AcademicInstitution[]>(academicInstitutions);
-	const [isLoadedFromDb, setIsLoadedFromDb] = useState<boolean>(false);
-
-	useEffect(() => {
-		let isMounted = true;
-		async function fetchFromSQLite() {
-			try {
-				const res = await fetch('/api/institutions');
-				const contentType = res.headers.get('content-type') || '';
-				if (!res.ok || !contentType.includes('application/json')) return;
-				const data = await res.json();
-				if (isMounted && data && data.success && Array.isArray(data.institutions) && data.institutions.length > 0) {
-					setInstitutionsList(data.institutions);
-					setIsLoadedFromDb(true);
-				}
-			} catch (err) {
-				console.warn('[DegreeSearchSelector] Fallback to pre-bundled data:', err);
-			}
-		}
-		fetchFromSQLite();
-		return () => {
-			isMounted = false;
-		};
-	}, []);
+	// Full catalog comes from /api/institutions (kept out of the client bundle)
+	const { institutions: institutionsList, isLoading: isCatalogLoading, isLoadedFromDb } = useInstitutionsCatalog();
 
 	// Flatten all programs with institution metadata directly from SQLite
 	const allFlattenedPrograms = useMemo(() => {
@@ -495,10 +471,14 @@ export default function DegreeSearchSelector({
 			{/* ========================================================================= */}
 			<div className="w-full flex-1 min-h-0 flex flex-col space-y-2">
 				<div className="flex items-center justify-between text-xs text-[#66635C] font-semibold px-1 shrink-0">
-					<span>
-						נמצאו <strong className="text-[#222222]">{filteredPrograms.length}</strong> תוכניות לימוד
-						מתאימות ב-<strong className="text-[#1E597B]">{uniqueInstitutionsCount}</strong> מוסדות
-					</span>
+					{isCatalogLoading ? (
+						<span>טוען את קטלוג התארים...</span>
+					) : (
+						<span>
+							נמצאו <strong className="text-[#222222]">{filteredPrograms.length}</strong> תוכניות לימוד
+							מתאימות ב-<strong className="text-[#1E597B]">{uniqueInstitutionsCount}</strong> מוסדות
+						</span>
+					)}
 					<div className="flex items-center gap-3">
 						<span>מציג {Math.min(filteredPrograms.length, 80)} ראשונות</span>
 						<button
@@ -769,7 +749,7 @@ export default function DegreeSearchSelector({
 										<span>מסד נתונים מסונכרן (SQLite)</span>
 									</>
 								) : (
-									<span>טוען מסד נתונים...</span>
+									<span>{isCatalogLoading ? 'טוען מסד נתונים...' : 'קטלוג מקומי'}</span>
 								)}
 							</div>
 						</div>

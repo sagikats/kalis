@@ -1,8 +1,24 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { X, CheckCircle2, AlertCircle, XCircle, GraduationCap } from 'lucide-react';
-import academicData from '@/data/academicData.json';
+
+type RawInstitution = { id: string; name: string; programs: Program[] };
+
+// The raw catalog (~1.9MB, includes programs without a numeric threshold) is loaded as a lazy
+// chunk the first time the panel opens, so it stays out of the /calculators page bundle.
+let rawCatalogPromise: Promise<RawInstitution[]> | null = null;
+function loadRawCatalog(): Promise<RawInstitution[]> {
+  if (!rawCatalogPromise) {
+    rawCatalogPromise = import('@/data/academicData.json')
+      .then((m) => Object.values(m.default) as RawInstitution[])
+      .catch((err) => {
+        rawCatalogPromise = null;
+        throw err;
+      });
+  }
+  return rawCatalogPromise;
+}
 
 const INST_ID_MAP: Record<string, string> = {
   bgu: 'inst-3',
@@ -72,6 +88,16 @@ export default function AdmissionPanel({
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  const [catalog, setCatalog] = useState<RawInstitution[] | null>(null);
+  useEffect(() => {
+    if (!isOpen || catalog) return;
+    let isMounted = true;
+    loadRawCatalog()
+      .then((data) => { if (isMounted) setCatalog(data); })
+      .catch(() => { if (isMounted) setCatalog([]); });
+    return () => { isMounted = false; };
+  }, [isOpen, catalog]);
+
   const isTechnion = institutionId === 'technion';
   const defaultEffectiveSekem =
     userEngineeringSekem && userEngineeringSekem > userGeneralSekem
@@ -80,9 +106,8 @@ export default function AdmissionPanel({
 
   const programs: ProgramResult[] = useMemo(() => {
     const dataKey = INST_ID_MAP[institutionId];
-    if (!dataKey) return [];
-    const all = Object.values(academicData) as { id: string; name: string; programs: Program[] }[];
-    const institution = all.find(i => i.id === dataKey);
+    if (!dataKey || !catalog) return [];
+    const institution = catalog.find(i => i.id === dataKey);
     if (!institution) return [];
 
     return institution.programs.map((prog): ProgramResult => {
@@ -107,7 +132,7 @@ export default function AdmissionPanel({
       const status = classifyStatus(gap, isTechnion ? 2 : 20);
       return { program: prog, status, threshold, gap: gap ?? 0 };
     });
-  }, [institutionId, defaultEffectiveSekem, userGeneralSekem, userEngineeringSekem, userManagementSekem, isTechnion]);
+  }, [catalog, institutionId, defaultEffectiveSekem, userGeneralSekem, userEngineeringSekem, userManagementSekem, isTechnion]);
 
   const sorted = useMemo(() => {
     const order: Record<AdmissionStatus, number> = {
@@ -207,7 +232,10 @@ export default function AdmissionPanel({
 
         {/* Program List */}
         <div className="flex-1 overflow-y-auto py-2 px-3 space-y-1.5">
-          {sorted.length === 0 && (
+          {!catalog && (
+            <p className="text-center text-[#8A847C] text-sm py-12">טוען נתוני קבלה...</p>
+          )}
+          {catalog && sorted.length === 0 && (
             <p className="text-center text-[#8A847C] text-sm py-12">לא נמצאו נתוני קבלה</p>
           )}
 
