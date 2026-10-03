@@ -45,6 +45,10 @@ export interface AdmissionRoutes {
      excellentBagrut?: ExcellentBagrutRoute;
      /** Informational: admission to semester B after a semester at the continuing-education school (Technion "אפיק מקוצר"). Never changes the status. */
      shortTrack?: ShortTrackRoute;
+     /** Informational: the Technion math classification exam replaces the psychometric in the sekem ("בגרות ובחינת סיווג במתמטיקה"). */
+     mathExam?: MathExamRoute;
+     /** Informational: sekem discount for applicants recognised as "ראויים לקידום" (Technion: 1–2 points). */
+     promotionBonus?: number;
 }
 
 /** One bagrut condition: `count` distinct subjects from `subjects`, each at `minUnits`+ units and `minGrade`+. */
@@ -86,5 +90,18 @@ export interface ShortTrackRoute {
 	/** Minimum grade in every course. */
 	minCourseGrade: number;
 	/** Extra condition for this track, as published. */
+	note?: string;
+}
+
+/**
+ * Technion "קבלה על סמך בגרות ובחינת סיווג במתמטיקה": the exam score is converted to the psychometric scale
+ * (round(score × slope + intercept)) and used in the regular sekem instead of the psychometric score.
+ */
+export interface MathExamRoute {
+	/** Bagrut conditions to take part in the route. */
+	eligibility: ExcellentBagrutRoute;
+	/** Lowest exam score that is converted at all. */
+	minExamScore: number;
+	conversion: { slope: number; intercept: number };
 	note?: string;
 }

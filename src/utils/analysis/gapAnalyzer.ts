@@ -1,5 +1,5 @@
 import { AcademicDegree, AdmissionRoutes } from '../../types/academic';
-import { evaluateExcellentBagrut } from '../../modules/optimizer/excellentBagrut';
+import { evaluateExcellentBagrut, requiredMathExamScore } from '../../modules/optimizer/excellentBagrut';
 import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
@@ -490,6 +490,36 @@ export function analyzeProgramGap(
 						description: `התנאים: ${routes.excellentBagrut.summary}. חסר לך: ${eb.missing.join('; ')}.`
 					});
 				}
+			}
+			if (routes?.mathExam && threshold) {
+				const me = routes.mathExam;
+				const elig = evaluateExcellentBagrut(me.eligibility, profile.bagrutSubjects || []);
+				const avg = institutionRes.bagrutAverage || 0;
+				if (elig.met && avg > 0) {
+					const need = requiredMathExamScore(me, avg, threshold);
+					alternativePaths.push({
+						id: 'alt-math-exam',
+						title: 'בגרות + מבחן סיווג במתמטיקה (במקום פסיכומטרי)',
+						description: need
+							? `ציון המבחן מומר לסולם הפסיכומטרי ומחליף אותו בסכם. עם ממוצע הבגרות שלך (${avg}) מספיק ציון ${need.examScore} במבחן הסיווג במתמטיקה (שווה ערך לפסיכומטרי ${need.psychometricEquivalent}) כדי להגיע לסף ${threshold}.${me.note ? ` ${me.note}` : ''}`
+							: `ציון המבחן מחליף את הפסיכומטרי בסכם, אבל עם ממוצע הבגרות הנוכחי (${avg}) גם 100 במבחן לא מגיע לסף ${threshold}.`
+					});
+				} else if (!elig.met && elig.missing.length <= 2) {
+					alternativePaths.push({
+						id: 'alt-math-exam',
+						title: 'בגרות + מבחן סיווג במתמטיקה (במקום פסיכומטרי)',
+						description: `תנאי ההשתתפות: ${me.eligibility.summary}. חסר לך: ${elig.missing.join('; ')}.`
+					});
+				}
+			}
+			if (routes?.promotionBonus && threshold) {
+				const lowered = Math.round((threshold - routes.promotionBonus) * 100) / 100;
+				const wouldPass = userSekem > 0 && userSekem >= lowered;
+				alternativePaths.push({
+					id: 'alt-promotion',
+					title: 'ראויים לקידום (הנחה בסכם)',
+					description: `מי שהוכר/ה ע"י האגודה לקידום החינוך כ"ראוי/ה לקידום" (30 נקודות ומעלה) מקבל/ת הנחה של ${routes.promotionBonus} ${routes.promotionBonus === 1 ? 'נקודה' : 'נקודות'} בסכם בתואר הזה, כלומר סף ${lowered}.${wouldPass ? ` עם ההכרה, הסכם שלך (${userSekem}) עומד בסף.` : ''} הבקשה מוגשת לאגודה (kidum-edu.org.il) לפני ההרשמה לטכניון.`
+				});
 			}
 			if (routes?.shortTrack) {
 				const st = routes.shortTrack;

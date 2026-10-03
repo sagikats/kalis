@@ -1,0 +1,39 @@
+{
+ "source": "https://admissions.technion.ac.il/ — \"סיכום אפשרויות הקבלה למסלולים בסמסטר חורף תשפ\"ז (אוקטובר 2026)\", עמודת \"נקודות הנחה בסכם לראויים לקידום\"",
+ "updated": "11.8.2026 (לפי הדף)",
+ "captured": "2026-10-03, צילום מסך של המשתמש",
+ "rules": [
+  "ערוץ \"ראויים לקידום\" מיועד למי שנאלצו להתמודד עם קשיים בתקופת התבגרותם; ההכרה נעשית ע\"י האגודה לקידום החינוך (טופס בקשה, טיפול כחודשיים).",
+  "מי שהוכרו וקיבלו ניקוד 30 נקודות ומעלה יוכלו להתקבל לחלק מהמסלולים גם אם הנתונים שלהם נמוכים במעט מסף הקבלה הרגיל; בחלק מהמסלולים 1–2 נקודות תוספת לסכם.",
+  "קשר: האגודה לקידום החינוך, \"ראויים לקידום\", 02-6441159, liath@kidum-edu.org.il, kidum-edu.org.il"
+ ],
+ "bonus_points": {
+  "1": [
+   "prog-technion-3",
+   "prog-technion-4",
+   "prog-technion-6",
+   "prog-technion-7",
+   "prog-technion-8",
+   "prog-technion-9",
+   "prog-technion-10",
+   "prog-technion-15",
+   "prog-technion-16",
+   "prog-technion-17",
+   "prog-technion-18",
+   "prog-technion-24",
+   "prog-technion-25",
+   "prog-technion-26",
+   "prog-technion-29",
+   "prog-technion-30",
+   "prog-technion-31",
+   "prog-technion-32",
+   "prog-technion-45"
+  ],
+  "2": [
+   "prog-technion-5",
+   "prog-technion-13",
+   "prog-technion-14",
+   "prog-technion-23"
+  ]
+ }
+}

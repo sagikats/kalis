@@ -12048,7 +12048,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 4–5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12121,7 +12166,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 4–5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12171,7 +12261,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 2
         }
       },
       {
@@ -12192,7 +12327,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12208,7 +12388,54 @@
         "officialThreshold": 88,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
+        }
       },
       {
         "id": "prog-technion-8",
@@ -12256,7 +12483,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12305,7 +12577,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12350,7 +12667,56 @@
               }
             ],
             "summary": "ממוצע בגרות ללא בונוסים 90+; אנגלית, מתמטיקה ופיזיקה או כימיה 5 יח\"ל 90+"
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "shortTrack": {
+            "firstSemesterAverageMin": 75,
+            "minCourseGrade": 70
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12399,6 +12765,50 @@
           "shortTrack": {
             "firstSemesterAverageMin": 80,
             "minCourseGrade": 70
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
           }
         }
       },
@@ -12448,6 +12858,50 @@
           "shortTrack": {
             "firstSemesterAverageMin": 80,
             "minCourseGrade": 70
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
           }
         }
       },
@@ -12518,7 +12972,52 @@
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70,
             "note": "מי שלא עבר מבחן סיווג בפיזיקה צריך לפנות מראש לפקולטה להתאמת מערכת השעות."
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 2
         }
       },
       {
@@ -12567,7 +13066,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 2
         }
       },
       {
@@ -12588,7 +13132,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12609,7 +13198,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12630,7 +13264,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12651,7 +13330,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12667,7 +13391,53 @@
         "officialThreshold": 94,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-20",
@@ -12712,7 +13482,53 @@
         "officialThreshold": 94,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-23",
@@ -12760,7 +13576,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 2
         }
       },
       {
@@ -12782,7 +13643,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 78,
             "minCourseGrade": 70
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12803,7 +13709,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 65
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12824,7 +13775,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 65
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12855,7 +13851,53 @@
         "officialThreshold": 91,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-29",
@@ -12875,7 +13917,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 65
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12922,7 +14009,52 @@
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70,
             "note": "יש לעבור בהצלחה מבחן התאמה להוראה ו/או ראיונות כדרישה לקבלה לפקולטה."
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -12969,7 +14101,52 @@
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70,
             "note": "יש לעבור בהצלחה מבחן התאמה להוראה ו/או ראיונות כדרישה לקבלה לפקולטה."
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -13043,7 +14220,52 @@
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 65,
             "note": "מסיימים בממוצע 90+ זכאים להצטרף לתוכנית הזנק (תואר ראשון ושני בארבע שנים)."
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {
@@ -13059,7 +14281,53 @@
         "officialThreshold": 91,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-34",
@@ -13089,7 +14357,53 @@
         "officialThreshold": 91,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-36",
@@ -13330,7 +14644,52 @@
           "shortTrack": {
             "firstSemesterAverageMin": 80,
             "minCourseGrade": 65
-          }
+          },
+          "mathExam": {
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 80
+                },
+                {
+                  "subjects": [
+                    "פיזיקה",
+                    "כימיה",
+                    "ביולוגיה",
+                    "מדעי המחשב",
+                    "בקרת מכונות",
+                    "מכטרוניקה",
+                    "אלקטרוניקה",
+                    "אלקטרוניקה ומחשבים",
+                    "מדעי ההנדסה",
+                    "ביוטכנולוגיה",
+                    "מערכות ביוטכנולוגיה",
+                    "יישומי ביוטכנולוגיה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 80
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל, אנגלית 4–5 יח\"ל ומקצוע מדעי/טכנולוגי 5 יח\"ל — שלושתם בציון 80+"
+            },
+            "minExamScore": 56,
+            "conversion": {
+              "slope": 2.434,
+              "intercept": 526.915
+            }
+          },
+          "promotionBonus": 1
         }
       },
       {

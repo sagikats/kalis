@@ -6,7 +6,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import academicData from '../../../data/academicData.json';
-import { evaluateExcellentBagrut, rawBagrutAverage } from '../excellentBagrut';
+import { evaluateExcellentBagrut, rawBagrutAverage, requiredMathExamScore } from '../excellentBagrut';
 import { analyzeProgramGap } from '../../../utils/analysis/gapAnalyzer';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 
@@ -85,8 +85,8 @@ describe('Technion "בגרות מצוינת"', () => {
 			return analyzeProgramGap({ institutionId: 'inst-48', institutionName: 'הטכניון', calculatorId: 'technion', program: prog(id) }, profile, res);
 		};
 
-		it('is imported for 23 programs with the published numbers', () => {
-			assert.equal(technion.filter((p) => p.admissionRoutes?.shortTrack).length, 23);
+		it('is imported for 24 programs with the published numbers', () => {
+			assert.equal(technion.filter((p) => p.admissionRoutes?.shortTrack).length, 24);
 			assert.deepEqual(prog('prog-technion-24').admissionRoutes.shortTrack, { firstSemesterAverageMin: 78, minCourseGrade: 70 });
 			assert.equal(prog('prog-technion-45').admissionRoutes.shortTrack.firstSemesterAverageMin, 80);
 			assert.equal(prog('prog-technion-33').admissionRoutes?.shortTrack, undefined); // CS isn't offered
@@ -103,6 +103,49 @@ describe('Technion "בגרות מצוינת"', () => {
 		it('is not shown when the applicant is already accepted', () => {
 			const profile: any = { bagrutSubjects: A, psychometricGeneral: 0, mathUnits: 5, mathGrade: 95, physicsUnits: 5, physicsGrade: 93 };
 			assert.equal(analyze('prog-technion-45', profile).alternativePaths, undefined);
+		});
+	});
+
+	describe('"בגרות ובחינת סיווג במתמטיקה" (exam replaces the psychometric)', () => {
+		it('conversion matches the official table', () => {
+			const table: Record<number, number> = { 100: 770, 96: 761, 92: 751, 88: 741, 84: 731, 80: 722, 76: 712, 72: 702, 68: 692, 64: 683, 60: 673, 56: 663 };
+			const conv = prog('prog-technion-19').admissionRoutes.mathExam.conversion;
+			for (const [score, eq] of Object.entries(table)) assert.equal(Math.round(Number(score) * conv.slope + conv.intercept), eq);
+		});
+
+		it('tells an eligible applicant without psychometric the exam score they need (EE, threshold 94: 99 → 768)', () => {
+			const profile: any = { bagrutSubjects: A, psychometricGeneral: 0, mathUnits: 5, mathGrade: 95, physicsUnits: 5, physicsGrade: 93 };
+			const res = calculateMultiInstitutionSekem(profile, ['technion'])[0];
+			assert.equal(res.bagrutAverage, 111.1);
+			const route = prog('prog-technion-19').admissionRoutes.mathExam;
+			assert.deepEqual(requiredMathExamScore(route, 111.1, 94), { examScore: 99, psychometricEquivalent: 768 });
+			const gap = analyzeProgramGap({ institutionId: 'inst-48', institutionName: 'הטכניון', calculatorId: 'technion', program: prog('prog-technion-19') }, profile, res);
+			const path = gap.alternativePaths?.find((p) => p.id === 'alt-math-exam');
+			assert.ok(path);
+			assert.match(path!.description, /ציון 99 במבחן הסיווג/);
+		});
+
+		it('is not offered to programs missing from the official list (EE + math)', () => {
+			assert.equal(prog('prog-technion-20').admissionRoutes?.mathExam, undefined);
+		});
+	});
+
+	describe('"ראויים לקידום" (sekem discount)', () => {
+		it('has the published discount per track', () => {
+			assert.equal(prog('prog-technion-5').admissionRoutes.promotionBonus, 2); // הנדסה אזרחית
+			assert.equal(prog('prog-technion-24').admissionRoutes.promotionBonus, 1); // הנדסת מכונות
+			assert.equal(prog('prog-technion-19').admissionRoutes?.promotionBonus, undefined); // הנדסת חשמל: none
+		});
+
+		it('says when the discount would be enough (civil engineering: sekem 87 vs threshold 88, discount 2)', () => {
+			const profile: any = { bagrutSubjects: A, psychometricGeneral: 673, mathUnits: 5, mathGrade: 95, physicsUnits: 5, physicsGrade: 93 };
+			const res = calculateMultiInstitutionSekem(profile, ['technion'])[0];
+			const gap = analyzeProgramGap({ institutionId: 'inst-48', institutionName: 'הטכניון', calculatorId: 'technion', program: prog('prog-technion-5') }, profile, res);
+			assert.notEqual(gap.status, 'accepted');
+			const path = gap.alternativePaths?.find((p) => p.id === 'alt-promotion');
+			assert.ok(path);
+			assert.match(path!.description, /סף 86/);
+			assert.match(path!.description, /עומד בסף/);
 		});
 	});
 });

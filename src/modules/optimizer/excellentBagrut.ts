@@ -3,7 +3,8 @@
  * conditions (official page: admissions.technion.ac.il/acceptance-without-psychometric-exam/).
  */
 
-import type { ExcellentBagrutRoute, SubjectCondition } from '../../types/academic';
+import type { ExcellentBagrutRoute, MathExamRoute, SubjectCondition } from '../../types/academic';
+import { calculateTechnionSekem } from '../calculators/technion';
 import type { CalculatorSubject } from '../calculators/types';
 import { isSameBagrutSubject } from './solver';
 
@@ -69,4 +70,20 @@ export function evaluateExcellentBagrut(route: ExcellentBagrutRoute, subjects: C
 	}
 
 	return { met: missing.length === 0, rawAverage, missing };
+}
+
+/**
+ * Technion "בגרות ובחינת סיווג במתמטיקה": the lowest exam score whose converted (psychometric-scale) value brings the
+ * Technion sekem up to `threshold`, or null if even 100 isn't enough.
+ */
+export function requiredMathExamScore(
+	route: MathExamRoute,
+	bagrutAverage: number,
+	threshold: number
+): { examScore: number; psychometricEquivalent: number } | null {
+	for (let score = route.minExamScore; score <= 100; score++) {
+		const equivalent = Math.round(score * route.conversion.slope + route.conversion.intercept);
+		if (calculateTechnionSekem(bagrutAverage, equivalent) >= threshold) return { examScore: score, psychometricEquivalent: equivalent };
+	}
+	return null;
 }

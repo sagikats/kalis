@@ -72,7 +72,8 @@
   {
    "page_track": "הנדסה כימית",
    "program_ids": [
-    "prog-technion-9"
+    "prog-technion-9",
+    "prog-technion-10"
    ],
    "firstSemesterAverageMin": 75,
    "minCourseGrade": 70
@@ -199,5 +200,6 @@
    "firstSemesterAverageMin": 80,
    "minCourseGrade": 65
   }
- ]
+ ],
+ "cross_checked": "2026-10-03 מול \"סיכום אפשרויות הקבלה למסלולים בסמסטר חורף תשפ\"ז\" (עודכן 11.8.2026) — הנדסה כימית - מגמת כימיה נוספה (✔ בעמודת אפיק מקוצר)."
 }
