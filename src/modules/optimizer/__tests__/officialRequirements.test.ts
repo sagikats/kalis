@@ -44,8 +44,7 @@ function analyzeTauCs(prof: UserAcademicProfile) {
 describe('Official program requirements', () => {
 	it('TAU CS carries the official math requirement from its program page', () => {
 		const reqs = programOf('inst-6', 'prog-tau-0368-22').admissionRoutes.requirements;
-		assert.equal(reqs.length, 1);
-		assert.equal(reqs[0].id, 'math');
+		assert.deepEqual(reqs.map((r: any) => r.id), ['math', 'english']);
 		const text = describeRequirement(reqs[0]);
 		assert.match(text, /מתמטיקה 5 יח״ל בציון 80\+/);
 		assert.match(text, /מתמטיקה 4 יח״ל בציון 88\+/);
@@ -53,7 +52,7 @@ describe('Official program requirements', () => {
 	});
 
 	it('the evaluator distinguishes met, met-with-exam and unmet', () => {
-		const [r] = programOf('inst-6', 'prog-tau-0368-22').admissionRoutes.requirements;
+		const r = programOf('inst-6', 'prog-tau-0368-22').admissionRoutes.requirements.find((x: any) => x.id === 'math');
 		const ev = (u: number, g: number) => evaluateRequirement(r, { subjects: [{ name: 'מתמטיקה', units: u, grade: g }] });
 		assert.equal(ev(5, 85).met, true);
 		assert.equal(ev(4, 90).met, true);
@@ -150,12 +149,40 @@ describe('Official program requirements', () => {
 		assert.equal(ev(5, 65).examOption, undefined, 'only Open University courses remain (text), no exam route');
 
 		const phys = programOf('inst-1', 'prog-inst-1-61').admissionRoutes.requirements;
-		assert.deepEqual(phys.map((r: any) => r.id), ['math', 'science']);
+		assert.deepEqual(phys.map((r: any) => r.id), ['math', 'science', 'english']);
 
-		// Agriculture: catching up on math after admission is not an admission condition
-		assert.deepEqual(programOf('inst-1', 'prog-inst-1-1').admissionRoutes.requirements, []);
+		// Agriculture: catching up on math after admission is not an admission condition (only the English level)
+		assert.deepEqual(programOf('inst-1', 'prog-inst-1-1').admissionRoutes.requirements.map((r: any) => r.id), ['english']);
 		// Medicine: official minimum psychometric 700
 		assert.equal(programOf('inst-1', 'prog-huji-5').admissionRoutes.minPsychometric, 700);
+	});
+
+	it("TAU English rule: מתקדמים א' (100); 85–99 via summer courses; under 85 blocks; no score entered = unknown", () => {
+		const withEnglish = (eng?: number) => ({ ...profile(5, 85, 760), psychometricEnglish: eng });
+		const accepted = analyzeTauCs(withEnglish(110)).gap;
+		assert.equal(accepted.status, 'accepted');
+
+		const basic = analyzeTauCs(withEnglish(90)).gap;
+		assert.equal(basic.status, 'missing_requirement');
+		assert.match(basic.improvementOptions[0].description, /קורסי אנגלית/);
+
+		const preBasic = analyzeTauCs(withEnglish(70)).gap;
+		assert.equal(preBasic.status, 'missing_requirement');
+		assert.equal(preBasic.prerequisites.find((c) => c.id === 'official-english')?.notes?.includes('קורסי'), false);
+
+		// No English score entered: the condition can't be checked, so it neither blocks nor counts as missing
+		const unknown = analyzeTauCs(withEnglish(undefined)).gap;
+		assert.equal(unknown.status, 'accepted');
+		const check = unknown.prerequisites.find((c) => c.id === 'official-english');
+		assert.ok(check?.unknown, 'shown as unknown');
+		assert.ok(!unknown.missingPrerequisites.some((c) => c.id === 'official-english'));
+	});
+
+	it("HUJI English minimum per page (linguistics מתקדמים ב' = 120, most programs בסיסי = 85)", () => {
+		const eng = (id: string) => programOf('inst-1', id).admissionRoutes.requirements.find((r: any) => r.id === 'english');
+		assert.equal(eng('prog-inst-1-9').anyOf[0].psych[0].min, 120);
+		assert.equal(eng('prog-inst-1-1').anyOf[0].psych[0].min, 85);
+		assert.equal(eng('prog-inst-1-4').anyOf[0].psych[0].min, 134, 'English department: exemption level');
 	});
 
 	it('BGU: each route uses its own published list (psychometric route vs bagrut-only route)', () => {

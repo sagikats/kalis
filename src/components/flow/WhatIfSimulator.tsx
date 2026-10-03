@@ -444,7 +444,7 @@ export default function WhatIfSimulator({
 				psychometricGeneral: simulatedPsych
 			});
 			for (const r of results) {
-				if (r.met) continue;
+				if (r.met || r.unknown) continue;
 				missing.push({
 					title: r.requirement.title,
 					detail: r.examOption?.exam

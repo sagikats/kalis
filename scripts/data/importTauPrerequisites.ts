@@ -11,8 +11,12 @@
  * - "ציון עובר" = 55 (TAU: "ציון עובר (55)").
  * - "כל המתקבלים ע"ס 4 יח"ל נדרשים לעבור בחינת סיווג במתמטיקה" → the 4-unit option carries that exam.
  * - Alternatives the platform can't evaluate (academic courses, a prior degree, "ציון התאמה גבוה ב-20") go to `otherOptions`.
- * - English-level requirements are not modelled here (separate exemption-level system).
- * Programs whose section has no subject requirement get an empty list, which replaces the generic estimate.
+ * - English: TAU's university-wide rule (go.tau.ac.il/he/ba/english, snapshot `englishRule`) applies to every program —
+ *   מתקדמים א' (100) by the start of studies; בסיסי (85–99) may get there with summer courses (an exam-like option);
+ *   טרום בסיסי (≤84) is rejected. A few programs require מתקדמים ב' (120) instead.
+ * Programs whose section has no subject requirement, and pages with only the university's general requirements
+ * (`generalRequirementsOnly`), get no subject entry — and `requirementsSource`, which replaces the generic estimate.
+ * Pages showing "אין מידע להציג" (`noInfo`) get only the English rule and keep the generic estimate.
  */
 
 import fs from 'fs';
@@ -88,6 +92,38 @@ const basicMath = (q: number, other?: string) => req('math', 'ידע במתמט�
 
 /** AI / data-science minors: 5u 80+, or 4u 90+ with psychometric quant 125+. */
 const aiMath = () => req('math', 'ידע במתמטיקה', [opt([math(5, 80)]), opt([math(4, 90)], undefined, 125)]);
+
+const ENGLISH_SOURCE = 'go.tau.ac.il/he/ba/english — ידיעת השפה האנגלית (2026-10-04)';
+const ENGLISH_DEFAULT: ProgramRequirement = {
+	id: 'english',
+	title: "רמת אנגלית (מתקדמים א')",
+	anyOf: [
+		{ psych: [{ section: 'english', min: 100 }] },
+		{ psych: [{ section: 'english', min: 85 }], exam: "קורסי אנגלית (קיץ) להגעה לרמת מתקדמים א' עד תחילת שנת הלימודים" }
+	],
+	otherOptions: 'ציון מקביל באמירנט / אמי"ר; ברמת טרום בסיסי (עד 84) — דחייה אוטומטית',
+	source: ENGLISH_SOURCE
+};
+const englishAdvancedB = (courseRoute: boolean): ProgramRequirement => ({
+	id: 'english',
+	title: "רמת אנגלית (מתקדמים ב')",
+	anyOf: [
+		{ psych: [{ section: 'english', min: 120 }] },
+		...(courseRoute
+			? [{ psych: [{ section: 'english' as const, min: 85 }], exam: "קורסי אנגלית להגעה לרמת מתקדמים ב' עד תום השבוע השני של ספטמבר" }]
+			: [])
+	],
+	otherOptions: 'ציון 120+ באמירנט / אמי"ר'
+});
+/** Program-specific English levels (from each program's section); every other program gets ENGLISH_DEFAULT. */
+const ENGLISH_BY_PROGRAM: Record<string, ProgramRequirement> = {
+	'prog-tau-0651-28': englishAdvancedB(false), // פכ"מ: "רמת מתקדמים ב' לפחות"
+	'prog-tau-1411-93': englishAdvancedB(true), // משפטים + AI: "מתקדמים ב' ... עד תום השבוע השני של ספטמבר"
+	'prog-tau-0164-16': englishAdvancedB(false), // פיזיותרפיה: "מתקדמים ב' לפחות"
+	'prog-tau-0161-17': { ...englishAdvancedB(false), otherOptions: 'ציון 120+ באמי"ר / אמיר"ם (למעט בעלי תואר שני)' } // הפרעות בתקשורת
+};
+/** Official minimum general psychometric from a program's section ("פסיכומטרי X ומעלה"). */
+const MIN_PSYCH: Record<string, number> = { 'prog-tau-0164-16': 635 };
 
 // --- per program (hand-transcribed from the snapshot) ----------------------------------------------------------
 const TABLE: Record<string, ProgramRequirement[]> = {
@@ -178,6 +214,7 @@ const TABLE: Record<string, ProgramRequirement[]> = {
 	'prog-tau-1564-61': [req('math', 'ידע במתמטיקה', [opt([math(4, 60)]), opt([], undefined, 140)])],
 	'prog-tau-1501-106': [req('math', 'ידע במתמטיקה', [opt([math(4, 60)]), opt([], undefined, 140)])],
 	'prog-tau-0881-12': [req('math', 'ידע במתמטיקה', [opt([math(5, 70)]), opt([math(4, 80)]), opt([math(3, 90)])])],
+	'prog-tau-0164-16': [req('math', 'ידע במתמטיקה', [opt([math(5, 65)]), opt([math(4, 70)])])], // פיזיותרפיה
 	'prog-tau-0165-15': [
 		req('chemistry', 'ידע בכימיה', [opt([b(['כימיה'], 3, 60)]), opt([], 'עמידה בדרישות קורס הקיץ של החוג לריפוי בעיסוק')], 'מכינה קדם-אקדמית או קורס אקדמי מקביל'),
 		req('physics', 'ידע בפיזיקה', [opt([phys(3, 60)]), opt([], 'עמידה בדרישות קורס הקיץ של החוג לריפוי בעיסוק')], 'מכינה קדם-אקדמית או קורס אקדמי מקביל')
@@ -203,24 +240,35 @@ function main() {
 	const data = JSON.parse(fs.readFileSync(JSON_PATH, 'utf-8'));
 	const tau = data.find((i: any) => i.id === 'inst-6');
 	const byId = new Map<string, any>(tau.programs.map((p: any) => [p.id, p]));
-	const inSnapshot = new Set<string>(snap.programs.map((r: any) => r.program_id));
+	const withSection = new Map<string, any>(snap.programs.map((r: any) => [r.program_id, r]));
+	const generalOnly = new Map<string, any>(snap.generalRequirementsOnly.map((r: any) => [r.program_id, r]));
+	const noInfo = new Set<string>(snap.noInfo.map((r: any) => r.program_id));
 
-	for (const id of Object.keys(TABLE)) {
-		if (!inSnapshot.has(id)) throw new Error(`${id} has requirements but no snapshot text`);
+	for (const id of [...Object.keys(TABLE), ...Object.keys(MIN_PSYCH)]) {
+		if (!withSection.has(id)) throw new Error(`${id} has requirements but no snapshot text`);
 	}
 
 	let withReqs = 0;
-	for (const row of snap.programs) {
-		const p = byId.get(row.program_id);
-		if (!p) throw new Error(`Unknown program ${row.program_id}`);
-		const requirements = TABLE[row.program_id] ?? [];
-		p.admissionRoutes = { ...(p.admissionRoutes ?? {}), requirements, requirementsSource: `${SOURCE}: ${row.url}` };
-		if (requirements.length) withReqs++;
-		console.log(`  ${p.fieldOfStudy}: ${requirements.map((r) => r.title).join(', ') || '— (אין דרישת מקצוע)'}`);
+	for (const p of tau.programs) {
+		const row = withSection.get(p.id) ?? generalOnly.get(p.id);
+		if (!row && !noInfo.has(p.id)) throw new Error(`${p.id} is in no snapshot list`);
+		const subject = TABLE[p.id] ?? [];
+		const english = ENGLISH_BY_PROGRAM[p.id] ?? ENGLISH_DEFAULT;
+		const routes: any = { ...(p.admissionRoutes ?? {}), requirements: [...subject, english] };
+		delete routes.requirementsSource;
+		// The page was checked (section or general-only): its subject requirements replace the generic estimate
+		if (row) routes.requirementsSource = `${SOURCE}: ${row.url}`;
+		if (MIN_PSYCH[p.id]) {
+			routes.minPsychometric = Math.max(MIN_PSYCH[p.id], routes.minPsychometric ?? 0);
+			p.minPsychometricFloor = routes.minPsychometric;
+		}
+		p.admissionRoutes = routes;
+		if (subject.length) withReqs++;
+		console.log(`  ${p.fieldOfStudy}: ${[...subject.map((r) => r.title), english.title].join(', ')}${row ? '' : ' (אין מידע בדף — הערכה גנרית למקצועות)'}`);
 	}
 
 	fs.writeFileSync(JSON_PATH, JSON.stringify(data, null, 2) + '\n');
-	console.log(`Official requirements for ${snap.programs.length} TAU programs (${withReqs} with subject requirements)`);
+	console.log(`TAU: ${tau.programs.length} programs — ${withReqs} with subject requirements, ${noInfo.size} without page data; English rule on all`);
 }
 
 main();

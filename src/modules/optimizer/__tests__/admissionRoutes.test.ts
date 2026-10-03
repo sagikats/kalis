@@ -98,9 +98,9 @@ describe('Official admission routes', () => {
 	});
 
 	it('a program with only a catalog estimate for the floor keeps the sekem-based status', () => {
-		// TAU law has no official routes; the catalog's estimated floor must not block admission
+		// TAU law has no official psychometric minimum; the catalog's estimated floor must not block admission
 		const program = programOf('inst-6', 'prog-tau-1411-81');
-		assert.equal(program.admissionRoutes, undefined);
+		assert.equal(program.admissionRoutes?.minPsychometric, undefined);
 		const prof = profile(STRONG_BAGRUT, 590, 130);
 		const res = calculateMultiInstitutionSekem(prof as any, ['tau'])[0];
 		const gap = analyzeProgramGap(

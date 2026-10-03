@@ -17,6 +17,8 @@
  * - "מקצוע מדעי נוסף על מתמטיקה בבגרות" names no subjects/units; physics, chemistry, biology or computer science at
  *   any level is accepted (interpretation, marked in otherOptions).
  * - Open University course alternatives go to `otherOptions`.
+ * - English: each page's "רמת אנגלית מינימלית" (snapshot `englishMinimum`: 85 בסיסי / 100 מתקדמים א' / 120 מתקדמים ב' /
+ *   פטור 134) becomes an English-section requirement.
  */
 
 import fs from 'fs';
@@ -70,15 +72,26 @@ const BY_PAGE: Record<string, ProgramRequirement[]> = {
 		},
 		SCIENCE
 	],
-	English: [
-		{
-			id: 'english',
-			title: 'רמת אנגלית (134)',
-			anyOf: [{ psych: [{ section: 'english', min: 134 }] }],
-			otherOptions: 'אמי"ר / אמיר"ם 134+ או פטור מאנגלית ממוסד מוכר'
-		}
-	]
 };
+
+const ENGLISH_LEVELS: [RegExp, number, string][] = [
+	[/^פטור/, 134, 'פטור'],
+	[/120/, 120, "מתקדמים ב'"],
+	[/100/, 100, "מתקדמים א'"],
+	[/85/, 85, 'בסיסי']
+];
+function englishRequirement(minimum: string | null, page: string): ProgramRequirement | undefined {
+	if (!minimum) return undefined;
+	const level = ENGLISH_LEVELS.find(([re]) => re.test(minimum));
+	if (!level) throw new Error(`Unparsed English minimum "${minimum}" on ${page}`);
+	const [, min, name] = level;
+	return {
+		id: 'english',
+		title: `רמת אנגלית (${name})`,
+		anyOf: [{ psych: [{ section: 'english', min }] }],
+		otherOptions: page === 'English' ? 'אמי"ר / אמיר"ם 134+ או פטור מאנגלית ממוסד מוכר' : `ציון ${min}+ באמירנט / אמי"ר`
+	};
+}
 
 /** Official minimum general psychometric ("כל המועמדים נדרשים ..."). */
 const MIN_PSYCH_BY_PAGE: Record<string, number> = { Medicine: 700, 'Dental-Medicine': 640 };
@@ -86,6 +99,7 @@ const MIN_PSYCH_BY_PAGE: Record<string, number> = { Medicine: 700, 'Dental-Medic
 function main() {
 	const snap = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf-8'));
 	const pages = new Set<string>(snap.pages.map((p: any) => p.page));
+	const englishByPage = new Map<string, string | null>(snap.pages.map((p: any) => [p.page, p.englishMinimum]));
 	for (const page of [...Object.keys(BY_PAGE), ...Object.keys(MIN_PSYCH_BY_PAGE)]) {
 		if (!pages.has(page)) throw new Error(`${page} is not in the snapshot`);
 	}
@@ -97,7 +111,8 @@ function main() {
 	for (const [id, { page }] of Object.entries<any>(snap.programMap)) {
 		const p = byId.get(id);
 		if (!p) throw new Error(`Unknown program ${id}`);
-		const requirements = BY_PAGE[page] ?? [];
+		const english = englishRequirement(englishByPage.get(page) ?? null, page);
+		const requirements = [...(BY_PAGE[page] ?? []), ...(english ? [english] : [])];
 		const routes = { ...(p.admissionRoutes ?? {}), requirements, requirementsSource: `${SOURCE}: https://info.huji.ac.il/bachelor/${page}` };
 		if (MIN_PSYCH_BY_PAGE[page]) {
 			routes.minPsychometric = MIN_PSYCH_BY_PAGE[page];

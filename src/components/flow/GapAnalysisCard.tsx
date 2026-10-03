@@ -179,6 +179,8 @@ export default function GapAnalysisCard({
 							className={`p-4 rounded-2xl border flex items-start gap-3 ${
 								prereq.isMet
 									? 'bg-[#EBF4EE] border-[#C6DFCE]'
+									: prereq.unknown
+									? 'bg-[#FAF8F5] border-[#E5DFD4]'
 									: 'bg-[#FDF6E8] border-[#ECDAB6]'
 							}`}
 						>
@@ -199,7 +201,7 @@ export default function GapAnalysisCard({
 												: 'text-[#825B15] bg-white border-[#ECDAB6]'
 										}`}
 									>
-										{prereq.isMet ? 'עומד בדרישה' : 'חסר / דורש מכינה'}
+										{prereq.isMet ? 'עומד בדרישה' : prereq.unknown ? 'לא הוזן ציון' : 'חסר / דורש מכינה'}
 									</span>
 								</div>
 								<p className="text-[#66635C] font-medium">

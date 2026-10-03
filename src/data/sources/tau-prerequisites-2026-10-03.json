@@ -1,7 +1,7 @@
 {
  "source": "go.tau.ac.il — לשונית \"תנאי קבלה\" (?v=requirements), פרק \"דרישות הסף של התוכנית\" (ברירת המחדל של הדף: סמסטר א' תשפ\"ז)",
  "fetched": "2026-10-03",
- "note": "טקסט מילולי של הפרק לכל תוכנית שיש לה פרק כזה. תוכניות בלי הפרק לא נכללות.",
+ "note": "טקסט מילולי של הפרק לכל תוכנית שיש לה פרק כזה. תוכניות בלי הפרק לא נכללות. generalRequirementsOnly = לדף אין פרק \"דרישות הסף של התוכנית\", רק \"דרישות הקבלה הכלליות של האוניברסיטה\". noInfo = הדף מציג \"אין מידע להציג\" (לא נלקח נתון). 19 תוכניות נוספות אותרו דרך sitemap.xml ב-2026-10-04.",
  "programs": [
   {
    "program_id": "prog-tau-0910-103",
@@ -332,6 +332,277 @@
    "url": "https://go.tau.ac.il/he/neuroscience/ba/neuroscience-environment-ai?v=requirements",
    "program": "תוכנית דו-חוגית במדעי המוח ובמדעי הסביבה עם חטיבה בבינה מלאכותית ובמדעי הנתונים",
    "quote": "הרשמה בעדיפות ראשונה המסלול נבחר בעדיפות ראשונה או שניה ידע במתמטיקה בגרות במתמטיקה בהיקף של 4 יח\"ל לפחות בציון 60 לפחות או ציון 140 ומעלה בפרק הכמותי במבחן הפסיכומטרי אפיקי קבלה חריגה פסיכומטרי כללי 705 ומעלה וגם ציון התאמה 670 ומעלה (ייתכן זימון לראיון אישי)*"
+  },
+  {
+   "program_id": "prog-tau-0162-14",
+   "url": "https://go.tau.ac.il/he/med/ba/nursing-academic?v=requirements",
+   "program": "הסבת אקדמאים למדעי האחיוּת (Nursing)",
+   "quote": "מבחן התאמה וראיון הקבלה על בסיס מבדק התאמה, (בעלות 150 ₪). תתכן הזמנה לראיון אישי על פי החלטת ועדת הקבלה לתוכנית. המבדק תקף לשנתיים. מועמדים בעלי תואר שני ו/או שלישי, פטורים ממבדק התאמה אך ידרשו למלא \"טופס מהלך חיים ורקע אישי\" ויוזמנו לראיון. מועמד שנדחה רשאי להגיש מועמדות פעם נוספת. לאחר ההרשמה והגשת אישור זכאות ו/או גיליון ציונים עדכני למרכז למרשם, זימון למבדק ההתאמה ישלח רק למועמדים העומדים בתנאי הקבלה , לאחר הגשת כל המסמכים הדרושים , לרבות אישור זכאות לתואר וגיליון ציונים עדכני ורשמי . באחריות המועמד.ת לתאם מועד למבדקים ולהסדיר את התשלום בעבורם, כתנאי להמשך מועמדותו. ללא עבר אקדמי המונע קבלה כל מועמד חייב להצהיר על לימודי אחיות קודמים מלאים או חלקיים. במידה ולמד לימודי אחיות קודמים, יהיה עליו לחתום על טופס ויתור סודיות ומצבו האקדמי הקודם ייבדק. לא ניתן להתקבל במידה והמועמד למד לימודי אחיות קודמים ולימודיו הופסקו מסיבות אקדמיות (כגון כשלון בקורסים) או מסיבות משמעת."
+  },
+  {
+   "program_id": "prog-tau-0851-9",
+   "url": "https://go.tau.ac.il/he/arts/ba/digital?v=requirements",
+   "program": "לימודי מדיה דיגיטלית - מסלול מואץ לתואר ראשון ושני בקולנוע וטלוויזיה",
+   "quote": "מבדקי מיון קורות חיים פירוט תמציתי של עד עמוד אחד, כתוב היטב והכולל את הרקע של המועמד וכיצד המסלול יקדם את המועמד/ת בהשגת המטרות שלו/ה; עבודה/ות יצירתית/ות (כגון צילומי סטילס/ סרטון קצר/דף קומיקס/תסריט/סיפור קצר/ציור). ראיון תלמיד ללא תיק עבודות יגיש מטלה בתחום. יש להגיש את הנדרש בצירוף טופס פרטים אישיים . ראיון לאחר קבלת תיק העבודות תזמין ועדת הקבלה את המועמדים לראיון אישי"
+  },
+  {
+   "program_id": "prog-tau-0811-5",
+   "url": "https://go.tau.ac.il/he/arts/ba/actors?v=requirements",
+   "program": "לימודי משחק - מסלול מואץ לתואר ראשון ושני באמנות התיאטרון",
+   "quote": "מבדקי מיון שלב א' – אודישן: ביצוע שני מונולוגים מתוך מחזה קלאסי ומתוך מחזה מודרני וראיון אישי. שלב ב' ( למי שעברו את שלב א' )- סדנה אשר בודקת כישורים של יצירתיות ועבודה בקבוצה. המועמדים ידרשו למלא ולחתום על הצהרת בריאות יש לעבור בהצלחה את שני השלבים"
+  },
+  {
+   "program_id": "prog-tau-0861-6",
+   "url": "https://go.tau.ac.il/he/arts/ba/design?v=requirements",
+   "program": "לימודי עיצוב במה, קולנוע וטלוויזיה-מסלול מואץ לתואר ראשון ותואר שני",
+   "quote": "מבדקי מיון מבדק מיומנויות אישיות בתחום העיצוב וגם הגשת תיק עבודות וגם ראיון אישי"
+  },
+  {
+   "program_id": "prog-tau-0842-102",
+   "url": "https://go.tau.ac.il/he/arts/ba/music-diploma?v=requirements",
+   "program": "לימודי תעודת אמן - מגמה לביצוע מוזיקלי",
+   "quote": "מבדקי מיון בנוסף לרישום הכללי לאוניברסיטה, חייבים/ות המועמדים/ות לעבור מבחני כניסה . במגמת ביצוע מוזיקלי מבחן כניסה: בשירה/נגינה ובחינות תיאורטיות במסלול קומפוזיציה וניצוח בחינות תיאורטיות, הגשת יצירה בקומפוזיציה וראיון קבלה במגמת מוזיקולוגיה ראיון קבלה ובחינות תיאורטיות. בהתאם לתוצאות הבחינה, תתכן הפניה למכינת קיץ מועדי המבחנים מתפרסמים באתר ביה\"ס והרישום אליהן מתבצע דרך מזכירות ביה\"ס."
+  },
+  {
+   "program_id": "prog-tau-0842-11",
+   "url": "https://go.tau.ac.il/he/arts/ba/music?v=requirements",
+   "program": "תואר ראשון בלימודי מוזיקה",
+   "quote": "מבדקי מיון בנוסף לרישום הכללי לאוניברסיטה, חייבים/ות המועמדים/ות לעבור מבחני כניסה . במגמה לביצוע מוזיקלי מבחן כניסה: בשירה/נגינה ובחינות תיאורטיות במגמה לקומפוזיציה וניצוח בחינות תיאורטיות, הגשת יצירה בקומפוזיציה וראיון קבלה במגמה למוזיקולוגיה ראיון קבלה ובחינות תיאורטיות. מועדי המבחנים מתפרסמים באתר ביה\"ס והרישום אליהן מתבצע דרך מזכירות ביה\"ס."
+  },
+  {
+   "program_id": "prog-tau-0164-16",
+   "url": "https://go.tau.ac.il/he/med/ba/phys?v=requirements",
+   "program": "תואר ראשון בפיזיותרפיה",
+   "quote": "ידע במתמטיקה ציון 65 ומעלה בבגרות במתמטיקה בהיקף של 5 יח\"ל או ציון 70 ומעלה בבגרות במתמטיקה בהיקף של 4 יח\"ל פסיכומטרי 635 ומעלה או תואר שני (תואר מוסמך) ממוסד אקדמי מוכר על ידי המל\"ג מבדקי מיון ראיון אישי הרמה הנדרשת באנגלית מתקדמים ב' לפחות התכנית נבחרה בעדיפות ראשונה"
   }
- ]
+ ],
+ "generalRequirementsOnly": [
+  {
+   "program_id": "prog-tau-1541-98",
+   "url": "https://go.tau.ac.il/he/neuroscience/ba/psychology-biology-ai?v=requirements",
+   "program": "ביולוגיה ופסיכולוגיה במסגרת ביה\"ס למדעי המוח עם חטיבה בבינה מלאכותית ומדעי הנתונים"
+  },
+  {
+   "program_id": "prog-tau-0608-80",
+   "url": "https://go.tau.ac.il/he/humanities/ba/gender?v=requirements",
+   "program": "תואר ראשון בלימודי נשים ומגדר"
+  },
+  {
+   "program_id": "prog-tau-1411-81",
+   "url": "https://go.tau.ac.il/he/law/ba/law?v=requirements",
+   "program": "תואר ראשון בלימודי משפטים"
+  },
+  {
+   "program_id": "prog-tau-1041-52",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/sociology-anthropology?v=requirements",
+   "program": "תואר ראשון בלימודי סוציולוגיה ואנתרופולוגיה"
+  },
+  {
+   "program_id": "prog-tau-1051-53",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/labor-studies?v=requirements",
+   "program": "תואר ראשון בלימודי עבודה"
+  },
+  {
+   "program_id": "prog-tau-1071-54",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/psychology?v=requirements",
+   "program": "תואר ראשון בלימודי פסיכולוגיה"
+  },
+  {
+   "program_id": "prog-tau-1085-56",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/communications?v=requirements",
+   "program": "תואר ראשון בלימודי תקשורת"
+  },
+  {
+   "program_id": "prog-tau-1031-55",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/political-science?v=requirements",
+   "program": "תואר ראשון במדע המדינה, ממשל ויחסים בינלאומיים"
+  },
+  {
+   "program_id": "prog-tau-0662-101",
+   "url": "https://go.tau.ac.il/he/humanities/ba/accelerated-program?v=requirements",
+   "program": "תוכנית מואצת לתואר ראשון ושני במדעי הרוח ב- 4 שנים"
+  },
+  {
+   "program_id": "prog-tau-0631-40",
+   "url": "https://go.tau.ac.il/he/humanities/ba/arab?v=requirements",
+   "program": "תואר ראשון בלימודי הערבית והאסלאם"
+  },
+  {
+   "program_id": "prog-tau-0671-45",
+   "url": "https://go.tau.ac.il/he/humanities/ba/archeology?v=requirements",
+   "program": "תואר ראשון בארכיאולוגיה ותרבויות המזרח הקדום"
+  },
+  {
+   "program_id": "prog-tau-0687-39",
+   "url": "https://go.tau.ac.il/he/humanities/ba/asia?v=requirements",
+   "program": "תואר ראשון בלימודי מזרח אסיה"
+  },
+  {
+   "program_id": "prog-tau-0612-41",
+   "url": "https://go.tau.ac.il/he/humanities/ba/bible?v=requirements",
+   "program": "תואר ראשון במקרא"
+  },
+  {
+   "program_id": "prog-tau-0672-34",
+   "url": "https://go.tau.ac.il/he/humanities/ba/classics?v=requirements",
+   "program": "תואר ראשון בלימודים קלאסיים - יוון ורומא"
+  },
+  {
+   "program_id": "prog-tau-0621-29",
+   "url": "https://go.tau.ac.il/he/humanities/ba/general-history?v=requirements",
+   "program": "תואר ראשון בהיסטוריה כללית"
+  },
+  {
+   "program_id": "prog-tau-0662-46",
+   "url": "https://go.tau.ac.il/he/humanities/ba/general-studies?v=requirements",
+   "program": "תואר ראשון בתוכנית הרב-תחומית במדעי הרוח"
+  },
+  {
+   "program_id": "prog-tau-0614-37",
+   "url": "https://go.tau.ac.il/he/humanities/ba/hebrew?v=requirements",
+   "program": "תואר ראשון בחוג ללשון עברית"
+  },
+  {
+   "program_id": "prog-tau-0677-33",
+   "url": "https://go.tau.ac.il/he/humanities/ba/israel-studies?v=requirements",
+   "program": "תואר ראשון במסלול לימודי ישראל בחוג להיסטוריה של עם ישראל"
+  },
+  {
+   "program_id": "prog-tau-0616-38",
+   "url": "https://go.tau.ac.il/he/humanities/ba/jewish-philosophy?v=requirements",
+   "program": "תואר ראשון בפילוסופיה יהודית"
+  },
+  {
+   "program_id": "prog-tau-0627-47",
+   "url": "https://go.tau.ac.il/he/humanities/ba/linguistics?v=requirements",
+   "program": "תואר ראשון בבלשנות"
+  },
+  {
+   "program_id": "prog-tau-0622-48",
+   "url": "https://go.tau.ac.il/he/humanities/ba/middleast-history?v=requirements",
+   "program": "תואר ראשון בהיסטוריה של המזרח התיכון ואפריקה"
+  },
+  {
+   "program_id": "prog-tau-0618-27",
+   "url": "https://go.tau.ac.il/he/humanities/ba/philosophy?v=requirements",
+   "program": "תואר ראשון בפילוסופיה"
+  },
+  {
+   "program_id": "prog-tau-0624-43",
+   "url": "https://go.tau.ac.il/he/humanities/ba/semitic-linguistics?v=requirements",
+   "program": "תואר ראשון בבלשנות שמית"
+  },
+  {
+   "program_id": "prog-tau-0683-36",
+   "url": "https://go.tau.ac.il/he/humanities/ba/talmud?v=requirements",
+   "program": "תואר ראשון בתלמוד"
+  },
+  {
+   "program_id": "prog-tau-0626-44",
+   "url": "https://go.tau.ac.il/he/humanities/ba/english?v=requirements",
+   "program": "תואר ראשון בספרות אנגלית ולימודים אמריקניים"
+  },
+  {
+   "program_id": "prog-tau-0821-10",
+   "url": "https://go.tau.ac.il/he/arts/ba/art-history?v=requirements",
+   "program": "תואר ראשון בלימודי תולדות האמנות"
+  },
+  {
+   "program_id": "prog-tau-0861-7",
+   "url": "https://go.tau.ac.il/he/arts/ba/mult?v=requirements",
+   "program": "תואר ראשון בתוכנית הרב-תחומית באמנויות"
+  },
+  {
+   "program_id": "prog-tau-0851-8",
+   "url": "https://go.tau.ac.il/he/arts/ba/film?v=requirements",
+   "program": "תואר ראשון בלימודי קולנוע וטלוויזיה"
+  },
+  {
+   "program_id": "prog-tau-0811-4",
+   "url": "https://go.tau.ac.il/he/arts/ba/theater?v=requirements",
+   "program": "תואר ראשון בלימודי אמנות התיאטרון"
+  },
+  {
+   "program_id": "prog-tau-0811-100",
+   "url": "https://go.tau.ac.il/he/arts/ba/directors?v=requirements",
+   "program": "לימודי בימוי - מסלול מואץ לתואר ראשון ושני באמנות התיאטרון"
+  },
+  {
+   "program_id": "prog-tau-0102-35",
+   "url": "https://go.tau.ac.il/he/med/ba/medresearch?v=requirements",
+   "program": "לימודי רפואה (MD) עם תכנית נוספת"
+  },
+  {
+   "program_id": "prog-tau-0769-73",
+   "url": "https://go.tau.ac.il/he/education/ba/diploma?v=requirements",
+   "program": "לימודי תעודת הוראה"
+  }
+ ],
+ "noInfo": [
+  {
+   "program_id": "prog-tau-1541-105",
+   "url": "https://go.tau.ac.il/he/neuroscience/ba/linguistics-biology-ai?v=requirements",
+   "program": "תואר ראשון בביולוגיה ובלשנות במסגרת ביה\"ס למדעי המוח עם חטיבה בבינה מלאכותית ומדעי הנתונים"
+  },
+  {
+   "program_id": "prog-tau-0368-49",
+   "url": "https://go.tau.ac.il/he/humanities/ba/linguistics-computers?v=requirements",
+   "program": "תואר ראשון מובנה ללימודי בלשנות דו-חוגי עם מדעי המחשב"
+  },
+  {
+   "program_id": "prog-tau-1031-97",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/political-science-ai?v=requirements",
+   "program": "תכנית לימודים חד-חוגית במדע המדינה, ממשל ויחב\"ל עם חטיבה בבינה מלאכותית ובמדעי הנתונים"
+  },
+  {
+   "program_id": "prog-tau-1821-87",
+   "url": "https://go.tau.ac.il/he/excel/ba/excel-multi-program?v=requirements",
+   "program": "התוכנית הבין-תחומית לתלמידים מצטיינים ע\"ש עדי לאוטמן"
+  },
+  {
+   "program_id": "prog-tau-1822-1",
+   "url": "https://go.tau.ac.il/he/excel/ba/one-program?v=requirements",
+   "program": "התוכנית החד-תחומית לתלמידים מצטיינים ע\"ש עדי לאוטמן"
+  },
+  {
+   "program_id": "prog-tau-0111-18",
+   "url": "https://go.tau.ac.il/he/med/ba/med-doc?v=requirements",
+   "program": "לימודי תואר \"דוקטור ברפואה\""
+  },
+  {
+   "program_id": "prog-tau-0191-83",
+   "url": "https://go.tau.ac.il/he/med/ba/dental?v=requirements",
+   "program": "לימודי תואר \"דוקטור לרפואת שיניים\""
+  },
+  {
+   "program_id": "prog-tau-1071-50",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/mind-studies?v=requirements",
+   "program": "מסלול חקר התודעה והקוגניציה במסגרת תואר ראשון דו חוגי בפסיכולוגיה ובפילוסופיה"
+  },
+  {
+   "program_id": "prog-tau-1071-57",
+   "url": "https://go.tau.ac.il/he/exact/ba/economic-psychology?v=requirements",
+   "program": "מסלול כלכלה התנהגותית במסגרת תואר ראשון דו חוגי בכלכלה ובפסיכולוגיה"
+  },
+  {
+   "program_id": "prog-tau-1041-88",
+   "url": "https://go.tau.ac.il/he/social-sciences/ba/leadership?v=requirements",
+   "program": "מסלול מנהיגות ומשאבי אנוש במסגרת תואר ראשון דו–חוגי בלימודי עבודה ובסוציולוגיה ואנתרופולוגיה"
+  },
+  {
+   "program_id": "prog-tau-0321-32",
+   "url": "https://go.tau.ac.il/he/exact/ba/quantum?v=requirements",
+   "program": "תואר ראשון בפיזיקה ובמדעי המחשב במסלול מחשוב קוונטי"
+  },
+  {
+   "program_id": "prog-tau-0627-58",
+   "url": "https://go.tau.ac.il/he/humanities/ba/psycho-lng?v=requirements",
+   "program": "תואר ראשון דו-חוגי בפסיכולוגיה ובבלשנות - פסיכו-בלשנות"
+  }
+ ],
+ "englishRule": {
+  "url": "https://go.tau.ac.il/he/ba/english",
+  "quote": "כל המועמדות והמועמדים נדרשים להגיע לרמת מתקדמים א' לפחות עד תחילת שנת הלימודים; מועמדות ומועמדים שיסווגו לרמת \"טרום בסיסי\" יידחו אוטומטית. רמות: טרום בסיסי עד 84, בסיסי 85–99, מתקדמים א' 100–119, מתקדמים ב' 120–133, פטור 134+.",
+  "fetched": "2026-10-04"
+ }
 }

@@ -367,6 +367,14 @@ function ProgramReportCard({
 							))}
 					</div>
 				)}
+				{/* Official conditions that can't be checked yet (a psychometric section score wasn't entered) */}
+				{item.prerequisites
+					.filter((p) => p.unknown)
+					.map((p) => (
+						<div key={p.id} className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[11px] text-[#66635C] font-medium leading-relaxed">
+							<span className="font-bold text-[#44423D]">{p.name}:</span> {p.required}. {p.notes}
+						</div>
+					))}
 			</div>
 
 			{/* Action Button */}

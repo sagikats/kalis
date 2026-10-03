@@ -62,7 +62,10 @@ export interface AdmissionRoutes {
      requirements?: ProgramRequirement[];
      /** Requirements of the bagrut-only route when they differ from `requirements` (BGU publishes both). */
      bagrutOnlyRequirements?: ProgramRequirement[];
-     /** Where the requirements were taken from (URL + date). */
+     /**
+      * Where the program's subject requirements were taken from (URL + date). Present = the program page was checked,
+      * so the generic math/physics estimate no longer applies (even when `requirements` has no subject entry).
+      */
      requirementsSource?: string;
 }
 
@@ -83,6 +86,8 @@ export interface ProgramRequirement {
 	anyOf: RequirementOption[];
 	/** Official alternatives the platform can't evaluate (academic courses, a prior degree), shown as text. */
 	otherOptions?: string;
+	/** Source of this requirement when it differs from the program's `requirementsSource` (e.g. a university-wide English rule). */
+	source?: string;
 }
 
 /** One bagrut condition: `count` distinct subjects from `subjects`, each at `minUnits`+ units and `minGrade`+. */

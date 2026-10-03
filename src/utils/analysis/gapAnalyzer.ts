@@ -5,6 +5,7 @@ import {
 	evaluateRequirements,
 	describeRequirement,
 	requirementSubjects,
+	isBlocking,
 	RequirementResult
 } from '../../modules/optimizer/programRequirements';
 import { isSameBagrutSubject } from '../../modules/optimizer/solver';
@@ -30,6 +31,8 @@ export interface PrerequisiteCheck {
 	required: string; // e.g. '5 יח״ל בציון 70+ או 4 יח״ל 85+'
 	current: string; // e.g. '4 יח״ל בציון 80'
 	isMet: boolean;
+	/** Can't be checked — a needed psychometric section score wasn't entered. Doesn't count as missing. */
+	unknown?: boolean;
 	notes?: string;
 }
 
@@ -240,14 +243,18 @@ function describeCurrentForRequirement(r: ProgramRequirement, profile: UserAcade
 
 /** One prerequisite card per official requirement. */
 export function officialRequirementChecks(results: RequirementResult[], profile: UserAcademicProfile): PrerequisiteCheck[] {
-	return results.map(({ requirement: r, met, examOption }) => ({
+	const SECTION = { quant: 'חשיבה כמותית', verbal: 'חשיבה מילולית', english: 'אנגלית' } as const;
+	return results.map(({ requirement: r, met, examOption, unknown, missingSections }) => ({
 		id: `official-${r.id}`,
 		name: `${r.title} (תנאי סף רשמי)`,
 		required: describeRequirement(r),
 		current: describeCurrentForRequirement(r, profile),
 		isMet: met,
+		unknown: unknown || undefined,
 		notes: met
 			? undefined
+			: unknown
+			? `לא הוזן ציון ${(missingSections ?? []).map((sec) => SECTION[sec]).join(' / ')} בפסיכומטרי — אי אפשר לבדוק את התנאי. הזן/י את ציון הפרק כדי לדעת אם את/ה עומד/ת בו.`
 			: examOption
 			? `אפשר לעמוד בתנאי עם ${examOption.exam}, או לשפר את הבגרות לאחת האפשרויות האחרות.`
 			: 'לא מתקיים תנאי הסף הרשמי של התוכנית — בלעדיו אין קבלה גם אם הסכם עובר את הסף.'
@@ -304,9 +311,11 @@ export function checkProgramPrerequisites(
 	if (officialRequirements) {
 		checks.push(...officialRequirementChecks(evaluateProgramRequirements(officialRequirements, profile), profile));
 	}
+	// The program page was checked: its official subject requirements replace the generic estimate (even if none)
+	const subjectsOfficial = Boolean(officialRoutesOf(targetProgram)?.requirementsSource);
 
 	// 1. Math prerequisite (estimate)
-	if (!officialRequirements && isExactScience) {
+	if (!subjectsOfficial && isExactScience) {
 		const mathUnits = profile.mathUnits || 0;
 		const mathGrade = profile.mathGrade || 0;
 		const isMet = (mathUnits === 5 && mathGrade >= 70) || (mathUnits === 4 && mathGrade >= 85);
@@ -326,7 +335,7 @@ export function checkProgramPrerequisites(
 		(targetProgram as any)?.requiresPhysics ||
 		(targetProgram?.prerequisitesJson?.includes('"requiresPhysics":true'));
 
-	if (!officialRequirements && requiresPhysics) {
+	if (!subjectsOfficial && requiresPhysics) {
 		const physicsUnits = profile.physicsUnits || 0;
 		const physicsGrade = profile.physicsGrade || 0;
 		const isMet = physicsUnits === 5 && physicsGrade >= 65;
@@ -341,8 +350,8 @@ export function checkProgramPrerequisites(
 		});
 	}
 
-	// 3. English academic requirement
-	if (profile.psychometricEnglish !== undefined && profile.psychometricEnglish > 0) {
+	// 3. English — generic MAHAR rule only when the program has no official English requirement
+	if (!officialRequirements?.some((r) => r.id.startsWith('english')) && profile.psychometricEnglish !== undefined && profile.psychometricEnglish > 0) {
 		const engScore = profile.psychometricEnglish;
 		const isExempt = engScore >= 134;
 		checks.push({
@@ -388,7 +397,7 @@ export function analyzeProgramGap(
 	}
 
 	const prerequisites = checkProgramPrerequisites(target.program.fieldOfStudy, profile, target.program);
-	const missingPrerequisites = prerequisites.filter((p) => !p.isMet);
+	const missingPrerequisites = prerequisites.filter((p) => !p.isMet && !p.unknown);
 
 	// Generate actionable improvement levers if there's a gap
 	const improvementOptions: ImprovementOption[] = [];
@@ -523,11 +532,11 @@ export function analyzeProgramGap(
 	// Official program requirements (math, physics, …) apply on every route; BGU's bagrut-only route has its own list
 	const sekemPassed = status === 'accepted';
 	const requirementResults = evaluateProgramRequirements(routes?.requirements, profile);
-	const unmetRequirements = requirementResults.filter((r) => !r.met);
+	const unmetRequirements = requirementResults.filter(isBlocking);
 	const bagrutOnlyResults = routes?.bagrutOnlyRequirements
 		? evaluateProgramRequirements(routes.bagrutOnlyRequirements, profile)
 		: requirementResults;
-	const bagrutOnlyRequirementsMet = bagrutOnlyResults.every((r) => r.met);
+	const bagrutOnlyRequirementsMet = !bagrutOnlyResults.some(isBlocking);
 
 	if (routes?.minPsychometric && status === 'accepted' && psych < routes.minPsychometric) {
 		status = 'missing_requirement';
@@ -597,7 +606,7 @@ export function analyzeProgramGap(
 			if (admissionRoute === 'bagrut_only' && routes?.bagrutOnlyRequirements) {
 				const official = officialRequirementChecks(bagrutOnlyResults, profile);
 				prerequisites.splice(0, prerequisites.length, ...prerequisites.filter((c) => !c.id.startsWith('official-')), ...official);
-				missingPrerequisites.splice(0, missingPrerequisites.length, ...prerequisites.filter((c) => !c.isMet));
+				missingPrerequisites.splice(0, missingPrerequisites.length, ...prerequisites.filter((c) => !c.isMet && !c.unknown));
 			}
 		} else {
 			// Official routes other than the sekem, as alternative paths in the report (where relevant to this applicant)

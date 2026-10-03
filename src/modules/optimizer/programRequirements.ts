@@ -21,6 +21,13 @@ export interface RequirementResult {
 	met: boolean;
 	/** Not met outright, but this option is met apart from its institutional exam (e.g. a classification exam). */
 	examOption?: RequirementOption;
+	/**
+	 * Not met only because a psychometric section score wasn't entered (e.g. English level with no English score):
+	 * the outcome is unknown, so it must not block admission — callers show what's needed instead.
+	 */
+	unknown?: boolean;
+	/** Sections whose missing score makes the result unknown. */
+	missingSections?: ('quant' | 'verbal' | 'english')[];
 }
 
 const SECTION_LABEL = { quant: 'חשיבה כמותית', verbal: 'חשיבה מילולית', english: 'אנגלית' } as const;
@@ -52,9 +59,26 @@ function optionMetIgnoringExam(o: RequirementOption, ctx: RequirementContext): b
 
 export function evaluateRequirement(requirement: ProgramRequirement, ctx: RequirementContext): RequirementResult {
 	const met = requirement.anyOf.some((o) => !o.exam && optionMetIgnoringExam(o, ctx));
-	const examOption = met ? undefined : requirement.anyOf.find((o) => o.exam && optionMetIgnoringExam(o, ctx));
-	return { requirement, met, examOption };
+	if (met) return { requirement, met };
+	const examOption = requirement.anyOf.find((o) => o.exam && optionMetIgnoringExam(o, ctx));
+	// Unknown: an exam-free option whose bagrut part holds and whose only gaps are section scores never entered
+	const scores = { quant: ctx.psychQuant, verbal: ctx.psychVerbal, english: ctx.psychEnglish };
+	const unknownOption = requirement.anyOf.find(
+		(o) =>
+			!o.exam &&
+			o.psych?.length &&
+			assignable(o.bagrut ?? [], ctx.subjects) &&
+			o.psych.every((p) => (scores[p.section] ?? 0) >= p.min || !scores[p.section])
+	);
+	if (unknownOption) {
+		const missingSections = unknownOption.psych!.filter((p) => !scores[p.section]).map((p) => p.section);
+		return { requirement, met: false, examOption, unknown: true, missingSections };
+	}
+	return { requirement, met: false, examOption };
 }
+
+/** True when the result blocks admission (not met, and not merely unknown for lack of a section score). */
+export const isBlocking = (r: RequirementResult) => !r.met && !r.unknown;
 
 export function evaluateRequirements(requirements: ProgramRequirement[] | undefined, ctx: RequirementContext): RequirementResult[] {
 	return (requirements ?? []).map((r) => evaluateRequirement(r, ctx));

@@ -68,7 +68,9 @@ describe('TAU official thresholds', () => {
 		it('humanities: ציון התאמה 500, or psychometric 450 alone, or bagrut 102 alone', () => {
 			const phil = byId('prog-tau-0618-27');
 			assert.equal(phil.officialThreshold, 500);
-			assert.deepEqual(phil.admissionRoutes, { psychometricOnlyMin: 450, bagrutOnlyMin: 102 });
+			assert.equal(phil.admissionRoutes.psychometricOnlyMin, 450);
+			assert.equal(phil.admissionRoutes.bagrutOnlyMin, 102);
+			assert.equal(phil.admissionRoutes.minPsychometric, undefined);
 			assert.equal(analyze('prog-tau-0618-27', 460).status, 'accepted');
 			assert.notEqual(analyze('prog-tau-0618-27', 400).status, 'accepted');
 		});
