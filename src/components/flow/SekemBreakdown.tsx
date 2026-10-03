@@ -36,7 +36,7 @@ function StatusChip({ status }: { status: SubjectBreakdownItem['status'] }) {
 		dropped: { text: 'הושמט', cls: 'bg-white text-[#8A847C] border-[#E5DFD4]' },
 		empty: { text: 'אין ציון', cls: 'bg-white text-[#A8A196] border-[#EAE5DA]' }
 	}[status];
-	return <span className={`px-1.5 py-0.5 rounded-md border text-[10px] font-bold whitespace-nowrap ${map.cls}`}>{map.text}</span>;
+	return <span className={`px-1.5 py-0.5 rounded-md border text-[10px] font-bold text-center leading-tight sm:whitespace-nowrap ${map.cls}`}>{map.text}</span>;
 }
 
 function dropReason(item: SubjectBreakdownItem, average: number): string {
@@ -171,16 +171,17 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 
 					{/* Subjects */}
 					<div className="rounded-xl border border-[#EAE5DA] overflow-hidden">
-						<div className="grid grid-cols-[1fr_auto_auto_auto] gap-x-3 px-3 py-2 bg-[#FAF8F5] text-[10px] font-bold text-[#66635C]">
-							<span>מקצוע</span>
+						<div className="grid grid-cols-3 sm:grid-cols-[1fr_auto_auto_auto] gap-x-3 px-3 py-2 bg-[#FAF8F5] text-[10px] font-bold text-[#66635C]">
+							<span className="hidden sm:block">מקצוע</span>
 							<span className="text-center">ציון + בונוס</span>
 							<span className="text-center">בממוצע</span>
-							<span className="text-center w-[70px]">סטטוס</span>
+							<span className="text-center sm:w-[70px]">סטטוס</span>
 						</div>
 						{rows.map((r) => (
 							<div key={r.name} className={`border-t border-[#F0ECE4] ${r.status === 'dropped' || r.status === 'empty' ? 'bg-[#FCFBF9]' : ''}`}>
-								<div className="grid grid-cols-[1fr_auto_auto_auto] gap-x-3 items-center px-3 py-2 text-xs">
-									<span className={`min-w-0 truncate font-bold ${r.status === 'dropped' ? 'text-[#8A847C]' : 'text-[#222222]'}`}>
+								{/* Phones: the name gets its own line so narrow columns (simulator) don't cut it */}
+								<div className="grid grid-cols-3 sm:grid-cols-[1fr_auto_auto_auto] gap-x-2 sm:gap-x-3 gap-y-1 items-center px-3 py-2 text-xs">
+									<span className={`col-span-3 sm:col-span-1 min-w-0 sm:truncate font-bold ${r.status === 'dropped' ? 'text-[#8A847C]' : 'text-[#222222]'}`}>
 										{r.name} <span className="font-medium text-[#8A847C]">· {r.units} יח״ל</span>
 									</span>
 									<span className="text-center dir-ltr text-[#44423D] whitespace-nowrap">
@@ -190,12 +191,12 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 									<span className={`text-center font-black dir-ltr ${r.status === 'dropped' ? 'text-[#A8A196] line-through' : 'text-[#222222]'}`}>
 										{r.status === 'empty' ? '—' : fmt(r.effective)}
 									</span>
-									<span className="w-[70px] flex justify-center">
+									<span className="min-w-0 sm:w-[70px] flex justify-center">
 										{r.status === 'dropped' ? (
 											<button
 												type="button"
 												onClick={() => setOpenReason(openReason === r.name ? null : r.name)}
-												className="flex items-center gap-1 cursor-pointer"
+												className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-1 cursor-pointer"
 												title="למה הושמט?"
 											>
 												<StatusChip status="dropped" />
