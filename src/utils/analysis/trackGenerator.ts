@@ -961,7 +961,9 @@ export function extractDegreeHardRequirements(
 	const isExactScience = isCS || isEngineering || progName.includes('מתמטיקה') || progName.includes('פיזיקה') || progName.includes('כימיה');
 
 	// Degree-specific psychometric floor
-	let minPsychFloor = parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor;
+	// An official minimum psychometric (e.g. TAU "דרישות הסף") always wins over catalog estimates
+	const officialPsychMin = (program as any)?.admissionRoutes?.minPsychometric ?? parsedPrereq.admissionRoutes?.minPsychometric;
+	let minPsychFloor = officialPsychMin || (parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor);
 	if (!minPsychFloor || minPsychFloor <= 0) {
 		if (isMedicine) minPsychFloor = 700;
 		else if (isCS) minPsychFloor = 600;

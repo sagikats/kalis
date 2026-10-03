@@ -85,8 +85,8 @@ describe('Official admission routes', () => {
 	});
 
 	it('a program with only a catalog estimate for the floor keeps the sekem-based status', () => {
-		// TAU CS has no official routes; the catalog's estimated floor must not block admission
-		const program = programOf('inst-6', 'prog-tau-0368-22');
+		// TAU law has no official routes; the catalog's estimated floor must not block admission
+		const program = programOf('inst-6', 'prog-tau-1411-81');
 		assert.equal(program.admissionRoutes, undefined);
 		const prof = profile(STRONG_BAGRUT, 590, 130);
 		const res = calculateMultiInstitutionSekem(prof as any, ['tau'])[0];
@@ -117,5 +117,27 @@ describe('Official admission routes', () => {
 	it('the track simulator scores psychometric-only programs by the psychometric score', () => {
 		const res = evaluateSimulatedSekem('bgu', 'psychometric', profile(WEAK_BAGRUT, 550), WEAK_BAGRUT as any, 612);
 		assert.equal(res.sekem, 612);
+	});
+
+	it('tracks never propose a psychometric score under the official minimum (TAU CS: 660, reported by a user)', () => {
+		// The user's real profile (2026-10-03): a track suggested psychometric 658 for TAU CS
+		const bagrut = [
+			{ name: 'תנ"ך', units: 2, grade: 83 }, { name: 'ספרות עברית', units: 2, grade: 89 },
+			{ name: 'אזרחות', units: 2, grade: 93 }, { name: 'היסטוריה / תע"י', units: 5, grade: 91 },
+			{ name: 'הבעה עברית', units: 2, grade: 72 }, { name: 'אנגלית', units: 5, grade: 90 },
+			{ name: 'מתמטיקה', units: 5, grade: 87 }, { name: 'פיזיקה', units: 5, grade: 96 },
+			{ name: 'מדעי המחשב', units: 5, grade: 86 }, { name: 'תכנון ותכנות מערכות', units: 5, grade: 86 }
+		];
+		const program = programOf('inst-6', 'prog-tau-0368-22');
+		assert.equal(program.admissionRoutes.minPsychometric, 660);
+		const prof = profile(bagrut, 616);
+		const res = calculateMultiInstitutionSekem(prof as any, ['tau'])[0];
+		const gap = analyzeProgramGap({ institutionId: 'inst-6', institutionName: '', calculatorId: 'tau', program }, prof, res);
+		const tracks = generatePersonalizedTracks(gap, prof, res);
+		assert.ok(tracks.length > 0);
+		for (const t of tracks) {
+			if (t.id.includes('direct')) continue;
+			assert.ok((t.targetPsychometric ?? 0) >= 660, `${t.id} proposes psychometric ${t.targetPsychometric}`);
+		}
 	});
 });

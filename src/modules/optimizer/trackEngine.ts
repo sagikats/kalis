@@ -181,7 +181,9 @@ function generateAllActionTracks(
 		);
 
 	// Degree-specific hard prerequisites
-	const degreePsychFloor = targetProgram.prerequisites?.minPsychometricFloor || (
+	// An official minimum psychometric (e.g. TAU "דרישות הסף") always wins over catalog estimates
+	const officialPsychMin = (targetProgram.prerequisites as any)?.admissionRoutes?.minPsychometric;
+	const degreePsychFloor = officialPsychMin || targetProgram.prerequisites?.minPsychometricFloor || (
 		targetProgram.name?.includes('רפואה') ? 700 :
 		(targetProgram.name?.includes('מחשב') || targetProgram.name?.includes('תוכנה')) ? 600 :
 		targetProgram.name?.includes('הנדס') ? 560 :

@@ -3218,7 +3218,11 @@
         "officialThreshold": 675,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/biomedical — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        },
+        "minPsychometricFloor": 620
       },
       {
         "id": "prog-tau-0542-64",
@@ -3234,7 +3238,11 @@
         "officialThreshold": 636,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/mechanical — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        },
+        "minPsychometricFloor": 620
       },
       {
         "id": "prog-tau-0542-77",
@@ -3250,7 +3258,11 @@
         "officialThreshold": 658,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/bio-mechanical — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        },
+        "minPsychometricFloor": 620
       },
       {
         "id": "prog-tau-0512-74",
@@ -3260,14 +3272,17 @@
         "admissionThreshold": 710,
         "sekemScore": 710,
         "programId": "0512",
-        "minPsychometricFloor": 600,
+        "minPsychometricFloor": 660,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "officialThreshold": 710,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/electrical — סף קבלה תשפ\"ז",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        }
       },
       {
         "id": "prog-tau-0512-79",
@@ -3283,7 +3298,11 @@
         "officialThreshold": 705,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/electrical-physics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        },
+        "minPsychometricFloor": 660
       },
       {
         "id": "prog-tau-0512-70",
@@ -3299,7 +3318,11 @@
         "officialThreshold": 715,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/electrical-engineering-computer-science — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        },
+        "minPsychometricFloor": 660
       },
       {
         "id": "prog-tau-0573-66",
@@ -3315,7 +3338,11 @@
         "officialThreshold": 662,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/industrial-engineering — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        },
+        "minPsychometricFloor": 620
       },
       {
         "id": "prog-tau-0614-37",
@@ -3369,7 +3396,11 @@
         "officialThreshold": 614,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/arts/ba/arch — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 551
+        },
+        "minPsychometricFloor": 551
       },
       {
         "id": "prog-tau-0811-4",
@@ -3552,7 +3583,11 @@
         "officialThreshold": 680,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/excel-earth — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 640
+        },
+        "minPsychometricFloor": 640
       },
       {
         "id": "prog-tau-0351-84",
@@ -3568,7 +3603,11 @@
         "officialThreshold": 620,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/chem — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 575
+        },
+        "minPsychometricFloor": 575
       },
       {
         "id": "prog-tau-1011-82",
@@ -3796,7 +3835,11 @@
         "officialThreshold": 715,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/neuroscience/ba/psycho-computers — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        },
+        "minPsychometricFloor": 660
       },
       {
         "id": "prog-tau-0851-8",
@@ -3940,7 +3983,11 @@
         "officialThreshold": 705,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/computer — סף קבלה תשפ\"ז",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        },
+        "minPsychometricFloor": 660
       },
       {
         "id": "prog-tau-0359-89",
@@ -4004,7 +4051,11 @@
         "officialThreshold": 642,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/engineering/ba/high-tech-plus — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        },
+        "minPsychometricFloor": 620
       },
       {
         "id": "prog-tau-0677-33",
@@ -4210,7 +4261,11 @@
         "officialThreshold": 712,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/life/ba/bioinformatics — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 660
+        },
+        "minPsychometricFloor": 660
       },
       {
         "id": "prog-tau-0104-20",
@@ -4285,7 +4340,11 @@
         "officialThreshold": 700,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/chem-excel — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 670
+        },
+        "minPsychometricFloor": 670
       },
       {
         "id": "prog-tau-0323-86",
@@ -4465,7 +4524,11 @@
         "officialThreshold": 660,
         "relevantSekemType": "general",
         "thresholdSource": "https://go.tau.ac.il/he/law/ba/datascience-ai — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 600
+        },
+        "minPsychometricFloor": 600
       },
       {
         "id": "prog-tau-1554-69",
@@ -4497,7 +4560,11 @@
         "officialThreshold": 658,
         "relevantSekemType": "engineering",
         "thresholdSource": "https://go.tau.ac.il/he/exact/ba/geophysics-mechanical-engineering — סף קבלה שנה קודמת",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "minPsychometric": 620
+        },
+        "minPsychometricFloor": 620
       },
       {
         "id": "prog-tau-0581-67",
