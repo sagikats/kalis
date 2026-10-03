@@ -39,12 +39,13 @@ The system follows a strict modular 4-subagent architecture:
   * Direct bagrut thresholds: HUJI/TAU (105+), BGU (104+), BIU (102+), Haifa/Ariel/RUNI (100+). Technion requires psychometric for STEM.
 
 * **Subagent 2: Optimization, Scheduling & Recommendation Engine (`src/modules/optimizer/`)**
-  * Closed-loop solver (`solver.ts`), utility scorer (`utilityScorer.ts`), and track generator (`trackEngine.ts`).
+  * Closed-loop solver helpers (`solver.ts`), calendar (`calendarScheduler.ts`), bypass/mechina routes (`bypassRoutesEngine.ts`), official routes (`officialRoutes.ts`, `excellentBagrut.ts`).
+  * **The single recommendation engine is `src/utils/analysis/trackGenerator.ts`** (runs client-side in `/flow` and the What-If simulator). The former server engine `trackEngine.ts` + `/api/tracks/generate` + `reachabilityModel.ts` were removed (2026-10-03) — they were not used by the UI and had drifted from the live engine.
   * **Core Architectural Paradigm Shift:**
     1. *Track A (`track-maximize-exam`)*: "מיקוד על בחינה אחת" — Focus on a single decision lever (A1: Psychometric only, A2: Single high-ROI Bagrut lever, or A3: Direct Bagrut with 0 psychometric).
     2. *Track B (`track-risk-spread`)*: "פיזור סיכונים" — Balanced multi-vector improvement (2-3 levers) designed so no single test failure ruins admission.
     3. *Mechina (`track-anchor`)*: **Opt-In Only** — Evaluated via `mechinaAvailable: boolean` and exposed via on-demand endpoint `POST /api/tracks/mechina`, never forced as a default track.
-    4. *Reachability Model (`reachabilityModel.ts`)*: Realistic psychometric ceiling (`personalCeiling`) factoring in percentiles (strict caps above 660 and 700), preparation hours, and diagnostic confidence.
+    4. *Psychometric ceiling*: `getRealisticPsychometricCeiling` in `trackGenerator.ts` (the only ceiling model).
     5. *Exam Calendar & Timeline Phasing (`calendarScheduler.ts`)*: Israeli calendar awareness (Winter sessions for 2u core Quick-Wins/Safety Cushions; Spring for Psychometric; Summer for 5u elective expansions). Prevents cognitive overload/concurrency conflicts.
 
 * **Subagent 3: Pure Institution Calculators (`src/modules/calculators/`)**
@@ -60,7 +61,7 @@ The system follows a strict modular 4-subagent architecture:
       * Step 4: Action Tracks & Personal Builder (`RecommendedTracksView.tsx`).
     * Tab 1: **ריכוז המסלולים המומלץ** (Track A: מיקוד, Track B: פיזור סיכונים, ציר זמנים מועדי חורף/אביב/קיץ, כפתור מכינה Opt-In).
     * Tab 2: **מסלול בנייה אישי** (`WhatIfSimulator.tsx` + `MultiUniversityAdmissionGrid.tsx`).
-  * REST APIs: `/api/calculate`, `/api/programs`, `/api/tracks/generate`, `/api/tracks/mechina`, `/api/health`.
+  * REST APIs: `/api/calculate`, `/api/programs`, `/api/tracks/mechina`, `/api/health`.
 
 ---
 
@@ -154,7 +155,7 @@ npm run build
    - **Degree-Specific Engineering Sekem**: Tailored to Technion, TAU, BGU, HUJI, Ariel, Bar-Ilan, Haifa, and Reichman.
    - **Cross-Track Slope Coherence**: Enforced the mathematical slope ratio (e.g. Technion $\Delta S = 0.5 \Delta D + 0.075 \Delta P \implies 6.67$ pts psychometric per 1 pt Bagrut) across Track 1 and Track 2, eliminating any distorted trade-offs.
 
-7. **3-Track Workload Hierarchy & Multi-Exam Track 3 for Large Gaps (`trackGenerator.ts`, `trackEngine.ts`):**
+7. **3-Track Workload Hierarchy & Multi-Exam Track 3 for Large Gaps (`trackGenerator.ts`):**
    - **Track 1 (המסלול הממוקד / המהיר)**: Strictly 0 to 2 exams (fast ROI, minimal cognitive overhead, single exam or top high-ROI lever).
    - **Track 2 (המסלול המאוזן / פיזור סיכונים)**: Strictly 2 to 3 exams (moderate workload, safe risk distribution, balanced psychometric target). Never exceeds 3 exams!
    - **Track 3 (המסלול הרב-שלבי / פער גדול / הקלה מרבית)**: Reserved for large gaps or maximum psychometric relief, offering 4 to 5 exams phased across winter and summer sessions to maximize Bagrut (e.g. 116.5) and bring psychometric requirements down to the absolute mathematical floor ($\text{Floor}(P)$, e.g. 730 for Technion CS).

@@ -34,7 +34,7 @@ import {
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
-import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer';
+import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer/calendarScheduler';
 import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
 import { getUniversityCalculator } from '@/utils/universityCalculators';
 import UniversityVerificationModal from './UniversityVerificationModal';

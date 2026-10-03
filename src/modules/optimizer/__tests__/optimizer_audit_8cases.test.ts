@@ -25,14 +25,10 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
-	generateOptimizedActionTracks,
-	generateMechinaTrack,
-	calculateLeverUtilityScore,
-	extractRankedSubjectLevers,
+	generateAccurateMechinaTrack,
 	solveMinimumPsychometricTarget,
 	toCalculatorSubjects,
 	evaluateSimulatedSekem,
-	computePsychReachability,
 	getSubjectExamSession
 } from '../index';
 
@@ -71,224 +67,6 @@ function makeProgram(overrides: Partial<AcademicProgramRecord>): AcademicProgram
 		...overrides
 	};
 }
-
-// ─── Case 1: Technion CS – STEM psychometric mandate ─────────────────────────
-
-describe('Case 1: Technion CS – STEM psychometric mandate enforced', () => {
-	it('never produces a direct-bagrut track regardless of bagrut average', () => {
-		const profile: UserAcademicProfileRecord = {
-			userId: 'c1_technion_cs',
-			bagrutSubjects: [
-				{ id: '1', profileId: 'c1', subjectName: 'מתמטיקה', units: 5, grade: 85, isMandatory: true, isMath: true },
-				{ id: '2', profileId: 'c1', subjectName: 'אנגלית', units: 5, grade: 90, isMandatory: true },
-				{ id: '3', profileId: 'c1', subjectName: 'פיזיקה', units: 5, grade: 80, isMandatory: false, isPhysics: true },
-				{ id: '4', profileId: 'c1', subjectName: 'מדעי המחשב', units: 5, grade: 92, isMandatory: false },
-				{ id: '5', profileId: 'c1', subjectName: 'ספרות', units: 2, grade: 85, isMandatory: true },
-				{ id: '6', profileId: 'c1', subjectName: 'היסטוריה', units: 2, grade: 85, isMandatory: true },
-				{ id: '7', profileId: 'c1', subjectName: 'תנ״ך', units: 2, grade: 85, isMandatory: true },
-				{ id: '8', profileId: 'c1', subjectName: 'אזרחות', units: 2, grade: 85, isMandatory: true }
-			],
-			mathUnits: 5, mathGrade: 85,
-			physicsUnits: 5, physicsGrade: 80,
-			psychometricGeneral: 680,
-			psychometricQuant: 135, psychometricVerbal: 125, psychometricEnglish: 130,
-			hasTakenPsychometric: true,
-			updatedAt: new Date()
-		};
-
-		const program = makeProgram({
-			institutionId: 'technion',
-			institutionName: 'הטכניון',
-			name: 'מדעי המחשב',
-			fieldOfStudy: 'מדעי המחשב',
-			minSekemThreshold: 91.0,
-			relevantSekemType: 'technion',
-			directBagrutEligible: false,
-			prerequisites: { mustHavePsychometric: true }
-		});
-
-		const solution = generateOptimizedActionTracks(program, profile, defaultPreferences);
-
-		// Must NEVER have direct bagrut option for Technion
-		assert.strictEqual(solution.hasDirectBagrutOption, false,
-			'Case 1: Technion CS must never allow direct bagrut admission');
-
-		const directTrack = solution.tracks.find(t => t.id === 'track-direct-bagrut');
-		assert.strictEqual(directTrack, undefined,
-			'Case 1: No direct-bagrut track should be generated for Technion STEM');
-
-		// Must have at least one track with psychometric target
-		const psychTrack = solution.tracks.find(t => t.targetPsychometric !== undefined && t.targetPsychometric > 0);
-		assert.ok(psychTrack, 'Case 1: Must have at least one psychometric-target track');
-		assert.ok((psychTrack.targetPsychometric ?? 0) >= 680,
-			'Case 1: Target psychometric must not be lower than current (680)');
-	});
-});
-
-// ─── Case 2: HUJI Psychology – Direct bagrut on high average ─────────────────
-
-describe('Case 2: HUJI Psychology – Direct bagrut (0 psychometric) for 106.5+ average', () => {
-	it('generates a direct-bagrut track with no psychometric requirement', () => {
-		const profile: UserAcademicProfileRecord = {
-			userId: 'c2_huji_psych',
-			bagrutSubjects: [
-				{ id: '1', profileId: 'c2', subjectName: 'מתמטיקה', units: 4, grade: 90, isMandatory: true, isMath: true },
-				{ id: '2', profileId: 'c2', subjectName: 'אנגלית', units: 5, grade: 95, isMandatory: true },
-				{ id: '3', profileId: 'c2', subjectName: 'ספרות עברית', units: 5, grade: 95, isMandatory: false },
-				{ id: '4', profileId: 'c2', subjectName: 'היסטוריה', units: 2, grade: 88, isMandatory: true },
-				{ id: '5', profileId: 'c2', subjectName: 'תנ״ך', units: 2, grade: 88, isMandatory: true },
-				{ id: '6', profileId: 'c2', subjectName: 'אזרחות', units: 2, grade: 88, isMandatory: true },
-				{ id: '7', profileId: 'c2', subjectName: 'הבעה עברית', units: 2, grade: 90, isMandatory: true }
-			],
-			mathUnits: 4, mathGrade: 90,
-			physicsUnits: 0, physicsGrade: 0,
-			// Low psychometric – but high bagrut
-			psychometricGeneral: 550,
-			psychometricQuant: 110, psychometricVerbal: 110, psychometricEnglish: 110,
-			hasTakenPsychometric: true,
-			updatedAt: new Date()
-		};
-
-		const program = makeProgram({
-			institutionId: 'huji',
-			institutionName: 'האוניברסיטה העברית',
-			name: 'פסיכולוגיה',
-			fieldOfStudy: 'פסיכולוגיה',
-			minSekemThreshold: 660,
-			relevantSekemType: 'general',
-			directBagrutEligible: true,
-			directBagrutMinAverage: 105.0,
-			prerequisites: { mustHavePsychometric: false }
-		});
-
-		const solution = generateOptimizedActionTracks(program, profile, {
-			...defaultPreferences,
-			weeklyAvailabilityHours: 'full_30_plus'
-		});
-
-		assert.ok(solution.hasDirectBagrutOption,
-			'Case 2: HUJI Psychology with high bagrut must offer direct-bagrut path');
-
-		const directTrack = solution.tracks.find(t => t.id === 'track-direct-bagrut');
-		assert.ok(directTrack, 'Case 2: Direct-bagrut track must exist');
-		assert.strictEqual(directTrack?.targetPsychometric, undefined,
-			'Case 2: Direct-bagrut track must NOT include a psychometric target');
-		assert.ok((directTrack?.targetBagrutAverage ?? 0) >= 105.0,
-			'Case 2: Direct bagrut average must reach 105.0+');
-	});
-});
-
-// ─── Case 3: TAU Electrical Engineering – Math 4u vs psychometric ROI ────────
-
-describe('Case 3: TAU Electrical Engineering – 4u Math ROI correctly evaluated', () => {
-	it('ranks Math 5u upgrade higher than generic electives for STEM degree', () => {
-		const profile: UserAcademicProfileRecord = {
-			userId: 'c3_tau_ee',
-			bagrutSubjects: [
-				{ id: '1', profileId: 'c3', subjectName: 'מתמטיקה', units: 4, grade: 92, isMandatory: true, isMath: true },
-				{ id: '2', profileId: 'c3', subjectName: 'אנגלית', units: 5, grade: 88, isMandatory: true },
-				{ id: '3', profileId: 'c3', subjectName: 'פיזיקה', units: 5, grade: 82, isMandatory: false, isPhysics: true },
-				{ id: '4', profileId: 'c3', subjectName: 'ספרות', units: 2, grade: 80, isMandatory: true },
-				{ id: '5', profileId: 'c3', subjectName: 'היסטוריה', units: 2, grade: 80, isMandatory: true },
-				{ id: '6', profileId: 'c3', subjectName: 'תנ״ך', units: 2, grade: 80, isMandatory: true },
-				{ id: '7', profileId: 'c3', subjectName: 'אזרחות', units: 2, grade: 80, isMandatory: true }
-			],
-			mathUnits: 4, mathGrade: 92,
-			physicsUnits: 5, physicsGrade: 82,
-			psychometricGeneral: 670,
-			psychometricQuant: 130, psychometricVerbal: 125, psychometricEnglish: 130,
-			hasTakenPsychometric: true,
-			updatedAt: new Date()
-		};
-
-		const stemPref: UserPreferencesRecord = {
-			...defaultPreferences,
-			learningOrientation: 'stem',
-			learningStrength: 'analytical_quick'
-		};
-
-		// For STEM: Math 5u upgrade lever must score higher than humanities core 2u
-		const mathLever = {
-			id: 'math_5u', subjectName: 'מתמטיקה',
-			currentUnits: 4, currentGrade: 92,
-			targetUnits: 5, targetGrade: 90,
-			isMath: true
-		};
-		const coreHistLever = {
-			id: 'core_1', subjectName: 'היסטוריה',
-			currentUnits: 2, currentGrade: 80,
-			targetUnits: 2, targetGrade: 92
-		};
-
-		const mathScore = calculateLeverUtilityScore(mathLever, true, stemPref);
-		const histScore = calculateLeverUtilityScore(coreHistLever, true, stemPref);
-
-		assert.ok(mathScore > histScore,
-			`Case 3: Math 5u (${mathScore}) must outrank History 2u (${histScore}) for STEM EE`);
-
-		// Also verify ranked levers place math at top position for STEM
-		const levers = extractRankedSubjectLevers(profile, true, stemPref);
-		const topLever = levers[0];
-		assert.ok(topLever.isMath || topLever.isPhysics,
-			'Case 3: Top-ranked lever for STEM EE must be math or physics');
-	});
-});
-
-// ─── Case 4: BGU Economics/Society – Non-STEM ROI scoring ────────────────────
-
-describe('Case 4: BGU Economics/Social Sciences – Core 2u & geography beat math for non-STEM', () => {
-	it('correctly ranks core-subjects and geography over 5u math for humanities-oriented student', () => {
-		const profile: UserAcademicProfileRecord = {
-			userId: 'c4_bgu_econ',
-			bagrutSubjects: [
-				{ id: '1', profileId: 'c4', subjectName: 'מתמטיקה', units: 4, grade: 75, isMandatory: true, isMath: true },
-				{ id: '2', profileId: 'c4', subjectName: 'אנגלית', units: 5, grade: 85, isMandatory: true },
-				{ id: '3', profileId: 'c4', subjectName: 'היסטוריה', units: 2, grade: 78, isMandatory: true },
-				{ id: '4', profileId: 'c4', subjectName: 'תנ״ך', units: 2, grade: 75, isMandatory: true },
-				{ id: '5', profileId: 'c4', subjectName: 'אזרחות', units: 2, grade: 80, isMandatory: true },
-				{ id: '6', profileId: 'c4', subjectName: 'ספרות', units: 2, grade: 77, isMandatory: true }
-			],
-			mathUnits: 4, mathGrade: 75,
-			physicsUnits: 0, physicsGrade: 0,
-			psychometricGeneral: 620,
-			psychometricQuant: 120, psychometricVerbal: 125, psychometricEnglish: 120,
-			hasTakenPsychometric: true,
-			updatedAt: new Date()
-		};
-
-		const humanPref: UserPreferencesRecord = {
-			...defaultPreferences,
-			learningOrientation: 'humanities',
-			learningStrength: 'memory_retention'
-		};
-
-		const mathLever = {
-			id: 'math_5u', subjectName: 'מתמטיקה',
-			currentUnits: 4, currentGrade: 75,
-			targetUnits: 5, targetGrade: 90,
-			isMath: true
-		};
-		const geoLever = {
-			id: 'elective_geo_5u', subjectName: 'גיאוגרפיה',
-			currentUnits: 2, currentGrade: 0,
-			targetUnits: 5, targetGrade: 92
-		};
-		const histLever = {
-			id: 'core_hist', subjectName: 'היסטוריה',
-			currentUnits: 2, currentGrade: 78,
-			targetUnits: 2, targetGrade: 92
-		};
-
-		const mathScore = calculateLeverUtilityScore(mathLever, false, humanPref);
-		const geoScore = calculateLeverUtilityScore(geoLever, false, humanPref);
-		const histScore = calculateLeverUtilityScore(histLever, false, humanPref);
-
-		assert.ok(geoScore > mathScore,
-			`Case 4: Geography (${geoScore}) must beat Math 5u (${mathScore}) for non-STEM student`);
-		assert.ok(histScore > mathScore,
-			`Case 4: History core (${histScore}) must beat Math 5u (${mathScore}) for non-STEM student`);
-	});
-});
 
 // ─── Case 5: Haifa Law – HARDENED: solver must return a concrete, non-null target ─
 
@@ -340,48 +118,6 @@ describe('Case 5: Haifa Law – solver must return a concrete non-null psychomet
 			assert.ok(evalMinus5.sekem < threshold,
 				`Case 5: Target-5 (${target - 5}) must NOT reach threshold — confirms minimality`);
 		}
-	});
-});
-
-// ─── Case 6: Bar-Ilan Data Science – 3u Math prerequisite detection ───────────
-
-describe('Case 6: Bar-Ilan Data Science – 3u Math student leveraged toward math upgrade', () => {
-	it('places math upgrade as top lever candidate for data science (STEM orientation)', () => {
-		const profile: UserAcademicProfileRecord = {
-			userId: 'c6_biu_ds',
-			bagrutSubjects: [
-				// Only 3 units of math – major red flag for Data Science
-				{ id: '1', profileId: 'c6', subjectName: 'מתמטיקה', units: 3, grade: 95, isMandatory: true, isMath: true },
-				{ id: '2', profileId: 'c6', subjectName: 'אנגלית', units: 5, grade: 90, isMandatory: true },
-				{ id: '3', profileId: 'c6', subjectName: 'ספרות', units: 2, grade: 85, isMandatory: true },
-				{ id: '4', profileId: 'c6', subjectName: 'היסטוריה', units: 2, grade: 82, isMandatory: true },
-				{ id: '5', profileId: 'c6', subjectName: 'תנ״ך', units: 2, grade: 82, isMandatory: true },
-				{ id: '6', profileId: 'c6', subjectName: 'אזרחות', units: 2, grade: 84, isMandatory: true }
-			],
-			mathUnits: 3, mathGrade: 95,
-			physicsUnits: 0, physicsGrade: 0,
-			psychometricGeneral: 680,
-			psychometricQuant: 136, psychometricVerbal: 128, psychometricEnglish: 132,
-			hasTakenPsychometric: true,
-			updatedAt: new Date()
-		};
-
-		const stemPref: UserPreferencesRecord = {
-			...defaultPreferences,
-			learningOrientation: 'stem',
-			learningStrength: 'analytical_quick'
-		};
-
-		const levers = extractRankedSubjectLevers(profile, true, stemPref);
-
-		// With 3u math and STEM degree, math upgrade lever must be present
-		const mathLever = levers.find(l => l.isMath);
-		assert.ok(mathLever, 'Case 6: Math upgrade lever must be present for 3u student');
-
-		// And it must be the top-1 or top-2 lever by utility
-		const mathRank = levers.findIndex(l => l.isMath);
-		assert.ok(mathRank <= 1,
-			`Case 6: Math lever must be ranked #1 or #2 (got rank ${mathRank}) for STEM Data Science`);
 	});
 });
 
@@ -512,8 +248,8 @@ describe('Case 8: Legal 20-unit floor – calculator respects 20-unit minimum du
 
 // ─── Case 9: Opt-In Mechina Paradigm, Reachability Ceiling & Calendar Phasing ──
 
-describe('Case 9: Opt-In Mechina, Reachability Model and Calendar Phasing', () => {
-	it('evaluates mechina as Opt-In only: mechinaAvailable flag set when needed, not in default tracks', () => {
+describe('Case 9: Opt-In Mechina and Calendar Phasing', () => {
+	it('generates an on-demand mechina track for a large-gap candidate', () => {
 		// Use a weak candidate who has a large gap
 		const profile: UserAcademicProfileRecord = {
 			userId: 'c9_anchor_test',
@@ -544,64 +280,14 @@ describe('Case 9: Opt-In Mechina, Reachability Model and Calendar Phasing', () =
 			prerequisites: { mustHavePsychometric: false }
 		});
 
-		const solution = generateOptimizedActionTracks(program, profile, defaultPreferences);
-
-		// 1. Mechina must NOT be in default tracks array (Opt-In paradigm)
-		const defaultMechinaTrack = solution.tracks.find(t => t.id === 'track-anchor' || t.id === 'track-mechina');
-		assert.strictEqual(defaultMechinaTrack, undefined,
-			'Case 9: Mechina must NOT be pushed into default tracks (Opt-In only)');
-
-		// 2. mechinaAvailable must be true for large-gap candidate
-		assert.strictEqual(solution.mechinaAvailable, true,
-			'Case 9: mechinaAvailable must be true when gap cannot be closed easily');
-
-		// 3. On-demand Mechina track generation works as expected
-		const onDemandMechina = generateMechinaTrack(program, profile, defaultPreferences);
+		// On-demand (Opt-In) Mechina track generation
+		const onDemandMechina = generateAccurateMechinaTrack(program, profile, defaultPreferences);
 		assert.ok(onDemandMechina.id === 'track-mechina' || onDemandMechina.id === 'track-anchor',
 			'Case 9: on-demand mechina must return track-mechina ID');
 		assert.ok(onDemandMechina.estimatedWeeks >= 20,
 			'Case 9: on-demand mechina must span at least 20 weeks');
 		assert.ok(onDemandMechina.milestones.length >= 3,
 			'Case 9: on-demand mechina must have at least 3 milestones');
-
-		// 4. Hallucination-bug regression: risk-spread / balanced track must not claim threshold is closed when below cutoff
-		const riskSpreadTrack = solution.tracks.find(t => t.id === 'track-risk-spread' || t.id === 'track-balanced');
-		if (riskSpreadTrack && (riskSpreadTrack.targetSekem ?? 0) < program.minSekemThreshold) {
-			const desc = riskSpreadTrack.strategyDescription ?? '';
-			const containsFalseCloseClam =
-				desc.includes('סוגר את סף הקבלה במלואו') && !desc.includes('פער');
-			assert.ok(!containsFalseCloseClam,
-				`Case 9 (honest reporting): risk-spread track must report remaining gap honestly`);
-		}
-	});
-
-	it('enforces percentile caps and realistic psychometric ceilings in reachabilityModel', () => {
-		const highProfile: UserAcademicProfileRecord = {
-			userId: 'reachability_test',
-			bagrutSubjects: [],
-			mathUnits: 5, mathGrade: 90,
-			physicsUnits: 5, physicsGrade: 85,
-			psychometricGeneral: 710,
-			psychometricQuant: 142, psychometricVerbal: 140, psychometricEnglish: 142,
-			hasTakenPsychometric: true,
-			updatedAt: new Date()
-		};
-
-		const highReach = computePsychReachability(highProfile, defaultPreferences);
-		// Above 700: max delta is strictly capped at 20 points
-		assert.ok(highReach.maxImprovementPoints <= 20,
-			`Above 700 psychometric must have max delta <= 20, got ${highReach.maxImprovementPoints}`);
-		assert.ok(highReach.personalCeiling <= 730,
-			`Above 700 ceiling must be realistic, got ${highReach.personalCeiling}`);
-
-		const midProfile: UserAcademicProfileRecord = {
-			...highProfile,
-			psychometricGeneral: 670
-		};
-		const midReach = computePsychReachability(midProfile, defaultPreferences);
-		// Above 660: max delta is strictly capped at 35 points
-		assert.ok(midReach.maxImprovementPoints <= 35,
-			`Above 660 psychometric must have max delta <= 35, got ${midReach.maxImprovementPoints}`);
 	});
 
 	it('assigns Israeli exam sessions correctly in calendarScheduler', () => {

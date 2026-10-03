@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbRepository, GenerateTracksRequestSchema, UserAcademicProfileRecord, UserPreferencesRecord } from '@/modules/db';
-import { generateMechinaTrack, getDegreeBypassRoutes } from '@/modules/optimizer';
+import { generateAccurateMechinaTrack, getDegreeBypassRoutes } from '@/modules/optimizer';
 
 export async function POST(req: NextRequest) {
 	try {

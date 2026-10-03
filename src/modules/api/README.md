@@ -13,7 +13,6 @@
 | `GET` | `/api/health` | בדיקת בריאות המערכת, מודולים פעילים וכמות מוסדות |
 | `POST` | `/api/calculate` | חישוב סכם וממוצעי בגרות מרוכזים בכל האוניברסיטאות |
 | `GET` | `/api/programs` | חיפוש, סינון ופילוח חוגים וספי קבלה |
-| `POST` | `/api/tracks/generate` | הפקת מסלולי פעולה מותאמים אישית (המהיר, הבטוח, עוגן) |
 
 ---
 
@@ -70,39 +69,6 @@
 * `directBagrutOnly`: בוליאני (`true` / `false`) לאיתור מסלולים ללא פסיכומטרי.
 * `limit`: כמות תוצאות לעמוד (ברירת מחדל: 20).
 * `offset`: דילוג לעמוד הבא.
-
----
-
-### 3️⃣ `POST /api/tracks/generate` — הפקת מסלולי קבלה מותאמים אישית
-מפעיל את מנוע האופטימיזציה (תת-סוכן 2) מול חוג לימודים ספציפי ופרופיל מועמד.
-
-**גוף הבקשה (Request Body):**
-```json
-{
-  "programId": "prog_huji_psych",
-  "profile": {
-    "userId": "user_itai",
-    "bagrutSubjects": [
-      { "name": "מתמטיקה", "units": 4, "grade": 88 },
-      { "name": "אנגלית", "units": 5, "grade": 92 },
-      { "name": "ספרות עברית", "units": 5, "grade": 92 },
-      { "name": "תנ״ך", "units": 2, "grade": 85 },
-      { "name": "אזרחות", "units": 2, "grade": 85 }
-    ],
-    "mathUnits": 4,
-    "mathGrade": 88,
-    "psychometricGeneral": 0,
-    "hasTakenPsychometric": false
-  },
-  "preferences": {
-    "weeklyAvailabilityHours": "full_30_plus",
-    "learningStrength": "analytical_quick"
-  }
-}
-```
-
-**תגובה (200 OK):**
-מחזיר את פרטי החוג ו-3 מסלולי הפעולה המותאמים אישית, כולל איתור קבלה ישירה (0 פסיכומטרי) במידה וקיים.
 
 ---
 
