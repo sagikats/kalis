@@ -3,6 +3,8 @@
  * Subagent 1: Architecture & Database Design
  */
 
+import type { AdmissionRoutes } from '../../types/academic';
+
 export interface UserRecord {
 	id: string;
 	candidateNumber: string;
@@ -78,7 +80,9 @@ export interface ProgramPrerequisites {
 	thresholdSource?: string;
 	thresholdUpdatedAt?: string;
 	/** Official admission routes (see AdmissionRoutes in src/types/academic.ts). */
-	admissionRoutes?: { minPsychometric?: number; psychometricOnlyMin?: number; bagrutOnlyMin?: number };
+	admissionRoutes?: AdmissionRoutes;
+	/** The institution doesn't list this program for the coming year. */
+	notOffered?: { note: string; source: string };
 }
 
 export interface AcademicProgramRecord {

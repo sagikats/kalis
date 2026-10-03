@@ -5,6 +5,8 @@ export interface AcademicDegree {
      description?: string;               // תיאור נוסף אם קיים ברשומה
      admissionThreshold?: number | string | null; // סף קבלה רשמי / סכם (למשל: 705, 640)
      programId?: string;                 // מזהה תוכנית
+     /** The institution doesn't list this program for the coming year (hidden from selection). */
+     notOffered?: { note: string; source: string };
      sekemScore?: number | null;
      psychometricScore?: number | null;
      mathRequirement?: string | null;
@@ -49,6 +51,10 @@ export interface AdmissionRoutes {
      mathExam?: MathExamRoute;
      /** Informational: sekem discount for applicants recognised as "ראויים לקידום" (Technion: 1–2 points). */
      promotionBonus?: number;
+     /** Informational: Technion "גשר קבלה" — a math+physics semester adds up to `maxBonus` sekem points. */
+     gesher?: GesherRoute;
+     /** Informational: Technion "מתיכון לטכניון" — high-school students admitted on Technion math course grades. */
+     fromHighSchool?: { note?: string };
 }
 
 /** One bagrut condition: `count` distinct subjects from `subjects`, each at `minUnits`+ units and `minGrade`+. */
@@ -104,4 +110,14 @@ export interface MathExamRoute {
 	minExamScore: number;
 	conversion: { slope: number; intercept: number };
 	note?: string;
+}
+
+/**
+ * Technion "גשר קבלה": for applicants up to `maxBonus` points below the threshold. A semester of math and physics
+ * adds f(x) points, x = 0.6·math + 0.4·physics: 0 for x ≤ 65, (x − 65)·2/27 between, `maxBonus` for x ≥ 92.
+ */
+export interface GesherRoute {
+	maxBonus: number;
+	/** Bagrut conditions to take part (e.g. math 5u ≥ 70, English 4u+). */
+	eligibility: ExcellentBagrutRoute;
 }

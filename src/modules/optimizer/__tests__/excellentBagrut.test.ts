@@ -6,7 +6,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import academicData from '../../../data/academicData.json';
-import { evaluateExcellentBagrut, rawBagrutAverage, requiredMathExamScore } from '../excellentBagrut';
+import { evaluateExcellentBagrut, gesherBonus, rawBagrutAverage, requiredGesherScore, requiredMathExamScore } from '../excellentBagrut';
 import { analyzeProgramGap } from '../../../utils/analysis/gapAnalyzer';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 
@@ -146,6 +146,37 @@ describe('Technion "בגרות מצוינת"', () => {
 			assert.ok(path);
 			assert.match(path!.description, /סף 86/);
 			assert.match(path!.description, /עומד בסף/);
+		});
+	});
+
+	describe('"גשר קבלה", "מתיכון לטכניון" and programs not offered', () => {
+		it('gesher bonus matches the official table', () => {
+			const table: Record<number, number> = { 65: 0, 66: 0.1, 70: 0.4, 72: 0.5, 78: 1, 80: 1.1, 85: 1.5, 88: 1.7, 91: 1.9, 92: 2, 98: 2 };
+			for (const [x, f] of Object.entries(table)) assert.equal(gesherBonus(Number(x)), f, `x=${x}`);
+			assert.equal(requiredGesherScore(1), 78);
+			assert.equal(requiredGesherScore(2), 92);
+			assert.equal(requiredGesherScore(2.1), null);
+		});
+
+		it('offers gesher with the weighted score needed (civil engineering: 1 point short → 78)', () => {
+			const profile: any = { bagrutSubjects: A, psychometricGeneral: 673, mathUnits: 5, mathGrade: 95, physicsUnits: 5, physicsGrade: 93 };
+			const res = calculateMultiInstitutionSekem(profile, ['technion'])[0];
+			const gap = analyzeProgramGap({ institutionId: 'inst-48', institutionName: 'הטכניון', calculatorId: 'technion', program: prog('prog-technion-5') }, profile, res);
+			const path = gap.alternativePaths?.find((p) => p.id === 'alt-gesher');
+			assert.ok(path);
+			assert.match(path!.description, /משוקלל .* של 78/);
+		});
+
+		it('lists "מתיכון לטכניון" for its 11 tracks only', () => {
+			assert.equal(technion.filter((p) => p.admissionRoutes?.fromHighSchool).length, 11);
+			assert.ok(prog('prog-technion-33').admissionRoutes.fromHighSchool); // מדעי המחשב
+			assert.equal(prog('prog-technion-3').admissionRoutes.fromHighSchool, undefined); // ביולוגיה
+		});
+
+		it('marks molecular biochemistry and economics & management as not offered', () => {
+			assert.ok(prog('prog-inst-48-47').notOffered);
+			assert.ok(prog('prog-inst-48-48').notOffered);
+			assert.equal(technion.filter((p) => p.notOffered).length, 2);
 		});
 	});
 });

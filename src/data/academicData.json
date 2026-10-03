@@ -12093,7 +12093,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12211,7 +12233,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12306,7 +12350,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 2
+          "promotionBonus": 2,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12372,7 +12438,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12434,7 +12522,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12528,7 +12638,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12622,7 +12754,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12716,7 +12870,29 @@
             "firstSemesterAverageMin": 75,
             "minCourseGrade": 70
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -12809,7 +12985,30 @@
               "slope": 2.434,
               "intercept": 526.915
             }
-          }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -12902,7 +13101,30 @@
               "slope": 2.434,
               "intercept": 526.915
             }
-          }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -13017,7 +13239,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 2
+          "promotionBonus": 2,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13111,7 +13355,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 2
+          "promotionBonus": 2,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13177,7 +13443,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13243,7 +13531,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13309,7 +13619,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13375,7 +13707,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13436,7 +13790,30 @@
               "slope": 2.434,
               "intercept": 526.915
             }
-          }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -13452,7 +13829,31 @@
         "officialThreshold": 94,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-21",
@@ -13467,7 +13868,31 @@
         "officialThreshold": 94,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-22",
@@ -13527,7 +13952,30 @@
               "slope": 2.434,
               "intercept": 526.915
             }
-          }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -13621,7 +14069,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 2
+          "promotionBonus": 2,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13688,7 +14158,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -13754,7 +14246,30 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -13820,7 +14335,30 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -13896,7 +14434,30 @@
               "slope": 2.434,
               "intercept": 526.915
             }
-          }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -13962,7 +14523,30 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -14054,7 +14638,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -14146,7 +14752,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -14265,7 +14893,29 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
         }
       },
       {
@@ -14326,7 +14976,30 @@
               "slope": 2.434,
               "intercept": 526.915
             }
-          }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -14342,7 +15015,31 @@
         "officialThreshold": 91,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-35",
@@ -14401,6 +15098,28 @@
             "conversion": {
               "slope": 2.434,
               "intercept": 526.915
+            }
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           }
         }
@@ -14502,6 +15221,31 @@
               }
             ],
             "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {
+            "note": "הקבלה האוטומטית דרך התוכנית היא למסלול מתמטיקה תלת-שנתי בלבד."
           }
         }
       },
@@ -14538,6 +15282,28 @@
               }
             ],
             "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
           }
         }
       },
@@ -14554,7 +15320,31 @@
         "officialThreshold": 87,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-44",
@@ -14569,7 +15359,31 @@
         "officialThreshold": 94,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          }
+        }
       },
       {
         "id": "prog-technion-41",
@@ -14604,6 +15418,28 @@
               }
             ],
             "summary": "מתמטיקה ופיזיקה 5 יח\"ל 95+"
+          },
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
           }
         }
       },
@@ -14689,7 +15525,30 @@
               "intercept": 526.915
             }
           },
-          "promotionBonus": 1
+          "promotionBonus": 1,
+          "gesher": {
+            "maxBonus": 2,
+            "eligibility": {
+              "all": [
+                {
+                  "subjects": [
+                    "מתמטיקה"
+                  ],
+                  "minUnits": 5,
+                  "minGrade": 70
+                },
+                {
+                  "subjects": [
+                    "אנגלית"
+                  ],
+                  "minUnits": 4,
+                  "minGrade": 1
+                }
+              ],
+              "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+            }
+          },
+          "fromHighSchool": {}
         }
       },
       {
@@ -14721,7 +15580,11 @@
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "comments": "תואר ראשון בביוכימיה מולקולרית בפקולטה לביולוגיה וכימיה. סכם סף 84"
+        "comments": "תואר ראשון בביוכימיה מולקולרית בפקולטה לביולוגיה וכימיה. סכם סף 84",
+        "notOffered": {
+          "note": "המסלול לא מופיע ברשימת המסלולים של הטכניון לסמסטר חורף תשפ\"ז, ככל הנראה לא נפתח השנה.",
+          "source": "טבלת \"סיכום אפשרויות הקבלה למסלולים בסמסטר חורף תשפ\"ז\" (עודכן 11.8.2026) וטבלת הסכמים לאוקטובר 2026"
+        }
       },
       {
         "id": "prog-inst-48-48",
@@ -14734,7 +15597,11 @@
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "comments": "תואר ראשון בכלכלה וניהול בפקולטה למדעי הנתונים וההחלטות. סכם סף 88"
+        "comments": "תואר ראשון בכלכלה וניהול בפקולטה למדעי הנתונים וההחלטות. סכם סף 88",
+        "notOffered": {
+          "note": "המסלול לא מופיע ברשימת המסלולים של הטכניון לסמסטר חורף תשפ\"ז, ככל הנראה לא נפתח השנה.",
+          "source": "טבלת \"סיכום אפשרויות הקבלה למסלולים בסמסטר חורף תשפ\"ז\" (עודכן 11.8.2026) וטבלת הסכמים לאוקטובר 2026"
+        }
       }
     ]
   },

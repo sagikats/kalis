@@ -131,6 +131,8 @@ export default function DegreeSearchSelector({
 		for (const inst of institutionsList) {
 			const calcId = (inst as any).calculatorId || CALC_ID_MAP[inst.id] || inst.id || 'general';
 			for (const prog of inst.programs) {
+				// Programs the institution doesn't list this year can't be picked
+				if ((prog as any).notOffered || (prog as any).prerequisites?.notOffered) continue;
 				list.push({
 					institutionId: inst.id,
 					institutionName: inst.name,

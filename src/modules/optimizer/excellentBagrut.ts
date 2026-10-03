@@ -87,3 +87,18 @@ export function requiredMathExamScore(
 	}
 	return null;
 }
+
+/** Technion "גשר": sekem points added for a weighted course score x (official table, rounded to 0.1). */
+export function gesherBonus(x: number, maxBonus = 2): number {
+	if (x <= 65) return 0;
+	if (x >= 92) return maxBonus;
+	return Math.round(((x - 65) * 2) / 27 * 10) / 10;
+}
+
+/** Lowest weighted score (0.6·math + 0.4·physics) whose bonus closes `gap` sekem points, or null if above the cap. */
+export function requiredGesherScore(gap: number, maxBonus = 2): number | null {
+	if (gap <= 0) return 0;
+	if (gap > maxBonus) return null;
+	for (let x = 66; x <= 92; x++) if (gesherBonus(x, maxBonus) >= gap - 1e-9) return x;
+	return null;
+}

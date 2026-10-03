@@ -243,7 +243,8 @@ export class KalisDatabaseRepository {
 						officialThreshold: p.officialThreshold ?? undefined,
 						thresholdSource: p.thresholdSource ?? undefined,
 						thresholdUpdatedAt: p.thresholdUpdatedAt ?? undefined,
-						admissionRoutes: p.admissionRoutes ?? undefined
+						admissionRoutes: p.admissionRoutes ?? undefined,
+						notOffered: (p as any).notOffered ?? undefined
 					},
 					url: p.url,
 					createdAt: new Date(),
@@ -329,7 +330,8 @@ export class KalisDatabaseRepository {
 							officialThreshold: prereq.officialThreshold,
 							thresholdSource: prereq.thresholdSource,
 							thresholdUpdatedAt: prereq.thresholdUpdatedAt,
-							admissionRoutes: prereq.admissionRoutes
+							admissionRoutes: prereq.admissionRoutes,
+							notOffered: prereq.notOffered
 						},
 						description: p.description ?? undefined,
 						comments: p.comments ?? undefined,

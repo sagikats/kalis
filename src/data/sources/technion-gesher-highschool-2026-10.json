@@ -1,0 +1,130 @@
+{
+ "gesher": {
+  "source": "https://admissions.technion.ac.il/ — \"גשר קבלה לטכניון\"",
+  "captured": "2026-10-03, צילום מסך של המשתמש",
+  "rules": [
+   "למועמדים שציון הסכם שלהם נמוך בשתי נקודות לכל היותר מדרישות הסף של תוכנית הלימודים.",
+   "משך התוכנית סמסטר אחד, מחודש מאי עד תחילת ספטמבר; לימודי מתמטיקה ופיזיקה.",
+   "תוספת לסכם: ציון משוקלל x = 60% מתמטיקה + 40% פיזיקה; f(x)=0 עבור x≤65, (x−65)·2/27 עבור 65<x<92, 2 עבור x≥92.",
+   "תנאי קבלה: בעלי בגרות ישראלית שנבחנו בפסיכומטרי; אנגלית 104+ בפסיכומטרי או באמי\"ר; יע\"ל 121+; מתמטיקה 5 יח\"ל 70+ (לא על סמך מבחן סיווג); אנגלית 4 יח\"ל לפחות. המסלול לא פתוח לבוגרי מכינה."
+  ],
+  "bonus_table": {
+   "66": 0.1,
+   "67": 0.1,
+   "68": 0.2,
+   "69": 0.3,
+   "70": 0.4,
+   "71": 0.4,
+   "72": 0.5,
+   "73": 0.6,
+   "74": 0.7,
+   "75": 0.7,
+   "76": 0.8,
+   "77": 0.9,
+   "78": 1,
+   "79": 1,
+   "80": 1.1,
+   "81": 1.2,
+   "82": 1.3,
+   "83": 1.3,
+   "84": 1.4,
+   "85": 1.5,
+   "86": 1.6,
+   "87": 1.6,
+   "88": 1.7,
+   "89": 1.8,
+   "90": 1.9,
+   "91": 1.9,
+   "92": 2
+  },
+  "maxBonus": 2,
+  "eligibility": {
+   "all": [
+    {
+     "subjects": [
+      "מתמטיקה"
+     ],
+     "minUnits": 5,
+     "minGrade": 70
+    },
+    {
+     "subjects": [
+      "אנגלית"
+     ],
+     "minUnits": 4,
+     "minGrade": 1
+    }
+   ],
+   "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
+  },
+  "programs": [
+   "prog-technion-3",
+   "prog-technion-4",
+   "prog-technion-5",
+   "prog-technion-6",
+   "prog-technion-7",
+   "prog-technion-8",
+   "prog-technion-9",
+   "prog-technion-10",
+   "prog-technion-11",
+   "prog-technion-12",
+   "prog-technion-13",
+   "prog-technion-14",
+   "prog-technion-15",
+   "prog-technion-16",
+   "prog-technion-17",
+   "prog-technion-18",
+   "prog-technion-19",
+   "prog-technion-20",
+   "prog-technion-21",
+   "prog-technion-22",
+   "prog-technion-23",
+   "prog-technion-24",
+   "prog-technion-25",
+   "prog-technion-26",
+   "prog-technion-28",
+   "prog-technion-29",
+   "prog-technion-30",
+   "prog-technion-31",
+   "prog-technion-32",
+   "prog-technion-33",
+   "prog-technion-34",
+   "prog-technion-35",
+   "prog-technion-40",
+   "prog-technion-41",
+   "prog-technion-42",
+   "prog-technion-43",
+   "prog-technion-44",
+   "prog-technion-45"
+  ],
+  "programs_source": "עמודת \"גשר קבלה לטכניון\" בטבלת סיכום אפשרויות הקבלה (עודכן 11.8.2026)"
+ },
+ "from_high_school": {
+  "source": "https://admissions.technion.ac.il/ — \"מתיכון לטכניון\"",
+  "captured": "2026-10-03, צילום מסך של המשתמש",
+  "programs": [
+   "prog-technion-11",
+   "prog-technion-12",
+   "prog-technion-19",
+   "prog-technion-25",
+   "prog-technion-22",
+   "prog-technion-26",
+   "prog-technion-28",
+   "prog-technion-29",
+   "prog-technion-33",
+   "prog-technion-40",
+   "prog-technion-45"
+  ],
+  "notes": {
+   "prog-technion-40": "הקבלה האוטומטית דרך התוכנית היא למסלול מתמטיקה תלת-שנתי בלבד."
+  }
+ },
+ "not_offered": {
+  "source": "טבלת \"סיכום אפשרויות הקבלה למסלולים בסמסטר חורף תשפ\"ז\" (עודכן 11.8.2026) וטבלת הסכמים לאוקטובר 2026",
+  "programs": [
+   "prog-inst-48-47",
+   "prog-inst-48-48"
+  ],
+  "note": "המסלול לא מופיע ברשימת המסלולים של הטכניון לסמסטר חורף תשפ\"ז, ככל הנראה לא נפתח השנה."
+ }
+}

@@ -1,5 +1,5 @@
 import { AcademicDegree, AdmissionRoutes } from '../../types/academic';
-import { evaluateExcellentBagrut, requiredMathExamScore } from '../../modules/optimizer/excellentBagrut';
+import { evaluateExcellentBagrut, requiredGesherScore, requiredMathExamScore } from '../../modules/optimizer/excellentBagrut';
 import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
@@ -437,6 +437,7 @@ export function analyzeProgramGap(
 	// Official admission routes: an extra psychometric minimum can block the sekem route, and a bagrut-only or
 	// psychometric-only route can admit on its own. Only official data (never catalog estimates) changes the status.
 	const routes = officialRoutesOf(target.program);
+	const notOffered = (target.program as any).notOffered ?? (target.program as any).prerequisites?.notOffered;
 	const psych = profile.psychometricGeneral || 0;
 	let admissionRoute: ProgramGapAnalysis['admissionRoute'];
 	let admissionNote: string | undefined;
@@ -521,6 +522,25 @@ export function analyzeProgramGap(
 					description: `מי שהוכר/ה ע"י האגודה לקידום החינוך כ"ראוי/ה לקידום" (30 נקודות ומעלה) מקבל/ת הנחה של ${routes.promotionBonus} ${routes.promotionBonus === 1 ? 'נקודה' : 'נקודות'} בסכם בתואר הזה, כלומר סף ${lowered}.${wouldPass ? ` עם ההכרה, הסכם שלך (${userSekem}) עומד בסף.` : ''} הבקשה מוגשת לאגודה (kidum-edu.org.il) לפני ההרשמה לטכניון.`
 				});
 			}
+			if (routes?.gesher && threshold && userSekem > 0) {
+				const gap = Math.round((threshold - userSekem) * 10) / 10;
+				const need = requiredGesherScore(gap, routes.gesher.maxBonus);
+				const elig = evaluateExcellentBagrut(routes.gesher.eligibility, profile.bagrutSubjects || []);
+				if (need !== null && need > 0 && elig.met) {
+					alternativePaths.push({
+						id: 'alt-gesher',
+						title: 'גשר קבלה לטכניון',
+						description: `הסכם שלך חסר ${gap} נק׳ (עד ${routes.gesher.maxBonus} מותר). לומדים סמסטר מתמטיקה ופיזיקה בטכניון (מספטמבר), ולפי הציונים מקבלים עד ${routes.gesher.maxBonus} נקודות לסכם: ציון משוקלל (0.6×מתמטיקה + 0.4×פיזיקה) של ${need} סוגר לך את הפער. נדרשים גם אנגלית 104+ בפסיכומטרי או באמי"ר וידע בעברית.`
+					});
+				}
+			}
+			if (routes?.fromHighSchool) {
+				alternativePaths.push({
+					id: 'alt-from-high-school',
+					title: 'מתיכון לטכניון (לתלמידי תיכון)',
+					description: `תלמידי תיכון עם רקע חזק במתמטיקה לומדים קורסי מתמטיקה בטכניון במקביל לתיכון, ומתקבלים לפי הציונים בקורסים — בלי ציון בגרות או פסיכומטרי (נדרשת זכאות לבגרות מלאה).${routes.fromHighSchool.note ? ` ${routes.fromHighSchool.note}` : ''}`
+				});
+			}
 			if (routes?.shortTrack) {
 				const st = routes.shortTrack;
 				alternativePaths.push({
@@ -559,6 +579,10 @@ export function analyzeProgramGap(
 				});
 			}
 		}
+	}
+
+	if (notOffered) {
+		admissionNote = `${notOffered.note}${admissionNote ? ` ${admissionNote}` : ''}`;
 	}
 
 	return {
