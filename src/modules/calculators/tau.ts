@@ -105,11 +105,6 @@ export function calculateTauManagementSekem(bagrutAverage: number, psychometric:
 export function evaluateTau(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateTauOptimalBagrut(input.bagrutSubjects);
 	const psych = input.psychometricGeneral || 0;
-	const explicitQuant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
-		? input.psychometricQuantEmphasis
-		: undefined;
-	const rawQuant = explicitQuant ?? (input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych);
-	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const mathSub = input.bagrutSubjects.find((s) => s.name.includes('מתמטיקה'));
 	const effMathUnits = input.mathUnits || (mathSub ? mathSub.units : 0);

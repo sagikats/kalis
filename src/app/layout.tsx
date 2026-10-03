@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter_Tight, IBM_Plex_Sans_Hebrew, Frank_Ruhl_Libre } from 'next/font/google';
 import './globals.css';
-import { PlannerProvider } from '../context/PlannerContext';
 import { AuthProvider } from '../context/AuthContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -125,12 +124,10 @@ export default function RootLayout({
       </head>
       <body className="font-sans min-h-full flex flex-col bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222]">
         <AuthProvider>
-          <PlannerProvider>
-            <Navbar />
-            <main className="flex-1 w-full">{children}</main>
-            <Footer />
-            <AuthModal />
-          </PlannerProvider>
+          <Navbar />
+          <main className="flex-1 w-full">{children}</main>
+          <Footer />
+          <AuthModal />
         </AuthProvider>
       </body>
     </html>

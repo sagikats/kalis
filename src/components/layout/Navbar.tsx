@@ -5,29 +5,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
      Compass,
-     Sparkles,
      Sliders,
-     Bell,
      User,
      ChevronDown,
-     RefreshCw,
-     X,
-     AlertTriangle,
      Calculator,
      LogOut,
      LogIn,
      UserPlus,
      BookmarkCheck
 } from 'lucide-react';
-import { usePlanner } from '../../context/PlannerContext';
 import { useAuth } from '../../context/AuthContext';
 import KalisLogo from '../common/KalisLogo';
 
 export default function Navbar() {
      const pathname = usePathname();
-     const { recalculationPending, recalculationReason, recalculateRoute } = usePlanner();
      const { user, isAuthenticated, logout, openAuthModal } = useAuth();
-     const [showNotifications, setShowNotifications] = useState(false);
      const [showProfileMenu, setShowProfileMenu] = useState(false);
 
      const getInitials = (name?: string) => {
@@ -132,78 +124,6 @@ export default function Navbar() {
                                    </button>
                               </div>
                          )}
-
-                         {/* Notifications Popover */}
-                         <div className="relative">
-                              <button
-                                   onClick={() => setShowNotifications(!showNotifications)}
-                                   className="relative p-2 text-[#66635C] hover:text-[#222222] hover:bg-[#EFECE6] rounded-full transition-colors border border-transparent hover:border-[#E2DDD2]"
-                                   title="התראות מערכת"
-                              >
-                                   <Bell className="h-4 w-4" />
-                                   {recalculationPending && (
-                                        <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
-                                             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                                        </span>
-                                   )}
-                              </button>
-
-                              {showNotifications && (
-                                   <>
-                                        <div
-                                             className="fixed inset-0 z-40"
-                                             onClick={() => setShowNotifications(false)}
-                                        />
-                                        <div className="absolute right-0 mt-2 w-80 rounded-2xl bg-white p-4 shadow-xl border border-[#E7E2D8] z-50">
-                                        <div className="flex items-center justify-between border-b border-[#EAE5DA] pb-3">
-                                             <h4 className="font-bold text-sm text-[#222222] flex items-center gap-1.5">
-                                                  <Bell className="h-4 w-4 text-blue-600" />
-                                                  התראות מסלול
-                                             </h4>
-                                             <button
-                                                  onClick={() => setShowNotifications(false)}
-                                                  className="text-[#88857E] hover:text-[#222222]"
-                                             >
-                                                  <X className="h-4 w-4" />
-                                             </button>
-                                        </div>
-                                        <div className="mt-3 space-y-2 max-h-60 overflow-y-auto">
-                                             {recalculationPending ? (
-                                                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900">
-                                                       <div className="flex items-start gap-2">
-                                                            <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-                                                            <div>
-                                                                 <p className="font-bold">נדרש חישוב מסלול מחדש!</p>
-                                                                 <p className="mt-1 text-amber-800">{recalculationReason || 'זוהה שינוי בעומס הלימודים'}</p>
-                                                                 <button
-                                                                      onClick={() => {
-                                                                           recalculateRoute();
-                                                                           setShowNotifications(false);
-                                                                      }}
-                                                                      className="mt-2 text-xs bg-amber-600 hover:bg-amber-700 text-white font-bold px-3 py-1 rounded-lg shadow-xs transition"
-                                                                 >
-                                                                      בצע חישוב מסלול עכשיו
-                                                                 </button>
-                                                            </div>
-                                                       </div>
-                                                  </div>
-                                             ) : (
-                                                  <div className="p-3 bg-[#FAF8F5] border border-[#EAE5DA] rounded-xl text-xs text-[#66635C] text-center">
-                                                       אין התראות חדשות. תוכנית הלימודים מעודכנת ומיושרת!
-                                                  </div>
-                                             )}
-
-                                             <div className="p-3 bg-[#FAF8F5] border border-[#EAE5DA] rounded-xl text-xs text-[#44423D] flex items-start gap-2">
-                                                  <Sparkles className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
-                                                  <div>
-                                                       <span className="font-bold text-[#222222]">טיפ אלגוריתמי:</span> חזרות מרווחות בסופי שבוע מעלות את שימור הזיכרון ב-35%.
-                                                  </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </>
-                              )}
-                         </div>
 
                     </div>
 

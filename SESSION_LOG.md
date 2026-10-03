@@ -10,6 +10,23 @@
 
 ---
 
+## 🗓️ 2026-10-03 (סשן 15) — Claude Code (Opus 5.5) — ביצוע דוח הביקורת של Antigravity
+
+**בראנץ':** `cleanup/audit-followups` (לא ממוזג ל-main)
+
+### 🧭 תוכנית (אושרה ע"י המשתמש)
+1. ניקוי קוד מת: `/optimizer`, `PlannerContext`, `mockData`, פעמון Navbar, `task_for_sonnet.md`, משתנים מתים ב-`tau.ts`, טבלת בונוסים ב-MASTER_GUIDE.
+2. הקטנת bundle: `DegreeSearchSelector` + `AdmissionPanel` דרך `/api/programs` במקום ייבוא JSON של 1.88MB.
+3. מנוע מסלולים אחד: `trackGenerator` קנוני, `trackEngine` + `/api/tracks/generate` (לא בשימוש בפרודקשן) יוסרו/ייובשו.
+4. דרישות קדם רשמיות לכל תוכנית (ת"א, בן-גוריון).
+
+**ממצאי אימות הדוח:** BGU `<= 60` נכון (ידיעון: "above 60") — לא לשנות. טסטי API עוברים עם `tsx` (27/27) — ליקוי 7 לא רלוונטי.
+
+### ✅ מה נעשה
+- (בתהליך)
+
+---
+
 ## 🗓️ 2026-10-03 (סשן 14) — Antigravity — דוח ביקורת עומק ארכיטקטונית, ליקויים ותוכנית עבודה (CODE_AUDIT_AND_RECOMMENDATIONS.md)
 
 **בראנץ':** `main` (בסנכרון מול `origin/main`)
