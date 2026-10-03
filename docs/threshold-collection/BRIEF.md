@@ -47,7 +47,7 @@ Haifa (bagrut average + one CS sekem), Bar-Ilan (bagrut average only).
 ## 3. What is missing: the tasks, in priority order
 
 The full list of programs that still have no official threshold is in **`missing_programs.csv`**
-(1,136 rows: 308 at the 8 universities, priority 1, plus 828 at 54 colleges, priority 3).
+(308 rows, all at the 8 universities the site covers).
 `current_unverified_threshold` is our old value. Treat it as unreliable, and use it only to help recognise the program.
 
 ### Task A — University of Haifa: all 56 programs (priority 1) — needs the human
@@ -110,10 +110,6 @@ Already recorded (skip these): CS, CS with physics, Law, EE, Computer Eng., Psyc
 
 - HUJI programs with no row in the official sheet. They may have been discontinued; confirm whether they still exist.
 - Technion: ביוכימיה מולקולרית, כלכלה וניהול. These aren't in the admissions-routes table; check whether they're still offered and what their threshold is.
-
-### Task H — Colleges (priority 3, only after A–G)
-
-- 828 programs at 54 colleges (rows with `priority = 3` in the CSV). Same output format. Many colleges admit by bagrut average only; record that as `route = bagrut_only` with the minimum average.
 
 ---
 
