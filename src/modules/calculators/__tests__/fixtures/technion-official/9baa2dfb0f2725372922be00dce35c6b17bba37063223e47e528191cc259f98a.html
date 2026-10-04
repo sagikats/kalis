@@ -1,0 +1,128 @@
+<script>
+function copyScore(value){
+  if (value === undefined || value === null) return;
+  value = String(value).trim();
+  if (!value) return;
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(value);
+    return;
+  }
+  // Fallback
+  const ta = document.createElement('textarea');
+  ta.value = value;
+  ta.setAttribute('readonly','');
+  ta.style.position='fixed';
+  ta.style.left='-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+}
+</script>
+<style>
+  .copy-score-btn{
+    
+    margin-right:8px;
+    background-color: #002147 !important;
+    color: #ffffff !important;
+    cursor:pointer;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    /*background: #fff;*/
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+</style><div class="tc_wrapper">
+					<div class="msg screen">
+							<p>
+							שימו לב, <br/>
+							חישוב זה הוא כלי עזר בלבד. בכל מקרה של אי התאמה בין תוצאות חישוב זה, לבין מידע המתקבל מן הטכניון, קובע המידע שהתקבל מן הטכניון.
+							<br /></p>
+					</div>
+			  		<div class="inner_wrapper">
+					<h2>חישוב ציון סכם לכל המסלולים <br/>פרט לארכיטקטורה ולאדריכלות נוף</h2>
+					<table dir="rtl" class="zebra_table">
+					<caption class="hidden">תוצאות חישוב הסכם</caption>
+						<tr>
+						<th colspan="5"  class="new_tbl"><center><h2>חישוב סכם</h2></center></th>
+						</tr>
+						<tr>
+							<th>מקצוע</th>
+							<th>מספר יחידות</th>
+							<th>ציון</th>
+							<th width="20%">בונוס  בנקודות</th>
+							<th width="20%">ציון עם בונוס</th>
+						</tr><tr class="table_headline">
+				   			<td  colspan="5" >ציוני הבגרות</td></tr>
+						<tr class="table_headline">
+							<td  colspan="5"> מקצועות אשר נכנסו לממוצע</td>
+						</tr>	<tr>
+											<td> אנגלית</td>
+											<td> 5</td>
+											<td> 92</td>
+											<td> 25</td>
+											<td> 117</td>
+										</tr>	<tr>
+											<td> ספרות עברית</td>
+											<td> 2</td>
+											<td> 82</td>
+											<td> 0</td>
+											<td> 82</td>
+										</tr>	<tr>
+											<td> מתמטיקה</td>
+											<td> 10</td>
+											<td> 95</td>
+											<td> 30</td>
+											<td> 125</td>
+										</tr>	<tr>
+											<td> תנ"ך</td>
+											<td> 2</td>
+											<td> 80</td>
+											<td> 0</td>
+											<td> 80</td>
+										</tr>	<tr>
+											<td> אזרחות</td>
+											<td> 2</td>
+											<td> 88</td>
+											<td> 0</td>
+											<td> 88</td>
+										</tr>	<tr>
+											<td> הבעה עברית</td>
+											<td> 2</td>
+											<td> 84</td>
+											<td> 0</td>
+											<td> 84</td>
+										</tr>	<tr>
+											<td> הסטוריה</td>
+											<td> 2</td>
+											<td> 85</td>
+											<td> 0</td>
+											<td> 85</td>
+										</tr>	<tr>
+												<td> פיזיקה</td>
+												<td> 5</td>
+												<td> 93</td>
+												<td> 30</td>
+												<td> 123</td>
+											</tr>	<tr>
+												<td> מדעי המחשב</td>
+												<td> 5</td>
+												<td> 90</td>
+												<td> 30</td>
+												<td> 120</td>
+											</tr><tr class="table_headline">
+											<td  colspan="5">
+										  	מקצועות אשר לא נכנסו לממוצע
+											</td>
+										  </tr>	<tr>
+													<td> גיאוגרפיה</td>
+													<td> 5</td>
+													<td> 40</td>
+													<td> 0</td>
+													<td> 40</td>
+												</tr><tr class="table_headline"><td colspan="5">נתונים כללים</td></tr>
+					  <tr><td colspan="5" class="one_line_results">ציון פסיכומטרי רב תחומי: 714 <button type="button" class="copy-score-btn" onclick="copyScore(&quot;714&quot;)"> העתק </button><br/></br></td></tr><tr class="table_headline"><td  colspan="5">תוצאות החישוב</td></tr>
+					  <tr><td colspan="5" class="one_line_results">ממוצע ציוני הבגרות ללא בונוסים: 82.5 <button type="button" class="copy-score-btn" onclick="copyScore(&quot;82.5&quot;)"> העתק </button></br></br>ממוצע בגרות מיטבי: 111.1 <button type="button" class="copy-score-btn" onclick="copyScore(&quot;111.1&quot;)"> העתק </button></br></br>סכם לפי ממוצע בגרות מיטבי והציון הפסיכומטרי הרב תחומי: 90.1 <button type="button" class="copy-score-btn" onclick="copyScore(&quot;90.1&quot;)"> העתק </button></br></br><h2>הסכם לדיוני הקבלה הוא:90.1 <button type="button" class="copy-score-btn" onclick="copyScore(&quot;90.1&quot;)"> העתק </button></h2></td></tr></table>
+		</div><p class="screen">אם אינכם יכולים להתקבל לעדיפויות המעניינות אתכם, אולי תשקלו ללמוד <a href="https://kdam.technion.ac.il/" target="_blank"> במכינת הטכניון?</a></p></div>

@@ -14,15 +14,16 @@ import type { CalculatorSubject, DroppedSubjectInfo, OptimalBagrutResult, Subjec
 
 export interface OptimalAverageRules {
 	isMandatory: (name: string) => boolean;
-	getBonus: (subject: CalculatorSubject) => number;
+	/** A contextual bonus may depend on the subjects actually retained in this subset. */
+	getBonus: (subject: CalculatorSubject, includedSubjects?: CalculatorSubject[]) => number;
 	/** Weight of the subject in the average (default: its units). */
 	getWeight?: (subject: CalculatorSubject) => number;
 	/** Minimum total units of the included subjects (default 20). */
 	minUnits?: number;
 	/** Maximum average after bonuses, if the institution caps it. */
 	cap?: number;
-	/** Decimal places the average is rounded to (default 2). */
-	decimals?: number;
+	/** Decimal places the average is rounded to (default 2); null preserves the raw mean. */
+	decimals?: number | null;
 	/** Explanation attached to each dropped subject. */
 	dropReason: string;
 }
@@ -32,10 +33,11 @@ function weightedAverage(subjects: CalculatorSubject[], rules: OptimalAverageRul
 	let totalWeight = 0;
 	for (const s of subjects) {
 		const w = rules.getWeight ? rules.getWeight(s) : s.units;
-		totalScore += (s.grade + rules.getBonus(s)) * w;
+		totalScore += (s.grade + rules.getBonus(s, subjects)) * w;
 		totalWeight += w;
 	}
 	if (totalWeight === 0) return 0;
+	if (rules.decimals === null) return totalScore / totalWeight;
 	const factor = 10 ** (rules.decimals ?? 2);
 	return Math.round((totalScore / totalWeight) * factor) / factor;
 }
@@ -53,7 +55,7 @@ function buildBreakdown(
 	const inSet = new Set(included);
 	return subjects.map((s) => {
 		const empty = !(s.units > 0 && s.grade > 0);
-		const bonus = empty ? 0 : rules.getBonus(s);
+		const bonus = empty ? 0 : rules.getBonus(s, included);
 		return {
 			name: s.name,
 			units: s.units,
@@ -115,7 +117,7 @@ function computeOptimalAverageCore(
 	const numSubsets = 1 << droppableSubs.length;
 	for (let mask = 0; mask < numSubsets; mask++) {
 		const included = [...mandatorySubs];
-		const dropped: DroppedSubjectInfo[] = [];
+		const omitted: CalculatorSubject[] = [];
 		let units = mandatoryUnits;
 
 		for (let i = 0; i < droppableSubs.length; i++) {
@@ -124,13 +126,7 @@ function computeOptimalAverageCore(
 				included.push(sub);
 				units += sub.units;
 			} else {
-				dropped.push({
-					name: sub.name,
-					units: sub.units,
-					grade: sub.grade,
-					effectiveScoreWithBonus: sub.grade + rules.getBonus(sub),
-					reason: rules.dropReason
-				});
+				omitted.push(sub);
 			}
 		}
 
@@ -139,7 +135,13 @@ function computeOptimalAverageCore(
 		const avg = weightedAverage(included, rules);
 		if (avg > bestAvg || (avg === bestAvg && units > bestUnits)) {
 			bestAvg = avg;
-			bestDropped = dropped;
+			bestDropped = omitted.map((sub) => ({
+				name: sub.name,
+				units: sub.units,
+				grade: sub.grade,
+				effectiveScoreWithBonus: sub.grade + rules.getBonus(sub, included),
+				reason: rules.dropReason
+			}));
 			bestIncluded = included;
 			bestUnits = units;
 		}

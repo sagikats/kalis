@@ -1,0 +1,2 @@
+# Captured official calculator responses must keep their exact bytes.
+src/modules/calculators/__tests__/fixtures/technion-official/*.html -text -diff -whitespace
