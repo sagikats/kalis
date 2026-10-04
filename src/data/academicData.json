@@ -24775,72 +24775,180 @@
         "fieldOfStudy": "אומנות יצירה",
         "degreeLevel": "B.A",
         "description": "החוג לאמנות יצירה מקיים סדנאות עבודה ולימוד בכל תחומי העשייה העכשווית (ציור פיסול רישום צילום וידאו מחשבים הדפס קרמיקהמיצג ומיצב) עם אמנים-מורים מן השורה הראשונה בארץ. הלימודים בחוג לאמנות יצירה, נועדו להקנות מיומנויות, מושגי יסוד ועקרונות חשיבה לאדם העוסק ביצירה האמנותית. השילוב בין עבודה מעשית בסד",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 470–499 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3039 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3039 — תנאי הקבלה החוגיים תשפ\"ז: אמנות יצירה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-2",
         "fieldOfStudy": "אופקים",
         "degreeLevel": "B.A",
         "description": "תכנית \"אופקים\" הינה תכנית המצטיינים של אוניברסיטת חיפה, תכנית האוספת אליה מדי שנה עד 15 סטודנטים בעלי נתונים אישיים יוצאי דופן, מעניקה להם מלגת לימודים מלאה, חושפת אותם למרצים ולקורסים הטובים ביותר שיש לאוניברסיטה להציע, ומאפשרת להם את החופש לעצב את לימודיהם כרצונם תוך ליווי אישי והקפדה על רמה אקדמי",
-        "admissionThreshold": 600,
+        "admissionThreshold": 700,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 700+; טווח המתנה 670–699 (לדיון בוועדת הקבלה); כתיבת חיבור; ראיון קבלה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 700,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3025 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3025 — תנאי הקבלה החוגיים תשפ\"ז: אופקים – תוכנית המצטיינות והמצטיינים",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-3",
         "fieldOfStudy": "ארכיאולוגיה",
         "degreeLevel": "B.A",
         "description": "הארכיאולוגיה חוקרת את התרבויות הקדומות שהתקיימו בארץ ובעולם באמצעות התרבות החומרית שבני אדם השאירו אחריהם (מבנים לסוגיהם וחפצים). אין באפשרותנו לשוחח עם נושאי מחקרנו ולכן אנחנו מנסים \"לדובב\" את המבנים והחפצים שקדמונינו השאירו מאחריהם. זו במידה רבה עבודת בילוש שאוספת נתונים בשטח, מעבדת אותם ומנסה לשח",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 475–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3042 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3042 — תנאי הקבלה החוגיים תשפ\"ז: ארכיאולוגיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-4",
         "fieldOfStudy": "ביולוגיה",
         "degreeLevel": "B.Sc",
         "description": "בִּיּוֹלוֹגְיָה (בעברית: תורת החי) היא ענף במדעי הטבע, העוסק בהרכבו של עולם החי והצומח, במקור החיים, ברבגוניותם, בהתנהגותם של היצורים החיים, וביחסי הגומלין בינם לבין עצמם ובינם לבין סביבתם.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 640,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 640+; טווח המתנה 620–639 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "mathRequirement": "ציון 90 ומעלה ברמת 3 יח”ל או ציון 80 ומעלה ברמת 4 יח”ל או ציון 70 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3036 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3036 — תנאי הקבלה החוגיים תשפ\"ז: ביולוגיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-5",
         "fieldOfStudy": "ביופיזיקה",
         "degreeLevel": "B.Sc",
         "description": "ביו–פיזיקה הוא התחום שמשתמש בחוקי הפיזיקה כדי להבין מערכות ביולוגיות בצורה עמוקה ומדויקת. ביו–פיזיקאים מהווים חלק מחזית המחקר הביולוגי, ומשתמשים בסל הכלים העצום של עולם הפיזיקה העומד לרשותם כדי להבין ולפתח שיטות מחקר פורצות דרך במערכות כמו המולקולות שבתוך התאים, רשתות בין תאיות ועד התנהגויות של אורג",
-        "admissionThreshold": 600,
+        "admissionThreshold": 640,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 640+; טווח המתנה 620–639 (לדיון בוועדת הקבלה); פסיכומטרי כמותי גולמי: ציון 600 ומעלה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "mathRequirement": "ציון 75 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3091 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3091 — תנאי הקבלה החוגיים תשפ\"ז: ביופיזיקה*",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-6",
         "fieldOfStudy": "גיאוגרפיה ולימודי סביבה",
         "degreeLevel": "B.A",
         "description": "בחוג נחקרים ונלמדים מגוון רחב של תחומים כגון: גאולוגיה, גאומורפולוגיה, אקלים, אקולוגיה וסביבה, משאבי מים, גאוגרפיה תרבותית, חברתית, עירונית והיסטורית, תיירות, תכנון ומדיניות סביבתית, מערכות מידע גאוגרפיות, חישה מרחוק, והתמודדות עם מצבי חירום.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 540,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 540+; טווח המתנה 510–539 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; תנאים מיוחדים למסלולי מורי דרך והכשרה מקצועית; ישנה תוכנית דו-שנתית אליה ניתן להתקבל רק לאחר מעבר ראיון קבלה ורק עם רמת אנגלית בסיסי + ציון 120 ומעלה במבחן יעלנט",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 540,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/5113 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5113 — תנאי הקבלה החוגיים תשפ\"ז: גאוגרפיה ולימודי הסביבה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-48",
@@ -24860,10 +24968,53 @@
         "description": "הלימודים בחוג למדעי הדימות הרפואי מתקיימים במסלול חד חוגי. תכנית הלימודים משלבת לימודים תיאורטיים ומעשיים במספר צירים מרכזיים : מדעי הדימות הרפואי, מדעי הטבע והרפואה, מדעי המחשב והנתונים, מדעי החברה, מערכות בריאות ושיטות מחקר. בנוסף ללימודים באוניברסיטה, התכנית כוללת התנסויות קליניות במכוני דימות רפ",
         "admissionThreshold": 600,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 600+; טווח המתנה 540–599 (לדיון בוועדת הקבלה); פסיכומטרי 580+; ראיון קבלה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 600,
+        "minPsychometricFloor": 580,
+        "mathRequirement": "ציון עובר ברמות 4 או 5 יח”ל",
+        "admissionRoutes": {
+          "minPsychometric": 580,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3157 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3157 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הדימות הרפואי",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-8",
@@ -24882,11 +25033,36 @@
         "fieldOfStudy": "הפרעות בתקשורת",
         "degreeLevel": "B.A",
         "description": "התקשורת הבין-אישית היא הבסיס הראשוני ביותר של החברה האנושית. בני אדם מעבירים זה לזה רעיונות, רגשות ומחשבות, מהפשוטים ביותר ועד המורכבים ביותר, בעזרת המילים. ואולם השפה היא מנגנון עדין: משמעות רבה כל כך טמונה בכל צליל, וכל שגיאה ושינוי בהטיה, בהדגשה ובהגייה עלול לשנות את משמעות המסר כולו, ולערער את י",
-        "admissionThreshold": 580,
+        "admissionThreshold": 650,
         "psychometricScore": 580,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 650,
+        "mathRequirement": null,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 650+; טווח המתנה 600–649 (לדיון בוועדת הקבלה); בחינת כניסה חוגית (ראיון בכתב): לאחר ההרשמה לתואר יש ל הירשם לבחינת הכניסה החוגית שתתקיים בתאריכים 15.04.2026 או 14.06.202 (התאריכים הינם מועדי הבחינה היחידים. ניתן לגשת למועד אחד בלבד.)",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3243 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3243 — תנאי הקבלה החוגיים תשפ\"ז: הפרעות בתקשורת",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-10",
@@ -24895,10 +25071,18 @@
         "description": "המסלול לחינוך מיוחד מכשיר מורים לעבודה עם תלמידים בעלי צרכים מיוחדים במסגרות החינוך המיוחד או במסגרות המשולבות בבתי הספר. הסטודנטים לומדים, מתנסים ומקבלים כלים להתמודד עם אוכלוסיות מגוונות: לקויות למידה, הפרעות התנהגות, הפרעות נפשיות, ילדים על הרצף האוטיסטי וילדים ונוער בסיכון.",
         "admissionThreshold": 600,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 600+; טווח המתנה 570–599 (לדיון בוועדת הקבלה); הגשת קורות חיים; ראיון קבלה (על פי החלטת המחלקה)",
         "requiresPsychometric": false,
-        "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutEligible": false,
+        "directBagrutMinAverage": null,
+        "officialThreshold": 600,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/education/program/3192 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/education/program/3192 — תנאי הקבלה החוגיים תשפ\"ז: חינוך מיוחד",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-11",
@@ -24907,21 +25091,82 @@
         "description": "מטרת הלימודים לספק בסיס תיאורטי ומחקרי רחב בתחום התפתחות האדם וכן רכישת ידע ומיומנויות בתחום התנהלות אישית, קבוצתית ומערכתית. תכנית הלימודים מושתתת על לימודי יסוד במדעי ההתנהגות עם דגש על התהליכים ההתפתחותיים בטווח החיים, ובכלל זה הילדות, ההתבגרות והבגרות. הסטודנטים ירכשו ידע על התנהגות אנושית, על ה",
         "admissionThreshold": 600,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 600+; טווח המתנה 570–599 (לדיון בוועדת הקבלה); הגשת קורות חיים; מעבר ראיון קבלה על פי החלטת ביה”ס; ישנה תוכנית דו-שנתית אליה ניתן להתקבל רק עם רמת אנגלית בסיסי + ציון 120 ומעלה במבחן יעלנט",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 600,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/education/program/3178 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/education/program/3178 — תנאי הקבלה החוגיים תשפ\"ז: ייעוץ והתפתחות האדם",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-12",
         "fieldOfStudy": "כלכלה",
         "degreeLevel": "B.A",
         "description": "עבודת הכלכלן כרוכה בדרך כלל בקריאה וניתוח של דו”חות פיננסים ובהכנת דו”חות שכאלו. הדבר מתבצע תוך שימוש בתוכנת אקסל. חלק מן הכלכלנים עובדים בעיקר מול המחשב ואילו אחרים עובדים מול לקוחות, בתפקידי שירות או שיווק. בארגונים גדולים ובמשרדי ממשלה הכלכלן עובד כחלק מצוות. כלכלנים בעלי יכולת ניהול יכולים להתקד",
-        "admissionThreshold": 620,
+        "admissionThreshold": 660,
         "psychometricScore": 620,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 660,
+        "mathRequirement": "ציון 80 ומעלה ברמת 4 יח”ל או ציון 60 ומעלה ברמת 5 יח”ל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 660+; טווח המתנה 640–659 (לדיון בוועדת הקבלה)",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/2482 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2482 — תנאי הקבלה החוגיים תשפ\"ז: כלכלה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-46",
@@ -24940,97 +25185,251 @@
         "fieldOfStudy": "לימודי אסיה",
         "degreeLevel": "B.A",
         "description": "אזור מזרח אסיה, דרום מזרח אסיה ודרום אסיה הוא בעל אוכלוסייה אדירה בגודלה, תרבויות עתיקות ומפוארות, וחשיבות הולכת וגוברת בכלכלה ובפוליטיקה העולמית במאה ה-21. במסגרת הלימודים בחוג תוכלו לרכוש את שפות אסיה ולחקור את ההיסטוריה, התרבות, החברה, הכלכלה והפוליטיקה של המדינות סין, יפן, קוריאה, הודו ואינדונזי",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 450–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3046 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3046 — תנאי הקבלה החוגיים תשפ\"ז: לימודי אסיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-14",
         "fieldOfStudy": "לימודי ארץ ישראל",
         "degreeLevel": "B.A",
         "description": "המוטו ארוך השנים של המחלקה – \"עם הפנים לשטח\" – מבטא היטב את ייחודה בנוף האקדמי הישראלי: לימודים עיוניים ברמה הגבוהה ביותר, המחוברים לשטח, שואבים ממנו תובנות חדשות, ומגוונים באמצעותו את חוויית הלמידה. כך הופכים הלימודים במחלקה לשילוב נדיר שבין הכרת הארץ, אוכלוסייתה ונופיה העכשוויים, לבין הרקע ההיסטור",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 450–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; אישור רפואי המעיד על כשירות להשתתף בסיורים",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3061 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3061 — תנאי הקבלה החוגיים תשפ\"ז: לימודי ישראל",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-15",
         "fieldOfStudy": "לימודים רב תחומיים",
         "degreeLevel": "B.A",
         "description": "בוגרי מסלולי הלימוד לקראת תואר B.A כללי יוכלו להשתלב במגוון מסלולים תעסוקתיים לרבות, ניהול אדמיניסטרטיבי, כוח אדם, שיווק, מכירות ותקשורת.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 460–499 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3068 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3068 — תנאי הקבלה החוגיים תשפ\"ז: לימודים רב תחומיים",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-16",
         "fieldOfStudy": "מדעי הלמידה וההוראה",
         "degreeLevel": "B.A",
         "description": "הלימודים בתוכנית לתואר שני במדעי הלמידה וההוראה מתמקדים ברכישת ידע עיוני ומעשי בתחומי הלמידה, ההוראה ותוכניות הלימודים, וכוללים קורסים בנושאים כמו למידה בסביבות למידה טכנולוגיות חדשניות, פדגוגיה מוטת עתיד, למידה פרופסיונאלית, תכנון לימודים והוראת תחום הדעת.\nהלימודים מספקים בסיס אקדמי ופרקטי לעבודה ב",
-        "admissionThreshold": 600,
+        "admissionThreshold": 580,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 580+; טווח המתנה 550–579 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; ראיון-מבחן מחלקתי",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 580,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/education/program/3203 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/education/program/3203 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הלמידה וההוראה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-17",
         "fieldOfStudy": "מדעי המדינה",
         "degreeLevel": "B.A",
         "description": "מדע המדינה הוא אחד מתחומי המשנה של מדעי החברה. המחקר האקדמי של התחום מאופיין בריבוי אסכולות, וכנגזרת מכך, בריבוי שיטות מחקר. הסיבה לכך היא חוסר הסכמה בסיסי על מהי פוליטיקה. חילוקי דעות באשר להגדרת התחום הנחקר מוליכים לחילוקי דעות בהגדרת תחום המחקר. כך בשפה האנגלית יש המעדיפים להשתמש בשמות \"לימודי הפ",
-        "admissionThreshold": 600,
+        "admissionThreshold": 580,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 580+; טווח המתנה 520–579 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 102+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 102,
+        "officialThreshold": 580,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 102,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3054 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3054 — תנאי הקבלה החוגיים תשפ\"ז: מדעי המדינה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-18",
         "fieldOfStudy": "מדעי המחשב",
         "degreeLevel": "B.Sc",
         "description": "הלימודים המשולבים מציעים לסטודנטים לרכוש ידע איכותי ומודרני שיאפשר להם להשתלב בהמשך במחקר בסיסי או במחקר ופיתוח יישומיים המשלבים כלים וידע משני התחומים כגון זיהוי מטרות תרופתיות ותכנון תרופות. הביקוש למומחים בשני העולמות הולך וגובר, ובוגרי התכנית יזכו ליתרון משמעותי בהמשך דרכם המקצועית.",
-        "admissionThreshold": 660,
+        "admissionThreshold": 700,
         "psychometricScore": 660,
-        "mathRequirement": "5 יחידות בציון 80+ / 4 יחידות 90+",
+        "mathRequirement": "ציון 90 ומעלה ברמת 4 יח”ל או ציון 75 ומעלה ברמת 5 יח”ל",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 700,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 700+; טווח המתנה 680–699 (לדיון בוועדת הקבלה)",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/computer-information-science/program/3210 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/computer-information-science/program/3210 — תנאי הקבלה החוגיים תשפ\"ז: מדעי המחשב",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-19",
         "fieldOfStudy": "מדעי הנתונים",
         "degreeLevel": "B.Sc",
         "description": "כי התוכנית המוצעת מעניקה בסיס רחב במתמטיקה, סטטיסטיקה וחישוביות, לצד כישורים המגוונים בניתוח וניהול נתונים, הבנת תהליכים מורכבים והסקת מסקנות. נתונים הם אלו שמאפשרים לארגונים רבים להציע שיפור במוצרים ובשירותים הניתנים לנו, כמו גם לבצע אופטימיזציה לתהליכים ברמת הארגון/החברה כולה. שימוש בכלים מתקדמים ",
-        "admissionThreshold": 680,
+        "admissionThreshold": 700,
         "psychometricScore": 680,
-        "mathRequirement": "5 יחידות 80+ / 4 יחידות 90+",
-        "comments": "תנאי קבלה ללימודי טכנולוגיה/הנדסה באוניברסיטה: סכם/פסיכומטרי 680+",
+        "mathRequirement": "ציון 90 ומעלה ברמת 4 יח”ל או ציון 75 ומעלה ברמת 5 יח”ל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 700+; טווח המתנה 680–699 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 700,
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/computer-information-science/program/2495 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/computer-information-science/program/2495 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הנתונים",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-20",
         "fieldOfStudy": "מדעי הקוגניציה",
         "degreeLevel": "B.A",
         "description": "מדעי הקוגניציה עוסקים בנפש האדם ובעיקר בתהליכי החשיבה, ההכרה ועיבוד המידע. תהליכים קוגניטיביים מעורבים כמעט בכל התנהגות אנושית החל מקליטת מידע חושי, דרך תהליכי קשב, למידה, זיכרון, הבנת שפה ועד קבלת החלטות, פתרון בעיות, מודעות ועוד.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 680,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 680+; טווח המתנה 670–679 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "mathRequirement": "ציון 85 ומעלה ברמת 4 יח”ל או ציון 75 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/5563 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5563 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הקוגניציה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-21",
@@ -25049,86 +25448,257 @@
         "fieldOfStudy": "מדעי הרפואה",
         "degreeLevel": "B.Sc",
         "description": "מדעי הרפואה הוא תחום אקדמי הכולל מספר דיסציפלינות משיקות במדעי החיים והרפואה, ושם דגש על הקישור בין המדעים השונים לגוף ומצביו. מסגרות לימודי רפואה, או בשמם הנוסף מדעי הבריאות והחיים, מאגדות בתוכן מגוון תוכניות לימוד בתחום הפרא-רפואי. מקצועות אלה מעניקים לסטודנטים תחומי דעת מגוונים ומאפשרים לעוסקים ב",
-        "admissionThreshold": 740,
+        "admissionThreshold": 640,
         "psychometricScore": 740,
-        "comments": "תנאי קבלה לרפואה באוניברסיטה: סכם 740+ / פסיכומטרי 740+ + מבחני מו\"ר/מרק\"ם",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 640+; טווח המתנה 620–639 (לדיון בוועדת הקבלה); עמידה בתנאי קבלה של המחלקה לביולוגיה",
         "additionalConditions": "מעבר מבחני מו\"ר/מרק\"ם וראיון קבלה קליני",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "mathRequirement": "ציון 70 ומעלה ברמת 5 יח”ל או ציון 80 ומעלה ברמת 4 יח”ל או ציון 90 ומעלה ברמת 3 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3012 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3012 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הרפואה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-23",
         "fieldOfStudy": "מוסיקה",
         "degreeLevel": "B.A",
         "description": "תוכנית הלימודים עוסקת בשני נושאים עיקריים: המבנים והמרכיבים המרכזיים של המוזיקה: כולל שיעורים מעשיים בפיתוח שמיעה, הרמוניה וקריאת תווים ופרטיטורות. תולדות המוזיקה מימי הביניים ועד ימינו: הסגנונות המוסיקליים השונים והקשריהם ההיסטוריים, החברתיים, האתניים והתרבותיים, תולדות חייהם וניתוח יצירותיהם של מל",
-        "admissionThreshold": 600,
+        "admissionThreshold": 525,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 525+; טווח המתנה 475–524 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": false,
-        "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutEligible": false,
+        "directBagrutMinAverage": null,
+        "officialThreshold": 525,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3216 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3216 — תנאי הקבלה החוגיים תשפ\"ז: מוסיקה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-24",
         "fieldOfStudy": "מחשבת ישראל",
         "degreeLevel": "B.A",
         "description": "מטרת הלימודים היא להעניק לסטודנטים/יות יכולת לעיון מחקרי בנושאים המוצעים, יחד עם כלים מתודולוגיים וחשיפה לגישות מחקריות שונות. לסטודנטים/יות המתכוונים לעסוק בהוראה על-יסודית מקנה התכנית מטען ידיעות ודרכי מחשבה הנחוצים להוראת מחשבת ישראל בבתי הספר העל-יסודיים.",
-        "admissionThreshold": 680,
+        "admissionThreshold": 500,
         "psychometricScore": 680,
-        "mathRequirement": "5 יחידות 80+ / 4 יחידות 90+",
-        "comments": "תנאי קבלה ללימודי טכנולוגיה/הנדסה באוניברסיטה: סכם/פסיכומטרי 680+",
+        "mathRequirement": null,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 450–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; לנרשמים לתוכניות “ ולר “ ו” בארי “: ראיון קבלה עם ראשי התוכניות",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3115 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3115 — תנאי הקבלה החוגיים תשפ\"ז: מחשבת ישראל",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-25",
         "fieldOfStudy": "מערכות מידע",
         "degreeLevel": "B.Sc",
         "description": "לימודי ניהול מערכות מידע במסגרת מסלול ההתמחות לתואר ראשון, נועד להעניק לסטודנטים הלומדים בו גישה מלאה לכול רזי המקצוע ולהוות קרש קפיצה לקריירה מצליחה במגזר הציבורי והפרטי. תוכניות ההצטיינות פכ\"מ קיימות באוניברסיטות רבות בעולם, כמו אוקספורד וייל. בישראל, רק אוניברסיטת תל אביב משלבת את תוכנית ההצטיינו",
-        "admissionThreshold": 630,
+        "admissionThreshold": 680,
         "psychometricScore": 630,
-        "mathRequirement": "4 יחידות בציון 80+",
+        "mathRequirement": "ציון 80 ומעלה ברמת 4 יח”ל או ציון 70 ומעלה ברמת 5 יח”ל",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 680+; טווח המתנה 650–679 (לדיון בוועדת הקבלה)",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/computer-information-science/program/3218 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/computer-information-science/program/3218 — תנאי הקבלה החוגיים תשפ\"ז: מערכות מידע",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-26",
         "fieldOfStudy": "מקרא",
         "degreeLevel": "B.A",
         "description": "אם גם עבורכם התנ\"ך הוא ספר הספרים, אם אתם רוצים להכיר את הצדדים השונים של  החוק, הנבואה, השירה והסיפור המקראיים, ואת ביקורת המקרא המודרנית, כמו גם את הפרשנויות, העתיקות ומימי-הביניים; אם שפת התנ\"ך ושירתו מרגשים אתכם – הצטרפו לתכנית לתואר ראשון במקרא",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 450–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3105 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3105 — תנאי הקבלה החוגיים תשפ\"ז: מקרא",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-27",
         "fieldOfStudy": "משפטים",
         "degreeLevel": "LL.B.",
         "description": "לימודי תואר ראשון במשפטים עוסקים במהותם בחקר החוק ואכיפתו, אך מדובר בתחום אינטרדיסציפלינרי המקושר למגוון תחומי לימוד: מדעי החברה, המדינה והרוח אשר משפיעים ומושפעים מעולם המשפט. בהתאם לכך, תואר ראשון במשפטים LLB במרכז האקדמי למשפט ולעסקים משלב למידה, העמקה והכרות עם עולמות ידע נוספים. לכן תואר ראשון ",
-        "admissionThreshold": 660,
+        "admissionThreshold": 680,
         "psychometricScore": 660,
-        "comments": "אפיק בגרות בלבד: ממוצע 108+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 680+; טווח המתנה 630–679 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/law/program/3000 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/law/program/3000 — תנאי הקבלה החוגיים תשפ\"ז: משפטים",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-28",
         "fieldOfStudy": "מתמטיקה",
         "degreeLevel": "B.Sc",
         "description": "מתמטיקה היא שפה אוניברסלית המכתיבה שיח עקבי והגיוני. ככזאת, היא משמשת כשפתם של כל המדעים  ובפרט היא הבסיס עליו נבנים כל המדעים המדויקים (פיזיקה, כימיה, מדעי כדור הארץ, מדעי המחשב וכו)  וההנדסה על כל סוגיה וגווניה. בנוסף כיום חלקים גדלים והולכים בדיסציפלינות אחרות כמו מדעי החיים ומדעי החברה משתמשים ב",
-        "admissionThreshold": 600,
+        "admissionThreshold": 610,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 610+; טווח המתנה 580–609 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 610,
+        "mathRequirement": "ציון 80 ומעלה ברמת 4 יח”ל או ציון 70 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3161 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3161 — תנאי הקבלה החוגיים תשפ\"ז: מתמטיקה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-47",
@@ -25148,24 +25718,59 @@
         "fieldOfStudy": "סוציולוגיה",
         "degreeLevel": "B.A",
         "description": "לימודי סוציולוגיה מקנים הבנה עמוקה בתהליכים חברתיים, בצד השכלה כללית רחבה. הסוציולוגיה. חוקרת את תפקוד האדם בתוך החברה, ואת ההתנהלות של קבוצות חברתיות מובחנות. הלימודים מעניקים ידע תיאורטי מגוון, המשלב בתוכו תיאוריות ומתודולוגיות מתחומים כגון אנתרופולוגיה, פסיכולוגיה וכלכלה, לצד שיטות מחקר ייחודיות ",
-        "admissionThreshold": 600,
+        "admissionThreshold": 540,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 540+; טווח המתנה 520–539 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 90+; ישנה תוכנית דו-שנתית אותה ניתן להתחיל רק בסמסטר א’ ולהתקבל רק עם רמת אנגלית בסיסי + ציון 120 בבחינת יעלנט",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 90,
+        "officialThreshold": 540,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 90,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/2968 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2968 — תנאי הקבלה החוגיים תשפ\"ז: סוציולוגיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-30",
         "fieldOfStudy": "סטטיסטיקה",
         "degreeLevel": "B.A",
         "description": "הלימודים בתוכנית מכוונים להכשיר סטטיסטיקאים להפעלה ולפיתוח של שיטות הסקה סטטיסטיות לצרכים מעשיים. הקורסים כוללים הן קורסים תיאורטיים להבנה עמוקה של מודלים הסתברותיים וסטטיסטיים והן קורסים יישומיים ללימוד שיטות חדשות לניתוח נתונים מורכבים.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 630,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 630+; טווח המתנה 600–629 (לדיון בוועדת הקבלה); ראיון קבלה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 630,
+        "mathRequirement": "ציון 75 ומעלה ברמות 4 או 5 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3167 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3167 — תנאי הקבלה החוגיים תשפ\"ז: סטטיסטיקה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-haifa-5",
@@ -25175,19 +25780,55 @@
         "psychometricScore": 580,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 580,
+        "minPsychometricFloor": 550,
+        "mathRequirement": null,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 580+; טווח המתנה 570–579 (לדיון בוועדת הקבלה); פסיכומטרי 550+; 8 יחידות מדעיות בבגרות; מבחן אינטלגנציה רגשית מול מחשב (אין צורך בלמידה מוקדמת)",
+        "admissionRoutes": {
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/2973 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/2973 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הסיעוד",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-31",
         "fieldOfStudy": "ספרות עברית והשוואתית",
         "degreeLevel": "B.A",
         "description": "לימודי הספרות העברית מקנים לסטודנטים כלים שבאמצעותם ילמדו על מהותו של הטקסט הספרותי, מורכבויותיו ודרכי פענוחו. הסטודנטים לומדים את מהות הטקסט הספרותי בשלל מופעיו: כיצירה כתובה, חזותית, דיגיטאלית או כיצירה המבוצעת בעל פה. בנוסף, הלימודים נועדים להכשיר את הסטודנטים לדון במהות הכתיבה והקריאה כמעצבי החו",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 475–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; מועמדים שציונם במבחן יע”ל/ יעלנט בין 100 ל-120 יוכלו לגשת למבחן כניסה החוגי, ובמידה והם יעמדו במבחן זה יוכלו להתקבל ללימודים בחוג על תנאי; ישנה תוכנית דו-שנתית אליה ניתן להתקבל רק עם רמת אנגלית בסיסי + ציון 120 ומעלה במבחן יעלנט",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3081 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3081 — תנאי הקבלה החוגיים תשפ\"ז: ספרות עברית והשוואתית",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-32",
@@ -25197,8 +25838,33 @@
         "admissionThreshold": 615,
         "psychometricScore": 615,
         "requiresPsychometric": false,
-        "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutEligible": false,
+        "directBagrutMinAverage": null,
+        "officialThreshold": 615,
+        "mathRequirement": null,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 615+; טווח המתנה 580–614 (לדיון בוועדת הקבלה); ראיון קבלה",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3082 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3082 — תנאי הקבלה החוגיים תשפ\"ז: עבודה סוציאלית",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-49",
@@ -25217,60 +25883,195 @@
         "fieldOfStudy": "פיזיותרפיה",
         "degreeLevel": "B.P.T.",
         "description": "לימודי פיזיותרפיה נועדו להכשיר פיזיותרפיסטים מקצועיים אשר עוסקים בשיקום יכולות תפקודיות, טיפול בבעיות גופניות החל מרמת העצב ועד רמת השלד, ומסייעים למטופלים להגיע לתפקוד מרבי. לימודי תואר ראשון בפיזיותרפיה כוללים קורסים רבים מתחומי האנטומיה והרפואה, ועל כן תנאי הקבלה נחשבים לקשים וגבוהים במיוחד.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 680,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 680+; טווח המתנה 630–679 (לדיון בוועדת הקבלה); בגרות מלאה / תעודת מכינה; ראיון קבלה – להחלטת החוג",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 680,
+        "mathRequirement": "4 יח”ל בציון עובר ומעלה",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3181 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3181 — תנאי הקבלה החוגיים תשפ\"ז: פיזיותרפיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-34",
         "fieldOfStudy": "פילוסופיה",
         "degreeLevel": "B.A",
         "description": "תואר ראשון בפילוסופיה נלמד, בדרך כלל, במתכונת דו חוגית תוך שילוב עם תואר נוסף. ניתן לשלב לימודי פילוסופיה תוך יצירת שילובים מרתקים כגון לימודי משפטים ופילוסופיה, כלכלה ופילוסופיה, פסיכולוגיה ופילוסופיה, לימודי פילוסופיה, כלכלה ומדעי המדינה ועוד. שילוב פילוסופיה עם תואר נוסף הופך את חווית הלימוד הכול",
-        "admissionThreshold": 600,
+        "admissionThreshold": 560,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 560+; טווח המתנה 510–559 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; לקבלה למסלול חד-חוגי – מעבר ראיון קבלה",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 560,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3086 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3086 — תנאי הקבלה החוגיים תשפ\"ז: פילוסופיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-35",
         "fieldOfStudy": "פילוסופיה כלכלה ומדע המדינה",
         "degreeLevel": "B.A",
         "description": "שלוש שנים, שלוש תחומי לימוד, תואר יוקרתי אחד: תוכנית ההצטיינות פכ\"מ היא תוכנית רב-תחומית בנושאי משק, מדינה וממשל והקשרים ביניהם. אנחנו ניתן לך את הבסיס הטוב ביותר להבנה וניתוח שאלות הנוגעות לפוליטיקה, חברה ומדיניות ציבורית, מתוך השקפה כלכלית ופילוסופיה רחבה, הבנה של שיקולים מוסריים ומתוך ראיה של מדי",
-        "admissionThreshold": 630,
+        "admissionThreshold": 640,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 640+; טווח המתנה 620–639 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 110+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 110,
+        "officialThreshold": 640,
+        "mathRequirement": "ציון 80 ומעלה ברמת 4 יח”ל או ציון 70 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 110,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/5385 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/5385 — תנאי הקבלה החוגיים תשפ\"ז: לימודי תואר ראשון משולב בפכ\"מ – פילוסופיה, כלכלה ומדעי המדינה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-36",
         "fieldOfStudy": "פסיכולוגיה",
         "degreeLevel": "B.A",
         "description": "תכנית הלימודים שלנו לתואר ראשון בפסיכולוגיה תעניק לכם היכרות עם תחומי היסוד מהם מורכבת הפסיכולוגיה, הנותנים פרספקטיבה רחבה על ההתנהגות האנושית ומנגנוניה. בנוסף לכך, תקבלו כלים לחשיבה מדעית ביקורתית שיכשירו אתכם לחשוב כמו חוקרים. בסמינרים ובסדנאות המחקר תשתתפו במחקר עצמאי בקבוצות קטנות ותוך הנחייה אי",
-        "admissionThreshold": 640,
+        "admissionThreshold": 650,
         "psychometricScore": 640,
-        "comments": "תנאי קבלה במקצועות הבריאות והחברה באוניברסיטה: סכם/פסיכומטרי 640+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 650+; טווח המתנה 630–649 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 650,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3268 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3268 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-37",
         "fieldOfStudy": "קרימינולוגיה",
         "degreeLevel": "B.A",
         "description": "לימודי תואר ראשון בקרימינולוגיה כוללים קורסים בנושאי: פסיכולוגיה, סוציולוגיה, אנתרופולוגיה, ביולוגיה, פסיכופתולוגיה ועוד. במהלך התואר עוברים הסטודנטים סדנאות מעשיות, ומתנסים בעבודת פרקטיקום במוסדות רלוונטיים כגון: בתי חולים פסיכיאטריים, בתי כלא, מוסדות לעבריינים, מוסדות גמילה מסמים ועוד.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 550,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 550+; טווח המתנה 520–549 (לדיון בוועדת הקבלה)",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 550,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/law/program/3004 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/law/program/3004 — תנאי הקבלה החוגיים תשפ\"ז: קרימינולוגיה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-45",
@@ -25289,23 +26090,73 @@
         "fieldOfStudy": "ריפוי בעיסוק",
         "degreeLevel": "B.O.T",
         "description": "לימודי ריפוי בעיסוק לתואר ראשון נמשכים מעל לשלוש שנים, אשר במהלכם עוברים הסטודנטים הכשרה מעשית רבה ופרקטיקום בבתי חולים ובמקומות בהם נדרש מקצוע שיקומי זה. לאחר סיום הלימודים, עוברים הלומדים בחינה ממשלתית אשר מקנה לעוברים רשיון לעסוק במקצוע ותעודה מטעם משרד הבריאות.",
-        "admissionThreshold": 650,
+        "admissionThreshold": 610,
         "psychometricScore": 650,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 610,
+        "mathRequirement": null,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 610+; טווח המתנה 595–609 (לדיון בוועדת הקבלה)",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3088 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3088 — תנאי הקבלה החוגיים תשפ\"ז: ריפוי בעיסוק",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-39",
         "fieldOfStudy": "שירותי אנוש",
         "degreeLevel": "B.A",
         "description": "בשנים האחרונות התפתחה תודעת שירות גבוהה, ותחום הסיוע לצרכנים עומד במקום הראשון בסדר העדיפויות של הארגונים הללו. שירותי האנוש אינם קשורים לנושא כוח האדם בארגון, אלא מתמקדים בשירותים הניתנים לבני האנוש השונים, ללקוחות.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 540,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 540+; טווח המתנה 520–539 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 540,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3064 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3064 — תנאי הקבלה החוגיים תשפ\"ז: שירותי אנוש",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-40",
@@ -25314,58 +26165,100 @@
         "description": "בספרות אנגלית תכירו לעומק פרקים מייצגים של הספרות והתרבות האנגלופונית; ותפתחו יכולת חשיבה אנליטית והרגלי למידה עצמאיים של מגוון טקסטים, תוך היכרות עם גישות תיאורטיות ומתודולוגיות שונות. כאן גם תשכללו את השליטה שלכם בשפה האנגלית, כך שתוכלו להשתמש בה לכל מטרה שתרצו.",
         "admissionThreshold": 600,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 600+; טווח המתנה 570–599 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; בחינת כניסה חוגית בכתב",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 600,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3770 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3770 — תנאי הקבלה החוגיים תשפ\"ז: שפה וספרות אנגלית",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-41",
         "fieldOfStudy": "שפה וספרות ערבית",
         "degreeLevel": "B.A",
         "description": "אין",
-        "admissionThreshold": 600,
+        "admissionThreshold": 540,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 540+; טווח המתנה 500–539 (לדיון בוועדת הקבלה); בגרות בערבית 3 יח”ל בציון 80 ו/או מועמדים בעלי תעודת בגרות מלאה אשר סיימו בהצלחה קורסים ממושכים בשפה הערבית, אשר הוכרו על ידי ראש החוג.",
         "requiresPsychometric": false,
-        "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutEligible": false,
+        "directBagrutMinAverage": null,
+        "officialThreshold": 540,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3087 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3087 — תנאי הקבלה החוגיים תשפ\"ז: שפה וספרות ערבית",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-42",
         "fieldOfStudy": "תולדות האמנות",
         "degreeLevel": "B.A",
         "description": "הלימודים לתואר ראשון בתולדות האומנות מקנים לסטודנטים ידיעות בתחום ההיסטוריה והפילוסופיה של האמנות מהתקופה הפרה-היסטורית ועד ימינו. תוכניות הלימוד כוללות מגוון שיטות מחקר המאפשרות לנתח ולפרש יצירות אמנות שונות בהקשרים היסטוריים ותרבותיים נרחבים.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 470–499 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 100+; ישנה תוכנית דו-שנתית אליה ניתן להתקבל רק באישור ראש החוג ורק עם רמת אנגלית בסיסי + ציון 120 ומעלה במבחן יעלנט; קבלה למסלול חד-חוגי : באישור ראש החוג",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3102 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3102 — תנאי הקבלה החוגיים תשפ\"ז: תולדות האומנות",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-43",
         "fieldOfStudy": "תיאטרון",
         "degreeLevel": "B.A",
         "description": "תואר בתיאטרון הינו תואר משולב אשר במסגרתו תוכלו ללמוד באחת משתי בהתמחויות: תיאטרון חינוכי-קהילתי המתייחסת לאספקטים חינוכיים קהילתיים של התיאטרון או משחק לתיאטרון וקולנוע המכינה את הסטודנט לעבודה מקצועית במשחק בתיאטרון ומול מצלמה. לצד ההתמחות תזכו למסע מעמיק אל האספקטים מהעולם התיאטרלי והשתתפות במגוו",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 500+; טווח המתנה 475–499 (לדיון בוועדת הקבלה); ראיון קבלה",
         "requiresPsychometric": false,
-        "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutEligible": false,
+        "directBagrutMinAverage": null,
+        "officialThreshold": 500,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3211 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3211 — תנאי הקבלה החוגיים תשפ\"ז: לימודי תיאטרון ופרפורמנס",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-44",
         "fieldOfStudy": "תקשורת",
         "degreeLevel": "B.A",
         "description": "בוגר לימודי תקשורת יכול להשתלב בעבודה במספר תחומים: כאיש טלוויזיה, כאיש רדיו, כעיתונאי, כדובר, כאיש פרסום או יחסי ציבור, כקופירייטר, כאיש מדיה דיגיטלית, כעורך תוכן או כמורה לתקשורת בתיכון. חלק מן המקצועות האלו דורשים למידה נוספת: למשל קורס קופירייטינג או לימודים לתעודת הוראה. כל המקצועות המוזכרים לע",
-        "admissionThreshold": 600,
+        "admissionThreshold": 550,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 550+; טווח המתנה 500–549 (לדיון בוועדת הקבלה); ניתן להתקבל למסלול דו-חוגי בשנתיים רק עם רמת אנגלית בסיסי + ציון 120 ומעלה במבחן יעלנט",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 550,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3229 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3229 — תנאי הקבלה החוגיים תשפ\"ז: תקשורת",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-51",
@@ -25406,20 +26299,65 @@
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "comments": "תואר ראשון משולב במדעי הקוגניציה ופסיכולוגיה"
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 680+; טווח המתנה 670–679 (לדיון בוועדת הקבלה)",
+        "officialThreshold": 680,
+        "mathRequirement": "ציון 85 ומעלה ברמת 4 יח”ל או ציון 75 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/5381 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5381 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה ומדעי הקוגניציה",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-54",
         "fieldOfStudy": "פסיכוביולוגיה",
         "degreeLevel": "B.Sc",
         "description": "תואר ראשון בפסיכוביולוגיה (מסלול משולב פסיכולוגיה ומדעי החיים)",
-        "admissionThreshold": 670,
+        "admissionThreshold": 650,
         "psychometricScore": 670,
-        "sekemScore": 670,
+        "sekemScore": 650,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "comments": "תואר ראשון בפסיכוביולוגיה (מסלול משולב פסיכולוגיה ומדעי החיים)"
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 650+; טווח המתנה 630–649 (לדיון בוועדת הקבלה)",
+        "officialThreshold": 650,
+        "mathRequirement": null,
+        "admissionRoutes": {
+          "requirements": [],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3279 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3279 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה וביולוגיה עם ספח התמחות במדעי המוח",
+        "thresholdUpdatedAt": "2026-10-04"
       },
       {
         "id": "prog-inst-5-55",
@@ -25440,13 +26378,66 @@
         "fieldOfStudy": "ניהול ומנהל עסקים",
         "degreeLevel": "B.A",
         "description": "תואר ראשון בניהול ומנהל עסקים בביה\"ס למנהל עסקים",
-        "admissionThreshold": 600,
+        "admissionThreshold": 630,
         "psychometricScore": 600,
-        "sekemScore": 600,
+        "sekemScore": 630,
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100,
-        "comments": "תואר ראשון בניהול ומנהל עסקים"
+        "directBagrutMinAverage": 105,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת חיפה): סכם 630+; טווח המתנה 600–629 (לדיון בוועדת הקבלה); קבלה ללא פסיכומטרי: ממוצע בגרות 105+",
+        "officialThreshold": 630,
+        "mathRequirement": "ציון 80 ומעלה ברמת 4 יח”ל או ציון 70 ומעלה ברמת 5 יח”ל",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/2501 — תנאי הקבלה החוגיים (2026-10-04)"
+        },
+        "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2501 — תנאי הקבלה החוגיים תשפ\"ז: ניהול",
+        "thresholdUpdatedAt": "2026-10-04"
       }
     ]
   },
