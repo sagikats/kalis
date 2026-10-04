@@ -124,6 +124,9 @@ function describeSekemType(calcId: string, type: string): string {
 		return 'בן-גוריון: סכם';
 	}
 	if (calcId === 'reichman') return 'רייכמן: ציון מתואם';
+	if (calcId === 'ariel') {
+		return type === 'engineering' ? 'אריאל: ציון קבלה משולב (רב-תחומי/כמותי, הגבוה)' : 'אריאל: ציון קבלה משולב';
+	}
 	if (type === 'quantitative') return 'סכם כמותי';
 	if (type === 'management') return 'סכם ניהול';
 	return type === 'engineering' ? 'סכם כמותי / הנדסה' : 'סכם כללי';

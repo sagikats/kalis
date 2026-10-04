@@ -1,7 +1,9 @@
 /**
  * Pure Ariel University (אוניברסיטת אריאל בשומרון) Admission Calculator
- * Official Formula: Combined_Score = ((Bagrut_Average * 6.666) + Psychometric) / 2
- * ⚠️ NOT VERIFIED against an official source — bonus table, mandatory subjects and sekem formula are estimates.
+ * Combined score ("ציון קבלה משולב") = [(bagrut average × 6.666) + psychometric] / 2 — verified on every department's
+ * admission page (ariel.ac.il, תשפ"ז; snapshot src/data/sources/ariel-admission-pages-2026-10-05.json). Most departments
+ * take the higher of the general and quantitative-weighted psychometric scores.
+ * ⚠️ The bonus table and the mandatory subjects are still NOT VERIFIED against an official source.
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -102,7 +104,8 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
 	const generalSekem = calculateArielSekem(optimal.average, psych);
-	const engineeringSekem = calculateArielSekem(optimal.average, quant);
+	// "יש להתייחס לציון הפסיכומטרי בשקלול הכמותי/רב תחומי — הגבוה מבין השניים"
+	const engineeringSekem = Math.max(generalSekem, calculateArielSekem(optimal.average, quant));
 
 	const directBagrutEligible = optimal.average >= 100;
 
@@ -115,8 +118,8 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 		engineeringSekem,
 		directBagrutEligible,
 		notes: directBagrutEligible
-			? ['החישוב לאריאל הוא הערכה — הנוסחה טרם אומתה מול מקור רשמי של המוסד.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
-			: ['החישוב לאריאל הוא הערכה — הנוסחה טרם אומתה מול מקור רשמי של המוסד.'],
+			? ['נוסחת הציון המשולב של אריאל אומתה; טבלת הבונוסים בממוצע הבגרות עדיין הערכה.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
+			: ['נוסחת הציון המשולב של אריאל אומתה; טבלת הבונוסים בממוצע הבגרות עדיין הערכה.'],
 		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
 		subjectBreakdown: optimal.breakdown,
 		bagrutCap: optimal.cap

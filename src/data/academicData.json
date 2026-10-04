@@ -32359,227 +32359,1887 @@
         "fieldOfStudy": "ארכיאולוגיה",
         "degreeLevel": "B.A",
         "description": "הארכיאולוגיה חוקרת את התרבויות הקדומות שהתקיימו בארץ ובעולם באמצעות התרבות החומרית שבני אדם השאירו אחריהם (מבנים לסוגיהם וחפצים). אין באפשרותנו לשוחח עם נושאי מחקרנו ולכן אנחנו מנסים \"לדובב\" את המבנים והחפצים שקדמונינו השאירו מאחריהם. זו במידה רבה עבודת בילוש שאוספת נתונים בשטח, מעבדת אותם ומנסה לשח",
-        "admissionThreshold": 600,
+        "admissionThreshold": 530,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 530+; בגרות בלבד 85+; ועדת חריגים: בגרות 80–85 או משולב 500–530",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 85,
+        "officialThreshold": 530,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/archaeology/תנאי-קבלה-לחוג-להסטוריה-ארץ-ישראל-ארכי/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/archaeology/תנאי-קבלה-לחוג-להסטוריה-ארץ-ישראל-ארכי/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-2",
         "fieldOfStudy": "ארכיטקטורה",
         "degreeLevel": "B.Arch",
         "description": "בוגרי המסלול לארכיטקטורה עוסקים בתכנון וביצוע של תוכניות מתאר של יישובים | תכנון ושיקום שכונות מגורים | תכנון ועיצוב בניינים שונים | עיצוב מוצרי בניין ואביזרי בניין | תכנון פנים וריהוט. עבודתם נעשית במשרדי הממשלה, רשויות מקומיות, משרדים פרטיים כעצמאיים או כשכירים, חברות בנייה,חברות קבלניות שונות. חל",
-        "admissionThreshold": 580,
+        "admissionThreshold": 573,
         "psychometricScore": 580,
-        "comments": "נדרש מבחן מיון פנימי בארכיטקטורה",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 573+; בגרות בלבד 95+; אין קבלה אוטומטית: מבחני מיון (עבודת בית) וראיון אישי לכל מועמד",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 95,
+        "officialThreshold": 573,
+        "relevantSekemType": "general",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 95,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/architecture/תנאי-קבלה-בארכיטקטורה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/architecture/תנאי-קבלה-בארכיטקטורה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-3",
         "fieldOfStudy": "ביולוגיה מולקולרית",
         "degreeLevel": "B.Sc",
         "description": "תכנית הלימודים בביולוגיה מקנה לסטודנטים ידע עיוני ומעשי נרחב בתחום הביולוגיה העוסק בשאלה כיצד נוצר גוף שלם מתא אחד בודד ואלו תהליכים התפתחותיים גורמים להפרעות מולדות שונות. כמו כן, ניתנים דגשים למקצועות רלוונטיים לעולם הרפואה כגון: ביולוגיה התפתחותית, נוירו-ביולוגיה, ייעוץ גנטי, פיזיולוגיה, ביו-כימי",
-        "admissionThreshold": 600,
+        "admissionThreshold": 617,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 617+ (פסיכומטרי 550+); 9 יח\"ל ריאליות (4 מתמטיקה + 5 מקצוע ריאלי) בממוצע 75; בגרות בלבד 100 — באישור ועדת הקבלה; משולב 590–617: דיון לקבלה לסמסטר",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 617,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/bio/תנאי-קבלה-בביולוגיה-מולקולרית/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/bio/תנאי-קבלה-בביולוגיה-מולקולרית/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-4",
         "fieldOfStudy": "היסטוריה של עם ישראל בעת החדשה",
         "degreeLevel": "B.A",
         "description": "תולדות ישראל במאות התשע-עשרה והעשרים משמשות נושא למחקר היסטורי רב-תחומי וחדשני מצד אחד, ומצד שני הן מעצבות את הזיכרון הקיבוצי ומהוות ציר לדיון הציבורי בישראל.  ככאלו הן גם נושא מרכזי בלימודי ההיסטוריה ובפעילות החינוכית במערכת החינוך.\nבמוקד תכנית המ.א. בתולדות ישראל בעת החדשה עומדים התהליכים המרכזיים",
-        "admissionThreshold": 600,
+        "admissionThreshold": 530,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 530+; בגרות בלבד 85+; ועדת חריגים: בגרות 80–85 או משולב 500–530",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 85,
+        "officialThreshold": 530,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/archaeology/תנאי-קבלה-לחוג-להסטוריה-ארץ-ישראל-ארכי/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/archaeology/תנאי-קבלה-לחוג-להסטוריה-ארץ-ישראל-ארכי/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-5",
         "fieldOfStudy": "הנדסה אזרחית",
         "degreeLevel": "B.Sc",
         "description": "ההנדסה האזרחית עוסקת בתכנון, בהקמה ובתפעול של מבנים ומערכות לצורכי התעשייה, הציבור והפרט. המושג הנדסה אזרחית בא לאפיין פעולות של תכנון, פיתוח וייצור הבאות לענות על צרכים יומיומיים של הציבור במדינה, להבדיל מתחום הפיתוח הצבאי. מדובר בענף רחב שבו פועלים מהנדסי כבישים ותשתיות, מהנדסי בניין, מהנדסי מים ו",
-        "admissionThreshold": 600,
+        "admissionThreshold": 650,
         "psychometricScore": 600,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 650,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/ce/תנאי-הקבלה-בהנדסה-אזרחית/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 550+); מקומות מוגבלים; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 600 / בגרות 105; סכם הנדסי 660 (נוסחה נפרדת, לא מחושב כאן)",
+        "thresholdSource": "https://www.ariel.ac.il/wp/ce/תנאי-הקבלה-בהנדסה-אזרחית/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-6",
         "fieldOfStudy": "הנדסה כימית",
         "degreeLevel": "B.Sc",
         "description": "הנדסה כימית או הנדסת כימיה היא ענף בהנדסה העושה יצור ראשוני ובחינת היתכנות ועד לתפעול ושדרוג מתקני ענק בתעשייה הגדולה. מהנדסי כימיה ממלאים מגוון רחב של תפקידים: פיתוח ראשוני משלב הרעיון, הקמת מערכי ייצור \"בינוניים\" ללימוד בעיות תפעוליות וניהול מערכי ייצור מלאים בתעשייה התהליכית. המקצוע הוא רב-תחומי ",
-        "admissionThreshold": 580,
+        "admissionThreshold": 600,
         "psychometricScore": 580,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 600,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/ceb/תנאי-הקבלה-בהנדסה-כימית/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 600+ (פסיכומטרי 550+); בגרות בלבד 100+; 8 יח\"ל ריאליות; חסרי פיזיקה/כימיה 5 יח\"ל 70+ — מכינה או קורסי מבוא; על תנאי לשנה: משולב 570 / בגרות 95",
+        "thresholdSource": "https://www.ariel.ac.il/wp/ceb/תנאי-הקבלה-בהנדסה-כימית/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-7",
         "fieldOfStudy": "הנדסת חשמל ואלקטרוניקה",
         "degreeLevel": "B.Sc",
         "description": "מטרת החוג היא הקניית רקע טכנולוגי ומדעי מעמיק, שמאפשר לבוגרים להתמודד עם מחקר ופיתוח בעולם הטכנולוגי המשתנה, ולעמוד בראש פרוייקטים מתקדמים בתעשיות ההיי-טק והמחשבים. מדעי המחשב והדיגיטיזציה משתלטים על תחומים רבים, אבל העולם בחוץ הוא עדיין פיזיקלי, אנאלוגי ורציף. בנוסף, ההנדסה הקלאסית עוברת מהפיכה וחל",
-        "admissionThreshold": 620,
+        "admissionThreshold": 640,
         "psychometricScore": 620,
         "mathRequirement": "4 יחידות בציון 88+ / 5 יחידות 75+",
         "sekemScore": 630,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 106,
+        "officialThreshold": 640,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 106,
+          "psychometricOnlyMin": 680,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 88
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 78
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 88
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 78
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-130",
+              "title": "חשיבה כמותית 130+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/ee/תנאי-הקבלה-בהנדסת-חשמל-ואלקטרוניקה/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 550+); בגרות בלבד 106+; פסיכומטרי בלבד 680+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97; סכם הנדסי 680 (נוסחה נפרדת, לא מחושב כאן)",
+        "thresholdSource": "https://www.ariel.ac.il/wp/ee/תנאי-הקבלה-בהנדסת-חשמל-ואלקטרוניקה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-8",
         "fieldOfStudy": "הנדסת מכונות ומכטרוניקה",
         "degreeLevel": "B.Sc",
         "description": "תחום הנדסת המכונות עוסק בפיתוח ואחזקה של מערכות מכניות ומשלב כמעט את כל ענפי התעשייה עתירת הידע. עם התפתחות הטכנולוגיה, תחומי הידע במקצוע התרחבו והמהנדס נדרש להעמקה, להתמחות ולהרחבת הידע בתחום הפעילות שבו הוא עוסק. תכנית הלימודים נבנתה בהתאמה לכך ומאפשרת התמקצעות בתחומי ידע בעלי פוטנציאל צמיחה משמעו",
-        "admissionThreshold": 610,
+        "admissionThreshold": 620,
         "psychometricScore": 610,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 102,
+        "officialThreshold": 620,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 102,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97; סכם הנדסי 600 (נוסחה נפרדת, לא מחושב כאן)",
+        "thresholdSource": "https://www.ariel.ac.il/wp/me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-9",
         "fieldOfStudy": "הנדסת תעשייה וניהול",
         "degreeLevel": "B.Sc",
         "description": "הנדסת תעשייה וניהול היא תחום הנדסי אשר עוסק בתורות מעולם התעשייה והניהול. התפתחותה של הנדסת התעשייה והניהול וגיבושה למקשה אחת נוצרו בד בבד עם תהליך המודרניזציה שהחל בעקבות המהפכה התעשייתית. הצורך במציאת פתרונות לבעיות אשר צצו בארגונים יצר פיתוח שיטות מחקר חדשות, אשר שמו להן למטרה להגביר את קצב התפוק",
-        "admissionThreshold": 600,
+        "admissionThreshold": 620,
         "psychometricScore": 600,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 102,
+        "officialThreshold": 620,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 102,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
+        "thresholdSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-10",
         "fieldOfStudy": "הפרעות בתקשורת",
         "degreeLevel": "B.A",
         "description": "התקשורת הבין-אישית היא הבסיס הראשוני ביותר של החברה האנושית. בני אדם מעבירים זה לזה רעיונות, רגשות ומחשבות, מהפשוטים ביותר ועד המורכבים ביותר, בעזרת המילים. ואולם השפה היא מנגנון עדין: משמעות רבה כל כך טמונה בכל צליל, וכל שגיאה ושינוי בהטיה, בהדגשה ובהגייה עלול לשנות את משמעות המסר כולו, ולערער את י",
-        "admissionThreshold": 640,
+        "admissionThreshold": 630,
         "psychometricScore": 640,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 630,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 590,
+        "admissionRoutes": {
+          "minPsychometric": 590,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה 4 יח\"ל 80+",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה ברמה הנדרשת"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה ברמה הנדרשת"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/cod/תנאי-הקבלה-במחלקה-להפרעות-בתקשורת/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 630+ (פסיכומטרי 590+); ממוצע בגרות מינימלי לחישוב המשולב: 90; או: בגרות 93+ ופסיכומטרי 620+; מבדק התאמה וראיון אישי; ההרשמה לתשפ\"ז נסגרה",
+        "thresholdSource": "https://www.ariel.ac.il/wp/cod/תנאי-הקבלה-במחלקה-להפרעות-בתקשורת/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-11",
         "fieldOfStudy": "חינוך",
         "degreeLevel": "B.A",
         "description": "התואר מעניק לבוגריו ידע נרחב בהליכים ובשינויים שחלו במערכת החינוך בארץ ובעולם, ומציג מגוון גישות פסיכולוגיות, פילוסופיות וחברתיות המהוות תשתית חינוכית. התכנית מציגה דילמות חינוכיות, היבטים מקצועיים ואתיים בעבודת הצוות החינוכי, בדרכי התמודדות ברמת הפרט, הכיתה ובית הספר, ומתבססת על מחקר חינוכי, פסיכול",
-        "admissionThreshold": 600,
+        "admissionThreshold": 550,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 550+; בגרות בלבד 85+; קבלה לסמסטר: משולב 540–550",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 85,
+        "officialThreshold": 550,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/edu/edu-admission/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/edu/edu-admission/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-12",
         "fieldOfStudy": "חשבונאות",
         "degreeLevel": "B.A",
         "description": "מטרת לימודי חשבונאות בחוג היא להכשיר אתכם לתפקידים מרכזיים בתחום החשבות וראיית החשבון במשק הישראלי, וכן למחקר בתחום החשבונאות. כאן תקבלו רקע דיסציפלינרי וכלים מקצועיים בחמישה תחומים עיקריים: חשבונאות, ביקורת חשבונות, מדעי הניהול, חוק ומשפט ומסים. תוכלו לבחור בין כמה מסלולים: מסלול דו–חוגי בצירוף חוג",
-        "admissionThreshold": 630,
+        "admissionThreshold": 610,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 610+; בגרות בלבד 100+; פסיכומטרי בלבד 630+; קבלה אחרי ראיון: בגרות 94 / משולב 580 / פסיכומטרי 600; נפתח בסמסטר אוקטובר בלבד",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 610,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "psychometricOnlyMin": 630,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 80+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 80+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/accounting/תנאי-קבלה-בחשבונאות-וכלכלה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/accounting/תנאי-קבלה-בחשבונאות-וכלכלה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-13",
         "fieldOfStudy": "כלכלה",
         "degreeLevel": "B.A",
         "description": "עבודת הכלכלן כרוכה בדרך כלל בקריאה וניתוח של דו”חות פיננסים ובהכנת דו”חות שכאלו. הדבר מתבצע תוך שימוש בתוכנת אקסל. חלק מן הכלכלנים עובדים בעיקר מול המחשב ואילו אחרים עובדים מול לקוחות, בתפקידי שירות או שיווק. בארגונים גדולים ובמשרדי ממשלה הכלכלן עובד כחלק מצוות. כלכלנים בעלי יכולת ניהול יכולים להתקד",
-        "admissionThreshold": 630,
+        "admissionThreshold": 580,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 92+; קבלה לסמסטר: בגרות 85–92 או משולב 560–580",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 92,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 92,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/economics/economics-d-admission/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/economics/economics-d-admission/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-14",
         "fieldOfStudy": "כלכלה ומנהל עסקים",
         "degreeLevel": "B.A",
         "description": "מנהל עסקים נחשב לאחד מתחומי האקדמיה המבוקשים ביותר. מנהל עסקים , שייך לתחום מדעי החברה ועוסק בתורות ניהול שונות הפועלות לשיפור התפקוד ולמקסום רווחי הארגון. העולם העסקי המודרני , המתאפיין בתנודות חדות, מחייב את המנהלים הפועלים בו להפגין בקיאות ושליטה מלאה במגוון רחב של דיסציפלינות המרכיבות את המערכת ",
-        "admissionThreshold": 630,
+        "admissionThreshold": 580,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 92+; פסיכומטרי בלבד 600+; קבלה לסמסטר: בגרות 85+ או משולב 560–580",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 92,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 92,
+          "psychometricOnlyMin": 600,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-33",
         "fieldOfStudy": "כלכלה וניהול",
         "degreeLevel": "B.A",
         "description": "לא כתוב על התואר דו חוגי ואף לא בגיליון הציונים לכן הוחלט להקביל את התואר בכלכלה ובקירוב גם מנהל עסקים (נספרו כ 52 נ\"ז במנע\"ס)",
-        "admissionThreshold": 630,
+        "admissionThreshold": 580,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 92+; פסיכומטרי בלבד 600+; קבלה לסמסטר: בגרות 85+ או משולב 560–580",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 92,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 92,
+          "psychometricOnlyMin": 600,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-15",
         "fieldOfStudy": "לימודי ארץ ישראל",
         "degreeLevel": "B.A",
         "description": "המוטו ארוך השנים של המחלקה – \"עם הפנים לשטח\" – מבטא היטב את ייחודה בנוף האקדמי הישראלי: לימודים עיוניים ברמה הגבוהה ביותר, המחוברים לשטח, שואבים ממנו תובנות חדשות, ומגוונים באמצעותו את חוויית הלמידה. כך הופכים הלימודים במחלקה לשילוב נדיר שבין הכרת הארץ, אוכלוסייתה ונופיה העכשוויים, לבין הרקע ההיסטור",
-        "admissionThreshold": 600,
+        "admissionThreshold": 530,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 530+; בגרות בלבד 85+; ועדת חריגים: בגרות 80–85 או משולב 500–530",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 85,
+        "officialThreshold": 530,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/archaeology/תנאי-קבלה-לחוג-להסטוריה-ארץ-ישראל-ארכי/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/archaeology/תנאי-קבלה-לחוג-להסטוריה-ארץ-ישראל-ארכי/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-16",
         "fieldOfStudy": "לימודי המזרח התיכון",
         "degreeLevel": "B.A",
         "description": "המחלקה ללימודי המזרח התיכון עוסקת במחקר והוראה בתחום ההיסטוריה הפוליטית, החברתית והכלכלית של האזורים הערביים והמוסלמיים של המזרח התיכון, החל מהופעת האסלאם במאה השביעית ועד לימינו.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 500+; בגרות בלבד 85+; קבלה ללא סיווג רמה באנגלית — על תנאי; ראיון אישי: בגרות 80–85",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 85,
+        "officialThreshold": 500,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/middle-east/תנאי-הקבלה-לימודי-המזרח-התיכון-ומדעי-ה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/middle-east/תנאי-הקבלה-לימודי-המזרח-התיכון-ומדעי-ה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-17",
         "fieldOfStudy": "לימודי קדם רפואה",
         "degreeLevel": "B.Sc",
         "description": "לימודי קדם רפואה כוללים הקניית ידע רב ומעמיק במדעי היסוד, כגון כימיה, ביו־כימיה, ביולוגיה מולקולרית, גנטיקה, ביו אינפורמטיקה ופיזיקה. כמו כן, לימוד ותרגול של הכלים הנדרשים למחקר מדעי בכלל ולמחקר רפואי בפרט, ובהם מקצועות כגון פיזיולוגיה, אנטומיה, פתולוגיה, היסטולוגיה, פרמקולוגיה, דימות ועוד. חלק בלתי",
-        "admissionThreshold": 740,
+        "admissionThreshold": 640,
         "psychometricScore": 740,
-        "comments": "תנאי קבלה לרפואה באוניברסיטה: סכם 740+ / פסיכומטרי 740+ + מבחני מו\"ר/מרק\"ם",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 610+); הקבלה בשיקול ועדת הקבלה, מספר מקומות מוגבל; קורס \"מבוא לכימיה\" לפני הלימודים",
         "additionalConditions": "מעבר מבחני מו\"ר/מרק\"ם וראיון קבלה קליני",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 610,
+        "admissionRoutes": {
+          "minPsychometric": 610,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/bio/תנאי-הקבלה-לקדם-רפואה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/bio/תנאי-הקבלה-לקדם-רפואה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-18",
         "fieldOfStudy": "מדעי הכימיה",
         "degreeLevel": "B.Sc",
         "description": "כימיה[1] (מיוונית: Χημια) היא ענף במדעי הטבע העוסק בהרכב החומר, מבנהו, תכונותיו והשינויים החלים בו במהלך אינטראקציה עם חומר אחר[2][3]. ניתן לכנות את הכימיה כ\"מדע מרכזי\", כיוון שהיא מספקת את העקרונות הבסיסיים העומדים מאחורי תחומי ידע אחרים במדעי הטבע[4], כגון אסטרונומיה, הנדסת חומרים, ביולוגיה וגאולו",
-        "admissionThreshold": 600,
+        "admissionThreshold": 580,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+ (פסיכומטרי 550+); בגרות בלבד 93+; 9 יח\"ל ריאליות (מתוכן 4 מתמטיקה); חסרי פיזיקה/כימיה — קורסי מבוא",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 93,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 93,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/chemistry/תנאי-הקבלה-במדעי-הכימיה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/chemistry/תנאי-הקבלה-במדעי-הכימיה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-19",
@@ -32598,207 +34258,1689 @@
         "fieldOfStudy": "מדעי המחשב",
         "degreeLevel": "B.Sc",
         "description": "הלימודים המשולבים מציעים לסטודנטים לרכוש ידע איכותי ומודרני שיאפשר להם להשתלב בהמשך במחקר בסיסי או במחקר ופיתוח יישומיים המשלבים כלים וידע משני התחומים כגון זיהוי מטרות תרופתיות ותכנון תרופות. הביקוש למומחים בשני העולמות הולך וגובר, ובוגרי התכנית יזכו ליתרון משמעותי בהמשך דרכם המקצועית.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 650,
         "psychometricScore": 600,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 107,
+        "officialThreshold": 650,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 600,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107,
+          "psychometricOnlyMin": 680,
+          "minPsychometric": 600,
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "מדעי המחשב",
+                  "הנדסת תוכנה",
+                  "מדעי הנתונים",
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              }
+            ],
+            "summary": "ציון 85+ ב-5 יח\"ל במתמטיקה, באנגלית ובמגמה ריאלית (מדעי המחשב / הנדסת תוכנה / מדעי הנתונים / פיזיקה)"
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-130",
+              "title": "חשיבה כמותית 130+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/cs/תנאי-הקבלה-במדעי-המחשב/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 600+); בגרות בלבד 107+; פסיכומטרי בלבד 680+; אין קבלה אוטומטית: המועמדים מדורגים בוועדת הקבלה, על בסיס מקום פנוי; קבלה על תנאי לשנה: משולב 630 / בגרות 104 / פסיכומטרי 640",
+        "thresholdSource": "https://www.ariel.ac.il/wp/cs/תנאי-הקבלה-במדעי-המחשב/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-ariel-8",
         "fieldOfStudy": "מדעי הרפואה (Pre-Med)",
         "degreeLevel": "תואר ראשון",
-        "admissionThreshold": 650,
+        "admissionThreshold": 640,
         "psychometricScore": 650,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 640,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 610,
+        "admissionRoutes": {
+          "minPsychometric": 610,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/bio/תנאי-הקבלה-לקדם-רפואה/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 610+); הקבלה בשיקול ועדת הקבלה, מספר מקומות מוגבל; קורס \"מבוא לכימיה\" לפני הלימודים",
+        "thresholdSource": "https://www.ariel.ac.il/wp/bio/תנאי-הקבלה-לקדם-רפואה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-21",
         "fieldOfStudy": "מדעי התזונה",
         "degreeLevel": "B.Sc",
         "description": "תחום מדעי התזונה משפיע באמצעות המזון שאנו צורכים על בריאותנו. תכנית הלימודים במדעי התזונה מכינה את הסטודנטים לסטאז', למבחן הארצי ולקריירה בתזונה קלינית. הלימודים כוללים קורסים במדעי החיים לצד קורסים בתחומי התזונה השונים.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 620,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+; בגרות בלבד 100+; 9 יח\"ל ריאליות; או: פסיכומטרי 580+ ובגרות 90+; אין קבלה אוטומטית: קורות חיים, ראיון במידת הצורך; רשימת המתנה",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 100,
+        "officialThreshold": 620,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 100,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה 4 יח\"ל 75+",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי 5 יח\"ל",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "ביולוגיה",
+                        "כימיה",
+                        "פיזיקה",
+                        "ביוטכנולוגיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/nutrition/תנאי-הקבלה-במדעי-התזונה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/nutrition/תנאי-הקבלה-במדעי-התזונה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-22",
         "fieldOfStudy": "מתמטיקה",
         "degreeLevel": "B.Sc",
         "description": "מתמטיקה היא שפה אוניברסלית המכתיבה שיח עקבי והגיוני. ככזאת, היא משמשת כשפתם של כל המדעים  ובפרט היא הבסיס עליו נבנים כל המדעים המדויקים (פיזיקה, כימיה, מדעי כדור הארץ, מדעי המחשב וכו)  וההנדסה על כל סוגיה וגווניה. בנוסף כיום חלקים גדלים והולכים בדיסציפלינות אחרות כמו מדעי החיים ומדעי החברה משתמשים ב",
-        "admissionThreshold": 600,
+        "admissionThreshold": 570,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 570+; בגרות בלבד 92+; פסיכומטרי 600+ וכמותי 120+ פוטרים ממכינת ההשלמה במתמטיקה (לא לבעלי 3 יח\"ל)",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 92,
+        "officialThreshold": 570,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 92,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/math/תנאי-קבלה-במתמטיקה-תשפה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/math/תנאי-קבלה-במתמטיקה-תשפה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-34",
         "fieldOfStudy": "ניהול וכלכלה",
         "degreeLevel": "B.A",
         "description": "כלכלה 60 נ\"ז מנהל עסקים 60 נ\"ז",
-        "admissionThreshold": 630,
+        "admissionThreshold": 580,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 92+; פסיכומטרי בלבד 600+; קבלה לסמסטר: בגרות 85+ או משולב 560–580",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 92,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 92,
+          "psychometricOnlyMin": 600,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-ariel-13",
         "fieldOfStudy": "ניהול ומנהל עסקים",
         "degreeLevel": "תואר ראשון",
-        "admissionThreshold": 570,
+        "admissionThreshold": 580,
         "psychometricScore": 570,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 92,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 92,
+          "psychometricOnlyMin": 600,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 92+; פסיכומטרי בלבד 600+; קבלה לסמסטר: בגרות 85+ או משולב 560–580",
+        "thresholdSource": "https://www.ariel.ac.il/wp/economics/תנאי-קבלה-בכלכלה-ומנהל-עסקים/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-23",
         "fieldOfStudy": "ניהול מערכות בריאות",
         "degreeLevel": "B.A",
         "description": "עבור סטודנטים שאינם בעלי מקצוע בתחומי הבריאות תהווה התכנית ללימודי ניהול מערכות בריאות כרטיס כניסה מצוין לארגוני הבריאות, המציעים מגוון גדול של תפקידי ניהול ואפשרויות קידום מקצועי. עבור העובדים בתחומי הבריאות: עובדי מנהל ומשק, אחים ואחיות, מרפאים בעיסוק, אנשי דימות ורנטגנאות, רשמים רפואיים, עובדי מע",
-        "admissionThreshold": 630,
+        "admissionThreshold": 543,
         "psychometricScore": 630,
-        "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 543+; בגרות בלבד 90+; על תנאי: בגרות 85–90",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 90,
+        "officialThreshold": 543,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 90,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/healthmanagement/תנאי-הקבלה-בניהול-מערכות-בריאות-תשף/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/healthmanagement/תנאי-הקבלה-בניהול-מערכות-בריאות-תשף/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-24",
         "fieldOfStudy": "סוציולוגיה ואנתרופולוגיה",
         "degreeLevel": "B.A",
         "description": "לימודי סוציולוגיה ואנתרופולוגיה הם המיקרוסקופ שיאפשר לכם לגלות חלקים רבים של החברה הישראלית ולחשוב על המשמעות העמוקה של חיים בחברה ובתרבות.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 517,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 517+; בגרות בלבד 85+; קבלה לסמסטר: משולב 550–560",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 85,
+        "officialThreshold": 517,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 85,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/social-anthropology/social-anthropology-admission/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/social-anthropology/social-anthropology-admission/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-ariel-9",
         "fieldOfStudy": "סיעוד",
         "degreeLevel": "תואר ראשון",
-        "admissionThreshold": 560,
+        "admissionThreshold": 570,
         "psychometricScore": 560,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 570,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 500,
+        "admissionRoutes": {
+          "minPsychometric": 500,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/nursing/תנאי-הקבלה-ללימודי-סיעוד/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 570+ (פסיכומטרי 500+); ממוצע בגרות מינימלי לחישוב המשולב: 85; או: בגרות 88+ ופסיכומטרי 550+; ראיון אישי לכל מועמד; אין קבלה אוטומטית",
+        "thresholdSource": "https://www.ariel.ac.il/wp/nursing/תנאי-הקבלה-ללימודי-סיעוד/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-25",
         "fieldOfStudy": "עבודה סוציאלית",
         "degreeLevel": "B.S.W.",
         "description": "עבודה סוציאלית מהווה חלק נכבד בפעילות למען רווחת הציבור והעוסקים במקצוע זה משתלבים בתפקידי מפתח במערכות החינוך הרווחה. כמו כן, התואר מעניק כלים לעשייה בקרב קהילות קשות יום, התמודדות עם מוות וסיוע לילדים נזקקים.",
-        "admissionThreshold": 640,
+        "admissionThreshold": 600,
         "psychometricScore": 640,
-        "comments": "תנאי קבלה במקצועות הבריאות והחברה באוניברסיטה: סכם/פסיכומטרי 640+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 600+ (פסיכומטרי 550+); בגרות בלבד 105+; גיל 20+; רשימת המתנה: בגרות 103–104; ההרשמה לתשפ\"ז נסגרה",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 105,
+        "officialThreshold": 600,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 105,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/socialwork/תנאי-הקבלה-בעבודה-סוציאלית/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/socialwork/תנאי-הקבלה-בעבודה-סוציאלית/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-ariel-10",
         "fieldOfStudy": "פיזיוטרפיה",
         "degreeLevel": "תואר ראשון",
-        "admissionThreshold": 640,
+        "admissionThreshold": 630,
         "psychometricScore": 640,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 630,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה 4 יח\"ל",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/physiotherapy/תנאי-הקבלה-בפיזיותרפיה/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): פסיכומטרי 630+; קבלה לפי בגרות 95+ ופסיכומטרי (רב-תחומי בלבד) 630+; אין קבלה אוטומטית: דף הצגה עצמית וראיון, מקומות מוגבלים; ההרשמה לתשפ\"ז נסגרה",
+        "thresholdSource": "https://www.ariel.ac.il/wp/physiotherapy/תנאי-הקבלה-בפיזיותרפיה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-26",
         "fieldOfStudy": "פיזיותרפיה",
         "degreeLevel": "B.P.T.",
         "description": "לימודי פיזיותרפיה נועדו להכשיר פיזיותרפיסטים מקצועיים אשר עוסקים בשיקום יכולות תפקודיות, טיפול בבעיות גופניות החל מרמת העצב ועד רמת השלד, ומסייעים למטופלים להגיע לתפקוד מרבי. לימודי תואר ראשון בפיזיותרפיה כוללים קורסים רבים מתחומי האנטומיה והרפואה, ועל כן תנאי הקבלה נחשבים לקשים וגבוהים במיוחד.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 630,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): פסיכומטרי 630+; קבלה לפי בגרות 95+ ופסיכומטרי (רב-תחומי בלבד) 630+; אין קבלה אוטומטית: דף הצגה עצמית וראיון, מקומות מוגבלים; ההרשמה לתשפ\"ז נסגרה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 630,
+        "relevantSekemType": "psychometric",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה 4 יח\"ל",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                },
+                {
+                  "exam": "קורס השלמה במכינה בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/physiotherapy/תנאי-הקבלה-בפיזיותרפיה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/physiotherapy/תנאי-הקבלה-בפיזיותרפיה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-27",
         "fieldOfStudy": "פיזיקה",
         "degreeLevel": "B.Sc",
         "description": "לימודי פיזיקה לתואר ראשון נמשכים שלוש שנים, כאשר בסיומן מקבלים בוגרי התואר תעודת B.Sc. הלימודים מעניקים ידע רחב במגוון תחומים כמו- חקר חומרים, חקר החלל, חקר הטבע וחקר האנרגיה ועוד וזאת באמצעות מגוון נושאים מרתקים ומעניינים ביותר, ביניהם נוכל למצוא: תורת החשמל, תורת הקוונטים, תורת היחסים, תרמודינאמיק",
-        "admissionThreshold": 600,
+        "admissionThreshold": 551,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 551+; בגרות בלבד 90+; פסיכומטרי נמוך עם כמותי 120+ — לדיון אצל ראש המחלקה",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 90,
+        "officialThreshold": 551,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 90,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "science",
+              "title": "מקצוע ריאלי 5 יח\"ל 80+",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה",
+                        "מדעי המחשב",
+                        "כימיה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/physics/תנאי-הקבלה-בפיזיקה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/physics/תנאי-הקבלה-בפיזיקה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-28",
         "fieldOfStudy": "פסיכולוגיה",
         "degreeLevel": "B.A",
         "description": "תכנית הלימודים שלנו לתואר ראשון בפסיכולוגיה תעניק לכם היכרות עם תחומי היסוד מהם מורכבת הפסיכולוגיה, הנותנים פרספקטיבה רחבה על ההתנהגות האנושית ומנגנוניה. בנוסף לכך, תקבלו כלים לחשיבה מדעית ביקורתית שיכשירו אתכם לחשוב כמו חוקרים. בסמינרים ובסדנאות המחקר תשתתפו במחקר עצמאי בקבוצות קטנות ותוך הנחייה אי",
-        "admissionThreshold": 600,
+        "admissionThreshold": 580,
         "psychometricScore": 600,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 97,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 97,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 3,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/behavior/תנאי-הקבלה-במדעי-ההתנהגות/ (2026-10-05)"
+        },
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 97+; קבלה לסמסטר: בגרות 87–97 או משולב 560–580",
+        "thresholdSource": "https://www.ariel.ac.il/wp/behavior/תנאי-הקבלה-במדעי-ההתנהגות/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-29",
         "fieldOfStudy": "קרימינולוגיה",
         "degreeLevel": "B.A",
         "description": "לימודי תואר ראשון בקרימינולוגיה כוללים קורסים בנושאי: פסיכולוגיה, סוציולוגיה, אנתרופולוגיה, ביולוגיה, פסיכופתולוגיה ועוד. במהלך התואר עוברים הסטודנטים סדנאות מעשיות, ומתנסים בעבודת פרקטיקום במוסדות רלוונטיים כגון: בתי חולים פסיכיאטריים, בתי כלא, מוסדות לעבריינים, מוסדות גמילה מסמים ועוד.",
-        "admissionThreshold": 600,
+        "admissionThreshold": 560,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 560+; בגרות בלבד 90+; קבלה לסמסטר: בגרות 85–90 או משולב 550–560",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 90,
+        "officialThreshold": 560,
+        "relevantSekemType": "general",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 90,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/criminology/תנאי-הקבלה-בחוג-לקרימינולוגיה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/criminology/תנאי-הקבלה-בחוג-לקרימינולוגיה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-30",
         "fieldOfStudy": "רב תחומי במדעי החברה והרוח",
         "degreeLevel": "B.A",
         "description": "תואר ראשון רב תחומי הינו תואר אינטרדיספילנרי אשר משלב ידע מתחומים רבים ומשלב בין פקולטות שונות, בדרך כלל בתחומים הקשורים זה לזה, ומקנה לבוגריו השכלה אקדמית מעמיקה בתחומים בהם הוא עוסק. לימודים אלו נוגעים לרוב בענף המשפטים, מדעי המדינה, תקשורת, פסיכולוגיה, סוציולוגיה, אנתרופולוגיה, אמנות, כלכלה, חינו",
-        "admissionThreshold": 600,
+        "admissionThreshold": 500,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 500+; בגרות בלבד 80+; או: בגרות 75 + ראיון",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 80,
+        "officialThreshold": 500,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 80,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/ba/תנאי-הקבלה-במחלקה-הרב-תחומית/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/ba/תנאי-הקבלה-במחלקה-הרב-תחומית/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-31",
         "fieldOfStudy": "ריפוי בעיסוק",
         "degreeLevel": "B.O.T",
         "description": "לימודי ריפוי בעיסוק לתואר ראשון נמשכים מעל לשלוש שנים, אשר במהלכם עוברים הסטודנטים הכשרה מעשית רבה ופרקטיקום בבתי חולים ובמקומות בהם נדרש מקצוע שיקומי זה. לאחר סיום הלימודים, עוברים הלומדים בחינה ממשלתית אשר מקנה לעוברים רשיון לעסוק במקצוע ותעודה מטעם משרד הבריאות.",
-        "admissionThreshold": 640,
+        "admissionThreshold": 620,
         "psychometricScore": 640,
-        "comments": "תנאי קבלה במקצועות הבריאות והחברה באוניברסיטה: סכם/פסיכומטרי 640+",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 590+); ממוצע בגרות מינימלי לחישוב המשולב: 90; בגרות בלבד 107 — עם מתמטיקה 5/75 או 4/80 ומגמה מדעית 5 יח\"ל; אין קבלה אוטומטית: ראיון אישי, מקומות מוגבלים; ההרשמה לתשפ\"ז נסגרה",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "officialThreshold": 620,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 590,
+        "admissionRoutes": {
+          "minPsychometric": 590,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 100
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 100+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/occupational-therapy/תנאי-הקבלה-בריפוי-בעיסוק/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/occupational-therapy/תנאי-הקבלה-בריפוי-בעיסוק/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-32",
         "fieldOfStudy": "תקשורת",
         "degreeLevel": "B.A",
         "description": "בוגר לימודי תקשורת יכול להשתלב בעבודה במספר תחומים: כאיש טלוויזיה, כאיש רדיו, כעיתונאי, כדובר, כאיש פרסום או יחסי ציבור, כקופירייטר, כאיש מדיה דיגיטלית, כעורך תוכן או כמורה לתקשורת בתיכון. חלק מן המקצועות האלו דורשים למידה נוספת: למשל קורס קופירייטינג או לימודים לתעודת הוראה. כל המקצועות המוזכרים לע",
-        "admissionThreshold": 600,
+        "admissionThreshold": 580,
         "psychometricScore": 600,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 580+; בגרות בלבד 95+; פסיכומטרי בלבד 580+; פסיכומטרי בלבד 580 — עם זכאות לבגרות בממוצע 80+; ראיון: בגרות 85–95 או משולב 550–580",
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 95,
+        "officialThreshold": 580,
+        "relevantSekemType": "engineering",
+        "admissionRoutes": {
+          "bagrutOnlyMin": 95,
+          "psychometricOnlyMin": 580,
+          "requirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 60
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/communication/תנאי-קבלה-בבית-הספר-לתקשורת/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/communication/תנאי-קבלה-בבית-הספר-לתקשורת/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-39",
@@ -32819,56 +35961,1004 @@
         "fieldOfStudy": "הנדסת תוכנה",
         "degreeLevel": "B.Sc",
         "description": "תואר ראשון בהנדסת תוכנה (B.Sc) בפקולטה להנדסה",
-        "admissionThreshold": 620,
+        "admissionThreshold": 630,
         "psychometricScore": 620,
         "sekemScore": 630,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 104,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
-        "comments": "תואר ראשון בהנדסת תוכנה (B.Sc). סכם הנדסה 630 או פסיכומטרי 620+"
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 630+ (פסיכומטרי 590+); בגרות בלבד 104+; פסיכומטרי בלבד 650+; סכם הנדסי 640 / סכם מחשבים ותוכנה 640 (נוסחאות נפרדות, לא מחושבות כאן)",
+        "officialThreshold": 630,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 590,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 104,
+          "psychometricOnlyMin": 650,
+          "minPsychometric": 590,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-130",
+              "title": "חשיבה כמותית 130+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/cse/תנאי-הקבלה-בהנדסת-מחשבים-ותוכנה/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/cse/תנאי-הקבלה-בהנדסת-מחשבים-ותוכנה/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-41",
         "fieldOfStudy": "מדעי הנתונים ובינה מלאכותית",
         "degreeLevel": "B.Sc",
         "description": "תואר ראשון במדעי הנתונים ובינה מלאכותית (B.Sc Data Science & AI)",
-        "admissionThreshold": 640,
+        "admissionThreshold": 650,
         "psychometricScore": 640,
         "sekemScore": 640,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 107,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 80+",
-        "comments": "תואר ראשון במדעי הנתונים ובינה מלאכותית (B.Sc Data Science & AI)"
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 600+); בגרות בלבד 107+; פסיכומטרי בלבד 680+; אין קבלה אוטומטית: המועמדים מדורגים בוועדת הקבלה, על בסיס מקום פנוי; קבלה על תנאי לשנה: משולב 630 / בגרות 104 / פסיכומטרי 640",
+        "officialThreshold": 650,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 600,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107,
+          "psychometricOnlyMin": 680,
+          "minPsychometric": 600,
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "מדעי המחשב",
+                  "הנדסת תוכנה",
+                  "מדעי הנתונים",
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              }
+            ],
+            "summary": "ציון 85+ ב-5 יח\"ל במתמטיקה, באנגלית ובמגמה ריאלית (מדעי המחשב / הנדסת תוכנה / מדעי הנתונים / פיזיקה)"
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-130",
+              "title": "חשיבה כמותית 130+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/data-science-and-ai/תנאי-הקבלה-במדעי-הנתונים-ובינה-מלאכות/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/data-science-and-ai/תנאי-הקבלה-במדעי-הנתונים-ובינה-מלאכות/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-42",
         "fieldOfStudy": "הנדסת מערכות מידע",
         "degreeLevel": "B.Sc",
         "description": "תואר ראשון בהנדסת מערכות מידע בפקולטה להנדסה",
-        "admissionThreshold": 600,
+        "admissionThreshold": 620,
         "psychometricScore": 600,
         "sekemScore": 600,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 102,
         "mathRequirement": "4 יחידות בציון 80+ / 5 יחידות 70+",
-        "comments": "תואר ראשון בהנדסת מערכות מידע"
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
+        "officialThreshold": 620,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 550,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 102,
+          "minPsychometric": 550,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה בפיזיקה טרום הלימודים בציון 70+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-43",
         "fieldOfStudy": "מדעי המחשב ומתמטיקה",
         "degreeLevel": "B.Sc",
         "description": "תואר ראשון דו-חוגי במדעי המחשב ומתמטיקה",
-        "admissionThreshold": 600,
+        "admissionThreshold": 650,
         "psychometricScore": 600,
         "sekemScore": 600,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 107,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
-        "comments": "תואר ראשון דו-חוגי במדעי המחשב ומתמטיקה"
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 600+); בגרות בלבד 107+; פסיכומטרי בלבד 680+; אין קבלה אוטומטית: המועמדים מדורגים בוועדת הקבלה, על בסיס מקום פנוי; קבלה על תנאי לשנה: משולב 630 / בגרות 104 / פסיכומטרי 640; דו-חוגי: נדרשים תנאי הקבלה של מדעי המחשב (המחמירים)",
+        "officialThreshold": 650,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 600,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107,
+          "psychometricOnlyMin": 680,
+          "minPsychometric": 600,
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "מדעי המחשב",
+                  "הנדסת תוכנה",
+                  "מדעי הנתונים",
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              }
+            ],
+            "summary": "ציון 85+ ב-5 יח\"ל במתמטיקה, באנגלית ובמגמה ריאלית (מדעי המחשב / הנדסת תוכנה / מדעי הנתונים / פיזיקה)"
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "quant-130",
+              "title": "חשיבה כמותית 130+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/cs/תנאי-הקבלה-במדעי-המחשב/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/cs/תנאי-הקבלה-במדעי-המחשב/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       },
       {
         "id": "prog-inst-2-44",
@@ -32888,13 +36978,327 @@
         "fieldOfStudy": "מדעי המחשב ופיזיקה",
         "degreeLevel": "B.Sc",
         "description": "תואר ראשון דו-חוגי במדעי המחשב ופיזיקה",
-        "admissionThreshold": 610,
+        "admissionThreshold": 650,
         "psychometricScore": 610,
         "sekemScore": 610,
         "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
-        "comments": "תואר ראשון דו-חוגי במדעי המחשב ופיזיקה"
+        "directBagrutEligible": true,
+        "directBagrutMinAverage": 107,
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 600+); בגרות בלבד 107+; פסיכומטרי בלבד 680+; אין קבלה אוטומטית: המועמדים מדורגים בוועדת הקבלה, על בסיס מקום פנוי; קבלה על תנאי לשנה: משולב 630 / בגרות 104 / פסיכומטרי 640; דו-חוגי עם פיזיקה: בנוסף 5 יח\"ל פיזיקה 80+",
+        "officialThreshold": 650,
+        "relevantSekemType": "engineering",
+        "minPsychometricFloor": 600,
+        "admissionRoutes": {
+          "bagrutOnlyMin": 107,
+          "psychometricOnlyMin": 680,
+          "minPsychometric": 600,
+          "excellentBagrut": {
+            "all": [
+              {
+                "subjects": [
+                  "מתמטיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "אנגלית"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              },
+              {
+                "subjects": [
+                  "מדעי המחשב",
+                  "הנדסת תוכנה",
+                  "מדעי הנתונים",
+                  "פיזיקה"
+                ],
+                "minUnits": 5,
+                "minGrade": 85
+              }
+            ],
+            "summary": "ציון 85+ ב-5 יח\"ל במתמטיקה, באנגלית ובמגמה ריאלית (מדעי המחשב / הנדסת תוכנה / מדעי הנתונים / פיזיקה)"
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "quant-120",
+              "title": "חשיבה כמותית 120+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "psychometricOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 75
+                    }
+                  ]
+                },
+                {
+                  "exam": "מכינת השלמה במתמטיקה טרום הלימודים בציון 85+"
+                }
+              ]
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 55
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמירנט"
+            },
+            {
+              "id": "physics",
+              "title": "פיזיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "quant-130",
+              "title": "חשיבה כמותית 130+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/cs/תנאי-הקבלה-במדעי-המחשב/ (2026-10-05)"
+        },
+        "thresholdSource": "https://www.ariel.ac.il/wp/cs/תנאי-הקבלה-במדעי-המחשב/ — תנאי הקבלה תשפ\"ז",
+        "thresholdUpdatedAt": "2026-10-05"
       }
     ]
   },

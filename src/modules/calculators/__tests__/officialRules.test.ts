@@ -25,6 +25,7 @@ import {
 	isBguMandatorySubject
 } from '../bgu';
 import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, calculateHaifaOptimalBagrut, getHaifaBonus } from '../haifa';
+import { calculateArielSekem, evaluateAriel } from '../ariel';
 
 const sub = (name: string, units: number, grade: number) => ({ name, units, grade });
 
@@ -342,6 +343,23 @@ describe('Official admission rules', () => {
 			const pm = calculateHaifaMathPsychometric(140, 120, 130);
 			assert.equal(pm, 0.514554 * (6 * 140 + 4 * 120 + 130) - 65.3);
 			assert.equal(calculateHaifaMathSekem(110, pm), Math.round((110 * 10 - 330 + 3 * pm) / 4));
+		});
+	});
+
+	// Source: every department's "תנאי הקבלה" page on ariel.ac.il, תשפ"ז (snapshot ariel-admission-pages-2026-10-05.json)
+	describe('Ariel University (combined score)', () => {
+		it('combined score = [(bagrut × 6.666) + psychometric] / 2 — the communication page example: 87 & 580 = 580', () => {
+			assert.equal(calculateArielSekem(87, 580), 580);
+			assert.equal(calculateArielSekem(100, 600), Math.round((100 * 6.666 + 600) / 2));
+		});
+
+		it('science/engineering programs take the higher of the general and quantitative psychometric', () => {
+			const subjects = [sub('מתמטיקה', 5, 90), sub('אנגלית', 5, 90), sub('פיזיקה', 5, 90), sub('היסטוריה', 2, 90),
+				sub('אזרחות', 2, 90), sub('תנ"ך', 2, 90), sub('ספרות', 2, 90), sub('הבעה עברית', 2, 90)];
+			const high = evaluateAriel({ bagrutSubjects: subjects, psychometricGeneral: 700, psychometricQuantEmphasis: 650 });
+			assert.equal(high.engineeringSekem, high.generalSekem);
+			const quant = evaluateAriel({ bagrutSubjects: subjects, psychometricGeneral: 650, psychometricQuantEmphasis: 700 });
+			assert.ok(quant.engineeringSekem! > quant.generalSekem);
 		});
 	});
 });
