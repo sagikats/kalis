@@ -48,3 +48,6 @@ next-env.d.ts
 
 # session signing secret (auto-generated if SESSION_SECRET is unset)
 prisma/.session_secret
+
+# Raw pages saved by the user from sites that block automation
+tmp-sources/
