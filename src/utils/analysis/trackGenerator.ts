@@ -934,6 +934,8 @@ export interface DegreeHardRequirements {
 	minMathGrade: number;
 	directBagrutEligible: boolean;
 	directBagrutMinAverage?: number;
+	/** Official minimum bagrut average on the sekem route (on top of the threshold). */
+	minBagrutAverage?: number;
 	directBagrutMath5Min?: number;
 	directBagrutMath4Min?: number;
 	/** Official program requirements (math, physics, …) — replace the generic math/physics gate when present. */
@@ -1035,7 +1037,12 @@ export function extractDegreeHardRequirements(
 	// An official minimum psychometric (e.g. TAU "דרישות הסף") always wins over catalog estimates
 	const officialRoutes = (program as any)?.admissionRoutes ?? parsedPrereq.admissionRoutes;
 	const officialPsychMin = officialRoutes?.minPsychometric;
+	// The program's admission conditions were taken from an official source: never fall back to name-based estimates
+	const hasOfficialData = Boolean(officialRoutes?.requirementsSource || (program as any)?.thresholdSource);
 	let minPsychFloor = officialPsychMin || (parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor);
+	if ((!minPsychFloor || minPsychFloor <= 0) && hasOfficialData) {
+		minPsychFloor = 200;
+	}
 	if (!minPsychFloor || minPsychFloor <= 0) {
 		if (isMedicine) minPsychFloor = 700;
 		else if (isCS) minPsychFloor = 600;
@@ -1067,17 +1074,25 @@ export function extractDegreeHardRequirements(
 	if (!directBagrutMinAverage && directBagrutEligible) {
 		directBagrutMinAverage = (calculatorId === 'biu' || calculatorId === 'bar_ilan') ? 100.0 : 102.0;
 	}
+	// Official data: a bagrut-only route exists exactly when the institution publishes one (admissionRoutes.bagrutOnlyMin),
+	// even for programs flagged requiresPsychometric (that flag describes the main sekem route).
+	if (hasOfficialData) {
+		directBagrutEligible = Boolean(officialRoutes?.bagrutOnlyMin);
+		directBagrutMinAverage = officialRoutes?.bagrutOnlyMin;
+	}
 
 	return {
 		minPsychometricFloor: minPsychFloor,
-		minPsychometricQuant: parsedPrereq.minPsychometricQuant ?? (isExactScience ? 115 : undefined),
+		minPsychometricQuant: parsedPrereq.minPsychometricQuant ?? (isExactScience && !hasOfficialData ? 115 : undefined),
 		requiresPhysics: Boolean(requiresPhysics),
 		minMathUnits: parsedPrereq.minMathUnits ?? (isExactScience ? 4 : 3),
 		minMathGrade: parsedPrereq.minMathGrade ?? (isExactScience ? 75 : 60),
 		directBagrutEligible: Boolean(directBagrutEligible),
 		directBagrutMinAverage: directBagrutMinAverage ?? undefined,
-		directBagrutMath5Min: parsedPrereq.directBagrutMath5Min ?? (isExactScience ? 80 : undefined),
-		directBagrutMath4Min: parsedPrereq.directBagrutMath4Min ?? (isExactScience ? 90 : undefined),
+		// Generic math estimates for the bagrut-only route — official programs use bagrutOnlyRequirements/requirements instead
+		directBagrutMath5Min: parsedPrereq.directBagrutMath5Min ?? (isExactScience && !hasOfficialData ? 80 : undefined),
+		directBagrutMath4Min: parsedPrereq.directBagrutMath4Min ?? (isExactScience && !hasOfficialData ? 90 : undefined),
+		minBagrutAverage: officialRoutes?.minBagrutAverage,
 		officialRequirements: officialRoutes?.requirements,
 		bagrutOnlyRequirements: officialRoutes?.bagrutOnlyRequirements,
 		subjectRequirementsOfficial: Boolean(officialRoutes?.requirementsSource)
@@ -2285,6 +2300,9 @@ function generateAllPersonalizedTracks(
 				);
 			}
 		}
+
+		// An official minimum bagrut average on the sekem route (e.g. Bar-Ilan law: 90) that the plan doesn't reach
+		if (hardReqs.minBagrutAverage && instCheck.bagrutAverage < hardReqs.minBagrutAverage) continue;
 
 		// Strictly sync values directly from the official calculator
 		t.targetSekem = isTechnion

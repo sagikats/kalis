@@ -570,6 +570,28 @@ export function analyzeProgramGap(
 		admissionRoute = 'sekem';
 	}
 
+	// An official minimum bagrut average on the sekem route, on top of the threshold (Bar-Ilan: "נדרשת עמידה בממוצע 90 בבגרות")
+	const sekemRouteBagrutAvg = institutionRes.bagrutAverage || 0;
+	if (routes?.minBagrutAverage && sekemPassed && sekemRouteBagrutAvg < routes.minBagrutAverage) {
+		status = 'missing_requirement';
+		admissionRoute = undefined;
+		const avgNote = `הסכם עובר את הסף, אבל המוסד דורש גם ממוצע בגרות ${routes.minBagrutAverage} לפחות (יש לך ${sekemRouteBagrutAvg}).`;
+		admissionNote = admissionNote ? `${admissionNote} ${avgNote.replace('הסכם עובר את הסף, אבל ', 'בנוסף, ')}` : avgNote;
+		const need = Math.round((routes.minBagrutAverage - sekemRouteBagrutAvg) * 10) / 10;
+		improvementOptions.unshift({
+			id: 'opt-bagrut-floor',
+			type: 'bagrut',
+			title: `הגעה לממוצע בגרות ${routes.minBagrutAverage} (תנאי סף רשמי)`,
+			description: `התואר דורש ממוצע בגרות ${routes.minBagrutAverage} לפחות בנוסף לסכם. חסרות ${need} נקודות ממוצע.`,
+			currentValue: sekemRouteBagrutAvg,
+			targetValue: routes.minBagrutAverage,
+			gapAmount: need,
+			effortLevel: need <= 2 ? 'easy' : need <= 5 ? 'medium' : 'hard',
+			estimatedWeeks: 12,
+			potentialSekemGain: 0
+		});
+	}
+
 	if (unmetRequirements.length > 0) {
 		if (sekemPassed) {
 			status = 'missing_requirement';

@@ -937,6 +937,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                               userManagementSekem={res.managementSekem}
                               bagrutAverage={res.bagrutAverage}
                               profile={calculatedProfile}
+                              institutionResult={res}
                          />
                     );
                })()}

@@ -1,6 +1,6 @@
 import type { SubjectInput } from '../../modules/calculators';
 import type { SubjectBreakdownItem } from '../../modules/calculators/types';
-import { resolvePsychometricScores } from './psychometricHelper';
+import { resolvePsychometricScores, simulateRealisticSubscores } from './psychometricHelper';
 import {
 	evaluateTechnion,
 	evaluateTau,
@@ -100,12 +100,20 @@ export function calculateMultiInstitutionSekem(
 		? input.psychometricEnglish
 		: (psychResolution.rawSubscores?.english || undefined);
 
+	// Only a general score entered: estimate balanced section scores from it — the same assumption the track engine
+	// and the simulator make (simulateRealisticSubscores), so the report, the tracks and the simulator agree on
+	// section-based scores (Bar-Ilan sciences/engineering, Haifa math programs).
+	const sectionsEstimated = psych > 0 && !resolvedQuantSub && !resolvedVerbalSub && !resolvedEnglishSub &&
+		!(input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0) &&
+		!(input.psychometricVerbalEmphasis && input.psychometricVerbalEmphasis > 0);
+	const estimated = sectionsEstimated ? simulateRealisticSubscores(psych, psych) : undefined;
+
 	const commonCalcInput = {
 		bagrutSubjects: input.bagrutSubjects,
 		psychometricGeneral: psych,
-		psychometricQuant: resolvedQuantSub,
-		psychometricVerbal: resolvedVerbalSub,
-		psychometricEnglish: resolvedEnglishSub,
+		psychometricQuant: estimated?.quantSub ?? resolvedQuantSub,
+		psychometricVerbal: estimated?.verbalSub ?? resolvedVerbalSub,
+		psychometricEnglish: estimated?.englishSub ?? resolvedEnglishSub,
 		psychometricQuantEmphasis: quant,
 		psychometricVerbalEmphasis: verbal,
 		mathGrade: resolvedMathGrade,
@@ -235,8 +243,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: arielRes.optimalUnits,
 			notes:
 				arielRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${arielRes.droppedSubjects.join(', ')}). נוסחת הציון המשולב אומתה; טבלת הבונוסים — הערכה`
-					: 'נוסחת הציון המשולב אומתה; טבלת הבונוסים — הערכה'
+					? `ממוצע מיטבי (הושמטו: ${arielRes.droppedSubjects.join(', ')}). ${arielRes.notes[0]}`
+					: arielRes.notes[0]
 		},
 		haifa: {
 			institutionId: 'haifa',
@@ -304,5 +312,11 @@ export function calculateMultiInstitutionSekem(
 	return selectedInstitutionIds
 		.map((id) => allInstitutions[id])
 		.filter(Boolean)
-		.map((r) => ({ ...r, psychometricGeneral: psych || 0 }));
+		.map((r) => ({
+			...r,
+			psychometricGeneral: psych || 0,
+			notes: sectionsEstimated && (r.institutionId === 'bar_ilan' || r.institutionId === 'haifa')
+				? `${r.notes ? `${r.notes}. ` : ''}ציוני החלקים בפסיכומטרי (כמותי, מילולי, אנגלית) הוערכו מהציון הכללי — הזנת החלקים תדייק את החישוב`
+				: r.notes
+		}));
 }

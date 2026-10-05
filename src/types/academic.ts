@@ -39,6 +39,8 @@ export interface AcademicDegree {
 export interface AdmissionRoutes {
      /** A minimum general psychometric score required in addition to the main threshold ("ובנוסף"). */
      minPsychometric?: number;
+     /** A minimum bagrut average (institution's own average) required in addition to the main threshold (Bar-Ilan "נדרשת עמידה בממוצע X בבגרות"). */
+     minBagrutAverage?: number;
      /** Admission on the general psychometric score alone ("או פסיכומטרי X", "קבלה לפי פסיכומטרי"). */
      psychometricOnlyMin?: number;
      /** Admission on the institution's bagrut average alone ("קבלה לפי בגרות בלבד"). */

@@ -29,14 +29,14 @@ import {
 	Calendar,
 	Clock
 } from 'lucide-react';
-import { ProgramGapAnalysis, UserAcademicProfile, evaluateProgramRequirements } from '@/utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, UserAcademicProfile, analyzeProgramGap, evaluateProgramRequirements } from '@/utils/analysis/gapAnalyzer';
 import { describeRequirement } from '@/modules/optimizer/programRequirements';
 import {
 	calculateMultiInstitutionSekem,
 	InstitutionSekemResult,
 	UnifiedCalculationInput
 } from '@/utils/calculators/multiCalculator';
-import { SubjectInput } from '@/modules/calculators';
+import { SubjectInput, selectProgramSekem } from '@/modules/calculators';
 import { getRealisticPsychometricCeiling, RecommendedTrack, evaluateSimulatedSekem } from '@/utils/analysis/trackGenerator';
 import { simulateRealisticSubscores } from '@/utils/calculators/psychometricHelper';
 import { isSubjectMatch, isSameBagrutSubject } from '@/modules/optimizer/solver';
@@ -456,10 +456,36 @@ export default function WhatIfSimulator({
 		return missing;
 	}, [analysis.admissionRoutes, simulatedPsych, activeEffectiveSubjects, effectiveMath5, effectiveMathGrade, userProfile]);
 
-	const isAccepted = passesSekem && missingConditions.length === 0;
+	// The status of the simulated state comes from the same analysis as the admission report (analyzeProgramGap), so
+	// official alternative routes count too: bagrut-only, psychometric-only and excellent bagrut.
+	const simulatedAnalysis = useMemo(() => {
+		const targetRes = simulatedSekemResult.allInstitutions.find((r) => r.institutionId === analysis.target.calculatorId);
+		if (!targetRes) return null;
+		const mathUnits = effectiveMath5 ? 5 : userProfile.mathUnits || 0;
+		return analyzeProgramGap(analysis.target, {
+			...userProfile,
+			bagrutSubjects: [
+				...activeEffectiveSubjects.filter((sub) => !isSameBagrutSubject(sub.name, 'מתמטיקה')),
+				...(mathUnits > 0 ? [{ name: 'מתמטיקה', units: mathUnits, grade: effectiveMathGrade }] : [])
+			],
+			mathUnits,
+			mathGrade: effectiveMathGrade,
+			psychometricGeneral: simulatedPsych
+		}, targetRes);
+	}, [simulatedSekemResult, analysis.target, activeEffectiveSubjects, effectiveMath5, effectiveMathGrade, simulatedPsych, userProfile]);
+
+	const isAccepted = simulatedAnalysis ? simulatedAnalysis.status === 'accepted' : passesSekem && missingConditions.length === 0;
 	// The sekem passes but an official condition is missing (replaces the old near-threshold "על הגבול")
-	const isMissingRequirement = passesSekem && missingConditions.length > 0;
-	const missingTitles = missingConditions.map((m) => m.title).join(', ');
+	const isMissingRequirement = simulatedAnalysis
+		? simulatedAnalysis.status === 'missing_requirement'
+		: passesSekem && missingConditions.length > 0;
+	/** Accepted on an official route other than the sekem (e.g. "בגרות בלבד"): its explanation. */
+	const alternativeRouteNote = isAccepted && simulatedAnalysis?.admissionRoute && simulatedAnalysis.admissionRoute !== 'sekem'
+		? simulatedAnalysis.admissionNote
+		: undefined;
+	const missingTitles = missingConditions.length > 0
+		? missingConditions.map((m) => m.title).join(', ')
+		: simulatedAnalysis?.admissionNote ?? '';
 
 	// Progress bar calculation (0% to 100%)
 	const progressPercent = useMemo(() => {
@@ -1503,7 +1529,7 @@ export default function WhatIfSimulator({
 							<div className="pt-2">
 								{isAccepted ? (
 									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#EBF4EE] text-[#205739] text-xs font-bold border border-[#C6DFCE]">
-										<span>+{rawGap.toFixed(isTechnion ? 2 : 1)} נקודות מעל הסף הנדרש 🎉</span>
+										<span>{alternativeRouteNote ?? `+${rawGap.toFixed(isTechnion ? 2 : 1)} נקודות מעל הסף הנדרש 🎉`}</span>
 									</span>
 								) : isMissingRequirement ? (
 									<span className="inline-flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg bg-[#FDF6E8] text-[#825B15] text-xs font-bold border border-[#ECDAB6]">
@@ -1603,13 +1629,12 @@ export default function WhatIfSimulator({
 											const baseInst = baselineAllInstitutions.find(
 												(b) => b.institutionId === inst.institutionId
 											);
-											const isEng = analysis.relevantSekemType === 'engineering';
-											const currentScore =
-												isEng && inst.engineeringSekem ? inst.engineeringSekem : inst.generalSekem;
-											const baseScore =
-												isEng && baseInst?.engineeringSekem
-													? baseInst.engineeringSekem
-													: baseInst?.generalSekem || 0;
+											// The same score type as the target program (falls back to the general score where an
+											// institution has no such score), so the target row equals the main simulated sekem.
+											const sekemType = analysis.relevantSekemType;
+											const currentScore = selectProgramSekem(inst, sekemType, inst.institutionId);
+											const baseScore = baseInst ? selectProgramSekem(baseInst, sekemType, baseInst.institutionId) : 0;
+											const isEng = sekemType === 'engineering' || sekemType === 'quantitative' || sekemType === 'technion';
 											return {
 												institutionId: inst.institutionId,
 												institutionName: inst.institutionName,
@@ -1623,7 +1648,7 @@ export default function WhatIfSimulator({
 												isTarget: inst.institutionId === analysis.target.calculatorId,
 												isTechnion: inst.institutionId === 'technion',
 												isDirectBagrutEligible: inst.directBagrutEligible,
-												sekemTypeLabel: isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי',
+												sekemTypeLabel: sekemType === 'psychometric' ? 'פסיכומטרי' : sekemType === 'management' ? 'סכם ניהול' : isEng ? 'סכם הנדסי/כמותי' : 'סכם כללי/רב-תחומי',
 											};
 										})}
 									/>
@@ -1790,7 +1815,7 @@ export default function WhatIfSimulator({
 						</div>
 						<div className="text-[11px] font-medium opacity-90">
 							{isAccepted
-								? 'עומד בכל תנאי הסף הנדרשים לרישום'
+								? alternativeRouteNote ?? 'עומד בכל תנאי הסף הנדרשים לרישום'
 								: isMissingRequirement
 								? `חסר: ${missingTitles}`
 								: `נדרש שיפור נוסף של ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נק׳`}

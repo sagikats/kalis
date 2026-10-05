@@ -2,10 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { X, CheckCircle2, AlertCircle, XCircle, GraduationCap } from 'lucide-react';
-import type { AdmissionRoutes } from '@/types/academic';
+import type { AcademicDegree, AdmissionRoutes } from '@/types/academic';
 import type { SubjectInput } from '@/modules/calculators';
-import { evaluateProgramRequirements, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
-import { isBlocking } from '@/modules/optimizer/programRequirements';
+import { analyzeProgramGap, AdmissionStatus, ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
+import type { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { isSameBagrutSubject } from '@/modules/optimizer/solver';
 
 /** The calculator inputs the official conditions are checked against. */
@@ -64,18 +64,16 @@ interface Program {
   psychometricScore?: number | string;
   comments?: string;
   admissionRoutes?: AdmissionRoutes;
+  notOffered?: { note: string };
 }
-
-/** Same meaning as the admission report: missing_requirement = the sekem passes but an official condition is missing. */
-type AdmissionStatus = 'accepted' | 'missing_requirement' | 'not_accepted' | 'no_threshold';
 
 interface ProgramResult {
   program: Program;
   status: AdmissionStatus;
   threshold: number | null;
   gap: number;
-  /** Official conditions the applicant doesn't meet (titles), when the sekem passes. */
-  missing: string[];
+  /** Why the status isn't a plain sekem pass/fail: a missing official condition, or admission on another official route. */
+  note?: string;
 }
 
 interface AdmissionPanelProps {
@@ -88,32 +86,24 @@ interface AdmissionPanelProps {
   userManagementSekem?: number;
   bagrutAverage?: number;
   profile?: AdmissionPanelProfile;
+  /** The institution's full calculator result: each program is judged by its own official score type. */
+  institutionResult: InstitutionSekemResult;
 }
 
-function parseThreshold(raw: number | string | undefined): number | null {
-  if (raw === undefined || raw === null) return null;
-  if (typeof raw === 'number') return isNaN(raw) ? null : raw;
-  const n = parseInt(String(raw), 10);
-  return isNaN(n) ? null : n;
-}
+const EMPTY_PROFILE: AdmissionPanelProfile = toPanelProfile([], 0, 0, 0, 0);
 
-/** Official conditions not met: the minimum psychometric and blocking subject/English requirements. */
-function missingConditions(routes: AdmissionRoutes | undefined, profile: AdmissionPanelProfile | undefined): string[] {
-  if (!routes || !profile) return [];
-  const missing: string[] = [];
-  if (routes.minPsychometric && (profile.psychometricGeneral || 0) < routes.minPsychometric) {
-    missing.push(`פסיכומטרי ${routes.minPsychometric}`);
-  }
-  for (const r of evaluateProgramRequirements(routes.requirements, profile)) {
-    if (isBlocking(r)) missing.push(r.requirement.title);
-  }
-  return missing;
-}
-
-function classifyStatus(gap: number | null, missing: string[]): AdmissionStatus {
-  if (gap === null) return 'no_threshold';
-  if (gap < 0) return 'not_accepted';
-  return missing.length > 0 ? 'missing_requirement' : 'accepted';
+/** Same analysis as the admission report and the simulator, so all three always agree. */
+function evaluateProgram(prog: Program, institutionId: string, dataKey: string, institutionName: string,
+  profile: AdmissionPanelProfile, institutionResult: InstitutionSekemResult): ProgramResult {
+  const analysis: ProgramGapAnalysis = analyzeProgramGap(
+    { institutionId: dataKey, institutionName, calculatorId: institutionId, program: prog as unknown as AcademicDegree },
+    profile,
+    institutionResult
+  );
+  const note = analysis.status === 'missing_requirement' || (analysis.admissionRoute && analysis.admissionRoute !== 'sekem')
+    ? analysis.admissionNote
+    : undefined;
+  return { program: prog, status: analysis.status, threshold: analysis.threshold, gap: analysis.gap, note };
 }
 
 export default function AdmissionPanel({
@@ -125,6 +115,7 @@ export default function AdmissionPanel({
   userEngineeringSekem,
   userManagementSekem,
   profile,
+  institutionResult,
 }: AdmissionPanelProps) {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -142,41 +133,15 @@ export default function AdmissionPanel({
   }, [isOpen, catalog]);
 
   const isTechnion = institutionId === 'technion';
-  const defaultEffectiveSekem =
-    userEngineeringSekem && userEngineeringSekem > userGeneralSekem
-      ? userEngineeringSekem
-      : userGeneralSekem;
-
   const programs: ProgramResult[] = useMemo(() => {
     const dataKey = INST_ID_MAP[institutionId];
     if (!dataKey || !catalog) return [];
     const institution = catalog.find(i => i.id === dataKey);
     if (!institution) return [];
-
-    return institution.programs.map((prog): ProgramResult => {
-      const threshold = parseThreshold(prog.admissionThreshold);
-
-      let programSekem = defaultEffectiveSekem;
-      if (institutionId === 'tau') {
-        const title = prog.fieldOfStudy;
-        const isManagement = (title.includes('ניהול') || title.includes('חשבונאות') || title.includes('מנהל עסקים')) && !title.includes('הנדס');
-        const isEngineering = title.includes('הנדס') || title.includes('מדעי המחשב') || title.includes('פיזיקה') || title.includes('כימיה') || title.includes('מתמטיקה') || title.includes('מדעים מדויקים');
-
-        if (isManagement && userManagementSekem) {
-          programSekem = userManagementSekem;
-        } else if (isEngineering && userEngineeringSekem) {
-          programSekem = userEngineeringSekem;
-        } else {
-          programSekem = userGeneralSekem;
-        }
-      }
-
-      const gap = threshold !== null ? programSekem - threshold : null;
-      const missing = gap !== null && gap >= 0 ? missingConditions(prog.admissionRoutes, profile) : [];
-      const status = classifyStatus(gap, missing);
-      return { program: prog, status, threshold, gap: gap ?? 0, missing };
-    });
-  }, [catalog, institutionId, defaultEffectiveSekem, userGeneralSekem, userEngineeringSekem, userManagementSekem, profile]);
+    return institution.programs
+      .filter((prog) => !prog.notOffered)
+      .map((prog) => evaluateProgram(prog, institutionId, dataKey, institutionName, profile ?? EMPTY_PROFILE, institutionResult));
+  }, [catalog, institutionId, institutionName, profile, institutionResult]);
 
   const sorted = useMemo(() => {
     const order: Record<AdmissionStatus, number> = {
@@ -284,7 +249,7 @@ export default function AdmissionPanel({
           )}
 
           {sorted.map((item) => {
-            const { program, status, threshold, gap, missing } = item;
+            const { program, status, threshold, gap, note } = item;
 
             const cfg = {
               accepted: {
@@ -336,9 +301,9 @@ export default function AdmissionPanel({
                       {cfg.gapLabel}
                     </span>
                   </div>
-                  {missing.length > 0 && (
-                    <p className="text-[10px] font-medium text-[#825B15] mt-0.5">
-                      הסכם עובר (+{gap}), חסר תנאי סף רשמי: {missing.join(', ')}
+                  {note && (
+                    <p className={`text-[10px] font-medium mt-0.5 ${status === 'accepted' ? 'text-[#205739]' : 'text-[#825B15]'}`}>
+                      {note}
                     </p>
                   )}
                   <div className="flex items-center gap-2 mt-1.5">

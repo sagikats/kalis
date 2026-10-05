@@ -101,6 +101,8 @@ function englishFloor(r: Row): number {
 interface Parsed {
 	requirements: ProgramRequirement[];
 	minPsych?: number;
+	/** "נדרשת עמידה בממוצע X בבגרות" inside the sekem channel: a bagrut-average minimum on top of the sekem. */
+	minBagrutAverage?: number;
 }
 
 /** Parses one channel's conditions. */
@@ -112,6 +114,8 @@ function parseChannel(text: string, notes: string, r: Row): Parsed {
 
 	const psych = text.match(/מינימום (?:ציון )?פסיכומטרי\s*-\s*(\d{3})/);
 	if (psych) minPsych = Number(psych[1]);
+	const avg = text.match(/נדרשת עמידה בממוצע (\d+(?:\.\d+)?) בבגרות/);
+	const minBagrutAverage = avg ? Number(avg[1]) : undefined;
 
 	const quantMath = text.match(/כמותי בפסיכומטרי\s*[–-]\s*(\d+) ובנוסף מינימום ציון בגרות במתמטיקה 5 יח"ל\s*-\s*(\d+)\s*או מינימום ציון כמותי בפסיכומטרי\s*[–-]\s*(\d+) ובנוסף מינימום ציון בגרות במתמטיקה 5 יח"ל\s*-\s*(\d+)/);
 	if (quantMath) {
@@ -163,7 +167,7 @@ function parseChannel(text: string, notes: string, r: Row): Parsed {
 	const engSection = text.match(/מינימום ציון (\d+) בחלק האנגלית (?:ש)?בפסיכומטרי/);
 	reqs.push(english(Math.max(englishFloor(r), engSection ? Number(engSection[1]) : 0)));
 
-	return { requirements: reqs, minPsych };
+	return { requirements: reqs, minPsych, minBagrutAverage };
 }
 
 /** Tracks whose sekem channel has "אפשרות א' / ב'" — hand-coded from the official text. */
@@ -235,6 +239,7 @@ function applyRow(p: any, r: Row) {
 		...(bagrutMin ? { bagrutOnlyMin: Number(bagrutMin[1]) } : {}),
 		...(psychOnly ? { psychometricOnlyMin: Number(psychOnly[1]) } : {}),
 		...(sekem.minPsych ? { minPsychometric: sekem.minPsych } : {}),
+		...(sekem.minBagrutAverage ? { minBagrutAverage: sekem.minBagrutAverage } : {}),
 		requirements: sekem.requirements,
 		...(bagrutReqs ? { bagrutOnlyRequirements: bagrutReqs } : {}),
 		...(psychReqs ? { psychometricOnlyRequirements: psychReqs } : {}),
