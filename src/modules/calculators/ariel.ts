@@ -3,7 +3,9 @@
  * Combined score ("ציון קבלה משולב") = [(bagrut average × 6.666) + psychometric] / 2 — verified on every department's
  * admission page (ariel.ac.il, תשפ"ז; snapshot src/data/sources/ariel-admission-pages-2026-10-05.json). Most departments
  * take the higher of the general and quantitative-weighted psychometric scores.
- * ⚠️ The bonus table and the mandatory subjects are still NOT VERIFIED against an official source.
+ * Bonus table — partly verified against Ariel's official calculator (pniot.ariel.ac.il/projects/tzmm/NewCalcMark,
+ * 14 results on 2026-10-05): English 4u +12.5 / 5u +25, any other 5u +25, chemistry 4u +10, no bonus below 60.
+ * ⚠️ Still unverified: math 4u/5u bonus, 4u of other subjects, and which mandatory subjects (e.g. literature) may be dropped.
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -48,29 +50,9 @@ export function getArielBonus(subject: CalculatorSubject): number {
 		return 0;
 	}
 
-	if (subject.units === 5) {
-		if (
-			n.includes('פיזיקה') ||
-			n.includes('כימיה') ||
-			n.includes('ביולוגיה') ||
-			n.includes('מדעי המחשב') ||
-			n.includes('סייבר') ||
-			n.includes('אלקטרוניקה') ||
-			n.includes('רובוטיקה') ||
-			n.includes('תוכנה') ||
-			n.includes('תכנות') ||
-			n.includes('הנדס') ||
-			n.includes('ספרות') ||
-			n.includes('תנ"ך') ||
-			n.includes('תנ״ך') ||
-			n.includes('הלכה') ||
-			n.includes('היסטוריה') ||
-			n.includes('ערבית')
-		) {
-			return 25;
-		}
-		return 20;
-	}
+	// Official calculator (pniot.ariel.ac.il, results 2026-10-05): every 5-unit subject seen got +25 —
+	// physics, biology, computer science and also geography.
+	if (subject.units === 5) return 25;
 
 	if (subject.units === 4) {
 		return 10;
@@ -118,8 +100,8 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 		engineeringSekem,
 		directBagrutEligible,
 		notes: directBagrutEligible
-			? ['נוסחת הציון המשולב של אריאל אומתה; טבלת הבונוסים בממוצע הבגרות עדיין הערכה.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
-			: ['נוסחת הציון המשולב של אריאל אומתה; טבלת הבונוסים בממוצע הבגרות עדיין הערכה.'],
+			? ['נוסחת הציון המשולב של אריאל אומתה, וגם רוב טבלת הבונוסים (מול המחשבון הרשמי). הבונוס במתמטיקה עדיין הערכה.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
+			: ['נוסחת הציון המשולב של אריאל אומתה, וגם רוב טבלת הבונוסים (מול המחשבון הרשמי). הבונוס במתמטיקה עדיין הערכה.'],
 		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
 		subjectBreakdown: optimal.breakdown,
 		bagrutCap: optimal.cap

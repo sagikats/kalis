@@ -361,5 +361,25 @@ describe('Official admission rules', () => {
 			const quant = evaluateAriel({ bagrutSubjects: subjects, psychometricGeneral: 650, psychometricQuantEmphasis: 700 });
 			assert.ok(quant.engineeringSekem! > quant.generalSekem);
 		});
+
+		// Source: Ariel's official calculator results (pniot.ariel.ac.il/projects/tzmm/NewCalcMark, 2026-10-05).
+		// The official page truncates the average to 2 decimals. Cases where the official result dropped literature
+		// are left out until the drop rule is understood.
+		it('bagrut average matches the official calculator (English 4u +12.5, any 5u +25, no bonus below 60)', () => {
+			const base = (over: Record<string, [number, number]>, electives: [string, number, number][]) => {
+				const m: Record<string, [number, number]> = { 'אזרחות': [2, 80], 'אנגלית': [3, 80], 'היסטוריה': [2, 80], 'מתמטיקה': [3, 80],
+					'הבעה עברית': [2, 80], 'תנ"ך': [2, 80], 'ספרות': [2, 80], ...over };
+				return [...Object.entries(m).map(([n, [u, g]]) => sub(n, u, g)), ...electives.map(([n, u, g]) => sub(n, u, g))];
+			};
+			// We round to 2 decimals, the official page truncates: allow one hundredth.
+			const near = (subjects: ReturnType<typeof sub>[], official: number) =>
+				assert.ok(Math.abs(evaluateAriel({ bagrutSubjects: subjects }).bagrutAverage - official) <= 0.011, `expected ≈${official}`);
+			near(base({ 'אנגלית': [4, 80] }, [['פיזיקה', 5, 80]]), 87.95);
+			near(base({}, [['ביולוגיה', 5, 80]]), 85.95);
+			near(base({}, [['גאוגרפיה', 5, 80]]), 85.95);
+			near(base({}, [['פיזיקה', 5, 100]]), 90.71);
+			near(base({ 'מתמטיקה': [5, 55] }, [['פיזיקה', 5, 80]]), 80);
+			near(base({ 'אנגלית': [5, 59] }, [['פיזיקה', 5, 80]]), 80.86);
+		});
 	});
 });
