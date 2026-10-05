@@ -37258,7 +37258,11 @@
         "psychometricScore": 670,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-7",
@@ -37325,7 +37329,11 @@
         "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
         "requiresPsychometric": false,
         "directBagrutEligible": true,
-        "directBagrutMinAverage": 100
+        "directBagrutMinAverage": 100,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-9",
@@ -37477,7 +37485,11 @@
         "comments": "תנאי קבלה במקצועות הבריאות והחברה באוניברסיטה: סכם/פסיכומטרי 640+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-13",
@@ -37740,7 +37752,11 @@
         "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-22",
@@ -38010,7 +38026,11 @@
         "comments": "תנאי קבלה ללימודי טכנולוגיה/הנדסה באוניברסיטה: סכם/פסיכומטרי 680+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-29",
@@ -38175,7 +38195,11 @@
         "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-33",
@@ -38382,7 +38406,11 @@
         "comments": "תנאי קבלה לכלכלה וניהול באוניברסיטה: סכם/פסיכומטרי 630+",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-38",
@@ -38571,7 +38599,11 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יחידות בציון 80+ / 5 יחידות 70+",
-        "comments": "תואר ראשון בהנדסת מערכות מידע (B.Sc). סכם/פסיכומטרי 630+"
+        "comments": "תואר ראשון בהנדסת מערכות מידע (B.Sc). סכם/פסיכומטרי 630+",
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-52",
@@ -38585,7 +38617,11 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "5 יחידות בציון 80+ / 4 יחידות 90+",
-        "comments": "תואר ראשון דו-חוגי במדעי המחשב ומתמטיקה"
+        "comments": "תואר ראשון דו-חוגי במדעי המחשב ומתמטיקה",
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-53",
@@ -38670,7 +38706,11 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "5 יחידות בציון 80+",
-        "comments": "תואר ראשון בביואינפורמטיקה"
+        "comments": "תואר ראשון בביואינפורמטיקה",
+        "notOffered": {
+          "note": "לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה",
+          "source": "https://admissions.haifa.ac.il/bachelor/ (2026-10-04)"
+        }
       },
       {
         "id": "prog-inst-5-56",

@@ -14,7 +14,7 @@
  * - minPsychometric = "פסיכומטרי גולמי X" (nursing, medical imaging).
  * - requirements: "בגרות במתמטיקה" alternatives, and the English level when it is בסיסי (85) or מתקדמים א' (100).
  *   "טרום בסיסי" has no modelled minimum. Interviews / entrance exams go to "comments".
- * Catalog programs with no matching page keep their old values and are listed as unverified.
+ * Catalog programs with no page in the official list are marked notOffered.
  */
 
 import fs from 'fs';
@@ -130,9 +130,12 @@ function main() {
 		const row = officialId ? byId.get(officialId) : undefined;
 		if (officialId && !row?.sekem) throw new Error(`${p.id}: official program ${officialId} has no sekem in the snapshot`);
 		if (!row?.sekem) {
-			unmatched.push(`${p.id} ${p.fieldOfStudy} (kept ${p.admissionThreshold}, unverified)`);
+			// No page in Haifa's official bachelor's list (approved by the user to hide, 2026-10-05)
+			p.notOffered = { note: 'לא מופיע ברשימת התוכניות לתואר ראשון באתר הקבלה של אוניברסיטת חיפה', source: `https://admissions.haifa.ac.il/bachelor/ (${UPDATED_AT})` };
+			unmatched.push(`${p.id} ${p.fieldOfStudy} -> notOffered`);
 			continue;
 		}
+		delete p.notOffered;
 		const old = p.admissionThreshold;
 		p.officialThreshold = row.sekem;
 		p.admissionThreshold = row.sekem;
