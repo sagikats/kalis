@@ -133,14 +133,7 @@ describe('Subagent 2: Optimizer & Recommendation Algorithms', () => {
 		};
 
 		const gap = analyzeProgramGap(target as any, profile as any, tauRes);
-		const tracks = generatePersonalizedTracks(gap, profile as any, tauRes, {
-			weeklyAvailabilityHours: 'part_15_25',
-			targetTimeline: 'immediate_october',
-			psychWillingness: 'full_exam',
-			psychExperience: 'never',
-			learningOrientation: 'stem',
-			learningStrength: 'analytical_quick'
-		});
+		const tracks = generatePersonalizedTracks(gap, profile as any, tauRes);
 
 		assert.ok(tracks.length >= 2, 'Must generate at least 2 tracks');
 

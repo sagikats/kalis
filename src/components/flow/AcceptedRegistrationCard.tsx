@@ -58,7 +58,7 @@ export default function AcceptedRegistrationCard({
 						<div className="flex items-center gap-2">
 							<span className="px-3 py-1 bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] text-xs font-bold rounded-lg flex items-center gap-1.5">
 								<CheckCircle2 className="h-4 w-4 text-[#205739]" />
-								<span>{isScreening ? 'עובר/ת לשלב המיונים — זו עדיין לא קבלה' : 'קבלה מובטחת — עומד בכל הדרישות!'}</span>
+								<span>{isScreening ? 'עובר/ת לשלב המיונים — זו עדיין לא קבלה' : 'עומד/ת בסף ובכל תנאי הסף שפורסמו'}</span>
 							</span>
 							<span className="text-xs text-[#66635C] font-bold">
 								{analysis.target.institutionName} • {analysis.target.program.degreeLevel}
@@ -156,7 +156,7 @@ export default function AcceptedRegistrationCard({
 								rel="noopener noreferrer"
 								className="px-8 py-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-2xl shadow-sm transition flex items-center justify-center gap-3 shrink-0"
 							>
-								<span>מעבר לעמוד ההרשמה ב{analysis.target.institutionName}</span>
+								<span>מעבר לעמוד ההרשמה ב{analysis.target.institutionName.replace(/^ה/, '')}</span>
 								<ExternalLink className="h-4 w-4 text-white" />
 							</a>
 						</div>

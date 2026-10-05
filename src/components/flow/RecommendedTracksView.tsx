@@ -35,7 +35,6 @@ import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { ProgramGapAnalysis, UserAcademicProfile, screeningStageTitle } from '@/utils/analysis/gapAnalyzer';
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer/calendarScheduler';
-import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
 import { getUniversityCalculator } from '@/utils/universityCalculators';
 import UniversityVerificationModal from './UniversityVerificationModal';
 import SekemBreakdown from './SekemBreakdown';
@@ -53,8 +52,6 @@ interface RecommendedTracksViewProps {
 	userProfile?: UserAcademicProfile;
 	institutionResult?: InstitutionSekemResult;
 	defaultTab?: 'recommended' | 'custom_builder';
-	mechinaAvailable?: boolean;
-	mechinaReason?: string;
 	onSelectProgram?: (programId: string) => void;
 	onEditPreferences?: () => void;
 	onBackToReport: () => void;
@@ -68,8 +65,6 @@ export default function RecommendedTracksView({
 	userProfile,
 	institutionResult,
 	defaultTab = 'recommended',
-	mechinaAvailable,
-	mechinaReason,
 	onSelectProgram,
 	onEditPreferences,
 	onBackToReport,
@@ -276,92 +271,19 @@ export default function RecommendedTracksView({
 		}
 	};
 
-	// Bypass Routes (Mechina & Open University Afik Ma'avar) Opt-In State
-	const [mechinaTrack, setMechinaTrack] = useState<any | null>(null);
-	const [afikMaavarTrack, setAfikMaavarTrack] = useState<any | null>(null);
-	const [hasAfikMaavar, setHasAfikMaavar] = useState<boolean>(false);
-	const [afikSpec, setAfikSpec] = useState<any | null>(null);
-	const [activeBypassTab, setActiveBypassTab] = useState<string>('');
-	const [bypassFetched, setBypassFetched] = useState<boolean>(false);
+	// Other official admission routes of this program (bagrut-only, psychometric-only, Technion routes).
+	// Mechina / Open University tracks are not offered until each one is backed by an official source.
 	const officialRoutes = analysis.officialRoutes ?? [];
-	const bypassTabs: { key: string; label: string; status?: OfficialRouteStatus }[] = [
-		...officialRoutes.map((r) => ({ key: r.id, label: r.tabLabel, status: r.status })),
-		...(mechinaTrack ? [{ key: 'mechina', label: 'מכינה קדם-אקדמית' }] : []),
-		...(hasAfikMaavar && afikMaavarTrack ? [{ key: 'afik_maavar', label: 'אפיק מעבר מהאו״פ' }] : [])
-	];
+	const bypassTabs: { key: string; label: string; status?: OfficialRouteStatus }[] = officialRoutes.map((r) => ({
+		key: r.id,
+		label: r.tabLabel,
+		status: r.status
+	}));
+	const [activeBypassTab, setActiveBypassTab] = useState<string>('');
 	const currentBypassTab = bypassTabs.some((t) => t.key === activeBypassTab) ? activeBypassTab : bypassTabs[0]?.key;
 	const currentOfficialRoute = officialRoutes.find((r) => r.id === currentBypassTab);
-	const [isLoadingMechina, setIsLoadingMechina] = useState<boolean>(false);
 	const [showMechinaDetails, setShowMechinaDetails] = useState<boolean>(false);
-
-	const isMechinaApplicable = mechinaAvailable ?? (analysis.status !== 'accepted' || analysis.gap < 0);
-
-	const handleToggleMechina = async () => {
-		if (showMechinaDetails) {
-			setShowMechinaDetails(false);
-			return;
-		}
-		if (mechinaTrack || afikMaavarTrack || bypassFetched) {
-			setShowMechinaDetails(true);
-			return;
-		}
-		setIsLoadingMechina(true);
-		try {
-			const res = await fetch('/api/tracks/mechina', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					programId: analysis.target.program.id,
-					profile: {
-						bagrutSubjects: (userProfile?.bagrutSubjects && userProfile.bagrutSubjects.length > 0
-							? userProfile.bagrutSubjects
-							: [{ name: 'מתמטיקה', units: 4, grade: 80 }]
-						).map((s) => ({
-							name: s.name,
-							units: s.units,
-							grade: s.grade
-						})),
-						mathUnits: userProfile?.mathUnits || 4,
-						mathGrade: userProfile?.mathGrade || 80,
-						physicsUnits: userProfile?.physicsUnits ?? 0,
-						physicsGrade: userProfile?.physicsGrade ?? 0,
-						psychometricGeneral: userProfile?.psychometricGeneral ?? 0,
-						psychometricQuant: userProfile?.psychometricQuant ?? 0,
-						psychometricVerbal: userProfile?.psychometricVerbal ?? 0,
-						psychometricEnglish: userProfile?.psychometricEnglish ?? 0,
-						hasTakenPsychometric: (userProfile?.psychometricGeneral || 0) > 0
-					}
-				})
-			});
-			const contentType = res.headers.get('content-type') || '';
-			if (!contentType.includes('application/json')) {
-				return;
-			}
-			const data = await res.json();
-			if (data.success) {
-				if (data.mechinaTrack) {
-					setMechinaTrack(data.mechinaTrack);
-				} else if (data.track) {
-					setMechinaTrack(data.track);
-				}
-				if (data.afikMaavarTrack) {
-					setAfikMaavarTrack(data.afikMaavarTrack);
-				}
-				setHasAfikMaavar(Boolean(data.hasAfikMaavar));
-				if (data.afikSpec) {
-					setAfikSpec(data.afikSpec);
-				}
-				setShowMechinaDetails(true);
-			}
-		} catch (err) {
-			console.error('Failed to load bypass tracks', err);
-		} finally {
-			setIsLoadingMechina(false);
-			setBypassFetched(true);
-			// The institution's official routes are shown even if the mechina service had nothing to add
-			if (officialRoutes.length > 0) setShowMechinaDetails(true);
-		}
-	};
+	const handleToggleMechina = () => setShowMechinaDetails((v) => !v);
 
 	const handlePrint = () => {
 		window.print();
@@ -1486,52 +1408,42 @@ export default function RecommendedTracksView({
 				{/* ========================================================================= */}
 				{/* OPT-IN BYPASS ROUTES (מכינה קדם-אקדמית & אפיק מעבר מהאוניברסיטה הפתוחה) */}
 				{/* ========================================================================= */}
-				{(isMechinaApplicable || officialRoutes.length > 0) && analysis.status !== 'accepted' && (
+				{officialRoutes.length > 0 && analysis.status !== 'accepted' && (
 					<div className="bg-white border border-[#D2CEEB] rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative overflow-hidden">
 						<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
 							<div className="space-y-1.5 max-w-2xl">
 								<div className="flex items-center gap-2 flex-wrap">
 									<span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] tracking-wider">
-										{officialRoutes.length > 0
-											? `${officialRoutes.length} אפיקי קבלה רשמיים • מכינה • אפיק מעבר`
-											: 'מסלולים עוקפים מובנים • מכינה קדם-אקדמית & אפיק מעבר (Opt-In)'}
+										{`${officialRoutes.length} אפיקי קבלה רשמיים`}
 									</span>
 								</div>
 								<h4 className="text-lg sm:text-xl font-bold text-[#222222] flex items-center gap-2.5">
 									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="rounded" />
-									<span>שוקל מסלול עוקף קבלה ב{analysis.target.institutionName.replace('אוניברסיטת ', '')}?</span>
+									<span>דרכי קבלה נוספות ב{analysis.target.institutionName.replace('אוניברסיטת ', '').replace(/^ה/, '')}</span>
 								</h4>
 								<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
-									{officialRoutes.length > 0
-										? `לתואר הזה יש גם דרכי קבלה שאינן הסכם הרגיל: ${officialRoutes.map((r) => r.tabLabel).join(', ')}. בנוסף: מכינה קדם-אקדמית ואפיק מעבר מהאוניברסיטה הפתוחה.`
-										: 'עבור פערים גדולים או למי שמעוניין בנתיב ישיר ללא תלות בבגרויות ובפסיכומטרי: מכינה קדם-אקדמית במוסד (מחליפה את תעודת הבגרות בתוכנית ממוקדת) או אפיק מעבר מהאוניברסיטה הפתוחה (צבירת נקודות זכות אקדמיות ופטור מלא מבגרות ופסיכומטרי).'}
+									{`לתואר הזה יש גם דרכי קבלה רשמיות שאינן הסכם הרגיל: ${officialRoutes.map((r) => r.tabLabel).join(', ')}.`}
 								</p>
 							</div>
 
 							<button
 								type="button"
 								onClick={handleToggleMechina}
-								disabled={isLoadingMechina}
 								className={`px-5 py-3 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2 shrink-0 border shadow-sm ${
 									showMechinaDetails
 										? 'bg-white text-[#453D78] border-[#D2CEEB] hover:bg-[#F2F1F8]'
 										: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
 								}`}
 							>
-								{isLoadingMechina ? (
+								{showMechinaDetails ? (
 									<>
-										<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-										<span>טוען מסלולים עוקפים...</span>
-									</>
-								) : showMechinaDetails ? (
-									<>
-										<span>הסתר מסלולים עוקפים</span>
+										<span>הסתר דרכי קבלה נוספות</span>
 										<ChevronUp className="h-4 w-4" />
 									</>
 								) : (
 									<>
 										<GraduationCap className="h-4 w-4" />
-										<span>{officialRoutes.length > 0 ? 'לכל דרכי הקבלה' : 'בדוק מסלולים עוקפים (מכינה / אפיק מעבר)'}</span>
+										<span>לכל דרכי הקבלה</span>
 										<ChevronDown className="h-4 w-4" />
 									</>
 								)}
@@ -1564,367 +1476,6 @@ export default function RecommendedTracksView({
 
 								{/* Official route details */}
 								{currentOfficialRoute && <OfficialRouteDetail route={currentOfficialRoute} />}
-
-								{/* ------------------------------------------------------------- */}
-								{/* TAB 1: MECHINA TRACK (מכינה קדם-אקדמית) */}
-								{/* ------------------------------------------------------------- */}
-								{currentBypassTab === 'mechina' && mechinaTrack && (
-									<div className="bg-[#FAF8F5] border border-[#D2CEEB] rounded-2xl p-5 space-y-4">
-										<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E5DFD4] pb-3">
-											<div className="flex items-center gap-3">
-												<UniversityLogo institution={analysis.target.institutionId} size="md" shape="rounded" />
-												<div>
-													<h5 className="text-base font-bold text-[#222222]">
-														{mechinaTrack.title}
-													</h5>
-													<p className="text-xs text-[#66635C] mt-0.5">
-														{mechinaTrack.keyAdvantage}
-													</p>
-												</div>
-											</div>
-											<div className="flex items-center gap-2.5 text-xs font-bold text-[#66635C] shrink-0 flex-wrap">
-												<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
-													משך: <span className="text-[#453D78] font-bold">{mechinaTrack.estimatedWeeks} שבועות</span>
-												</div>
-												<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
-													עומס: <span className="text-[#453D78] font-bold">{mechinaTrack.weeklyHours} ש״ש</span>
-												</div>
-												<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
-													יעד ממוצע: <span className="text-[#205739] font-bold">{mechinaTrack.targetBagrutAverage}+</span>
-												</div>
-											</div>
-										</div>
-
-										<p className="text-xs text-[#66635C] leading-relaxed">
-											{mechinaTrack.strategyDescription}
-										</p>
-
-										{/* Dedicated Curriculum (Zero Irrelevant Bagruts / No Geography) */}
-										{mechinaTrack.recommendedLevers && mechinaTrack.recommendedLevers.length > 0 && (
-											<div className="space-y-2 pt-1">
-												<div className="flex items-center justify-between flex-wrap gap-2">
-													<h6 className="text-[11px] font-bold text-[#8A847C] uppercase tracking-wider">
-														תוכנית הלימודים הפנימית של המכינה (מחליפה 100% מתעודת הבגרות):
-													</h6>
-													<span className="text-[10px] text-[#205739] font-bold bg-[#EBF4EE] border border-[#C6DFCE] px-2 py-0.5 rounded">
-														ללא צורך בשיפור מקצועות בגרות כלליים (גיאוגרפיה, ספרות וכו׳)
-													</span>
-												</div>
-												<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
-													{mechinaTrack.recommendedLevers.map((lever: any, lIdx: number) => (
-														<div key={lIdx} className="bg-white border border-[#E5DFD4] rounded-xl p-3 space-y-1">
-															<div className="text-xs font-bold text-[#222222]">{lever.subjectName}</div>
-															<div className="flex items-center justify-between text-[11px] text-[#66635C]">
-																<span>{lever.targetUnits} יח״ל מכינה</span>
-																<span className="font-bold text-[#453D78]">ציון יעד: {lever.targetGrade}+</span>
-															</div>
-														</div>
-													))}
-												</div>
-											</div>
-										)}
-
-										{/* Milestones in Mechina */}
-										{mechinaTrack.milestones && mechinaTrack.milestones.length > 0 && (
-											<div className="space-y-2 pt-2">
-												<h6 className="text-[11px] font-bold text-[#8A847C] uppercase tracking-wider">
-													תחנות מסלול המכינה:
-												</h6>
-												<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-													{mechinaTrack.milestones.map((m: any, mIdx: number) => {
-														const sInfo = getSessionInfo(
-															m.type === 'psychometric'
-																? 'winter'
-																: m.type === 'administrative'
-																? 'administrative'
-																: 'summer'
-														);
-														return (
-															<div
-																key={mIdx}
-																className="bg-white border border-[#E5DFD4] rounded-xl p-3 space-y-1.5"
-															>
-																<div className="flex items-center justify-between gap-2">
-																	<span className="text-[10px] font-bold text-[#453D78] bg-[#F2F1F8] border border-[#D2CEEB] px-2 py-0.5 rounded">
-																		תחנה {m.orderIndex || mIdx + 1} • {m.timing}
-																	</span>
-																	<span className="text-[10px] text-[#66635C] font-bold">
-																		{sInfo.iconEmoji}
-																	</span>
-																</div>
-																<div className="text-xs font-bold text-[#222222]">
-																	{m.title}
-																</div>
-																<p className="text-[11px] text-[#66635C] leading-normal">
-																	{m.detail}
-																</p>
-																{mIdx === 0 && (
-																	<a
-																		href={mechinaTrack.registrationUrl || getMechinaRegistrationUrl(mechinaTrack.institutionId || analysis.target.institutionId || '')}
-																		target="_blank"
-																		rel="noopener noreferrer"
-																		className="inline-flex items-center gap-1 text-[11px] font-bold text-[#453D78] hover:text-[#2E2855] hover:underline pt-1 cursor-pointer"
-																	>
-																		<span>מעבר לפורטל הרישום של המכינה</span>
-																		<ExternalLink className="h-3 w-3" />
-																	</a>
-																)}
-															</div>
-														);
-													})}
-												</div>
-											</div>
-										)}
-
-										{/* Mechina perks banner */}
-										<div className="p-3 bg-[#F2F1F8] border border-[#D2CEEB] rounded-xl flex items-center gap-2 text-xs text-[#453D78]">
-											<ShieldCheck className="h-4 w-4 text-[#453D78] shrink-0" />
-											<span>
-												תעודת גמר מכינה מוכרת ומחליפה את תעודת הבגרות במוסד זה. עמידה בממוצע היעד מקנה קבלה ישירה.
-											</span>
-										</div>
-
-										{/* Bottom Actions: Registration Link & Save Mechina Track Button */}
-										<div className="pt-3 border-t border-[#E5DFD4] flex items-center justify-end gap-3 flex-wrap">
-											<a
-												href={mechinaTrack.registrationUrl || getMechinaRegistrationUrl(mechinaTrack.institutionId || analysis.target.institutionId || '')}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#222222] hover:text-[#000000] border border-[#DDD7CC] shadow-2xs hover:shadow-xs group cursor-pointer"
-												title="מעבר לעמוד ההרשמה הרשמי של המכינה"
-											>
-												<ExternalLink className="h-3.5 w-3.5 text-[#66635C] group-hover:text-[#111111] transition-colors" />
-												<span>הרשמה למכינה באתר המוסד</span>
-											</a>
-
-											<button
-												type="button"
-												onClick={() => handleSaveTrack(mechinaTrack)}
-												disabled={savingTrackId === mechinaTrack.id}
-												className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-sm ${
-													savedTrackMap[mechinaTrack.id]
-														? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
-														: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
-												}`}
-											>
-												{savingTrackId === mechinaTrack.id ? (
-													<>
-														<Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
-														<span>שומר...</span>
-													</>
-												) : savedTrackMap[mechinaTrack.id] ? (
-													<>
-														<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
-														<span>מסלול מכינה שמור ✓</span>
-													</>
-												) : (
-													<>
-														<Bookmark className="h-3.5 w-3.5 text-white" />
-														<span>שמור מסלול מכינה זה</span>
-													</>
-												)}
-											</button>
-										</div>
-									</div>
-								)}
-
-								{/* ------------------------------------------------------------- */}
-								{/* TAB 2: OPEN UNIVERSITY TRANSITION ROUTE (אפיק מעבר מהאו״פ) */}
-								{/* ------------------------------------------------------------- */}
-								{currentBypassTab === 'afik_maavar' && hasAfikMaavar && afikMaavarTrack && (
-									<div className="bg-[#FAF8F5] border border-[#A5F3FC] rounded-2xl p-5 space-y-4 animate-in fade-in duration-200">
-										<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E5DFD4] pb-3">
-											<div className="flex items-center gap-3">
-												<div className="w-10 h-10 rounded-xl bg-[#ECFEFF] border border-[#A5F3FC] flex items-center justify-center shrink-0">
-													<Globe className="h-5 w-5 text-[#0E7490]" />
-												</div>
-												<div>
-													<div className="flex items-center gap-2">
-														<h5 className="text-base font-bold text-[#222222]">
-															{afikMaavarTrack.title}
-														</h5>
-														<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]">
-															הסכם רשמי
-														</span>
-													</div>
-													<p className="text-xs text-[#66635C] mt-0.5">
-														{afikSpec?.academicAdvantage || afikMaavarTrack.keyAdvantage}
-													</p>
-												</div>
-											</div>
-
-											<div className="flex items-center gap-2.5 text-xs font-bold text-[#66635C] shrink-0 flex-wrap">
-												<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
-													ממוצע מעבר: <span className="text-[#0E7490] font-bold">{afikSpec?.requiredGpa || 85}+</span>
-												</div>
-												<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
-													ציון סף לקורס: <span className="text-[#222222] font-bold">{afikSpec?.minCourseGrade || 70}+</span>
-												</div>
-												<div className="bg-white px-3 py-1.5 rounded-xl border border-[#E5DFD4]">
-													נ״ז מקוזזות: <span className="text-[#065F46] font-bold">{afikSpec?.requiredCredits || 27} נ״ז</span>
-												</div>
-												<div className="bg-[#ECFDF5] px-3 py-1.5 rounded-xl border border-[#A7F3D0] text-[#065F46]">
-													פטור מבגרות & פסיכומטרי ✓
-												</div>
-											</div>
-										</div>
-
-										<p className="text-xs text-[#66635C] leading-relaxed">
-											{afikMaavarTrack.strategyDescription}
-										</p>
-
-										{/* Special Requirements Alert if present */}
-										{afikSpec?.specialRequirements && (
-											<div className="p-3 bg-[#FFFBEB] border border-[#FDE68A] rounded-xl text-xs text-[#92400E] flex items-center gap-2">
-												<AlertTriangle className="h-4 w-4 shrink-0 text-[#D97706]" />
-												<span>{afikSpec.specialRequirements}</span>
-											</div>
-										)}
-
-										{/* Course Matrix Table */}
-										{afikSpec?.courses && afikSpec.courses.length > 0 && (
-											<div className="space-y-2 pt-1">
-												<div className="flex items-center justify-between flex-wrap gap-2">
-													<h6 className="text-[11px] font-bold text-[#8A847C] uppercase tracking-wider">
-														מקבץ קורסי האוניברסיטה הפתוחה למעבר אקדמי (מוכרים ומקוזזים מתואר הבוגר):
-													</h6>
-													<span className="text-[10px] text-[#0E7490] font-bold bg-[#ECFEFF] border border-[#A5F3FC] px-2 py-0.5 rounded">
-														מעבר ישיר לשנה ב׳ בפקולטה
-													</span>
-												</div>
-
-												<div className="overflow-x-auto rounded-xl border border-[#E5DFD4] bg-white shadow-2xs">
-													<table className="w-full text-right text-xs">
-														<thead className="bg-[#FAF8F5] border-b border-[#E5DFD4] text-[#8A847C] font-bold">
-															<tr>
-																<th className="p-3">קוד קורס (או״פ)</th>
-																<th className="p-3">שם הקורס האקדמי</th>
-																<th className="p-3 text-center">נקודות זכות (נ״ז)</th>
-																<th className="p-3 text-center">ציון מינימום נדרש</th>
-															</tr>
-														</thead>
-														<tbody className="divide-y divide-[#E5DFD4]">
-															{afikSpec.courses.map((course: any, cIdx: number) => (
-																<tr key={cIdx} className="hover:bg-[#FAF8F5]/60 transition">
-																	<td className="p-3 font-mono font-bold text-[#0E7490]">{course.courseNumber}</td>
-																	<td className="p-3 font-bold text-[#222222]">{course.courseName}</td>
-																	<td className="p-3 text-center font-bold text-[#66635C]">{course.credits} נ״ז</td>
-																	<td className="p-3 text-center font-bold text-[#065F46]">{course.minGrade || afikSpec.minCourseGrade}+</td>
-																</tr>
-															))}
-														</tbody>
-													</table>
-												</div>
-											</div>
-										)}
-
-										{/* Milestones in Afik Ma'avar */}
-										{afikMaavarTrack.milestones && afikMaavarTrack.milestones.length > 0 && (
-											<div className="space-y-2 pt-2">
-												<h6 className="text-[11px] font-bold text-[#8A847C] uppercase tracking-wider">
-													תחנות ציר המעבר האקדמי:
-												</h6>
-												<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-													{afikMaavarTrack.milestones.map((m: any, mIdx: number) => (
-														<div
-															key={mIdx}
-															className="bg-white border border-[#E5DFD4] rounded-xl p-3 space-y-1.5"
-														>
-															<div className="flex items-center justify-between gap-2">
-																<span className="text-[10px] font-bold text-[#0E7490] bg-[#ECFEFF] border border-[#A5F3FC] px-2 py-0.5 rounded">
-																	תחנה {m.orderIndex || mIdx + 1} • {m.timing}
-																</span>
-																<span className="text-[10px] text-[#66635C] font-bold">
-																	🌐
-																</span>
-															</div>
-															<div className="text-xs font-bold text-[#222222]">
-																{m.title}
-															</div>
-															<p className="text-[11px] text-[#66635C] leading-normal">
-																{m.detail}
-															</p>
-															{mIdx === 0 && (
-																<a
-																	href={afikMaavarTrack.registrationUrl || afikSpec?.registrationUrl || 'https://www.openu.ac.il/registration/'}
-																	target="_blank"
-																	rel="noopener noreferrer"
-																	className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0E7490] hover:text-[#085265] hover:underline pt-1 cursor-pointer"
-																>
-																	<span>מעבר לפורטל הרישום של האו״פ</span>
-																	<ExternalLink className="h-3 w-3" />
-																</a>
-															)}
-														</div>
-													))}
-												</div>
-											</div>
-										)}
-
-										{/* Guaranteed Admission Legal Banner */}
-										<div className="p-3 bg-[#ECFDF5] border border-[#A7F3D0] rounded-xl flex items-center justify-between flex-wrap gap-2 text-xs text-[#065F46]">
-											<div className="flex items-center gap-2">
-												<ShieldCheck className="h-4 w-4 text-[#065F46] shrink-0" />
-												<span>
-													הסכם אקדמי רשמי (מל״ג): עמידה בממוצע {afikSpec?.requiredGpa || 85}+ ובציוני הסף מבטיחה קבלה ישירה לשנה ב׳ ללא תלות בבגרות או בפסיכומטרי!
-												</span>
-											</div>
-											<div className="flex items-center gap-3">
-												<a
-													href={afikSpec?.infoUrl || 'https://www.openu.ac.il/afik/'}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0E7490] hover:underline"
-												>
-													<span>מתווה אפיקי המעבר באו״פ</span>
-													<ExternalLink className="h-3 w-3" />
-												</a>
-											</div>
-										</div>
-
-										{/* Bottom Actions: Registration Link & Save Afik Ma'avar Track Button */}
-										<div className="pt-3 border-t border-[#E5DFD4] flex items-center justify-end gap-3 flex-wrap">
-											<a
-												href={afikMaavarTrack.registrationUrl || afikSpec?.registrationUrl || 'https://www.openu.ac.il/registration/'}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#0E7490] hover:text-[#085265] border border-[#A5F3FC] shadow-2xs hover:shadow-xs group cursor-pointer"
-												title="מעבר לעמוד ההרשמה המקוונת באוניברסיטה הפתוחה"
-											>
-												<ExternalLink className="h-3.5 w-3.5 text-[#0E7490] group-hover:text-[#085265] transition-colors" />
-												<span>הרשמה לאפיק מעבר באו״פ</span>
-											</a>
-
-											<button
-												type="button"
-												onClick={() => handleSaveTrack(afikMaavarTrack)}
-												disabled={savingTrackId === afikMaavarTrack.id}
-												className={`px-4 py-2 rounded-xl font-bold text-xs transition flex items-center gap-2 border shadow-sm ${
-													savedTrackMap[afikMaavarTrack.id]
-														? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
-														: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
-												}`}
-											>
-												{savingTrackId === afikMaavarTrack.id ? (
-													<>
-														<Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
-														<span>שומר...</span>
-													</>
-												) : savedTrackMap[afikMaavarTrack.id] ? (
-													<>
-														<BookmarkCheck className="h-3.5 w-3.5 text-[#205739]" />
-														<span>אפיק מעבר שמור ✓</span>
-													</>
-												) : (
-													<>
-														<Bookmark className="h-3.5 w-3.5 text-white" />
-														<span>שמור אפיק מעבר זה</span>
-													</>
-												)}
-											</button>
-										</div>
-									</div>
-								)}
 							</div>
 						)}
 					</div>

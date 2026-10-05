@@ -126,7 +126,7 @@ describe('Matriculation Grade Validation & Empty State Guards', () => {
 			targetTimeline: 'immediate_october' as const
 		};
 
-		const tracks = generatePersonalizedTracks(dummyGap, blankProfile, dummyInstRes, preferences);
+		const tracks = generatePersonalizedTracks(dummyGap, blankProfile, dummyInstRes);
 		assert.deepEqual(tracks, [], 'Engine must return empty array when no valid grades entered');
 	});
 });

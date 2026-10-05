@@ -131,9 +131,9 @@ export default function TrackRegistrationGate({
 						<div className="rounded-2xl border border-[#E5DFD4] bg-[#FAF8F5] p-5 space-y-4">
 							<div className="flex items-center justify-between">
 								<span className="text-xs font-bold text-purple-800 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">
-									חלופה // מכינה / אפיק מעבר
+									חלופה // דרכי קבלה רשמיות
 								</span>
-								<span className="text-xs text-[#88857E]">מסלול עוקף</span>
+								<span className="text-xs text-[#88857E]">לפי המוסד</span>
 							</div>
 							<div className="h-5 w-3/4 bg-[#DDD7CC] rounded-md" />
 							<div className="space-y-2 pt-2">

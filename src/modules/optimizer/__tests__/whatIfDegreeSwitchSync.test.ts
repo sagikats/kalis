@@ -62,7 +62,7 @@ test('WhatIfDegreeSwitchSync: verifies primary recommended track is loaded on de
 		targetTimeline: 'immediate_october' as const
 	};
 
-	const biuTracks = generatePersonalizedTracks(biuGap, userProfile, biuRes, preferences);
+	const biuTracks = generatePersonalizedTracks(biuGap, userProfile, biuRes);
 	assert.ok(biuTracks.length >= 2, 'BIU program should have at least 2 tracks');
 	const biuPrimary = biuTracks.find((t) => t.badge === 'הכי מומלץ') || biuTracks[0];
 	assert.ok(biuPrimary, 'BIU program must have a primary track');
@@ -84,7 +84,7 @@ test('WhatIfDegreeSwitchSync: verifies primary recommended track is loaded on de
 		} as any
 	};
 	const technionGap = analyzeProgramGap(technionCsSelection, userProfile, technionRes);
-	const technionTracks = generatePersonalizedTracks(technionGap, userProfile, technionRes, preferences);
+	const technionTracks = generatePersonalizedTracks(technionGap, userProfile, technionRes);
 	assert.ok(technionTracks.length >= 1, 'Technion CS must have tracks');
 	const technionPrimary = technionTracks.find((t) => t.badge === 'הכי מומלץ') || technionTracks[0];
 	assert.ok(technionPrimary, 'Technion CS must have a primary track');

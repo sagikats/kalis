@@ -193,8 +193,7 @@ export function runBatchAudit(): BatchAuditSummary {
 		const tracks = generatePersonalizedTracks(
 			gapAnalysis,
 			archetype.profile,
-			initialRes as any,
-			archetype.preferences
+			initialRes as any
 		);
 
 		// 4. Audit Scenario

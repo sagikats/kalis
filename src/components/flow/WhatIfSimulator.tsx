@@ -745,7 +745,7 @@ export default function WhatIfSimulator({
 				title: activeTrack
 					? `מסלול מותאם: ${activeTrack.title}`
 					: `מסלול מותאם אישית (${totalExamsCount} בחינות)`,
-				badge: isScreening ? 'עובר לשלב המיונים' : isAccepted ? 'קבלה מובטחת' : isMissingRequirement ? 'חסר תנאי סף' : 'מסלול מותאם',
+				badge: isScreening ? 'עובר לשלב המיונים' : isAccepted ? 'עובר את הסף' : isMissingRequirement ? 'חסר תנאי סף' : 'מסלול מותאם',
 				badgeColor: isAccepted ? 'emerald' : isMissingRequirement ? 'amber' : 'blue',
 				targetSekem: currentSekem,
 				targetPsychometric: simulatedPsych,
@@ -1817,7 +1817,7 @@ export default function WhatIfSimulator({
 							</span>
 						</div>
 						<div className="text-base sm:text-lg font-black leading-tight">
-							{isScreening ? 'עובר/ת לשלב המיונים' : isAccepted ? 'קבלה מובטחת 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
+							{isScreening ? 'עובר/ת לשלב המיונים' : isAccepted ? 'עובר/ת את הסף 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
 						</div>
 						<div className="text-[11px] font-medium opacity-90">
 							{isAccepted

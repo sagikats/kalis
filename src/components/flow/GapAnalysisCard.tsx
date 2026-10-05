@@ -202,7 +202,7 @@ export default function GapAnalysisCard({
 												: 'text-[#825B15] bg-white border-[#ECDAB6]'
 										}`}
 									>
-										{prereq.isMet ? 'עומד בדרישה' : prereq.unknown ? 'לא הוזן ציון' : 'חסר / דורש מכינה'}
+										{prereq.isMet ? 'עומד בדרישה' : prereq.unknown ? 'לא הוזן ציון' : 'חסר'}
 									</span>
 								</div>
 								<p className="text-[#66635C] font-medium">
@@ -265,7 +265,7 @@ export default function GapAnalysisCard({
 					<div className="space-y-1.5 max-w-xl">
 						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] text-xs font-bold">
 							<CheckCircle2 className="h-3.5 w-3.5 text-[#205739]" />
-							<span>סטטוס: קבלה מובטחת לחוג זה!</span>
+							<span>סטטוס: עומד/ת בסף ובתנאי הסף שפורסמו</span>
 						</div>
 						<h3 className="text-lg sm:text-xl font-bold text-[#222222]">
 							עובר את סף הקבלה — אין צורך בשיפור ציונים 🎉
@@ -287,7 +287,7 @@ export default function GapAnalysisCard({
 						rel="noopener noreferrer"
 						className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-2xl shadow-sm transition shrink-0 flex items-center gap-2"
 					>
-						<span>מעבר להרשמה ב{analysis.target.institutionName}</span>
+						<span>מעבר להרשמה ב{analysis.target.institutionName.replace(/^ה/, '')}</span>
 						<ExternalLink className="h-4 w-4" />
 					</a>
 				</div>

@@ -180,28 +180,11 @@ export function getFeasibilityEvaluation(
 	feasibility: 'very_high' | 'high' | 'moderate' | 'challenging';
 	explanation: string;
 } {
-	if (psychDelta <= 30 && numSubjects <= 2) {
-		return {
-			feasibility: 'very_high',
-			explanation: 'הסתברות הצלחה סטטיסטית גבוהה מאוד (מעל 85%): השיפור בפסיכומטרי מתון ובר-השגה באופן מלא במחזור בחינה בודד.'
-		};
-	}
-	if (psychDelta <= 60 && numSubjects <= 3) {
-		return {
-			feasibility: 'high',
-			explanation: 'הסתברות הצלחה סטטיסטית גבוהה (75%–85%): עומס הלמידה מבוקר ומחולק בין יעדים ריאליים.'
-		};
-	}
-	if (psychDelta <= 85) {
-		return {
-			feasibility: 'moderate',
-			explanation: 'הסתברות הצלחה סטטיסטית בינונית (60%–75%): דורש תרגול עקבי ומשמעת לימודית גבוהה לסגירת הפער.'
-		};
-	}
-	return {
-		feasibility: 'challenging',
-		explanation: 'מסלול אתגרי (50%–60%): מצריך עלייה של 85–100 נקודות בפסיכומטרי, מומלץ לשלב מרתון סימולציות מורחב.'
-	};
+	// Only a description of the effort — there is no data behind success probabilities, so none is given
+	const exams = numSubjects > 0 ? ` ו-${numSubjects} בחינות בגרות` : '';
+	const effort = psychDelta > 0 ? `שיפור של ${psychDelta} נקודות בפסיכומטרי${exams}.` : numSubjects > 0 ? `${numSubjects} בחינות בגרות, בלי שינוי בפסיכומטרי.` : 'בלי שינוי בציונים.';
+	const feasibility = psychDelta <= 30 && numSubjects <= 2 ? 'very_high' : psychDelta <= 60 && numSubjects <= 3 ? 'high' : psychDelta <= 85 ? 'moderate' : 'challenging';
+	return { feasibility, explanation: effort };
 }
 
 /**
@@ -516,9 +499,7 @@ export function getAvailableSubjectLevers(
 	const currentMathU = userProfile.mathUnits || 4;
 	const currentMathG = userProfile.mathGrade || 80;
 	if (currentMathU < 5) {
-		const mathReason = answers.learningStrength === 'analytical_quick'
-			? 'התאמה אופטימלית לחשיבה אנליטית: שדרוג ל-5 יח״ל מעניק בונוס 35 נקודות ומקדם סכם הנדסה ישיר.'
-			: 'שדרוג ל-5 יח״ל מעניק בונוס מרבי (35 נקודות), מקדם סכם ייעודי ופוטר ממכינות.';
+		const mathReason = 'שדרוג ל-5 יח״ל: מתמטיקה מקבלת את הבונוס הגבוה ביותר ברוב המוסדות (גובה הבונוס משתנה ממוסד למוסד).';
 		levers.push({
 			id: 'math_5u',
 			subjectName: 'מתמטיקה',
@@ -556,7 +537,7 @@ export function getAvailableSubjectLevers(
 			currentUnits: histSub.units,
 			targetGrade: 92,
 			targetUnits: 5,
-			reason: 'הרחבה מ-2 ל-5 יח״ל באמצעות שאלון השלמה של 3 יח״ל בלבד: מעניקה בונוס מלא (20 נקודות) בחצי מהמאמץ של מקצוע חדש.',
+			reason: 'הרחבה מ-2 ל-5 יח״ל: מקצוע מוגבר מקבל בונוס בחישוב הממוצע של המוסד.',
 			priority: 2
 		});
 	}
@@ -572,7 +553,7 @@ export function getAvailableSubjectLevers(
 			currentUnits: tanachSub.units,
 			targetGrade: 92,
 			targetUnits: 5,
-			reason: 'הרחבה ל-5 יח״ל מוגבר באמצעות שאלון השלמה: מעניקה בונוס מלא (20 נקודות) במאמץ ממוקד.',
+			reason: 'הרחבה ל-5 יח״ל: מקצוע מוגבר מקבל בונוס בחישוב הממוצע של המוסד.',
 			priority: 2
 		});
 	}
@@ -588,7 +569,7 @@ export function getAvailableSubjectLevers(
 			currentUnits: litSub.units,
 			targetGrade: 92,
 			targetUnits: 5,
-			reason: 'הרחבה ל-5 יח״ל מוגבר בספרות באמצעות שאלון השלמה של 3 יח״ל: מעניקה בונוס מלא (20 נקודות).',
+			reason: 'הרחבה ל-5 יח״ל בספרות: מקצוע מוגבר מקבל בונוס בחישוב הממוצע של המוסד.',
 			priority: 2
 		});
 	}
@@ -596,9 +577,7 @@ export function getAvailableSubjectLevers(
 	// High-Yield 5-Unit Elective (Geography or Computer Science)
 	const hasGeo = (userProfile.bagrutSubjects || []).some((s) => isSubjectMatch(s.name || (s as any).subjectName || '', 'גיאוגרפיה'));
 	if (!hasGeo) {
-		const geoReason = answers.learningStrength === 'memory_retention'
-			? 'התאמה מושלמת לחוזק בשינון: מקצוע מוגבר מובנה שמעניק בונוס 20–25 נקודות ללא עומס מתמטי.'
-			: 'הרחבת מקצוע בחירה ל-5 יח״ל מעניקה בונוס מלא (20–25 נקודות) ומקפיצה את הממוצע האופטימלי.';
+		const geoReason = 'מקצוע בחירה מוגבר (5 יח״ל) מקבל בונוס בחישוב הממוצע של המוסד.';
 		levers.push({
 			id: 'elective_geo_5u',
 			subjectName: 'גיאוגרפיה',
@@ -624,7 +603,7 @@ export function getAvailableSubjectLevers(
 			currentUnits: 0,
 			targetGrade: 92,
 			targetUnits: 5,
-			reason: 'מקצוע מוגבר הדורש פרויקט תכנות ולמידה מאפס (בונוס 25 נקודות). מומלץ רק לבעלי רקע או תפיסה אנליטית מובהקת.',
+			reason: 'מקצוע מוגבר הדורש פרויקט תכנות ולמידה מאפס. מקבל בונוס בחישוב הממוצע של המוסד.',
 			priority: 3
 		});
 	}
@@ -641,7 +620,7 @@ export function getAvailableSubjectLevers(
 				currentUnits: currentPhysU || 0,
 				targetGrade: 88,
 				targetUnits: 5,
-				reason: 'דרישת קדם הכרחית לפקולטות המובילות, מעניקה בונוס מדעים 25 נקודות ופטור ממבחני סיווג.',
+				reason: 'פיזיקה 5 יח״ל: מקצוע מדעי מוגבר שמקבל בונוס בחישוב הממוצע של המוסד.',
 				priority: 2,
 				isPhysics: true
 			});
@@ -713,7 +692,7 @@ export function getAvailableSubjectLevers(
 			currentUnits: englishSub.units,
 			targetGrade: 88,
 			targetUnits: 5,
-			reason: 'שדרוג ל-5 יח״ל מעניק בונוס 25 נקודות ומבטיח פטור מלא מלימודי אנגלית.',
+			reason: 'שדרוג ל-5 יח״ל: מקצוע מוגבר מקבל בונוס בחישוב הממוצע של המוסד.',
 			priority: 4
 		});
 	}
@@ -1115,14 +1094,13 @@ export const DEFAULT_USER_PREFERENCES: UserPreferencesQuestionnaire = {
 export function generatePersonalizedTracks(
 	gapAnalysis: ProgramGapAnalysis,
 	userProfile: UserAcademicProfile,
-	institutionRes: InstitutionSekemResult,
-	inputAnswers?: Partial<UserPreferencesQuestionnaire>
+	institutionRes: InstitutionSekemResult
 ): RecommendedTrack[] {
 	// A screened program (medicine) without a published threshold: there is no score target to plan towards
 	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return [];
 	const tracks = markScreeningTracks(
 		gapAnalysis,
-		markRequirementOnlyTracks(gapAnalysis, userProfile, generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes, inputAnswers))
+		markRequirementOnlyTracks(gapAnalysis, userProfile, generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes))
 	);
 	if (gapAnalysis.relevantSekemType !== 'psychometric' || gapAnalysis.threshold === null) return tracks;
 
@@ -1213,13 +1191,10 @@ function markScreeningTracks(gapAnalysis: ProgramGapAnalysis, tracks: Recommende
 function generateAllPersonalizedTracks(
 	gapAnalysis: ProgramGapAnalysis,
 	userProfile: UserAcademicProfile,
-	institutionRes: InstitutionSekemResult,
-	inputAnswers?: Partial<UserPreferencesQuestionnaire>
+	institutionRes: InstitutionSekemResult
 ): RecommendedTrack[] {
-	const answers: UserPreferencesQuestionnaire = {
-		...DEFAULT_USER_PREFERENCES,
-		...(inputAnswers || {})
-	};
+	// The questionnaire is not part of the algorithm: every applicant gets the same fixed rules
+	const answers: UserPreferencesQuestionnaire = DEFAULT_USER_PREFERENCES;
 
 	// HARD GUARD: If user has not entered valid Bagrut grades (no subjects, total units < 20, or bagrut average <= 0)
 	// NEVER invent fake tracks!
@@ -1700,7 +1675,7 @@ function generateAllPersonalizedTracks(
 			feasibility: 'very_high',
 			feasibilityExplanation: isZeroLevers
 				? `עמידה מלאה ומיידית ברף קבלה ישירה בבגרות (${directBagrutSol.res.bagrutAverage.toFixed(1)}) ללא צורך בבחינות נוספות.`
-				: `קבלה מובטחת רשמית על סמך עמידה ברף קבלה ישירה בבגרות (${directBagrutSol.res.bagrutAverage.toFixed(1)}), עם אפס תלות במבחן הפסיכומטרי.`,
+				: `עמידה בסף הרשמי של הקבלה לפי בגרות בלבד (ממוצע ${directBagrutSol.res.bagrutAverage.toFixed(1)}), בלי פסיכומטרי.`,
 			steps: isZeroLevers
 				? [
 					{
@@ -2223,9 +2198,9 @@ function generateAllPersonalizedTracks(
 						strategyDescription: `בניית בסיס אקדמי מוצק: שדרוג ${anchorSummary} מעלה את ממוצע הבגרות ל-${targetBagrutAnchor.toFixed(1)}.${
 							anchorPsych > (hasTakenPsych ? currentPsych : 0)
 								? (hasTakenPsych
-									? ` דורש רק פסיכומטרי ${anchorPsych} (+${anchorPsychDelta} נקודות בלבד) לסגירת הרף המלא (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`
-									: ` דורש יעד פסיכומטרי ראשון נגיש של ${anchorPsych} בלבד לסגירת הרף המלא (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`)
-								: ` סוגר את סף הקבלה ישירות (סכם מובטח: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)}) ללא צורך בהעלאת ציון הפסיכומטרי!`
+									? ` דורש רק פסיכומטרי ${anchorPsych} (+${anchorPsychDelta} נקודות בלבד) לסגירת הרף המלא (סכם מחושב: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`
+									: ` דורש יעד פסיכומטרי ראשון נגיש של ${anchorPsych} בלבד לסגירת הרף המלא (סכם מחושב: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} מול סף ${threshold}).`)
+								: ` סוגר את סף הקבלה ישירות (סכם מחושב: ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)}) ללא צורך בהעלאת ציון הפסיכומטרי!`
 						}`,
 						targetSekem: anchorRes.sekem,
 						targetPsychometric: anchorPsych,
@@ -2276,8 +2251,8 @@ function generateAllPersonalizedTracks(
 										{
 											title: 'הגשת מועמדות ורישום',
 											detail: hasTakenPsych
-												? `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} וקבלה מובטחת עם הפסיכומטרי הקיים (${currentPsych})!`
-												: `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} וקבלה מובטחת!`,
+												? `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} ועמידה בסף עם הפסיכומטרי הקיים (${currentPsych}).`
+												: `זכאות מלאה לסכם ${anchorRes.sekem.toFixed(isTechnion ? 2 : 1)} ועמידה בסף.`,
 											timing: 'שבועות 17–18',
 											type: 'bagrut_core' as const
 										}

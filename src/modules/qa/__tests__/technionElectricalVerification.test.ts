@@ -79,7 +79,7 @@ describe('Technion Electrical Engineering Verification Debug', () => {
 			targetTimeline: 'flexible'
 		};
 
-		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, technionRes, answers);
+		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, technionRes);
 		console.log('Generated tracks count:', tracks.length);
 		tracks.forEach((t, i) => {
 			console.log(`\n=== TRACK ${i + 1}: ${t.title} ===`);

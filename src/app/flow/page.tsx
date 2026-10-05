@@ -784,10 +784,9 @@ export default function AdmissionFlowPage() {
 		return generatePersonalizedTracks(
 			currentFocusedAnalysis,
 			userProfile,
-			instRes,
-			questionnaireAnswers || undefined
+			instRes
 		);
-	}, [gradeValidation.isValid, currentFocusedAnalysis, questionnaireAnswers, institutionResultsMap, userProfile]);
+	}, [gradeValidation.isValid, currentFocusedAnalysis, institutionResultsMap, userProfile]);
 
 	return (
 		<div className={`w-full bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
@@ -1363,7 +1362,6 @@ export default function AdmissionFlowPage() {
 									tracks={recommendedTracks || []}
 									userProfile={userProfile}
 									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
-									mechinaAvailable={currentFocusedAnalysis.status === 'not_accepted' || currentFocusedAnalysis.gap < 0}
 									onSelectProgram={(programId) => setFocusedProgramId(programId)}
 									onBackToReport={() => setActiveStep(3)}
 								/>

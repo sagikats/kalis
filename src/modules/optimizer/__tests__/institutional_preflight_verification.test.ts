@@ -83,7 +83,7 @@ describe('Institutional Pre-Flight Verification & Cross-Track Coherence', () => 
 			targetTimeline: 'flexible'
 		};
 
-		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, technionRes, preferences);
+		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, technionRes);
 		assert.ok(tracks.length >= 2, 'Should generate at least 2 tracks');
 
 		// 1. Verify EVERY track against pure calculateInstitution('technion', ...)
@@ -207,7 +207,7 @@ describe('Institutional Pre-Flight Verification & Cross-Track Coherence', () => 
 			targetTimeline: 'flexible'
 		};
 
-		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, tauRes, preferences);
+		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, tauRes);
 		assert.ok(tracks.length >= 1, 'Should generate tracks for TAU CS');
 
 		for (const t of tracks) {
@@ -287,7 +287,7 @@ describe('Institutional Pre-Flight Verification & Cross-Track Coherence', () => 
 			targetTimeline: 'flexible'
 		};
 
-		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, bguRes, preferences);
+		const tracks = generatePersonalizedTracks(gapAnalysis, userProfile, bguRes);
 		assert.ok(tracks.length >= 1, 'Should generate tracks for BGU Software Engineering');
 
 		for (const t of tracks) {
