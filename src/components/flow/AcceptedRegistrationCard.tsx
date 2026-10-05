@@ -42,6 +42,8 @@ export default function AcceptedRegistrationCard({
 	);
 
 	const surplus = Math.max(0, analysis.gap);
+	/** Medicine-style programs: passing only invites to the screening stage (MOR / interviews). */
+	const isScreening = analysis.status === 'screening';
 	const unacceptedOthers = otherAnalyses.filter(
 		(a) => a.target.program.id !== analysis.target.program.id && (a.status === 'not_accepted' || a.status === 'missing_requirement')
 	);
@@ -56,7 +58,7 @@ export default function AcceptedRegistrationCard({
 						<div className="flex items-center gap-2">
 							<span className="px-3 py-1 bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] text-xs font-bold rounded-lg flex items-center gap-1.5">
 								<CheckCircle2 className="h-4 w-4 text-[#205739]" />
-								<span>קבלה מובטחת — עומד בכל הדרישות!</span>
+								<span>{isScreening ? 'עובר/ת לשלב המיונים — זו עדיין לא קבלה' : 'קבלה מובטחת — עומד בכל הדרישות!'}</span>
 							</span>
 							<span className="text-xs text-[#66635C] font-bold">
 								{analysis.target.institutionName} • {analysis.target.program.degreeLevel}
@@ -65,7 +67,7 @@ export default function AcceptedRegistrationCard({
 
 						<div className="bg-[#FAF8F5] border border-[#C6DFCE] px-3.5 py-1.5 rounded-xl text-[#205739] text-xs font-bold flex items-center gap-1.5">
 							<Award className="h-4 w-4 text-[#205739]" />
-							<span>עודף ביטחון: +{surplus.toFixed(analysis.target.calculatorId === 'technion' ? 2 : 1)} נקודות סכם</span>
+							<span>{analysis.threshold === null ? 'סף שלב א\' לא מתפרסם מראש' : `עודף ביטחון: +${surplus.toFixed(analysis.target.calculatorId === 'technion' ? 2 : 1)} נקודות סכם`}</span>
 						</div>
 					</div>
 
@@ -75,10 +77,14 @@ export default function AcceptedRegistrationCard({
 							<UniversityLogo institution={analysis.target.institutionId} size="xl" shape="rounded" />
 							<div>
 								<h2 className="text-2xl sm:text-3xl font-bold text-[#222222]">
-									ברכות! התקבלת ל{analysis.target.program.fieldOfStudy} 🎉
+									{isScreening
+										? `עברת לשלב המיונים ב${analysis.target.program.fieldOfStudy}`
+										: `ברכות! התקבלת ל${analysis.target.program.fieldOfStudy} 🎉`}
 								</h2>
 								<p className="text-xs sm:text-sm text-[#66635C] font-medium">
-									הנתונים האקדמיים שלך עוברים את סף הקבלה הרשמי של האוניברסיטה לשנת הלימודים.
+									{isScreening
+										? analysis.admissionNote
+										: 'הנתונים האקדמיים שלך עוברים את סף הקבלה הרשמי של האוניברסיטה לשנת הלימודים.'}
 								</p>
 							</div>
 						</div>
@@ -97,10 +103,10 @@ export default function AcceptedRegistrationCard({
 
 						<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
 							<span className="text-[11px] text-[#66635C] font-bold block">
-								סף הקבלה הנדרש בחוג
+								{isScreening ? 'סף הזימון לשלב המיונים' : 'סף הקבלה הנדרש בחוג'}
 							</span>
 							<span className="text-2xl font-bold text-[#205739] mt-1 block">
-								{analysis.threshold}
+								{analysis.threshold ?? 'לא מתפרסם מראש'}
 							</span>
 						</div>
 
@@ -109,7 +115,7 @@ export default function AcceptedRegistrationCard({
 								סטטוס פלואו
 							</span>
 							<span className="text-sm font-bold text-[#205739] mt-2 block">
-								אין צורך בשיפור ציונים ✨
+								{isScreening ? 'השלב הבא: המיונים' : 'אין צורך בשיפור ציונים ✨'}
 							</span>
 						</div>
 					</div>

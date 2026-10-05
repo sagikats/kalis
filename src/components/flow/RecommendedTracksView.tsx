@@ -2005,7 +2005,12 @@ export default function RecommendedTracksView({
 								</div>
 							)}
 
-							{/* Interactive What-If Simulator */}
+							{/* Interactive What-If Simulator (needs a published threshold to compare against) */}
+							{analysis.threshold === null ? (
+								<div className="p-4 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-xs text-[#453D78] font-medium leading-relaxed">
+									לתואר הזה אין סף מספרי שמתפרסם מראש, ולכן אין מה לדמות בסימולטור. {analysis.admissionNote}
+								</div>
+							) : (
 							<WhatIfSimulator
 								analysis={analysis}
 								userProfile={userProfile}
@@ -2017,6 +2022,7 @@ export default function RecommendedTracksView({
 									setActiveTab('recommended');
 								}}
 							/>
+							)}
 						</div>
 					) : (
 						<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] space-y-4">

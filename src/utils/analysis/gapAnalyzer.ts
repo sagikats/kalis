@@ -16,7 +16,11 @@ import { InstitutionSekemResult } from '../calculators/multiCalculator';
  * accepted — admitted on some official route; missing_requirement — the sekem passes the threshold but an official
  * condition (minimum psychometric, subject requirement) is missing; not_accepted — below the threshold.
  */
-export type AdmissionStatus = 'accepted' | 'missing_requirement' | 'not_accepted' | 'no_threshold';
+/**
+ * 'screening': the threshold and official conditions are met, which only invites the applicant to a screening stage
+ * (medicine: MOR/מרק"ם, interviews) — the final decision is made there.
+ */
+export type AdmissionStatus = 'accepted' | 'missing_requirement' | 'not_accepted' | 'no_threshold' | 'screening';
 
 export interface TargetProgramSelection {
 	institutionId: string; // e.g. 'inst-6'
@@ -94,7 +98,7 @@ export interface UserAcademicProfile {
 
 export function parseAdmissionThreshold(raw: number | string | undefined | null): number | null {
 	if (raw === undefined || raw === null) return null;
-	if (typeof raw === 'number') return isNaN(raw) ? null : raw;
+	if (typeof raw === 'number') return isNaN(raw) || raw <= 0 ? null : raw;
 	const trimmed = String(raw).trim();
 	if (trimmed.includes('ללא') || trimmed.includes('ראיון') || trimmed.includes('אודישן')) return null;
 	const parsed = parseFloat(trimmed);
@@ -683,6 +687,54 @@ export function analyzeProgramGap(
 					potentialSekemGain: 0
 				});
 			}
+		}
+	}
+
+	// Medicine and other screened programs: passing never means "accepted" — it means moving on to the screening stage.
+	if (routes?.screening) {
+		const screeningNote = routes.screening.note;
+		if (threshold === null && !routes.requirementsSource) {
+			// Neither a threshold nor verified registration conditions: say so, never guess
+			status = 'no_threshold';
+			admissionRoute = undefined;
+			admissionNote = `תנאי הקבלה לתואר הזה טרם אומתו מול המקור הרשמי. ${screeningNote}`;
+		} else if (threshold === null) {
+			// No published threshold: only the official registration conditions can be checked
+			const floorMissing = Boolean(routes.minPsychometric && psych < routes.minPsychometric);
+			const avgMissing = Boolean(routes.minBagrutAverage && (institutionRes.bagrutAverage || 0) < routes.minBagrutAverage);
+			const unmet = [
+				...(floorMissing ? [`פסיכומטרי ${routes.minPsychometric}`] : []),
+				...(avgMissing ? [`ממוצע בגרות ${routes.minBagrutAverage}`] : []),
+				...unmetRequirements.map((r) => r.requirement.title)
+			];
+			if (unmet.length > 0) {
+				status = 'not_accepted';
+				admissionNote = `לא מתקיימים תנאי הסף להרשמה: ${unmet.join(', ')}. ${screeningNote}`;
+				if (floorMissing && !improvementOptions.some((o) => o.id === 'opt-psych-floor')) {
+					improvementOptions.unshift({
+						id: 'opt-psych-floor',
+						type: 'psychometric',
+						title: `הגעה לפסיכומטרי ${routes.minPsychometric} (תנאי סף רשמי)`,
+						description: `התואר דורש פסיכומטרי ${routes.minPsychometric} לפחות. ${psych ? `חסרות ${routes.minPsychometric! - psych} נקודות.` : 'יש לגשת לבחינה.'}`,
+						currentValue: psych || 'טרם נבחנת',
+						targetValue: routes.minPsychometric!,
+						gapAmount: psych ? routes.minPsychometric! - psych : routes.minPsychometric!,
+						effortLevel: 'hard',
+						estimatedWeeks: 12,
+						potentialSekemGain: 0
+					});
+				}
+			} else {
+				status = 'screening';
+				admissionNote = `עומד/ת בתנאי הסף להרשמה. סף המעבר לשלב ${routes.screening.stage} נקבע מדי שנה לפי המועמדים ואינו מתפרסם מראש. ${screeningNote}`;
+			}
+			admissionRoute = undefined;
+		} else if (status === 'accepted') {
+			status = 'screening';
+			admissionRoute = undefined;
+			admissionNote = `עובר/ת את סף הזימון ל${routes.screening.stage} (${threshold}). זו לא קבלה: ההחלטה הסופית נקבעת בשלב המיונים. ${screeningNote}`;
+		} else {
+			admissionNote = `${admissionNote ? `${admissionNote} ` : ''}הסף הוא סף הזימון ל${routes.screening.stage}, לא סף קבלה. ${screeningNote}`;
 		}
 	}
 

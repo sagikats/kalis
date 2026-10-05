@@ -41,6 +41,18 @@ export interface AdmissionRoutes {
      minPsychometric?: number;
      /** A minimum bagrut average (institution's own average) required in addition to the main threshold (Bar-Ilan "נדרשת עמידה בממוצע X בבגרות"). */
      minBagrutAverage?: number;
+     /**
+      * Medicine-style admission: meeting the threshold and conditions only invites the applicant to a screening stage
+      * (MOR/מרק"ם, interviews, a computerized test); the final decision comes from that stage. Never "accepted".
+      */
+     screening?: {
+          /** Short name of the stage, e.g. 'מבדקי מו"ר/מרק"ם'. */
+          stage: string;
+          /** The official description of the process (stages, weights, published cutoffs). */
+          note: string;
+          /** URL — date. */
+          source: string;
+     };
      /** Admission on the general psychometric score alone ("או פסיכומטרי X", "קבלה לפי פסיכומטרי"). */
      psychometricOnlyMin?: number;
      /** Admission on the institution's bagrut average alone ("קבלה לפי בגרות בלבד"). */

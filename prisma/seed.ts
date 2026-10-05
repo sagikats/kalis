@@ -172,7 +172,8 @@ async function main() {
 				}
 			}
 
-			if (parsedThreshold === 0) continue;
+			// Screened programs (medicine) may have no published threshold — keep them; 0 = no threshold
+			if (parsedThreshold === 0 && !p.admissionRoutes?.screening) continue;
 
 			let progId = p.id || `prog_${instId}_${programCounter++}`;
 			if (seenIds.has(progId)) {

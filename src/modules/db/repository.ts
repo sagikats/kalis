@@ -180,7 +180,8 @@ export class KalisDatabaseRepository {
 					}
 				}
 
-				if (parsedThreshold === 0) continue; // Skip programs with no numeric threshold
+				// Skip programs with no numeric threshold — except screened programs (medicine), where 0 = not published
+				if (parsedThreshold === 0 && !(p as any).admissionRoutes?.screening) continue;
 
 				const progId = p.id || `prog_${instId}_${programCount++}`;
 				const field = p.fieldOfStudy || p.name || 'כללי';

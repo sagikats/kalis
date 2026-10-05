@@ -2,6 +2,7 @@
 
 import React, { useMemo } from 'react';
 import Link from 'next/link';
+import { describeThresholdSource } from '@/utils/sourceLink';
 import {
 	CheckCircle2,
 	AlertCircle,
@@ -34,7 +35,8 @@ export default function PersonalAdmissionReport({
 			accepted: analyses.filter((a) => a.status === 'accepted').length,
 			missing_requirement: analyses.filter((a) => a.status === 'missing_requirement').length,
 			not_accepted: analyses.filter((a) => a.status === 'not_accepted').length,
-			no_threshold: analyses.filter((a) => a.status === 'no_threshold').length
+			// Screening (medicine: MOR / interviews) is shown with the programs that have a separate admission process
+			no_threshold: analyses.filter((a) => a.status === 'no_threshold' || a.status === 'screening').length
 		};
 	}, [analyses]);
 
@@ -43,7 +45,7 @@ export default function PersonalAdmissionReport({
 			accepted: analyses.filter((a) => a.status === 'accepted'),
 			missing_requirement: analyses.filter((a) => a.status === 'missing_requirement'),
 			not_accepted: analyses.filter((a) => a.status === 'not_accepted'),
-			no_threshold: analyses.filter((a) => a.status === 'no_threshold')
+			no_threshold: analyses.filter((a) => a.status === 'no_threshold' || a.status === 'screening')
 		};
 	}, [analyses]);
 
@@ -114,7 +116,7 @@ export default function PersonalAdmissionReport({
 					<div className="p-3.5 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-center">
 						<span className="text-[11px] font-bold text-[#453D78] block">🎓 קבלה נפרדת</span>
 						<span className="text-2xl font-black text-[#453D78] mt-0.5 block">{counts.no_threshold}</span>
-						<span className="text-[10px] text-[#453D78]/80">אודישן / ראיון</span>
+						<span className="text-[10px] text-[#453D78]/80">מיונים / אודישן / ראיון</span>
 					</div>
 				</div>
 
@@ -238,13 +240,16 @@ function ProgramReportCard({
 }) {
 	const isAccepted = item.status === 'accepted';
 	const isMissingRequirement = item.status === 'missing_requirement';
-	const isNoThreshold = item.status === 'no_threshold';
+	const isScreening = item.status === 'screening';
+	const isNoThreshold = item.status === 'no_threshold' || (isScreening && item.threshold === null);
+	/** Medicine-style program: the threshold only invites to MOR / interviews. */
+	const isScreenedProgram = Boolean(item.admissionRoutes?.screening);
 
 	const borderStyle = isAccepted
 		? 'border-[#C6DFCE] bg-[#FBFDFB]'
 		: isMissingRequirement
 		? 'border-[#ECDAB6] bg-[#FDFCF8]'
-		: isNoThreshold
+		: isNoThreshold || isScreening
 		? 'border-[#D2CEEB] bg-[#FAF9FD]'
 		: 'border-[#F1CAC1] bg-[#FDFBFB]';
 
@@ -252,7 +257,7 @@ function ProgramReportCard({
 		? 'text-[#205739] bg-[#EBF4EE] border-[#C6DFCE]'
 		: isMissingRequirement
 		? 'text-[#825B15] bg-[#FDF6E8] border-[#ECDAB6]'
-		: isNoThreshold
+		: isNoThreshold || isScreening
 		? 'text-[#453D78] bg-[#F2F1F8] border-[#D2CEEB]'
 		: 'text-[#9B3327] bg-[#FDF1EE] border-[#F1CAC1]';
 
@@ -270,8 +275,12 @@ function ProgramReportCard({
 		? 'חסר פסיכומטרי מינימלי'
 		: isMissingRequirement
 		? 'חסר תנאי סף רשמי'
+		: isScreening
+		? item.threshold === null ? 'עומד בתנאי ההרשמה · מיונים' : `עובר לשלב המיונים (+${item.gap})`
 		: isNoThreshold
 		? 'קבלה נפרדת'
+		: isScreenedProgram && item.threshold === null
+		? 'לא עומד בתנאי הסף'
 		: `פער: ${Math.abs(item.gap)} נק׳`;
 
 	return (
@@ -309,18 +318,22 @@ function ProgramReportCard({
 							{item.officialThreshold !== undefined && item.officialThreshold !== item.threshold && (
 								<span className="text-[10px] text-[#66635C] block">בסולם המוסד: {item.officialThreshold}</span>
 							)}
-							{item.thresholdSource && (
-								<a
-									href={item.thresholdSource.split(' — ')[0]}
-									target="_blank"
-									rel="noopener noreferrer"
-									onClick={(e) => e.stopPropagation()}
-									title={item.thresholdSource.split(' — ').slice(1).join(' — ')}
-									className="text-[10px] text-[#2F6FB0] underline block"
-								>
-									מקור{item.thresholdSource.includes(' — ') ? `: ${item.thresholdSource.split(' — ').slice(1).join(' — ')}` : ''}
-								</a>
-							)}
+							{item.thresholdSource && (() => {
+								const src = describeThresholdSource(item.thresholdSource);
+								return src.href ? (
+									<a
+										href={src.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										onClick={(e) => e.stopPropagation()}
+										className="text-[10px] text-[#2F6FB0] underline block"
+									>
+										{src.label}
+									</a>
+								) : (
+									<span className="text-[10px] text-[#66635C] block">{src.label}</span>
+								);
+							})()}
 						</div>
 					</div>
 				)}
@@ -331,6 +344,8 @@ function ProgramReportCard({
 						className={`p-2.5 rounded-xl text-[11px] font-medium border ${
 							item.status === 'accepted'
 								? 'bg-[#EEF6EF] border-[#C9E2CD] text-[#2E6B3A]'
+								: isScreenedProgram
+								? 'bg-[#F2F1F8] border-[#D2CEEB] text-[#453D78]'
 								: 'bg-[#FBEDEC] border-[#EBC5C1] text-[#8A2F26]'
 						}`}
 					>

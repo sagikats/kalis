@@ -64,7 +64,7 @@
             }
           ],
           "requirementsSource": "https://shoham.biu.ac.il/kabala/Results.aspx — אופטומטריה (חד חוגי), 2026-10-05",
-          "minBagrutAverage": 100.0
+          "minBagrutAverage": 100
         },
         "thresholdSource": "https://shoham.biu.ac.il/kabala/Results.aspx — אופטומטריה (חד חוגי)",
         "thresholdUpdatedAt": "2026-10-05"
@@ -3579,7 +3579,7 @@
             }
           ],
           "requirementsSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים (חד חוגי), 2026-10-05",
-          "minBagrutAverage": 90.0
+          "minBagrutAverage": 90
         },
         "thresholdSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים (חד חוגי)",
         "thresholdUpdatedAt": "2026-10-05"
@@ -5286,17 +5286,65 @@
         "fieldOfStudy": "רפואה (M.D.)",
         "degreeLevel": "M.D",
         "description": "הפקולטה לרפואה ע\"ש עזריאלי בצפת - מסלול שש-שנתי לרפואה (M.D.) לבוגרי תיכון/תואר ראשון",
-        "admissionThreshold": 735,
-        "psychometricScore": 730,
-        "sekemScore": 735,
+        "admissionThreshold": null,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יח\"ל בציון 85+ או 5 יח\"ל בציון 75+",
-        "comments": "הפקולטה לרפואה ע\"ש עזריאלי בצפת - מסלול שש-שנתי (M.D.). תנאי סף: פסיכומטרי 730+, סכם 735+, בגרות 105+, מבחני מו\"ר/מרק\"ם",
-        "notOffered": {
-          "note": "הקבלה לרפואה בבר-אילן בהליך מיון נפרד, לא במחשבון הקבלה לתואר ראשון",
-          "source": "https://shoham.biu.ac.il/kabala/Results.aspx (2026-10-05)"
+        "comments": "תוכנית שש-שנתית (הפקולטה לרפואה ע\"ש עזריאלי, צפת). תנאי סף רשמיים: פסיכומטרי 680+, ממוצע 101+, מתמטיקה 4/85 או 5/80 ללא בונוס, אנגלית 120+.",
+        "admissionRoutes": {
+          "minPsychometric": 680,
+          "minBagrutAverage": 101,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה (ציון ללא בונוס)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 85
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://medicine.biu.ac.il/six_year_track_application_requirements — 2026-10-05",
+          "screening": {
+            "stage": "שלב המיונים",
+            "note": "תנאי סף: פסיכומטרי 680+, ממוצע בגרות משוקלל 101+, מתמטיקה 4 יח\"ל 85 / 5 יח\"ל 80 (ללא בונוס), אנגלית 120+. שלבי המיון וספי המעבר אינם מפורסמים בדף הרשמי (הפקולטה לרפואה ע\"ש עזריאלי, צפת).",
+            "source": "https://medicine.biu.ac.il/six_year_track_application_requirements — 2026-10-05"
+          }
         }
       },
       {
@@ -10728,7 +10776,7 @@
             }
           ],
           "requirementsSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים חד חוגי עם כלכלה חד חוגי (חד חוגי), 2026-10-05",
-          "minBagrutAverage": 90.0
+          "minBagrutAverage": 90
         },
         "comments": "תנאי קבלה רשמיים (מחשבון בר-אילן): שקלול לקבלה 75.00, לדחייה 74.99 (סולם 0–100); ההרשמה למסלול סגורה כרגע (לפי המחשבון). ערוץ קבלה לפי שקלול בגרות ופסיכומטרי: • נדרשת עמידה בשקלול לקבלה • מינימום ציון פסיכומטרי - 600 • נדרשת עמידה בממוצע 90 בבגרות. • מינימום ציון 80 בבגרות במתמטיקה ב- 5 יח\"ל או ציון 95 ב- 4 יח\"ל או ציון 118 בחלק הכמותי של הפסיכומטרי. •  • לנדרשים במבחן יע\"ל - נדרש ציון 120 ומעלהערוץ קבלה לפי פסיכומטרי:  • מינימום ציון פסיכומטרי - 720 • זכאות לתעודת בגרות •  • לנדרשים במבחן יע\"ל - נדרש ציון 120 ומעלהערוץ קבלה לפי בגרות ללא פסיכומטרי: • נדרשת עמידה בממוצע 112 בבגרות. • מינימום ציון בגרות באנגלית 5 יח\"ל - 90 • מינימום ציון 80 בבגרות במתמטיקה ב- 5 יח\"ל או ציון 95 ב- 4 יח\"ל  • לנדרשים במבחן יע\"ל - נדרש ציון 120 ומעלה",
         "thresholdSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים חד חוגי עם כלכלה חד חוגי (חד חוגי)",
@@ -10766,7 +10814,7 @@
             }
           ],
           "requirementsSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים חד חוגי עם עבודה סוציאלית חד חוגי (חד חוגי), 2026-10-05",
-          "minBagrutAverage": 90.0
+          "minBagrutAverage": 90
         },
         "comments": "תנאי קבלה רשמיים (מחשבון בר-אילן): שקלול לקבלה 75.00, לדחייה 74.99 (סולם 0–100); ההרשמה למסלול סגורה כרגע (לפי המחשבון). ערוץ קבלה לפי שקלול בגרות ופסיכומטרי: • נדרשת עמידה בשקלול לקבלה • מינימום ציון פסיכומטרי - 600 • נדרשת עמידה בממוצע 90 בבגרות.הערות כלליות:מס' המקומות במסלול מוגבל.",
         "thresholdSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים חד חוגי עם עבודה סוציאלית חד חוגי (חד חוגי)",
@@ -10839,7 +10887,7 @@
             }
           ],
           "requirementsSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים פילוסופיה (חד חוגי), 2026-10-05",
-          "minBagrutAverage": 90.0
+          "minBagrutAverage": 90
         },
         "comments": "תנאי קבלה רשמיים (מחשבון בר-אילן): שקלול לקבלה 75.00, לדחייה 74.99 (סולם 0–100). ערוץ קבלה לפי שקלול בגרות ופסיכומטרי: • נדרשת עמידה בשקלול לקבלה • מינימום ציון פסיכומטרי - 600 • נדרשת עמידה בממוצע 90 בבגרות.ערוץ קבלה לפי פסיכומטרי:  • מינימום ציון פסיכומטרי - 720 • זכאות לתעודת בגרות.ערוץ קבלה לפי בגרות ללא פסיכומטרי: • נדרשת עמידה בממוצע 112 בבגרות. • מינימום ציון בגרות באנגלית 5 יח\"ל - 90הערות כלליות: • מועמדים שנדחו בציון משוקלל 72 ומעלה יוכלו להירשם לקורס קדם בכפוף לתנאי המינימום המתפרסמים בידיעון. הקורס יתקיים בפקולטה למשפטים במועד שיפורסם על ידה ועלותו 1,100 ש\"ח. מועמד שיהיה נוכח בכל המפגשים, יעבור את המבחן בציון שייקבע ע\"י הפקולטה וכן יעמוד בבחינת מיון באנגלית (מאל\"ו) בציון 85 - יתקבל ללימודים. הפקולטה שומרת לעצמה את הזכות לסגור את הרישום לקורס בכל עת.",
         "thresholdSource": "https://shoham.biu.ac.il/kabala/Results.aspx — משפטים פילוסופיה (חד חוגי)",
@@ -16843,7 +16891,7 @@
         "degreeLevel": "תואר ראשון",
         "admissionThreshold": 716,
         "psychometricScore": 740,
-        "comments": "סף זימון למבחן מרק\"ם/מו\"ר: פסיכומטרי 740+ וממוצע בגרות 112+",
+        "comments": "הליך מיון בשלושה שלבים (רשמי, info.huji.ac.il). שלב א': ציון משוקלל קוגניטיבי (בגרות ופסיכומטרי), סף המעבר לתשפ\"ז 25.186. שלב ב': מבדקי מו\"ר/מרק\"ם, נדרש 175 לפחות. שלב ג': ציון סופי 60% מו\"ר/מרק\"ם ו-40% הציון המשוקלל; הציון הסופי לקבלה שפורסם לתשפ\"ז 25.783 (תשפ\"ו 25.966). פסיכומטרי רב-תחומי 700 לפחות.",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
@@ -16855,7 +16903,12 @@
         "admissionRoutes": {
           "requirements": [],
           "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Medicine",
-          "minPsychometric": 700
+          "minPsychometric": 700,
+          "screening": {
+            "stage": "מבדקי מו\"ר/מרק\"ם",
+            "note": "שלב א': ציון משוקלל קוגניטיבי (בגרות ופסיכומטרי), סף המעבר לתשפ\"ז 25.186. שלב ב': מבדקי מו\"ר/מרק\"ם, נדרש 175 לפחות. שלב ג': ציון סופי 60% מו\"ר/מרק\"ם ו-40% הציון המשוקלל; הציון הסופי לקבלה שפורסם לתשפ\"ז 25.783 (תשפ\"ו 25.966). פסיכומטרי רב-תחומי 700 לפחות.",
+            "source": "https://info.huji.ac.il/bachelor/Medicine — 2026-10-05"
+          }
         }
       },
       {
@@ -16864,7 +16917,7 @@
         "degreeLevel": "תואר ראשון",
         "admissionThreshold": 661,
         "psychometricScore": 680,
-        "comments": "נדרש מעבר מבחני התאמה וראיון",
+        "comments": "הליך מיון בשלושה שלבים (רשמי): ציון קוגניטיבי, מבחן תפיסה מרחבית, ראיונות ושאלון שאו\"ל. פסיכומטרי רב-תחומי 640 לפחות.",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
@@ -16892,7 +16945,12 @@
             }
           ],
           "requirementsSource": "info.huji.ac.il — \"תנאי סף\" › \"תנאים נוספים\" (2026-10-04): https://info.huji.ac.il/bachelor/Dental-Medicine",
-          "minPsychometric": 640
+          "minPsychometric": 640,
+          "screening": {
+            "stage": "מבחן תפיסה מרחבית וראיונות",
+            "note": "שלב א': ציון משוקלל קוגניטיבי וסף מעבר. שלב ב': מבחן תפיסה מרחבית — כ-85% מהמועמדים הגבוהים עוברים. שלב ג': יום ראיונות ושאלון שאו\"ל (80% ראיונות, 20% שאו\"ל). פסיכומטרי רב-תחומי 640 לפחות.",
+            "source": "https://info.huji.ac.il/bachelor/Dental-Medicine — 2026-10-05"
+          }
         }
       },
       {
@@ -17757,43 +17815,18 @@
         "fieldOfStudy": "לימודי רפואה (MD) עם תכנית נוספת",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0102",
-        "admissionThreshold": 735,
+        "admissionThreshold": null,
         "programId": "0102",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "sekemScore": 735,
-        "psychometricScore": 735,
-        "comments": "מסלול משולב ברפואה (MD) עם תוכנית נוספת - סף זימון סכם 735+",
+        "comments": "הקבלה בהליך מיון: סף קוגניטיבי ואחריו מבדקי מו\"ר/מרק\"ם (בתי הספר לרפואה בעברית, בת\"א ובטכניון משתמשים באותם מבדקים — info.huji.ac.il). הספים ותנאי הסף של ת\"א טרם אומתו מול האתר הרשמי.",
         "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "english",
-              "title": "רמת אנגלית (מתקדמים א')",
-              "anyOf": [
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 100
-                    }
-                  ]
-                },
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 85
-                    }
-                  ],
-                  "exam": "קורסי אנגלית (קיץ) להגעה לרמת מתקדמים א' עד תחילת שנת הלימודים"
-                }
-              ],
-              "otherOptions": "ציון מקביל באמירנט / אמי\"ר; ברמת טרום בסיסי (עד 84) — דחייה אוטומטית",
-              "source": "go.tau.ac.il/he/ba/english — ידיעת השפה האנגלית (2026-10-04)"
-            }
-          ],
-          "requirementsSource": "go.tau.ac.il — \"תנאי קבלה\" › \"דרישות הסף של התוכנית\" (2026-10-03): https://go.tau.ac.il/he/med/ba/medresearch?v=requirements"
+          "screening": {
+            "stage": "מבדקי מו\"ר/מרק\"ם",
+            "note": "הקבלה בהליך מיון: סף קוגניטיבי ואחריו מבדקי מו\"ר/מרק\"ם (בתי הספר לרפואה בעברית, בת\"א ובטכניון משתמשים באותם מבדקים — info.huji.ac.il). הספים ותנאי הסף של ת\"א טרם אומתו מול האתר הרשמי.",
+            "source": "https://go.tau.ac.il/he/med/ba/med-doc — 2026-10-05"
+          }
         }
       },
       {
@@ -17801,42 +17834,18 @@
         "fieldOfStudy": "לימודי תואר \"דוקטור ברפואה\"",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0111",
-        "admissionThreshold": 730,
+        "admissionThreshold": null,
         "programId": "0111",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "sekemScore": 730,
-        "psychometricScore": 730,
-        "comments": "סף זימון למבחני מו\"ר/מרק\"ם: ציון התאמה (סכם) 730+ ובגרות 105+",
+        "comments": "הקבלה בהליך מיון: סף קוגניטיבי ואחריו מבדקי מו\"ר/מרק\"ם (בתי הספר לרפואה בעברית, בת\"א ובטכניון משתמשים באותם מבדקים — info.huji.ac.il). הספים ותנאי הסף של ת\"א טרם אומתו מול האתר הרשמי.",
         "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "english",
-              "title": "רמת אנגלית (מתקדמים א')",
-              "anyOf": [
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 100
-                    }
-                  ]
-                },
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 85
-                    }
-                  ],
-                  "exam": "קורסי אנגלית (קיץ) להגעה לרמת מתקדמים א' עד תחילת שנת הלימודים"
-                }
-              ],
-              "otherOptions": "ציון מקביל באמירנט / אמי\"ר; ברמת טרום בסיסי (עד 84) — דחייה אוטומטית",
-              "source": "go.tau.ac.il/he/ba/english — ידיעת השפה האנגלית (2026-10-04)"
-            }
-          ]
+          "screening": {
+            "stage": "מבדקי מו\"ר/מרק\"ם",
+            "note": "הקבלה בהליך מיון: סף קוגניטיבי ואחריו מבדקי מו\"ר/מרק\"ם (בתי הספר לרפואה בעברית, בת\"א ובטכניון משתמשים באותם מבדקים — info.huji.ac.il). הספים ותנאי הסף של ת\"א טרם אומתו מול האתר הרשמי.",
+            "source": "https://go.tau.ac.il/he/med/ba/med-doc — 2026-10-05"
+          }
         }
       },
       {
@@ -17844,42 +17853,18 @@
         "fieldOfStudy": "לימודי תואר \"דוקטור לרפואת שיניים\"",
         "degreeLevel": "תואר ראשון",
         "description": "מזהה תוכנית: 0191",
-        "admissionThreshold": 680,
+        "admissionThreshold": null,
         "programId": "0191",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "sekemScore": 680,
-        "psychometricScore": 680,
-        "comments": "סף זימון למבחני התאמה וראיונות לרפואת שיניים (DMD): סכם 680+",
+        "comments": "הקבלה בהליך מיון. הספים ותנאי הסף של ת\"א טרם אומתו מול האתר הרשמי.",
         "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "english",
-              "title": "רמת אנגלית (מתקדמים א')",
-              "anyOf": [
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 100
-                    }
-                  ]
-                },
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 85
-                    }
-                  ],
-                  "exam": "קורסי אנגלית (קיץ) להגעה לרמת מתקדמים א' עד תחילת שנת הלימודים"
-                }
-              ],
-              "otherOptions": "ציון מקביל באמירנט / אמי\"ר; ברמת טרום בסיסי (עד 84) — דחייה אוטומטית",
-              "source": "go.tau.ac.il/he/ba/english — ידיעת השפה האנגלית (2026-10-04)"
-            }
-          ]
+          "screening": {
+            "stage": "מבחן תפיסה מרחבית וראיונות",
+            "note": "הקבלה בהליך מיון; מבחן התפיסה המרחבית מתקיים בעברית ובת\"א באותו יום (info.huji.ac.il). הספים ותנאי הסף של ת\"א טרם אומתו מול האתר הרשמי.",
+            "source": "https://go.tau.ac.il/he/med/ba/dental — 2026-10-05"
+          }
         }
       },
       {
@@ -36974,19 +36959,42 @@
         "fieldOfStudy": "רפואה על שם ג'ויס וארוינג גולדמן (רפואה על שם ג'ויס וארוינג גולדמן חד-מחלקתי)",
         "degreeLevel": "תואר ראשון",
         "description": "חד-מחלקתי",
-        "admissionThreshold": 735,
-        "sekemScore": 735,
-        "psychometricScore": 680,
+        "admissionThreshold": null,
         "mathRequirement": null,
         "englishRequirement": "מתקדמים ב",
         "hebrewRequirement": "רמה ו'",
         "additionalConditions": null,
-        "comments": "הודעה חשובה להרשמה לשנת הלימודים תשפ\"ז:\n מועד הבחינה הפסיכומטרית האחרון שיילקח בחשבון הינו מועד חורף (דצמבר 2025).\nדרישות נוספות:\n רמה \"מתקדמים ב'\" באנגלית \n רמה ו' בעברית לנדרשים \nפסיכומטרי מועד אפריל 2025 ונתיב לאקדמיה מחזור סתיו תשפ\"ה - מועד אחרון למיונים.\nניתן להירשם לעדיפות ראשונה בלבד.\n  6.4.2025 - סיום הרשמה \n 22.4.2025 - מועד אחרון להגשת טופס מקוון של קורות חיים וגיליונות ציונים מלימודים קודמים, קישור לטופס קו\"ח ועדכון גליון ציונים נמצאים באיזור האישי למועמדים. מועמדים שלא יגישו את המסמכים עד למועד זה, תיפסל מועמדותם על הסף. חשוב-לא נקבל גליון ציונים מעודכן (עם ציונים שנוספו) לאחר מועד זה. עם המעבר לשלבי מיון מתקדמים (לאחר הזימון לראיון שני), יש להציג מסמך מקורי מעודכן וחתום ע\"י המוסד בו למדת.\n22.4.2025 - מועד אחרון להגעת ציוני בגרויות \n24.4.2025 - מועד אחרון להגשת ט.3010 מילואים\n 06-08.5.2025 - מבחני מיון ממוחשבים. \n 4.6.2025 - מועד נוסף מבחני מיון ממוחשבים. \nעלות הבחינה: 395 ש\"ח \n 10.6.2025 - המועד האחרון להגשת המלצות.\n המלצות - יש להיכנס לאזור האישי, לציין את פרטיהם של שני הממליצים ולשלוח אליהם את הקישור. על הממליצים לשלוח את ההמלצות לפי ההנחיות בטופס המקוון עד 10.6.25 [מועמדים שנרשמו בעבר לרפואה 6 שנתי יכולים לעשות שימוש חוזר בהמלצות לאחר ביצוע הרישום. יש להיכנס לאזור האישי ולבחור ב\"ניהול המלצות\"]\n23.06-10.07.2025 - ראיונות קבלה סבב ראשון \n20.7-31.07.2025 - ראיונות קבלה סבב שני\n07-18.9.25 - קורס קיץ חובה למתקבלים - ללא עלות.\nחריגים לשנה א' בלבד:\n מועמדים חדשים: \n 1. ראוי לקידום - פסיכו 660 וסכם 710 יועבר להמשך שלבי המיונים. \n 2. מועמד שלמד במכינת אוניברסיטת בן גוריון או הטכניון ואין לו זכאות לבגרות - חישוב הסכם יהיה 30% ממוצע מכינה + 70% פסיכומטרי. \n 3. מועמד שלמד במכינת אוניברסיטת בן גוריון או הטכניון ויש לו זכאות לבגרות - חישוב הסכם יהיה: 25% ממוצע בגרות + 25% ממוצע מכינה + 50% פסיכומטרי. או לחילופין: 30% ממוצע מכינה + 70% פסיכומטרי - הטוב מבין השניים. \nבעל רקע אקדמי מהארץ בלבד, שאינו עומד בסכם הנדרש, יכול להתמיין במידה ועומד באחת מהאפשרויות הבאות:\n 1. פסיכו 660 וציון ממוצע 95 עם 60 נק\"ז בלימודי מערכת מלאה במשך 3 סמסטרים רצופים מאותו מוסד.\n 2. פסיכו 660 וציון ממוצע 90 עם 80 נק\"ז בלימודי מערכת מלאה במשך 4 סמסטרים רצופים מאותו מוסד.\n 3. בוגרי תואר ראשון עם ממוצע 90 בעלי פסיכו 660.\n שנים מתקדמות ברפואה:\nהחלטת בית הספר לרפואה בגין הרשמה למסלול זה תתקיים לקראת חודש אוגוסט ותפורסם בהתאם",
+        "comments": "הליך מיון (רשמי, תשפ\"ז): סף פסיכומטרי וסכם שנקבע מדי שנה ואינו מתפרסם מראש, מבחן ממוחשב ושני ראיונות. אנגלית: מתקדמים ב'.",
         "registrationStatus": "סגורה",
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/health/School_of_Medicine.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null
+        "directBagrutMinAverage": null,
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "רמת מתקדמים ב' (אמי\"ר/אמירנט)"
+            }
+          ],
+          "requirementsSource": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/acceptance-conditions/ — 2026-10-05",
+          "screening": {
+            "stage": "המבחן הממוחשב והראיונות",
+            "note": "אחרי עמידה בסף הפסיכומטרי והסכם שנקבע כל שנה, יוזמנו למבחן ממוחשב, ומשם לשני ראיונות קבלה. מתקבלים בעלי ההערכות הגבוהות ביותר בכל שלב, עד מילוי המכסה. אנגלית: מתקדמים ב'. המועד האחרון לבחינה הפסיכומטרית: דצמבר 2025.",
+            "source": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/acceptance-conditions/ — 2026-10-05"
+          }
+        }
       },
       {
         "id": "prog-bgu-185",
@@ -43194,14 +43202,21 @@
         "description": "סכם מצטיינים: 229",
         "admissionThreshold": 92,
         "sekemScore": 92,
-        "comments": "סף זימון משוער למבחן מו\"ר: 207 | סכם: 92.000",
+        "comments": "סף הזימון למו\"ר (רשמי). 92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "officialThreshold": 92,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "screening": {
+            "stage": "מבדקי מו\"ר",
+            "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
+            "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
+          }
+        }
       },
       {
         "id": "prog-technion-37",
@@ -43210,14 +43225,21 @@
         "description": "סכם מצטיינים: 229",
         "admissionThreshold": 92,
         "sekemScore": 92,
-        "comments": "סף זימון משוער למבחן מו\"ר: 207",
+        "comments": "סף הזימון למו\"ר (רשמי). 92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "officialThreshold": 92,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "screening": {
+            "stage": "מבדקי מו\"ר",
+            "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
+            "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
+          }
+        }
       },
       {
         "id": "prog-technion-38",
@@ -43226,14 +43248,21 @@
         "description": "סכם מצטיינים: 229",
         "admissionThreshold": 92,
         "sekemScore": 92,
-        "comments": "סף זימון משוער למבחן מו\"ר: 207",
+        "comments": "סף הזימון למו\"ר (רשמי). 92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "officialThreshold": 92,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "screening": {
+            "stage": "מבדקי מו\"ר",
+            "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
+            "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
+          }
+        }
       },
       {
         "id": "prog-technion-39",
@@ -43242,14 +43271,21 @@
         "description": "סכם מצטיינים: 229",
         "admissionThreshold": 92,
         "sekemScore": 92,
-        "comments": "סף זימון משוער למבחן מו\"ר: 207",
+        "comments": "סף הזימון למו\"ר (רשמי). 92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "officialThreshold": 92,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "screening": {
+            "stage": "מבדקי מו\"ר",
+            "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
+            "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
+          }
+        }
       },
       {
         "id": "prog-technion-40",
@@ -43626,11 +43662,18 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "5 יחידות בציון 70+ או 4 יחידות בציון 80+",
-        "comments": "תואר דוקטור לרפואה (M.D.) בפקולטה לרפואה ע\"ש רפפורט. סכם סף 92 ומעבר מבחני מו\"ר/מרק\"ם",
+        "comments": "סף הזימון למו\"ר (רשמי). 92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
         "officialThreshold": 92,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026 (סף זימון למו\"ר)",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "screening": {
+            "stage": "מבדקי מו\"ר",
+            "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
+            "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
+          }
+        }
       },
       {
         "id": "prog-inst-48-47",
@@ -48291,14 +48334,68 @@
         "fieldOfStudy": "רפואה (M.D.)",
         "degreeLevel": "M.D",
         "description": "בית הספר לרפואה ע\"ש ד\"ר מרים ושלדון אדלסון - תכנית שש-שנתית ללימודי רפואה (M.D.)",
-        "admissionThreshold": 710,
-        "psychometricScore": 710,
-        "sekemScore": 710,
+        "admissionThreshold": null,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יח\"ל בציון 85+ או 5 יח\"ל בציון 75+",
-        "comments": "תכנית שש-שנתית ללימודי רפואה (M.D.). תנאי סף: פסיכומטרי 710+, זכאות לבגרות בציון 105+, מעבר מרכז הערכה וראיונות קבלה"
+        "comments": "תוכנית שש-שנתית, תשפ\"ז (רשמי): פסיכומטרי 680+, מתמטיקה 4 יח\"ל 80 / 5 יח\"ל 70, אנגלית מתקדמים ב'; 70% ציון משולב + 30% הערכה לא-קוגניטיבית.",
+        "relevantSekemType": "general",
+        "admissionRoutes": {
+          "minPsychometric": 680,
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "קורס מתמטי במוסד אקדמי מוכר כחלופה ל-4 יח\"ל (בבקשה)"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "מתקדמים ב', אמירנט 120, SAT מילולי 377, תואר ראשון ממוסד ישראלי מוכר, או מתקדמים א' בציון עובר"
+            }
+          ],
+          "requirementsSource": "https://www.ariel.ac.il/wp/med/admission-6years/ — 2026-10-05",
+          "screening": {
+            "stage": "ההערכה הלא-קוגניטיבית (מו\"ר או מיון באריאל)",
+            "note": "שלב א': ציון קבלה משולב [(בגרות × 6.666) + פסיכומטרי] / 2, וסף שייקבע. שלב ב': הערכה לא-קוגניטיבית — ציון מו\"ר או מיון באוניברסיטת אריאל. ציון סופי: 70% ציון משולב ו-30% ההערכה הלא-קוגניטיבית, ונדרש גם ציון מינימלי בהערכה. פסיכומטרי 680 לפחות.",
+            "source": "https://www.ariel.ac.il/wp/med/admission-6years/ — 2026-10-05"
+          }
+        }
       },
       {
         "id": "prog-inst-2-40",
@@ -57420,15 +57517,17 @@
         "fieldOfStudy": "רפואה (M.D.)",
         "degreeLevel": "M.D",
         "description": "בית הספר לרפואה ע\"ש דינה רקנאטי - תכנית שש-שנתית לתואר דוקטור ברפואה (M.D.)",
-        "admissionThreshold": 710,
-        "psychometricScore": 710,
-        "sekemScore": 710,
+        "admissionThreshold": null,
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יח\"ל בציון 85+ או 5 יח\"ל בציון 75+",
         "englishRequirement": "פטור או מתקדמים ב'",
-        "comments": "תנאי קבלה לביה\"ס לרפואה ע\"ש דינה רקנאטי (M.D.): פסיכומטרי 710+, זכאות לבגרות בממוצע 105+, ראיונות קבלה ומבחני מיון"
+        "comments": "תוכנית ארבע-שנתית לבוגרי תואר ראשון בלבד (תקנון תשפ\"ז).",
+        "notOffered": {
+          "note": "ברייכמן יש רק תוכנית ארבע-שנתית לבוגרי תואר ראשון (ממוצע 80+, קורסי ליבה, MCAT) — אין מסלול לבוגרי תיכון.",
+          "source": "https://www.runi.ac.il/media/vgrbi4om/ru_md-regulations-2026_5.pdf (2026-10-05)"
+        }
       },
       {
         "id": "prog-inst-38-14",

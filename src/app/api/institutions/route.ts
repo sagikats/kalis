@@ -20,7 +20,8 @@ export async function GET(req: NextRequest) {
 					fieldOfStudy: p.fieldOfStudy,
 					facultyName: p.facultyName,
 					degreeLevel: p.degreeLevel,
-					admissionThreshold: p.minSekemThreshold,
+					// 0 = no published threshold (screened programs such as medicine)
+					admissionThreshold: p.minSekemThreshold > 0 ? p.minSekemThreshold : null,
 					minSekemThreshold: p.minSekemThreshold,
 					sekemScore: p.minSekemThreshold,
 					relevantSekemType: p.relevantSekemType,

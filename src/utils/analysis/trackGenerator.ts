@@ -1119,7 +1119,9 @@ export function generatePersonalizedTracks(
 	institutionRes: InstitutionSekemResult,
 	inputAnswers?: Partial<UserPreferencesQuestionnaire>
 ): RecommendedTrack[] {
-	const tracks = generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes, inputAnswers);
+	// A screened program (medicine) without a published threshold: there is no score target to plan towards
+	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return [];
+	const tracks = markScreeningTracks(gapAnalysis, generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes, inputAnswers));
 	if (gapAnalysis.relevantSekemType !== 'psychometric' || gapAnalysis.threshold === null) return tracks;
 
 	// Psychometric-only programs: bagrut upgrades can't move the score, so only two plans make sense —
@@ -1135,6 +1137,36 @@ export function generatePersonalizedTracks(
 	if (useful.length > 0) return useful;
 	const reachesScore = tracks.filter((t) => (t.targetPsychometric ?? 0) >= threshold);
 	return reachesScore.length > 0 ? reachesScore : tracks;
+}
+
+/**
+ * Medicine-style programs: reaching the threshold only invites to the screening stage (MOR / interviews), so a plan
+ * never promises admission — its wording says so, and it ends with the screening step.
+ */
+function markScreeningTracks(gapAnalysis: ProgramGapAnalysis, tracks: RecommendedTrack[]): RecommendedTrack[] {
+	const screening = gapAnalysis.admissionRoutes?.screening;
+	if (!screening) return tracks;
+	const reword = (text: string) =>
+		text
+			.replace(/קבלה מובטחת/g, `מעבר לשלב ${screening.stage}`)
+			.replace(/קבלה מיידית/g, `מעבר מיידי לשלב ${screening.stage}`)
+			.replace(/סף הקבלה/g, 'סף הזימון למיונים');
+	return tracks.map((t) => ({
+		...t,
+		title: reword(t.title),
+		badge: reword(t.badge),
+		strategyDescription: reword(t.strategyDescription),
+		keyAdvantage: t.keyAdvantage ? reword(t.keyAdvantage) : t.keyAdvantage,
+		steps: [
+			...t.steps.map((st) => ({ ...st, title: reword(st.title), detail: reword(st.detail) })),
+			{
+				title: `שלב ${screening.stage}`,
+				detail: `עמידה בסף מזמנת לשלב המיונים — זו עדיין לא קבלה. ${screening.note}`,
+				timing: 'אחרי סגירת ההרשמה',
+				type: 'administrative' as any
+			}
+		]
+	}));
 }
 
 function generateAllPersonalizedTracks(
@@ -1887,6 +1919,14 @@ function generateAllPersonalizedTracks(
 					}
 				}
 			}
+		}
+
+		// A balanced plan exists to trade bagrut work for a lower psychometric target. When it doesn't lower the target
+		// (e.g. a psychometric floor binds both plans), it only adds an exam — drop it, unless it is the single-exam
+		// alternative to a plan that needs no psychometric improvement.
+		if (bestBalCombo && !track1ZeroPsych) {
+			const isSingleExamAlternative = track1ExamCount === 1 && bestBalCombo.levers.length === 1 && bestBalCombo.psych <= baseP;
+			if (!isSingleExamAlternative && bestBalCombo.psych >= track1Psych) bestBalCombo = null;
 		}
 
 		if (bestBalCombo) {

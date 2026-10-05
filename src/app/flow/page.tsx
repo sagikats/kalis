@@ -685,7 +685,7 @@ export default function AdmissionFlowPage() {
 			accepted: gapAnalyses.filter((a) => a.status === 'accepted').length,
 			missing_requirement: gapAnalyses.filter((a) => a.status === 'missing_requirement').length,
 			not_accepted: gapAnalyses.filter((a) => a.status === 'not_accepted').length,
-			no_threshold: gapAnalyses.filter((a) => a.status === 'no_threshold').length
+			no_threshold: gapAnalyses.filter((a) => a.status === 'no_threshold' || a.status === 'screening').length
 		};
 	}, [gapAnalyses]);
 
@@ -1342,7 +1342,7 @@ export default function AdmissionFlowPage() {
 								</button>
 							</div>
 						) : currentFocusedAnalysis ? (
-							currentFocusedAnalysis.status === 'accepted' ? (
+							currentFocusedAnalysis.status === 'accepted' || currentFocusedAnalysis.status === 'screening' ? (
 								<AcceptedRegistrationCard
 									analysis={currentFocusedAnalysis}
 									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}

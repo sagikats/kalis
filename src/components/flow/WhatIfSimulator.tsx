@@ -474,13 +474,19 @@ export default function WhatIfSimulator({
 		}, targetRes);
 	}, [simulatedSekemResult, analysis.target, activeEffectiveSubjects, effectiveMath5, effectiveMathGrade, simulatedPsych, userProfile]);
 
-	const isAccepted = simulatedAnalysis ? simulatedAnalysis.status === 'accepted' : passesSekem && missingConditions.length === 0;
+	/** Medicine-style programs: meeting the threshold and conditions only invites to the screening stage (MOR / interviews). */
+	const isScreening = simulatedAnalysis?.status === 'screening';
+	const isAccepted = simulatedAnalysis
+		? simulatedAnalysis.status === 'accepted' || isScreening
+		: passesSekem && missingConditions.length === 0;
 	// The sekem passes but an official condition is missing (replaces the old near-threshold "על הגבול")
 	const isMissingRequirement = simulatedAnalysis
 		? simulatedAnalysis.status === 'missing_requirement'
 		: passesSekem && missingConditions.length > 0;
 	/** Accepted on an official route other than the sekem (e.g. "בגרות בלבד"): its explanation. */
-	const alternativeRouteNote = isAccepted && simulatedAnalysis?.admissionRoute && simulatedAnalysis.admissionRoute !== 'sekem'
+	const alternativeRouteNote = isScreening
+		? simulatedAnalysis?.admissionNote
+		: isAccepted && simulatedAnalysis?.admissionRoute && simulatedAnalysis.admissionRoute !== 'sekem'
 		? simulatedAnalysis.admissionNote
 		: undefined;
 	const missingTitles = missingConditions.length > 0
@@ -739,7 +745,7 @@ export default function WhatIfSimulator({
 				title: activeTrack
 					? `מסלול מותאם: ${activeTrack.title}`
 					: `מסלול מותאם אישית (${totalExamsCount} בחינות)`,
-				badge: isAccepted ? 'קבלה מובטחת' : isMissingRequirement ? 'חסר תנאי סף' : 'מסלול מותאם',
+				badge: isScreening ? 'עובר לשלב המיונים' : isAccepted ? 'קבלה מובטחת' : isMissingRequirement ? 'חסר תנאי סף' : 'מסלול מותאם',
 				badgeColor: isAccepted ? 'emerald' : isMissingRequirement ? 'amber' : 'blue',
 				targetSekem: currentSekem,
 				targetPsychometric: simulatedPsych,
@@ -1490,7 +1496,7 @@ export default function WhatIfSimulator({
 								{isAccepted ? (
 									<>
 										<CheckCircle2 className="h-4 w-4 text-[#205739]" />
-										<span>התקבלת!</span>
+										<span>{isScreening ? 'שלב המיונים' : 'התקבלת!'}</span>
 									</>
 								) : isMissingRequirement ? (
 									<>
@@ -1811,7 +1817,7 @@ export default function WhatIfSimulator({
 							</span>
 						</div>
 						<div className="text-base sm:text-lg font-black leading-tight">
-							{isAccepted ? 'קבלה מובטחת 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
+							{isScreening ? 'עובר/ת לשלב המיונים' : isAccepted ? 'קבלה מובטחת 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
 						</div>
 						<div className="text-[11px] font-medium opacity-90">
 							{isAccepted

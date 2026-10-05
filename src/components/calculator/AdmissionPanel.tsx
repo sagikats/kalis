@@ -100,7 +100,8 @@ function evaluateProgram(prog: Program, institutionId: string, dataKey: string, 
     profile,
     institutionResult
   );
-  const note = analysis.status === 'missing_requirement' || (analysis.admissionRoute && analysis.admissionRoute !== 'sekem')
+  const note = analysis.status === 'missing_requirement' || analysis.status === 'screening' || analysis.admissionRoutes?.screening ||
+    (analysis.admissionRoute && analysis.admissionRoute !== 'sekem')
     ? analysis.admissionNote
     : undefined;
   return { program: prog, status: analysis.status, threshold: analysis.threshold, gap: analysis.gap, note };
@@ -145,7 +146,7 @@ export default function AdmissionPanel({
 
   const sorted = useMemo(() => {
     const order: Record<AdmissionStatus, number> = {
-      accepted: 0, missing_requirement: 1, no_threshold: 2, not_accepted: 3,
+      accepted: 0, screening: 1, missing_requirement: 2, no_threshold: 3, not_accepted: 4,
     };
     return [...programs].sort((a, b) => {
       const orderDiff = order[a.status] - order[b.status];
@@ -168,7 +169,7 @@ export default function AdmissionPanel({
 
   const acceptedCount = programs.filter(p => p.status === 'accepted').length;
   const missingRequirementCount = programs.filter(p => p.status === 'missing_requirement').length;
-  const auditionCount = programs.filter(p => p.status === 'no_threshold').length;
+  const auditionCount = programs.filter(p => p.status === 'no_threshold' || p.status === 'screening').length;
 
   return (
     <>
@@ -233,7 +234,7 @@ export default function AdmissionPanel({
           {auditionCount > 0 && (
             <div className="flex items-center gap-1.5 text-[#453D78]">
               <GraduationCap className="h-3.5 w-3.5" />
-              <span className="text-xs font-bold">{auditionCount} קבלה נפרדת</span>
+              <span className="text-xs font-bold">{auditionCount} מיונים / קבלה נפרדת</span>
             </div>
           )}
           <span className="text-[11px] text-[#8A847C] mr-auto">{sorted.length} חוגים סה&quot;כ</span>
@@ -273,8 +274,16 @@ export default function AdmissionPanel({
                 rowCls: 'border-[#E5DFD4] bg-white',
                 nameCls: 'text-[#66635C]',
                 barCls: 'bg-[#9B3327]/30',
-                gapLabel: String(gap),
+                gapLabel: threshold === null ? 'חסר תנאי' : String(gap),
                 gapCls: 'text-[#9B3327]',
+              },
+              screening: {
+                icon: <GraduationCap className="h-4 w-4 text-[#453D78] shrink-0" />,
+                rowCls: 'border-[#D2CEEB] bg-[#F2F1F8]/80',
+                nameCls: 'text-[#222222]',
+                barCls: 'bg-[#453D78]',
+                gapLabel: 'שלב המיונים',
+                gapCls: 'text-[#453D78]',
               },
               no_threshold: {
                 icon: <GraduationCap className="h-4 w-4 text-[#453D78] shrink-0" />,
@@ -302,7 +311,7 @@ export default function AdmissionPanel({
                     </span>
                   </div>
                   {note && (
-                    <p className={`text-[10px] font-medium mt-0.5 ${status === 'accepted' ? 'text-[#205739]' : 'text-[#825B15]'}`}>
+                    <p className={`text-[10px] font-medium mt-0.5 ${status === 'accepted' ? 'text-[#205739]' : status === 'screening' ? 'text-[#453D78]' : 'text-[#825B15]'}`}>
                       {note}
                     </p>
                   )}

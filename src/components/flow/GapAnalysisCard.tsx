@@ -21,6 +21,7 @@ import { InstitutionSekemResult } from '../../utils/calculators/multiCalculator'
 import { SubjectInput } from '../../modules/calculators';
 import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '@/components/common/UniversityLogo';
+import { describeThresholdSource } from '@/utils/sourceLink';
 
 interface GapAnalysisCardProps {
 	analysis: ProgramGapAnalysis;
@@ -126,9 +127,9 @@ export default function GapAnalysisCard({
 								בסולם המוסד: {analysis.officialThreshold}
 							</span>
 						)}
-						{analysis.thresholdSource && (
+						{analysis.thresholdSource && describeThresholdSource(analysis.thresholdSource).href && (
 							<a
-								href={analysis.thresholdSource.split(' — ')[0]}
+								href={describeThresholdSource(analysis.thresholdSource).href}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-[11px] text-[#2F6FB0] underline mt-1 inline-block"
