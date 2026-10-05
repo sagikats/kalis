@@ -144,7 +144,7 @@ export default function RecommendedTracksView({
 
 	// Guard: Unauthenticated users are gated behind registration
 	if (!user) {
-		return <TrackRegistrationGate analysis={analysis} onBackToReport={onBackToReport} />;
+		return <TrackRegistrationGate analysis={analysis} trackCount={tracks.length} onBackToReport={onBackToReport} />;
 	}
 
 	const [savedTrackMap, setSavedTrackMap] = useState<Record<string, { savedAt: Date; candidateNumber: string }>>({});

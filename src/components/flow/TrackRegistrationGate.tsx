@@ -17,12 +17,17 @@ import { useAuth } from '@/context/AuthContext';
 interface TrackRegistrationGateProps {
 	analysis: ProgramGapAnalysis;
 	onBackToReport: () => void;
+	/** How many improvement tracks were actually built for this program. */
+	trackCount?: number;
 }
 
 export default function TrackRegistrationGate({
 	analysis,
-	onBackToReport
+	onBackToReport,
+	trackCount
 }: TrackRegistrationGateProps) {
+	const viewTracksLabel =
+		trackCount === 1 ? 'צפייה במסלול השיפור המותאם אישית' : trackCount ? `צפייה ב-${trackCount} מסלולי השיפור המותאמים אישית` : 'צפייה במסלולי השיפור המותאמים אישית';
 	const { openAuthModal } = useAuth();
 	const { target, gap, userSekem, threshold } = analysis;
 	const formattedSekem = userSekem ? userSekem.toFixed(2) : '—';
@@ -93,7 +98,7 @@ export default function TrackRegistrationGate({
 								<span className="text-xs font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
 									מסלול 1 // מיקוד
 								</span>
-								<span className="text-xs text-[#88857E]">8 שבועות</span>
+								
 							</div>
 							<div className="h-5 w-3/4 bg-[#DDD7CC] rounded-md" />
 							<div className="space-y-2 pt-2">
@@ -113,7 +118,7 @@ export default function TrackRegistrationGate({
 								<span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
 									מסלול 2 // פיזור סיכונים
 								</span>
-								<span className="text-xs text-[#88857E]">16 שבועות</span>
+								
 							</div>
 							<div className="h-5 w-3/4 bg-[#DDD7CC] rounded-md" />
 							<div className="space-y-2 pt-2">
@@ -161,7 +166,7 @@ export default function TrackRegistrationGate({
 
 					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#55524B] mb-3">
 						<Sparkles className="w-3.5 h-3.5 text-amber-600" />
-						<span>3 מסלולי שיפור אופטימליים חושבו בהצלחה</span>
+						<span>{trackCount === 0 ? 'לא נמצא מסלול שיפור שמגיע לסף' : trackCount === 1 ? 'חושב מסלול שיפור אחד' : trackCount ? `חושבו ${trackCount} מסלולי שיפור` : 'מסלולי השיפור חושבו'}</span>
 					</div>
 
 					<h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#222222] tracking-tight max-w-xl">
@@ -176,7 +181,7 @@ export default function TrackRegistrationGate({
 					<div className="my-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-right max-w-md w-full">
 						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
 							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-							<span>צפייה ב-3 המסלולים המותאמים אישית</span>
+							<span>{viewTracksLabel}</span>
 						</div>
 						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
 							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />

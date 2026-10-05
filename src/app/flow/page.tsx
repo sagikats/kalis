@@ -1353,6 +1353,7 @@ export default function AdmissionFlowPage() {
 							) : !user ? (
 								<TrackRegistrationGate
 									analysis={currentFocusedAnalysis}
+									trackCount={recommendedTracks?.length}
 									onBackToReport={() => setActiveStep(3)}
 								/>
 							) : (
