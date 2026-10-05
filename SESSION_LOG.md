@@ -10,6 +10,21 @@
 
 ---
 
+## 🗓️ 2026-10-05 (לילה) — Claude Code (Opus 5.5) — ✅ מוזג ונפרס: בונוסי אריאל + אחידות בין המסכים + תיעוד
+
+- **אישור המשתמש:** "לשלב ל-main ולפרוס".
+- **מיזוג:** main = `cb918d1`, ב-fast-forward מ-`fix/cross-path-consistency`. כולל גם את `data/ariel-bonus-table`. **LIVE = cb918d1.**
+- **גיבוי:** `~/backups/dev_20261005_164722_predeploy.db`.
+- **אומת אחרי הפריסה:**
+  - health תקין.
+  - syncCatalog: "8 institutions, 845 programs, 87 subjects".
+  - נתוני המשתמשים זהים (אותו hash): users 8, user_academic_profiles 7, user_preferences 6, saved_tracks 12.
+  - `/api/institutions` מחזיר `minBagrutAverage` ל-5 תוכניות בר-אילן.
+  - `/api/calculate` באריאל עם גאוגרפיה 5 יח"ל מחזיר ממוצע 85.95, כמו המחשבון הרשמי (לפני התיקון: 84.76).
+- **לא נבדק בדפדפן אחרי הפריסה.**
+
+---
+
 ## 🗓️ 2026-10-05 (לילה) — Claude Code (Opus 5.5) — ביקורת אכיפה ואחידות בין המסכים
 
 **בראנץ':** `fix/cross-path-consistency` (יצא מ-`data/ariel-bonus-table`). נדחף, לא מוזג ולא נפרס.
