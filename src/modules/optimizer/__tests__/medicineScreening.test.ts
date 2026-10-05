@@ -104,12 +104,19 @@ describe('Medicine: screening, never "accepted"', () => {
 		assert.equal(analyze('inst-3', 'prog-bgu-180', profile({ psychometricEnglish: 110 }), { generalSekem: 760 }).status, 'missing_requirement');
 	});
 
-	it('Tel Aviv: conditions not verified yet -> "separate admission", never a guessed status', () => {
-		for (const id of ['prog-tau-0111-18', 'prog-tau-0102-35', 'prog-tau-0191-83']) {
-			const a = analyze('inst-6', id, profile());
-			assert.equal(a.status, 'no_threshold');
-			assert.match(a.admissionNote ?? '', /טרם אומתו/);
+	it('Tel Aviv M.D. (go.tau.ac.il ?v=new-info): psychometric 700, math 4u pass, English 120; no published MOR threshold', () => {
+		for (const id of ['prog-tau-0111-18', 'prog-tau-0102-35']) {
+			assert.equal(program('inst-6', id).admissionThreshold, null);
+			assert.equal(analyze('inst-6', id, profile()).status, 'screening');
+			assert.equal(analyze('inst-6', id, profile({ psychometricGeneral: 690 })).status, 'not_accepted');
+			assert.equal(analyze('inst-6', id, profile({ math: [3, 95] })).status, 'not_accepted');
 		}
+		assert.match(program('inst-6', 'prog-tau-0111-18').admissionRoutes.screening.note, /30% ציון ההתאמה הראשוני ו-70%/);
+	});
+
+	it('Tel Aviv D.M.D.: English 120, knowledge tests and a spatial-perception test', () => {
+		assert.equal(analyze('inst-6', 'prog-tau-0191-83', profile()).status, 'screening');
+		assert.equal(analyze('inst-6', 'prog-tau-0191-83', profile({ psychometricEnglish: 110 })).status, 'not_accepted');
 	});
 
 	it('Reichman M.D. is a 4-year program for degree holders -> not offered to high-school graduates', () => {

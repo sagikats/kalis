@@ -17,8 +17,8 @@
  *   served HTML — transcribed from the user's screenshot).
  * - Where it is set each year from the applicant pool and isn't published (Ariel, Bar-Ilan), the threshold is
  *   removed (admissionThreshold null), and only the published registration conditions are checked.
- * - Tel Aviv: the official page shows "אין מידע להציג" (loaded dynamically). The unsourced thresholds are removed, and
- *   the programs say their conditions are not verified yet. They wait for the user's screenshots (USER_TASKS).
+ * - Tel Aviv: the conditions are on the program page's "new-info" tab (?v=new-info); the default tabs show
+ *   "אין מידע להציג". No MOR-invitation threshold is published, so the unsourced 730/735/680 are removed.
  * - Reichman: a 4-year program for degree holders only, so it is marked notOffered for high-school graduates.
  * - Bar-Ilan's 6-year track exists (it was wrongly hidden as notOffered).
  *
@@ -170,29 +170,44 @@ const UPDATES: Record<string, Update> = {
 	}
 };
 
-// ── Tel Aviv: official conditions not readable yet — remove the unsourced thresholds ──
-const TAU_NOTE =
-	'הקבלה בהליך מיון: סף קוגניטיבי ואחריו מבדקי מו"ר/מרק"ם (בתי הספר לרפואה בעברית, בת"א ובטכניון משתמשים באותם מבדקים — info.huji.ac.il). ' +
-	'הספים ותנאי הסף של ת"א טרם אומתו מול האתר הרשמי.';
+// ── Tel Aviv: the program page's "new-info" tab (?v=new-info; the default tabs show "אין מידע להציג") ──
+const TAU_MD_SOURCE = `https://go.tau.ac.il/he/med/ba/med-doc?v=new-info — ${FETCHED}`;
+const TAU_MD_NOTE =
+	'שלב א\': ציון התאמה רפואה ראשוני — 50% ממוצע בגרות ו-50% פסיכומטרי. שלב ב\': שאלון אישי ביוגרפי ומרכז הערכה (מו"ר/מרק"ם). ' +
+	'ציון סופי: 30% ציון ההתאמה הראשוני ו-70% המבחנים הלא-קוגניטיביים. סף הזימון לשלב ב\' לא מתפרסם מראש. ' +
+	'תנאי סף להרשמה: פסיכומטרי 700 (המועד האחרון מרץ/אפריל 2026), מתמטיקה 4 יח"ל בציון עובר, אנגלית 120.';
 for (const id of ['prog-tau-0111-18', 'prog-tau-0102-35']) {
 	UPDATES[id] = {
 		threshold: null,
 		relevantSekemType: null,
-		routes: { screening: { stage: MOR, note: TAU_NOTE, source: `https://go.tau.ac.il/he/med/ba/med-doc — ${FETCHED}` } },
-		comments: TAU_NOTE
+		routes: {
+			minPsychometric: 700,
+			requirements: [
+				math([[4, 55]], 'מתמטיקה 4 יח"ל (ציון עובר)', 'קורס מתמטי במוסד אקדמי מוכר כחלופה ל-4 יח"ל (בבקשה)'),
+				english(120, 'אמירנט 120, SAT מילולי 377, זכאות לתואר, או קורס מתקדמים א\' באישור')
+			],
+			requirementsSource: TAU_MD_SOURCE,
+			screening: { stage: MOR, note: TAU_MD_NOTE, source: TAU_MD_SOURCE }
+		},
+		comments: `הליך מיון (רשמי, go.tau.ac.il). ${TAU_MD_NOTE}`
 	};
 }
+const TAU_DMD_SOURCE = `https://go.tau.ac.il/he/med/ba/dental?v=new-info — ${FETCHED}`;
 UPDATES['prog-tau-0191-83'] = {
 	threshold: null,
 	relevantSekemType: null,
 	routes: {
+		requirements: [english(120)],
+		requirementsSource: TAU_DMD_SOURCE,
 		screening: {
-			stage: 'מבחן תפיסה מרחבית וראיונות',
-			note: 'הקבלה בהליך מיון; מבחן התפיסה המרחבית מתקיים בעברית ובת"א באותו יום (info.huji.ac.il). הספים ותנאי הסף של ת"א טרם אומתו מול האתר הרשמי.',
-			source: `https://go.tau.ac.il/he/med/ba/dental — ${FETCHED}`
+			stage: 'מבחני הידע ומבחן התפיסה המרחבית',
+			note:
+				'ציון התאמה "רפואה ראשוני": 30% בגרות/מכינה ו-70% פסיכומטרי. אחר כך מבחן ידע בסיסי במתמטיקה ובכימיה או פיזיקה, ואז מבחן תפיסה מרחבית. ' +
+				'אנגלית: 120 בפסיכומטרי. ספי המעבר לא מפורסמים בדף.',
+			source: TAU_DMD_SOURCE
 		}
 	},
-	comments: 'הקבלה בהליך מיון. הספים ותנאי הסף של ת"א טרם אומתו מול האתר הרשמי.'
+	comments: 'הליך מיון (רשמי, go.tau.ac.il): ציון ראשוני 30% בגרות + 70% פסיכומטרי, מבחני ידע ומבחן תפיסה מרחבית. אנגלית 120.'
 };
 
 function main() {
