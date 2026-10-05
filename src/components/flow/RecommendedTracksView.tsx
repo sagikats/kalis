@@ -542,7 +542,14 @@ export default function RecommendedTracksView({
 				tracks.length === 0 ? (
 					<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 						<AlertTriangle className="h-12 w-12 text-[#8A847C] mx-auto" />
-						{analysis.admissionRoutes?.screening && analysis.threshold === null ? (
+						{analysis.status === 'accepted' ? (
+							<>
+								<h3 className="text-lg font-bold text-[#222222]">אין צורך במסלול שיפור</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									הסכם שלך ({analysis.userSekem}) כבר עובר את הסף ({analysis.threshold}) ואת תנאי הסף שפורסמו לתוכנית הזו.
+								</p>
+							</>
+						) : analysis.admissionRoutes?.screening && analysis.threshold === null ? (
 							<>
 								<h3 className="text-lg font-bold text-[#222222]">אין סף זימון שמתפרסם מראש</h3>
 								<p className="text-sm text-[#66635C] leading-relaxed">
@@ -670,7 +677,7 @@ export default function RecommendedTracksView({
 													<span className="text-[10px] text-[#1E597B] font-bold bg-[#EBF4FA] px-2 py-0.5 rounded-md border border-[#CCE4F4]">
 														{[
 															needsPsychImprovement ? 'פסיכומטרי' : null,
-															hasSubjectImprovements ? `${track.recommendedSubjectImprovements.length} בגרויות` : null
+															hasSubjectImprovements ? (track.recommendedSubjectImprovements.length === 1 ? 'בגרות אחת' : `${track.recommendedSubjectImprovements.length} בגרויות`) : null
 														].filter(Boolean).join(' + ')}
 													</span>
 												</div>

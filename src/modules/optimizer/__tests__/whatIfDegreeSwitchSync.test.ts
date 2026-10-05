@@ -63,7 +63,11 @@ test('WhatIfDegreeSwitchSync: verifies primary recommended track is loaded on de
 	};
 
 	const biuTracks = generatePersonalizedTracks(biuGap, userProfile, biuRes);
-	assert.ok(biuTracks.length >= 2, 'BIU program should have at least 2 tracks');
+	// Bar-Ilan CS is almost all psychometric: no bagrut lowers the target by 10+, so only track 1 (docs/TRACKS_REDESIGN.md)
+	assert.ok(biuTracks.length >= 1, 'BIU program should have a track');
+	for (let i = 1; i < biuTracks.length; i++) {
+		assert.ok(biuTracks[i].targetPsychometric! <= biuTracks[i - 1].targetPsychometric! - 10, 'each further track lowers the psychometric by 10+');
+	}
 	const biuPrimary = biuTracks.find((t) => t.badge === 'הכי מומלץ') || biuTracks[0];
 	assert.ok(biuPrimary, 'BIU program must have a primary track');
 	assert.equal(biuPrimary.targetSekem! >= 90, true, 'BIU track reaches threshold');
