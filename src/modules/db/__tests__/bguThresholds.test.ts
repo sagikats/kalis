@@ -39,4 +39,13 @@ describe('BGU official thresholds', () => {
 		assert.equal(se.relevantSekemType, 'quantitative');
 		assert.equal(se.admissionThreshold, 720);
 	});
+
+	// Source: BGU applicant handbook תשפ"ז, basic condition ד (snapshot src/data/sources/bgu-english-rule-2026.json)
+	it('every active program requires English "בסיסי" (85) or a higher department level', () => {
+		for (const p of bgu.filter((x: any) => !x.notOffered)) {
+			const eng = (p.admissionRoutes?.requirements ?? []).find((r: any) => r.id?.startsWith('english'));
+			assert.ok(eng, p.fieldOfStudy);
+			assert.ok(eng.anyOf[0].psych[0].min >= 85, p.fieldOfStudy);
+		}
+	});
 });
