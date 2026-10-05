@@ -162,8 +162,8 @@ const UPDATES: Record<string, Update> = {
 		threshold: null,
 		relevantSekemType: null,
 		notOffered: {
-			note: 'ברייכמן יש רק תוכנית ארבע-שנתית לבוגרי תואר ראשון (ממוצע 80+, קורסי ליבה, MCAT) — אין מסלול לבוגרי תיכון.',
-			source: `https://www.runi.ac.il/media/vgrbi4om/ru_md-regulations-2026_5.pdf (${FETCHED})`
+			note: 'ברייכמן יש רק תוכנית ארבע-שנתית לבוגרי תואר ראשון (ממוצע 80+, 7 קורסי ליבה בציון 75+, מבחן ידע: של רייכמן, ת"א, אריאל או MCAT) — אין מסלול לבוגרי תיכון.',
+			source: `https://www.runi.ac.il/admissions/medicine/acceptance ; https://www.runi.ac.il/media/vgrbi4om/ru_md-regulations-2026_5.pdf (${FETCHED})`
 		},
 		routes: {},
 		comments: 'תוכנית ארבע-שנתית לבוגרי תואר ראשון בלבד (תקנון תשפ"ז).'
