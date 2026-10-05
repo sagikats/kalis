@@ -1283,7 +1283,12 @@ function generateAllPersonalizedTracks(
 					...(l.targetUnits > o.targetUnits || (l.targetUnits === o.targetUnits && l.targetGrade > o.targetGrade) ? l : {}),
 					floorGrade: Math.max(o.floorGrade ?? 0, l.floorGrade ?? 0) || undefined,
 					required: o.required || l.required,
-					reason: o.required ? o.reason : l.reason
+					reason:
+						o.required && !l.required && (l.targetUnits > o.targetUnits || l.targetGrade > o.targetGrade)
+							? `${o.reason} היעד גבוה מהנדרש, כי הוא גם מוריד את הפסיכומטרי הנדרש.`
+							: o.required
+							? o.reason
+							: l.reason
 				};
 			}
 		}
@@ -1350,13 +1355,12 @@ function generateAllPersonalizedTracks(
 	for (const r of hardReqs.officialRequirements ?? []) {
 		const res = evaluateRequirement(r, reqCtx);
 		if (res.met || res.unknown) continue;
-		const bagrutOptions = r.anyOf.filter((o) => !o.exam && o.bagrut?.length && !o.psych?.length);
+		// The bagrut part is raised here; a psychometric section in the same option becomes a target inside the exam
+		const bagrutOptions = r.anyOf.filter((o) => !o.exam && o.bagrut?.length);
 		if (bagrutOptions.length === 0) continue;
-		const isPhysicsReq = r.id.startsWith('phys');
-		// An exam / course alternative exists: only physics is replaced by the bagrut (it saves the course / mechina)
-		if (res.examOption && !isPhysicsReq) continue;
+		// Step 0 meets the condition with the bagrut, also when a course / exam alternative exists (it saves that course)
 		const note = res.examOption?.exam
-			? `תנאי סף רשמי (${r.title}). בגרות בפיזיקה חוסכת את החלופה: ${res.examOption.exam}.`
+			? `תנאי סף רשמי (${r.title}). הבגרות חוסכת את החלופה: ${res.examOption.exam}.`
 			: `תנאי סף רשמי של התוכנית: ${r.title}.`;
 		let best: { levers: PlanLever[]; p: number } | null = null;
 		for (const option of bagrutOptions) {
@@ -1442,6 +1446,9 @@ function generateAllPersonalizedTracks(
 	let plan2: Plan | null = null;
 	if (plan1 && plan1.psych - MIN_RELIEF >= startPsych) {
 		plan2 = preferFewer([bestWith(plan1.levers, 1), bestWith(plan1.levers, 2)].filter((p): p is Plan => Boolean(p)), plan1.psych - MIN_RELIEF);
+	} else if (!plan1) {
+		// Not reachable with the psychometric and one bagrut: the plans with more bagrut exams still are
+		plan2 = preferFewer([bestWith(requiredLevers, 2)].filter((p): p is Plan => Boolean(p)), 800);
 	}
 
 	// ---- Track 3 ----
@@ -1454,6 +1461,8 @@ function generateAllPersonalizedTracks(
 			plan3 = candidates.filter((c) => c.psych <= officialPsychMin).sort((a, b) => examCount(a.levers) - examCount(b.levers))[0] ?? null;
 		}
 		plan3 = plan3 ?? preferFewer(candidates, prev.psych - MIN_RELIEF);
+	} else if (!prev) {
+		plan3 = preferFewer(greedyUpTo(requiredLevers, MAX_TOTAL_EXAMS), 800);
 	}
 
 	/** The plan's grades lowered to the minimum that still reaches the threshold at its psychometric (official floors kept). */
@@ -1542,7 +1551,7 @@ function generateAllPersonalizedTracks(
 		const onlyRequired = plan1.levers.every((l) => l.required);
 		pushTrack(
 			'track-fast',
-			plan1HasBagrut ? 'מסלול 1: פסיכומטרי ובגרות אחת' : onlyRequired && plan1.levers.length ? 'מסלול 1: תנאי הסף ופסיכומטרי' : 'מסלול 1: פסיכומטרי בלבד',
+			plan1HasBagrut ? 'פסיכומטרי ובגרות אחת' : onlyRequired && plan1.levers.length ? 'תנאי הסף ופסיכומטרי' : 'פסיכומטרי בלבד',
 			'הכי מהיר',
 			'from-amber-500 to-orange-600',
 			plan1,
@@ -1551,13 +1560,14 @@ function generateAllPersonalizedTracks(
 				: 'הדרך הקצרה ביותר: בלי בגרויות נוספות מעבר לתנאי הסף.'
 		);
 	}
-	if (plan2 && plan1) {
-		pushTrack('track-balanced', 'מסלול 2: פחות פסיכומטרי, עוד בגרויות', 'הקלה בפסיכומטרי', 'from-emerald-500 to-teal-600', plan2,
-			'בגרויות שמורידות את יעד הפסיכומטרי.', plan1.psych - plan2.psych);
+	if (plan2) {
+		pushTrack('track-balanced', 'פחות פסיכומטרי, עוד בגרויות', 'הקלה בפסיכומטרי', 'from-emerald-500 to-teal-600', plan2,
+			plan1 ? 'בגרויות שמורידות את יעד הפסיכומטרי.' : 'גם עם פסיכומטרי מרבי ובגרות אחת לא מגיעים לסף, אז נדרשות עוד בגרויות.',
+			plan1 ? plan1.psych - plan2.psych : undefined);
 	}
-	if (plan3 && prev) {
-		pushTrack('track-multi-exam', 'מסלול 3: מקסימום בגרויות', 'הקלה מרבית בפסיכומטרי', 'from-blue-600 to-indigo-700', plan3,
-			'הכי פחות תלות בפסיכומטרי, עם יותר בחינות בגרות.', prev.psych - plan3.psych);
+	if (plan3) {
+		pushTrack('track-multi-exam', 'מקסימום בגרויות', 'הקלה מרבית בפסיכומטרי', 'from-blue-600 to-indigo-700', plan3,
+			'הכי פחות תלות בפסיכומטרי, עם יותר בחינות בגרות.', prev ? prev.psych - plan3.psych : undefined);
 	}
 
 	// Final Deduplication: Never return duplicate tracks with identical subject improvements and psychometric target

@@ -155,6 +155,47 @@ describe('Track rules (docs/TRACKS_REDESIGN.md)', () => {
 		assert.match(tracks[0].title, /השלמת תנאי סף/);
 	});
 
+	it('a condition that combines bagrut with a psychometric section (Bar-Ilan EE: math 5u 75 + quant 130) raises the bagrut part', () => {
+		const prog = program('inst-4', 'prog-inst-4-15');
+		const p = profile({ grade: 75, mathU: 4 });
+		const { tracks } = tracksFor('inst-4', prog, p);
+		assert.ok(tracks.length > 0, 'tracks exist');
+		for (const t of tracks) {
+			const math = t.recommendedSubjectImprovements.find((l) => isSubjectMatch(l.subjectName, 'מתמטיקה'));
+			assert.ok(math && math.targetUnits === 5 && math.targetGrade >= 75, `${t.id}: ${JSON.stringify(math)}`);
+			assert.ok(hasSubject(t, 'פיזיקה'), t.id);
+		}
+	});
+
+	it('achieving a track makes the applicant pass in the regular admission analysis', () => {
+		let checked = 0;
+		const profiles = [profile({ grade: 75, mathU: 4 }), profile({ psych: 560, grade: 85 }), profile({ psych: 620, grade: 90, physU: 5 })];
+		for (const instId of Object.keys(CALC)) {
+			const progs = (academicData as any[]).find((i) => i.id === instId).programs.filter((x: any) => !x.notOffered && x.admissionThreshold);
+			for (const prog of progs.filter((_: any, i: number) => i % Math.ceil(progs.length / 6) === 0)) {
+				for (const p of profiles) {
+					const { tracks } = tracksFor(instId, prog, p);
+					for (const t of tracks) {
+						const subjects = p.bagrutSubjects.map((s) => ({ ...s }));
+						for (const l of t.recommendedSubjectImprovements) {
+							const i = subjects.findIndex((s) => isSubjectMatch(s.name, l.subjectName));
+							if (i >= 0) subjects[i] = { ...subjects[i], units: l.targetUnits, grade: l.targetGrade };
+							else subjects.push({ name: l.subjectName, units: l.targetUnits, grade: l.targetGrade });
+						}
+						const math = subjects.find((s) => isSubjectMatch(s.name, 'מתמטיקה'))!;
+						const phys = subjects.find((s) => isSubjectMatch(s.name, 'פיזיקה'));
+						const after = { ...p, bagrutSubjects: subjects, psychometricGeneral: t.targetPsychometric!, mathUnits: math.units, mathGrade: math.grade, physicsUnits: phys?.units ?? 0, physicsGrade: phys?.grade ?? 0 } as UserAcademicProfile;
+						const res = calculateMultiInstitutionSekem(after as any, [CALC[instId]])[0];
+						const a = analyzeProgramGap({ institutionId: instId, institutionName: '', calculatorId: CALC[instId], program: prog }, after, res);
+						assert.ok(['accepted', 'screening'].includes(a.status), `${instId} ${prog.id} ${t.id}: ${a.status} ${a.userSekem}/${a.threshold} ${a.admissionNote ?? ''}`);
+						checked++;
+					}
+				}
+			}
+		}
+		assert.ok(checked > 50, `checked ${checked}`);
+	});
+
 	it('the questionnaire is not an input any more', () => {
 		assert.equal(generatePersonalizedTracks.length, 3);
 	});
