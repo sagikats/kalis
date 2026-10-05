@@ -1,8 +1,7 @@
 /**
  * Pure Bar-Ilan University (אוניברסיטת בר-אילן) Admission Calculator
- * Official Formulas: General Sekem & Exact Sciences/Engineering Sekem
  * Bagrut average: verified against the official page (bonus table, droppable subjects, no cap).
- * ⚠️ Sekem formula NOT verified — Bar-Ilan's real admission score is on a ~0–100 scale; this is an estimate.
+ * Admission score: Bar-Ilan's 0–100 "שקלול", reconstructed from the official calculator (see calculateBarIlanScores).
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -81,60 +80,130 @@ export function calculateBarIlanOptimalBagrut(subjects: CalculatorSubject[]): Op
 	});
 }
 
-export function calculateBarIlanGeneralSekem(bagrutAverage: number, psychometric: number): number {
-	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
-	const bt = Math.round((bagrutAverage * 10 - 330) * 10) / 10;
-	const rawSekem = 0.5 * psychometric + 0.5 * bt;
-	return Math.min(800, Math.max(200, Math.round(rawSekem)));
+/*
+ * Bar-Ilan admission score ("שקלול מועמד למסלול", 0–100) — reconstructed from Bar-Ilan's official calculator
+ * (shoham.biu.ac.il/kabala, 2026-10-05; 816 calculator results reproduced exactly — see
+ * src/modules/calculators/__tests__/fixtures/biu-official/). Every input goes through a stepped conversion table and the
+ * steps are weighted per scoring group, then summed:
+ *
+ *   general (humanities, social sciences, law):   0.49·P + 0.51·B
+ *   sciences (CS, economics, life sciences …):     0.4·P + 0.4·B + Q + M
+ *   engineering (electrical, computers …):         0.5·P + 0.2·B + Q + M + F
+ *   software / industrial engineering:             0.5·P + 0.25·B + Q + 1.5·M
+ *
+ * P = psychometric steps, B = bagrut-average steps (average capped at 113), Q = quantitative-section term, M / F =
+ * math / physics "product" terms (grade × units; flat below 300). English and other subjects don't count.
+ * Values are relative to the reference profile (average 112.08, psychometric 714, quant 145, math 5u 95, physics 5u 93).
+ * Between sampled points (psychometric 570–800 is sampled every 20–50 points, the average below 90 not at all) the
+ * steps are interpolated / extrapolated, so the score may be off by one step there (≤ 0.5).
+ */
+
+/** Psychometric steps relative to 714 (one step = 0.49 general / 0.4 sciences / 0.5 engineering). */
+const BIU_PSYCH_STEPS: [number, number][] = [
+	[400, -56], [405, -55], [410, -54], [415, -53], [420, -53], [425, -52], [430, -51], [435, -50], [440, -49], [445, -48],
+	[450, -47], [455, -46], [460, -45], [465, -44], [470, -43], [475, -43], [480, -42], [485, -41], [490, -40], [495, -39],
+	[500, -38], [505, -37], [510, -36], [515, -35], [520, -35], [525, -34], [530, -33], [535, -32], [540, -31], [545, -30],
+	[550, -29], [555, -28], [560, -27], [565, -27], [600, -21], [650, -12], [680, -6], [700, -3], [714, 0], [750, 6], [800, 16]
+];
+/** Bagrut-average steps relative to 112 (one step = 0.51 general / 0.4 sciences / 0.2 engineering / 0.25 software). */
+const BIU_BAGRUT_STEPS: [number, number][] = [
+	[90, -35], [91, -34], [92, -32], [93, -30], [94, -29], [95, -27], [96, -25], [97, -24], [98, -22], [99, -21], [100, -19],
+	[101, -17], [102, -16], [103, -14], [104, -12], [105, -11], [106, -9], [107, -7], [108, -6], [109, -4], [110, -3],
+	[111, -1], [112, 0], [113, 2]
+];
+const BIU_BAGRUT_CAP = 113;
+/** Quantitative-section term relative to 145 (sciences / engineering / software). */
+const BIU_QUANT_TERM: [number, number][] = [
+	[50, -8.1], [55, -7.7], [60, -7.2], [65, -6.8], [70, -6.4], [75, -6.0], [80, -5.5], [85, -5.1], [90, -4.7], [95, -4.2],
+	[100, -3.8], [105, -3.4], [110, -3.0], [115, -2.5], [120, -2.1], [125, -1.7], [130, -1.2], [135, -0.8], [140, -0.4],
+	[145, 0], [150, 0.5]
+];
+/** Math / physics product (grade × units) term relative to 475; flat at or below 285. */
+const BIU_PRODUCT_TERM: [number, number][] = [
+	[285, -5.8], [300, -5.7], [320, -5.1], [325, -4.9], [340, -4.4], [350, -4.1], [360, -3.8], [375, -3.3], [380, -3.1],
+	[400, -2.5], [425, -1.6], [450, -0.8], [475, 0], [500, 0.8]
+];
+/** Physics term when there is no physics in the bagrut (engineering). */
+const BIU_NO_PHYSICS = -6.5;
+/** Profile-A scores per group (the tables are relative to that profile). */
+const BIU_BASE = { general: 89.61, sciences: 86.9, engineering: 82.8, software: 84.45 };
+
+/** Piecewise-linear lookup; below the table it extends with `slopeBelow` per unit, above it stays flat. */
+function lookup(table: [number, number][], x: number, slopeBelow: number): number {
+	if (x <= table[0][0]) return table[0][1] - slopeBelow * (table[0][0] - x);
+	for (let i = 1; i < table.length; i++) {
+		const [x1, y1] = table[i];
+		if (x <= x1) {
+			const [x0, y0] = table[i - 1];
+			return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
+		}
+	}
+	return table[table.length - 1][1];
+}
+const steps = (table: [number, number][], x: number, slopeBelow: number) => Math.floor(lookup(table, x, slopeBelow) + 1e-9);
+const tenth = (v: number) => Math.round(v * 10) / 10;
+const productTerm = (units: number, grade: number) => (units * grade <= 285 ? -5.8 : tenth(lookup(BIU_PRODUCT_TERM, units * grade, 0)));
+
+export interface BarIlanScoreInput {
+	bagrutAverage: number;
+	psychometric: number;
+	/** Quantitative section, 50–150. */
+	quant: number;
+	mathUnits: number;
+	mathGrade: number;
+	physicsUnits?: number;
+	physicsGrade?: number;
 }
 
-/**
- * Calculates Bar-Ilan Engineering & Exact Sciences Sekem (סכם הנדסה ומדעים מדויקים):
- * In Bar-Ilan Engineering Faculty:
- * Formula places 55% weight on Quantitative Psychometric and 45% on Bagrut standing
- */
-export function calculateBarIlanEngineeringSekem(
-	bagrutAverage: number,
-	quant: number,
-	mathUnits: number = 4,
-	mathGrade: number = 80
-): number {
-	if (bagrutAverage <= 0 || quant <= 0) return 0;
-	const bt = Math.round((bagrutAverage * 10 - 330) * 10) / 10;
+export interface BarIlanScores {
+	general: number;
+	sciences: number;
+	engineering: number;
+	software: number;
+}
 
-	// Bonus weight if 5 units math with high grade
-	let mathFactor = 0;
-	if (mathUnits === 5 && mathGrade >= 85) {
-		mathFactor = 10;
-	}
-
-	const raw = 0.55 * quant + 0.45 * bt + mathFactor;
-	return Math.min(800, Math.max(200, Math.round(raw)));
+/** Bar-Ilan's 0–100 admission scores for the four scoring groups (0 without a psychometric score). */
+export function calculateBarIlanScores(i: BarIlanScoreInput): BarIlanScores {
+	if (i.bagrutAverage <= 0 || i.psychometric <= 0) return { general: 0, sciences: 0, engineering: 0, software: 0 };
+	const p = steps(BIU_PSYCH_STEPS, i.psychometric, 0.18);
+	const b = steps(BIU_BAGRUT_STEPS, Math.min(i.bagrutAverage, BIU_BAGRUT_CAP), 1.59);
+	const q = i.quant > 0 ? tenth(lookup(BIU_QUANT_TERM, i.quant, 0.09)) : tenth(lookup(BIU_QUANT_TERM, 50, 0));
+	const m = productTerm(i.mathUnits, i.mathGrade);
+	// Physics uses the same product scale, relative to 5u × 93 (= the math scale + 0.3)
+	const f = i.physicsUnits && i.physicsGrade ? productTerm(i.physicsUnits, i.physicsGrade) + 0.3 : BIU_NO_PHYSICS;
+	const r2 = (v: number) => Math.round(v * 100) / 100;
+	return {
+		general: r2(BIU_BASE.general + 0.49 * p + 0.51 * b),
+		sciences: tenth(BIU_BASE.sciences + 0.4 * p + 0.4 * b + q + m),
+		engineering: tenth(BIU_BASE.engineering + 0.5 * p + 0.2 * b + q + m + f),
+		software: r2(BIU_BASE.software + 0.5 * p + 0.25 * b + q + 1.5 * m)
+	};
 }
 
 export function evaluateBarIlan(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
 	const optimal = calculateBarIlanOptimalBagrut(input.bagrutSubjects);
-	const mathSub = input.bagrutSubjects.find((s) => s.name.includes('מתמטיקה'));
-	const mathUnits = input.mathUnits ?? (mathSub ? mathSub.units : 4);
-	const mathGrade = input.mathGrade ?? (mathSub ? mathSub.grade : 80);
+	const mathSub = input.bagrutSubjects.find((s) => isMath(s.name) && s.units > 0 && s.grade > 0);
+	const physicsSub = input.bagrutSubjects.find((s) => s.name.includes('פיזיקה') || s.name.includes('פיסיקה'));
+	const mathUnits = mathSub?.units ?? input.mathUnits ?? 0;
+	const mathGrade = mathSub?.grade ?? input.mathGrade ?? 0;
+	const physicsUnits = physicsSub?.units ?? input.physicsUnits ?? 0;
+	const physicsGrade = physicsSub?.grade ?? input.physicsGrade ?? 0;
+	const quant = input.psychometricQuant && input.psychometricQuant <= 150 ? input.psychometricQuant : 0;
 
-	const psych = input.psychometricGeneral || 0;
-	const explicitQuant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
-		? input.psychometricQuantEmphasis
-		: undefined;
-	const rawQuant = explicitQuant ?? (input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych);
-	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
+	const scores = calculateBarIlanScores({
+		bagrutAverage: optimal.average,
+		psychometric: input.psychometricGeneral || 0,
+		quant,
+		mathUnits,
+		mathGrade,
+		physicsUnits,
+		physicsGrade
+	});
 
-	const generalSekem = calculateBarIlanGeneralSekem(optimal.average, psych);
-	const engineeringSekem = calculateBarIlanEngineeringSekem(optimal.average, quant, mathUnits, mathGrade);
-
-	// Bar-Ilan Direct Bagrut Admission: Available for Bagrut >= 102.0 in Humanities, Social Sciences, Jewish Studies
-	const directBagrutEligible = optimal.average >= 102.0;
-
-	const notes: string[] = ['ממוצע הבגרות מחושב לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה — נוסחת הסכם טרם אומתה.'];
-	if (directBagrutEligible) {
-		notes.push('ממוצע בגרות עומד ברף קבלה ישירה (102.0 ומעלה) באוניברסיטת בר-אילן לחוגים זכאים.');
-	}
+	const notes: string[] = [
+		'שקלול בר-אילן (סולם 0–100) לפי המחשבון הרשמי: כללי, מדעים, הנדסה והנדסת תוכנה.'
+	];
+	if (!quant && (input.psychometricGeneral || 0) > 0) notes.push('לא הוזן ציון בחשיבה כמותית — השקלול במסלולי המדעים וההנדסה מחושב בלעדיו.');
 	if (optimal.droppedSubjects.length > 0) {
 		notes.push(`הושמטו ${optimal.droppedSubjects.length} מקצועות בחירה לטובת מקסום הממוצע האופטימלי.`);
 	}
@@ -144,9 +213,12 @@ export function evaluateBarIlan(input: InstitutionCalculatorInput): InstitutionC
 		institutionName: 'אוניברסיטת בר-אילן',
 		bagrutAverage: optimal.average,
 		optimalUnits: optimal.optimalUnits,
-		generalSekem,
-		engineeringSekem,
-		directBagrutEligible,
+		generalSekem: scores.general,
+		quantitativeSekem: scores.sciences,
+		engineeringSekem: scores.engineering,
+		managementSekem: scores.software,
+		// Lowest official bagrut-only threshold at Bar-Ilan is 90 (per-track minimums are in each program's admissionRoutes)
+		directBagrutEligible: optimal.average >= 90,
 		notes,
 		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
 		subjectBreakdown: optimal.breakdown,

@@ -844,7 +844,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   </div>
                                              </div>
 
-                                             <div className={`grid grid-cols-2 ${res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-2`}>
+                                             <div className={`grid grid-cols-2 ${res.institutionId === 'bar_ilan' ? 'sm:grid-cols-5' : res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-2`}>
                                                   {/* Bagrut Avg */}
                                                   <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
                                                        <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">ממוצע בגרות</span>
@@ -853,14 +853,22 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                                                   {/* General Sekem */}
                                                   <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
-                                                       <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">סכם כללי</span>
+                                                       <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול כללי' : 'סכם כללי'}</span>
                                                        <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.generalSekem}</span>
                                                   </div>
+
+                                                  {/* Bar-Ilan sciences score */}
+                                                  {res.institutionId === 'bar_ilan' && res.quantitativeSekem !== undefined && (
+                                                       <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
+                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">שקלול מדעים</span>
+                                                            <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.quantitativeSekem}</span>
+                                                       </div>
+                                                  )}
 
                                                   {/* Engineering Sekem */}
                                                   {res.engineeringSekem !== undefined && (
                                                        <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
-                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">סכם כמותי/הנדסה</span>
+                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסה' : 'סכם כמותי/הנדסה'}</span>
                                                             <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.engineeringSekem}</span>
                                                        </div>
                                                   )}
@@ -868,7 +876,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   {/* Management Sekem */}
                                                   {res.managementSekem !== undefined && (
                                                        <div className="py-1.5 px-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-center flex flex-col justify-center">
-                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">התאמה לניהול</span>
+                                                            <span className="text-[10px] text-[#66635C] block font-bold leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסת תוכנה' : 'התאמה לניהול'}</span>
                                                             <span className="text-base sm:text-lg font-black text-[#222222] mt-0.5 block leading-tight">{res.managementSekem}</span>
                                                        </div>
                                                   )}

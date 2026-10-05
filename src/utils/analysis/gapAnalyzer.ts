@@ -124,6 +124,12 @@ function describeSekemType(calcId: string, type: string): string {
 		return 'בן-גוריון: סכם';
 	}
 	if (calcId === 'reichman') return 'רייכמן: ציון מתואם';
+	if (calcId === 'bar_ilan') {
+		if (type === 'quantitative') return 'בר-אילן: שקלול מדעים (0–100)';
+		if (type === 'engineering') return 'בר-אילן: שקלול הנדסה (0–100)';
+		if (type === 'management') return 'בר-אילן: שקלול הנדסת תוכנה (0–100)';
+		return 'בר-אילן: שקלול כללי (0–100)';
+	}
 	if (calcId === 'ariel') {
 		return type === 'engineering' ? 'אריאל: ציון קבלה משולב (רב-תחומי/כמותי, הגבוה)' : 'אריאל: ציון קבלה משולב';
 	}

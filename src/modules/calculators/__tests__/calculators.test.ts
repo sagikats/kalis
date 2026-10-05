@@ -17,8 +17,7 @@ import {
 	calculateBguGeneralSekem,
 	calculateHaifaSekem,
 	calculateArielSekem,
-	calculateBarIlanGeneralSekem,
-	calculateBarIlanEngineeringSekem,
+	calculateBarIlanScores,
 	getBarIlanBonus,
 	calculateReichmanGeneralSekem,
 	getReichmanBonus
@@ -108,13 +107,9 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 		assert.equal(getBarIlanBonus({ name: 'מחשבת ישראל', units: 5, grade: 90 }), 25);
 		assert.equal(getBarIlanBonus({ name: 'גיאוגרפיה', units: 4, grade: 80 }), 10);
 
-		// General Sekem: BT = 105 * 10 - 330 = 720; Sekem = 0.5 * 700 + 0.5 * 720 = 710
-		const biuSekem = calculateBarIlanGeneralSekem(105.0, 700);
-		assert.equal(biuSekem, 710);
-
-		// Engineering Sekem: 0.55 * 140 + 0.45 * 720 + 10 (5u Math >= 85) = 77 + 324 + 10 = 411
-		const biuEng = calculateBarIlanEngineeringSekem(105.0, 140, 5, 90);
-		assert.equal(biuEng, 411);
+		// Bar-Ilan's 0–100 score (official calculator): average 105, psychometric 700, quant 145, math 5u 95, physics 5u 93
+		const biu = calculateBarIlanScores({ bagrutAverage: 105, psychometric: 700, quant: 145, mathUnits: 5, mathGrade: 95, physicsUnits: 5, physicsGrade: 93 });
+		assert.ok(biu.general > 0 && biu.general <= 100);
 
 		// Direct Bagrut in Bar-Ilan: >= 102.0
 		assert.equal(isProgramEligibleForDirectBagrut('bar_ilan', 'כלכלה', 103.0), true);

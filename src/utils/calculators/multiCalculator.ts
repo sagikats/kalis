@@ -235,8 +235,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: arielRes.optimalUnits,
 			notes:
 				arielRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${arielRes.droppedSubjects.join(', ')}). הערכה — הנוסחה טרם אומתה מול מקור רשמי`
-					: 'הערכה — הנוסחה טרם אומתה מול מקור רשמי'
+					? `ממוצע מיטבי (הושמטו: ${arielRes.droppedSubjects.join(', ')}). נוסחת הציון המשולב אומתה; טבלת הבונוסים — הערכה`
+					: 'נוסחת הציון המשולב אומתה; טבלת הבונוסים — הערכה'
 		},
 		haifa: {
 			institutionId: 'haifa',
@@ -264,6 +264,8 @@ export function calculateMultiInstitutionSekem(
 			bagrutAverage: biuRes.bagrutAverage,
 			generalSekem: biuRes.generalSekem,
 			engineeringSekem: biuRes.engineeringSekem,
+			quantitativeSekem: biuRes.quantitativeSekem,
+			managementSekem: biuRes.managementSekem,
 			directBagrutEligible: biuRes.directBagrutEligible,
 			droppedSubjects: biuRes.droppedSubjects,
 			subjectBreakdown: biuRes.subjectBreakdown,
@@ -271,8 +273,8 @@ export function calculateMultiInstitutionSekem(
 			optimalUnits: biuRes.optimalUnits,
 			notes:
 				biuRes.droppedSubjects && biuRes.droppedSubjects.length > 0
-					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). ממוצע לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה`
-					: 'ממוצע לפי כללי בר-אילן הרשמיים; הסכם הוא הערכה'
+					? `ממוצע מיטבי (הושמטו: ${biuRes.droppedSubjects.join(', ')}). שקלול 0–100 לפי המחשבון הרשמי של בר-אילן`
+					: 'שקלול 0–100 לפי המחשבון הרשמי של בר-אילן'
 		},
 		reichman: {
 			institutionId: 'reichman',

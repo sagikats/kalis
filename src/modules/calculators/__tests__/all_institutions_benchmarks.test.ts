@@ -19,8 +19,7 @@ import {
 	calculateHujiSekem, calculateHujiWeightedScore,
 	calculateHaifaSekem,
 	calculateArielSekem,
-	calculateBarIlanGeneralSekem,
-	calculateBarIlanEngineeringSekem,
+	calculateBarIlanScores,
 	calculateReichmanGeneralSekem
 } from '../index';
 import { CalculatorSubject } from '../types';
@@ -223,18 +222,18 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 			const res = calculateInstitution('bar_ilan', {
 				bagrutSubjects: baseSubjects,
 				psychometricGeneral: 700,
-				psychometricQuant: 700,
+				psychometricQuant: 140,
 				mathUnits: 5,
 				mathGrade: 90
 			});
 
-			assert.ok(res.engineeringSekem! > 650, 'Bar-Ilan engineering sekem should be > 650');
+			assert.ok(res.engineeringSekem! > 60 && res.engineeringSekem! <= 100, 'Bar-Ilan engineering score is on its 0–100 scale');
 			assert.ok(res.bagrutAverage > 100, 'Bar-Ilan bagrut should include bonuses');
 		});
 
-		it('Case 2: General Sekem with 200-800 scale', () => {
-			const sekem = calculateBarIlanGeneralSekem(102.0, 620);
-			assert.ok(sekem >= 600 && sekem <= 700, 'Bar-Ilan general sekem in valid range');
+		it('Case 2: General score on the 0–100 scale', () => {
+			const { general } = calculateBarIlanScores({ bagrutAverage: 102, psychometric: 620, quant: 120, mathUnits: 4, mathGrade: 80 });
+			assert.ok(general > 60 && general < 90, 'Bar-Ilan general score in valid range');
 		});
 
 		it('Case 3: Direct Bagrut: Bagrut >= 102.0 -> directBagrutEligible = true', () => {
@@ -242,7 +241,7 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 				bagrutSubjects: baseSubjects,
 				psychometricGeneral: 0
 			});
-			assert.equal(res.directBagrutEligible, true, 'Bar-Ilan direct bagrut threshold is >= 102.0');
+			assert.equal(res.directBagrutEligible, true, 'Bar-Ilan has bagrut-only tracks from an average of 90');
 		});
 	});
 

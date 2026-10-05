@@ -33,18 +33,18 @@ test('WhatIfDegreeSwitchSync: verifies primary recommended track is loaded on de
 	const biuRes = multiRes.find((r) => r.institutionId === 'bar_ilan')!;
 	const technionRes = multiRes.find((r) => r.institutionId === 'technion')!;
 
-	// 1. Program A: BIU Medicine
+	// 1. Program A: BIU computer science (official threshold 74 on Bar-Ilan's 0–100 scale)
 	const biuMedicineSelection = {
 		institutionId: 'bar_ilan',
 		institutionName: 'אוניברסיטת בר אילן',
 		calculatorId: 'bar_ilan',
 		program: {
-			id: 'prog-inst-4-95',
-			name: 'רפואה (M.D.)',
-			fieldOfStudy: 'רפואה (M.D.)',
-			admissionThreshold: 735,
-			minSekemThreshold: 735,
-			minPsychometricFloor: 700,
+			id: 'prog-inst-4-41',
+			name: 'מדעי המחשב',
+			fieldOfStudy: 'מדעי המחשב',
+			admissionThreshold: 90,
+			minSekemThreshold: 90,
+			relevantSekemType: 'quantitative',
 			requiresPsychometric: true,
 			directBagrutEligible: false
 		} as any
@@ -63,10 +63,10 @@ test('WhatIfDegreeSwitchSync: verifies primary recommended track is loaded on de
 	};
 
 	const biuTracks = generatePersonalizedTracks(biuGap, userProfile, biuRes, preferences);
-	assert.ok(biuTracks.length >= 2, 'BIU Medicine should have at least 2 tracks');
+	assert.ok(biuTracks.length >= 2, 'BIU program should have at least 2 tracks');
 	const biuPrimary = biuTracks.find((t) => t.badge === 'הכי מומלץ') || biuTracks[0];
-	assert.ok(biuPrimary, 'BIU Medicine must have a primary track');
-	assert.equal(biuPrimary.targetSekem! >= 735, true, 'BIU track reaches threshold');
+	assert.ok(biuPrimary, 'BIU program must have a primary track');
+	assert.equal(biuPrimary.targetSekem! >= 90, true, 'BIU track reaches threshold');
 
 	// 2. Program B: Technion Computer Science
 	const technionCsSelection = {
