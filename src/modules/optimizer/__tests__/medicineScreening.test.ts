@@ -83,6 +83,8 @@ describe('Medicine: screening, never "accepted"', () => {
 		assert.match(low.admissionNote ?? '', /פסיכומטרי 680/);
 		assert.equal(analyze('inst-4', 'prog-inst-4-95', profile(), { bagrutAverage: 100 }).status, 'not_accepted');
 		assert.equal(analyze('inst-4', 'prog-inst-4-95', profile({ math: [5, 75] }), { bagrutAverage: 105 }).status, 'not_accepted');
+		// Hebrew: 107+ in the verbal section (track page, medicine.biu.ac.il/tracks/8154)
+		assert.equal(analyze('inst-4', 'prog-inst-4-95', profile({ psychometricVerbal: 100 }), { bagrutAverage: 105 }).status, 'not_accepted');
 	});
 
 	it('Ariel 6-year: psychometric 680, math 4u 80 / 5u 70, English 120; threshold not published', () => {
@@ -92,10 +94,14 @@ describe('Medicine: screening, never "accepted"', () => {
 		assert.equal(analyze('inst-2', 'prog-inst-2-39', profile({ psychometricEnglish: 110 })).status, 'not_accepted');
 	});
 
-	it('BGU: no published threshold (the old 735 was unsourced); English Advanced B is checked', () => {
-		assert.equal(program('inst-3', 'prog-bgu-180').admissionThreshold, null);
-		assert.equal(analyze('inst-3', 'prog-bgu-180', profile()).status, 'screening');
-		assert.equal(analyze('inst-3', 'prog-bgu-180', profile({ psychometricEnglish: 110 })).status, 'not_accepted');
+	it('BGU: סכם 735 and psychometric 680 (official degree page) invite to the computerized test; English Advanced B', () => {
+		const p = program('inst-3', 'prog-bgu-180');
+		assert.equal(p.admissionThreshold, 735);
+		assert.equal(p.admissionRoutes.minPsychometric, 680);
+		assert.equal(analyze('inst-3', 'prog-bgu-180', profile(), { generalSekem: 760 }).status, 'screening');
+		assert.equal(analyze('inst-3', 'prog-bgu-180', profile(), { generalSekem: 720 }).status, 'not_accepted');
+		assert.equal(analyze('inst-3', 'prog-bgu-180', profile({ psychometricGeneral: 670 }), { generalSekem: 760 }).status, 'missing_requirement');
+		assert.equal(analyze('inst-3', 'prog-bgu-180', profile({ psychometricEnglish: 110 }), { generalSekem: 760 }).status, 'missing_requirement');
 	});
 
 	it('Tel Aviv: conditions not verified yet -> "separate admission", never a guessed status', () => {

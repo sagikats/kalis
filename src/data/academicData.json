@@ -5291,7 +5291,7 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "mathRequirement": "4 יח\"ל בציון 85+ או 5 יח\"ל בציון 75+",
-        "comments": "תוכנית שש-שנתית (הפקולטה לרפואה ע\"ש עזריאלי, צפת). תנאי סף רשמיים: פסיכומטרי 680+, ממוצע 101+, מתמטיקה 4/85 או 5/80 ללא בונוס, אנגלית 120+.",
+        "comments": "תוכנית שש-שנתית (הפקולטה לרפואה ע\"ש עזריאלי, צפת). תנאי סף רשמיים: פסיכומטרי 680+, ממוצע 101+, מתמטיקה 4/85 או 5/80 ללא בונוס, אנגלית 120+, חשיבה מילולית 107+.",
         "admissionRoutes": {
           "minPsychometric": 680,
           "minBagrutAverage": 101,
@@ -5336,16 +5336,32 @@
                     }
                   ]
                 }
+              ],
+              "otherOptions": "אמי\"ר / אמיר\"ם 120+"
+            },
+            {
+              "id": "hebrew-verbal",
+              "title": "עברית: חשיבה מילולית 107+",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "verbal",
+                      "min": 107
+                    }
+                  ]
+                }
               ]
             }
           ],
           "requirementsSource": "https://medicine.biu.ac.il/six_year_track_application_requirements — 2026-10-05",
           "screening": {
             "stage": "שלב המיונים",
-            "note": "תנאי סף: פסיכומטרי 680+, ממוצע בגרות משוקלל 101+, מתמטיקה 4 יח\"ל 85 / 5 יח\"ל 80 (ללא בונוס), אנגלית 120+. שלבי המיון וספי המעבר אינם מפורסמים בדף הרשמי (הפקולטה לרפואה ע\"ש עזריאלי, צפת).",
+            "note": "תנאי סף: פסיכומטרי 680+, ממוצע בגרות משוקלל 101+, מתמטיקה 4 יח\"ל 85 / 5 יח\"ל 80 (ללא בונוס), אנגלית 120+, עברית: 107+ בפרק החשיבה המילולית. שלבי המיון וספי המעבר אינם מפורסמים בדף הרשמי (הפקולטה לרפואה ע\"ש עזריאלי, צפת).",
             "source": "https://medicine.biu.ac.il/six_year_track_application_requirements — 2026-10-05"
           }
-        }
+        },
+        "minPsychometricFloor": 680
       },
       {
         "id": "prog-inst-4-96",
@@ -36959,12 +36975,12 @@
         "fieldOfStudy": "רפואה על שם ג'ויס וארוינג גולדמן (רפואה על שם ג'ויס וארוינג גולדמן חד-מחלקתי)",
         "degreeLevel": "תואר ראשון",
         "description": "חד-מחלקתי",
-        "admissionThreshold": null,
+        "admissionThreshold": 735,
         "mathRequirement": null,
         "englishRequirement": "מתקדמים ב",
         "hebrewRequirement": "רמה ו'",
         "additionalConditions": null,
-        "comments": "הליך מיון (רשמי, תשפ\"ז): סף פסיכומטרי וסכם שנקבע מדי שנה ואינו מתפרסם מראש, מבחן ממוחשב ושני ראיונות. אנגלית: מתקדמים ב'.",
+        "comments": "הליך מיון (רשמי, דף התואר, הרשמה לתשפ\"ח): סכם 735 ובנוסף פסיכומטרי 680, אנגלית מתקדמים ב'; מבחן ממוחשב ושני ראיונות.",
         "registrationStatus": "סגורה",
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/health/School_of_Medicine.aspx",
         "requiresPsychometric": true,
@@ -36988,13 +37004,19 @@
               "otherOptions": "רמת מתקדמים ב' (אמי\"ר/אמירנט)"
             }
           ],
-          "requirementsSource": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/acceptance-conditions/ — 2026-10-05",
+          "requirementsSource": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/?tab=2944 — צילום מסך של המשתמש, 2026-10-05",
           "screening": {
             "stage": "המבחן הממוחשב והראיונות",
-            "note": "אחרי עמידה בסף הפסיכומטרי והסכם שנקבע כל שנה, יוזמנו למבחן ממוחשב, ומשם לשני ראיונות קבלה. מתקבלים בעלי ההערכות הגבוהות ביותר בכל שלב, עד מילוי המכסה. אנגלית: מתקדמים ב'. המועד האחרון לבחינה הפסיכומטרית: דצמבר 2025.",
-            "source": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/acceptance-conditions/ — 2026-10-05"
-          }
-        }
+            "note": "תנאי הסף לזימון: סכם 735 ובנוסף פסיכומטרי כללי רב-תחומי (או נתיב לאקדמיה) 680, אנגלית מתקדמים ב', עברית רמה ו' (לנדרשים). אחר כך מבחן ממוחשב ושני ראיונות; מתקבלים בעלי ההערכות הגבוהות ביותר בכל שלב, עד מילוי המכסה.",
+            "source": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/?tab=2944 — 2026-10-05"
+          },
+          "minPsychometric": 680
+        },
+        "officialThreshold": 735,
+        "thresholdSource": "https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/?tab=2944 — 2026-10-05",
+        "thresholdUpdatedAt": "2026-10-05",
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 680
       },
       {
         "id": "prog-bgu-185",
@@ -48395,7 +48417,8 @@
             "note": "שלב א': ציון קבלה משולב [(בגרות × 6.666) + פסיכומטרי] / 2, וסף שייקבע. שלב ב': הערכה לא-קוגניטיבית — ציון מו\"ר או מיון באוניברסיטת אריאל. ציון סופי: 70% ציון משולב ו-30% ההערכה הלא-קוגניטיבית, ונדרש גם ציון מינימלי בהערכה. פסיכומטרי 680 לפחות.",
             "source": "https://www.ariel.ac.il/wp/med/admission-6years/ — 2026-10-05"
           }
-        }
+        },
+        "minPsychometricFloor": 680
       },
       {
         "id": "prog-inst-2-40",

@@ -16,7 +16,9 @@ describe('BGU official thresholds', () => {
 		assert.ok(sourced.length >= 175, `expected ~181 sourced programs, got ${sourced.length}`);
 		for (const p of sourced) {
 			assert.equal(p.admissionThreshold, p.officialThreshold, p.fieldOfStudy);
-			assert.ok(p.thresholdSource?.startsWith('https://apps4cloud.bgu.ac.il/calcprod/'), p.fieldOfStudy);
+			// Medicine isn't in the calculator service: its threshold comes from the degree page (importMedicine.ts)
+			assert.ok(p.thresholdSource?.startsWith('https://apps4cloud.bgu.ac.il/calcprod/') ||
+				p.thresholdSource?.startsWith('https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/'), p.fieldOfStudy);
 			assert.ok(['general', 'quantitative', 'engineering', 'psychometric'].includes(p.relevantSekemType), p.fieldOfStudy);
 		}
 	});

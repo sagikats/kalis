@@ -13,7 +13,9 @@
  * `admissionRoutes.screening`. The platform never shows "accepted" for these programs, only "passes to screening".
  *
  * - Where the institution publishes the threshold (HUJI, Technion), it is kept.
- * - Where it is set each year from the applicant pool and isn't published (BGU, Ariel, Bar-Ilan), the threshold is
+ * - BGU publishes סכם 735 + psychometric 680 on the degree page's "תנאי קבלה" tab, rendered by JavaScript (not in the
+ *   served HTML — transcribed from the user's screenshot).
+ * - Where it is set each year from the applicant pool and isn't published (Ariel, Bar-Ilan), the threshold is
  *   removed (admissionThreshold null), and only the published registration conditions are checked.
  * - Tel Aviv: the official page shows "אין מידע להציג" (loaded dynamically). The unsourced thresholds are removed, and
  *   the programs say their conditions are not verified yet. They wait for the user's screenshots (USER_TASKS).
@@ -89,23 +91,25 @@ const UPDATES: Record<string, Update> = {
 			}
 		])
 	),
-	// ── BGU: threshold set each year, not published ───────────────────────────
+	// ── BGU: סכם 735 ובנוסף פסיכומטרי 680 (the degree page's "תנאי קבלה" tab, rendered by JavaScript — the values are not
+	//    in the served HTML; transcribed from the user's screenshot of ?tab=2944, 2026-10-05, registration for תשפ"ח) ──
 	'prog-bgu-180': {
-		threshold: null,
-		relevantSekemType: null,
+		threshold: 735,
+		relevantSekemType: 'general',
 		routes: {
+			minPsychometric: 680,
 			requirements: [english(120, 'רמת מתקדמים ב\' (אמי"ר/אמירנט)')],
-			requirementsSource: `https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/acceptance-conditions/ — ${FETCHED}`,
+			requirementsSource: `https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/?tab=2944 — צילום מסך של המשתמש, ${FETCHED}`,
 			screening: {
 				stage: 'המבחן הממוחשב והראיונות',
 				note:
-					'אחרי עמידה בסף הפסיכומטרי והסכם שנקבע כל שנה, יוזמנו למבחן ממוחשב, ומשם לשני ראיונות קבלה. ' +
-					'מתקבלים בעלי ההערכות הגבוהות ביותר בכל שלב, עד מילוי המכסה. אנגלית: מתקדמים ב\'. המועד האחרון לבחינה הפסיכומטרית: דצמבר 2025.',
-				source: `https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/acceptance-conditions/ — ${FETCHED}`
+					'תנאי הסף לזימון: סכם 735 ובנוסף פסיכומטרי כללי רב-תחומי (או נתיב לאקדמיה) 680, אנגלית מתקדמים ב\', עברית רמה ו\' (לנדרשים). ' +
+					'אחר כך מבחן ממוחשב ושני ראיונות; מתקבלים בעלי ההערכות הגבוהות ביותר בכל שלב, עד מילוי המכסה.',
+				source: `https://www.bgu.ac.il/welcome/ba/catalog/categories/medical-school/?tab=2944 — ${FETCHED}`
 			}
 		},
 		comments:
-			'הליך מיון (רשמי, תשפ"ז): סף פסיכומטרי וסכם שנקבע מדי שנה ואינו מתפרסם מראש, מבחן ממוחשב ושני ראיונות. אנגלית: מתקדמים ב\'.'
+			'הליך מיון (רשמי, דף התואר, הרשמה לתשפ"ח): סכם 735 ובנוסף פסיכומטרי 680, אנגלית מתקדמים ב\'; מבחן ממוחשב ושני ראיונות.'
 	},
 	// ── Ariel 6-year: threshold set after registration ────────────────────────
 	'prog-inst-2-39': {
@@ -136,17 +140,22 @@ const UPDATES: Record<string, Update> = {
 		routes: {
 			minPsychometric: 680,
 			minBagrutAverage: 101,
-			requirements: [math([[4, 85], [5, 80]], 'מתמטיקה (ציון ללא בונוס)'), english(120)],
+			requirements: [
+				math([[4, 85], [5, 80]], 'מתמטיקה (ציון ללא בונוס)'),
+				english(120, 'אמי"ר / אמיר"ם 120+'),
+				{ id: 'hebrew-verbal', title: 'עברית: חשיבה מילולית 107+', anyOf: [{ psych: [{ section: 'verbal' as const, min: 107 }] }] }
+			],
 			requirementsSource: `https://medicine.biu.ac.il/six_year_track_application_requirements — ${FETCHED}`,
 			screening: {
 				stage: 'שלב המיונים',
 				note:
-					'תנאי סף: פסיכומטרי 680+, ממוצע בגרות משוקלל 101+, מתמטיקה 4 יח"ל 85 / 5 יח"ל 80 (ללא בונוס), אנגלית 120+. ' +
+					'תנאי סף: פסיכומטרי 680+, ממוצע בגרות משוקלל 101+, מתמטיקה 4 יח"ל 85 / 5 יח"ל 80 (ללא בונוס), אנגלית 120+, ' +
+					'עברית: 107+ בפרק החשיבה המילולית. ' +
 					'שלבי המיון וספי המעבר אינם מפורסמים בדף הרשמי (הפקולטה לרפואה ע"ש עזריאלי, צפת).',
 				source: `https://medicine.biu.ac.il/six_year_track_application_requirements — ${FETCHED}`
 			}
 		},
-		comments: 'תוכנית שש-שנתית (הפקולטה לרפואה ע"ש עזריאלי, צפת). תנאי סף רשמיים: פסיכומטרי 680+, ממוצע 101+, מתמטיקה 4/85 או 5/80 ללא בונוס, אנגלית 120+.'
+		comments: 'תוכנית שש-שנתית (הפקולטה לרפואה ע"ש עזריאלי, צפת). תנאי סף רשמיים: פסיכומטרי 680+, ממוצע 101+, מתמטיקה 4/85 או 5/80 ללא בונוס, אנגלית 120+, חשיבה מילולית 107+.'
 	},
 	// ── Reichman: graduates only ──────────────────────────────────────────────
 	'prog-inst-38-13': {
@@ -202,11 +211,16 @@ function main() {
 			for (const k of ['officialThreshold', 'thresholdSource', 'thresholdUpdatedAt', 'sekemScore', 'psychometricScore', 'minPsychometricFloor']) delete p[k];
 		} else if (u.threshold !== undefined) {
 			p.admissionThreshold = u.threshold;
+			p.officialThreshold = u.threshold;
+			p.thresholdSource = (u.routes.screening as { source: string }).source;
+			p.thresholdUpdatedAt = FETCHED;
+			for (const k of ['sekemScore', 'psychometricScore', 'minPsychometricFloor']) delete p[k];
 		}
 		if (u.relevantSekemType === null) delete p.relevantSekemType;
 		else if (u.relevantSekemType) p.relevantSekemType = u.relevantSekemType;
 		if (u.notOffered === null) delete p.notOffered;
 		else if (u.notOffered) p.notOffered = u.notOffered;
+		const floor = (p.admissionRoutes ?? u.routes)?.minPsychometric ?? (u.routes.minPsychometric as number | undefined);
 		p.requiresPsychometric = true;
 		p.directBagrutEligible = false;
 		p.directBagrutMinAverage = null;
@@ -214,6 +228,7 @@ function main() {
 		p.admissionRoutes = { ...(u.threshold === null ? {} : p.admissionRoutes ?? {}), ...u.routes };
 		if (u.notOffered) delete p.admissionRoutes;
 		p.comments = u.comments;
+		if (floor && !p.notOffered) p.minPsychometricFloor = floor;
 		report.push(`${id} ${p.fieldOfStudy}: threshold=${p.admissionThreshold ?? 'none'} screening=${p.admissionRoutes?.screening ? 'yes' : 'no'}${p.notOffered ? ' notOffered' : ''}`);
 	}
 
