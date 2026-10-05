@@ -53,17 +53,13 @@ export class KalisDatabaseRepository {
 		return KalisDatabaseRepository.instance;
 	}
 
-	private normalizeInstitutionId(rawName: string): string {
-		const lower = (rawName || '').toLowerCase();
-		if (lower.includes('טכניון')) return 'technion';
-		if (lower.includes('תל אביב') || lower.includes('תל-אביב')) return 'tau';
-		if (lower.includes('עברית')) return 'huji';
-		if (lower.includes('בן גוריון') || lower.includes('בן-גוריון')) return 'bgu';
-		if (lower.includes('חיפה')) return 'haifa';
-		if (lower.includes('אריאל')) return 'ariel';
-		if (lower.includes('בר אילן') || lower.includes('בר-אילן')) return 'bar_ilan';
-		if (lower.includes('רייכמן') || lower.includes('בינתחומי')) return 'reichman';
-		return 'other';
+	// The 8 universities by catalog id (matching by name pulled in colleges: "אפקה … בתל אביב", "… - חיפה")
+	private normalizeInstitutionId(rawInst: { id?: string }): string {
+		const ids: Record<string, string> = {
+			'inst-48': 'technion', 'inst-6': 'tau', 'inst-1': 'huji', 'inst-3': 'bgu',
+			'inst-5': 'haifa', 'inst-2': 'ariel', 'inst-4': 'bar_ilan', 'inst-38': 'reichman'
+		};
+		return ids[rawInst.id ?? ''] ?? 'other';
 	}
 
 	private determineSekemType(field: string, institutionId: string): SekemType {
@@ -163,7 +159,7 @@ export class KalisDatabaseRepository {
 		let programCount = 0;
 
 		for (const rawInst of rawInstitutions) {
-			const instId = this.normalizeInstitutionId(rawInst.name);
+			const instId = this.normalizeInstitutionId(rawInst);
 			const instRecord = this.institutions.get(instId);
 			const instName = instRecord ? instRecord.name : rawInst.name;
 

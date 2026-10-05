@@ -15,6 +15,10 @@ import { useInstitutionsCatalog } from '../../hooks/useInstitutionsCatalog';
 import { TargetProgramSelection } from '../../utils/analysis/gapAnalyzer';
 import UniversityLogo from '../common/UniversityLogo';
 
+/** Only an official minimum psychometric is shown (the catalog's minPsychometricFloor may be a name-based estimate). */
+const officialPsychMin = (program: any): number | undefined =>
+	program?.admissionRoutes?.minPsychometric ?? program?.prerequisites?.admissionRoutes?.minPsychometric ?? undefined;
+
 const MAJOR_INSTITUTION_CHIPS = [
 	{ id: 'all', name: 'כל המוסדות' },
 	{ id: 'tau', name: 'תל אביב', calcId: 'tau', badge: 'TAU', color: 'from-purple-500 to-indigo-600' },
@@ -580,10 +584,10 @@ export default function DegreeSearchSelector({
 												<span className="font-extrabold text-[#222222]">{threshold}</span>
 											</div>
 										)}
-										{item.program.minPsychometricFloor && (
+										{officialPsychMin(item.program) && (
 											<div className="flex items-center justify-between text-[#66635C]">
-												<span>רצפת פסיכומטרי:</span>
-												<span className="font-bold text-[#222222]">{item.program.minPsychometricFloor}</span>
+												<span>פסיכומטרי מינימלי (רשמי):</span>
+												<span className="font-bold text-[#222222]">{officialPsychMin(item.program)}</span>
 											</div>
 										)}
 										<div className="flex items-center justify-between text-[#66635C]">

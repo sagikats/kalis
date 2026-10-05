@@ -292,14 +292,17 @@ export function checkProgramPrerequisites(
 
 	// 0. Degree-specific psychometric floor — the official one ("ובנוסף") first, then the catalog's estimate
 	const officialFloor = officialRoutesOf(targetProgram)?.minPsychometric;
-	let psychFloor = officialFloor ?? targetProgram?.minPsychometricFloor;
-	if (!psychFloor && targetProgram?.prerequisitesJson) {
+	// Conditions taken from an official source: no estimated floor (the seed's minPsychometricFloor is name-based)
+	const hasOfficialData = Boolean(officialRoutesOf(targetProgram)?.requirementsSource ||
+		(targetProgram as any)?.thresholdSource || (targetProgram as any)?.prerequisites?.thresholdSource);
+	let psychFloor = officialFloor ?? (hasOfficialData ? undefined : targetProgram?.minPsychometricFloor);
+	if (!psychFloor && !hasOfficialData && targetProgram?.prerequisitesJson) {
 		try {
 			const parsed = JSON.parse(targetProgram.prerequisitesJson);
 			psychFloor = parsed.minPsychometricFloor;
 		} catch (e) {}
 	}
-	if (!psychFloor) {
+	if (!psychFloor && !hasOfficialData) {
 		if (isMedicine) psychFloor = 700;
 		else if (isCS) psychFloor = 600;
 		else if (isEngineering) psychFloor = 560;
@@ -383,6 +386,11 @@ export function checkProgramPrerequisites(
 /**
  * Performs full Gap Analysis for a target program against the user's evaluated Sekem results
  */
+/** "שלב X" for a screening stage name, without doubling "שלב". */
+export const screeningStageTitle = (stage: string) => (stage.startsWith('שלב ') ? stage : `שלב ${stage}`);
+/** Hebrew "ל" + a stage name: the definite article merges into it (ל + המבחן → למבחן). */
+export const withLamed = (stage: string) => `ל${stage.startsWith('ה') ? stage.slice(1) : stage}`;
+
 export function analyzeProgramGap(
 	target: TargetProgramSelection,
 	profile: UserAcademicProfile,
@@ -726,15 +734,15 @@ export function analyzeProgramGap(
 				}
 			} else {
 				status = 'screening';
-				admissionNote = `עומד/ת בתנאי הסף להרשמה. סף המעבר לשלב ${routes.screening.stage} נקבע מדי שנה לפי המועמדים ואינו מתפרסם מראש. ${screeningNote}`;
+				admissionNote = `עומד/ת בתנאי הסף להרשמה. סף המעבר ל${screeningStageTitle(routes.screening.stage)} נקבע מדי שנה לפי המועמדים ואינו מתפרסם מראש. ${screeningNote}`;
 			}
 			admissionRoute = undefined;
 		} else if (status === 'accepted') {
 			status = 'screening';
 			admissionRoute = undefined;
-			admissionNote = `עובר/ת את סף הזימון ל${routes.screening.stage} (${threshold}). זו לא קבלה: ההחלטה הסופית נקבעת בשלב המיונים. ${screeningNote}`;
+			admissionNote = `עובר/ת את סף הזימון ${withLamed(routes.screening.stage)} (${threshold}). זו לא קבלה: ההחלטה הסופית נקבעת בשלב המיונים. ${screeningNote}`;
 		} else {
-			admissionNote = `${admissionNote ? `${admissionNote} ` : ''}הסף הוא סף הזימון ל${routes.screening.stage}, לא סף קבלה. ${screeningNote}`;
+			admissionNote = `${admissionNote ? `${admissionNote} ` : ''}הסף הוא סף הזימון ${withLamed(routes.screening.stage)}, לא סף קבלה. ${screeningNote}`;
 		}
 	}
 

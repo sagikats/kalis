@@ -7,7 +7,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import academicData from '../../../data/academicData.json';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
-import { analyzeProgramGap, UserAcademicProfile } from '../../../utils/analysis/gapAnalyzer';
+import { analyzeProgramGap, checkProgramPrerequisites, UserAcademicProfile } from '../../../utils/analysis/gapAnalyzer';
 import { evaluateSimulatedSekem, extractDegreeHardRequirements } from '../../../utils/analysis/trackGenerator';
 
 const CALC_IDS: Record<string, string> = {
@@ -113,5 +113,17 @@ describe('Official conditions on top of the threshold', () => {
 		assert.equal(hard.directBagrutEligible, false);
 		assert.equal(hard.directBagrutMath5Min, undefined);
 		assert.equal(hard.minPsychometricQuant, undefined);
+	});
+
+	it('the seed\'s name-based psychometric floor (API shape: prerequisites.minPsychometricFloor) is ignored when official data exists', () => {
+		const officialNoFloor = (academicData as any[]).flatMap((i) => (CALC_IDS[i.id] ? i.programs.map((p: any) => [i.id, p]) : []))
+			.filter(([, p]: any) => !p.notOffered && p.admissionRoutes?.requirementsSource && !p.admissionRoutes?.minPsychometric);
+		assert.ok(officialNoFloor.length > 100);
+		const profile = { ...randomProfile(true), psychometricGeneral: 550 };
+		for (const [instId, p] of officialNoFloor as any[]) {
+			const api = { ...p, prerequisites: { minPsychometricFloor: 600, admissionRoutes: p.admissionRoutes } };
+			assert.equal(extractDegreeHardRequirements(api, CALC_IDS[instId]).minPsychometricFloor, 200, p.id);
+			assert.ok(!checkProgramPrerequisites(p.fieldOfStudy, profile, api).some((c) => c.id === 'psych_floor'), p.id);
+		}
 	});
 });

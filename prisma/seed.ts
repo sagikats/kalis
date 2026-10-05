@@ -36,17 +36,14 @@ const SUBJECT_INTELLIGENCE: Record<string, { friction: number; prepHours: number
 	system_programming: { friction: 1.25, prepHours: 120, sessions: ['summer'] }
 };
 
-function normalizeInstitutionId(rawName: string): string {
-	const lower = (rawName || '').toLowerCase();
-	if (lower.includes('טכניון')) return 'technion';
-	if (lower.includes('תל אביב') || lower.includes('תל-אביב')) return 'tau';
-	if (lower.includes('עברית')) return 'huji';
-	if (lower.includes('בן גוריון') || lower.includes('בן-גוריון')) return 'bgu';
-	if (lower.includes('חיפה')) return 'haifa';
-	if (lower.includes('אריאל')) return 'ariel';
-	if (lower.includes('בר אילן') || lower.includes('בר-אילן')) return 'bar_ilan';
-	if (lower.includes('רייכמן') || lower.includes('בינתחומי')) return 'reichman';
-	return 'other';
+// The 8 universities by catalog id. Matching by name pulled in colleges ("אפקה … בתל אביב", "… - חיפה").
+const UNIVERSITY_CALCULATOR_IDS: Record<string, string> = {
+	'inst-48': 'technion', 'inst-6': 'tau', 'inst-1': 'huji', 'inst-3': 'bgu',
+	'inst-5': 'haifa', 'inst-2': 'ariel', 'inst-4': 'bar_ilan', 'inst-38': 'reichman'
+};
+
+function normalizeInstitutionId(rawInst: { id?: string }): string {
+	return UNIVERSITY_CALCULATOR_IDS[rawInst.id ?? ''] ?? 'other';
 }
 
 function determineSekemType(field: string, institutionId: string): string {
@@ -156,7 +153,7 @@ async function main() {
 	let programCounter = 0;
 
 	for (const rawInst of rawInstitutions) {
-		const instId = normalizeInstitutionId(rawInst.name);
+		const instId = normalizeInstitutionId(rawInst);
 		if (instId === 'other') continue;
 
 		const rawPrograms = rawInst.programs || [];

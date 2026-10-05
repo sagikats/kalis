@@ -7,6 +7,7 @@ import type {
 } from '../calculators/multiCalculator';
 import { calculateInstitution, selectProgramSekem } from '../../modules/calculators/index';
 import type { ProgramGapAnalysis, UserAcademicProfile } from './gapAnalyzer';
+import { screeningStageTitle } from './gapAnalyzer';
 import { normalizeHebrewSubjectKey, isSubjectMatch } from '../../modules/optimizer/solver';
 import { evaluateRequirement, requirementSubjects } from '../../modules/optimizer/programRequirements';
 import { simulateRealisticSubscores } from '../calculators/psychometricHelper';
@@ -1039,10 +1040,8 @@ export function extractDegreeHardRequirements(
 	const officialPsychMin = officialRoutes?.minPsychometric;
 	// The program's admission conditions were taken from an official source: never fall back to name-based estimates
 	const hasOfficialData = Boolean(officialRoutes?.requirementsSource || (program as any)?.thresholdSource);
-	let minPsychFloor = officialPsychMin || (parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor);
-	if ((!minPsychFloor || minPsychFloor <= 0) && hasOfficialData) {
-		minPsychFloor = 200;
-	}
+	// With official data, the catalog's minPsychometricFloor is a name-based estimate from the seed — ignore it
+	let minPsychFloor = officialPsychMin || (hasOfficialData ? 200 : (parsedPrereq.minPsychometricFloor ?? program?.minPsychometricFloor));
 	if (!minPsychFloor || minPsychFloor <= 0) {
 		if (isMedicine) minPsychFloor = 700;
 		else if (isCS) minPsychFloor = 600;
@@ -1148,8 +1147,8 @@ function markScreeningTracks(gapAnalysis: ProgramGapAnalysis, tracks: Recommende
 	if (!screening) return tracks;
 	const reword = (text: string) =>
 		text
-			.replace(/קבלה מובטחת/g, `מעבר לשלב ${screening.stage}`)
-			.replace(/קבלה מיידית/g, `מעבר מיידי לשלב ${screening.stage}`)
+			.replace(/קבלה מובטחת/g, `מעבר ל${screeningStageTitle(screening.stage)}`)
+			.replace(/קבלה מיידית/g, `מעבר מיידי ל${screeningStageTitle(screening.stage)}`)
 			.replace(/סף הקבלה/g, 'סף הזימון למיונים');
 	return tracks.map((t) => ({
 		...t,
@@ -1160,7 +1159,7 @@ function markScreeningTracks(gapAnalysis: ProgramGapAnalysis, tracks: Recommende
 		steps: [
 			...t.steps.map((st) => ({ ...st, title: reword(st.title), detail: reword(st.detail) })),
 			{
-				title: `שלב ${screening.stage}`,
+				title: screeningStageTitle(screening.stage),
 				detail: `עמידה בסף מזמנת לשלב המיונים — זו עדיין לא קבלה. ${screening.note}`,
 				timing: 'אחרי סגירת ההרשמה',
 				type: 'administrative' as any
