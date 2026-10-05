@@ -391,6 +391,12 @@ export const screeningStageTitle = (stage: string) => (stage.startsWith('שלב 
 /** Hebrew "ל" + a stage name: the definite article merges into it (ל + המבחן → למבחן). */
 export const withLamed = (stage: string) => `ל${stage.startsWith('ה') ? stage.slice(1) : stage}`;
 
+/** Label for the threshold box: screened programs (medicine) have an invitation threshold, not an admission one. */
+export function thresholdLabel(a: Pick<ProgramGapAnalysis, 'admissionRoutes' | 'thresholdVerified'>): string {
+	if (a.admissionRoutes?.screening) return a.thresholdVerified ? 'סף זימון למיונים (רשמי)' : 'סף זימון למיונים';
+	return a.thresholdVerified ? 'סף קבלה רשמי' : 'סף קבלה משוער';
+}
+
 export function analyzeProgramGap(
 	target: TargetProgramSelection,
 	profile: UserAcademicProfile,

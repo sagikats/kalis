@@ -15,7 +15,7 @@ import {
 	Check,
 	ExternalLink
 } from 'lucide-react';
-import { ProgramGapAnalysis, ImprovementOption, UserAcademicProfile } from '../../utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, ImprovementOption, UserAcademicProfile, thresholdLabel } from '../../utils/analysis/gapAnalyzer';
 import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
 import { InstitutionSekemResult } from '../../utils/calculators/multiCalculator';
 import { SubjectInput } from '../../modules/calculators';
@@ -117,7 +117,7 @@ export default function GapAnalysisCard({
 
 					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
 						<span className="text-[11px] text-[#66635C] font-bold block">
-							{analysis.thresholdVerified ? 'סף קבלה רשמי' : 'סף קבלה משוער'}
+							{thresholdLabel(analysis)}
 						</span>
 						<span className="text-2xl font-bold text-[#222222] mt-1 block">
 							{analysis.threshold ?? 'ללא ציון מספרי'}

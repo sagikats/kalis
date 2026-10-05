@@ -15,7 +15,7 @@ import {
 	HelpCircle,
 	ExternalLink
 } from 'lucide-react';
-import { ProgramGapAnalysis, AdmissionStatus } from '../../utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, AdmissionStatus, thresholdLabel } from '../../utils/analysis/gapAnalyzer';
 import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
 import UniversityLogo from '../common/UniversityLogo';
 
@@ -312,7 +312,7 @@ function ProgramReportCard({
 						</div>
 						<div>
 							<span className="text-[10px] text-[#66635C] block font-medium">
-								{item.thresholdVerified ? 'סף קבלה רשמי' : 'סף קבלה משוער'}
+								{thresholdLabel(item)}
 							</span>
 							<span className="text-base font-black text-[#825B15]">{item.threshold}</span>
 							{item.officialThreshold !== undefined && item.officialThreshold !== item.threshold && (

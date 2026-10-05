@@ -418,7 +418,7 @@ export default function SavedTracksPage() {
 												{track.institutionName || 'מוסד אקדמי'}
 												{track.admissionThreshold && (
 													<span className="mr-2 text-[#88857E]">
-														• סף קבלה רשמי: <strong className="text-[#222222]">{track.admissionThreshold}</strong>
+														• {track.screened ? 'סף זימון למיונים' : 'סף קבלה רשמי'}: <strong className="text-[#222222]">{track.admissionThreshold}</strong>
 													</span>
 												)}
 											</p>
@@ -447,7 +447,7 @@ export default function SavedTracksPage() {
 											{(track.badge || track.title)?.replace(/\s*\([^)]*\)/g, '').trim()}
 										</span>
 										<span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]">
-											עמידה בסף מאומתת ✅
+											{track.screened ? 'עמידה בסף הזימון מאומתת — זו לא קבלה' : 'עמידה בסף מאומתת ✅'}
 										</span>
 										{track.estimatedWeeks > 0 && (
 											<span className="flex items-center gap-1 text-xs text-[#66635C] mr-auto">

@@ -67,7 +67,7 @@ export default function TrackRegistrationGate({
 						</div>
 						<div className="w-px h-7 bg-[#E5DFD4]" />
 						<div className="text-center px-3">
-							<span className="text-[10px] text-[#88857E] block font-medium">סף קבלה</span>
+							<span className="text-[10px] text-[#88857E] block font-medium">{analysis.admissionRoutes?.screening ? 'סף זימון למיונים' : 'סף קבלה'}</span>
 							<span className="text-sm sm:text-base font-extrabold text-[#222222]">{formattedThreshold}</span>
 						</div>
 					</div>

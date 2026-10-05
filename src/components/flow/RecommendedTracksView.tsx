@@ -32,7 +32,7 @@ import {
 	ExternalLink
 } from 'lucide-react';
 import { RecommendedTrack } from '@/utils/analysis/trackGenerator';
-import { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
+import { ProgramGapAnalysis, UserAcademicProfile, screeningStageTitle } from '@/utils/analysis/gapAnalyzer';
 import { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
 import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer/calendarScheduler';
 import { getMechinaRegistrationUrl, getAfikMaavarRegistrationUrl } from '@/utils/universityRegistration';
@@ -505,8 +505,8 @@ export default function RecommendedTracksView({
 						</div>
 						<div className="h-10 w-px bg-[#E5DFD4]" />
 						<div className="text-center px-2 min-w-[75px]">
-							<span className="text-[11px] font-bold text-[#66635C] block">סף קבלה</span>
-							<span className="text-xl font-black text-[#825B15] dir-ltr">{analysis.threshold || '—'}</span>
+							<span className="text-[11px] font-bold text-[#66635C] block">{analysis.admissionRoutes?.screening ? 'סף זימון למיונים' : 'סף קבלה'}</span>
+							<span className="text-xl font-black text-[#825B15] dir-ltr">{analysis.threshold || (analysis.admissionRoutes?.screening ? 'לא מתפרסם' : '—')}</span>
 						</div>
 						{analysis.threshold && (
 							<>
@@ -620,10 +620,21 @@ export default function RecommendedTracksView({
 				tracks.length === 0 ? (
 					<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 						<AlertTriangle className="h-12 w-12 text-[#8A847C] mx-auto" />
-						<h3 className="text-lg font-bold text-[#222222]">לא נמצאו מסלולי שיפור אוטומטיים</h3>
-						<p className="text-sm text-[#66635C] leading-relaxed">
-							על מנת שנוכל להציג מסלולי פעולה ריאליים ומדויקים, יש לוודא שציוני הבגרות והפסיכומטרי הוזנו במלואם. לחלופין, תוכל להשתמש בלשונית &quot;מסלול בנייה אישי&quot; כדי לדמות ציונים בעצמך.
-						</p>
+						{analysis.admissionRoutes?.screening && analysis.threshold === null ? (
+							<>
+								<h3 className="text-lg font-bold text-[#222222]">אין סף זימון שמתפרסם מראש</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									בתוכנית הזו סף המעבר ל{screeningStageTitle(analysis.admissionRoutes.screening.stage)} נקבע מדי שנה לפי המועמדים ואינו מתפרסם, ולכן אין יעד ציון לבנות אליו מסלול. מה שאפשר לתכנן: לעמוד בתנאי הסף להרשמה ולהגיע לציון גבוה ככל האפשר. {analysis.admissionRoutes.screening.note}
+								</p>
+							</>
+						) : (
+							<>
+								<h3 className="text-lg font-bold text-[#222222]">לא נמצאו מסלולי שיפור אוטומטיים</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									על מנת שנוכל להציג מסלולי פעולה ריאליים ומדויקים, יש לוודא שציוני הבגרות והפסיכומטרי הוזנו במלואם. לחלופין, תוכל להשתמש בלשונית &quot;מסלול בנייה אישי&quot; כדי לדמות ציונים בעצמך.
+								</p>
+							</>
+						)}
 						<div className="flex items-center justify-center gap-3 pt-2">
 							<button
 								onClick={onBackToReport}
@@ -1413,6 +1424,21 @@ export default function RecommendedTracksView({
 							})}
 						</div>
 					)}
+
+					{/* Screened programs (medicine): the plan ends with the screening stage, never with admission */}
+					{/* The fallback steps grid already ends with the screening step */}
+					{analysis.admissionRoutes?.screening && (selectedTrack.schedulePhases?.length ?? 0) > 0 && (() => {
+						const last = selectedTrack.steps[selectedTrack.steps.length - 1];
+						return (
+							<div className="mt-4 p-3.5 rounded-2xl bg-[#FDF6E8] border border-[#ECDAB6] text-xs text-[#825B15] space-y-1">
+								<div className="font-extrabold text-[#222222] flex items-center gap-1.5">
+									<span className="text-sm">🩺</span>
+									<span>אחרי הבחינה: {last?.title ?? screeningStageTitle(analysis.admissionRoutes.screening.stage)}</span>
+								</div>
+								<p className="leading-relaxed">{last?.detail ?? analysis.admissionRoutes.screening.note}</p>
+							</div>
+						);
+					})()}
 				</div>
 
 				{/* Action Buttons */}

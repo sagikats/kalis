@@ -184,6 +184,8 @@ export interface ActionTrackRecord {
 	fieldOfStudy?: string;
 	degreeLevel?: string;
 	admissionThreshold?: number;
+	/** Screened program (medicine): the threshold only invites to MOR / interviews */
+	screened?: boolean;
 	registrationUrl?: string;
 	createdAt: Date;
 }

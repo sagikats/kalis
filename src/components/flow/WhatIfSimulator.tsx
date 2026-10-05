@@ -1557,7 +1557,7 @@ export default function WhatIfSimulator({
 						{/* Progress Bar Gauge ("כמה אני מתקרב לסף הנדרש עבור התואר") */}
 						<div className="space-y-2.5">
 							<div className="flex items-center justify-between text-xs font-bold text-[#66635C]">
-								<span>מד התקדמות לסף הקבלה:</span>
+								<span>{simulatedAnalysis?.admissionRoutes?.screening ? 'מד התקדמות לסף הזימון למיונים:' : 'מד התקדמות לסף הקבלה:'}</span>
 								<span className="text-[#222222] font-black text-sm dir-ltr">{progressPercent}%</span>
 							</div>
 
@@ -1576,7 +1576,7 @@ export default function WhatIfSimulator({
 
 							<div className="flex items-center justify-between text-[11px] text-[#8A847C] font-medium">
 								<span>ציון בסיס ({analysis.userSekem.toFixed(isTechnion ? 2 : 1)})</span>
-								<span>יעד קבלה ({threshold.toFixed(isTechnion ? 2 : 1)})</span>
+								<span>{simulatedAnalysis?.admissionRoutes?.screening ? 'סף זימון' : 'יעד קבלה'} ({threshold.toFixed(isTechnion ? 2 : 1)})</span>
 							</div>
 						</div>
 
@@ -2020,7 +2020,7 @@ export default function WhatIfSimulator({
 					<div className="text-xs text-[#66635C] flex items-center gap-2">
 						<Sparkles className="h-4 w-4 text-[#1E597B]" />
 						<span>
-							מצאת שילוב ציונים ומקצועות שמביא אותך לקבלה? לחץ כדי לעדכן את תוכנית העבודה שלך.
+							{simulatedAnalysis?.admissionRoutes?.screening ? 'מצאת שילוב ציונים ומקצועות שמביא אותך לסף הזימון למיונים?' : 'מצאת שילוב ציונים ומקצועות שמביא אותך לקבלה?'} לחץ כדי לעדכן את תוכנית העבודה שלך.
 						</span>
 					</div>
 

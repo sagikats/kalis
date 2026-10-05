@@ -1120,7 +1120,10 @@ export function generatePersonalizedTracks(
 ): RecommendedTrack[] {
 	// A screened program (medicine) without a published threshold: there is no score target to plan towards
 	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return [];
-	const tracks = markScreeningTracks(gapAnalysis, generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes, inputAnswers));
+	const tracks = markScreeningTracks(
+		gapAnalysis,
+		markRequirementOnlyTracks(gapAnalysis, userProfile, generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes, inputAnswers))
+	);
 	if (gapAnalysis.relevantSekemType !== 'psychometric' || gapAnalysis.threshold === null) return tracks;
 
 	// Psychometric-only programs: bagrut upgrades can't move the score, so only two plans make sense —
@@ -1136,6 +1139,45 @@ export function generatePersonalizedTracks(
 	if (useful.length > 0) return useful;
 	const reachesScore = tracks.filter((t) => (t.targetPsychometric ?? 0) >= threshold);
 	return reachesScore.length > 0 ? reachesScore : tracks;
+}
+
+/**
+ * The sekem already passes and only an official condition is missing (e.g. English 120): a plan that keeps the scores
+ * as they are is not a "psychometric leap" — it is about meeting that condition.
+ */
+function markRequirementOnlyTracks(
+	gapAnalysis: ProgramGapAnalysis,
+	userProfile: UserAcademicProfile,
+	tracks: RecommendedTrack[]
+): RecommendedTrack[] {
+	if (gapAnalysis.status !== 'missing_requirement' || gapAnalysis.threshold === null || gapAnalysis.userSekem < gapAnalysis.threshold) return tracks;
+	const missing = gapAnalysis.improvementOptions
+		.filter((o) => o.id.startsWith('opt-req-'))
+		.map((o) => o.title.replace(/^עמידה בתנאי הסף:\s*/, ''));
+	if (missing.length === 0) return tracks;
+	const current = userProfile.psychometricGeneral || 0;
+	const list = missing.join(', ');
+	return tracks.map((t) => {
+		if (t.recommendedSubjectImprovements.length > 0 || (t.targetPsychometric ?? current) > current) return t;
+		const requirementSteps = t.steps.filter((s) => s.title.startsWith('תנאי סף רשמי'));
+		return {
+			...t,
+			title: `השלמת תנאי סף: ${list}`,
+			badge: 'הסכם כבר עובר',
+			strategyDescription: `הסכם שלך (${gapAnalysis.userSekem}) כבר עובר את הסף (${gapAnalysis.threshold}). חסר רק תנאי הסף הרשמי: ${list}.`,
+			keyAdvantage: 'אין צורך לשפר את הסכם — רק לעמוד בתנאי הסף הרשמי.',
+			estimatedWeeks: Math.max(t.estimatedWeeks, 8),
+			steps: [
+				{
+					title: 'הכנה ממוקדת לתנאי הסף',
+					detail: `תרגול ממוקד לעמידה בתנאי: ${list}.`,
+					timing: 'שבועות 1–8',
+					type: 'psychometric'
+				},
+				...requirementSteps
+			]
+		};
+	});
 }
 
 /**

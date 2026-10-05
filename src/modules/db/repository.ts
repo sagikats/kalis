@@ -1127,6 +1127,8 @@ export class KalisDatabaseRepository {
 						fieldOfStudy: prog?.fieldOfStudy,
 						degreeLevel: prog?.degreeLevel,
 						admissionThreshold: prog?.minSekemThreshold,
+						// Medicine: the threshold invites to MOR / interviews, it is not an admission threshold
+						screened: Boolean((prog as any)?.prerequisites?.admissionRoutes?.screening),
 						registrationUrl: regUrl,
 						createdAt: dt.createdAt
 					};
