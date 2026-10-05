@@ -14,6 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import type { ProgramRequirement, RequirementOption } from '../../src/types/academic';
+import { ALIASES as BGU_ALIASES } from './bguAliases';
 
 const ROOT = path.resolve(__dirname, '../..');
 const SNAPSHOT = path.join(ROOT, 'src/data/sources/bgu-thresholds-2026-10-02.json');
@@ -74,7 +75,9 @@ function main() {
 
 	for (const p of bgu.programs) {
 		const m = norm(p.fieldOfStudy).match(/\(([^()]*(?:\([^()]*\)[^()]*)*)\)$/);
-		const row = m ? byPath.get(key(m[1])) : undefined;
+		// Same hand-mapped names as the threshold import
+		const official = BGU_ALIASES[p.id] ?? m?.[1];
+		const row = official ? byPath.get(key(official)) : undefined;
 		if (!row) continue;
 		const requirements = parseBguInfo(row.psycho_info);
 		const bagrutOnly = parseBguInfo(row.bagrut_info);

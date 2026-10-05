@@ -34295,7 +34295,7 @@
         "fieldOfStudy": "מדעי הקוגניציה והמח (מדעי הקוגניציה והמח דו מחלקתי עם מדעי הטבע - שילוב עם מדעי המחשב)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי עם מדעי הטבע",
-        "admissionThreshold": 655,
+        "admissionThreshold": 720,
         "sekemScore": null,
         "psychometricScore": 655,
         "mathRequirement": "90/4 או 80/5",
@@ -34307,9 +34307,39 @@
         "url": "https://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Cognitive_sciences_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutMinAverage": 115,
         "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620,
           "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "english",
               "title": "רמת אנגלית (בסיסי)",
@@ -34325,8 +34355,48 @@
               ],
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
-          ]
-        }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
+            }
+          ],
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+        },
+        "officialThreshold": 720,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 620,
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח דו מחלקתי עם מדעי המחשב והמידע - שילוב עם מדעי המחשב",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-2",
@@ -34453,9 +34523,39 @@
         "url": "https://in.bgu.ac.il/welcome/Pages/degree_1/humsos/Cognitive_sciences_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutMinAverage": 115,
         "admissionRoutes": {
+          "bagrutOnlyMin": 115,
+          "minPsychometric": 620,
           "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "english",
               "title": "רמת אנגלית (בסיסי)",
@@ -34471,8 +34571,48 @@
               ],
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
-          ]
-        }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
+            }
+          ],
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+        },
+        "officialThreshold": 720,
+        "relevantSekemType": "general",
+        "minPsychometricFloor": 620,
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי הקוגניציה והמח דו מחלקתי עם מדעי הטבע - שילוב עם מדעי החיים",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-7",
@@ -39074,8 +39214,10 @@
         "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/fom/Hotel_Tourism_Management_degree_1.aspx",
         "requiresPsychometric": true,
         "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
+        "directBagrutMinAverage": 80,
         "admissionRoutes": {
+          "bagrutOnlyMin": 80,
+          "psychometricOnlyMin": 500,
           "requirements": [
             {
               "id": "english",
@@ -39093,7 +39235,11 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ]
-        }
+        },
+        "officialThreshold": 500,
+        "relevantSekemType": "general",
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: ניהול תיירות ופנאי חד מחלקתי",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-14",

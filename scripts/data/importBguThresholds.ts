@@ -15,6 +15,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { ALIASES } from './bguAliases';
 
 const ROOT = path.resolve(__dirname, '../..');
 const SNAPSHOT = path.join(ROOT, 'src/data/sources/bgu-thresholds-2026-10-02.json');
@@ -54,7 +55,8 @@ function main() {
 
 	for (const p of bgu.programs) {
 		const m = norm(p.fieldOfStudy).match(/\(([^()]*(?:\([^()]*\)[^()]*)*)\)$/);
-		const row = m ? byPath.get(key(m[1])) : undefined;
+		const official = ALIASES[p.id] ?? m?.[1];
+		const row = official ? byPath.get(key(official)) : undefined;
 		if (!row) {
 			unmatched.push(`${p.id} ${p.fieldOfStudy} (kept ${p.admissionThreshold}, unverified)`);
 			continue;
