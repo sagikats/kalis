@@ -282,6 +282,9 @@ function main() {
 	const unmatched: string[] = [];
 
 	for (const p of biu.programs) {
+		// Tracks this script added on an earlier run (handled below), and medicine (owned by importMedicine.ts — its
+		// 6-year track is a separate selection process, not a calculator track)
+		if (p.id.startsWith('prog-biu-ctl') || p.admissionRoutes?.screening) continue;
 		const r = MAP[p.id] ? rows.get(MAP[p.id]) : undefined;
 		const old = p.admissionThreshold;
 		if (MAP[p.id] && !r) throw new Error(`${p.id}: row ${MAP[p.id]} not in the snapshot`);
