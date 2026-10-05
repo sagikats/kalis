@@ -100,6 +100,8 @@
 
 ## 5. איפה כל דבר בקוד
 
+- **איך נאסף כל דבר, ואיך לחזור על זה:** [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)
+
 - מחשבונים: `src/modules/calculators/*.ts`. בחירת סוג הסכם: `selectProgramSekem` ב-`index.ts`.
 - שכבה משותפת למסכים: `src/utils/calculators/multiCalculator.ts`.
 - **ההחלטה "התקבלת / חסר תנאי / לא"**, ממקור אחד: `analyzeProgramGap` ב-`src/utils/analysis/gapAnalyzer.ts`. משתמשים בה הדוח, המחשבון (`AdmissionPanel`) והסימולטור (`WhatIfSimulator`).
