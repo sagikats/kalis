@@ -10,6 +10,23 @@
 
 ---
 
+## 🗓️ 2026-10-05 (לילה) — Claude Code (Opus 5.5) — ביקורת אכיפה ואחידות בין המסכים
+
+**בראנץ':** `fix/cross-path-consistency` (יצא מ-`data/ariel-bonus-table`). נדחף, לא מוזג ולא נפרס.
+
+- **הדוח המלא:** `DATA_STATUS.md` — כיסוי נתונים לכל אוניברסיטה, סוגי סכם, מה תוקן ומה פתוח.
+- **תוקן:**
+  - פאנל המחשבון הרגיל ב-`AdmissionPanel` עובר עכשיו דרך `analyzeProgramGap`. כך הוא מכבד את סוג הסכם הרשמי, את האפיקים החלופיים ואת `notOffered`, וספים עשרוניים כבר לא מעוגלים.
+  - הסטטוס בסימולטור עובר דרך `analyzeProgramGap`, וטבלת כל האוניברסיטאות מוצגת לפי `selectProgramSekem`.
+  - `multiCalculator`: כשיש רק ציון פסיכומטרי כללי, ציוני החלקים מוערכים כמו ב-`simulateRealisticSubscores`. אותה הערכה בדוח, במסלולים ובסימולטור.
+  - `trackGenerator`: בתוכנית עם נתונים רשמיים, `directBagrutEligible` נגזר מ-`bagrutOnlyMin`. בלי הערכות לפי שם (רצפת פסיכומטרי, מתמטיקה, כמותי 115).
+  - שדה חדש `AdmissionRoutes.minBagrutAverage`: ממוצע מינימלי במסלול הסכם בבר-אילן (משפטים ×4 = 90, אופטומטריה 100). נאכף בכל המסכים.
+  - **הנתונים נערכו ידנית ל-5 התוכניות.** `importBarIlanThresholds.ts` לא אידמפוטנטי — לא להריץ בלי לבדוק את ה-diff.
+- **טסט חדש:** `crossPathParity.test.ts`. 270/270 עוברים, utils 11/11, tsc נקי, build עובר.
+- **לא נבדק בדפדפן:** ה-browser pane חסם את localhost. דפי `/calculators` ו-`/flow` מחזירים 200.
+
+---
+
 ## 🗓️ 2026-10-05 (ערב) — Claude Code (Opus 5.5) — אריאל: חיפוש טבלת הבונוסים
 
 - המשתמש הריץ בדפדפן שלו שלושה סקריפטים חדשים: `tmp-sources/ariel/collect-bonus.js`, `collect-calc.js`, `collect-general.js`. התוצאות נשמרו ב-`tmp-sources/ariel/*.json`.
