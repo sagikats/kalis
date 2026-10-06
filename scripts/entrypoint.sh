@@ -13,10 +13,11 @@ if [ ! -f /app/prisma/dev.db ]; then
   fi
 fi
 
-# Ensure permissions
-chmod -R 777 /app/prisma 2>/dev/null || true
-# The session-signing key: readable only by the app user (whoever reads it can forge a login as any user)
-chmod 600 /app/prisma/.session_secret 2>/dev/null || true
+# Permissions: the volume holds the database (user data) and the session-signing key — only the app user
+# (nextjs, which owns them) may read or write them. SQLite creates its journal files next to the db, so the
+# directory stays writable by its owner.
+chmod 700 /app/prisma 2>/dev/null || true
+find /app/prisma -maxdepth 1 -type f -exec chmod 600 {} + 2>/dev/null || true
 
 # Keep the catalog (institutions / programs / subjects) in step with this image's data.
 # User data is untouched; a failure never blocks startup.
