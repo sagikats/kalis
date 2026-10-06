@@ -56,18 +56,32 @@ const hasSubject = (t: RecommendedTrack, name: string) => t.recommendedSubjectIm
 function checkInvariants(tracks: RecommendedTrack[], a: ReturnType<typeof analyzeProgramGap>, p: UserAcademicProfile, label: string) {
 	assert.ok(tracks.length <= 3, `${label}: ${tracks.length} tracks`);
 	for (const t of tracks) {
-		assert.ok((t.targetSekem ?? 0) >= (a.threshold ?? 0) - 0.05, `${label} ${t.id}: sekem ${t.targetSekem} < ${a.threshold}`);
-		if (p.psychometricGeneral) assert.ok((t.targetPsychometric ?? 0) >= p.psychometricGeneral, `${label} ${t.id}: target below the current psychometric`);
+		if (t.id === 'track-direct-bagrut') assert.ok(t.targetBagrutAverage! >= (a.admissionRoutes?.bagrutOnlyMin ?? 0) - 0.05, `${label}: bagrut-only average ${t.targetBagrutAverage}`);
+		else assert.ok((t.targetSekem ?? 0) >= (a.threshold ?? 0) - 0.05, `${label} ${t.id}: sekem ${t.targetSekem} < ${a.threshold}`);
+		if (p.psychometricGeneral && t.id !== 'track-direct-bagrut') assert.ok((t.targetPsychometric ?? 0) >= p.psychometricGeneral, `${label} ${t.id}: target below the current psychometric`);
 		assert.ok(exams(t) <= 6, `${label} ${t.id}: ${exams(t)} exams`);
 		assert.ok(!/%\)|מובטח/.test(`${t.strategyDescription} ${t.feasibilityExplanation}`), `${label} ${t.id}: invented probability / guarantee`);
 	}
-	for (let i = 1; i < tracks.length; i++) {
-		assert.ok(tracks[i].targetPsychometric! <= tracks[i - 1].targetPsychometric! - 10,
-			`${label}: track ${i + 1} (${tracks[i].targetPsychometric}) is not 10+ below track ${i} (${tracks[i - 1].targetPsychometric})`);
+	const psychTracks = tracks.filter((t) => t.id !== 'track-direct-bagrut');
+	for (let i = 1; i < psychTracks.length; i++) {
+		assert.ok(psychTracks[i].targetPsychometric! <= psychTracks[i - 1].targetPsychometric! - 10,
+			`${label}: track ${i + 1} (${psychTracks[i].targetPsychometric}) is not 10+ below track ${i} (${psychTracks[i - 1].targetPsychometric})`);
 	}
 	const t1 = tracks.find((t) => t.id === 'track-fast');
 	const t2 = tracks.find((t) => t.id === 'track-balanced');
-	if (t1 && t2) assert.ok(exams(t2) - exams(t1) <= 2, `${label}: track 2 adds ${exams(t2) - exams(t1)} exams`);
+	const t3 = tracks.find((t) => t.id === 'track-multi-exam');
+	if (t1 && t2 && exams(t2) - exams(t1) > 2) {
+		// Extended track 2 (two more exams weren't enough): up to 5 exams, and no track 3
+		assert.ok(exams(t2) <= 5, `${label}: extended track 2 has ${exams(t2)} exams`);
+		assert.ok(!t3, `${label}: track 3 next to an extended track 2`);
+	}
+	// A psychometric target below 550: no bagrut tracks to lower it further
+	if (t1 && t1.targetPsychometric! < 550) assert.ok(!t2 && !t3, `${label}: bagrut tracks next to psychometric ${t1.targetPsychometric}`);
+	const direct = tracks.find((t) => t.id === 'track-direct-bagrut');
+	if (direct) {
+		assert.equal(direct.targetPsychometric, undefined);
+		assert.ok(t1 && t1.targetPsychometric! < 550, `${label}: bagrut-only track without a low psychometric target`);
+	}
 }
 
 describe('Track rules (docs/TRACKS_REDESIGN.md)', () => {
@@ -194,6 +208,28 @@ describe('Track rules (docs/TRACKS_REDESIGN.md)', () => {
 			}
 		}
 		assert.ok(checked > 50, `checked ${checked}`);
+	});
+
+	it('psychometric target below 550 with an official bagrut-only route: psychometric only, plus bagrut-only admission', () => {
+		let found = 0;
+		const profiles = [profile({ grade: 85 }), profile({ grade: 90 }), profile({ grade: 80, mathU: 4 })];
+		for (const instId of Object.keys(CALC)) {
+			const progs = (academicData as any[]).find((i) => i.id === instId).programs.filter((x: any) => !x.notOffered && x.admissionThreshold && x.admissionRoutes?.bagrutOnlyMin);
+			for (const prog of progs) {
+				for (const p of profiles) {
+					const { a, tracks } = tracksFor(instId, prog, p);
+					const t1 = tracks.find((t) => t.id === 'track-fast');
+					if (!t1 || t1.targetPsychometric! >= 550) continue;
+					checkInvariants(tracks, a, p, `${instId} ${prog.id}`);
+					const direct = tracks.find((t) => t.id === 'track-direct-bagrut');
+					if (direct) {
+						assert.ok(direct.targetBagrutAverage! >= prog.admissionRoutes.bagrutOnlyMin - 0.05, `${prog.id}: ${direct.targetBagrutAverage}`);
+						found++;
+					}
+				}
+			}
+		}
+		assert.ok(found > 3, `bagrut-only tracks found: ${found}`);
 	});
 
 	it('the questionnaire is not an input any more', () => {

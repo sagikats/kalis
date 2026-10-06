@@ -511,7 +511,7 @@ export function getAvailableSubjectLevers(
 			priority: 1,
 			isMath: true
 		});
-	} else if (currentMathG < 85) {
+	} else if (currentMathG < 95) {
 		levers.push({
 			id: 'math_5u_boost',
 			subjectName: 'מתמטיקה',
@@ -1266,6 +1266,7 @@ function generateAllPersonalizedTracks(
 	const MIN_RELIEF = 10;
 	const PREFER_FEWER_WITHIN = 5;
 	const MAX_TOTAL_EXAMS = 6;
+	const MAX_EXTENDED_TRACK2_EXAMS = 5;
 	const officialPsychMin = gapAnalysis.admissionRoutes?.minPsychometric;
 	const psychFloor = Math.max(degreePsychFloor || 200, 200);
 	const subjectKey = (l: { subjectName: string }) => normalizeHebrewSubjectKey(l.subjectName);
@@ -1442,10 +1443,23 @@ function generateAllPersonalizedTracks(
 	// (with a missing official condition the plan is kept: it becomes "השלמת תנאי סף")
 	if (plan1 && hasTakenPsych && plan1.psych <= currentPsych && plan1.levers.length === 0 && gapAnalysis.status !== 'missing_requirement') plan1 = null;
 
+	// A low psychometric target (below LOW_PSYCH): bagrut exams to lower it further aren't worth offering — the plans
+	// are the psychometric alone, or the official bagrut-only admission when the program has one
+	const LOW_PSYCH = 550;
+	const lowPsychTarget = Boolean(plan1 && plan1.psych < LOW_PSYCH);
+
 	// ---- Track 2 ----
 	let plan2: Plan | null = null;
-	if (plan1 && plan1.psych - MIN_RELIEF >= startPsych) {
+	let plan2Extended = false;
+	if (lowPsychTarget) {
+		// none
+	} else if (plan1 && plan1.psych - MIN_RELIEF >= startPsych) {
 		plan2 = preferFewer([bestWith(plan1.levers, 1), bestWith(plan1.levers, 2)].filter((p): p is Plan => Boolean(p)), plan1.psych - MIN_RELIEF);
+		if (!plan2) {
+			// Two more exams don't lower the target by 10: the fewest exams (up to 5 in all) that do — and no track 3
+			plan2 = greedyUpTo(plan1.levers, MAX_EXTENDED_TRACK2_EXAMS).find((c) => c.psych <= plan1!.psych - MIN_RELIEF) ?? null;
+			plan2Extended = Boolean(plan2);
+		}
 	} else if (!plan1) {
 		// Not reachable with the psychometric and one bagrut: the plans with more bagrut exams still are
 		plan2 = preferFewer([bestWith(requiredLevers, 2)].filter((p): p is Plan => Boolean(p)), 800);
@@ -1454,7 +1468,9 @@ function generateAllPersonalizedTracks(
 	// ---- Track 3 ----
 	let plan3: Plan | null = null;
 	const prev = plan2 ?? plan1;
-	if (prev && prev.psych - MIN_RELIEF >= startPsych) {
+	if (lowPsychTarget || plan2Extended) {
+		// none
+	} else if (prev && prev.psych - MIN_RELIEF >= startPsych) {
 		const candidates = greedyUpTo(prev.levers, MAX_TOTAL_EXAMS).filter((c) => c.psych <= prev.psych - MIN_RELIEF);
 		if (!hasTakenPsych && officialPsychMin && plan1 && plan1.psych <= 720) {
 			// Untested, moderate target: aim for the program's official minimum psychometric with the fewest exams
@@ -1463,6 +1479,49 @@ function generateAllPersonalizedTracks(
 		plan3 = plan3 ?? preferFewer(candidates, prev.psych - MIN_RELIEF);
 	} else if (!prev) {
 		plan3 = preferFewer(greedyUpTo(requiredLevers, MAX_TOTAL_EXAMS), 800);
+	}
+
+	// ---- Bagrut-only admission (official route), offered next to a low psychometric target ----
+	let bagrutOnlyPlan: { levers: PlanLever[]; average: number } | null = null;
+	const bagrutOnlyMin = gapAnalysis.admissionRoutes?.bagrutOnlyMin;
+	if (lowPsychTarget && bagrutOnlyMin) {
+		const averageOf = (levers: PlanLever[]) => {
+			const sim = simulate(levers);
+			return evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, startPsych, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade).bagrutAverage;
+		};
+		let current = mergeLevers(requiredLevers);
+		let average = averageOf(current);
+		while (average < bagrutOnlyMin && examCount(current) < MAX_TOTAL_EXAMS) {
+			let best: { levers: PlanLever[]; average: number } | null = null;
+			for (const l of pool) {
+				if (current.some((c) => subjectKey(c) === subjectKey(l) && !c.required)) continue;
+				const next = mergeLevers([...current, l]);
+				const avg = averageOf(next);
+				if (avg > average && (!best || avg > best.average)) best = { levers: next, average: avg };
+			}
+			if (!best) break;
+			current = best.levers;
+			average = best.average;
+		}
+		if (average >= bagrutOnlyMin) {
+			// Lowest grades that keep the average at the official minimum
+			const levers = current.map((l) => ({ ...l }));
+			for (let i = levers.length - 1; i >= 0; i--) {
+				const l = levers[i];
+				let low = Math.max(l.floorGrade ?? 0, l.targetUnits > l.currentUnits || l.currentGrade <= 0 ? 56 : l.currentGrade + 1);
+				let high = l.targetGrade;
+				let bestG = high;
+				while (low <= high) {
+					const mid = Math.floor((low + high) / 2);
+					if (averageOf(levers.map((x, j) => (j === i ? { ...x, targetGrade: mid } : x))) >= bagrutOnlyMin) {
+						bestG = mid;
+						high = mid - 1;
+					} else low = mid + 1;
+				}
+				levers[i].targetGrade = bestG;
+			}
+			bagrutOnlyPlan = { levers, average: averageOf(levers) };
+		}
 	}
 
 	/** The plan's grades lowered to the minimum that still reaches the threshold at its psychometric (official floors kept). */
@@ -1564,6 +1623,39 @@ function generateAllPersonalizedTracks(
 		pushTrack('track-balanced', 'פחות פסיכומטרי, עוד בגרויות', 'הקלה בפסיכומטרי', 'from-emerald-500 to-teal-600', plan2,
 			plan1 ? 'בגרויות שמורידות את יעד הפסיכומטרי.' : 'גם עם פסיכומטרי מרבי ובגרות אחת לא מגיעים לסף, אז נדרשות עוד בגרויות.',
 			plan1 ? plan1.psych - plan2.psych : undefined);
+	}
+	if (bagrutOnlyPlan) {
+		const levers = bagrutOnlyPlan.levers;
+		tracks.push({
+			id: 'track-direct-bagrut',
+			title: 'קבלה לפי בגרות בלבד, בלי פסיכומטרי',
+			badge: 'בלי פסיכומטרי',
+			badgeColor: 'from-teal-500 to-emerald-600',
+			strategyDescription: `התוכנית מקבלת גם לפי ממוצע בגרות בלבד (${bagrutOnlyMin}+). ${levers.length ? `שיפור ${describeLevers(levers)} מביא` : 'הממוצע שלך מביא'} לממוצע ${bagrutOnlyPlan.average.toFixed(1)}.`,
+			targetBagrutAverage: Math.round(bagrutOnlyPlan.average * 10) / 10,
+			currentBagrutAverage: currentBagrut,
+			recommendedSubjectImprovements: levers.map((l) => ({
+				subjectName: l.subjectName,
+				currentGrade: l.currentGrade,
+				currentUnits: l.currentUnits,
+				targetGrade: l.targetGrade,
+				targetUnits: l.targetUnits,
+				reason: l.reason
+			})),
+			estimatedWeeks: 12,
+			weeklyHours: availableWeeklyHours,
+			...(() => {
+				const e = getFeasibilityEvaluation(0, levers.length);
+				return { feasibility: e.feasibility, feasibilityExplanation: e.explanation };
+			})(),
+			steps: levers.map((l) => ({
+				title: `${l.subjectName} ${l.targetUnits} יח״ל`,
+				detail: `יעד: ציון ${l.targetGrade}. ${l.reason}`,
+				timing: getSubjectExamSession(l.subjectName, l.targetUnits) === 'winter' ? 'ינואר (מועד חורף)' : 'יוני–יולי (מועד קיץ)',
+				type: 'bagrut_core' as const
+			})),
+			keyAdvantage: 'בלי בחינה פסיכומטרית בכלל.'
+		});
 	}
 	if (plan3) {
 		pushTrack('track-multi-exam', 'מקסימום בגרויות', 'הקלה מרבית בפסיכומטרי', 'from-blue-600 to-indigo-700', plan3,

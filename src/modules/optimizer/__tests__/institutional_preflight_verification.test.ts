@@ -133,8 +133,9 @@ describe('Institutional Pre-Flight Verification & Cross-Track Coherence', () => 
 		assert.ok(t1.recommendedSubjectImprovements.length <= 2, `Track 1 must have at most 2 bagrut exams (got ${t1.recommendedSubjectImprovements.length})`);
 		assert.ok(t2.recommendedSubjectImprovements.length <= 3, `Track 2 must have at most 3 bagrut exams (got ${t2.recommendedSubjectImprovements.length})`);
 		assert.ok(
-			t3.recommendedSubjectImprovements.length >= 4 && t3.recommendedSubjectImprovements.length <= 5,
-			`Track 3 must offer 4 to 5 exams for the large gap (got ${t3.recommendedSubjectImprovements.length})`
+			// docs/TRACKS_REDESIGN.md: track 3 goes up to 5–6 bagrut exams, more than track 2
+			t3.recommendedSubjectImprovements.length > t2.recommendedSubjectImprovements.length && t3.recommendedSubjectImprovements.length <= 6,
+			`Track 3 must offer more exams than track 2 and at most 6 (got ${t3.recommendedSubjectImprovements.length})`
 		);
 		assert.ok(
 			(t3.targetPsychometric || 0) <= (t2.targetPsychometric || 0),
