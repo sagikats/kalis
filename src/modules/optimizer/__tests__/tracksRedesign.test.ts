@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import academicData from '../../../data/academicData.json';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 import { analyzeProgramGap, UserAcademicProfile } from '../../../utils/analysis/gapAnalyzer';
-import { generatePersonalizedTracks, RecommendedTrack } from '../../../utils/analysis/trackGenerator';
+import { generatePersonalizedTracks, generateTrackPlan, RecommendedTrack } from '../../../utils/analysis/trackGenerator';
 import { isSubjectMatch } from '../solver';
 
 const CALC: Record<string, string> = {
@@ -59,7 +59,7 @@ function checkInvariants(tracks: RecommendedTrack[], a: ReturnType<typeof analyz
 		if (t.id === 'track-direct-bagrut') assert.ok(t.targetBagrutAverage! >= (a.admissionRoutes?.bagrutOnlyMin ?? 0) - 0.05, `${label}: bagrut-only average ${t.targetBagrutAverage}`);
 		else assert.ok((t.targetSekem ?? 0) >= (a.threshold ?? 0) - 0.05, `${label} ${t.id}: sekem ${t.targetSekem} < ${a.threshold}`);
 		if (p.psychometricGeneral && t.id !== 'track-direct-bagrut') assert.ok((t.targetPsychometric ?? 0) >= p.psychometricGeneral, `${label} ${t.id}: target below the current psychometric`);
-		assert.ok(exams(t) <= 6, `${label} ${t.id}: ${exams(t)} exams`);
+		if (t.id !== 'track-max-bagrut') assert.ok(exams(t) <= 6, `${label} ${t.id}: ${exams(t)} exams`);
 		assert.ok(!/%\)|מובטח/.test(`${t.strategyDescription} ${t.feasibilityExplanation}`), `${label} ${t.id}: invented probability / guarantee`);
 	}
 	const psychTracks = tracks.filter((t) => t.id !== 'track-direct-bagrut');
@@ -230,6 +230,34 @@ describe('Track rules (docs/TRACKS_REDESIGN.md)', () => {
 			}
 		}
 		assert.ok(found > 3, `bagrut-only tracks found: ${found}`);
+	});
+
+	it('there is always something to offer: a track, or (only when 800 + 6 exams fail) the mechina / Open University routes', () => {
+		let bypass = 0;
+		let maxTracks = 0;
+		const profiles = [profile({ grade: 70, mathU: 4 }), profile({ psych: 500, grade: 72, mathU: 4 }), profile({ psych: 600, grade: 85 })];
+		for (const instId of Object.keys(CALC)) {
+			const progs = (academicData as any[]).find((i) => i.id === instId).programs.filter((x: any) => !x.notOffered && x.admissionThreshold);
+			for (const prog of progs.filter((_: any, i: number) => i % Math.ceil(progs.length / 8) === 0)) {
+				for (const p of profiles) {
+					const res = calculateMultiInstitutionSekem(p as any, [CALC[instId]])[0];
+					const a = analyzeProgramGap({ institutionId: instId, institutionName: '', calculatorId: CALC[instId], program: prog }, p, res);
+					if (a.status === 'accepted') continue;
+					const plan = generateTrackPlan(a, p, res);
+					assert.ok(plan.tracks.length > 0 || plan.suggestBypass, `${instId} ${prog.id}: nothing offered`);
+					if (plan.suggestBypass) {
+						bypass++;
+						// Only the "every bagrut" track can stand next to the mechina / transfer routes
+						assert.ok(plan.tracks.every((t) => t.id === 'track-max-bagrut'), `${prog.id}: ${plan.tracks.map((t) => t.id)}`);
+					}
+					if (plan.tracks.some((t) => t.id === 'track-max-bagrut')) {
+						maxTracks++;
+						assert.ok(plan.suggestBypass, `${prog.id}: max-bagrut track without the bypass routes`);
+					}
+				}
+			}
+		}
+		assert.ok(bypass > 0, 'the weak profiles reach the bypass case somewhere');
 	});
 
 	it('the questionnaire is not an input any more', () => {

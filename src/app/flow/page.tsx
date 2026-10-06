@@ -51,7 +51,7 @@ import {
 import {
 	UserPreferencesQuestionnaire,
 	RecommendedTrack,
-	generatePersonalizedTracks
+	generateTrackPlan
 } from '@/utils/analysis/trackGenerator';
 import {
 	validateUserGrades,
@@ -776,17 +776,14 @@ export default function AdmissionFlowPage() {
 	};
 
 	// Generate the 3 tailored, realistic tracks for Step 4
-	const recommendedTracks = useMemo(() => {
+	const trackPlan = useMemo(() => {
 		if (!gradeValidation.isValid) return null;
 		if (!currentFocusedAnalysis) return null;
 		const instRes = institutionResultsMap[currentFocusedAnalysis.target.calculatorId];
 		if (!instRes || instRes.bagrutAverage <= 0) return null;
-		return generatePersonalizedTracks(
-			currentFocusedAnalysis,
-			userProfile,
-			instRes
-		);
+		return generateTrackPlan(currentFocusedAnalysis, userProfile, instRes);
 	}, [gradeValidation.isValid, currentFocusedAnalysis, institutionResultsMap, userProfile]);
+	const recommendedTracks = trackPlan?.tracks ?? null;
 
 	return (
 		<div className={`w-full bg-[#FAF8F5] text-[#222222] font-sans dir-rtl ${
@@ -1354,6 +1351,7 @@ export default function AdmissionFlowPage() {
 								<TrackRegistrationGate
 									analysis={currentFocusedAnalysis}
 									trackCount={recommendedTracks?.length}
+									suggestBypass={trackPlan?.suggestBypass}
 									onBackToReport={() => setActiveStep(3)}
 								/>
 							) : (
@@ -1361,6 +1359,7 @@ export default function AdmissionFlowPage() {
 									analysis={currentFocusedAnalysis}
 									allAnalyses={gapAnalyses}
 									tracks={recommendedTracks || []}
+									suggestBypass={trackPlan?.suggestBypass}
 									userProfile={userProfile}
 									institutionResult={institutionResultsMap[currentFocusedAnalysis.target.calculatorId]}
 									onSelectProgram={(programId) => setFocusedProgramId(programId)}

@@ -43,6 +43,7 @@ import OfficialRouteDetail, { ROUTE_STATUS_STYLE } from './OfficialRouteDetail';
 import type { OfficialRouteStatus } from '@/modules/optimizer/officialRoutes';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
+import BypassRoutesCard from './BypassRoutesCard';
 import { useAuth } from '@/context/AuthContext';
 
 interface RecommendedTracksViewProps {
@@ -56,10 +57,13 @@ interface RecommendedTracksViewProps {
 	onEditPreferences?: () => void;
 	onBackToReport: () => void;
 	onApplyCustomScenario?: (customPsych: number, customSubjects: any[], simulatedSekem: number) => void;
+	/** Psychometric 800 with 6 bagrut exams doesn't reach the threshold: show the mechina / Open University routes. */
+	suggestBypass?: boolean;
 }
 
 export default function RecommendedTracksView({
 	analysis,
+	suggestBypass,
 	allAnalyses,
 	tracks,
 	userProfile,
@@ -144,7 +148,7 @@ export default function RecommendedTracksView({
 
 	// Guard: Unauthenticated users are gated behind registration
 	if (!user) {
-		return <TrackRegistrationGate analysis={analysis} trackCount={tracks.length} onBackToReport={onBackToReport} />;
+		return <TrackRegistrationGate analysis={analysis} trackCount={tracks.length} suggestBypass={suggestBypass} onBackToReport={onBackToReport} />;
 	}
 
 	const [savedTrackMap, setSavedTrackMap] = useState<Record<string, { savedAt: Date; candidateNumber: string }>>({});
@@ -538,7 +542,9 @@ export default function RecommendedTracksView({
 			{/* ========================================================================= */}
 			{/* TAB 1: RECOMMENDED TRACKS SUMMARY */}
 			{/* ========================================================================= */}
-			{activeTab === 'recommended' && (
+			{activeTab === 'recommended' && tracks.length === 0 && suggestBypass ? (
+				<BypassRoutesCard calculatorId={analysis.target.calculatorId} institutionName={analysis.target.institutionName} hasMaxTrack={false} />
+			) : activeTab === 'recommended' && (
 				tracks.length === 0 ? (
 					<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 						<AlertTriangle className="h-12 w-12 text-[#8A847C] mx-auto" />
@@ -1486,6 +1492,10 @@ export default function RecommendedTracksView({
 							</div>
 						)}
 					</div>
+				)}
+
+				{suggestBypass && tracks.length > 0 && (
+					<BypassRoutesCard calculatorId={analysis.target.calculatorId} institutionName={analysis.target.institutionName} hasMaxTrack={tracks.some((t) => t.id === 'track-max-bagrut')} />
 				)}
 
 				{/* Transition CTA to Personal Builder */}

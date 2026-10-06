@@ -1091,17 +1091,33 @@ export const DEFAULT_USER_PREFERENCES: UserPreferencesQuestionnaire = {
 /**
  * Main Closed-Loop Generator producing 3 mathematically guaranteed tailored admission tracks
  */
+export interface TrackPlanResult {
+	tracks: RecommendedTrack[];
+	/** Even psychometric 800 with 6 bagrut exams doesn't reach the threshold: show the mechina / Open University routes. */
+	suggestBypass: boolean;
+}
+
 export function generatePersonalizedTracks(
 	gapAnalysis: ProgramGapAnalysis,
 	userProfile: UserAcademicProfile,
 	institutionRes: InstitutionSekemResult
 ): RecommendedTrack[] {
+	return generateTrackPlan(gapAnalysis, userProfile, institutionRes).tracks;
+}
+
+/** The tracks, and whether the mechina / Open University routes should be offered next to them. */
+export function generateTrackPlan(
+	gapAnalysis: ProgramGapAnalysis,
+	userProfile: UserAcademicProfile,
+	institutionRes: InstitutionSekemResult
+): TrackPlanResult {
 	// A screened program (medicine) without a published threshold: there is no score target to plan towards
-	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return [];
-	const tracks = markScreeningTracks(
-		gapAnalysis,
-		markRequirementOnlyTracks(gapAnalysis, userProfile, generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes))
-	);
+	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return { tracks: [], suggestBypass: false };
+	const plan = generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes);
+	return { tracks: filterPsychometricOnly(gapAnalysis, userProfile, markScreeningTracks(gapAnalysis, markRequirementOnlyTracks(gapAnalysis, userProfile, plan.tracks))), suggestBypass: plan.suggestBypass };
+}
+
+function filterPsychometricOnly(gapAnalysis: ProgramGapAnalysis, userProfile: UserAcademicProfile, tracks: RecommendedTrack[]): RecommendedTrack[] {
 	if (gapAnalysis.relevantSekemType !== 'psychometric' || gapAnalysis.threshold === null) return tracks;
 
 	// Psychometric-only programs: bagrut upgrades can't move the score, so only two plans make sense —
@@ -1192,7 +1208,7 @@ function generateAllPersonalizedTracks(
 	gapAnalysis: ProgramGapAnalysis,
 	userProfile: UserAcademicProfile,
 	institutionRes: InstitutionSekemResult
-): RecommendedTrack[] {
+): TrackPlanResult {
 	// The questionnaire is not part of the algorithm: every applicant gets the same fixed rules
 	const answers: UserPreferencesQuestionnaire = DEFAULT_USER_PREFERENCES;
 
@@ -1201,7 +1217,7 @@ function generateAllPersonalizedTracks(
 	const validSubjects = (userProfile.bagrutSubjects || []).filter((s) => (Number(s.grade) || 0) > 0);
 	const totalUnits = validSubjects.reduce((acc, s) => acc + (s.units || 0), 0);
 	if (validSubjects.length === 0 || totalUnits < 20 || !institutionRes || institutionRes.bagrutAverage <= 0) {
-		return [];
+		return { tracks: [], suggestBypass: false };
 	}
 
 	const hasTakenPsych = (userProfile.psychometricGeneral || 0) > 0;
@@ -1481,6 +1497,23 @@ function generateAllPersonalizedTracks(
 		plan3 = preferFewer(greedyUpTo(requiredLevers, MAX_TOTAL_EXAMS), 800);
 	}
 
+	// ---- Psychometric 800 and up to 6 exams don't reach the threshold: improve every bagrut (very demanding) ----
+	const beyondRegularTracks = !plan1 && !plan2 && !plan3;
+	let maxPlan: Plan | null = null;
+	if (beyondRegularTracks) {
+		let all = mergeLevers([...requiredLevers, ...pool.map((l) => ({ ...l, targetGrade: 100 }))]);
+		for (let i = 0; i < 3 && !maxPlan; i++) {
+			const sim = simulate(all);
+			const p = findExactPsychometricTarget(calculatorId, relevantSekemType, threshold, userProfile, sim.subjects, psychFloor, 800, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+			if (p === null) break;
+			const res = evaluateSimulatedSekem(calculatorId, relevantSekemType, userProfile, sim.subjects, p, sim.mathUnits, sim.mathGrade, sim.physUnits, sim.physGrade);
+			// Subjects the institution leaves out of the average are not worth an exam
+			const counted = all.filter((l) => l.required || !comboHasDroppedSubject([l], res.droppedSubjects));
+			if (counted.length === all.length) maxPlan = { levers: all, psych: p };
+			else all = counted;
+		}
+	}
+
 	// ---- Bagrut-only admission (official route), offered next to a low psychometric target ----
 	let bagrutOnlyPlan: { levers: PlanLever[]; average: number } | null = null;
 	const bagrutOnlyMin = gapAnalysis.admissionRoutes?.bagrutOnlyMin;
@@ -1623,6 +1656,10 @@ function generateAllPersonalizedTracks(
 		pushTrack('track-balanced', 'פחות פסיכומטרי, עוד בגרויות', 'הקלה בפסיכומטרי', 'from-emerald-500 to-teal-600', plan2,
 			plan1 ? 'בגרויות שמורידות את יעד הפסיכומטרי.' : 'גם עם פסיכומטרי מרבי ובגרות אחת לא מגיעים לסף, אז נדרשות עוד בגרויות.',
 			plan1 ? plan1.psych - plan2.psych : undefined);
+	}
+	if (maxPlan) {
+		pushTrack('track-max-bagrut', 'שיפור כל הבגרויות (מאמץ חריג)', 'מאמץ חריג', 'from-rose-500 to-red-600', maxPlan,
+			'גם פסיכומטרי 800 ו-6 בגרויות לא מספיקים, אז זה המסלול היחיד שמגיע לסף בלי מכינה או אפיק מעבר: שיפור כמעט כל מקצועות הבגרות.');
 	}
 	if (bagrutOnlyPlan) {
 		const levers = bagrutOnlyPlan.levers;
@@ -1812,5 +1849,7 @@ function generateAllPersonalizedTracks(
 		}
 	}
 
-	return verifiedTracks.slice(0, 3);
+	const finalTracks = verifiedTracks.slice(0, 3);
+	// Mechina / Open University transfer routes are offered only when the regular tracks can't reach the threshold
+	return { tracks: finalTracks, suggestBypass: beyondRegularTracks || (finalTracks.length === 0 && gapAnalysis.status !== 'accepted') };
 }

@@ -19,12 +19,15 @@ interface TrackRegistrationGateProps {
 	onBackToReport: () => void;
 	/** How many improvement tracks were actually built for this program. */
 	trackCount?: number;
+	/** The regular tracks can't reach the threshold: mechina / Open University routes are offered. */
+	suggestBypass?: boolean;
 }
 
 export default function TrackRegistrationGate({
 	analysis,
 	onBackToReport,
-	trackCount
+	trackCount,
+	suggestBypass
 }: TrackRegistrationGateProps) {
 	const viewTracksLabel =
 		trackCount === 1 ? 'צפייה במסלול השיפור המותאם אישית' : trackCount ? `צפייה ב-${trackCount} מסלולי השיפור המותאמים אישית` : 'צפייה במסלולי השיפור המותאמים אישית';
@@ -166,7 +169,7 @@ export default function TrackRegistrationGate({
 
 					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#55524B] mb-3">
 						<Sparkles className="w-3.5 h-3.5 text-amber-600" />
-						<span>{trackCount === 0 ? 'לא נמצא מסלול שיפור שמגיע לסף' : trackCount === 1 ? 'חושב מסלול שיפור אחד' : trackCount ? `חושבו ${trackCount} מסלולי שיפור` : 'מסלולי השיפור חושבו'}</span>
+						<span>{trackCount === 0 && suggestBypass ? 'נמצאו דרכי קבלה דרך מכינה או אפיק מעבר' : trackCount === 0 ? 'לא נמצא מסלול שיפור שמגיע לסף' : trackCount === 1 ? 'חושב מסלול שיפור אחד' : trackCount ? `חושבו ${trackCount} מסלולי שיפור` : 'מסלולי השיפור חושבו'}</span>
 					</div>
 
 					<h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#222222] tracking-tight max-w-xl">
