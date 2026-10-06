@@ -1,0 +1,36 @@
+{
+  "fetched": "2026-10-06",
+  "how": "Read in a regular browser (the site serves pages to browsers; plain HTTP clients get no answer). Text quoted from the pages below.",
+  "sources": {
+    "general": {
+      "url": "https://admissions.technion.ac.il/admission-requirements-technion/",
+      "quote": "כדי להתקבל לטכניון יש לעמוד בדרישות הבאות: תעודת בגרות מלאה ... סיווג באנגלית - יש לקבל ציון 104 לפחות בחלק האנגלית בפסיכומטרי. במידה ואין ציון פסיכומטרי, יש לעבור את מבחן אמיר או אמירנט ... ידע במתמטיקה - כדי להתקבל לטכניון יש צורך במתמטיקה ברמה של 5 יח\"ל בציון 70 לפחות."
+    },
+    "sekem": {
+      "url": "https://admissions.technion.ac.il/sechem-for-admission/sekem/",
+      "quote": "לפחות 4 יח\"ל באנגלית בתעודת הבגרות. לקבלה לרוב מסלולי הלימוד, נדרש מקצוע המתמטיקה ב-5 יח\"ל בציון 70. מועמדים בעלי 5 יח\"ל במתמטיקה בציון נמוך מ-70 או בעלי 4 יח\"ל במתמטיקה נדרשים לעבור מבחן סיווג במתמטיקה ולהשיג בו ציון 70. לקבלה למסלולים ביולוגיה, כימיה, והמסלול הדו-חוגי ביולוגיה-כימיה: נדרש מקצוע המתמטיקה ב-4 יח\"ל בציון 80 לפחות, או לחילופין 5 יח\"ל בציון 70. למועמדים העומדים בדרישה זו אין צורך בבחינת סיווג. לקבלה למסלולים ארכיטקטורה ואדריכלות נוף: נדרש מקצוע המתמטיקה ב-4 יח\"ל לפחות בציון 70 או לחילופין 5 יח\"ל בציון 65."
+    },
+    "math": {
+      "url": "https://admissions.technion.ac.il/math-knowledge/",
+      "quote": "התעודה כוללת 5 יח\"ל מתמטיקה בציון 70 ומעלה. אם הציון נמוך מ-70 על המועמד לעבור בחינת סיווג במתמטיקה ולקבל בה ציון 70 ומעלה. תעודת הבגרות כוללת 4 יח\"ל מתמטיקה, והמועמדים נבחנו בבחינת סיווג במתמטיקה וקיבלו בה ציון 70 ומעלה ... מועמדים שלמדו באוניברסיטה הפתוחה קורס חדו\"א א' (20406), וקיבלו ציון 65 ומעלה, פטורים ממבחן הסיווג במתמטיקה."
+    },
+    "english": {
+      "url": "https://admissions.technion.ac.il/english-exam/",
+      "quote": "ציון אנגלית גבוה מ-104 באנגלית בבחינה הפסיכומטרית או בבחינת אמי\"ר או בבחינת אמירנט ... ציון 520 ומעלה באנגלית בבחינת SAT. ציון 22 ומעלה באנגלית בבחינת ACT. מועמדים שלא יעמדו בתנאי האנגלית, לא יתקבלו לטכניון, גם אם ציון הסכם שלהם מגיע לסף הקבלה. למסלולי הרפואה ציון של 120 ומעלה ... טבלת סיווג הרמות: 119-104 אנגלית למתקדמים א; 103 ומטה לא ניתן להתקבל לטכניון."
+    },
+    "medicine": {
+      "url": "https://admissions.technion.ac.il/acceptance-with-sekhem/",
+      "quote": "ידע במתמטיקה: להגשת מועמדות יש להשיג 5 יח\"ל במתמטיקה בציון 70 בבגרות, מי שאינו עומד בדרישה זו בתעודת הבגרות, נדרש במבחן הסיווג במתמטיקה בציון 70 לפחות ... ידע באנגלית: להגשת מועמדות למסלולי הרפואה נדרש ציון של 120 ומעלה בחלק האנגלית של הבחינה הפסיכומטרית או בבחינת אמי''ר, או 600 בבחינת SAT, או 26 בבחינת ACT."
+    },
+    "table": {
+      "url": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/",
+      "note": "The per-program admission-options table (updated 11.8.2026) lists no further subject requirements; 'פיזיקה' appears only in program names. No physics requirement at the Technion."
+    }
+  },
+  "groups": {
+    "architecture": ["prog-technion-1", "prog-technion-2"],
+    "biologyChemistry": ["prog-technion-3", "prog-technion-4", "prog-technion-32"],
+    "medicine": ["prog-technion-36", "prog-technion-37", "prog-technion-38", "prog-technion-39", "prog-inst-48-46"]
+  },
+  "notes": "Hebrew (121 on the Hebrew knowledge test) applies only to applicants who aren't exempt and isn't modelled. Biology/chemistry and architecture: the pages give no classification-exam alternative, so none is modelled."
+}

@@ -45614,7 +45614,72 @@
         "officialThreshold": 82,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
+        }
       },
       {
         "id": "prog-technion-2",
@@ -45630,7 +45695,72 @@
         "officialThreshold": 85,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 65
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
+        }
       },
       {
         "id": "prog-technion-3",
@@ -45751,7 +45881,70 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -45891,7 +46084,70 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46008,7 +46264,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46096,7 +46417,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46180,7 +46566,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46296,7 +46747,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46412,7 +46928,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46528,7 +47109,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46644,7 +47290,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46760,7 +47471,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -46897,7 +47673,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47013,7 +47854,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47101,7 +48007,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47189,7 +48160,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47277,7 +48313,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47365,7 +48466,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47449,7 +48615,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47488,7 +48719,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47527,7 +48823,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47611,7 +48972,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47727,7 +49153,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47816,7 +49307,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47905,7 +49461,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -47994,7 +49615,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48010,7 +49696,74 @@
         "officialThreshold": 91,
         "relevantSekemType": "technion",
         "thresholdSource": "https://admissions.technion.ac.il/sechem-for-admission/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%D7%99-%D7%94%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%9C%D7%A4%D7%99-%D7%90%D7%A4%D7%99%D7%A7%D7%99-%D7%94%D7%A7%D7%91%D7%9C%D7%94/ — טבלת אפיקי קבלה, אוקטובר 2026",
-        "thresholdUpdatedAt": "2026-10-02"
+        "thresholdUpdatedAt": "2026-10-02",
+        "admissionRoutes": {
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
+        }
       },
       {
         "id": "prog-technion-28",
@@ -48093,7 +49846,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48182,7 +50000,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48296,7 +50179,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48410,7 +50358,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48551,7 +50564,70 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 80
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48635,7 +50711,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48674,7 +50815,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48757,7 +50963,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48780,7 +51051,72 @@
             "stage": "מבדקי מו\"ר",
             "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
             "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 120+ באמי\"ר / אמירנט, SAT אנגלית 600+, ACT אנגלית 26+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ ; https://admissions.technion.ac.il/acceptance-with-sekhem/ — 2026-10-06"
         }
       },
       {
@@ -48803,7 +51139,72 @@
             "stage": "מבדקי מו\"ר",
             "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
             "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 120+ באמי\"ר / אמירנט, SAT אנגלית 600+, ACT אנגלית 26+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ ; https://admissions.technion.ac.il/acceptance-with-sekhem/ — 2026-10-06"
         }
       },
       {
@@ -48826,7 +51227,72 @@
             "stage": "מבדקי מו\"ר",
             "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
             "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 120+ באמי\"ר / אמירנט, SAT אנגלית 600+, ACT אנגלית 26+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ ; https://admissions.technion.ac.il/acceptance-with-sekhem/ — 2026-10-06"
         }
       },
       {
@@ -48849,7 +51315,72 @@
             "stage": "מבדקי מו\"ר",
             "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
             "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 120+ באמי\"ר / אמירנט, SAT אנגלית 600+, ACT אנגלית 26+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ ; https://admissions.technion.ac.il/acceptance-with-sekhem/ — 2026-10-06"
         }
       },
       {
@@ -48910,7 +51441,72 @@
           },
           "fromHighSchool": {
             "note": "הקבלה האוטומטית דרך התוכנית היא למסלול מתמטיקה תלת-שנתי בלבד."
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -48968,7 +51564,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -49007,7 +51668,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -49046,7 +51772,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -49104,7 +51895,72 @@
               ],
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -49212,7 +52068,72 @@
               "summary": "מתמטיקה 5 יח\"ל 70+, אנגלית 4 יח\"ל לפחות"
             }
           },
-          "fromHighSchool": {}
+          "fromHighSchool": {},
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים א')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 104
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 104+ באמי\"ר / אמירנט, SAT אנגלית 520+, ACT אנגלית 22+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
         }
       },
       {
@@ -49237,7 +52158,72 @@
             "stage": "מבדקי מו\"ר",
             "note": "92.000 הוא סף הזימון למבדקי מו\"ר (תשפ\"ה 92.000, תשפ\"ו 91.270). הקבלה הסופית לפי ציון מו\"ר משוקלל, וציון הקבלה שפורסם הוא 205.",
             "source": "טבלת סיכום אפשרויות הקבלה, admissions.technion.ac.il (אוקטובר 2026)"
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "ידע במתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 70
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ],
+                  "exam": "מבחן סיווג במתמטיקה בציון 70+"
+                }
+              ],
+              "otherOptions": "קורס חדו\"א א' (20406) באוניברסיטה הפתוחה בציון 65+ פוטר ממבחן הסיווג"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (מתקדמים ב')",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 120
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 120+ באמי\"ר / אמירנט, SAT אנגלית 600+, ACT אנגלית 26+"
+            },
+            {
+              "id": "english-bagrut",
+              "title": "אנגלית בבגרות (4 יח\"ל לפחות)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "אנגלית"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ ; https://admissions.technion.ac.il/acceptance-with-sekhem/ — 2026-10-06"
         }
       },
       {

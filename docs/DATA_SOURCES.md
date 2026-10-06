@@ -198,14 +198,21 @@
 | **סולם** | סכם טכניוני 0–100, עם משקל כפול למתמטיקה |
 | **ספים** | "טבלת סיכום של אפשרויות קבלה לכל המסלולים (אוקטובר 2026)" ב-admissions.technion.ac.il |
 | **אפיקים** | בגרות מצוינת (`/acceptance-without-psychometric-exam/`), בחינת סיווג במתמטיקה, גשר, מתיכון לטכניון, אפיק מקוצר, ראויים לקידום |
-| **חסימה** | **האתר חוסם כל אוטומציה.** הכול הגיע מהמשתמש: טבלה מועתקת וצילומי מסך |
-| **snapshot** | `technion-thresholds-2026-10.json`, `technion-excellent-bagrut-2026-10.json`, `technion-math-exam-2026-10.json`, `technion-gesher-highschool-2026-10.json`, `technion-short-track-2026-10.json`, `technion-promotion-2026-10.json` |
-| **ייבוא** | `importTechnionThresholds.ts`, `importTechnionExcellentBagrut.ts`, `importTechnionMathExam.ts`, `importTechnionGesherHighSchool.ts`, `importTechnionShortTrack.ts`, `importTechnionPromotion.ts` |
+| **חסימה** | **לקוחות HTTP (curl) לא מקבלים תשובה.** החיבור נפתח, אבל אין מענה. **בדפדפן האתר עונה רגיל:** ב-2026-10-06 דפי הדרישות נקראו בדפדפן המובנה. הנתונים הקודמים הגיעו מהמשתמש: טבלה מועתקת וצילומי מסך |
+| **snapshot** | `technion-requirements-2026-10-06.json` (דרישות, כולל ציטוטים), `technion-thresholds-2026-10.json`, `technion-excellent-bagrut-2026-10.json`, `technion-math-exam-2026-10.json`, `technion-gesher-highschool-2026-10.json`, `technion-short-track-2026-10.json`, `technion-promotion-2026-10.json` |
+| **ייבוא** | `importTechnionThresholds.ts`, `importTechnionExcellentBagrut.ts`, `importTechnionMathExam.ts`, `importTechnionGesherHighSchool.ts`, `importTechnionShortTrack.ts`, `importTechnionPromotion.ts`, `importTechnionRequirements.ts` |
 | **אימות המחשבון** | 20 דפי HTML שנלכדו מהמחשבון הרשמי, עם hash, ב-`fixtures/technion-official/` (העבודה של יואב). נבדקים ב-`technionOfficialParity.test.ts`. בנוסף, פרופילים A/B/C שהמשתמש בדק ב-`admissions.technion.ac.il/sekem-calculator` |
 
 **לקחים:**
 - נוסחת ההמרה של בחינת הסיווג במתמטיקה תואמת את כל 12 השורות בטבלה הרשמית.
-- **חסר:** דרישות מתמטיקה, פיזיקה ואנגלית לכל מסלול. צריך צילומי מסך של "תנאי קבלה" לכל מסלול (USER_TASKS 2.2).
+- **דרישות (2026-10-06):**
+  - **הנתונים נקראו מהדפים:** `/admission-requirements-technion/`, `/sechem-for-admission/sekem/`, `/math-knowledge/`, `/english-exam/`, `/acceptance-with-sekhem/` (רפואה).
+  - **מתמטיקה, ברוב התוכניות:** 5 יח"ל בציון 70, או 4 יח"ל ומבחן סיווג בציון 70.
+    - ביולוגיה וכימיה: 4 יח"ל בציון 80, או 5 יח"ל בציון 70.
+    - ארכיטקטורה ואדריכלות נוף: 4 יח"ל בציון 70, או 5 יח"ל בציון 65.
+  - **אנגלית:** 104 ומעלה, ברפואה 120. בנוסף 4 יח"ל אנגלית בבגרות.
+  - **אין דרישת פיזיקה:** בטבלת האפיקים לפי מסלול, המילה "פיזיקה" מופיעה רק בשמות של מסלולים.
+  - **עברית:** נדרש 121, רק למי שלא פטור. לא ממודל.
 
 ---
 
