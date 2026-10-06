@@ -15,6 +15,8 @@ fi
 
 # Ensure permissions
 chmod -R 777 /app/prisma 2>/dev/null || true
+# The session-signing key: readable only by the app user (whoever reads it can forge a login as any user)
+chmod 600 /app/prisma/.session_secret 2>/dev/null || true
 
 # Keep the catalog (institutions / programs / subjects) in step with this image's data.
 # User data is untouched; a failure never blocks startup.
