@@ -2,7 +2,8 @@
 
 import SekemBreakdown from './SekemBreakdown';
 import type { SubjectBreakdownItem } from '../../modules/calculators/types';
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { useSpringNumber } from '@/hooks/useSpringNumber';
 import Link from 'next/link';
 import {
 	Sliders,
@@ -506,6 +507,18 @@ export default function WhatIfSimulator({
 		const pct = Math.round((achieved / neededTotal) * 100);
 		return Math.min(100, Math.max(0, pct));
 	}, [analysis.userSekem, currentSekem, threshold]);
+
+	// The live score rolls to each new value instead of jumping, so the size of a change is felt
+	const displaySekem = useSpringNumber(currentSekem);
+	const displayProgress = useSpringNumber(progressPercent);
+	// Crossing the threshold is the one moment that earns a haptic tick (phones that support it)
+	const wasAcceptedRef = useRef(isAccepted);
+	useEffect(() => {
+		if (isAccepted && !wasAcceptedRef.current && typeof navigator !== 'undefined') {
+			navigator.vibrate?.(12);
+		}
+		wasAcceptedRef.current = isAccepted;
+	}, [isAccepted]);
 
 	// Helper to calculate the exact MARGINAL IMPACT of a specific subject
 	const calculateSubjectMarginalImpact = (item: SimulatedSubjectItem): { sekemDelta: number; bagrutDelta: number } => {
@@ -1470,13 +1483,11 @@ export default function WhatIfSimulator({
 				{/* LEFT COLUMN (lg:col-span-5): סכם האוניברסיטה הבלעדי + מד התקדמות לסף */}
 				{/* ----------------------------------------------------------------- */}
 				<div className="lg:col-span-5 lg:sticky lg:top-6 self-start space-y-4">
-					<div className="bg-white border-2 border-line rounded-3xl p-6 sm:p-7 shadow-xs space-y-6">
+					<div className="bg-white border border-line rounded-3xl p-6 sm:p-7 shadow-[0_1px_2px_rgba(40,30,20,0.04),0_16px_40px_-20px_rgba(40,30,20,0.16)] space-y-6">
 						{/* University Header with Logo */}
 						<div className="flex items-start justify-between gap-3 border-b border-line pb-4">
 							<div className="flex items-center gap-3">
-								<div className="p-2 rounded-2xl bg-paper border border-line shadow-2xs shrink-0">
-									<UniversityLogo institution={analysis.target.calculatorId} size="md" />
-								</div>
+								<UniversityLogo institution={analysis.target.calculatorId} size="lg" />
 								<div>
 									<h4 className="text-base font-bold text-ink">
 										{analysis.target.institutionName}
@@ -1492,7 +1503,8 @@ export default function WhatIfSimulator({
 
 							{/* Admission Status Pill Badge */}
 							<div
-								className={`px-3 py-1.5 rounded-xl border text-xs font-bold shrink-0 flex items-center gap-1.5 ${
+								key={isAccepted ? 'accepted' : isMissingRequirement ? 'missing' : 'below'}
+								className={`animate-pop px-3 py-1.5 rounded-full border text-xs font-bold shrink-0 flex items-center gap-1.5 ${
 									isAccepted
 										? 'bg-success-soft text-success border-success/25'
 										: isMissingRequirement
@@ -1520,12 +1532,12 @@ export default function WhatIfSimulator({
 						</div>
 
 						{/* Live Sekem Score Box */}
-						<div className="bg-paper p-5 rounded-2xl border border-line text-center space-y-2">
-							<span className="text-xs font-bold text-ink-2 uppercase tracking-wider block">
-								הסכם המחושב בסימולציה
+						<div className={`p-6 rounded-2xl text-center space-y-2 transition-colors duration-700 ${isAccepted ? 'bg-success-soft' : 'bg-paper'}`}>
+							<span className="text-xs font-medium text-ink-2 block">
+								הסכם בסימולציה
 							</span>
-							<div className="text-4xl sm:text-5xl font-bold text-ink dir-ltr tracking-tight">
-								{currentSekem.toFixed(isTechnion ? 2 : 1)}
+							<div className="font-serif text-5xl sm:text-6xl font-bold text-ink dir-ltr tabular-nums">
+								{displaySekem.toFixed(isTechnion ? 2 : 1)}
 							</div>
 
 							<div className="flex items-center justify-center gap-4 text-xs font-bold pt-1">
@@ -1565,19 +1577,19 @@ export default function WhatIfSimulator({
 						<div className="space-y-2.5">
 							<div className="flex items-center justify-between text-xs font-bold text-ink-2">
 								<span>{simulatedAnalysis?.admissionRoutes?.screening ? 'מד התקדמות לסף הזימון למיונים:' : 'מד התקדמות לסף הקבלה:'}</span>
-								<span className="text-ink font-bold text-sm dir-ltr">{progressPercent}%</span>
+								<span className="text-ink font-bold text-sm dir-ltr tabular-nums">{Math.round(displayProgress)}%</span>
 							</div>
 
-							<div className="w-full h-3.5 bg-line rounded-full overflow-hidden p-0.5 border border-line-strong">
+							<div className="w-full h-2 bg-line rounded-full overflow-hidden">
 								<div
-									className={`h-full rounded-full transition-all duration-300 ${
+									className={`h-full rounded-full transition-colors duration-500 ${
 										isAccepted
 											? 'bg-success'
 											: isMissingRequirement
 											? 'bg-warning'
 											: 'bg-ink'
 									}`}
-									style={{ width: `${Math.max(5, progressPercent)}%` }}
+									style={{ width: `${Math.max(3, displayProgress)}%` }}
 								/>
 							</div>
 
