@@ -10,6 +10,25 @@
 
 ---
 
+## 🗓️ 2026-10-07 — Claude Code (Opus 5.5) — סשן עיצוב UI (בראנץ' `ui/apple-design`, מבוסס `main`)
+
+### ✅ מה נעשה
+- הותקן הסקיל `apple-design` (מקור: github.com/emilkowalski/skills, `skills/apple-design/SKILL.md`) אל `.claude/skills/apple-design/` — הנחיות עיצוב ותנועה בסגנון Apple (springs, תגובה מיידית, materials/blur, טיפוגרפיה, reduced-motion). קובץ טקסט בלבד, ללא סקריפטים.
+- נפתח בראנץ' `ui/apple-design` מתוך `main` (הבראנצ'ים שממתינים לפריסה לא נכללים בו).
+
+- **שדרוג UI לפי הסקיל** (לא מוזג — המשתמש רוצה לאשר קודם):
+  - `globals.css`: אסינג קפיצי (spring מחושב, `ease-spring` / `ease-sheet`) כברירת מחדל לכל `transition`; משוב לחיצה מיידי (כל כפתור מתכווץ ל-0.97 ב-pointer-down, `press-soft` לכרטיסים רחבים); טיפוגרפיה לפי גודל (כותרות צפופות, טקסט קטן מרווח; הוסר ה-letter-spacing הגלובלי); חומרים שקופים `material-bar` / `material-thick`; `scroll-edge` (קו מפריד רק כשיש תוכן מתחת); focus-visible; תמיכה ב-reduced-motion / reduced-transparency / more-contrast.
+  - **באג שנמצא:** `animate-in fade-in zoom-in-95 slide-in-from-*`, `animate-fadeIn`, `animate-scaleUp` היו בשימוש בלי שום הגדרה (אין פלאגין) — כל המודאלים קפצו בלי אנימציה. עכשיו מוגדרים ב-`globals.css` כ"התממשות" (שקיפות+קנה מידה+טשטוש על spring).
+  - Navbar: זכוכית שקופה, גלולה פעילה שגולשת בין הלשוניות, תפריט מובייל (לא היה ניווט במובייל בכלל), תפריט פרופיל מעוגן לכפתור.
+  - דף הבית: FAQ נפתח/נסגר בתנועה הפיכה; נקודות הקרוסלה עם אזור לחיצה גדול; הוסר hover-scale מכפתורים.
+  - `/flow`: הדוק התחתון = זכוכית; סליידרים בסגנון iOS עם מילוי (`.slider` + `sliderFill` ב-WhatIfSimulator); מגירת סל התארים נכנסת מימין (הצד שבו היא יושבת — קודם נכנסה משמאל); AdmissionPanel עם עקומת sheet.
+  - tsc נקי, 297/297 טסטים, build עובר.
+
+### 🔄 בתהליך
+- ממתין לאישור המשתמש לפני מיזוג ל-main.
+
+---
+
 ## 🗓️ 2026-10-06 — Claude Code (Opus 5.5) — המשכים אוטונומיים (בראנץ' `data/followups-2026-10-06`, לא מוזג ולא נפרס)
 
 - **ב"ג:** כלל אנגלית כלל-אוניברסיטאי, "בסיסי" 85+, לפי הידיעון לתשפ"ז. נוסף ל-208 תוכניות דרך `importBguEnglishRule.ts`.

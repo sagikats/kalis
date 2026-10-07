@@ -102,7 +102,7 @@ export default function LandingPage() {
                 key={img.src}
                 src={img.src}
                 alt={img.alt}
-                className={`absolute inset-0 w-full h-full object-cover object-center select-none transition-all duration-1000 ease-in-out ${
+                className={`absolute inset-0 w-full h-full object-cover object-center select-none transition-[opacity,scale] duration-[1400ms] ease-[var(--ease-sheet)] motion-reduce:scale-100 ${
                   isActive
                     ? 'opacity-85 scale-100'
                     : 'opacity-0 scale-105 pointer-events-none'
@@ -117,7 +117,7 @@ export default function LandingPage() {
           {/* Headline and Subtitle overlaid on the image - 100% STATIC (לא תזוז) */}
           <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl mx-auto flex flex-col items-center justify-center">
             {/* Main Headline without emoji */}
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-2xl select-none">
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05] drop-shadow-2xl select-none">
               הצעד הראשון שלך לאקדמיה
             </h1>
 
@@ -133,18 +133,23 @@ export default function LandingPage() {
           </div>
 
           {/* Carousel Dots Navigation */}
-          <div className="absolute bottom-5 z-20 flex items-center gap-1.5 sm:gap-2">
+          <div className="absolute bottom-3 z-20 flex items-center">
             {HERO_IMAGES.map((_, dotIdx) => (
               <button
                 key={dotIdx}
                 onClick={() => setCurrentImageIndex(dotIdx)}
                 aria-label={`עבור לתמונה ${dotIdx + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                  dotIdx === currentImageIndex
-                    ? 'w-7 bg-white shadow-xs'
-                    : 'w-2 bg-white/40 hover:bg-white/75'
-                }`}
-              />
+                aria-current={dotIdx === currentImageIndex}
+                className="group/dot p-1.5 cursor-pointer"
+              >
+                <span
+                  className={`block h-1.5 rounded-full transition-[width,background-color] duration-500 ease-[var(--ease-spring)] ${
+                    dotIdx === currentImageIndex
+                      ? 'w-7 bg-white shadow-xs'
+                      : 'w-2 bg-white/40 group-hover/dot:bg-white/75'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>
@@ -192,7 +197,7 @@ export default function LandingPage() {
             <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
               <button
                 onClick={() => router.push('/flow')}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-white bg-[#3C3C3C] hover:bg-[#2A2A2A] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-bold text-white bg-[#3C3C3C] hover:bg-[#2A2A2A] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
               >
                 <Sliders className="h-5 w-5 text-white" />
                 <span>התחל תהליך: בדיקת קבלה ומסלולים</span>
@@ -201,7 +206,7 @@ export default function LandingPage() {
 
               <button
                 onClick={() => router.push('/calculators')}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold text-[#222222] bg-white hover:bg-[#F3EFE8] border border-[#DDD7CC] hover:border-[#CDC5B6] rounded-2xl shadow-2xs transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold text-[#222222] bg-white hover:bg-[#F3EFE8] border border-[#DDD7CC] hover:border-[#CDC5B6] rounded-2xl shadow-2xs transition-all duration-200 cursor-pointer"
               >
                 <Calculator className="h-5 w-5 text-[#55524B]" />
                 <span>מחשבון סכם לכל האוניברסיטאות</span>
@@ -542,21 +547,23 @@ export default function LandingPage() {
                 >
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full flex items-center justify-between p-5 text-right font-bold text-sm sm:text-base text-[#222222] hover:bg-[#FAF8F5] transition cursor-pointer"
+                    className="press-soft w-full flex items-center justify-between p-5 text-right font-bold text-sm sm:text-base text-[#222222] hover:bg-[#FAF8F5] transition cursor-pointer"
                     aria-expanded={isOpen}
                   >
                     <span>{item.q}</span>
                     <ChevronDown
-                      className={`h-4 w-4 text-[#88857E] shrink-0 transition-transform duration-200 ${
+                      className={`h-4 w-4 text-[#88857E] shrink-0 transition-transform duration-500 ease-[var(--ease-spring)] ${
                         isOpen ? 'rotate-180' : ''
                       }`}
                     />
                   </button>
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#55524B] leading-relaxed border-t border-[#F0ECE1]">
-                      {item.a}
+                  <div className="disclosure" data-open={isOpen} inert={!isOpen}>
+                    <div>
+                      <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#55524B] leading-relaxed border-t border-[#F0ECE1]">
+                        {item.a}
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}

@@ -71,6 +71,10 @@ interface WhatIfSimulatorProps {
 /** Lowest grade the simulator's subject sliders allow (bonuses typically start at 60, so going below it matters). */
 const SUBJECT_GRADE_MIN = 40;
 
+// Filled-track position for the `.slider` range style (globals.css)
+const sliderFill = (value: number, min: number, max: number) =>
+	({ '--fill': `${max > min ? ((value - min) / (max - min)) * 100 : 0}%` }) as React.CSSProperties;
+
 /**
  * Pre-loads a recommended track's proposed improvements into What-If Simulator state
  */
@@ -1090,7 +1094,8 @@ export default function WhatIfSimulator({
 								step={5}
 								value={simulatedPsych}
 								onChange={(e) => setSimulatedPsych(Number(e.target.value))}
-								className="w-full h-2.5 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+								className="slider w-full"
+								style={sliderFill(simulatedPsych, Math.max(450, initialPsych - 40), 800)}
 							/>
 							<div className="flex items-center justify-between text-[11px] text-[#8A847C] font-medium">
 								<span>{hasOriginalPsych ? `קיים: ${initialPsych}` : 'התחלה: 450'}</span>
@@ -1292,7 +1297,8 @@ export default function WhatIfSimulator({
 										step={1}
 										value={simulatedMathGrade}
 										onChange={(e) => setSimulatedMathGrade(Number(e.target.value))}
-										className="w-full h-1.5 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+										className="slider w-full"
+										style={sliderFill(simulatedMathGrade, SUBJECT_GRADE_MIN, 100)}
 									/>
 								</div>
 							)}
@@ -1425,7 +1431,8 @@ export default function WhatIfSimulator({
 											onChange={(e) =>
 												handleGradeSliderChange(item.id, Number(e.target.value))
 											}
-											className="w-full h-1.5 bg-[#EAE5DA] rounded-lg appearance-none cursor-pointer accent-[#3C3C3C]"
+											className="slider w-full"
+											style={sliderFill(item.simulatedGrade, SUBJECT_GRADE_MIN, 100)}
 										/>
 									</div>
 								);
@@ -2037,7 +2044,7 @@ export default function WhatIfSimulator({
 
 			{/* Modal: Add Subject to Improvement List ("הוסף מקצוע") */}
 			{isAddSubjectModalOpen && (
-				<div className="fixed inset-0 z-50 bg-black/45 backdrop-blur-xs flex items-center justify-center p-4">
+				<div className="fixed inset-0 z-50 bg-black/45 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
 					<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-7 max-w-xl w-full max-h-[85vh] overflow-y-auto space-y-6 dir-rtl text-right shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
 						{/* Header */}
 						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4">

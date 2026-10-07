@@ -1401,14 +1401,14 @@ export default function AdmissionFlowPage() {
 			{/* Incomplete psychometric scores: asked once when leaving step 1, then no banners later */}
 			{pendingStepAfterPsychNotice !== null && (
 				<div
-					className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4"
+					className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-xs px-4 animate-in fade-in"
 					role="dialog"
 					aria-modal="true"
 					aria-labelledby="psych-estimate-title"
 					onClick={() => setPendingStepAfterPsychNotice(null)}
 				>
 					<div
-						className="w-full max-w-md bg-white rounded-2xl border border-[#E5DFD4] shadow-xl p-5 space-y-4"
+						className="w-full max-w-md bg-white rounded-2xl border border-[#E5DFD4] shadow-xl p-5 space-y-4 animate-in fade-in zoom-in-95"
 						dir="rtl"
 						onClick={(e) => e.stopPropagation()}
 					>
@@ -1462,7 +1462,7 @@ export default function AdmissionFlowPage() {
 			<div className="fixed bottom-3 sm:bottom-4.5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
 				<nav
 					aria-label="ניווט שלבי האשף"
-					className="pointer-events-auto max-w-6xl w-full bg-white/95 backdrop-blur-xl border border-[#D5CFC2] rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.14),0_3px_12px_rgba(0,0,0,0.06)] px-3.5 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-2.5 sm:gap-4 ring-1 ring-black/5"
+					className="pointer-events-auto max-w-6xl w-full material-thick border border-[#D5CFC2]/80 rounded-3xl px-3.5 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-2.5 sm:gap-4"
 				>
 					{/* --- RIGHT SIDE (RTL START): BACK BUTTON OR STEP BADGE --- */}
 					<div className="flex items-center gap-2 shrink-0">

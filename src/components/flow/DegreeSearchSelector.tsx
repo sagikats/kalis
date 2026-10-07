@@ -634,7 +634,7 @@ export default function DegreeSearchSelector({
 					/>
 
 					{/* Drawer Panel */}
-					<div className="relative w-full max-w-md bg-white shadow-2xl border-l border-[#E5DFD4] h-full flex flex-col z-10 p-5 dir-rtl text-right animate-in slide-in-from-left duration-200">
+					<div className="relative w-full max-w-md bg-white shadow-2xl border-l border-[#E5DFD4] h-full flex flex-col z-10 p-5 dir-rtl text-right animate-in slide-in-from-right">
 						{/* Header */}
 						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4 shrink-0">
 							<div className="flex items-center gap-2">

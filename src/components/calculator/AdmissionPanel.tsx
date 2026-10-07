@@ -183,7 +183,7 @@ export default function AdmissionPanel({
 
       {/* Slide-over Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[460px] bg-[#FAF8F5] border-l border-[#E5DFD4] z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[460px] bg-[#FAF8F5] border-l border-[#E5DFD4] z-50 flex flex-col shadow-2xl transition-transform duration-500 ease-sheet motion-reduce:transition-none ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         dir="rtl"
