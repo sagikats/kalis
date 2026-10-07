@@ -1,6 +1,6 @@
 import { AcademicDegree, AdmissionRoutes, ProgramRequirement } from '../../types/academic';
 import { evaluateExcellentBagrut } from '../../modules/optimizer/excellentBagrut';
-import { describeOfficialRoutes, OfficialRouteInfo } from '../../modules/optimizer/officialRoutes';
+import { describeOfficialRoutes, evaluateEngineeringScore, OfficialRouteInfo } from '../../modules/optimizer/officialRoutes';
 import {
 	evaluateRequirements,
 	describeRequirement,
@@ -9,7 +9,7 @@ import {
 	RequirementResult
 } from '../../modules/optimizer/programRequirements';
 import { isSameBagrutSubject } from '../../modules/optimizer/solver';
-import { SubjectInput, selectProgramSekem } from '../../modules/calculators';
+import { SubjectInput, selectProgramSekem, HAIFA_WEIGHTINGS, HaifaWeightingType } from '../../modules/calculators';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
 /**
@@ -61,10 +61,10 @@ export interface ProgramGapAnalysis {
 	/** Threshold on the institution's own scale (e.g. HUJI 23.75), when sourced. */
 	officialThreshold?: number;
 	thresholdSource?: string;
-	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
+	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric' | HaifaWeightingType;
 	relevantSekemLabel: string;
 	/** Which official route the status rests on, when accepted. */
-	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut';
+	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut' | 'engineering_score';
 	/** One-line explanation when an official route or condition changed the status. */
 	admissionNote?: string;
 	/** Official admission routes of the program, when published. */
@@ -110,6 +110,8 @@ export function parseAdmissionThreshold(raw: number | string | undefined | null)
  */
 function describeSekemType(calcId: string, type: string): string {
 	if (type === 'psychometric') return 'ציון פסיכומטרי';
+	if (type in HAIFA_WEIGHTINGS) return HAIFA_WEIGHTINGS[type as HaifaWeightingType].label;
+	if (calcId === 'haifa' && type === 'engineering') return 'חיפה: סכם 1:3 מתמטי';
 	if (calcId === 'huji') {
 		if (type === 'engineering') return 'העברית: ציון משוקלל 50/50 בדגש כמותי';
 		if (type === 'quantitative') return 'העברית: ציון משוקלל 30/70';
@@ -439,8 +441,13 @@ export function analyzeProgramGap(
 		let psychNeeded = 0;
 
 		if (currentPsych > 0) {
-			let psychMultiplier = 2.0; // standard 50% weight (e.g. BGU, HUJI, Haifa, Ariel)
-			if (sekemType === 'psychometric') {
+			let psychMultiplier = 2.0; // standard 50% weight (e.g. BGU, HUJI, Ariel)
+			const haifaWeighting = HAIFA_WEIGHTINGS[sekemType as HaifaWeightingType];
+			if (haifaWeighting) {
+				psychMultiplier = (haifaWeighting.bagrut + haifaWeighting.psych) / haifaWeighting.psych;
+			} else if (target.calculatorId === 'haifa' && sekemType === 'engineering') {
+				psychMultiplier = 4 / 3; // (BT + 3PM) / 4
+			} else if (sekemType === 'psychometric') {
 				psychMultiplier = 1; // the threshold is the psychometric score itself
 			} else if (target.calculatorId === 'tau') {
 				psychMultiplier = sekemType === 'management' ? 1.43 : 1.92;
@@ -465,8 +472,12 @@ export function analyzeProgramGap(
 				targetPsych = Math.min(800, Math.max(200, Math.ceil((threshold - intercept) / neededFactor)));
 			} else if (target.calculatorId === 'ariel') {
 				targetPsych = Math.min(800, Math.max(200, Math.ceil(2 * threshold - bagrutAvg * 6.666)));
+			} else if (HAIFA_WEIGHTINGS[sekemType as HaifaWeightingType] || (target.calculatorId === 'haifa' && sekemType === 'engineering')) {
+				const w = HAIFA_WEIGHTINGS[sekemType as HaifaWeightingType] ?? { bagrut: 1, psych: 3 };
+				const bt = bagrutAvg * 10 - 330;
+				targetPsych = Math.min(800, Math.max(200, Math.ceil(((w.bagrut + w.psych) * threshold - w.bagrut * bt) / w.psych)));
 			} else {
-				// BGU, HUJI, Haifa standard
+				// BGU, HUJI, Haifa 1:1
 				const bt = bagrutAvg * 10 - 330;
 				targetPsych = Math.min(800, Math.max(200, Math.ceil(2 * threshold - bt)));
 			}
@@ -492,8 +503,13 @@ export function analyzeProgramGap(
 		}
 
 		// 2. Bagrut Average improvement lever
-		let bagrutMultiplier = 0.2; // standard 5 points of Sekem per Bagrut point (BGU, HUJI, Haifa, TAU general)
-		if (target.calculatorId === 'tau' && sekemType === 'management') {
+		let bagrutMultiplier = 0.2; // standard 5 points of Sekem per Bagrut point (BGU, HUJI, Haifa 1:1, TAU general)
+		const haifaBagrutWeighting =
+			HAIFA_WEIGHTINGS[sekemType as HaifaWeightingType] ?? (target.calculatorId === 'haifa' && sekemType === 'engineering' ? { bagrut: 1, psych: 3 } : undefined);
+		if (haifaBagrutWeighting) {
+			// Haifa: one bagrut point is 10·b/(b+p) sekem points
+			bagrutMultiplier = (haifaBagrutWeighting.bagrut + haifaBagrutWeighting.psych) / (10 * haifaBagrutWeighting.bagrut);
+		} else if (target.calculatorId === 'tau' && sekemType === 'management') {
 			bagrutMultiplier = 0.35;
 		} else if (isTechnion) {
 			bagrutMultiplier = 2.0; // 0.5 per bagrut point on 100-scale
@@ -553,7 +569,8 @@ export function analyzeProgramGap(
 		bagrutAverage: institutionRes.bagrutAverage || 0,
 		psychometric: psych,
 		userSekem,
-		threshold
+		threshold,
+		quantSection: profile.psychometricQuant
 	});
 
 	// Official program requirements (math, physics, …) apply on every route; BGU's bagrut-only route has its own list
@@ -647,6 +664,18 @@ export function analyzeProgramGap(
 			status = 'accepted';
 			admissionRoute = 'psychometric_only';
 			admissionNote = `מתקבל/ת באפיק "פסיכומטרי בלבד": ${psych} (נדרש ${routes.psychometricOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
+		} else if (
+			unmetRequirements.length === 0 &&
+			routes?.engineeringScore &&
+			evaluateEngineeringScore(routes.engineeringScore, requirementSubjects(
+				profile.bagrutSubjects || [],
+				{ units: profile.mathUnits, grade: profile.mathGrade },
+				{ units: profile.physicsUnits, grade: profile.physicsGrade }
+			), psych, profile.psychometricQuant).met
+		) {
+			status = 'accepted';
+			admissionRoute = 'engineering_score';
+			admissionNote = `מתקבל/ת באפיק "סכם הנדסי" (${routes.engineeringScore.min}+), בכפוף לתנאים הנוספים של המוסד.`;
 		} else if (unmetRequirements.length === 0 && routes?.excellentBagrut && evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []).met) {
 			status = 'accepted';
 			admissionRoute = 'excellent_bagrut';

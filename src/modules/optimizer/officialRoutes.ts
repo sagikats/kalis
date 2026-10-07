@@ -6,8 +6,10 @@
  * Used by the step-4 "מסלולים עוקפים" tabs (all routes) and the step-3 report (`reportLine`, only where relevant).
  */
 
-import type { AdmissionRoutes, ExcellentBagrutRoute } from '../../types/academic';
+import type { AdmissionRoutes, EngineeringScoreRoute, ExcellentBagrutRoute } from '../../types/academic';
 import type { CalculatorSubject } from '../calculators/types';
+import { calculateArielEngineeringScore } from '../calculators/ariel';
+import { isMath, isPhysics } from '../calculators/subjectMatchers';
 import { describeCondition, evaluateExcellentBagrut, requiredGesherScore, requiredMathExamScore } from './excellentBagrut';
 
 export type OfficialRouteStatus = 'fits' | 'close' | 'not_met' | 'info';
@@ -36,6 +38,30 @@ export interface OfficialRouteContext {
 	/** The applicant's score for this program and its threshold. */
 	userSekem: number;
 	threshold: number | null;
+	/** Quantitative section of the psychometric (50–150), when known. */
+	quantSection?: number;
+}
+
+export interface EngineeringScoreResult {
+	score: number | null;
+	met: boolean;
+	/** Conditions the applicant doesn't meet yet (the score itself excluded). */
+	missing: string[];
+}
+
+/** Ariel "סכם הנדסי": the score and whether the published conditions for using it hold. */
+export function evaluateEngineeringScore(route: EngineeringScoreRoute, subjects: CalculatorSubject[], psychometric: number, quantSection?: number): EngineeringScoreResult {
+	const missing: string[] = [];
+	const has = (match: (n: string) => boolean, units: number) =>
+		subjects.some((s) => match(s.name) && s.units >= units && s.grade >= (route.minGrade ?? 1));
+	const gradeText = route.minGrade ? ` בציון ${route.minGrade}+` : '';
+	if (!has(isMath, route.mathMinUnits)) missing.push(`מתמטיקה ${route.mathMinUnits} יח״ל לפחות${gradeText}`);
+	if (!has(isPhysics, route.physicsMinUnits)) missing.push(`פיזיקה ${route.physicsMinUnits} יח״ל לפחות${gradeText}`);
+	if (route.minPsychometric && !(psychometric >= route.minPsychometric)) missing.push(`פסיכומטרי ${route.minPsychometric}+`);
+	const q = quantSection && quantSection >= 50 && quantSection <= 150 ? quantSection : 0;
+	if (!(q >= route.minQuantSection)) missing.push(`חשיבה כמותית ${route.minQuantSection}+`);
+	const score = q ? calculateArielEngineeringScore(subjects, q) : null;
+	return { score, met: missing.length === 0 && score !== null && score >= route.min, missing };
 }
 
 const fmt = (n: number) => String(Math.round(n * 100) / 100);
@@ -81,6 +107,31 @@ export function describeOfficialRoutes(routes: AdmissionRoutes | undefined, ctx:
 			headline: fits ? `הפסיכומטרי שלך (${psych}) עומד בדרישה.` : psych ? `הפסיכומטרי שלך ${psych}; חסרות ${min - psych} נקודות.` : 'עדיין לא נבחנת בפסיכומטרי.',
 			conditions: [`ציון פסיכומטרי כללי ${min}+`],
 			notes: ['בכפוף לזכאות לבגרות ולתנאי הסף הנוספים של המוסד.']
+		});
+	}
+
+	if (routes.engineeringScore) {
+		const r = routes.engineeringScore;
+		const ev = evaluateEngineeringScore(r, subjects, psych, ctx.quantSection);
+		const scoreText = ev.score !== null ? `הסכם ההנדסי שלך ${ev.score}` : 'עדיין אין נתונים לחישוב הסכם ההנדסי';
+		out.push({
+			id: 'engineering-score',
+			tabLabel: 'סכם הנדסי',
+			title: 'סכם הנדסי (מתמטיקה, פיזיקה וחשיבה כמותית)',
+			status: ev.met ? 'fits' : ev.missing.length === 0 && ev.score !== null && r.min - ev.score <= 20 ? 'close' : 'not_met',
+			headline: ev.met
+				? `${scoreText} — עומד בדרישה (${r.min}).`
+				: ev.missing.length
+				? `${scoreText}. חסר לך: ${ev.missing.join('; ')}.`
+				: `${scoreText}; חסרות ${r.min - (ev.score ?? 0)} נקודות.`,
+			conditions: [
+				`סכם הנדסי ${r.min}+`,
+				'(ציון מתמטיקה × יח״ל + ציון פיזיקה × יח״ל + 3 × חשיבה כמותית) / 1.8',
+				`מתמטיקה ${r.mathMinUnits} יח״ל ופיזיקה ${r.physicsMinUnits} יח״ל לפחות${r.minGrade ? `, בציון ${r.minGrade}+` : ''}`,
+				`חשיבה כמותית ${r.minQuantSection}+${r.minPsychometric ? `, פסיכומטרי ${r.minPsychometric}+` : ''}`
+			],
+			notes: ['בכפוף לזכאות לבגרות ולתנאי הסף של התוכנית.'],
+			...(ev.met ? {} : ev.score !== null && ev.missing.length === 0 ? { reportLine: `סכם הנדסי ${r.min}: ${scoreText}.` } : {})
 		});
 	}
 

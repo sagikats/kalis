@@ -270,6 +270,8 @@ function ProgramReportCard({
 			? 'התקבלת (לפי פסיכומטרי)'
 			: item.admissionRoute === 'excellent_bagrut'
 			? 'התקבלת (בגרות מצוינת)'
+			: item.admissionRoute === 'engineering_score'
+			? 'התקבלת (סכם הנדסי)'
 			: `התקבלת (+${item.gap})`
 		: blockedByPsychFloor
 		? 'חסר פסיכומטרי מינימלי'

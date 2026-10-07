@@ -79,6 +79,8 @@ export interface InstitutionCalculatorResult {
 	engineeringSekem?: number;
 	managementSekem?: number;
 	quantitativeSekem?: number;
+	/** Scores per program weighting, keyed by the program's sekem type (Haifa: 'haifa-1:3' etc.). */
+	weightedSekems?: Record<string, number>;
 	directBagrutEligible: boolean;
 	/** The applicant's general psychometric score — the "score" of programs that admit by psychometric alone. */
 	psychometricGeneral?: number;

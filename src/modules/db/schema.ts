@@ -3,6 +3,8 @@
  * Subagent 1: Architecture & Database Design
  */
 
+import type { HaifaWeightingType } from '../calculators/haifa';
+
 import type { AdmissionRoutes } from '../../types/academic';
 
 export interface UserRecord {
@@ -60,7 +62,7 @@ export interface UserPreferencesRecord {
 	updatedAt: Date;
 }
 
-export type SekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
+export type SekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric' | HaifaWeightingType;
 
 export interface ProgramPrerequisites {
 	minMathUnits?: number;

@@ -24,7 +24,7 @@ import {
 	getBguBonus,
 	isBguMandatorySubject
 } from '../bgu';
-import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, calculateHaifaOptimalBagrut, getHaifaBonus } from '../haifa';
+import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, calculateHaifaOptimalBagrut, calculateHaifaWeightedSekem, getHaifaBonus } from '../haifa';
 import { calculateArielSekem, evaluateAriel } from '../ariel';
 
 const sub = (name: string, units: number, grade: number) => ({ name, units, grade });
@@ -339,10 +339,27 @@ describe('Official admission rules', () => {
 			assert.equal(calculateHaifaMathSekem(107.1, pm), 731);
 		});
 
-		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = (BT + 3PM)/4', () => {
+		it('CS sekem for average 100 with Q150/V100/E100 = 658, truncated from 658.81 (user-verified on Haifa calculator, 2026-10-07)', () => {
+			const pm = calculateHaifaMathPsychometric(150, 100, 100);
+			assert.equal(calculateHaifaMathSekem(100, pm), 658);
+		});
+
+		it('worked examples on admissions.haifa.ac.il/score-calculation (BT 432, PC 554): 1:2 = 513, 3:7 = 517', () => {
+			// BT 432 is a bagrut average of 76.2
+			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-1:2'), 513);
+			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-3:7'), 517);
+			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-humanities-1:2'), 513);
+		});
+
+		it('humanities: psychometric 600+ means the bagrut is not counted', () => {
+			assert.equal(calculateHaifaWeightedSekem(80, 640, 'haifa-humanities-1:2'), 640);
+			assert.equal(calculateHaifaWeightedSekem(80, 640, 'haifa-1:2'), Math.floor((470 + 2 * 640) / 3));
+		});
+
+		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = floor((BT + 3PM)/4)', () => {
 			const pm = calculateHaifaMathPsychometric(140, 120, 130);
 			assert.equal(pm, 0.514554 * (6 * 140 + 4 * 120 + 130) - 65.3);
-			assert.equal(calculateHaifaMathSekem(110, pm), Math.round((110 * 10 - 330 + 3 * pm) / 4));
+			assert.equal(calculateHaifaMathSekem(110, pm), Math.floor((110 * 10 - 330 + 3 * pm) / 4));
 		});
 	});
 
@@ -371,15 +388,28 @@ describe('Official admission rules', () => {
 					'הבעה עברית': [2, 80], 'תנ"ך': [2, 80], 'ספרות': [2, 80], ...over };
 				return [...Object.entries(m).map(([n, [u, g]]) => sub(n, u, g)), ...electives.map(([n, u, g]) => sub(n, u, g))];
 			};
-			// We round to 2 decimals, the official page truncates: allow one hundredth.
+			// The official page truncates the average to 2 decimals, and so do we.
 			const near = (subjects: ReturnType<typeof sub>[], official: number) =>
-				assert.ok(Math.abs(evaluateAriel({ bagrutSubjects: subjects }).bagrutAverage - official) <= 0.011, `expected ≈${official}`);
+				assert.equal(evaluateAriel({ bagrutSubjects: subjects }).bagrutAverage, official);
 			near(base({ 'אנגלית': [4, 80] }, [['פיזיקה', 5, 80]]), 87.95);
 			near(base({}, [['ביולוגיה', 5, 80]]), 85.95);
 			near(base({}, [['גאוגרפיה', 5, 80]]), 85.95);
 			near(base({}, [['פיזיקה', 5, 100]]), 90.71);
 			near(base({ 'מתמטיקה': [5, 55] }, [['פיזיקה', 5, 80]]), 80);
 			near(base({ 'אנגלית': [5, 59] }, [['פיזיקה', 5, 80]]), 80.86);
+		});
+
+		// Source: Ariel's official calculator, 2026-10-07 (user run; English entered as 2u): math 4u +15, 5u +35.
+		it('math bonus 4u +15 / 5u +35: averages 88.80 / 93.63 and combined 657.5 / 673.5 with quantitative psychometric 723', () => {
+			const run = (mathUnits: number) => [sub('אזרחות', 2, 80), sub('אנגלית', 2, 80), sub('היסטוריה', 2, 80), sub('מתמטיקה', mathUnits, 80),
+				sub('הבעה עברית', 2, 80), sub('תנ"ך', 2, 80), sub('פיזיקה', 5, 80), sub('ספרות', 2, 80)];
+			const m4 = evaluateAriel({ bagrutSubjects: run(4), psychometricGeneral: 714, psychometricQuantEmphasis: 723 });
+			const m5 = evaluateAriel({ bagrutSubjects: run(5), psychometricGeneral: 714, psychometricQuantEmphasis: 723 });
+			assert.equal(m4.bagrutAverage, 88.8);
+			assert.equal(m5.bagrutAverage, 93.63);
+			// Official 657.5 / 673.5 on a decimal scale; ours is whole points
+			assert.ok(Math.abs(m4.engineeringSekem! - 657.5) <= 0.5);
+			assert.ok(Math.abs(m5.engineeringSekem! - 673.5) <= 0.5);
 		});
 	});
 });

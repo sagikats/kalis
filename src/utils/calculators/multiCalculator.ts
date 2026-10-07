@@ -36,6 +36,8 @@ export interface InstitutionSekemResult {
 	engineeringSekem?: number;
 	managementSekem?: number;
 	quantitativeSekem?: number;
+	/** Scores per program weighting (Haifa: 'haifa-1:3' etc.). */
+	weightedSekems?: Record<string, number>;
 	directBagrutEligible: boolean;
 	/** The applicant's effective general psychometric score (for psychometric-only programs). */
 	psychometricGeneral?: number;
@@ -254,6 +256,7 @@ export function calculateMultiInstitutionSekem(
 			bagrutAverage: haifaRes.bagrutAverage,
 			generalSekem: haifaRes.generalSekem,
 			engineeringSekem: haifaRes.engineeringSekem,
+			weightedSekems: haifaRes.weightedSekems,
 			directBagrutEligible: haifaRes.directBagrutEligible,
 			droppedSubjects: haifaRes.droppedSubjects,
 			subjectBreakdown: haifaRes.subjectBreakdown,

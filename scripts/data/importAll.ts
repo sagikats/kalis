@@ -22,7 +22,7 @@ const ORDER = [
 	// Ben-Gurion
 	'importBguThresholds', 'importBguRequirements', 'importBguEnglishRule',
 	// Haifa, Ariel, Bar-Ilan, Reichman
-	'importHaifaThresholds', 'importArielThresholds', 'importBarIlanThresholds', 'importReichmanThresholds',
+	'importHaifaThresholds', 'importHaifaWeighting', 'importArielThresholds', 'importBarIlanThresholds', 'importReichmanThresholds',
 	// Medicine at all universities — last: it owns those programs' routes
 	'importMedicine'
 ];

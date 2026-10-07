@@ -42786,7 +42786,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3039 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3039 — תנאי הקבלה החוגיים תשפ\"ז: אמנות יצירה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-2",
@@ -42806,7 +42807,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3025 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3025 — תנאי הקבלה החוגיים תשפ\"ז: אופקים – תוכנית המצטיינות והמצטיינים",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-3",
@@ -42827,7 +42829,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3042 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3042 — תנאי הקבלה החוגיים תשפ\"ז: ארכיאולוגיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-4",
@@ -42887,7 +42890,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3036 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3036 — תנאי הקבלה החוגיים תשפ\"ז: ביולוגיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-5",
@@ -42925,7 +42929,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3091 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3091 — תנאי הקבלה החוגיים תשפ\"ז: ביופיזיקה*",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-6",
@@ -42946,7 +42951,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/5113 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5113 — תנאי הקבלה החוגיים תשפ\"ז: גאוגרפיה ולימודי הסביבה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-48",
@@ -43016,7 +43022,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3157 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3157 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הדימות הרפואי",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-8",
@@ -43068,7 +43075,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3243 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3243 — תנאי הקבלה החוגיים תשפ\"ז: הפרעות בתקשורת",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-10",
@@ -43088,7 +43096,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/education/program/3192 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/education/program/3192 — תנאי הקבלה החוגיים תשפ\"ז: חינוך מיוחד",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-11",
@@ -43108,7 +43117,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/education/program/3178 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/education/program/3178 — תנאי הקבלה החוגיים תשפ\"ז: ייעוץ והתפתחות האדם",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-12",
@@ -43172,7 +43182,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/2482 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2482 — תנאי הקבלה החוגיים תשפ\"ז: כלכלה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-46",
@@ -43209,7 +43220,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3046 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3046 — תנאי הקבלה החוגיים תשפ\"ז: לימודי אסיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-14",
@@ -43230,7 +43242,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3061 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3061 — תנאי הקבלה החוגיים תשפ\"ז: לימודי ישראל",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-15",
@@ -43250,7 +43263,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3068 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3068 — תנאי הקבלה החוגיים תשפ\"ז: לימודים רב תחומיים",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-16",
@@ -43271,7 +43285,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/education/program/3203 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/education/program/3203 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הלמידה וההוראה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-17",
@@ -43292,7 +43307,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3054 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3054 — תנאי הקבלה החוגיים תשפ\"ז: מדעי המדינה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-18",
@@ -43341,7 +43357,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/computer-information-science/program/3210 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/computer-information-science/program/3210 — תנאי הקבלה החוגיים תשפ\"ז: מדעי המחשב",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-19",
@@ -43390,7 +43407,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/computer-information-science/program/2495 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/computer-information-science/program/2495 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הנתונים",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-20",
@@ -43439,7 +43457,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/5563 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5563 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הקוגניציה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-21",
@@ -43516,7 +43535,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3012 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3012 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הרפואה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-23",
@@ -43536,7 +43556,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3216 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3216 — תנאי הקבלה החוגיים תשפ\"ז: מוסיקה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-24",
@@ -43557,7 +43578,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3115 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3115 — תנאי הקבלה החוגיים תשפ\"ז: מחשבת ישראל",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-25",
@@ -43606,7 +43628,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/computer-information-science/program/3218 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/computer-information-science/program/3218 — תנאי הקבלה החוגיים תשפ\"ז: מערכות מידע",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-26",
@@ -43627,7 +43650,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3105 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3105 — תנאי הקבלה החוגיים תשפ\"ז: מקרא",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-27",
@@ -43663,7 +43687,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/law/program/3000 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/law/program/3000 — תנאי הקבלה החוגיים תשפ\"ז: משפטים",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-3:7"
       },
       {
         "id": "prog-inst-5-28",
@@ -43712,7 +43737,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3161 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3161 — תנאי הקבלה החוגיים תשפ\"ז: מתמטיקה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-47",
@@ -43750,7 +43776,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/2968 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2968 — תנאי הקבלה החוגיים תשפ\"ז: סוציולוגיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-30",
@@ -43788,7 +43815,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/natural-sciences/program/3167 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/natural-sciences/program/3167 — תנאי הקבלה החוגיים תשפ\"ז: סטטיסטיקה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-haifa-5",
@@ -43825,7 +43853,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/2973 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/2973 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הסיעוד",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-31",
@@ -43846,7 +43875,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3081 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3081 — תנאי הקבלה החוגיים תשפ\"ז: ספרות עברית והשוואתית",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-32",
@@ -43882,7 +43912,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3082 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3082 — תנאי הקבלה החוגיים תשפ\"ז: עבודה סוציאלית",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-49",
@@ -43951,7 +43982,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3181 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3181 — תנאי הקבלה החוגיים תשפ\"ז: פיזיותרפיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-34",
@@ -43972,7 +44004,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3086 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3086 — תנאי הקבלה החוגיים תשפ\"ז: פילוסופיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-35",
@@ -44037,7 +44070,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/5385 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/5385 — תנאי הקבלה החוגיים תשפ\"ז: לימודי תואר ראשון משולב בפכ\"מ – פילוסופיה, כלכלה ומדעי המדינה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-36",
@@ -44057,7 +44091,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3268 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3268 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-37",
@@ -44093,7 +44128,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/law/program/3004 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/law/program/3004 — תנאי הקבלה החוגיים תשפ\"ז: קרימינולוגיה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-45",
@@ -44145,7 +44181,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3088 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3088 — תנאי הקבלה החוגיים תשפ\"ז: ריפוי בעיסוק",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-39",
@@ -44182,7 +44219,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3064 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-welfare-health-sciences/program/3064 — תנאי הקבלה החוגיים תשפ\"ז: שירותי אנוש",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-40",
@@ -44203,7 +44241,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3770 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3770 — תנאי הקבלה החוגיים תשפ\"ז: שפה וספרות אנגלית",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-41",
@@ -44223,7 +44262,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3087 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3087 — תנאי הקבלה החוגיים תשפ\"ז: שפה וספרות ערבית",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-42",
@@ -44244,7 +44284,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3102 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3102 — תנאי הקבלה החוגיים תשפ\"ז: תולדות האומנות",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-43",
@@ -44264,7 +44305,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/humanities/program/3211 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/humanities/program/3211 — תנאי הקבלה החוגיים תשפ\"ז: לימודי תיאטרון ופרפורמנס",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-humanities-1:2"
       },
       {
         "id": "prog-inst-5-44",
@@ -44284,7 +44326,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3229 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3229 — תנאי הקבלה החוגיים תשפ\"ז: תקשורת",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-51",
@@ -44370,7 +44413,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/5381 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5381 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה ומדעי הקוגניציה",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-54",
@@ -44391,7 +44435,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/3279 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3279 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה וביולוגיה עם ספח התמחות במדעי המוח",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-55",
@@ -44475,7 +44520,8 @@
           "requirementsSource": "https://admissions.haifa.ac.il/social-sciences/program/2501 — תנאי הקבלה החוגיים (2026-10-04)"
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2501 — תנאי הקבלה החוגיים תשפ\"ז: ניהול",
-        "thresholdUpdatedAt": "2026-10-04"
+        "thresholdUpdatedAt": "2026-10-04",
+        "relevantSekemType": "engineering"
       }
     ]
   },
@@ -53666,6 +53712,13 @@
         "minPsychometricFloor": 550,
         "admissionRoutes": {
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 660,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 5
+          },
           "requirements": [
             {
               "id": "math",
@@ -53753,7 +53806,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/ce/תנאי-הקבלה-בהנדסה-אזרחית/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 550+); מקומות מוגבלים; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 600 / בגרות 105; סכם הנדסי 660 (נוסחה נפרדת, לא מחושב כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 550+); סכם הנדסי 660+; מקומות מוגבלים; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 600 / בגרות 105",
         "thresholdSource": "https://www.ariel.ac.il/wp/ce/תנאי-הקבלה-בהנדסה-אזרחית/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -53773,6 +53826,13 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -53840,7 +53900,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/ceb/תנאי-הקבלה-בהנדסה-כימית/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 600+ (פסיכומטרי 550+); בגרות בלבד 100+; 8 יח\"ל ריאליות; חסרי פיזיקה/כימיה 5 יח\"ל 70+ — מכינה או קורסי מבוא; על תנאי לשנה: משולב 570 / בגרות 95",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 600+ (פסיכומטרי 550+); בגרות בלבד 100+; סכם הנדסי 600+; 8 יח\"ל ריאליות; חסרי פיזיקה/כימיה 5 יח\"ל 70+ — מכינה או קורסי מבוא; על תנאי לשנה: משולב 570 / בגרות 95",
         "thresholdSource": "https://www.ariel.ac.il/wp/ceb/תנאי-הקבלה-בהנדסה-כימית/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -53863,6 +53923,13 @@
           "bagrutOnlyMin": 106,
           "psychometricOnlyMin": 680,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 680,
+            "minQuantSection": 130,
+            "mathMinUnits": 5,
+            "physicsMinUnits": 5,
+            "minGrade": 80
+          },
           "requirements": [
             {
               "id": "math",
@@ -54049,7 +54116,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/ee/תנאי-הקבלה-בהנדסת-חשמל-ואלקטרוניקה/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 550+); בגרות בלבד 106+; פסיכומטרי בלבד 680+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97; סכם הנדסי 680 (נוסחה נפרדת, לא מחושב כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 550+); בגרות בלבד 106+; פסיכומטרי בלבד 680+; סכם הנדסי 680+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "thresholdSource": "https://www.ariel.ac.il/wp/ee/תנאי-הקבלה-בהנדסת-חשמל-ואלקטרוניקה/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -54070,6 +54137,13 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 102,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -54256,7 +54330,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97; סכם הנדסי 600 (נוסחה נפרדת, לא מחושב כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; סכם הנדסי 600+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "thresholdSource": "https://www.ariel.ac.il/wp/me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -54276,6 +54350,13 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 102,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -54363,7 +54444,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; סכם הנדסי 600+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "thresholdSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -57082,7 +57163,7 @@
         "directBagrutEligible": true,
         "directBagrutMinAverage": 104,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 630+ (פסיכומטרי 590+); בגרות בלבד 104+; פסיכומטרי בלבד 650+; סכם הנדסי 640 / סכם מחשבים ותוכנה 640 (נוסחאות נפרדות, לא מחושבות כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 630+ (פסיכומטרי 590+); בגרות בלבד 104+; פסיכומטרי בלבד 650+; סכם הנדסי 640+; או סכם מחשבים ותוכנה 640 — בלי פיזיקה, למגמת מדעי המחשב/אלקטרוניקה (הנוסחה לא מפורסמת)",
         "officialThreshold": 630,
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 590,
@@ -57090,6 +57171,13 @@
           "bagrutOnlyMin": 104,
           "psychometricOnlyMin": 650,
           "minPsychometric": 590,
+          "engineeringScore": {
+            "min": 640,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -57700,13 +57788,20 @@
         "directBagrutEligible": true,
         "directBagrutMinAverage": 102,
         "mathRequirement": "4 יחידות בציון 80+ / 5 יחידות 70+",
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; סכם הנדסי 600+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "officialThreshold": 620,
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "admissionRoutes": {
           "bagrutOnlyMin": 102,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",

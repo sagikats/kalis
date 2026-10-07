@@ -1,6 +1,8 @@
 /**
  * Pure University of Haifa (אוניברסיטת חיפה) Admission Calculator
- * Official Formula: BT = Bagrut_Average * 10 - 330; Sekem = 0.5 * BT + 0.5 * Psychometric
+ * Official Formula (admissions.haifa.ac.il/score-calculation/): BT = Bagrut_Average * 10 - 330;
+ * final score = (b·BT + p·P) / (b + p), where the bagrut:psychometric weighting b:p depends on the program
+ * (see HAIFA_WEIGHTINGS) and P is the general psychometric score, or PM for mathematical programs.
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -100,11 +102,39 @@ export function calculateHaifaMathPsychometric(quant: number, verbal: number, en
 	return 0.514554 * (6 * quant + 4 * verbal + english) - 65.3;
 }
 
-/** Mathematical programs: 1:3 weighting with the math-weighted psychometric — (BT + 3PM) / 4. */
+/**
+ * Mathematical programs: 1:3 weighting with the math-weighted psychometric — (BT + 3PM) / 4.
+ * The Haifa calculator truncates: average 100 with Q150/V100/E100 gives 658.81 and it shows 658 (user-verified, CS).
+ */
 export function calculateHaifaMathSekem(bagrutAverage: number, mathPsychometric: number): number {
 	if (bagrutAverage <= 0 || mathPsychometric <= 0) return 0;
 	const raw = (haifaBagrutStandard(bagrutAverage) + 3 * mathPsychometric) / 4;
-	return Math.max(200, Math.round(raw));
+	return Math.max(200, Math.floor(raw));
+}
+
+/**
+ * Bagrut:psychometric weightings (admissions.haifa.ac.il/score-calculation/, read 2026-10-07):
+ * humanities 1:2 (Ofakim 1:3); social sciences, education, welfare & health, criminology 1:3; some of their programs
+ * and all of natural sciences 1:3 mathematical; law 3:7; architecture 1:1.
+ * 'haifa-humanities-1:2': psychometric 600+ means the bagrut isn't counted at all (humanities, except Ofakim).
+ */
+export const HAIFA_WEIGHTINGS = {
+	'haifa-1:1': { bagrut: 1, psych: 1, label: 'חיפה: סכם 1:1' },
+	'haifa-1:2': { bagrut: 1, psych: 2, label: 'חיפה: סכם 1:2' },
+	'haifa-humanities-1:2': { bagrut: 1, psych: 2, label: 'חיפה: סכם 1:2 (פסיכומטרי 600+ בלבד)' },
+	'haifa-1:3': { bagrut: 1, psych: 3, label: 'חיפה: סכם 1:3' },
+	'haifa-3:7': { bagrut: 3, psych: 7, label: 'חיפה: סכם 3:7' }
+} as const;
+
+export type HaifaWeightingType = keyof typeof HAIFA_WEIGHTINGS;
+
+/** (b·BT + p·P) / (b + p), truncated like the Haifa calculator. */
+export function calculateHaifaWeightedSekem(bagrutAverage: number, psychometric: number, type: HaifaWeightingType): number {
+	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
+	if (type === 'haifa-humanities-1:2' && psychometric >= 600) return Math.floor(psychometric);
+	const { bagrut, psych } = HAIFA_WEIGHTINGS[type];
+	const raw = (bagrut * haifaBagrutStandard(bagrutAverage) + psych * psychometric) / (bagrut + psych);
+	return Math.max(200, Math.floor(raw));
 }
 
 export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
@@ -133,6 +163,9 @@ export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCal
 		optimalUnits: optimal.optimalUnits,
 		generalSekem,
 		engineeringSekem,
+		weightedSekems: Object.fromEntries(
+			(Object.keys(HAIFA_WEIGHTINGS) as HaifaWeightingType[]).map((t) => [t, calculateHaifaWeightedSekem(optimal.average, psych, t)])
+		),
 		directBagrutEligible,
 		notes: directBagrutEligible
 			? ['ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת חיפה לחוגים זכאים.']

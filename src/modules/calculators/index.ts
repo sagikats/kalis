@@ -8,7 +8,7 @@ import { evaluateTechnion } from './technion';
 import { evaluateTau } from './tau';
 import { evaluateHuji } from './huji';
 import { evaluateBgu } from './bgu';
-import { evaluateHaifa } from './haifa';
+import { evaluateHaifa, HaifaWeightingType } from './haifa';
 import { evaluateAriel } from './ariel';
 import { evaluateBarIlan } from './barIlan';
 import { evaluateReichman } from './reichman';
@@ -110,18 +110,19 @@ export function isProgramEligibleForDirectBagrut(
 }
 
 /** 'psychometric': programs that admit by the general psychometric score alone (e.g. BGU Economics ≥ 600). */
-export type ProgramSekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
+export type ProgramSekemType = 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric' | HaifaWeightingType;
 
 /**
  * Picks the institution score that a program's threshold is compared against.
  * Single source of truth for every consumer (optimizer, track engines, gap analysis, QA).
  */
 export function selectProgramSekem(
-	res: Pick<InstitutionCalculatorResult, 'generalSekem' | 'engineeringSekem' | 'managementSekem' | 'quantitativeSekem' | 'psychometricGeneral'>,
+	res: Pick<InstitutionCalculatorResult, 'generalSekem' | 'engineeringSekem' | 'managementSekem' | 'quantitativeSekem' | 'psychometricGeneral' | 'weightedSekems'>,
 	sekemType: ProgramSekemType | string | undefined,
 	institutionId?: string
 ): number {
 	if (sekemType === 'psychometric') return res.psychometricGeneral ?? 0;
+	if (sekemType && res.weightedSekems && sekemType in res.weightedSekems) return res.weightedSekems[sekemType];
 	if (sekemType === 'technion' || institutionId === 'technion') return res.engineeringSekem ?? res.generalSekem;
 	if (sekemType === 'quantitative') return res.quantitativeSekem ?? res.generalSekem;
 	if (sekemType === 'engineering') return res.engineeringSekem ?? res.generalSekem;

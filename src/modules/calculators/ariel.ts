@@ -3,9 +3,11 @@
  * Combined score ("ציון קבלה משולב") = [(bagrut average × 6.666) + psychometric] / 2 — verified on every department's
  * admission page (ariel.ac.il, תשפ"ז; snapshot src/data/sources/ariel-admission-pages-2026-10-05.json). Most departments
  * take the higher of the general and quantitative-weighted psychometric scores.
- * Bonus table — partly verified against Ariel's official calculator (pniot.ariel.ac.il/projects/tzmm/NewCalcMark,
- * 14 results on 2026-10-05): English 4u +12.5 / 5u +25, any other 5u +25, chemistry 4u +10, no bonus below 60.
- * ⚠️ Still unverified: math 4u/5u bonus, 4u of other subjects, and which mandatory subjects (e.g. literature) may be dropped.
+ * Bonus table — verified against Ariel's official calculator (pniot.ariel.ac.il/projects/tzmm/NewCalcMark,
+ * results on 2026-10-05 and 2026-10-07): math 4u +15 / 5u +35, English 4u +12.5 / 5u +25, any other 5u +25,
+ * chemistry 4u +10, no bonus below 60. The calculator truncates the average to 2 decimals.
+ * ⚠️ Still unverified: 4u of subjects other than math, English and chemistry, and which mandatory subjects
+ * (e.g. literature) may be dropped.
  * Subagent 3: Data Verification & Institution Calculators
  */
 
@@ -16,6 +18,7 @@ import {
 	InstitutionCalculatorResult
 } from './types';
 import { computeOptimalAverage } from './optimalAverage';
+import { isMath, isPhysics } from './subjectMatchers';
 
 const ARIEL_MANDATORY_SUBJECTS = [
 	'מתמטיקה',
@@ -61,11 +64,23 @@ export function getArielBonus(subject: CalculatorSubject): number {
 	return 0;
 }
 
+/** The official calculator shows the average truncated to 2 decimals (88.8095 → 88.80). */
+function truncateArielAverage(avg: number): number {
+	return Math.floor(avg * 100 + 1e-9) / 100;
+}
+
 export function calculateArielOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
+	const optimal = calculateArielRawOptimalBagrut(subjects);
+	return { ...optimal, average: truncateArielAverage(optimal.average) };
+}
+
+/** Optimal average without truncation — the combined score is computed from it (88.8095 & 723 → 657.5 officially). */
+function calculateArielRawOptimalBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
 	return computeOptimalAverage(subjects, {
 		isMandatory: isArielMandatorySubject,
 		getBonus: getArielBonus,
 		cap: 125,
+		decimals: null,
 		dropReason: 'השמטה חוקית באריאל: שקלול המקצוע הוריד את הממוצע האופטימלי'
 	});
 }
@@ -77,7 +92,8 @@ export function calculateArielSekem(bagrutAverage: number, psychometric: number)
 }
 
 export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCalculatorResult {
-	const optimal = calculateArielOptimalBagrut(input.bagrutSubjects);
+	const rawOptimal = calculateArielRawOptimalBagrut(input.bagrutSubjects);
+	const optimal = { ...rawOptimal, average: truncateArielAverage(rawOptimal.average) };
 	const psych = input.psychometricGeneral || 0;
 	const explicitQuant = input.psychometricQuantEmphasis && input.psychometricQuantEmphasis > 0
 		? input.psychometricQuantEmphasis
@@ -85,9 +101,9 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 	const rawQuant = explicitQuant ?? (input.psychometricQuant && input.psychometricQuant > 0 ? input.psychometricQuant : psych);
 	const quant = rawQuant > 0 && rawQuant <= 150 ? Math.round(200 + (rawQuant - 50) * 6) : rawQuant;
 
-	const generalSekem = calculateArielSekem(optimal.average, psych);
+	const generalSekem = calculateArielSekem(rawOptimal.average, psych);
 	// "יש להתייחס לציון הפסיכומטרי בשקלול הכמותי/רב תחומי — הגבוה מבין השניים"
-	const engineeringSekem = Math.max(generalSekem, calculateArielSekem(optimal.average, quant));
+	const engineeringSekem = Math.max(generalSekem, calculateArielSekem(rawOptimal.average, quant));
 
 	const directBagrutEligible = optimal.average >= 100;
 
@@ -100,10 +116,24 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 		engineeringSekem,
 		directBagrutEligible,
 		notes: directBagrutEligible
-			? ['נוסחת הציון המשולב של אריאל אומתה, וגם רוב טבלת הבונוסים (מול המחשבון הרשמי). הבונוס במתמטיקה עדיין הערכה.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
-			: ['נוסחת הציון המשולב של אריאל אומתה, וגם רוב טבלת הבונוסים (מול המחשבון הרשמי). הבונוס במתמטיקה עדיין הערכה.'],
+			? ['נוסחת הציון המשולב וטבלת הבונוסים של אריאל אומתו מול המחשבון הרשמי.', 'ממוצע בגרות עומד ברף קבלה ישירה (100 ומעלה) באוניברסיטת אריאל לחוגים זכאים.']
+			: ['נוסחת הציון המשולב וטבלת הבונוסים של אריאל אומתו מול המחשבון הרשמי.'],
 		droppedSubjects: optimal.droppedSubjects.map((s) => s.name),
 		subjectBreakdown: optimal.breakdown,
 		bagrutCap: optimal.cap
 	};
+}
+
+/**
+ * Ariel "סכם הנדסי" (engineering programs' pages, תשפ"ז): (math grade × units + physics grade × units + 3 × quantitative
+ * section) / 1.8, truncated — the official calculator shows 606 for math 4u 80, physics 5u 80 and quantitative 124
+ * (1092 / 1.8 = 606.67; user run 2026-10-07). Null without math, physics or the quantitative section.
+ */
+export function calculateArielEngineeringScore(subjects: CalculatorSubject[], quantSection: number): number | null {
+	const best = (match: (n: string) => boolean) =>
+		subjects.filter((s) => match(s.name) && s.units > 0 && s.grade > 0).sort((a, b) => b.units * b.grade - a.units * a.grade)[0];
+	const math = best(isMath);
+	const physics = best(isPhysics);
+	if (!math || !physics || !(quantSection > 0)) return null;
+	return Math.floor((math.grade * math.units + physics.grade * physics.units + 3 * quantSection) / 1.8 + 1e-9);
 }
