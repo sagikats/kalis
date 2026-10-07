@@ -388,15 +388,28 @@ describe('Official admission rules', () => {
 					'הבעה עברית': [2, 80], 'תנ"ך': [2, 80], 'ספרות': [2, 80], ...over };
 				return [...Object.entries(m).map(([n, [u, g]]) => sub(n, u, g)), ...electives.map(([n, u, g]) => sub(n, u, g))];
 			};
-			// We round to 2 decimals, the official page truncates: allow one hundredth.
+			// The official page truncates the average to 2 decimals, and so do we.
 			const near = (subjects: ReturnType<typeof sub>[], official: number) =>
-				assert.ok(Math.abs(evaluateAriel({ bagrutSubjects: subjects }).bagrutAverage - official) <= 0.011, `expected ≈${official}`);
+				assert.equal(evaluateAriel({ bagrutSubjects: subjects }).bagrutAverage, official);
 			near(base({ 'אנגלית': [4, 80] }, [['פיזיקה', 5, 80]]), 87.95);
 			near(base({}, [['ביולוגיה', 5, 80]]), 85.95);
 			near(base({}, [['גאוגרפיה', 5, 80]]), 85.95);
 			near(base({}, [['פיזיקה', 5, 100]]), 90.71);
 			near(base({ 'מתמטיקה': [5, 55] }, [['פיזיקה', 5, 80]]), 80);
 			near(base({ 'אנגלית': [5, 59] }, [['פיזיקה', 5, 80]]), 80.86);
+		});
+
+		// Source: Ariel's official calculator, 2026-10-07 (user run; English entered as 2u): math 4u +15, 5u +35.
+		it('math bonus 4u +15 / 5u +35: averages 88.80 / 93.63 and combined 657.5 / 673.5 with quantitative psychometric 723', () => {
+			const run = (mathUnits: number) => [sub('אזרחות', 2, 80), sub('אנגלית', 2, 80), sub('היסטוריה', 2, 80), sub('מתמטיקה', mathUnits, 80),
+				sub('הבעה עברית', 2, 80), sub('תנ"ך', 2, 80), sub('פיזיקה', 5, 80), sub('ספרות', 2, 80)];
+			const m4 = evaluateAriel({ bagrutSubjects: run(4), psychometricGeneral: 714, psychometricQuantEmphasis: 723 });
+			const m5 = evaluateAriel({ bagrutSubjects: run(5), psychometricGeneral: 714, psychometricQuantEmphasis: 723 });
+			assert.equal(m4.bagrutAverage, 88.8);
+			assert.equal(m5.bagrutAverage, 93.63);
+			// Official 657.5 / 673.5 on a decimal scale; ours is whole points
+			assert.ok(Math.abs(m4.engineeringSekem! - 657.5) <= 0.5);
+			assert.ok(Math.abs(m5.engineeringSekem! - 673.5) <= 0.5);
 		});
 	});
 });
