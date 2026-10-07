@@ -4,7 +4,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
-     Calculator,
      GraduationCap,
      Brain,
      Zap,
@@ -358,24 +357,20 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
                     {/* Header */}
-                    <div className="space-y-4 text-center max-w-3xl mx-auto">
-                         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-line text-ink-2 text-xs font-semibold shadow-2xs">
-                              <Calculator className="h-4 w-4 text-accent" />
-                              <span>מחשבון סכם וקבלה אחוד לאוניברסיטאות בישראל</span>
-                         </div>
-                         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-ink">
-                              מחשבון סכם <span className="text-ink">כלל-אוניברסיטאי</span>
+                    <div className="text-center max-w-3xl mx-auto pt-6 sm:pt-10">
+                         <p className="text-sm font-medium text-accent">מחשבון סכם · שמונה אוניברסיטאות</p>
+                         <h1 className="mt-4 text-4xl sm:text-6xl font-bold text-ink">
+                              מחשבון סכם כלל-אוניברסיטאי
                          </h1>
-                         <p className="text-sm sm:text-base text-ink-2 leading-relaxed">
+                         <p className="mt-5 text-base sm:text-lg text-ink-2 leading-relaxed">
                               הזן את ציוני הבגרות והפסיכומטרי שלך פעם אחת בלבד וקבל חישוב השוואתי מדויק של ציוני הסכם בכל אוניברסיטאות היעד בישראל — הטכניון, תל אביב, העברית, בן-גוריון, בר-אילן, חיפה, אריאל ורייכמן.
                          </p>
-                         <div className="flex justify-center pt-1">
+                         <div className="flex justify-center pt-6">
                               <Link
                                    href="/flow"
-                                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-ink hover:bg-black text-white text-xs font-bold shadow-xs transition"
+                                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-2 transition-colors"
                               >
-                                   <Sparkles className="h-4 w-4" />
-                                   <span>מעבר לבדיקת קבלה וניתוח פערים לפי תארים מבוקשים</span>
+                                   <span>לבדיקת קבלה לפי תארים</span>
                                    <ArrowLeft className="h-3.5 w-3.5" />
                               </Link>
                          </div>
@@ -432,9 +427,10 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                         <button
                                              key={inst.id}
                                              onClick={() => toggleInstitution(inst.id)}
-                                             className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition flex items-center gap-2 border shadow-2xs ${isSelected
-                                                  ? 'bg-ink border-ink text-white'
-                                                  : 'bg-paper border-line text-ink-2 hover:border-line-strong hover:text-ink'
+                                             aria-pressed={isSelected}
+                                             className={`px-3.5 py-2 rounded-full text-xs font-semibold transition flex items-center gap-2 border ${isSelected
+                                                  ? 'bg-white border-ink text-ink ring-1 ring-ink'
+                                                  : 'bg-paper border-line text-ink-3 hover:border-line-strong hover:text-ink-2 [&_img]:grayscale [&_img]:opacity-60'
                                                   }`}
                                         >
                                              <UniversityLogo institution={inst.id} size="xs" shape="circle" />
@@ -846,38 +842,38 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
 
                                              <div className={`grid grid-cols-2 ${res.institutionId === 'bar_ilan' ? 'sm:grid-cols-5' : res.managementSekem !== undefined ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-2`}>
                                                   {/* Bagrut Avg */}
-                                                  <div className="py-1.5 px-2 rounded-xl bg-paper border border-line text-center flex flex-col justify-center">
-                                                       <span className="text-[10px] text-ink-2 block font-bold leading-tight truncate">ממוצע בגרות</span>
-                                                       <span className="text-base sm:text-lg font-bold text-ink mt-0.5 block leading-tight">{res.bagrutAverage}</span>
+                                                  <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
+                                                       <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">ממוצע בגרות</span>
+                                                       <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.bagrutAverage}</span>
                                                   </div>
 
                                                   {/* General Sekem */}
-                                                  <div className="py-1.5 px-2 rounded-xl bg-paper border border-line text-center flex flex-col justify-center">
-                                                       <span className="text-[10px] text-ink-2 block font-bold leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול כללי' : 'סכם כללי'}</span>
-                                                       <span className="text-base sm:text-lg font-bold text-ink mt-0.5 block leading-tight">{res.generalSekem}</span>
+                                                  <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
+                                                       <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול כללי' : 'סכם כללי'}</span>
+                                                       <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.generalSekem}</span>
                                                   </div>
 
                                                   {/* Bar-Ilan sciences score */}
                                                   {res.institutionId === 'bar_ilan' && res.quantitativeSekem !== undefined && (
-                                                       <div className="py-1.5 px-2 rounded-xl bg-paper border border-line text-center flex flex-col justify-center">
-                                                            <span className="text-[10px] text-ink-2 block font-bold leading-tight truncate">שקלול מדעים</span>
-                                                            <span className="text-base sm:text-lg font-bold text-ink mt-0.5 block leading-tight">{res.quantitativeSekem}</span>
+                                                       <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
+                                                            <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">שקלול מדעים</span>
+                                                            <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.quantitativeSekem}</span>
                                                        </div>
                                                   )}
 
                                                   {/* Engineering Sekem */}
                                                   {res.engineeringSekem !== undefined && (
-                                                       <div className="py-1.5 px-2 rounded-xl bg-paper border border-line text-center flex flex-col justify-center">
-                                                            <span className="text-[10px] text-ink-2 block font-bold leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסה' : 'סכם כמותי/הנדסה'}</span>
-                                                            <span className="text-base sm:text-lg font-bold text-ink mt-0.5 block leading-tight">{res.engineeringSekem}</span>
+                                                       <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
+                                                            <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסה' : 'סכם כמותי/הנדסה'}</span>
+                                                            <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.engineeringSekem}</span>
                                                        </div>
                                                   )}
 
                                                   {/* Management Sekem */}
                                                   {res.managementSekem !== undefined && (
-                                                       <div className="py-1.5 px-2 rounded-xl bg-paper border border-line text-center flex flex-col justify-center">
-                                                            <span className="text-[10px] text-ink-2 block font-bold leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסת תוכנה' : 'התאמה לניהול'}</span>
-                                                            <span className="text-base sm:text-lg font-bold text-ink mt-0.5 block leading-tight">{res.managementSekem}</span>
+                                                       <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
+                                                            <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסת תוכנה' : 'התאמה לניהול'}</span>
+                                                            <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.managementSekem}</span>
                                                        </div>
                                                   )}
                                              </div>
@@ -886,14 +882,14 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                              <div className="flex gap-2">
                                                   <button
                                                        onClick={() => setPanelInstitutionId(res.institutionId)}
-                                                       className="flex-1 py-1.5 sm:py-2 bg-ink hover:bg-black text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
+                                                       className="flex-1 py-2 bg-white hover:bg-paper text-ink border border-line-strong font-semibold text-xs rounded-full transition flex items-center justify-center gap-1.5 cursor-pointer"
                                                   >
                                                        <GraduationCap className="h-3.5 w-3.5" />
                                                        <span>מה הסיכויים שלי?</span>
                                                   </button>
                                                   <Link
                                                        href="/flow"
-                                                       className="px-2.5 py-1.5 sm:py-2 bg-paper hover:bg-line text-ink border border-line-strong font-bold text-xs rounded-xl transition flex items-center justify-center gap-1 shrink-0"
+                                                       className="w-9 h-9 bg-white hover:bg-paper text-ink border border-line-strong rounded-full transition flex items-center justify-center shrink-0"
                                                        title="בדיקת קבלה ופערים"
                                                   >
                                                        <ChevronLeft className="h-4 w-4" />
