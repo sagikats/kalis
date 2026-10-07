@@ -27770,7 +27770,7 @@
         "fieldOfStudy": "יזמות וחדשנות (יזמות וחדשנות דו מחלקתי - מדעי המחשב)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 655,
+        "admissionThreshold": 720,
         "sekemScore": null,
         "psychometricScore": 655,
         "mathRequirement": "88/4 או 78/5",
@@ -27784,7 +27784,50 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "minPsychometric": 600,
           "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 4,
+                      "minGrade": 90
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 80
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "english",
               "title": "רמת אנגלית (בסיסי)",
@@ -27800,8 +27843,31 @@
               ],
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
-          ]
-        }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
+            }
+          ],
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+        },
+        "officialThreshold": 720,
+        "relevantSekemType": "quantitative",
+        "minPsychometricFloor": 600,
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - יזמות וחדשנות",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-208",
@@ -37059,7 +37125,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה דו מחלקתי - מתמטיקה ומדעי המחשב)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 745,
+        "admissionThreshold": 720,
         "sekemScore": 745,
         "psychometricScore": 655,
         "mathRequirement": "87/5",
@@ -37073,7 +37139,39 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "minPsychometric": 600,
           "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 87
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "quant",
+              "title": "חשיבה כמותית",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 125
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "id": "english",
               "title": "רמת אנגלית (בסיסי)",
@@ -37089,8 +37187,31 @@
               ],
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
-          ]
-        }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
+            }
+          ],
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+        },
+        "officialThreshold": 720,
+        "relevantSekemType": "quantitative",
+        "minPsychometricFloor": 600,
+        "thresholdSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז: מדעי המחשב דו מחלקתי - מתמטיקה ומדעי המחשב",
+        "thresholdUpdatedAt": "2026-10-02"
       },
       {
         "id": "prog-bgu-70",
