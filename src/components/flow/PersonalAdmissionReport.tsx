@@ -73,16 +73,10 @@ export default function PersonalAdmissionReport({
 			<div className="bg-white border border-line rounded-3xl p-6 shadow-xs space-y-5">
 				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-line pb-4">
 					<div>
-						<div className="flex items-center gap-2 mb-1">
-							<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
-								שלב 3 מתוך 4: תוצאות קבלה
-							</span>
-						</div>
-						<h2 className="text-2xl sm:text-3xl font-bold text-ink">
-							שלב 3: דוח סיכויי קבלה אישי
-						</h2>
-						<p className="text-xs sm:text-sm text-ink-2 mt-1">
-							הערכה מבוססת מנועי הסכם הרשמיים לכל התארים שבחרת
+						<p className="text-xs font-medium text-accent">שלב 3 מתוך 4 · דוח קבלה</p>
+						<h2 className="mt-1 text-2xl sm:text-3xl font-bold text-ink">דוח הקבלה שלך</h2>
+						<p className="text-sm text-ink-2 mt-1">
+							הסכם שלך מול סף הקבלה בכל אחד מהתארים שבחרת, לפי נוסחת כל מוסד.
 						</p>
 					</div>
 					<button
@@ -94,31 +88,23 @@ export default function PersonalAdmissionReport({
 				</div>
 
 				{/* Stat Badges */}
-				<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-					<div className="p-3.5 rounded-2xl bg-success-soft border border-success/25 text-center">
-						<span className="text-[11px] font-bold text-success block">✅ התקבלת</span>
-						<span className="text-2xl font-bold text-success mt-0.5 block">{counts.accepted}</span>
-						<span className="text-[10px] text-success/80">עובר את רף הסכם</span>
-					</div>
-
-					<div className="p-3.5 rounded-2xl bg-warning-soft border border-warning/30 text-center">
-						<span className="text-[11px] font-bold text-warning block">חסר תנאי סף</span>
-						<span className="text-2xl font-bold text-warning mt-0.5 block">{counts.missing_requirement}</span>
-						<span className="text-[10px] text-warning/80">עומד בסכם, לא בתנאי רשמי</span>
-					</div>
-
-					<div className="p-3.5 rounded-2xl bg-danger-soft border border-danger/25 text-center">
-						<span className="text-[11px] font-bold text-danger block">❌ טרם התקבלת</span>
-						<span className="text-2xl font-bold text-danger mt-0.5 block">{counts.not_accepted}</span>
-						<span className="text-[10px] text-danger/80">דרוש שיפור נתונים</span>
-					</div>
-
-					<div className="p-3.5 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-center">
-						<span className="text-[11px] font-bold text-[#453D78] block">קבלה נפרדת</span>
-						<span className="text-2xl font-bold text-[#453D78] mt-0.5 block">{counts.no_threshold}</span>
-						<span className="text-[10px] text-[#453D78]/80">מיונים / אודישן / ראיון</span>
-					</div>
-				</div>
+				<dl className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-line rounded-2xl overflow-hidden border border-line">
+					{[
+						{ label: 'עובר את הסף', value: counts.accepted, note: 'הסכם מעל רף הקבלה', dot: 'bg-success' },
+						{ label: 'חסר תנאי סף', value: counts.missing_requirement, note: 'עומד בסכם, לא בתנאי רשמי', dot: 'bg-warning' },
+						{ label: 'יש פער', value: counts.not_accepted, note: 'נדרש שיפור', dot: 'bg-danger' },
+						{ label: 'קבלה נפרדת', value: counts.no_threshold, note: 'מיונים, אודישן או ראיון', dot: 'bg-[#453D78]' },
+					].map((stat) => (
+						<div key={stat.label} className="bg-white px-5 py-4">
+							<dt className="flex items-center gap-2 text-xs font-medium text-ink-2">
+								<span aria-hidden="true" className={`h-2 w-2 rounded-full ${stat.dot}`} />
+								{stat.label}
+							</dt>
+							<dd className="mt-2 font-serif text-4xl font-bold text-ink tabular-nums">{stat.value}</dd>
+							<dd className="mt-1 text-[11px] text-ink-3">{stat.note}</dd>
+						</div>
+					))}
+				</dl>
 
 				{analyses.length > 0 && analyses.every((a) => a.userSekem === 0) && (
 					<div className="p-4 rounded-2xl bg-paper border border-line flex items-start gap-3">
@@ -140,7 +126,7 @@ export default function PersonalAdmissionReport({
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
 						<CheckCircle2 className="h-5 w-5 text-success" />
-						<h3 className="text-base font-bold text-success">
+						<h3 className="text-lg font-semibold text-ink">
 							תארים שהתקבלת אליהם ({grouped.accepted.length})
 						</h3>
 					</div>
@@ -158,7 +144,7 @@ export default function PersonalAdmissionReport({
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
 						<AlertCircle className="h-5 w-5 text-warning" />
-						<h3 className="text-base font-bold text-warning">
+						<h3 className="text-lg font-semibold text-ink">
 							עומד/ת בסכם, אבל חסר תנאי סף רשמי ({grouped.missing_requirement.length})
 						</h3>
 					</div>
@@ -177,7 +163,7 @@ export default function PersonalAdmissionReport({
 					<div className="flex items-center justify-between flex-wrap gap-2">
 						<div className="flex items-center gap-2">
 							<XCircle className="h-5 w-5 text-danger" />
-							<h3 className="text-base font-bold text-danger">
+							<h3 className="text-lg font-semibold text-ink">
 								תארים שטרם התקבלת אליהם ({grouped.not_accepted.length})
 							</h3>
 						</div>
@@ -199,7 +185,7 @@ export default function PersonalAdmissionReport({
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
 						<HelpCircle className="h-5 w-5 text-[#453D78]" />
-						<h3 className="text-base font-bold text-[#453D78]">
+						<h3 className="text-lg font-semibold text-ink">
 							תארים עם קבלה נפרדת ({grouped.no_threshold.length})
 						</h3>
 					</div>
@@ -245,13 +231,8 @@ function ProgramReportCard({
 	/** Medicine-style program: the threshold only invites to MOR / interviews. */
 	const isScreenedProgram = Boolean(item.admissionRoutes?.screening);
 
-	const borderStyle = isAccepted
-		? 'border-success/25 bg-[#FBFDFB]'
-		: isMissingRequirement
-		? 'border-warning/30 bg-[#FDFCF8]'
-		: isNoThreshold || isScreening
-		? 'border-[#D2CEEB] bg-[#FAF9FD]'
-		: 'border-danger/25 bg-[#FDFBFB]';
+	// Cards stay white; status lives in the badge only, so a page of results reads calm
+	const borderStyle = 'border-line bg-white';
 
 	const badgeStyle = isAccepted
 		? 'text-success bg-success-soft border-success/25'
@@ -286,7 +267,7 @@ function ProgramReportCard({
 		: `פער: ${Math.abs(item.gap)} נק׳`;
 
 	return (
-		<div className={`p-5 rounded-2xl border ${borderStyle} shadow-xs space-y-4 flex flex-col justify-between`}>
+		<div className={`p-5 sm:p-6 rounded-2xl border ${borderStyle} shadow-[0_1px_2px_rgba(40,30,20,0.04)] space-y-4 flex flex-col justify-between`}>
 			<div className="space-y-2.5">
 				<div className="flex items-start justify-between gap-2">
 					<div className="flex items-center gap-3">
@@ -307,16 +288,16 @@ function ProgramReportCard({
 
 				{/* Score Comparison Box */}
 				{!isNoThreshold && (
-					<div className="grid grid-cols-2 gap-2 bg-paper p-3 rounded-xl border border-line text-center text-xs">
+					<div className="grid grid-cols-2 gap-2 bg-paper px-4 py-3.5 rounded-xl text-center text-xs">
 						<div>
 							<span className="text-[10px] text-ink-2 block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>
-							<span className="text-base font-bold text-ink">{item.userSekem}</span>
+							<span className="mt-0.5 block font-serif text-2xl font-bold text-ink tabular-nums">{item.userSekem}</span>
 						</div>
 						<div>
 							<span className="text-[10px] text-ink-2 block font-medium">
 								{thresholdLabel(item)}
 							</span>
-							<span className="text-base font-bold text-warning">{item.threshold}</span>
+							<span className="mt-0.5 block font-serif text-2xl font-bold text-ink-2 tabular-nums">{item.threshold}</span>
 							{item.officialThreshold !== undefined && item.officialThreshold !== item.threshold && (
 								<span className="text-[10px] text-ink-2 block">בסולם המוסד: {item.officialThreshold}</span>
 							)}
@@ -328,7 +309,7 @@ function ProgramReportCard({
 										target="_blank"
 										rel="noopener noreferrer"
 										onClick={(e) => e.stopPropagation()}
-										className="text-[10px] text-[#2F6FB0] underline block"
+										className="text-[10px] text-accent underline underline-offset-2 block"
 									>
 										{src.label}
 									</a>

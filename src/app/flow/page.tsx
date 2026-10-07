@@ -808,20 +808,9 @@ export default function AdmissionFlowPage() {
 								{/* Integrated Card Top Bar with Prominent Step 1 Title */}
 								<div className="flex items-center justify-between flex-wrap gap-3 border-b border-line pb-3 shrink-0">
 									<div>
-										<div className="flex items-center gap-2 mb-1">
-											<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
-												שלב 1 מתוך 4: נתוני פתיחה
-											</span>
-											<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
-												בגרויות (חלק 1 מתוך 2)
-											</span>
-										</div>
-										<h2 className="text-xl sm:text-2xl font-bold text-ink">
-											שלב 1: הזנת ציוני תעודת בגרות
-										</h2>
-										<p className="text-xs text-ink-2 mt-0.5">
-											הזן ציון סופי (0–100) ובחר יחידות לימוד לכל מקצוע בתעודה
-										</p>
+										<p className="text-xs font-medium text-accent">שלב 1 מתוך 4 · בגרויות</p>
+										<h2 className="mt-1 text-2xl sm:text-3xl font-bold text-ink">ציוני תעודת הבגרות</h2>
+										<p className="text-sm text-ink-2 mt-1">ציון סופי (0–100) ומספר יחידות לכל מקצוע בתעודה.</p>
 									</div>
 
 									<div className="flex items-center flex-wrap gap-2">
@@ -866,15 +855,15 @@ export default function AdmissionFlowPage() {
 								</div>
 
 								{/* Subjects Grid: 2 columns with internal scroll */}
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 flex-1 min-h-0 overflow-y-auto pr-1 pl-1 py-1 custom-scrollbar">
+								<div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-10 content-start flex-1 min-h-0 overflow-y-auto px-1 custom-scrollbar">
 										{subjects.map((sub, idx) => (
 											<div
 												key={idx}
-												className="flex items-center gap-3 p-3.5 rounded-2xl border transition-all bg-paper border-line hover:border-line-strong"
+												className="flex items-center gap-3 py-3 border-b border-line"
 											>
 												<div className="flex-1 min-w-0">
-													<span className="text-xs font-bold text-ink block truncate">
-														{sub.name}
+													<span className="text-sm font-medium text-ink block truncate">
+															{sub.name}
 													</span>
 												</div>
 
@@ -882,7 +871,7 @@ export default function AdmissionFlowPage() {
 												<select
 													value={sub.units}
 													onChange={(e) => handleSubjectChange(idx, 'units', e.target.value)}
-													className="bg-white border border-line-strong text-xs font-bold text-ink rounded-xl px-2.5 py-1.5 focus:outline-none cursor-pointer"
+													className="bg-paper border border-line text-sm text-ink rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-ink-3 cursor-pointer"
 												>
 													<option value={2}>2 יח״ל</option>
 													<option value={3}>3 יח״ל</option>
@@ -899,7 +888,8 @@ export default function AdmissionFlowPage() {
 													value={sub.grade === 0 ? '' : sub.grade}
 													onChange={(e) => handleSubjectChange(idx, 'grade', e.target.value)}
 													placeholder="ציון"
-													className="w-16 bg-white border border-line-strong text-xs font-bold text-center rounded-xl px-2 py-1.5 text-ink focus:outline-none focus:ring-1 focus:ring-ink transition"
+														aria-invalid={sub.grade > 100}
+														className={`w-16 bg-paper border text-sm font-semibold text-center tabular-nums rounded-lg px-2 py-1.5 text-ink focus:outline-none focus:bg-white transition ${sub.grade > 100 ? 'border-danger text-danger' : 'border-line focus:border-ink-3'}`}
 												/>
 
 												<button
@@ -987,18 +977,9 @@ export default function AdmissionFlowPage() {
 								{/* Integrated Card Top Bar with Prominent Step 1B Title */}
 								<div className="flex items-center justify-between flex-wrap gap-3 border-b border-line pb-3.5 shrink-0">
 									<div>
-										<div className="flex items-center gap-2 mb-1">
-											<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
-												שלב 1 מתוך 4: נתוני פתיחה
-											</span>
-											<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
-												פסיכומטרי (חלק 2 מתוך 2)
-											</span>
-										</div>
-										<h2 className="text-xl sm:text-2xl font-bold text-ink">
-											שלב 1: הזנת ציוני בחינה פסיכומטרית
-										</h2>
-										<p className="text-xs text-ink-2 mt-0.5">
+										<p className="text-xs font-medium text-accent">שלב 1 מתוך 4 · פסיכומטרי</p>
+										<h2 className="mt-1 text-2xl sm:text-3xl font-bold text-ink">ציוני הבחינה הפסיכומטרית</h2>
+										<p className="text-sm text-ink-2 mt-1">
 											ציון רב-תחומי (200–800) וציוני פרקים. אם טרם נבחנת, תוכל לסמן זאת ולבדוק קבלה ישירה.
 										</p>
 									</div>

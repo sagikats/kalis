@@ -236,15 +236,9 @@ export default function DegreeSearchSelector({
 				{/* Top Integrated Title Bar */}
 				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-line pb-3.5">
 					<div>
-						<div className="flex items-center gap-2 mb-1">
-							<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
-								שלב 2 מתוך 4: הגדרת מטרות
-							</span>
-						</div>
-						<h2 className="text-xl sm:text-2xl font-bold text-ink">
-							שלב 2: בחירת תארים מבוקשים
-						</h2>
-						<p className="text-xs text-ink-2 mt-0.5">
+						<p className="text-xs font-medium text-accent">שלב 2 מתוך 4 · תארים</p>
+						<h2 className="mt-1 text-2xl sm:text-3xl font-bold text-ink">אילו תארים לבדוק?</h2>
+						<p className="text-sm text-ink-2 mt-1">
 							בחר את התארים והמוסדות שמעניין אותך לבדוק. סל היעדים שלך מתעדכן מיידית.
 						</p>
 					</div>
@@ -528,7 +522,7 @@ export default function DegreeSearchSelector({
 										onClick={() => onToggleProgram(item)}
 										className={`px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0 cursor-pointer ${
 											selected
-												? 'bg-success-soft text-success border border-success/25 hover:bg-[#FEE2E2] hover:text-[#991B1B] hover:border-[#FECACA]'
+												? 'bg-ink text-white border border-ink hover:bg-danger hover:border-danger'
 												: 'bg-paper text-ink border border-line hover:bg-ink hover:text-white hover:border-ink'
 										}`}
 										title={selected ? 'הסר מסל היעדים' : 'הוסף לסל היעדים'}
@@ -551,7 +545,7 @@ export default function DegreeSearchSelector({
 								<div className="flex items-center justify-between gap-2 mt-2 pt-1.5 border-t border-paper-2/90 text-xs">
 									<div className="flex items-center gap-1.5 min-w-0">
 										<UniversityLogo institution={item.institutionId} size="xs" showBadge={false} />
-										<span className="text-accent font-bold text-[11px] truncate">
+										<span className="text-ink-2 font-medium text-[11px] truncate">
 											{item.institutionName.replace('אוניברסיטת ', '')}
 										</span>
 									</div>
@@ -561,7 +555,7 @@ export default function DegreeSearchSelector({
 										onClick={() => toggleExpandCard(cardKey)}
 										className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold border transition cursor-pointer shrink-0 ${
 											threshold
-												? 'bg-warning-soft border-warning/30 text-warning hover:bg-[#F9ECCF]'
+												? 'bg-paper border-line text-ink-2 hover:bg-paper-2 tabular-nums'
 												: 'bg-paper border-line text-ink-2 hover:bg-paper-2'
 										}`}
 										title="לחץ להרחבת פרטי סף ודרישות קבלה"

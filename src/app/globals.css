@@ -77,6 +77,13 @@ body {
  * Kept in the base layer so any explicit `tracking-*` / `leading-*` utility still wins.
  */
 @layer base {
+  /* Page and section titles are set in the serif — the editorial voice of the product */
+  h1, h2 {
+    font-family: var(--font-serif);
+  }
+  h2.text-xs, h2.text-sm, h2.text-base {
+    font-family: var(--font-sans);
+  }
   h1 {
     letter-spacing: -0.022em;
     line-height: 1.08;
