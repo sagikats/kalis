@@ -100,11 +100,14 @@ export function calculateHaifaMathPsychometric(quant: number, verbal: number, en
 	return 0.514554 * (6 * quant + 4 * verbal + english) - 65.3;
 }
 
-/** Mathematical programs: 1:3 weighting with the math-weighted psychometric — (BT + 3PM) / 4. */
+/**
+ * Mathematical programs: 1:3 weighting with the math-weighted psychometric — (BT + 3PM) / 4.
+ * The Haifa calculator truncates: average 100 with Q150/V100/E100 gives 658.81 and it shows 658 (user-verified, CS).
+ */
 export function calculateHaifaMathSekem(bagrutAverage: number, mathPsychometric: number): number {
 	if (bagrutAverage <= 0 || mathPsychometric <= 0) return 0;
 	const raw = (haifaBagrutStandard(bagrutAverage) + 3 * mathPsychometric) / 4;
-	return Math.max(200, Math.round(raw));
+	return Math.max(200, Math.floor(raw));
 }
 
 export function evaluateHaifa(input: InstitutionCalculatorInput): InstitutionCalculatorResult {

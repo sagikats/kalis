@@ -339,10 +339,15 @@ describe('Official admission rules', () => {
 			assert.equal(calculateHaifaMathSekem(107.1, pm), 731);
 		});
 
-		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = (BT + 3PM)/4', () => {
+		it('CS sekem for average 100 with Q150/V100/E100 = 658, truncated from 658.81 (user-verified on Haifa calculator, 2026-10-07)', () => {
+			const pm = calculateHaifaMathPsychometric(150, 100, 100);
+			assert.equal(calculateHaifaMathSekem(100, pm), 658);
+		});
+
+		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = floor((BT + 3PM)/4)', () => {
 			const pm = calculateHaifaMathPsychometric(140, 120, 130);
 			assert.equal(pm, 0.514554 * (6 * 140 + 4 * 120 + 130) - 65.3);
-			assert.equal(calculateHaifaMathSekem(110, pm), Math.round((110 * 10 - 330 + 3 * pm) / 4));
+			assert.equal(calculateHaifaMathSekem(110, pm), Math.floor((110 * 10 - 330 + 3 * pm) / 4));
 		});
 	});
 
