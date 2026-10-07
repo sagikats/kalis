@@ -24,7 +24,7 @@ import {
 	getBguBonus,
 	isBguMandatorySubject
 } from '../bgu';
-import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, calculateHaifaOptimalBagrut, getHaifaBonus } from '../haifa';
+import { calculateHaifaMathPsychometric, calculateHaifaMathSekem, calculateHaifaOptimalBagrut, calculateHaifaWeightedSekem, getHaifaBonus } from '../haifa';
 import { calculateArielSekem, evaluateAriel } from '../ariel';
 
 const sub = (name: string, units: number, grade: number) => ({ name, units, grade });
@@ -342,6 +342,22 @@ describe('Official admission rules', () => {
 		it('CS sekem for average 100 with Q150/V100/E100 = 658, truncated from 658.81 (user-verified on Haifa calculator, 2026-10-07)', () => {
 			const pm = calculateHaifaMathPsychometric(150, 100, 100);
 			assert.equal(calculateHaifaMathSekem(100, pm), 658);
+		});
+
+		it('psychology for average 100, general 614 = 621 = (BT + 7·PC) / 8 (user-verified on Haifa calculator, 2026-10-07)', () => {
+			assert.equal(calculateHaifaWeightedSekem(100, 614, 'haifa-1:7'), 621);
+		});
+
+		it('worked examples on admissions.haifa.ac.il/score-calculation (BT 432, PC 554): 1:2 = 513, 3:7 = 517', () => {
+			// BT 432 is a bagrut average of 76.2
+			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-1:2'), 513);
+			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-3:7'), 517);
+			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-humanities-1:2'), 513);
+		});
+
+		it('humanities: psychometric 600+ means the bagrut is not counted', () => {
+			assert.equal(calculateHaifaWeightedSekem(80, 640, 'haifa-humanities-1:2'), 640);
+			assert.equal(calculateHaifaWeightedSekem(80, 640, 'haifa-1:2'), Math.floor((470 + 2 * 640) / 3));
 		});
 
 		it('math programs: PM = 0.514554*(6Q+4V+E) - 65.3, sekem = floor((BT + 3PM)/4)', () => {

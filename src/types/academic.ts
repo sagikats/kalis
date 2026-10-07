@@ -1,3 +1,4 @@
+import type { HaifaWeightingType } from '@/modules/calculators/haifa';
 export interface AcademicDegree {
      id: string;
      fieldOfStudy: string;               // שם תחום ההשכלה / חוג
@@ -22,7 +23,7 @@ export interface AcademicDegree {
      registrationStatus?: string | null;
      url?: string;
      /** Which institution score the threshold is compared against (overrides the name-based guess). */
-     relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric';
+     relevantSekemType?: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric' | HaifaWeightingType;
      /** Threshold on the institution's own scale (e.g. HUJI weighted score 23.75), when sourced. */
      officialThreshold?: number | null;
      /** Where the threshold was taken from, and when. */

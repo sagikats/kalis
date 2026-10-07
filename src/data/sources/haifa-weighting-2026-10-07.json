@@ -1,0 +1,38 @@
+{
+  "fetched": "2026-10-07",
+  "source": {
+    "url": "https://admissions.haifa.ac.il/score-calculation/",
+    "how": "Read in the built-in browser (curl gets the WAF's 'Request Rejected').",
+    "quote": "בפקולטה למדעי הרוח השקלול לפי יחס 1:2 (פרט לאופקים, שיקלול 1:3) בפקולטה למדעי החברה, בפקולטה לחינוך, בפקולטה לרווחה ובריאות ובבית הספר לקרימינולוגיה השקלול לפי יחס 1:3. ישנם חוגים/מסלולים בפקולטות אלה, בהם הדרישה היא לשיקלול 1:3 מתמטי. בפקולטה למדעי הטבע השקלול הוא לפי 1:3 מתמטי. בפקולטה למשפטים ובבית הספר לרפואה השקלול הוא לפי יחס 3:7. ... למועמדים בעלי תעודת בגרות אשר השיגו ציון 600 ומעלה (לא משוקלל) בבחינה הפסיכומטרית ומבקשים להתקבל לחוגי הפקולטה למדעי הרוח (למעט תכנית “אופקים”), לא יוכנסו ציוני הבגרות לשקלול. ... בכל החוגים המתמטיים ו/או המדעיים (מתמטיקה, כלכלה, סטטיסטיקה, מדעי המחשב, מערכות מידע ניהוליות, מדעי הרפואה וביולוגיה) הציון הפסיכומטרי התקף הינו ... 6 חשיבה כמותית, 4 חשיבה מילולית, 1 אנגלית."
+  },
+  "calculatorRuns": {
+    "how": "User ran applicants.haifa.ac.il/enrollmentChances on 2026-10-07: bagrut average 100 (BT 670), quantitative 150, verbal 100, English 100 (general psychometric 614, PM 655.08).",
+    "results": {
+      "מדעי המחשב": 658,
+      "מדעי הנתונים": 658,
+      "מערכות מידע (דו-חוגי עם סטטיסטיקה)": 658,
+      "מתמטיקה": 658,
+      "סטטיסטיקה": 658,
+      "כלכלה": 658,
+      "ביופיזיקה": 658,
+      "פסיכולוגיה": 621
+    },
+    "reading": "658 = floor((670 + 3·655.08) / 4) = floor(658.81): 1:3 mathematical, truncated. Psychology 621 = (670 + 7·614) / 8 exactly: 1:7 — not 1:3 (628) as the faculty rule would give."
+  },
+  "byFaculty": {
+    "computer-information-science": "engineering",
+    "natural-sciences": "engineering",
+    "social-sciences": "haifa-1:3",
+    "education": "haifa-1:3",
+    "social-welfare-health-sciences": "haifa-1:3",
+    "humanities": "haifa-humanities-1:2",
+    "law": "haifa-3:7"
+  },
+  "byProgram": {
+    "2482": { "type": "engineering", "why": "כלכלה: listed as mathematical on the page; calculator 658" },
+    "3268": { "type": "haifa-1:7", "why": "פסיכולוגיה: calculator 621 = (BT + 7·PC) / 8" },
+    "3025": { "type": "haifa-1:3", "why": "אופקים: 1:3 per the page" },
+    "3004": { "type": "haifa-1:3", "why": "קרימינולוגיה: listed under law on the site, but the page gives the school of criminology 1:3" }
+  },
+  "unverified": "Faculty defaults for programs not run in the calculator; in particular social-science programs other than economics and psychology might use 1:3 mathematical ('some programs in these faculties')."
+}
