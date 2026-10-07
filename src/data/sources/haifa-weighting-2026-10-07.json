@@ -6,7 +6,7 @@
     "quote": "בפקולטה למדעי הרוח השקלול לפי יחס 1:2 (פרט לאופקים, שיקלול 1:3) בפקולטה למדעי החברה, בפקולטה לחינוך, בפקולטה לרווחה ובריאות ובבית הספר לקרימינולוגיה השקלול לפי יחס 1:3. ישנם חוגים/מסלולים בפקולטות אלה, בהם הדרישה היא לשיקלול 1:3 מתמטי. בפקולטה למדעי הטבע השקלול הוא לפי 1:3 מתמטי. בפקולטה למשפטים ובבית הספר לרפואה השקלול הוא לפי יחס 3:7. ... למועמדים בעלי תעודת בגרות אשר השיגו ציון 600 ומעלה (לא משוקלל) בבחינה הפסיכומטרית ומבקשים להתקבל לחוגי הפקולטה למדעי הרוח (למעט תכנית “אופקים”), לא יוכנסו ציוני הבגרות לשקלול. ... בכל החוגים המתמטיים ו/או המדעיים (מתמטיקה, כלכלה, סטטיסטיקה, מדעי המחשב, מערכות מידע ניהוליות, מדעי הרפואה וביולוגיה) הציון הפסיכומטרי התקף הינו ... 6 חשיבה כמותית, 4 חשיבה מילולית, 1 אנגלית."
   },
   "calculatorRuns": {
-    "how": "User ran applicants.haifa.ac.il/enrollmentChances on 2026-10-07: bagrut average 100 (BT 670), quantitative 150, verbal 100, English 100 (general psychometric 614, PM 655.08).",
+    "how": "User ran applicants.haifa.ac.il/enrollmentChances on 2026-10-07: bagrut average 100 (BT 670), quantitative 150, verbal 100, English 100 (general psychometric 614, PM 655.08). Bagrut year entered: 2019; psychometric year 2022.",
     "results": {
       "מדעי המחשב": 658,
       "מדעי הנתונים": 658,
@@ -22,7 +22,7 @@
       "ניהול": 658,
       "מדעי הקוגניציה": 658
     },
-    "reading": "Mathematical programs: 658 = floor((670 + 3·655.08)/4) — 1:3 mathematical, truncated. General programs match the page's reduced-bagrut ratios exactly (the 7th-10th year after the bagrut): sociology and psychology 621 = (670 + 7·614)/8 (1:7, i.e. 1:3), law 622 = floor((3·670 + 17·614)/20) (3:17, i.e. 3:7), philosophy 623 = floor((670 + 5·614)/6) (1:5, i.e. 1:2 — the calculator doesn't apply the 600+ psychometric-only rule). So the faculty ratios hold, and the runs were apparently scored as an older bagrut; the math programs were not reduced. Open question for the user: the bagrut year entered on the 'תעודה' tab."
+    "reading": "Mathematical programs: 658 = floor((670 + 3·655.08)/4) — 1:3 mathematical, truncated. General programs match the page's reduced-bagrut ratios exactly (the 7th-10th year after the bagrut): sociology and psychology 621 = (670 + 7·614)/8 (1:7, i.e. 1:3), law 622 = floor((3·670 + 17·614)/20) (3:17, i.e. 3:7), philosophy 623 = floor((670 + 5·614)/6) (1:5, i.e. 1:2 — the calculator doesn't apply the 600+ psychometric-only rule). Confirmed: the bagrut year entered was 2019, the 7th year before תשפ\"ז, so the calculator halved the bagrut weight for the general programs (it did not for the mathematical ones, although the page lists 1:7 for them too). The faculty ratios therefore hold for a recent bagrut."
   },
   "byFaculty": {
     "computer-information-science": "engineering",
