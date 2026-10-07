@@ -50605,6 +50605,13 @@
         "minPsychometricFloor": 550,
         "admissionRoutes": {
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 660,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 5
+          },
           "requirements": [
             {
               "id": "math",
@@ -50692,7 +50699,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/ce/תנאי-הקבלה-בהנדסה-אזרחית/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 550+); מקומות מוגבלים; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 600 / בגרות 105; סכם הנדסי 660 (נוסחה נפרדת, לא מחושב כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 650+ (פסיכומטרי 550+); סכם הנדסי 660+; מקומות מוגבלים; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 600 / בגרות 105",
         "thresholdSource": "https://www.ariel.ac.il/wp/ce/תנאי-הקבלה-בהנדסה-אזרחית/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -50712,6 +50719,13 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 100,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -50779,7 +50793,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/ceb/תנאי-הקבלה-בהנדסה-כימית/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 600+ (פסיכומטרי 550+); בגרות בלבד 100+; 8 יח\"ל ריאליות; חסרי פיזיקה/כימיה 5 יח\"ל 70+ — מכינה או קורסי מבוא; על תנאי לשנה: משולב 570 / בגרות 95",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 600+ (פסיכומטרי 550+); בגרות בלבד 100+; סכם הנדסי 600+; 8 יח\"ל ריאליות; חסרי פיזיקה/כימיה 5 יח\"ל 70+ — מכינה או קורסי מבוא; על תנאי לשנה: משולב 570 / בגרות 95",
         "thresholdSource": "https://www.ariel.ac.il/wp/ceb/תנאי-הקבלה-בהנדסה-כימית/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -50802,6 +50816,13 @@
           "bagrutOnlyMin": 106,
           "psychometricOnlyMin": 680,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 680,
+            "minQuantSection": 130,
+            "mathMinUnits": 5,
+            "physicsMinUnits": 5,
+            "minGrade": 80
+          },
           "requirements": [
             {
               "id": "math",
@@ -50988,7 +51009,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/ee/תנאי-הקבלה-בהנדסת-חשמל-ואלקטרוניקה/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 550+); בגרות בלבד 106+; פסיכומטרי בלבד 680+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97; סכם הנדסי 680 (נוסחה נפרדת, לא מחושב כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 640+ (פסיכומטרי 550+); בגרות בלבד 106+; פסיכומטרי בלבד 680+; סכם הנדסי 680+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "thresholdSource": "https://www.ariel.ac.il/wp/ee/תנאי-הקבלה-בהנדסת-חשמל-ואלקטרוניקה/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -51009,6 +51030,13 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 102,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -51195,7 +51223,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97; סכם הנדסי 600 (נוסחה נפרדת, לא מחושב כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; סכם הנדסי 600+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "thresholdSource": "https://www.ariel.ac.il/wp/me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -51215,6 +51243,13 @@
         "admissionRoutes": {
           "bagrutOnlyMin": 102,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -51302,7 +51337,7 @@
           ],
           "requirementsSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ (2026-10-05)"
         },
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; סכם הנדסי 600+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "thresholdSource": "https://www.ariel.ac.il/wp/iem/תנאי-קבלה-בהנדסת-תעשייה-וניהול/ — תנאי הקבלה תשפ\"ז",
         "thresholdUpdatedAt": "2026-10-05"
       },
@@ -54021,7 +54056,7 @@
         "directBagrutEligible": true,
         "directBagrutMinAverage": 104,
         "mathRequirement": "4 יחידות בציון 85+ / 5 יחידות 75+",
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 630+ (פסיכומטרי 590+); בגרות בלבד 104+; פסיכומטרי בלבד 650+; סכם הנדסי 640 / סכם מחשבים ותוכנה 640 (נוסחאות נפרדות, לא מחושבות כאן)",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 630+ (פסיכומטרי 590+); בגרות בלבד 104+; פסיכומטרי בלבד 650+; סכם הנדסי 640+; או סכם מחשבים ותוכנה 640 — בלי פיזיקה, למגמת מדעי המחשב/אלקטרוניקה (הנוסחה לא מפורסמת)",
         "officialThreshold": 630,
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 590,
@@ -54029,6 +54064,13 @@
           "bagrutOnlyMin": 104,
           "psychometricOnlyMin": 650,
           "minPsychometric": 590,
+          "engineeringScore": {
+            "min": 640,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",
@@ -54639,13 +54681,20 @@
         "directBagrutEligible": true,
         "directBagrutMinAverage": 102,
         "mathRequirement": "4 יחידות בציון 80+ / 5 יחידות 70+",
-        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
+        "comments": "תנאי קבלה רשמיים תשפ\"ז (אוניברסיטת אריאל): ציון קבלה משולב 620+ (פסיכומטרי 550+); בגרות בלבד 102+; סכם הנדסי 600+; 8 יח\"ל ריאליות; מסלול \"יסודות\" (על תנאי לשנה): משולב 580 / בגרות 97",
         "officialThreshold": 620,
         "relevantSekemType": "engineering",
         "minPsychometricFloor": 550,
         "admissionRoutes": {
           "bagrutOnlyMin": 102,
           "minPsychometric": 550,
+          "engineeringScore": {
+            "min": 600,
+            "minPsychometric": 550,
+            "minQuantSection": 120,
+            "mathMinUnits": 4,
+            "physicsMinUnits": 4
+          },
           "requirements": [
             {
               "id": "math",

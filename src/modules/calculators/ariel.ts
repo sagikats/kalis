@@ -18,6 +18,7 @@ import {
 	InstitutionCalculatorResult
 } from './types';
 import { computeOptimalAverage } from './optimalAverage';
+import { isMath, isPhysics } from './subjectMatchers';
 
 const ARIEL_MANDATORY_SUBJECTS = [
 	'מתמטיקה',
@@ -121,4 +122,18 @@ export function evaluateAriel(input: InstitutionCalculatorInput): InstitutionCal
 		subjectBreakdown: optimal.breakdown,
 		bagrutCap: optimal.cap
 	};
+}
+
+/**
+ * Ariel "סכם הנדסי" (engineering programs' pages, תשפ"ז): (math grade × units + physics grade × units + 3 × quantitative
+ * section) / 1.8, truncated — the official calculator shows 606 for math 4u 80, physics 5u 80 and quantitative 124
+ * (1092 / 1.8 = 606.67; user run 2026-10-07). Null without math, physics or the quantitative section.
+ */
+export function calculateArielEngineeringScore(subjects: CalculatorSubject[], quantSection: number): number | null {
+	const best = (match: (n: string) => boolean) =>
+		subjects.filter((s) => match(s.name) && s.units > 0 && s.grade > 0).sort((a, b) => b.units * b.grade - a.units * a.grade)[0];
+	const math = best(isMath);
+	const physics = best(isPhysics);
+	if (!math || !physics || !(quantSection > 0)) return null;
+	return Math.floor((math.grade * math.units + physics.grade * physics.units + 3 * quantSection) / 1.8 + 1e-9);
 }

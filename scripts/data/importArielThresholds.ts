@@ -14,14 +14,15 @@
  * Modelled: the regular ("מן המניין") routes — combined score (+ its minimum psychometric / quantitative section),
  * bagrut only, psychometric only, CS "בגרות בשקלול ריאלי", and the bagrut / English requirements. Where a page lets a
  * pre-study completion course ("מכינת השלמה") replace a bagrut requirement, it is the exam alternative.
+ * Engineering programs: the separate "סכם הנדסי" (math × units + physics × units + 3 × quant section) / 1.8 with each
+ * page's conditions (engineeringScore). Not modelled: CSE's "סכם מחשבים ותוכנה" (no published formula).
  * Not modelled (comments only): conditional / one-semester admission, interviews and screening, the reservists' route
- * (limited to reservists), Ariel's separate "סכם הנדסי" (math × units + physics × units + 3 × quant) / 1.8, mechina and
- * technician routes.
+ * (limited to reservists), mechina and technician routes.
  */
 
 import fs from 'fs';
 import path from 'path';
-import type { ExcellentBagrutRoute, ProgramRequirement, RequirementOption } from '../../src/types/academic';
+import type { EngineeringScoreRoute, ExcellentBagrutRoute, ProgramRequirement, RequirementOption } from '../../src/types/academic';
 
 const ROOT = path.resolve(__dirname, '../..');
 const SNAPSHOT = path.join(ROOT, 'src/data/sources/ariel-admission-pages-2026-10-05.json');
@@ -80,8 +81,15 @@ interface Entry {
 	excellent?: ExcellentBagrutRoute;
 	/** Use the psychometric score alone as the threshold (no published combined score). */
 	psychometricThreshold?: boolean;
+	/** "סכם הנדסי" and its conditions. */
+	engineering?: EngineeringScoreRoute;
 	notes: string[];
 }
+
+/** "סכם הנדסי X — מותנה במינימום 550 ציון פסיכומטרי ו-120 תת ציון כמותי. בגרות בהיקף של 4/5 יחידות לפחות במתמטיקה ופיזיקה." */
+const engineering550 = (min: number, physicsMinUnits = 4): EngineeringScoreRoute => ({
+	min, minPsychometric: 550, minQuantSection: 120, mathMinUnits: 4, physicsMinUnits
+});
 
 const ENG85 = englishLevel(85);
 
@@ -146,6 +154,7 @@ const IEM: Entry = {
 	minPsych: 550,
 	bagrutOnly: 102,
 	reqs: [mathReq([[4, 80], [5, 70]], 70), physicsReq(70), englishBagrut([[4, PASS]]), ENG85],
+	engineering: engineering550(600),
 	notes: ['8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 580 / בגרות 97']
 };
 
@@ -174,7 +183,9 @@ const MAP: Record<string, Entry> = {
 		combined: 650,
 		minPsych: 550,
 		reqs: [mathReq([[4, 85], [5, 75]], 85), physicsReq(75, 85), englishBagrut([[4, PASS]]), ENG85],
-		notes: ['מקומות מוגבלים', '8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 600 / בגרות 105', 'סכם הנדסי 660 (נוסחה נפרדת, לא מחושב כאן)']
+		// "לא ניתן לחשב סכם הנדסי ... ללא 5 יח"ל בפיזיקה וללא תת ציון כמותי"
+		engineering: engineering550(660, 5),
+		notes: ['מקומות מוגבלים', '8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 600 / בגרות 105']
 	},
 	'prog-inst-2-6': {
 		page: 'ceb/תנאי-הקבלה-בהנדסה-כימית/',
@@ -182,6 +193,7 @@ const MAP: Record<string, Entry> = {
 		minPsych: 550,
 		bagrutOnly: 100,
 		reqs: [mathReq([[4, 80], [5, 70]], 70), englishBagrut([[4, PASS]]), ENG85],
+		engineering: engineering550(600),
 		notes: ['8 יח"ל ריאליות; חסרי פיזיקה/כימיה 5 יח"ל 70+ — מכינה או קורסי מבוא', 'על תנאי לשנה: משולב 570 / בגרות 95']
 	},
 	'prog-inst-2-7': {
@@ -192,7 +204,9 @@ const MAP: Record<string, Entry> = {
 		psychOnly: 680,
 		reqs: [mathReq([[4, 88], [5, 75]], 70), physicsReq(78), englishBagrut([[4, PASS]]), ENG85],
 		psychOnlyReqs: [quant(130)],
-		notes: ['8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 580 / בגרות 97', 'סכם הנדסי 680 (נוסחה נפרדת, לא מחושב כאן)']
+		// "סכם הנדסי: 680 מותנה בתת ציון כמותי 130 לפחות ... בהיקף 5 יח"ל במתמטיקה ופיזיקה בציון 80 לפחות"
+		engineering: { min: 680, minQuantSection: 130, mathMinUnits: 5, physicsMinUnits: 5, minGrade: 80 },
+		notes: ['8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 580 / בגרות 97']
 	},
 	'prog-inst-2-8': {
 		page: 'me/תנאי-הקבלה-בהנדסת-מכונות-ומכטרוניקה/',
@@ -201,7 +215,8 @@ const MAP: Record<string, Entry> = {
 		bagrutOnly: 102,
 		reqs: [mathReq([[4, 80], [5, 70]], 70), physicsReq(70), englishBagrut([[4, PASS]]), ENG85],
 		combinedReqs: [quant(120)],
-		notes: ['8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 580 / בגרות 97', 'סכם הנדסי 600 (נוסחה נפרדת, לא מחושב כאן)']
+		engineering: engineering550(600),
+		notes: ['8 יח"ל ריאליות', 'מסלול "יסודות" (על תנאי לשנה): משולב 580 / בגרות 97']
 	},
 	'prog-inst-2-9': IEM, // הנדסת תעשייה וניהול
 	'prog-inst-2-42': IEM, // הנדסת מערכות מידע — a specialisation of industrial engineering
@@ -382,7 +397,8 @@ const MAP: Record<string, Entry> = {
 		reqs: [mathReq([[4, 85], [5, 75]], 85), physicsReq(70), englishBagrut([[4, 70], [5, 65]]), ENG85],
 		combinedReqs: [quant(120)],
 		psychOnlyReqs: [quant(130)],
-		notes: ['סכם הנדסי 640 / סכם מחשבים ותוכנה 640 (נוסחאות נפרדות, לא מחושבות כאן)']
+		engineering: engineering550(640),
+		notes: ['או סכם מחשבים ותוכנה 640 — בלי פיזיקה, למגמת מדעי המחשב/אלקטרוניקה (הנוסחה לא מפורסמת)']
 	}
 };
 
@@ -418,6 +434,7 @@ function main() {
 			...(e.psychOnly ? { psychometricOnlyMin: e.psychOnly } : {}),
 			...(e.minPsych ? { minPsychometric: e.minPsych } : {}),
 			...(e.excellent ? { excellentBagrut: e.excellent } : {}),
+			...(e.engineering ? { engineeringScore: e.engineering } : {}),
 			requirements: [...e.reqs, ...extra],
 			...(extra.length ? { bagrutOnlyRequirements: e.reqs } : {}),
 			...(e.psychOnly ? { psychometricOnlyRequirements: [...e.reqs, ...(e.psychOnlyReqs ?? [])] } : {}),
@@ -427,7 +444,8 @@ function main() {
 		const routes = [
 			e.psychometricThreshold ? `פסיכומטרי ${e.combined}+` : `ציון קבלה משולב ${e.combined}+${e.minPsych ? ` (פסיכומטרי ${e.minPsych}+)` : ''}`,
 			...(e.bagrutOnly ? [`בגרות בלבד ${e.bagrutOnly}+`] : []),
-			...(e.psychOnly ? [`פסיכומטרי בלבד ${e.psychOnly}+`] : [])
+			...(e.psychOnly ? [`פסיכומטרי בלבד ${e.psychOnly}+`] : []),
+			...(e.engineering ? [`סכם הנדסי ${e.engineering.min}+`] : [])
 		];
 		p.comments = `תנאי קבלה רשמיים תשפ"ז (אוניברסיטת אריאל): ${[...routes, ...e.notes].join('; ')}`;
 		p.thresholdSource = `${url} — תנאי הקבלה תשפ"ז`;

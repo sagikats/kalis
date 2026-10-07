@@ -1,6 +1,6 @@
 import { AcademicDegree, AdmissionRoutes, ProgramRequirement } from '../../types/academic';
 import { evaluateExcellentBagrut } from '../../modules/optimizer/excellentBagrut';
-import { describeOfficialRoutes, OfficialRouteInfo } from '../../modules/optimizer/officialRoutes';
+import { describeOfficialRoutes, evaluateEngineeringScore, OfficialRouteInfo } from '../../modules/optimizer/officialRoutes';
 import {
 	evaluateRequirements,
 	describeRequirement,
@@ -64,7 +64,7 @@ export interface ProgramGapAnalysis {
 	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric' | HaifaWeightingType;
 	relevantSekemLabel: string;
 	/** Which official route the status rests on, when accepted. */
-	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut';
+	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut' | 'engineering_score';
 	/** One-line explanation when an official route or condition changed the status. */
 	admissionNote?: string;
 	/** Official admission routes of the program, when published. */
@@ -569,7 +569,8 @@ export function analyzeProgramGap(
 		bagrutAverage: institutionRes.bagrutAverage || 0,
 		psychometric: psych,
 		userSekem,
-		threshold
+		threshold,
+		quantSection: profile.psychometricQuant
 	});
 
 	// Official program requirements (math, physics, …) apply on every route; BGU's bagrut-only route has its own list
@@ -663,6 +664,18 @@ export function analyzeProgramGap(
 			status = 'accepted';
 			admissionRoute = 'psychometric_only';
 			admissionNote = `מתקבל/ת באפיק "פסיכומטרי בלבד": ${psych} (נדרש ${routes.psychometricOnlyMin}), בכפוף לתנאים הנוספים של המוסד.`;
+		} else if (
+			unmetRequirements.length === 0 &&
+			routes?.engineeringScore &&
+			evaluateEngineeringScore(routes.engineeringScore, requirementSubjects(
+				profile.bagrutSubjects || [],
+				{ units: profile.mathUnits, grade: profile.mathGrade },
+				{ units: profile.physicsUnits, grade: profile.physicsGrade }
+			), psych, profile.psychometricQuant).met
+		) {
+			status = 'accepted';
+			admissionRoute = 'engineering_score';
+			admissionNote = `מתקבל/ת באפיק "סכם הנדסי" (${routes.engineeringScore.min}+), בכפוף לתנאים הנוספים של המוסד.`;
 		} else if (unmetRequirements.length === 0 && routes?.excellentBagrut && evaluateExcellentBagrut(routes.excellentBagrut, profile.bagrutSubjects || []).met) {
 			status = 'accepted';
 			admissionRoute = 'excellent_bagrut';

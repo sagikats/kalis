@@ -60,6 +60,8 @@ export interface AdmissionRoutes {
      bagrutOnlyMin?: number;
      /** Admission without psychometric on per-subject bagrut conditions (Technion "בגרות מצוינת"). */
      excellentBagrut?: ExcellentBagrutRoute;
+     /** Ariel "סכם הנדסי": (math grade × units + physics grade × units + 3 × quantitative section) / 1.8. */
+     engineeringScore?: EngineeringScoreRoute;
      /** Informational: admission to semester B after a semester at the continuing-education school (Technion "אפיק מקוצר"). Never changes the status. */
      shortTrack?: ShortTrackRoute;
      /** Informational: the Technion math classification exam replaces the psychometric in the sekem ("בגרות ובחינת סיווג במתמטיקה"). */
@@ -120,6 +122,19 @@ export interface SubjectCondition {
  * Per-subject admission route ("בגרות מצוינת"): every condition in `all`, plus at least one option of `anyOf`
  * (each option is a list of conditions that must all hold). A subject is used for one condition only.
  */
+/** Ariel "סכם הנדסי" — the score and the conditions for computing it, as published on the program page. */
+export interface EngineeringScoreRoute {
+     min: number;
+     /** Minimum general psychometric score. */
+     minPsychometric?: number;
+     /** Minimum quantitative section (50–150). */
+     minQuantSection: number;
+     mathMinUnits: number;
+     physicsMinUnits: number;
+     /** Minimum grade in both math and physics (EE: 80). */
+     minGrade?: number;
+}
+
 export interface ExcellentBagrutRoute {
 	/** Minimum plain bagrut average — units-weighted, without bonuses ("ממוצע בגרות רגיל (ללא בונוסים)"). */
 	rawAverageMin?: number;
