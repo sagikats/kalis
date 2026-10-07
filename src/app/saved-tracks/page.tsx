@@ -663,7 +663,7 @@ export default function SavedTracksPage() {
 																			<span>(</span>
 																			<span dir="ltr" className="inline-flex items-center gap-1 font-mono text-ink-2">
 																				<span>{currU}</span>
-																				<span>←</span>
+																				<span>→</span>
 																				<span>{targetU}</span>
 																			</span>
 																			<span>יח״ל)</span>
@@ -677,7 +677,7 @@ export default function SavedTracksPage() {
 																		{(!isNewSubject && !hasUnitChange && currG > 0) ? (
 																			<>
 																				<span className="text-ink-3 font-normal">{currG}</span>
-																				<span className="text-ink-3 font-normal">←</span>
+																				<span className="text-ink-3 font-normal">→</span>
 																				<span className="font-mono font-bold text-success bg-success-soft px-1.5 py-0.5 rounded border border-success/25 text-[11px]">
 																					יעד: {targetG}
 																				</span>

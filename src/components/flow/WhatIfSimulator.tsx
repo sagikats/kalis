@@ -1733,7 +1733,7 @@ export default function WhatIfSimulator({
 							<div dir="ltr" className="text-xs font-bold text-ink-2 dir-ltr">
 								{hasOriginalPsych ? (
 									<span>
-										{userProfile.psychometricGeneral} ← {simulatedPsych}
+										{userProfile.psychometricGeneral} → {simulatedPsych}
 										{simulatedPsych > (userProfile.psychometricGeneral || 0) && (
 											<span className="text-success ml-1">
 												(+{simulatedPsych - (userProfile.psychometricGeneral || 0)})
@@ -1771,7 +1771,7 @@ export default function WhatIfSimulator({
 							</div>
 							<div dir="ltr" className="text-xs font-bold text-ink-2 dir-ltr">
 								<span>
-									{(institutionResult.bagrutAverage || 100).toFixed(2)} ← {simulatedSekemResult.bagrutAverage.toFixed(2)}
+									{(institutionResult.bagrutAverage || 100).toFixed(2)} → {simulatedSekemResult.bagrutAverage.toFixed(2)}
 								</span>
 							</div>
 						</div>
@@ -1799,7 +1799,7 @@ export default function WhatIfSimulator({
 							</div>
 							<div dir="ltr" className="text-xs font-bold text-ink-2 dir-ltr">
 								<span>
-									{analysis.userSekem.toFixed(isTechnion ? 2 : 1)} ← {currentSekem.toFixed(isTechnion ? 2 : 1)}
+									{analysis.userSekem.toFixed(isTechnion ? 2 : 1)} → {currentSekem.toFixed(isTechnion ? 2 : 1)}
 									{currentSekem > analysis.userSekem && (
 										<span className="text-success ml-1">
 											(+{(currentSekem - analysis.userSekem).toFixed(isTechnion ? 2 : 1)})
@@ -1887,7 +1887,7 @@ export default function WhatIfSimulator({
 													{change.unitsNumber !== change.targetUnitsNumber ? (
 														<>
 															<span>{change.unitsNumber}</span>
-															<span>←</span>
+															<span>→</span>
 															<span>{change.targetUnitsNumber}</span>
 															<span>יח״ל</span>
 														</>
@@ -1912,7 +1912,7 @@ export default function WhatIfSimulator({
 											{change.fromGrade > 0 && change.unitsNumber === change.targetUnitsNumber ? (
 												<div className="text-xs font-bold text-ink">
 													<span>{change.fromGrade}</span>
-													<span className="text-ink-3 mx-1">←</span>
+													<span className="text-ink-3 mx-1">→</span>
 													<span className="text-success">{change.toGrade}</span>
 													{change.deltaGrade > 0 && (
 														<span className="text-[10px] text-success ml-1 font-bold">

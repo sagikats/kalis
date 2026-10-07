@@ -590,7 +590,7 @@ export default function RecommendedTracksView({
 					</div>
 				) : (
 				<div className="space-y-8">
-					<div className={`grid grid-cols-1 ${tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
+					<div className={`grid grid-cols-1 ${tracks.length === 1 ? 'max-w-2xl mx-auto' : tracks.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-3'} gap-6`}>
 				{tracks.map((track) => {
 					const isSelected = track.id === selectedTrackId;
 					const isBalanced = track.id === 'track-balanced' || track.id === 'track-risk-spread';
@@ -606,8 +606,8 @@ export default function RecommendedTracksView({
 							onClick={() => setSelectedTrackId(track.id)}
 							className={`cursor-pointer rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden relative ${
 								isSelected
-									? 'bg-white border-2 border-ink shadow-xs'
-									: 'bg-white border border-line hover:border-line-strong hover:bg-paper shadow-2xs'
+									? 'bg-white border border-ink ring-1 ring-ink shadow-[0_16px_40px_-20px_rgba(40,30,20,0.25)]'
+									: 'bg-white border border-line hover:border-line-strong shadow-[0_1px_2px_rgba(40,30,20,0.04)]'
 							}`}
 						>
 							{/* Track Top Banner */}
@@ -615,19 +615,13 @@ export default function RecommendedTracksView({
 								<div className="flex items-center justify-between gap-2">
 									<div className="flex items-center gap-2">
 										<span
-											className={`px-3 py-1 text-[11px] font-bold rounded-lg ${
-												isFast
-													? 'bg-warning-soft text-warning border border-warning/30'
-													: isBalanced
-													? 'bg-success-soft text-success border border-success/25'
-													: 'bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB]'
-											}`}
+											className="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-paper text-ink-2 border border-line"
 										>
 											{track.badge?.replace(/\s*\([^)]*\)/g, '').trim()}
 										</span>
 										{isSelected && (
-											<span className="flex items-center gap-1 text-[10px] font-bold text-success bg-success-soft border border-success/25 px-2 py-0.5 rounded-md">
-												<CheckCircle2 className="h-3 w-3 text-success" />
+											<span className="flex items-center gap-1 text-[11px] font-semibold text-ink px-1 py-0.5">
+													<CheckCircle2 className="h-3.5 w-3.5 text-ink" />
 												<span>מסלול מוצג</span>
 											</span>
 										)}
@@ -651,7 +645,7 @@ export default function RecommendedTracksView({
 										<TrackIcon className="h-5 w-5" />
 									</div>
 									<div>
-										<h3 className="text-lg font-bold text-ink leading-snug">{track.title}</h3>
+										<h3 className="font-serif text-xl font-bold text-ink leading-snug">{track.title}</h3>
 										<span className="text-[11px] text-ink-2 font-bold block mt-0.5">
 											{track.weeklyHours} שעות למידה שבועיות
 										</span>
@@ -674,13 +668,13 @@ export default function RecommendedTracksView({
 									if (!needsPsychImprovement && !hasSubjectImprovements) return null;
 
 									return (
-										<div className="pt-2 border-t border-line">
-											<div className="bg-paper-2 border border-[#DDD5C7] rounded-2xl p-3.5 space-y-2.5 shadow-xs">
+										<div className="pt-2">
+											<div className="bg-paper rounded-2xl px-4 py-3.5 space-y-2">
 												<div className="flex items-center justify-between">
 													<span className="text-[13px] font-bold text-ink block">
 														המלצות לשיפור
 													</span>
-													<span className="text-[10px] text-accent font-bold bg-[#EBF4FA] px-2 py-0.5 rounded-md border border-[#CCE4F4]">
+													<span className="text-[11px] text-ink-3 font-medium">
 														{[
 															needsPsychImprovement ? 'פסיכומטרי' : null,
 															hasSubjectImprovements ? (track.recommendedSubjectImprovements.length === 1 ? 'בגרות אחת' : `${track.recommendedSubjectImprovements.length} בגרויות`) : null
@@ -688,30 +682,30 @@ export default function RecommendedTracksView({
 													</span>
 												</div>
 
-												<div className="space-y-1.5">
+												<div className="divide-y divide-line">
 													{/* Psychometric improvement row */}
 													{needsPsychImprovement && (
-														<div className="text-xs flex items-center justify-between gap-2 p-2 rounded-xl bg-[#FAF5FF] border border-[#E9D8FD] flex-wrap">
+														<div className="text-[13px] flex items-center justify-between gap-2 py-2.5 flex-wrap">
 															<div className="flex items-center gap-1.5 truncate">
 																<Brain className="h-3.5 w-3.5 text-accent shrink-0" />
-																<span className="text-[#581C87] font-bold truncate">
-																	בחינה פסיכומטרית:
+																<span className="text-ink font-medium truncate">
+																		בחינה פסיכומטרית
 																</span>
 															</div>
-															<span dir="ltr" className="text-[#3B0764] font-bold shrink-0 dir-ltr flex items-center gap-1">
+															<span dir="ltr" className="text-ink font-bold shrink-0 dir-ltr flex items-center gap-1 tabular-nums">
 																{(track.currentPsychometric || 0) > 0 ? (
 																	<>
-																		<span className="text-accent/60 font-normal">{track.currentPsychometric}</span>
-																		<span className="text-accent/60 font-normal">←</span>
-																		<span className="text-[#3B0764] font-bold">{track.targetPsychometric}</span>
-																		<span className="text-[10px] text-[#6B21A8] font-bold ml-0.5 bg-[#F3E8FF] px-1.5 py-0.5 rounded-md border border-[#E9D8FD]">
+																		<span className="text-ink-3 font-normal">{track.currentPsychometric}</span>
+																			<span className="text-ink-3 font-normal">→</span>
+																			<span className="text-ink font-bold">{track.targetPsychometric}</span>
+																			<span className="text-[11px] text-success font-semibold ml-0.5">
 																			(+{track.targetPsychometric! - (track.currentPsychometric || 0)})
 																		</span>
 																	</>
 																) : (
 																	<>
-																		<span className="text-[10px] text-accent/70 font-normal">יעד:</span>
-																		<span className="text-[#3B0764] font-bold">{track.targetPsychometric}</span>
+																		<span className="text-[11px] text-ink-3 font-normal">יעד</span>
+																			<span className="text-ink font-bold">{track.targetPsychometric}</span>
 																	</>
 																)}
 															</span>
@@ -723,7 +717,7 @@ export default function RecommendedTracksView({
 														const isNewSubject = !s.currentUnits || s.currentUnits === 0;
 														const hasUnitChange = Boolean(s.currentUnits && s.currentUnits > 0 && s.currentUnits !== s.targetUnits);
 														return (
-															<div key={idx} className="text-xs flex items-center justify-between gap-2 px-2 py-1.5 rounded-xl bg-white border border-line flex-wrap">
+															<div key={idx} className="text-[13px] flex items-center justify-between gap-2 py-2.5 flex-wrap">
 																<div className="flex items-center gap-1.5 truncate">
 																	<span className="text-ink font-medium truncate">
 																		{s.subjectName}{' '}
@@ -736,7 +730,7 @@ export default function RecommendedTracksView({
 																				<span>(</span>
 																				<span dir="ltr" className="inline-flex items-center gap-1 font-mono text-ink-2">
 																					<span>{s.currentUnits}</span>
-																					<span className="text-ink-3">←</span>
+																					<span className="text-ink-3">→</span>
 																					<span>{s.targetUnits}</span>
 																				</span>
 																				<span>יח״ל):</span>
@@ -749,7 +743,7 @@ export default function RecommendedTracksView({
 																{(!isNewSubject && !hasUnitChange && s.currentGrade > 0) ? (
 																	<span dir="ltr" className="text-ink font-bold shrink-0 dir-ltr flex items-center gap-1">
 																		<span className="text-ink-3 font-normal">{s.currentGrade}</span>
-																		<span className="text-ink-3 font-normal">←</span>
+																		<span className="text-ink-3 font-normal">→</span>
 																		<span className="text-ink font-bold">{s.targetGrade}</span>
 																		{s.targetGrade > s.currentGrade && (
 																			<span className="text-[10px] text-success font-bold ml-0.5">
@@ -810,7 +804,7 @@ export default function RecommendedTracksView({
 																		<span className="text-xs text-ink-3 line-through">
 																			{track.currentPsychometric}
 																		</span>
-																		<span className="text-ink-3 text-xs">←</span>
+																		<span className="text-ink-3 text-xs">→</span>
 																	</>
 																)}
 																<span className="text-sm font-bold text-ink">
@@ -851,7 +845,7 @@ export default function RecommendedTracksView({
 																<span className="text-xs text-ink-3 line-through">
 																	{track.currentBagrutAverage?.toFixed(1)}
 																</span>
-																<span className="text-ink-3 text-xs">←</span>
+																<span className="text-ink-3 text-xs">→</span>
 																<span className="text-sm font-bold text-ink">
 																	{track.targetBagrutAverage?.toFixed(1)}
 																</span>
@@ -1148,7 +1142,7 @@ export default function RecommendedTracksView({
 												{(selectedTrack.currentPsychometric || 0) > 0 ? (
 													<>
 														<span className="text-ink-3 font-normal">{selectedTrack.currentPsychometric}</span>
-														<span className="text-ink-3">←</span>
+														<span className="text-ink-3">→</span>
 														<span className="font-bold text-[#3B0764]">{selectedTrack.targetPsychometric}</span>
 													</>
 												) : (
@@ -1178,7 +1172,7 @@ export default function RecommendedTracksView({
 														<span>(</span>
 														<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
 															<span>{s.currentUnits}</span>
-															<span>←</span>
+															<span>→</span>
 															<span>{s.targetUnits}</span>
 														</span>
 														<span>יח״ל):</span>
@@ -1190,7 +1184,7 @@ export default function RecommendedTracksView({
 											{(!isNewSubject && !hasUnitChange && s.currentGrade > 0) ? (
 												<span dir="ltr" className="inline-flex items-center gap-1 font-mono">
 													<span className="text-ink-3 font-normal">{s.currentGrade}</span>
-													<span className="text-ink-3">←</span>
+													<span className="text-ink-3">→</span>
 													<span className="font-bold">{s.targetGrade}</span>
 													{s.targetGrade > s.currentGrade && (
 														<span className="text-[10px] text-success font-bold ml-0.5">
