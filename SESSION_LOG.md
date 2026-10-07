@@ -10,6 +10,25 @@
 
 ---
 
+## 🗓️ 2026-10-07 — Claude Code (Opus 5.5) — סשן עיצוב UI (בראנץ' `ui/apple-design`, מבוסס `main`)
+
+### ✅ מה נעשה
+- הותקן הסקיל `apple-design` (מקור: github.com/emilkowalski/skills, `skills/apple-design/SKILL.md`) אל `.claude/skills/apple-design/` — הנחיות עיצוב ותנועה בסגנון Apple (springs, תגובה מיידית, materials/blur, טיפוגרפיה, reduced-motion). קובץ טקסט בלבד, ללא סקריפטים.
+- נפתח בראנץ' `ui/apple-design` מתוך `main` (הבראנצ'ים שממתינים לפריסה לא נכללים בו).
+
+- **שדרוג UI לפי הסקיל** (אושר ומוזג ל-main; עדיין לא נפרס):
+  - `globals.css`: אסינג קפיצי (spring מחושב, `ease-spring` / `ease-sheet`) כברירת מחדל לכל `transition`; משוב לחיצה מיידי (כל כפתור מתכווץ ל-0.97 ב-pointer-down, `press-soft` לכרטיסים רחבים); טיפוגרפיה לפי גודל (כותרות צפופות, טקסט קטן מרווח; הוסר ה-letter-spacing הגלובלי); חומרים שקופים `material-bar` / `material-thick`; `scroll-edge` (קו מפריד רק כשיש תוכן מתחת); focus-visible; תמיכה ב-reduced-motion / reduced-transparency / more-contrast.
+  - **באג שנמצא:** `animate-in fade-in zoom-in-95 slide-in-from-*`, `animate-fadeIn`, `animate-scaleUp` היו בשימוש בלי שום הגדרה (אין פלאגין) — כל המודאלים קפצו בלי אנימציה. עכשיו מוגדרים ב-`globals.css` כ"התממשות" (שקיפות+קנה מידה+טשטוש על spring).
+  - Navbar: זכוכית שקופה, גלולה פעילה שגולשת בין הלשוניות, תפריט מובייל (לא היה ניווט במובייל בכלל), תפריט פרופיל מעוגן לכפתור.
+  - דף הבית: FAQ נפתח/נסגר בתנועה הפיכה; נקודות הקרוסלה עם אזור לחיצה גדול; הוסר hover-scale מכפתורים.
+  - `/flow`: הדוק התחתון = זכוכית; סליידרים בסגנון iOS עם מילוי (`.slider` + `sliderFill` ב-WhatIfSimulator); מגירת סל התארים נכנסת מימין (הצד שבו היא יושבת — קודם נכנסה משמאל); AdmissionPanel עם עקומת sheet.
+  - tsc נקי, 297/297 טסטים, build עובר.
+
+### 🔄 בתהליך
+- מוזג ל-main. ההמשך בבראנץ' `ui/apple-design-2`: סכם מתגלגל בסימולטור, רגע מעבר הסף, ושיטוח הכרטיסים בדף תוכנית הפעולה.
+
+---
+
 ## 🗓️ 2026-10-07 — ✅ נפרס d395782 (טכניון, ב"ג תארים כפולים, חיפה, אריאל)
 - **מוזגו ל-main:** `data/technion-requirements`, `data/bgu-cs-double-majors`, `data/haifa-math-rounding`. היה קונפליקט ב-SESSION_LOG בלבד, ושתי הרשומות נשמרו.
 - **בדיקות לפני הפריסה:** `importAll` על התוצאה הממוזגת לא שינה כלום, tsc נקי, 318/318 בדיקות עוברות, build עובר.
@@ -67,6 +86,8 @@
 - גם הנתונים שלנו למדעי המחשב בחיפה תואמים: סף 700, מתמטיקה 5 יח"ל בציון 75 או 4 יח"ל בציון 90.
 - **הצעד הבא:** USER_TASKS 2.4ב, הרצות לחוגים מדעי הנתונים, מערכות מידע, מתמטיקה, ביופיזיקה, סטטיסטיקה וכלכלה.
 - **ממתינים לפריסה:** `data/technion-requirements`, `data/bgu-cs-double-majors`, `data/haifa-math-rounding`.
+
+---
 
 ## 🗓️ 2026-10-06 — Claude Code (Opus 5.5) — המשכים אוטונומיים (בראנץ' `data/followups-2026-10-06`, לא מוזג ולא נפרס)
 

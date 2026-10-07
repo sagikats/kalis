@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -12,7 +12,9 @@ import {
      LogOut,
      LogIn,
      UserPlus,
-     BookmarkCheck
+     BookmarkCheck,
+     Menu,
+     X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import KalisLogo from '../common/KalisLogo';
@@ -21,6 +23,34 @@ export default function Navbar() {
      const pathname = usePathname();
      const { user, isAuthenticated, logout, openAuthModal } = useAuth();
      const [showProfileMenu, setShowProfileMenu] = useState(false);
+     const [showMobileMenu, setShowMobileMenu] = useState(false);
+     const [isScrolled, setIsScrolled] = useState(false);
+
+     // Scroll edge effect: the bar only grows a hairline once content actually slides under it
+     useEffect(() => {
+          const onScroll = () => setIsScrolled(window.scrollY > 4);
+          onScroll();
+          window.addEventListener('scroll', onScroll, { passive: true });
+          return () => window.removeEventListener('scroll', onScroll);
+     }, []);
+
+     // One active pill that glides between tabs, so the eye follows where you went
+     const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+     const [indicator, setIndicator] = useState<{ left: number; width: number; ready: boolean } | null>(null);
+
+     useLayoutEffect(() => {
+          const measure = () => {
+               const el = linkRefs.current[pathname];
+               if (!el) {
+                    setIndicator(null);
+                    return;
+               }
+               setIndicator((prev) => ({ left: el.offsetLeft, width: el.offsetWidth, ready: prev !== null }));
+          };
+          measure();
+          window.addEventListener('resize', measure);
+          return () => window.removeEventListener('resize', measure);
+     }, [pathname, user?.savedTracksCount, isAuthenticated]);
 
      const getInitials = (name?: string) => {
           if (!name) return 'מו';
@@ -37,7 +67,7 @@ export default function Navbar() {
      ];
 
      return (
-          <header className="sticky top-0 z-50 w-full border-b border-[#E7E2D8] bg-[#FAF8F5]/90 backdrop-blur-md transition-all">
+          <header className="sticky top-0 z-50 w-full material-bar scroll-edge" data-scrolled={isScrolled}>
                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
                     {/* Left/Right in RTL: Actions (Notifications & Profile) on the RIGHT visually in RTL */}
@@ -64,7 +94,7 @@ export default function Navbar() {
                                                   className="fixed inset-0 z-40"
                                                   onClick={() => setShowProfileMenu(false)}
                                              />
-                                             <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white p-3 shadow-xl border border-[#E7E2D8] z-50 animate-in fade-in zoom-in-95 duration-150">
+                                             <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white p-3 shadow-xl border border-[#E7E2D8] z-50 origin-top-right animate-in fade-in zoom-in-95">
                                                   <div className="p-2 border-b border-[#EAE5DA] mb-2">
                                                        <p className="font-bold text-sm text-[#222222]">{user.name}</p>
                                                        <p className="text-xs text-[#66635C] mt-0.5">{user.email}</p>
@@ -128,7 +158,20 @@ export default function Navbar() {
                     </div>
 
                     {/* Navigation Links (Capsule Design) */}
-                    <nav className="hidden md:flex items-center gap-1 bg-[#EFECE6] p-1 rounded-full border border-[#E2DDD3]">
+                    <nav className="relative hidden md:flex items-center gap-1 bg-[#EFECE6] p-1 rounded-full border border-[#E2DDD3]">
+                         {indicator && (
+                              <span
+                                   aria-hidden="true"
+                                   className="absolute top-1 bottom-1 rounded-full bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)] border border-[#DDD7CC] motion-reduce:transition-none"
+                                   style={{
+                                        left: indicator.left,
+                                        width: indicator.width,
+                                        transition: indicator.ready
+                                             ? 'left 500ms var(--ease-spring), width 500ms var(--ease-spring)'
+                                             : 'none',
+                                   }}
+                              />
+                         )}
                          {navLinks.map((link) => {
                               const Icon = link.icon;
                               const isActive = pathname === link.href;
@@ -136,9 +179,11 @@ export default function Navbar() {
                                    <Link
                                         key={link.href}
                                         href={link.href}
-                                        className={`flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 ${isActive
-                                             ? 'bg-white text-[#222222] shadow-[0_1px_4px_rgba(0,0,0,0.08)] border border-[#DDD7CC] font-bold'
-                                             : 'text-[#66635C] hover:text-[#222222] hover:bg-white/60'
+                                        ref={(el) => { linkRefs.current[link.href] = el; }}
+                                        aria-current={isActive ? 'page' : undefined}
+                                        className={`relative z-10 flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-full border border-transparent transition-colors duration-200 active:scale-[0.97] ${isActive
+                                             ? 'text-[#222222]'
+                                             : 'text-[#66635C] hover:text-[#222222] hover:bg-white/50'
                                              }`}
                                    >
                                         <Icon className={`h-4 w-4 ${isActive ? 'text-[#222222]' : 'text-[#88857E]'}`} />
@@ -154,6 +199,41 @@ export default function Navbar() {
                               );
                          })}
                     </nav>
+
+                    {/* Mobile navigation: the four destinations, anchored to the menu button */}
+                    <div className="relative md:hidden">
+                         <button
+                              onClick={() => setShowMobileMenu((v) => !v)}
+                              aria-expanded={showMobileMenu}
+                              aria-label={showMobileMenu ? 'סגור תפריט' : 'פתח תפריט'}
+                              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#EFECE6] border border-[#E2DDD3] text-[#44423D] transition-colors cursor-pointer"
+                         >
+                              {showMobileMenu ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                         </button>
+                         {showMobileMenu && (
+                              <>
+                                   <div className="fixed inset-0 z-40" onClick={() => setShowMobileMenu(false)} />
+                                   <nav className="absolute left-1/2 -translate-x-1/2 mt-2 w-60 rounded-2xl bg-white p-2 shadow-xl border border-[#E7E2D8] z-50 origin-top animate-in fade-in zoom-in-95">
+                                        {navLinks.map((link) => {
+                                             const Icon = link.icon;
+                                             const isActive = pathname === link.href;
+                                             return (
+                                                  <Link
+                                                       key={link.href}
+                                                       href={link.href}
+                                                       aria-current={isActive ? 'page' : undefined}
+                                                       onClick={() => setShowMobileMenu(false)}
+                                                       className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-semibold rounded-xl transition-colors ${isActive ? 'bg-[#F4F1EA] text-[#222222] font-bold' : 'text-[#55524B] active:bg-[#F4F1EA]'}`}
+                                                  >
+                                                       <Icon className="h-4 w-4 text-[#88857E]" />
+                                                       <span>{link.label}</span>
+                                                  </Link>
+                                             );
+                                        })}
+                                   </nav>
+                              </>
+                         )}
+                    </div>
 
                     {/* Brand Logo (Appears on the LEFT side in RTL) */}
                     <Link href="/" className="flex items-center gap-3 group">
