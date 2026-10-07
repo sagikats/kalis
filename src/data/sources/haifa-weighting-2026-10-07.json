@@ -15,9 +15,14 @@
       "סטטיסטיקה": 658,
       "כלכלה": 658,
       "ביופיזיקה": 658,
-      "פסיכולוגיה": 621
+      "פסיכולוגיה": 621,
+      "סוציולוגיה": 621,
+      "משפטים": 622,
+      "פילוסופיה": 623,
+      "ניהול": 658,
+      "מדעי הקוגניציה": 658
     },
-    "reading": "658 = floor((670 + 3·655.08) / 4) = floor(658.81): 1:3 mathematical, truncated. Psychology 621 = (670 + 7·614) / 8 exactly: 1:7 — not 1:3 (628) as the faculty rule would give."
+    "reading": "Mathematical programs: 658 = floor((670 + 3·655.08)/4) — 1:3 mathematical, truncated. General programs match the page's reduced-bagrut ratios exactly (the 7th-10th year after the bagrut): sociology and psychology 621 = (670 + 7·614)/8 (1:7, i.e. 1:3), law 622 = floor((3·670 + 17·614)/20) (3:17, i.e. 3:7), philosophy 623 = floor((670 + 5·614)/6) (1:5, i.e. 1:2 — the calculator doesn't apply the 600+ psychometric-only rule). So the faculty ratios hold, and the runs were apparently scored as an older bagrut; the math programs were not reduced. Open question for the user: the bagrut year entered on the 'תעודה' tab."
   },
   "byFaculty": {
     "computer-information-science": "engineering",
@@ -29,10 +34,26 @@
     "law": "haifa-3:7"
   },
   "byProgram": {
-    "2482": { "type": "engineering", "why": "כלכלה: listed as mathematical on the page; calculator 658" },
-    "3268": { "type": "haifa-1:7", "why": "פסיכולוגיה: calculator 621 = (BT + 7·PC) / 8" },
-    "3025": { "type": "haifa-1:3", "why": "אופקים: 1:3 per the page" },
-    "3004": { "type": "haifa-1:3", "why": "קרימינולוגיה: listed under law on the site, but the page gives the school of criminology 1:3" }
+    "2482": {
+      "type": "engineering",
+      "why": "כלכלה: listed as mathematical on the page; calculator 658"
+    },
+    "3025": {
+      "type": "haifa-1:3",
+      "why": "אופקים: 1:3 per the page"
+    },
+    "3004": {
+      "type": "haifa-1:3",
+      "why": "קרימינולוגיה: listed under law on the site, but the page gives the school of criminology 1:3"
+    },
+    "2501": {
+      "type": "engineering",
+      "why": "ניהול: calculator 658 (1:3 mathematical)"
+    },
+    "5563": {
+      "type": "engineering",
+      "why": "מדעי הקוגניציה: calculator 658 (1:3 mathematical)"
+    }
   },
-  "unverified": "Faculty defaults for programs not run in the calculator; in particular social-science programs other than economics and psychology might use 1:3 mathematical ('some programs in these faculties')."
+  "unverified": "Social-science programs not run (political science, communication, geography, psychobiology, cognition & psychology) get the faculty's 1:3 general; some may be 1:3 mathematical. The reduced bagrut weight after 6 years isn't modelled (we don't ask the bagrut year)."
 }

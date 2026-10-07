@@ -27,7 +27,7 @@ describe('Haifa weighting per program', () => {
 
 	for (const [name, expected] of [
 		['מדעי המחשב', 658], ['מדעי הנתונים', 658], ['מערכות מידע', 658], ['מתמטיקה', 658],
-		['סטטיסטיקה', 658], ['כלכלה', 658], ['ביופיזיקה', 658], ['פסיכולוגיה', 621]
+		['סטטיסטיקה', 658], ['כלכלה', 658], ['ביופיזיקה', 658], ['ניהול ומנהל עסקים', 658], ['מדעי הקוגניציה', 658]
 	] as const) {
 		it(`${name}: ${expected}, as on the Haifa calculator`, () => {
 			const p = program(name);
@@ -36,13 +36,16 @@ describe('Haifa weighting per program', () => {
 	}
 
 	it('every offered program has an official weighting', () => {
-		const allowed = new Set(['engineering', 'haifa-1:2', 'haifa-humanities-1:2', 'haifa-1:3', 'haifa-1:7', 'haifa-3:7']);
+		const allowed = new Set(['engineering', 'haifa-1:2', 'haifa-humanities-1:2', 'haifa-1:3', 'haifa-3:7']);
 		for (const p of haifa.programs.filter((p: any) => !p.notOffered)) {
 			assert.ok(allowed.has(p.relevantSekemType), `${p.fieldOfStudy}: ${p.relevantSekemType}`);
 		}
 	});
 
-	it('faculty rules: law 3:7, Ofakim 1:3, other humanities 1:2, sociology 1:3', () => {
+	// The general programs' runs (sociology/psychology 621, law 622, philosophy 623) match the page's reduced-bagrut
+	// ratios (1:7, 3:17, 1:5) of these same faculty ratios exactly — see haifa-weighting-2026-10-07.json.
+	it('faculty rules: law 3:7, Ofakim 1:3, other humanities 1:2, sociology and psychology 1:3', () => {
+		assert.equal(program('פסיכולוגיה').relevantSekemType, 'haifa-1:3');
 		assert.equal(program('משפטים').relevantSekemType, 'haifa-3:7');
 		assert.equal(program('אופקים').relevantSekemType, 'haifa-1:3');
 		assert.equal(program('פילוסופיה').relevantSekemType, 'haifa-humanities-1:2');

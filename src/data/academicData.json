@@ -43337,7 +43337,7 @@
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/5563 — תנאי הקבלה החוגיים תשפ\"ז: מדעי הקוגניציה",
         "thresholdUpdatedAt": "2026-10-04",
-        "relevantSekemType": "haifa-1:3"
+        "relevantSekemType": "engineering"
       },
       {
         "id": "prog-inst-5-21",
@@ -43971,7 +43971,7 @@
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/3268 — תנאי הקבלה החוגיים תשפ\"ז: פסיכולוגיה",
         "thresholdUpdatedAt": "2026-10-04",
-        "relevantSekemType": "haifa-1:7"
+        "relevantSekemType": "haifa-1:3"
       },
       {
         "id": "prog-inst-5-37",
@@ -44400,7 +44400,7 @@
         },
         "thresholdSource": "https://admissions.haifa.ac.il/social-sciences/program/2501 — תנאי הקבלה החוגיים תשפ\"ז: ניהול",
         "thresholdUpdatedAt": "2026-10-04",
-        "relevantSekemType": "haifa-1:3"
+        "relevantSekemType": "engineering"
       }
     ]
   },

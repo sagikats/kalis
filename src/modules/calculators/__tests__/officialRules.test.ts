@@ -344,10 +344,6 @@ describe('Official admission rules', () => {
 			assert.equal(calculateHaifaMathSekem(100, pm), 658);
 		});
 
-		it('psychology for average 100, general 614 = 621 = (BT + 7·PC) / 8 (user-verified on Haifa calculator, 2026-10-07)', () => {
-			assert.equal(calculateHaifaWeightedSekem(100, 614, 'haifa-1:7'), 621);
-		});
-
 		it('worked examples on admissions.haifa.ac.il/score-calculation (BT 432, PC 554): 1:2 = 513, 3:7 = 517', () => {
 			// BT 432 is a bagrut average of 76.2
 			assert.equal(calculateHaifaWeightedSekem(76.2, 554, 'haifa-1:2'), 513);

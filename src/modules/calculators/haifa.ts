@@ -117,14 +117,12 @@ export function calculateHaifaMathSekem(bagrutAverage: number, mathPsychometric:
  * humanities 1:2 (Ofakim 1:3); social sciences, education, welfare & health, criminology 1:3; some of their programs
  * and all of natural sciences 1:3 mathematical; law 3:7; architecture 1:1.
  * 'haifa-humanities-1:2': psychometric 600+ means the bagrut isn't counted at all (humanities, except Ofakim).
- * 'haifa-1:7': psychology — the Haifa calculator gives exactly (BT + 7·PC) / 8 (user run, 2026-10-07).
  */
 export const HAIFA_WEIGHTINGS = {
 	'haifa-1:1': { bagrut: 1, psych: 1, label: 'חיפה: סכם 1:1' },
 	'haifa-1:2': { bagrut: 1, psych: 2, label: 'חיפה: סכם 1:2' },
 	'haifa-humanities-1:2': { bagrut: 1, psych: 2, label: 'חיפה: סכם 1:2 (פסיכומטרי 600+ בלבד)' },
 	'haifa-1:3': { bagrut: 1, psych: 3, label: 'חיפה: סכם 1:3' },
-	'haifa-1:7': { bagrut: 1, psych: 7, label: 'חיפה: סכם 1:7' },
 	'haifa-3:7': { bagrut: 3, psych: 7, label: 'חיפה: סכם 3:7' }
 } as const;
 
