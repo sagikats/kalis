@@ -22,8 +22,8 @@ export default function KalisLogo({
      const gapClass = size === 'inline' ? 'gap-1.5' : 'gap-2.5';
      const dotSize = size === 'inline' ? 'text-2xl sm:text-3xl' : size === 'sm' ? 'text-xl' : 'text-2xl';
 
-     const textColor = variant === 'light' ? 'text-white' : 'text-[#222222]';
-     const taglineColor = variant === 'light' ? 'text-slate-300' : 'text-[#66635C]';
+     const textColor = variant === 'light' ? 'text-white' : 'text-ink';
+     const taglineColor = variant === 'light' ? 'text-slate-300' : 'text-ink-2';
 
      const isInline = size === 'inline';
      const Container = isInline ? 'span' : 'div';
@@ -84,9 +84,9 @@ export default function KalisLogo({
 
                {/* BRAND TYPOGRAPHY: מתקבלים */}
                <Container className={`${isInline ? 'inline-flex' : 'flex'} flex-col text-right justify-center`}>
-                    <Container className={`font-extrabold tracking-tight leading-none ${titleSize} ${textColor} ${isInline ? 'inline-flex' : 'flex'} items-baseline gap-0.5`}>
+                    <Container className={`font-bold tracking-tight leading-none ${titleSize} ${textColor} ${isInline ? 'inline-flex' : 'flex'} items-baseline gap-0.5`}>
                          <span>מתקבלים</span>
-                         <span className={`text-cyan-500 font-black ${dotSize} leading-none`}>.</span>
+                         <span className={`text-cyan-500 font-bold ${dotSize} leading-none`}>.</span>
                     </Container>
                     {showTagline && (
                          <Container className={`font-semibold tracking-normal ${taglineSize} ${taglineColor} mt-0.5`}>

@@ -51,7 +51,7 @@ export default function GapAnalysisCard({
 			<div className="flex items-center justify-between">
 				<button
 					onClick={onBackToReport}
-					className="px-3.5 py-2 rounded-xl bg-white hover:bg-[#FAF8F5] text-[#222222] text-xs font-bold transition flex items-center gap-1.5 border border-[#E5DFD4]"
+					className="px-3.5 py-2 rounded-xl bg-white hover:bg-paper text-ink text-xs font-bold transition flex items-center gap-1.5 border border-line"
 				>
 					<ArrowRight className="h-4 w-4" />
 					<span>חזרה לדוח הקבלה המלא</span>
@@ -62,10 +62,10 @@ export default function GapAnalysisCard({
 			<div
 				className={`p-6 rounded-3xl border shadow-sm space-y-6 bg-white ${
 					isAccepted
-						? 'border-[#C6DFCE]'
+						? 'border-success/25'
 						: isMissingRequirement
-						? 'border-[#ECDAB6]'
-						: 'border-[#F1CAC1]'
+						? 'border-warning/30'
+						: 'border-danger/25'
 				}`}
 			>
 				<div className="flex items-start justify-between flex-wrap gap-4">
@@ -73,15 +73,15 @@ export default function GapAnalysisCard({
 						<UniversityLogo institution={analysis.target.institutionId} size="lg" shape="rounded" />
 						<div>
 							<div className="flex items-center gap-2 mb-1">
-								<span className="text-xs font-bold text-[#222222]">
+								<span className="text-xs font-bold text-ink">
 									{analysis.target.institutionName}
 								</span>
-								<span className="text-[#8A847C]">·</span>
-								<span className="text-xs font-bold text-[#66635C]">
+								<span className="text-ink-3">·</span>
+								<span className="text-xs font-bold text-ink-2">
 									{analysis.target.program.degreeLevel}
 								</span>
 							</div>
-							<h2 className="text-2xl sm:text-3xl font-bold text-[#222222]">
+							<h2 className="text-2xl sm:text-3xl font-bold text-ink">
 								{analysis.target.program.fieldOfStudy}
 							</h2>
 						</div>
@@ -90,10 +90,10 @@ export default function GapAnalysisCard({
 					<div
 						className={`px-4 py-2 rounded-2xl border text-sm font-bold text-center ${
 							isAccepted
-								? 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]'
+								? 'bg-success-soft text-success border-success/25'
 								: isMissingRequirement
-								? 'bg-[#FDF6E8] text-[#825B15] border-[#ECDAB6]'
-								: 'bg-[#FDF1EE] text-[#9B3327] border-[#F1CAC1]'
+								? 'bg-warning-soft text-warning border-warning/30'
+								: 'bg-danger-soft text-danger border-danger/25'
 						}`}
 					>
 						{isAccepted
@@ -106,24 +106,24 @@ export default function GapAnalysisCard({
 
 				{/* Score Comparison Matrix */}
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-						<span className="text-[11px] text-[#66635C] font-bold block">
+					<div className="p-4 rounded-2xl bg-paper border border-line text-center">
+						<span className="text-[11px] text-ink-2 font-bold block">
 							הסכם שלך ({analysis.relevantSekemLabel})
 						</span>
-						<span className="text-2xl font-bold text-[#222222] mt-1 block">
+						<span className="text-2xl font-bold text-ink mt-1 block">
 							{analysis.userSekem}
 						</span>
 					</div>
 
-					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-						<span className="text-[11px] text-[#66635C] font-bold block">
+					<div className="p-4 rounded-2xl bg-paper border border-line text-center">
+						<span className="text-[11px] text-ink-2 font-bold block">
 							{thresholdLabel(analysis)}
 						</span>
-						<span className="text-2xl font-bold text-[#222222] mt-1 block">
+						<span className="text-2xl font-bold text-ink mt-1 block">
 							{analysis.threshold ?? 'ללא ציון מספרי'}
 						</span>
 						{analysis.officialThreshold !== undefined && analysis.officialThreshold !== analysis.threshold && (
-							<span className="text-[11px] text-[#66635C] mt-1 block">
+							<span className="text-[11px] text-ink-2 mt-1 block">
 								בסולם המוסד: {analysis.officialThreshold}
 							</span>
 						)}
@@ -138,21 +138,21 @@ export default function GapAnalysisCard({
 							</a>
 						)}
 						{analysis.thresholdSource?.includes(' — ') && (
-							<span className="text-[10px] text-[#66635C] mt-0.5 block line-clamp-2">
+							<span className="text-[10px] text-ink-2 mt-0.5 block line-clamp-2">
 								{analysis.thresholdSource.split(' — ').slice(1).join(' — ')}
 							</span>
 						)}
 					</div>
 
-					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] text-center">
-						<span className="text-[11px] text-[#66635C] font-bold block">סטטוס פער</span>
+					<div className="p-4 rounded-2xl bg-paper border border-line text-center">
+						<span className="text-[11px] text-ink-2 font-bold block">סטטוס פער</span>
 						<span
 							className={`text-2xl font-bold mt-1 block ${
 								isAccepted
-									? 'text-[#205739]'
+									? 'text-success'
 									: isMissingRequirement
-									? 'text-[#825B15]'
-									: 'text-[#9B3327]'
+									? 'text-warning'
+									: 'text-danger'
 							}`}
 						>
 							{analysis.gap >= 0 ? `+${analysis.gap}` : `-${missingPoints}`}
@@ -162,12 +162,12 @@ export default function GapAnalysisCard({
 			</div>
 
 			{/* Section 1: Prerequisites Check */}
-			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-sm space-y-4">
-				<div className="flex items-center gap-2.5 border-b border-[#E5DFD4] pb-3">
-					<Award className="h-5 w-5 text-[#222222]" />
+			<div className="bg-white border border-line rounded-3xl p-6 shadow-sm space-y-4">
+				<div className="flex items-center gap-2.5 border-b border-line pb-3">
+					<Award className="h-5 w-5 text-ink" />
 					<div>
-						<h3 className="text-base font-bold text-[#222222]">בדיקת תנאי סף ודרישות קדם אקדמיות</h3>
-						<p className="text-xs text-[#66635C]">
+						<h3 className="text-base font-bold text-ink">בדיקת תנאי סף ודרישות קדם אקדמיות</h3>
+						<p className="text-xs text-ink-2">
 							מוסדות הלימוד מציבים דרישות סף במתמטיקה, פיזיקה ואנגלית שאינן תלויות רק בציון הסכם
 						</p>
 					</div>
@@ -179,39 +179,39 @@ export default function GapAnalysisCard({
 							key={prereq.id}
 							className={`p-4 rounded-2xl border flex items-start gap-3 ${
 								prereq.isMet
-									? 'bg-[#EBF4EE] border-[#C6DFCE]'
+									? 'bg-success-soft border-success/25'
 									: prereq.unknown
-									? 'bg-[#FAF8F5] border-[#E5DFD4]'
-									: 'bg-[#FDF6E8] border-[#ECDAB6]'
+									? 'bg-paper border-line'
+									: 'bg-warning-soft border-warning/30'
 							}`}
 						>
 							<div
 								className={`p-2 rounded-xl mt-0.5 shrink-0 ${
-									prereq.isMet ? 'bg-white text-[#205739]' : 'bg-white text-[#825B15]'
+									prereq.isMet ? 'bg-white text-success' : 'bg-white text-warning'
 								}`}
 							>
 								{prereq.isMet ? <Check className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
 							</div>
 							<div className="space-y-1 text-xs">
 								<div className="flex items-center justify-between gap-2">
-									<span className="font-bold text-[#222222]">{prereq.name}</span>
+									<span className="font-bold text-ink">{prereq.name}</span>
 									<span
 										className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
 											prereq.isMet
-												? 'text-[#205739] bg-white border-[#C6DFCE]'
-												: 'text-[#825B15] bg-white border-[#ECDAB6]'
+												? 'text-success bg-white border-success/25'
+												: 'text-warning bg-white border-warning/30'
 										}`}
 									>
 										{prereq.isMet ? 'עומד בדרישה' : prereq.unknown ? 'לא הוזן ציון' : 'חסר'}
 									</span>
 								</div>
-								<p className="text-[#66635C] font-medium">
-									דרישה: <span className="text-[#222222]">{prereq.required}</span>
+								<p className="text-ink-2 font-medium">
+									דרישה: <span className="text-ink">{prereq.required}</span>
 								</p>
-								<p className="text-[#66635C]">
-									הנתון שלך: <span className="text-[#222222]">{prereq.current}</span>
+								<p className="text-ink-2">
+									הנתון שלך: <span className="text-ink">{prereq.current}</span>
 								</p>
-								{prereq.notes && <p className="text-[#825B15] text-[11px] pt-1">{prereq.notes}</p>}
+								{prereq.notes && <p className="text-warning text-[11px] pt-1">{prereq.notes}</p>}
 							</div>
 						</div>
 					))}
@@ -220,15 +220,15 @@ export default function GapAnalysisCard({
 
 			{/* Section 2: Concrete Improvement Levers */}
 			{!isAccepted && analysis.improvementOptions.length > 0 && (
-				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-sm space-y-4">
-					<div className="flex items-center justify-between flex-wrap gap-2 border-b border-[#E5DFD4] pb-3">
+				<div className="bg-white border border-line rounded-3xl p-6 shadow-sm space-y-4">
+					<div className="flex items-center justify-between flex-wrap gap-2 border-b border-line pb-3">
 						<div className="flex items-center gap-2.5">
-							<Sparkles className="h-5 w-5 text-[#222222]" />
+							<Sparkles className="h-5 w-5 text-ink" />
 							<div>
-								<h3 className="text-base font-bold text-[#222222]">
+								<h3 className="text-base font-bold text-ink">
 									מנופי שיפור לסגירת הפער ({analysis.improvementOptions.length} חלופות)
 								</h3>
-								<p className="text-xs text-[#66635C]">
+								<p className="text-xs text-ink-2">
 									המערכת חישבה באופן מתמטי כמה נדרש לשפר בכל ערוץ כדי להגיע לסף הקבלה ({analysis.threshold})
 								</p>
 							</div>
@@ -261,16 +261,16 @@ export default function GapAnalysisCard({
 
 			{/* Section 3: Next Step CTA / University Registration if Accepted */}
 			{isAccepted ? (
-				<div className="bg-white border border-[#C6DFCE] rounded-3xl p-6 shadow-sm space-y-4 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-6">
+				<div className="bg-white border border-success/25 rounded-3xl p-6 shadow-sm space-y-4 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-6">
 					<div className="space-y-1.5 max-w-xl">
-						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] text-xs font-bold">
-							<CheckCircle2 className="h-3.5 w-3.5 text-[#205739]" />
+						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-soft border border-success/25 text-success text-xs font-bold">
+							<CheckCircle2 className="h-3.5 w-3.5 text-success" />
 							<span>סטטוס: עומד/ת בסף ובתנאי הסף שפורסמו</span>
 						</div>
-						<h3 className="text-lg sm:text-xl font-bold text-[#222222]">
-							עובר את סף הקבלה — אין צורך בשיפור ציונים 🎉
+						<h3 className="text-lg sm:text-xl font-bold text-ink">
+							עובר את סף הקבלה — אין צורך בשיפור ציונים
 						</h3>
-						<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
+						<p className="text-xs sm:text-sm text-ink-2 leading-relaxed">
 							הסכם שלך עובר את הרף הנדרש. באפשרותך להתקדם ישירות לעמוד ההרשמה הרשמי של האוניברסיטה ולהבטיח את מקומך לשנת הלימודים.
 						</p>
 					</div>
@@ -285,30 +285,30 @@ export default function GapAnalysisCard({
 						}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-2xl shadow-sm transition shrink-0 flex items-center gap-2"
+						className="px-6 py-3.5 bg-ink hover:bg-black text-white font-bold text-sm rounded-2xl shadow-sm transition shrink-0 flex items-center gap-2"
 					>
 						<span>מעבר להרשמה ב{analysis.target.institutionName.replace(/^ה/, '')}</span>
 						<ExternalLink className="h-4 w-4" />
 					</a>
 				</div>
 			) : (
-				<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-sm space-y-4 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-6">
+				<div className="bg-white border border-line rounded-3xl p-6 shadow-sm space-y-4 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-6">
 					<div className="space-y-1.5 max-w-xl">
-						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222] text-xs font-bold">
-							<Sparkles className="h-3.5 w-3.5 text-[#222222]" />
+						<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-paper border border-line text-ink text-xs font-bold">
+							<Sparkles className="h-3.5 w-3.5 text-ink" />
 							<span>השלב הבא: שאלון העדפות ותכנון 3 מסלולים</span>
 						</div>
-						<h3 className="text-lg sm:text-xl font-bold text-[#222222]">
+						<h3 className="text-lg sm:text-xl font-bold text-ink">
 							מוכן לתכנן את המסלול האופטימלי עבורך?
 						</h3>
-						<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
+						<p className="text-xs sm:text-sm text-ink-2 leading-relaxed">
 							המערכת תערוך שאלון קצר להעדפותיך (מה אתה מעדיף לשפר, כמה זמן יש לך) ותבנה לך 3 תוכניות למידה מומלצות ומדויקות.
 						</p>
 					</div>
 
 					<button
 						onClick={() => onPlanTrackCTA && onPlanTrackCTA(analysis.target.program.fieldOfStudy)}
-						className="px-6 py-3.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm rounded-2xl shadow-sm transition shrink-0 flex items-center gap-2"
+						className="px-6 py-3.5 bg-ink hover:bg-black text-white font-bold text-sm rounded-2xl shadow-sm transition shrink-0 flex items-center gap-2"
 					>
 						<span>עבור לתכנון מסלול שיפור</span>
 						<ArrowLeft className="h-4 w-4" />
@@ -326,44 +326,44 @@ function ImprovementCard({ option }: { option: ImprovementOption }) {
 	const icon = isPsych ? (
 		<Brain className="h-5 w-5 text-[#453D78]" />
 	) : isBagrut ? (
-		<BookOpen className="h-5 w-5 text-[#222222]" />
+		<BookOpen className="h-5 w-5 text-ink" />
 	) : (
-		<TrendingUp className="h-5 w-5 text-[#205739]" />
+		<TrendingUp className="h-5 w-5 text-success" />
 	);
 
 	const effortBadge =
 		option.effortLevel === 'easy' ? (
-			<span className="text-[10px] font-bold text-[#205739] bg-[#EBF4EE] px-2 py-0.5 rounded border border-[#C6DFCE]">
+			<span className="text-[10px] font-bold text-success bg-success-soft px-2 py-0.5 rounded border border-success/25">
 				מאמץ קל
 			</span>
 		) : option.effortLevel === 'medium' ? (
-			<span className="text-[10px] font-bold text-[#825B15] bg-[#FDF6E8] px-2 py-0.5 rounded border border-[#ECDAB6]">
+			<span className="text-[10px] font-bold text-warning bg-warning-soft px-2 py-0.5 rounded border border-warning/30">
 				מאמץ בינוני
 			</span>
 		) : (
-			<span className="text-[10px] font-bold text-[#9B3327] bg-[#FDF1EE] px-2 py-0.5 rounded border border-[#F1CAC1]">
+			<span className="text-[10px] font-bold text-danger bg-danger-soft px-2 py-0.5 rounded border border-danger/25">
 				מאמץ מוגבר
 			</span>
 		);
 
 	return (
-		<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-3 flex flex-col justify-between">
+		<div className="p-4 rounded-2xl bg-paper border border-line space-y-3 flex flex-col justify-between">
 			<div className="space-y-2">
 				<div className="flex items-center justify-between">
-					<div className="p-2 rounded-xl bg-white border border-[#E5DFD4]">{icon}</div>
+					<div className="p-2 rounded-xl bg-white border border-line">{icon}</div>
 					{effortBadge}
 				</div>
 
-				<h4 className="text-sm font-bold text-[#222222]">{option.title}</h4>
-				<p className="text-xs text-[#66635C] leading-relaxed">{option.description}</p>
+				<h4 className="text-sm font-bold text-ink">{option.title}</h4>
+				<p className="text-xs text-ink-2 leading-relaxed">{option.description}</p>
 			</div>
 
-			<div className="pt-2 border-t border-[#E5DFD4] space-y-1.5 text-xs">
-				<div className="flex items-center justify-between text-[#66635C]">
+			<div className="pt-2 border-t border-line space-y-1.5 text-xs">
+				<div className="flex items-center justify-between text-ink-2">
 					<span>יעד נדרש:</span>
-					<span className="font-bold text-[#222222]">{option.targetValue}</span>
+					<span className="font-bold text-ink">{option.targetValue}</span>
 				</div>
-				<div className="flex items-center justify-between text-[#8A847C] text-[11px]">
+				<div className="flex items-center justify-between text-ink-3 text-[11px]">
 					<span className="flex items-center gap-1">
 						<Clock className="h-3 w-3" />
 						<span>זמן משוער:</span>

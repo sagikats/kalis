@@ -28,13 +28,13 @@ interface MultiUniversityAdmissionGridProps {
 function ScoreDelta({ delta, isTechnion }: { delta: number; isTechnion: boolean }) {
 	if (delta <= 0) {
 		return (
-			<span className="text-[10px] text-[#8A847C] font-medium">
+			<span className="text-[10px] text-ink-3 font-medium">
 				ללא שינוי
 			</span>
 		);
 	}
 	return (
-		<span className="inline-flex items-center gap-0.5 text-[11px] font-black text-[#205739]">
+		<span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-success">
 			<TrendingUp className="h-3 w-3 shrink-0" />
 			+{isTechnion ? delta.toFixed(2) : delta.toFixed(1)}
 		</span>
@@ -72,11 +72,11 @@ export default function MultiUniversityAdmissionGrid({
 							'relative flex flex-col justify-between rounded-2xl border p-3 overflow-hidden',
 							'transition-all duration-200',
 							isClickable
-								? 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#222222]/20'
+								? 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20'
 								: '',
 							isSelected
-								? 'bg-white border-2 border-[#3C3C3C] shadow-xs'
-								: 'bg-white border border-[#E5DFD4] hover:border-[#D5CFC2] hover:bg-[#FAF8F5] shadow-2xs',
+								? 'bg-white border-2 border-ink shadow-xs'
+								: 'bg-white border border-line hover:border-line-strong hover:bg-paper shadow-2xs',
 						].join(' ')}
 					>
 						{/* ── TOP: Logo badge + Name ── */}
@@ -85,7 +85,7 @@ export default function MultiUniversityAdmissionGrid({
 							<div className="flex items-center gap-2">
 								<UniversityLogo institution={inst.institutionId || inst.logoText} size="sm" shape="rounded" />
 								<span
-									className="text-[11px] font-bold text-[#222222] leading-tight line-clamp-2"
+									className="text-[11px] font-bold text-ink leading-tight line-clamp-2"
 									title={inst.institutionName}
 								>
 									{inst.institutionName
@@ -96,7 +96,7 @@ export default function MultiUniversityAdmissionGrid({
 
 							{/* ── SCORE ── */}
 							<div className="space-y-0.5" dir="ltr">
-								<div className="text-xl font-black leading-none text-[#222222]">
+								<div className="text-xl font-bold leading-none text-ink">
 									{inst.isTechnion
 										? inst.currentScore.toFixed(2)
 										: inst.currentScore.toFixed(1)}
@@ -104,7 +104,7 @@ export default function MultiUniversityAdmissionGrid({
 								<div className="flex items-center gap-1.5 flex-wrap">
 									<ScoreDelta delta={inst.delta} isTechnion={inst.isTechnion} />
 									{inst.delta === 0 && inst.baseScore > 0 && (
-										<span className="text-[9px] text-[#8A847C]">
+										<span className="text-[9px] text-ink-3">
 											({inst.baseScore.toFixed(inst.isTechnion ? 1 : 0)})
 										</span>
 									)}
@@ -113,14 +113,14 @@ export default function MultiUniversityAdmissionGrid({
 						</div>
 
 						{/* ── BOTTOM SECTION ── */}
-						<div className="mt-2.5 pt-2 border-t border-[#EAE5DA] space-y-1.5">
+						<div className="mt-2.5 pt-2 border-t border-line space-y-1.5">
 							{/* Bagrut average */}
 							<div className="flex items-center justify-between text-[10px]" dir="rtl">
-								<span className="text-[#66635C]">בגרות</span>
-								<span className="font-bold text-[#222222] dir-ltr flex items-center gap-1">
+								<span className="text-ink-2">בגרות</span>
+								<span className="font-bold text-ink dir-ltr flex items-center gap-1">
 									{inst.bagrutAverage.toFixed(2)}
 									{inst.bagrutDelta > 0 && (
-										<span className="text-[#205739] font-black text-[9px]">
+										<span className="text-success font-bold text-[9px]">
 											(+{inst.bagrutDelta.toFixed(1)})
 										</span>
 									)}
@@ -130,7 +130,7 @@ export default function MultiUniversityAdmissionGrid({
 							{/* Sekem type label */}
 							<div
 								className={`text-[9px] font-medium truncate ${
-									isSelected ? 'text-[#1E597B] font-bold' : 'text-[#8A847C]'
+									isSelected ? 'text-accent font-bold' : 'text-ink-3'
 								}`}
 							>
 								{inst.sekemTypeLabel}
@@ -140,7 +140,7 @@ export default function MultiUniversityAdmissionGrid({
 						{/* ── TARGET BADGE (top-left corner) ── */}
 						{isSelected && (
 							<div className="absolute top-1.5 left-1.5">
-								<span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-[#3C3C3C] text-white text-[8px] font-black shadow-xs">
+								<span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-ink text-white text-[8px] font-bold shadow-xs">
 									<Sparkles className="h-2.5 w-2.5 shrink-0" />
 									היעד שלך
 								</span>

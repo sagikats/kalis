@@ -41,10 +41,10 @@ export default function TrackRegistrationGate({
 	return (
 		<div className="w-full max-w-5xl mx-auto space-y-6 dir-rtl" dir="rtl">
 			{/* Top Bar: Target Degree Header */}
-			<div className="bg-white rounded-3xl border border-[#E5DFD4] p-5 sm:p-7 shadow-xs">
+			<div className="bg-white rounded-3xl border border-line p-5 sm:p-7 shadow-xs">
 				<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 					<div className="flex items-center gap-4">
-						<div className="w-14 h-14 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center p-2 shrink-0">
+						<div className="w-14 h-14 rounded-2xl bg-paper border border-line flex items-center justify-center p-2 shrink-0">
 							<UniversityLogo
 								institution={target.calculatorId}
 								size="lg"
@@ -53,105 +53,105 @@ export default function TrackRegistrationGate({
 						</div>
 						<div>
 							<div className="flex items-center gap-2">
-								<span className="text-xs font-semibold text-[#88857E]">
+								<span className="text-xs font-semibold text-ink-3">
 									{target.institutionName}
 								</span>
 								<span className="text-xs text-[#CDC5B6]">•</span>
-								<span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-[#FFFBEB] border border-[#FDE68A] px-2 py-0.5 rounded-full">
+								<span className="inline-flex items-center gap-1 text-[11px] font-bold text-warning bg-warning-soft border border-[#FDE68A] px-2 py-0.5 rounded-full">
 									{analysis.status === 'not_accepted' && gap >= 0 ? 'חסר תנאי סף רשמי' : `פער נדרש: ${formattedGap} נק'`}
 								</span>
 							</div>
-							<h2 className="text-xl sm:text-2xl font-black text-[#222222] mt-0.5">
+							<h2 className="text-xl sm:text-2xl font-bold text-ink mt-0.5">
 								{programName}
 							</h2>
 						</div>
 					</div>
 
 					{/* Metrics summary */}
-					<div className="flex items-center gap-3 self-stretch sm:self-auto justify-between sm:justify-end bg-[#FAF8F5] p-3 rounded-2xl border border-[#E5DFD4]">
+					<div className="flex items-center gap-3 self-stretch sm:self-auto justify-between sm:justify-end bg-paper p-3 rounded-2xl border border-line">
 						<div className="text-center px-3">
-							<span className="text-[10px] text-[#88857E] block font-medium">הסכם שלך</span>
-							<span className="text-sm sm:text-base font-extrabold text-[#222222]">{formattedSekem}</span>
+							<span className="text-[10px] text-ink-3 block font-medium">הסכם שלך</span>
+							<span className="text-sm sm:text-base font-bold text-ink">{formattedSekem}</span>
 						</div>
-						<div className="w-px h-7 bg-[#E5DFD4]" />
+						<div className="w-px h-7 bg-line" />
 						<div className="text-center px-3">
-							<span className="text-[10px] text-[#88857E] block font-medium">{analysis.admissionRoutes?.screening ? 'סף זימון למיונים' : 'סף קבלה'}</span>
-							<span className="text-sm sm:text-base font-extrabold text-[#222222]">{formattedThreshold}</span>
+							<span className="text-[10px] text-ink-3 block font-medium">{analysis.admissionRoutes?.screening ? 'סף זימון למיונים' : 'סף קבלה'}</span>
+							<span className="text-sm sm:text-base font-bold text-ink">{formattedThreshold}</span>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			{/* Main Gate Card */}
-			<div className="relative bg-white rounded-3xl border border-[#E5DFD4] overflow-hidden shadow-sm">
+			<div className="relative bg-white rounded-3xl border border-line overflow-hidden shadow-sm">
 				{/* Background Teaser Grid (Blurred) */}
 				<div className="absolute inset-0 z-0 p-6 sm:p-8 space-y-6 filter blur-[8px] select-none pointer-events-none opacity-35 overflow-hidden">
 					<div className="flex items-center justify-between">
 						<div className="space-y-1">
-							<div className="h-6 w-48 bg-[#DDD7CC] rounded-lg animate-pulse" />
-							<div className="h-4 w-72 bg-[#EAE5DB] rounded-md animate-pulse" />
+							<div className="h-6 w-48 bg-line-strong rounded-lg animate-pulse" />
+							<div className="h-4 w-72 bg-line rounded-md animate-pulse" />
 						</div>
-						<div className="h-8 w-24 bg-[#EAE5DB] rounded-full animate-pulse" />
+						<div className="h-8 w-24 bg-line rounded-full animate-pulse" />
 					</div>
 
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 						{/* Teaser Card 1 */}
-						<div className="rounded-2xl border border-[#E5DFD4] bg-[#FAF8F5] p-5 space-y-4">
+						<div className="rounded-2xl border border-line bg-paper p-5 space-y-4">
 							<div className="flex items-center justify-between">
-								<span className="text-xs font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
+								<span className="text-xs font-bold text-accent-2 bg-accent-soft px-2.5 py-1 rounded-full border border-accent/20">
 									מסלול 1 // מיקוד
 								</span>
 								
 							</div>
-							<div className="h-5 w-3/4 bg-[#DDD7CC] rounded-md" />
+							<div className="h-5 w-3/4 bg-line-strong rounded-md" />
 							<div className="space-y-2 pt-2">
-								<div className="h-3 w-full bg-[#EAE5DB] rounded-sm" />
-								<div className="h-3 w-5/6 bg-[#EAE5DB] rounded-sm" />
-								<div className="h-3 w-4/6 bg-[#EAE5DB] rounded-sm" />
+								<div className="h-3 w-full bg-line rounded-sm" />
+								<div className="h-3 w-5/6 bg-line rounded-sm" />
+								<div className="h-3 w-4/6 bg-line rounded-sm" />
 							</div>
-							<div className="pt-4 border-t border-[#E5DFD4] flex justify-between">
-								<span className="h-4 w-16 bg-[#DDD7CC] rounded-sm" />
-								<span className="h-4 w-12 bg-[#DDD7CC] rounded-sm" />
+							<div className="pt-4 border-t border-line flex justify-between">
+								<span className="h-4 w-16 bg-line-strong rounded-sm" />
+								<span className="h-4 w-12 bg-line-strong rounded-sm" />
 							</div>
 						</div>
 
 						{/* Teaser Card 2 */}
-						<div className="rounded-2xl border border-[#E5DFD4] bg-[#FAF8F5] p-5 space-y-4">
+						<div className="rounded-2xl border border-line bg-paper p-5 space-y-4">
 							<div className="flex items-center justify-between">
-								<span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+								<span className="text-xs font-bold text-success bg-success-soft px-2.5 py-1 rounded-full border border-success/25">
 									מסלול 2 // פיזור סיכונים
 								</span>
 								
 							</div>
-							<div className="h-5 w-3/4 bg-[#DDD7CC] rounded-md" />
+							<div className="h-5 w-3/4 bg-line-strong rounded-md" />
 							<div className="space-y-2 pt-2">
-								<div className="h-3 w-full bg-[#EAE5DB] rounded-sm" />
-								<div className="h-3 w-5/6 bg-[#EAE5DB] rounded-sm" />
-								<div className="h-3 w-4/6 bg-[#EAE5DB] rounded-sm" />
+								<div className="h-3 w-full bg-line rounded-sm" />
+								<div className="h-3 w-5/6 bg-line rounded-sm" />
+								<div className="h-3 w-4/6 bg-line rounded-sm" />
 							</div>
-							<div className="pt-4 border-t border-[#E5DFD4] flex justify-between">
-								<span className="h-4 w-16 bg-[#DDD7CC] rounded-sm" />
-								<span className="h-4 w-12 bg-[#DDD7CC] rounded-sm" />
+							<div className="pt-4 border-t border-line flex justify-between">
+								<span className="h-4 w-16 bg-line-strong rounded-sm" />
+								<span className="h-4 w-12 bg-line-strong rounded-sm" />
 							</div>
 						</div>
 
 						{/* Teaser Card 3 */}
-						<div className="rounded-2xl border border-[#E5DFD4] bg-[#FAF8F5] p-5 space-y-4">
+						<div className="rounded-2xl border border-line bg-paper p-5 space-y-4">
 							<div className="flex items-center justify-between">
 								<span className="text-xs font-bold text-purple-800 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">
 									חלופה // דרכי קבלה רשמיות
 								</span>
-								<span className="text-xs text-[#88857E]">לפי המוסד</span>
+								<span className="text-xs text-ink-3">לפי המוסד</span>
 							</div>
-							<div className="h-5 w-3/4 bg-[#DDD7CC] rounded-md" />
+							<div className="h-5 w-3/4 bg-line-strong rounded-md" />
 							<div className="space-y-2 pt-2">
-								<div className="h-3 w-full bg-[#EAE5DB] rounded-sm" />
-								<div className="h-3 w-5/6 bg-[#EAE5DB] rounded-sm" />
-								<div className="h-3 w-4/6 bg-[#EAE5DB] rounded-sm" />
+								<div className="h-3 w-full bg-line rounded-sm" />
+								<div className="h-3 w-5/6 bg-line rounded-sm" />
+								<div className="h-3 w-4/6 bg-line rounded-sm" />
 							</div>
-							<div className="pt-4 border-t border-[#E5DFD4] flex justify-between">
-								<span className="h-4 w-16 bg-[#DDD7CC] rounded-sm" />
-								<span className="h-4 w-12 bg-[#DDD7CC] rounded-sm" />
+							<div className="pt-4 border-t border-line flex justify-between">
+								<span className="h-4 w-16 bg-line-strong rounded-sm" />
+								<span className="h-4 w-12 bg-line-strong rounded-sm" />
 							</div>
 						</div>
 					</div>
@@ -162,40 +162,40 @@ export default function TrackRegistrationGate({
 					{/* Glowing Lock Badge */}
 					<div className="relative mb-5">
 						<div className="absolute -inset-2 bg-amber-500/20 rounded-full blur-xl" />
-						<div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-[#FAF8F5] border-2 border-[#E5DFD4] flex items-center justify-center text-[#3C3C3C] shadow-md">
-							<Lock className="w-8 h-8 sm:w-9 sm:h-9 text-[#3C3C3C]" />
+						<div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-paper border-2 border-line flex items-center justify-center text-ink shadow-md">
+							<Lock className="w-8 h-8 sm:w-9 sm:h-9 text-ink" />
 						</div>
 					</div>
 
-					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#E5DFD4] text-xs font-bold text-[#55524B] mb-3">
-						<Sparkles className="w-3.5 h-3.5 text-amber-600" />
+					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-paper border border-line text-xs font-bold text-ink-2 mb-3">
+						<Sparkles className="w-3.5 h-3.5 text-warning" />
 						<span>{trackCount === 0 && suggestBypass ? 'נמצאו דרכי קבלה דרך מכינה או אפיק מעבר' : trackCount === 0 ? 'לא נמצא מסלול שיפור שמגיע לסף' : trackCount === 1 ? 'חושב מסלול שיפור אחד' : trackCount ? `חושבו ${trackCount} מסלולי שיפור` : 'מסלולי השיפור חושבו'}</span>
 					</div>
 
-					<h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#222222] tracking-tight max-w-xl">
+					<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-xl">
 						המסלולים המותאמים אישית שלך מוכנים לצפייה
 					</h3>
 
-					<p className="mt-3 text-sm sm:text-base text-[#66635C] max-w-lg leading-relaxed">
-						כדי לצפות במסלולי הקבלה, המלצות המבחנים המדויקות, שעות הלמידה ולוח מועדי הבחינות — <span className="font-bold text-[#222222]">יש להירשם לאתר בחינם</span>.
+					<p className="mt-3 text-sm sm:text-base text-ink-2 max-w-lg leading-relaxed">
+						כדי לצפות במסלולי הקבלה, המלצות המבחנים המדויקות, שעות הלמידה ולוח מועדי הבחינות — <span className="font-bold text-ink">יש להירשם לאתר בחינם</span>.
 					</p>
 
 					{/* Benefits Checkmarks */}
 					<div className="my-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-right max-w-md w-full">
-						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
-							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+						<div className="flex items-center gap-2 text-xs sm:text-sm text-ink-2 bg-paper px-3.5 py-2 rounded-xl border border-line">
+							<CheckCircle2 className="w-4 h-4 text-success shrink-0" />
 							<span>{viewTracksLabel}</span>
 						</div>
-						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
-							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+						<div className="flex items-center gap-2 text-xs sm:text-sm text-ink-2 bg-paper px-3.5 py-2 rounded-xl border border-line">
+							<CheckCircle2 className="w-4 h-4 text-success shrink-0" />
 							<span>לוח מועדי בחינות חורף, אביב וקיץ</span>
 						</div>
-						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
-							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+						<div className="flex items-center gap-2 text-xs sm:text-sm text-ink-2 bg-paper px-3.5 py-2 rounded-xl border border-line">
+							<CheckCircle2 className="w-4 h-4 text-success shrink-0" />
 							<span>סימולטור What-If לבניית מסלול אישי</span>
 						</div>
-						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
-							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+						<div className="flex items-center gap-2 text-xs sm:text-sm text-ink-2 bg-paper px-3.5 py-2 rounded-xl border border-line">
+							<CheckCircle2 className="w-4 h-4 text-success shrink-0" />
 							<span>שמירה וסנכרון של הנתונים בכל מכשיר</span>
 						</div>
 					</div>
@@ -204,7 +204,7 @@ export default function TrackRegistrationGate({
 					<div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 w-full max-w-lg">
 						<button
 							onClick={() => openAuthModal('register')}
-							className="flex-1 h-13 sm:h-14 flex items-center justify-center gap-2 px-5 rounded-2xl bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-sm shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+							className="flex-1 h-13 sm:h-14 flex items-center justify-center gap-2 px-5 rounded-2xl bg-ink hover:bg-black text-white font-bold text-sm shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
 						>
 							<UserPlus className="w-4 h-4 text-white shrink-0" />
 							<span className="whitespace-nowrap">הרשמה מהירה בחינם</span>
@@ -213,14 +213,14 @@ export default function TrackRegistrationGate({
 
 						<button
 							onClick={() => openAuthModal('login')}
-							className="flex-1 h-13 sm:h-14 flex items-center justify-center gap-2 px-5 rounded-2xl bg-white hover:bg-[#FAF8F5] text-[#222222] font-bold text-sm border border-[#DDD7CC] hover:border-[#C4BCB0] shadow-2xs hover:shadow-xs transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+							className="flex-1 h-13 sm:h-14 flex items-center justify-center gap-2 px-5 rounded-2xl bg-white hover:bg-paper text-ink font-bold text-sm border border-line-strong hover:border-[#C4BCB0] shadow-2xs hover:shadow-xs transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
 						>
-							<LogIn className="w-4 h-4 text-[#66635C] shrink-0" />
+							<LogIn className="w-4 h-4 text-ink-2 shrink-0" />
 							<span className="whitespace-nowrap">כבר רשום? התחבר</span>
 						</button>
 					</div>
 
-					<p className="mt-4 text-[11px] text-[#88857E]">
+					<p className="mt-4 text-[11px] text-ink-3">
 						ההרשמה חינמית לחלוטין וללא שום התחייבות • 100% הגנה על פרטיות המידע
 					</p>
 				</div>
@@ -230,7 +230,7 @@ export default function TrackRegistrationGate({
 			<div className="flex justify-start">
 				<button
 					onClick={onBackToReport}
-					className="inline-flex items-center gap-2 text-xs font-bold text-[#66635C] hover:text-[#222222] transition cursor-pointer px-4 py-2 rounded-xl hover:bg-white border border-transparent hover:border-[#E5DFD4]"
+					className="inline-flex items-center gap-2 text-xs font-bold text-ink-2 hover:text-ink transition cursor-pointer px-4 py-2 rounded-xl hover:bg-white border border-transparent hover:border-line"
 				>
 					<ArrowRight className="w-4 h-4" />
 					<span>חזור לדוח הקבלה המלא (שלב 3)</span>

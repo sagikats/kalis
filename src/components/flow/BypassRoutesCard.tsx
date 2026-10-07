@@ -25,16 +25,16 @@ export default function BypassRoutesCard({ calculatorId, institutionName, hasMax
 		<div className="bg-white border border-[#D2CEEB] rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm">
 			<div className="flex items-center gap-2">
 				<GraduationCap className="h-5 w-5 text-[#453D78]" />
-				<h4 className="text-lg font-bold text-[#222222]">מכינה או אפיק מעבר</h4>
+				<h4 className="text-lg font-bold text-ink">מכינה או אפיק מעבר</h4>
 			</div>
-			<p className="text-sm text-[#66635C] leading-relaxed">
+			<p className="text-sm text-ink-2 leading-relaxed">
 				גם עם פסיכומטרי 800 ו-6 בחינות בגרות לא מגיעים לסף של התוכנית הזו
 				{hasMaxTrack ? '. המסלול שלמעלה דורש לשפר כמעט את כל הבגרויות.' : '.'} לכן כדאי להכיר גם את הדרכים שלא תלויות בבגרות:
 			</p>
 			<div className="space-y-3">
-				<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-2">
-					<div className="font-bold text-sm text-[#222222]">מכינה קדם-אקדמית</div>
-					<p className="text-xs text-[#66635C] leading-relaxed">
+				<div className="p-4 rounded-2xl bg-paper border border-line space-y-2">
+					<div className="font-bold text-sm text-ink">מכינה קדם-אקדמית</div>
+					<p className="text-xs text-ink-2 leading-relaxed">
 						לימודים במכינה של האוניברסיטה, שבסופם הציונים במכינה משמשים לקבלה במקום ציוני הבגרות. התוכניות שהמכינה פותחת והציון הנדרש בכל אחת מפורטים באתר המכינה.
 					</p>
 					{links.mechinaUrl ? (
@@ -51,11 +51,11 @@ export default function BypassRoutesCard({ calculatorId, institutionName, hasMax
 						)
 					)}
 				</div>
-				<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] space-y-2">
-					<div className="font-bold text-sm text-[#222222]">אפיק מעבר מהאוניברסיטה הפתוחה</div>
+				<div className="p-4 rounded-2xl bg-paper border border-line space-y-2">
+					<div className="font-bold text-sm text-ink">אפיק מעבר מהאוניברסיטה הפתוחה</div>
 					{links.openUniversityUrl ? (
 						<>
-							<p className="text-xs text-[#66635C] leading-relaxed">
+							<p className="text-xs text-ink-2 leading-relaxed">
 								לומדים קורסים באוניברסיטה הפתוחה (שאין בה דרישות קבלה), ועוברים ל{inst} לפי הציונים בקורסים, בלי בגרות ופסיכומטרי. אילו תוכניות פתוחות למעבר ובאיזה ממוצע — בדף האפיק.
 							</p>
 							<a href={links.openUniversityUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
@@ -64,7 +64,7 @@ export default function BypassRoutesCard({ calculatorId, institutionName, hasMax
 							</a>
 						</>
 					) : (
-						<p className="text-xs text-[#66635C] leading-relaxed">אין לאוניברסיטה הפתוחה אפיק מעבר ל{inst}.</p>
+						<p className="text-xs text-ink-2 leading-relaxed">אין לאוניברסיטה הפתוחה אפיק מעבר ל{inst}.</p>
 					)}
 				</div>
 			</div>

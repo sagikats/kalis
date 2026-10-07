@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
 	return (
-		<main dir="rtl" className="min-h-screen bg-[#FAF8F5] text-[#222222] py-12 px-4 sm:px-6 lg:px-8">
+		<main dir="rtl" className="min-h-screen bg-paper text-ink py-12 px-4 sm:px-6 lg:px-8">
 			<div className="max-w-4xl mx-auto">
 				{/* Breadcrumb & Top Bar */}
 				<div className="mb-8">
 					<Link
 						href="/"
-						className="inline-flex items-center gap-2 text-xs font-bold text-[#66635C] hover:text-[#222222] bg-white px-3.5 py-1.5 rounded-full border border-[#E5DFD4] shadow-2xs transition-colors"
+						className="inline-flex items-center gap-2 text-xs font-bold text-ink-2 hover:text-ink bg-white px-3.5 py-1.5 rounded-full border border-line shadow-2xs transition-colors"
 					>
 						<ArrowRight className="w-3.5 h-3.5" />
 						חזרה לדף הבית
@@ -24,25 +24,25 @@ export default function TermsPage() {
 				</div>
 
 				{/* Header Section */}
-				<header className="mb-10 text-center sm:text-right border-b border-[#E5DFD4] pb-8">
+				<header className="mb-10 text-center sm:text-right border-b border-line pb-8">
 					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF0E6] border border-[#E8D8C8] text-[#8C4A1E] text-xs font-bold mb-4">
 						<Scale className="w-3.5 h-3.5" />
 						מסמך משפטי מחייב
 					</div>
-					<h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#222222] mb-3">
+					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-ink mb-3">
 						תנאי שימוש וכתב הגבלת אחריות
 					</h1>
-					<p className="text-sm sm:text-base text-[#66635C] max-w-2xl leading-relaxed">
+					<p className="text-sm sm:text-base text-ink-2 max-w-2xl leading-relaxed">
 						הנחיות, זכויות, חובות והגבלת אחריות משפטית בעת השימוש בפלטפורמת מתקבלים (mitkablim.co.il). עודכן לאחרונה: ספטמבר 2026.
 					</p>
 				</header>
 
 				{/* Critical Disclaimer Banner */}
-				<div className="mb-8 p-5 sm:p-6 rounded-2xl bg-[#FFFBEB] border border-[#FDE68A] shadow-xs">
+				<div className="mb-8 p-5 sm:p-6 rounded-2xl bg-warning-soft border border-[#FDE68A] shadow-xs">
 					<div className="flex items-start gap-3.5">
 						<AlertTriangle className="w-6 h-6 text-[#D97706] shrink-0 mt-0.5" />
 						<div>
-							<h2 className="text-base font-bold text-[#92400E] mb-1.5">
+							<h2 className="text-base font-bold text-warning mb-1.5">
 								הודעת הבהרה ודיסקליימר קריטי למועמדים
 							</h2>
 							<p className="text-xs sm:text-sm text-[#78350F] leading-relaxed">
@@ -53,11 +53,11 @@ export default function TermsPage() {
 				</div>
 
 				{/* Content Sections */}
-				<div className="space-y-8 text-sm leading-relaxed text-[#44423D]">
+				<div className="space-y-8 text-sm leading-relaxed text-ink-2">
 					{/* Section 1 */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<BookOpen className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<BookOpen className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">1. מבוא והסכמה לתנאים</h3>
 						</div>
 						<p className="mb-3">
@@ -69,9 +69,9 @@ export default function TermsPage() {
 					</section>
 
 					{/* Section 2 */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<ShieldAlert className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<ShieldAlert className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">2. מהות השירות והיעדר מצג קבלה רשמי</h3>
 						</div>
 						<ul className="list-disc list-inside space-y-2.5 pr-1">
@@ -88,9 +88,9 @@ export default function TermsPage() {
 					</section>
 
 					{/* Section 3 */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<Scale className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<Scale className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">3. הגבלת אחריות מוחלטת (Limitation of Liability)</h3>
 						</div>
 						<p className="mb-3">
@@ -110,9 +110,9 @@ export default function TermsPage() {
 					</section>
 
 					{/* Section 4 */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<CheckCircle className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<CheckCircle className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">4. קניין רוחני וזכויות יוצרים</h3>
 						</div>
 						<p className="mb-3">
@@ -124,9 +124,9 @@ export default function TermsPage() {
 					</section>
 
 					{/* Section 5 */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<ExternalLink className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<ExternalLink className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">5. דין וסמכות שיפוט</h3>
 						</div>
 						<p>
@@ -136,12 +136,12 @@ export default function TermsPage() {
 				</div>
 
 				{/* Bottom Navigation Link */}
-				<div className="mt-12 text-center border-t border-[#E5DFD4] pt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-[#66635C]">
-					<Link href="/privacy" className="hover:text-[#222222] underline">
+				<div className="mt-12 text-center border-t border-line pt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-ink-2">
+					<Link href="/privacy" className="hover:text-ink underline">
 						קרא את מדיניות הפרטיות של מתקבלים
 					</Link>
 					<span>•</span>
-					<Link href="/" className="hover:text-[#222222] underline">
+					<Link href="/" className="hover:text-ink underline">
 						חזרה לדף הראשי
 					</Link>
 				</div>

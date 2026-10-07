@@ -175,7 +175,7 @@ export default function AdmissionPanel({
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-[#222222]/30 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-ink/30 backdrop-blur-sm z-40 transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -183,30 +183,30 @@ export default function AdmissionPanel({
 
       {/* Slide-over Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[460px] bg-[#FAF8F5] border-l border-[#E5DFD4] z-50 flex flex-col shadow-2xl transition-transform duration-500 ease-sheet motion-reduce:transition-none ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[460px] bg-paper border-l border-line z-50 flex flex-col shadow-2xl transition-transform duration-500 ease-sheet motion-reduce:transition-none ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         dir="rtl"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#E5DFD4] bg-white sticky top-0 z-10">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-line bg-white sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
+            <div className="p-2 rounded-xl bg-paper border border-line text-ink">
               <GraduationCap className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#222222]">{institutionName}</h2>
-              <p className="text-[11px] text-[#66635C]">
+              <h2 className="text-sm font-bold text-ink">{institutionName}</h2>
+              <p className="text-[11px] text-ink-2">
                 {isTechnion ? 'סכם טכניוני' : 'סכם כללי'}:{' '}
-                <span className="text-[#222222] font-bold">{userGeneralSekem}</span>
+                <span className="text-ink font-bold">{userGeneralSekem}</span>
                 {!isTechnion && userEngineeringSekem && userEngineeringSekem !== userGeneralSekem && (
                   <span className="mr-2">
-                    · הנדסה: <span className="text-[#222222] font-bold">{userEngineeringSekem}</span>
+                    · הנדסה: <span className="text-ink font-bold">{userEngineeringSekem}</span>
                   </span>
                 )}
                 {userManagementSekem && (
                   <span className="mr-2">
-                    · ניהול: <span className="text-[#222222] font-bold">{userManagementSekem}</span>
+                    · ניהול: <span className="text-ink font-bold">{userManagementSekem}</span>
                   </span>
                 )}
               </p>
@@ -214,7 +214,7 @@ export default function AdmissionPanel({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5] transition"
+            className="p-2 rounded-xl text-ink-2 hover:text-ink hover:bg-paper transition"
             aria-label="סגור"
           >
             <X className="h-5 w-5" />
@@ -222,12 +222,12 @@ export default function AdmissionPanel({
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-4 px-5 py-2.5 bg-[#F5F2EB] border-b border-[#E5DFD4] flex-wrap">
-          <div className="flex items-center gap-1.5 text-[#205739]">
+        <div className="flex items-center gap-4 px-5 py-2.5 bg-paper-2 border-b border-line flex-wrap">
+          <div className="flex items-center gap-1.5 text-success">
             <CheckCircle2 className="h-3.5 w-3.5" />
             <span className="text-xs font-bold">{acceptedCount} התקבלת</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[#825B15]">
+          <div className="flex items-center gap-1.5 text-warning">
             <AlertCircle className="h-3.5 w-3.5" />
             <span className="text-xs font-bold">{missingRequirementCount} חסר תנאי סף</span>
           </div>
@@ -237,16 +237,16 @@ export default function AdmissionPanel({
               <span className="text-xs font-bold">{auditionCount} מיונים / קבלה נפרדת</span>
             </div>
           )}
-          <span className="text-[11px] text-[#8A847C] mr-auto">{sorted.length} חוגים סה&quot;כ</span>
+          <span className="text-[11px] text-ink-3 mr-auto">{sorted.length} חוגים סה&quot;כ</span>
         </div>
 
         {/* Program List */}
         <div className="flex-1 overflow-y-auto py-2 px-3 space-y-1.5">
           {!catalog && (
-            <p className="text-center text-[#8A847C] text-sm py-12">טוען נתוני קבלה...</p>
+            <p className="text-center text-ink-3 text-sm py-12">טוען נתוני קבלה...</p>
           )}
           {catalog && sorted.length === 0 && (
-            <p className="text-center text-[#8A847C] text-sm py-12">לא נמצאו נתוני קבלה</p>
+            <p className="text-center text-ink-3 text-sm py-12">לא נמצאו נתוני קבלה</p>
           )}
 
           {sorted.map((item) => {
@@ -254,33 +254,33 @@ export default function AdmissionPanel({
 
             const cfg = {
               accepted: {
-                icon: <CheckCircle2 className="h-4 w-4 text-[#205739] shrink-0" />,
-                rowCls: 'border-[#C6DFCE] bg-[#EBF4EE]/80',
-                nameCls: 'text-[#222222]',
-                barCls: 'bg-[#205739]',
+                icon: <CheckCircle2 className="h-4 w-4 text-success shrink-0" />,
+                rowCls: 'border-success/25 bg-success-soft/80',
+                nameCls: 'text-ink',
+                barCls: 'bg-success',
                 gapLabel: gap > 0 ? `+${gap}` : '✓',
-                gapCls: 'text-[#205739]',
+                gapCls: 'text-success',
               },
               missing_requirement: {
-                icon: <AlertCircle className="h-4 w-4 text-[#825B15] shrink-0" />,
-                rowCls: 'border-[#ECDAB6] bg-[#FDF6E8]/80',
-                nameCls: 'text-[#222222]',
-                barCls: 'bg-[#825B15]',
+                icon: <AlertCircle className="h-4 w-4 text-warning shrink-0" />,
+                rowCls: 'border-warning/30 bg-warning-soft/80',
+                nameCls: 'text-ink',
+                barCls: 'bg-warning',
                 gapLabel: 'חסר תנאי',
-                gapCls: 'text-[#825B15]',
+                gapCls: 'text-warning',
               },
               not_accepted: {
-                icon: <XCircle className="h-4 w-4 text-[#9B3327]/60 shrink-0" />,
-                rowCls: 'border-[#E5DFD4] bg-white',
-                nameCls: 'text-[#66635C]',
-                barCls: 'bg-[#9B3327]/30',
+                icon: <XCircle className="h-4 w-4 text-danger/60 shrink-0" />,
+                rowCls: 'border-line bg-white',
+                nameCls: 'text-ink-2',
+                barCls: 'bg-danger/30',
                 gapLabel: threshold === null ? 'חסר תנאי' : String(gap),
-                gapCls: 'text-[#9B3327]',
+                gapCls: 'text-danger',
               },
               screening: {
                 icon: <GraduationCap className="h-4 w-4 text-[#453D78] shrink-0" />,
                 rowCls: 'border-[#D2CEEB] bg-[#F2F1F8]/80',
-                nameCls: 'text-[#222222]',
+                nameCls: 'text-ink',
                 barCls: 'bg-[#453D78]',
                 gapLabel: 'שלב המיונים',
                 gapCls: 'text-[#453D78]',
@@ -288,7 +288,7 @@ export default function AdmissionPanel({
               no_threshold: {
                 icon: <GraduationCap className="h-4 w-4 text-[#453D78] shrink-0" />,
                 rowCls: 'border-[#D2CEEB] bg-[#F2F1F8]/80',
-                nameCls: 'text-[#222222]',
+                nameCls: 'text-ink',
                 barCls: 'bg-[#453D78]',
                 gapLabel: 'אודישן',
                 gapCls: 'text-[#453D78]',
@@ -311,12 +311,12 @@ export default function AdmissionPanel({
                     </span>
                   </div>
                   {note && (
-                    <p className={`text-[10px] font-medium mt-0.5 ${status === 'accepted' ? 'text-[#205739]' : status === 'screening' ? 'text-[#453D78]' : 'text-[#825B15]'}`}>
+                    <p className={`text-[10px] font-medium mt-0.5 ${status === 'accepted' ? 'text-success' : status === 'screening' ? 'text-[#453D78]' : 'text-warning'}`}>
                       {note}
                     </p>
                   )}
                   <div className="flex items-center gap-2 mt-1.5">
-                    <div className="flex-1 h-1 bg-[#E5DFD4] rounded-full overflow-hidden">
+                    <div className="flex-1 h-1 bg-line rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${cfg.barCls}`}
                         style={{ width: getBarWidth(threshold) }}
@@ -324,9 +324,9 @@ export default function AdmissionPanel({
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
                       {threshold !== null && (
-                        <span className="text-[10px] text-[#66635C]">סף {threshold}</span>
+                        <span className="text-[10px] text-ink-2">סף {threshold}</span>
                       )}
-                      <span className="text-[10px] text-[#8A847C] px-1.5 py-0.5 bg-white border border-[#E5DFD4] rounded-full">
+                      <span className="text-[10px] text-ink-3 px-1.5 py-0.5 bg-white border border-line rounded-full">
                         {program.degreeLevel}
                       </span>
                     </div>
@@ -338,8 +338,8 @@ export default function AdmissionPanel({
         </div>
 
         {/* Footer disclaimer */}
-        <div className="px-5 py-3 border-t border-[#E5DFD4] bg-white">
-          <p className="text-[10px] text-[#8A847C] text-center">
+        <div className="px-5 py-3 border-t border-line bg-white">
+          <p className="text-[10px] text-ink-3 text-center">
             הנתונים לצורך הערכה בלבד · יש לבדוק באתר האוניברסיטה
           </p>
         </div>

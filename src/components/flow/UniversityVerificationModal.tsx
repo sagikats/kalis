@@ -283,25 +283,25 @@ export default function UniversityVerificationModal({
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-fadeIn">
 			<div
-				className="bg-white border border-[#E5DFD4] rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-scaleUp text-right"
+				className="bg-white border border-line rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-scaleUp text-right"
 				dir="rtl"
 			>
 				{/* Modal Top Header */}
-				<div className="p-5 sm:p-6 bg-[#FAF8F5] border-b border-[#E5DFD4] flex items-center justify-between gap-4 shrink-0">
+				<div className="p-5 sm:p-6 bg-paper border-b border-line flex items-center justify-between gap-4 shrink-0">
 					<div className="flex items-center gap-3.5 min-w-0">
-						<div className="w-12 h-12 rounded-2xl bg-white border border-[#E5DFD4] flex items-center justify-center shrink-0 shadow-2xs">
+						<div className="w-12 h-12 rounded-2xl bg-white border border-line flex items-center justify-center shrink-0 shadow-2xs">
 							<UniversityLogo institution={institutionId || calcInfo.id} size="md" shape="rounded" />
 						</div>
 						<div className="min-w-0">
 							<div className="flex items-center gap-2 flex-wrap">
-								<h2 className="text-base sm:text-lg font-black text-[#222222]">
+								<h2 className="text-base sm:text-lg font-bold text-ink">
 									אימות חישוב סכם מול {calcInfo.shortName}
 								</h2>
-								<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE]">
+								<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-success-soft text-success border border-success/25">
 									אימות רשמי 1:1
 								</span>
 							</div>
-							<p className="text-xs text-[#66635C] truncate font-medium mt-0.5">
+							<p className="text-xs text-ink-2 truncate font-medium mt-0.5">
 								{programName} • {track.title}
 							</p>
 						</div>
@@ -310,7 +310,7 @@ export default function UniversityVerificationModal({
 					<button
 						type="button"
 						onClick={onClose}
-						className="p-2 rounded-xl text-[#8A847C] hover:text-[#222222] hover:bg-[#EAE5DA] transition cursor-pointer shrink-0"
+						className="p-2 rounded-xl text-ink-3 hover:text-ink hover:bg-line transition cursor-pointer shrink-0"
 						title="סגור חלונית"
 					>
 						<X className="h-5 w-5" />
@@ -322,23 +322,23 @@ export default function UniversityVerificationModal({
 					{/* Expected Sekem KPI Banner */}
 					<div className={`p-4 rounded-2xl border flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xs ${
 						isPassing
-							? 'bg-[#EBF4EE] border-[#C6DFCE]'
-							: 'bg-[#FDF6E8] border-[#ECDAB6]'
+							? 'bg-success-soft border-success/25'
+							: 'bg-warning-soft border-warning/30'
 					}`}>
 						<div className="flex items-center gap-3">
-							<div className={`p-2.5 rounded-xl ${isPassing ? 'bg-white text-[#205739]' : 'bg-white text-[#825B15]'}`}>
+							<div className={`p-2.5 rounded-xl ${isPassing ? 'bg-white text-success' : 'bg-white text-warning'}`}>
 								<Sparkles className="h-5 w-5" />
 							</div>
 							<div>
-								<div className="text-xs font-bold text-[#44423D]">
+								<div className="text-xs font-bold text-ink-2">
 									סכם צפוי במחשבון האוניברסיטה:
 								</div>
 								<div className="flex items-baseline gap-2 mt-0.5">
-									<span className={`text-2xl font-black ${isPassing ? 'text-[#205739]' : 'text-[#825B15]'}`}>
+									<span className={`text-2xl font-bold ${isPassing ? 'text-success' : 'text-warning'}`}>
 										{formattedSekem}
 									</span>
 									{threshold && (
-										<span className="text-xs font-bold text-[#66635C]">
+										<span className="text-xs font-bold text-ink-2">
 											(סף קבלה מבוקש: {threshold})
 										</span>
 									)}
@@ -347,7 +347,7 @@ export default function UniversityVerificationModal({
 						</div>
 
 						{isPassing && (
-							<div className="flex items-center gap-1.5 text-xs font-black text-[#205739] bg-white px-3 py-1.5 rounded-xl border border-[#C6DFCE]">
+							<div className="flex items-center gap-1.5 text-xs font-bold text-success bg-white px-3 py-1.5 rounded-xl border border-success/25">
 								<Check className="h-4 w-4" />
 								<span>עומד בסף הקבלה הרשמי ✓</span>
 							</div>
@@ -355,31 +355,31 @@ export default function UniversityVerificationModal({
 					</div>
 
 					{/* Chrome Extension AutoFill Card */}
-					<div className="p-4 sm:p-5 bg-gradient-to-r from-[#FAF8F5] to-[#F5F2EB] border-2 border-[#3C3C3C] rounded-2xl space-y-4 shadow-xs">
+					<div className="p-4 sm:p-5 bg-gradient-to-r from-paper to-paper-2 border-2 border-ink rounded-2xl space-y-4 shadow-xs">
 						<div className="flex items-center justify-between gap-2 flex-wrap">
 							<div className="flex items-center gap-2.5">
-								<div className="w-8 h-8 rounded-xl bg-[#3C3C3C] text-white flex items-center justify-center text-sm shrink-0 font-bold shadow-2xs">
-									⚡
+								<div className="w-8 h-8 rounded-xl bg-ink text-white flex items-center justify-center text-sm shrink-0 font-bold shadow-2xs">
+									<Zap className="h-4 w-4" />
 								</div>
 								<div>
-									<h3 className="text-xs sm:text-sm font-black text-[#222222] flex items-center gap-2">
+									<h3 className="text-xs sm:text-sm font-bold text-ink flex items-center gap-2">
 										<span>מילוי אוטומטי במחשבון האוניברסיטה</span>
-										<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EBF4EE] text-[#15803d] border border-[#C6DFCE]">
+										<span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-success-soft text-success border border-success/25">
 											Chrome Extension
 										</span>
 									</h3>
-									<p className="text-[11px] text-[#66635C] mt-0.5">
+									<p className="text-[11px] text-ink-2 mt-0.5">
 										תוסף כרום חכם שמזין את כל הציונים, המקצועות והסכם ישירות למחשבון הרשמי
 									</p>
 								</div>
 							</div>
 							{isExtensionInstalled ? (
-								<div className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#EBF4EE] text-[#15803d] border border-[#C6DFCE]">
-									<span className="w-2 h-2 rounded-full bg-[#15803d] animate-pulse" />
+								<div className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-success-soft text-success border border-success/25">
+									<span className="w-2 h-2 rounded-full bg-success animate-pulse" />
 									<span>התוסף מחובר ופעיל ✓</span>
 								</div>
 							) : (
-								<div className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#FAF8F5] text-[#8A847C] border border-[#E5DFD4]">
+								<div className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-paper text-ink-3 border border-line">
 									<span className="w-2 h-2 rounded-full bg-[#C4BFB6]" />
 									<span>התוסף אינו מחובר</span>
 								</div>
@@ -387,18 +387,18 @@ export default function UniversityVerificationModal({
 						</div>
 
 						{isExtensionInstalled ? (
-							<div className="bg-white p-3.5 border border-[#C6DFCE] rounded-xl space-y-3 shadow-2xs">
+							<div className="bg-white p-3.5 border border-success/25 rounded-xl space-y-3 shadow-2xs">
 								{extensionNeedsReload && (
 									<div className="p-3 bg-[#FFF7ED] border border-[#FDBA74] rounded-xl text-xs space-y-1.5 text-[#9A3412] animate-fadeIn">
 										<div className="flex items-center justify-between gap-2 flex-wrap">
 											<div className="flex items-center gap-1.5 font-bold">
-												<RotateCcw className="h-3.5 w-3.5 text-[#EA580C] shrink-0" />
+												<RotateCcw className="h-3.5 w-3.5 text-warning shrink-0" />
 												<span>התוסף עודכן בדפדפן! יש לרענן את העמוד כדי להפעיל אותו מחדש.</span>
 											</div>
 											<button
 												type="button"
 												onClick={() => window.location.reload()}
-												className="px-2.5 py-1 bg-[#EA580C] hover:bg-[#C2410C] text-white rounded-lg text-xs font-bold transition shrink-0 cursor-pointer shadow-2xs"
+												className="px-2.5 py-1 bg-ink hover:bg-black text-white rounded-lg text-xs font-bold transition shrink-0 cursor-pointer shadow-2xs"
 											>
 												רענן עמוד (F5)
 											</button>
@@ -410,7 +410,7 @@ export default function UniversityVerificationModal({
 									type="button"
 									onClick={handleTriggerExtensionAutofill}
 									disabled={isAutofilling}
-									className="w-full py-3 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs sm:text-sm font-black transition flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-70 group border border-[#111]"
+									className="w-full py-3 px-4 bg-ink hover:bg-black text-white rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-70 group border border-[#111]"
 								>
 									{isAutofilling ? (
 										<>
@@ -425,40 +425,40 @@ export default function UniversityVerificationModal({
 									) : (
 										<>
 											<Zap className="h-4 w-4 text-[#FBBF24] group-hover:scale-110 transition-transform" />
-											<span>הזן ציונים למחשבון ב-1 קליק ⚡</span>
+											<span>הזן ציונים למחשבון בלחיצה אחת</span>
 										</>
 									)}
 								</button>
-								<p className="text-[11px] text-[#66635C] text-center">
+								<p className="text-[11px] text-ink-2 text-center">
 									בלחיצה ייפתח המחשבון של {calcInfo.shortName} והתוסף ימלא את כל הציונים והסכם באופן אוטומטי
 								</p>
 							</div>
 						) : (
-							<div className="bg-white p-3.5 border border-[#E5DFD4] rounded-xl space-y-3">
+							<div className="bg-white p-3.5 border border-line rounded-xl space-y-3">
 								<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-									<p className="text-xs text-[#55524B] leading-relaxed">
+									<p className="text-xs text-ink-2 leading-relaxed">
 										כדי להזין את כל הציונים בלחיצה אחת, יש לוודא שתוסף הכרום מותקן ופעיל בדפדפן.
 									</p>
 									<button
 										type="button"
 										onClick={() => setShowExtensionHelp((prev) => !prev)}
-										className="py-2 px-3 rounded-xl bg-[#FAF8F5] border border-[#DDD7CC] text-xs font-bold text-[#3C3C3C] hover:bg-[#F2EFE9] transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5"
+										className="py-2 px-3 rounded-xl bg-paper border border-line-strong text-xs font-bold text-ink hover:bg-paper-2 transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5"
 									>
-										<Laptop className="h-3.5 w-3.5 text-[#3C3C3C]" />
+										<Laptop className="h-3.5 w-3.5 text-ink" />
 										<span>{showExtensionHelp ? 'סגור הוראות' : 'הוראות התקנה מהירה (30 שניות)'}</span>
 									</button>
 								</div>
 
 								{showExtensionHelp && (
-									<div className="p-3.5 bg-[#FAF8F5] border border-[#E5DFD4] rounded-xl text-xs space-y-2 text-[#44423D] animate-fadeIn mt-2">
-										<div className="font-bold text-[#222222] flex items-center gap-1.5">
-											<Laptop className="h-3.5 w-3.5 text-[#3C3C3C]" />
+									<div className="p-3.5 bg-paper border border-line rounded-xl text-xs space-y-2 text-ink-2 animate-fadeIn mt-2">
+										<div className="font-bold text-ink flex items-center gap-1.5">
+											<Laptop className="h-3.5 w-3.5 text-ink" />
 											<span>התקנת התוסף בדפדפן כרום:</span>
 										</div>
-										<ol className="list-decimal list-inside space-y-1.5 text-[11px] text-[#66635C] pr-1 leading-relaxed">
-											<li>פתח לשונית חדשה בכרום והקלד: <code className="bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono text-[10px]">chrome://extensions</code></li>
+										<ol className="list-decimal list-inside space-y-1.5 text-[11px] text-ink-2 pr-1 leading-relaxed">
+											<li>פתח לשונית חדשה בכרום והקלד: <code className="bg-white px-1.5 py-0.5 rounded border border-line text-[#222] font-mono text-[10px]">chrome://extensions</code></li>
 											<li>בפינה העליונה הפעל את המתג <strong>״מצב מפתח״ (Developer mode)</strong>.</li>
-											<li>לחץ על <strong>״טעינת תוסף לא ארוז״ (Load unpacked)</strong> ובחר את תיקיית <code className="bg-white px-1.5 py-0.5 rounded border border-[#E5DFD4] text-[#222] font-mono text-[10px]">chrome-extension</code> שבפרויקט.</li>
+											<li>לחץ על <strong>״טעינת תוסף לא ארוז״ (Load unpacked)</strong> ובחר את תיקיית <code className="bg-white px-1.5 py-0.5 rounded border border-line text-[#222] font-mono text-[10px]">chrome-extension</code> שבפרויקט.</li>
 											<li>לאחר מכן רענן דף זה — כפתור המילוי האוטומטי יידלק מיידית!</li>
 										</ol>
 									</div>
@@ -468,13 +468,13 @@ export default function UniversityVerificationModal({
 					</div>
 
 					{/* Direct Calculator External Link CTA */}
-					<div className="p-4 bg-[#FAF8F5] border border-[#DDD7CC] rounded-2xl space-y-3">
+					<div className="p-4 bg-paper border border-line-strong rounded-2xl space-y-3">
 						<div className="flex items-start justify-between gap-3">
 							<div>
-								<h3 className="text-xs sm:text-sm font-bold text-[#222222]">
+								<h3 className="text-xs sm:text-sm font-bold text-ink">
 									פתיחת מחשבון הסכם של {calcInfo.shortName}
 								</h3>
-								<p className="text-[11px] text-[#66635C] mt-0.5 leading-relaxed">
+								<p className="text-[11px] text-ink-2 mt-0.5 leading-relaxed">
 									בלחיצה ייפתח האתר הרשמי של המוסד בלשונית חדשה. תוכל להעתיק את הציונים המרוכזים כאן למטה ולהזין אותם, או להשתמש בתוסף האוטומטי.
 								</p>
 							</div>
@@ -485,7 +485,7 @@ export default function UniversityVerificationModal({
 								href={calcInfo.calculatorUrl}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="w-full sm:flex-1 py-2.5 px-4 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs cursor-pointer group"
+								className="w-full sm:flex-1 py-2.5 px-4 bg-ink hover:bg-black text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs cursor-pointer group"
 							>
 								<span>מעבר למחשבון הסכם הרשמי של {calcInfo.shortName}</span>
 								<ExternalLink className="h-3.5 w-3.5 text-white/80 group-hover:text-white transition" />
@@ -496,18 +496,18 @@ export default function UniversityVerificationModal({
 								onClick={handleCopyAll}
 								className={`w-full sm:w-auto py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 border cursor-pointer ${
 									copiedAll
-										? 'bg-[#EBF4EE] border-[#C6DFCE] text-[#205739]'
-										: 'bg-white hover:bg-[#F2EFE9] text-[#222222] border-[#DDD7CC]'
+										? 'bg-success-soft border-success/25 text-success'
+										: 'bg-white hover:bg-paper-2 text-ink border-line-strong'
 								}`}
 							>
 								{copiedAll ? (
 									<>
-										<Check className="h-3.5 w-3.5 text-[#205739]" />
+										<Check className="h-3.5 w-3.5 text-success" />
 										<span>כל הנתונים הועתקו! ✓</span>
 									</>
 								) : (
 									<>
-										<Copy className="h-3.5 w-3.5 text-[#66635C]" />
+										<Copy className="h-3.5 w-3.5 text-ink-2" />
 										<span>העתק את כל הנתונים</span>
 									</>
 								)}
@@ -519,13 +519,13 @@ export default function UniversityVerificationModal({
 					<div className="space-y-2.5">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-2">
-								<GraduationCap className="h-4 w-4 text-[#3C3C3C]" />
-								<h3 className="text-xs sm:text-sm font-bold text-[#222222]">
+								<GraduationCap className="h-4 w-4 text-ink" />
+								<h3 className="text-xs sm:text-sm font-bold text-ink">
 									1. ציון פסיכומטרי להזנה במחשבון
 								</h3>
 							</div>
 							{isPsychUpgraded && (
-								<span className="text-[10px] font-bold text-[#3B2D60] bg-[#ECE9F8] border border-[#DDD7CC] px-2 py-0.5 rounded-full">
+								<span className="text-[10px] font-bold text-[#3B2D60] bg-[#ECE9F8] border border-line-strong px-2 py-0.5 rounded-full">
 									יעד שיפור במסלול זה
 								</span>
 							)}
@@ -533,17 +533,17 @@ export default function UniversityVerificationModal({
 
 						{targetPsych > 0 ? (
 							<div className="space-y-2">
-								<div className="p-3.5 bg-white border border-[#E5DFD4] rounded-2xl flex items-center justify-between gap-3 shadow-2xs">
+								<div className="p-3.5 bg-white border border-line rounded-2xl flex items-center justify-between gap-3 shadow-2xs">
 									<div>
-										<div className="text-xs font-bold text-[#44423D]">
+										<div className="text-xs font-bold text-ink-2">
 											פסיכומטרי כללי / רב-תחומי:
 										</div>
 										<div className="flex items-baseline gap-2 mt-0.5">
-											<span className="text-lg font-black text-[#222222] dir-ltr">
+											<span className="text-lg font-bold text-ink dir-ltr">
 												{targetPsych}
 											</span>
 											{isPsychUpgraded && originalPsych > 0 && (
-												<span className="text-xs font-bold text-[#205739] dir-ltr">
+												<span className="text-xs font-bold text-success dir-ltr">
 													(משודרג מ-{originalPsych}, +{targetPsych - originalPsych})
 												</span>
 											)}
@@ -553,17 +553,17 @@ export default function UniversityVerificationModal({
 									<button
 										type="button"
 										onClick={() => handleCopyIndividual(String(targetPsych), 'psych')}
-										className="px-3 py-1.5 rounded-lg border border-[#DDD7CC] bg-[#FAF8F5] hover:bg-[#F2EFE9] text-xs font-bold text-[#222222] flex items-center gap-1.5 transition cursor-pointer"
+										className="px-3 py-1.5 rounded-lg border border-line-strong bg-paper hover:bg-paper-2 text-xs font-bold text-ink flex items-center gap-1.5 transition cursor-pointer"
 										title="העתק ציון"
 									>
 										{copiedField === 'psych' ? (
 											<>
-												<Check className="h-3 w-3 text-[#205739]" />
-												<span className="text-[#205739]">הועתק</span>
+												<Check className="h-3 w-3 text-success" />
+												<span className="text-success">הועתק</span>
 											</>
 										) : (
 											<>
-												<Copy className="h-3 w-3 text-[#66635C]" />
+												<Copy className="h-3 w-3 text-ink-2" />
 												<span>העתק</span>
 											</>
 										)}
@@ -571,36 +571,36 @@ export default function UniversityVerificationModal({
 								</div>
 
 								{(effectiveQuant || effectiveVerbal || effectiveEnglish) && (
-									<div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-3 bg-[#FAF8F5] border border-[#E5DFD4] rounded-xl text-xs">
+									<div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-3 bg-paper border border-line rounded-xl text-xs">
 										{effectiveQuant && (
-											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-[#EAE5DA]">
-												<span className="text-[#66635C] font-medium">כמותי:</span>
+											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-line">
+												<span className="text-ink-2 font-medium">כמותי:</span>
 												<div className="flex items-center gap-1.5">
-													<span className="font-bold text-[#222222] dir-ltr">{effectiveQuant}</span>
+													<span className="font-bold text-ink dir-ltr">{effectiveQuant}</span>
 													{isPsychUpgraded && userProfile?.psychometricQuant && effectiveQuant > userProfile.psychometricQuant && (
-														<span className="text-[10px] text-[#205739] font-bold dir-ltr">(+{effectiveQuant - userProfile.psychometricQuant})</span>
+														<span className="text-[10px] text-success font-bold dir-ltr">(+{effectiveQuant - userProfile.psychometricQuant})</span>
 													)}
 												</div>
 											</div>
 										)}
 										{effectiveVerbal && (
-											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-[#EAE5DA]">
-												<span className="text-[#66635C] font-medium">מילולי:</span>
+											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-line">
+												<span className="text-ink-2 font-medium">מילולי:</span>
 												<div className="flex items-center gap-1.5">
-													<span className="font-bold text-[#222222] dir-ltr">{effectiveVerbal}</span>
+													<span className="font-bold text-ink dir-ltr">{effectiveVerbal}</span>
 													{isPsychUpgraded && userProfile?.psychometricVerbal && effectiveVerbal > userProfile.psychometricVerbal && (
-														<span className="text-[10px] text-[#205739] font-bold dir-ltr">(+{effectiveVerbal - userProfile.psychometricVerbal})</span>
+														<span className="text-[10px] text-success font-bold dir-ltr">(+{effectiveVerbal - userProfile.psychometricVerbal})</span>
 													)}
 												</div>
 											</div>
 										)}
 										{effectiveEnglish && (
-											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-[#EAE5DA]">
-												<span className="text-[#66635C] font-medium">אנגלית:</span>
+											<div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-line">
+												<span className="text-ink-2 font-medium">אנגלית:</span>
 												<div className="flex items-center gap-1.5">
-													<span className="font-bold text-[#222222] dir-ltr">{effectiveEnglish}</span>
+													<span className="font-bold text-ink dir-ltr">{effectiveEnglish}</span>
 													{isPsychUpgraded && userProfile?.psychometricEnglish && effectiveEnglish > userProfile.psychometricEnglish && (
-														<span className="text-[10px] text-[#205739] font-bold dir-ltr">(+{effectiveEnglish - userProfile.psychometricEnglish})</span>
+														<span className="text-[10px] text-success font-bold dir-ltr">(+{effectiveEnglish - userProfile.psychometricEnglish})</span>
 													)}
 												</div>
 											</div>
@@ -609,7 +609,7 @@ export default function UniversityVerificationModal({
 								)}
 							</div>
 						) : (
-							<div className="p-3 bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl text-xs text-[#66635C]">
+							<div className="p-3 bg-paper border border-line rounded-2xl text-xs text-ink-2">
 								מסלול זה אינו דורש פסיכומטרי (קבלה ישירה על סמך בגרות).
 							</div>
 						)}
@@ -619,39 +619,39 @@ export default function UniversityVerificationModal({
 					<div className="space-y-2.5">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-2">
-								<BookOpen className="h-4 w-4 text-[#3C3C3C]" />
-								<h3 className="text-xs sm:text-sm font-bold text-[#222222]">
+								<BookOpen className="h-4 w-4 text-ink" />
+								<h3 className="text-xs sm:text-sm font-bold text-ink">
 									2. ציוני בגרות להזנה במחשבון ({verificationSubjects.length} מקצועות)
 								</h3>
 							</div>
-							<span className="text-[11px] text-[#66635C] font-medium">
+							<span className="text-[11px] text-ink-2 font-medium">
 								ממוצע יעד צפוי: {track.targetBagrutAverage?.toFixed(1) || track.currentBagrutAverage?.toFixed(1)}
 							</span>
 						</div>
 
-						<div className="border border-[#E5DFD4] rounded-2xl overflow-hidden bg-white shadow-2xs divide-y divide-[#EAE5DA]">
+						<div className="border border-line rounded-2xl overflow-hidden bg-white shadow-2xs divide-y divide-line">
 							{verificationSubjects.map((sub, idx) => (
 								<div
 									key={idx}
 									className={`p-3 flex items-center justify-between gap-3 text-xs transition ${
-										sub.isUpgraded || sub.isNew ? 'bg-[#FAF8F5]/80' : 'bg-white'
+										sub.isUpgraded || sub.isNew ? 'bg-paper/80' : 'bg-white'
 									}`}
 								>
 									<div className="min-w-0 flex-1">
 										<div className="flex items-center gap-2 flex-wrap">
-											<span className="font-bold text-[#222222] truncate">
+											<span className="font-bold text-ink truncate">
 												{sub.name}
 											</span>
-											<span className="text-[11px] font-semibold text-[#66635C] bg-[#FAF8F5] border border-[#E5DFD4] px-1.5 py-0.5 rounded">
+											<span className="text-[11px] font-semibold text-ink-2 bg-paper border border-line px-1.5 py-0.5 rounded">
 												{sub.units} יח״ל
 											</span>
 											{sub.isNew && (
-												<span className="text-[10px] font-black text-[#205739] bg-[#EBF4EE] border border-[#C6DFCE] px-1.5 py-0.5 rounded">
+												<span className="text-[10px] font-bold text-success bg-success-soft border border-success/25 px-1.5 py-0.5 rounded">
 													מקצוע חדש
 												</span>
 											)}
 											{sub.isUpgraded && (
-												<span className="text-[10px] font-black text-[#3B2D60] bg-[#ECE9F8] border border-[#DDD7CC] px-1.5 py-0.5 rounded flex items-center gap-1">
+												<span className="text-[10px] font-bold text-[#3B2D60] bg-[#ECE9F8] border border-line-strong px-1.5 py-0.5 rounded flex items-center gap-1">
 													<TrendingUp className="h-2.5 w-2.5" />
 													<span>שודרג מ-{sub.originalGrade}</span>
 												</span>
@@ -660,18 +660,18 @@ export default function UniversityVerificationModal({
 									</div>
 
 									<div className="flex items-center gap-2.5 shrink-0">
-										<div className="w-14 text-center py-1 bg-white border border-[#DDD7CC] rounded-lg font-black text-sm text-[#222222]">
+										<div className="w-14 text-center py-1 bg-white border border-line-strong rounded-lg font-bold text-sm text-ink">
 											{sub.grade}
 										</div>
 
 										<button
 											type="button"
 											onClick={() => handleCopyIndividual(String(sub.grade), `sub_${idx}`)}
-											className="p-1.5 rounded-lg border border-[#DDD7CC] bg-[#FAF8F5] hover:bg-[#F2EFE9] text-[#66635C] hover:text-[#222222] transition cursor-pointer"
+											className="p-1.5 rounded-lg border border-line-strong bg-paper hover:bg-paper-2 text-ink-2 hover:text-ink transition cursor-pointer"
 											title="העתק ציון"
 										>
 											{copiedField === `sub_${idx}` ? (
-												<Check className="h-3.5 w-3.5 text-[#205739]" />
+												<Check className="h-3.5 w-3.5 text-success" />
 											) : (
 												<Copy className="h-3.5 w-3.5" />
 											)}
@@ -683,8 +683,8 @@ export default function UniversityVerificationModal({
 					</div>
 
 					{/* 100% Accuracy Guarantee Notice */}
-					<div className="p-3.5 bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl flex items-start gap-2.5 text-xs text-[#66635C]">
-						<ShieldCheck className="h-4 w-4 text-[#205739] shrink-0 mt-0.5" />
+					<div className="p-3.5 bg-paper border border-line rounded-2xl flex items-start gap-2.5 text-xs text-ink-2">
+						<ShieldCheck className="h-4 w-4 text-success shrink-0 mt-0.5" />
 						<p className="leading-relaxed">
 							<strong>התחייבות לדיוק מתמטי 1:1:</strong> מנוע האופטימיזציה של מתקבלים מיישם במדויק את כללי חישוב הסכם, בונוסי המקצועות וחוקי נשירת מקצועות לפי הנחיות {calcInfo.shortName} לשנת תשפ״ו. הסכם שתקבל במחשבון האוניברסיטה יהיה זהה לסכם המחושב כאן.
 						</p>
@@ -692,8 +692,8 @@ export default function UniversityVerificationModal({
 				</div>
 
 				{/* Modal Bottom Footer */}
-				<div className="p-4 bg-[#FAF8F5] border-t border-[#E5DFD4] flex items-center justify-between gap-3 shrink-0">
-					<span className="text-[11px] text-[#8A847C] font-medium hidden sm:inline">
+				<div className="p-4 bg-paper border-t border-line flex items-center justify-between gap-3 shrink-0">
+					<span className="text-[11px] text-ink-3 font-medium hidden sm:inline">
 						בדוק והשווה ישירות באתר האוניברסיטה
 					</span>
 
@@ -701,7 +701,7 @@ export default function UniversityVerificationModal({
 						<button
 							type="button"
 							onClick={onClose}
-							className="px-5 py-2 rounded-xl text-xs font-bold text-[#66635C] hover:text-[#222222] hover:bg-[#EAE5DA] transition cursor-pointer"
+							className="px-5 py-2 rounded-xl text-xs font-bold text-ink-2 hover:text-ink hover:bg-line transition cursor-pointer"
 						>
 							סגור
 						</button>
@@ -710,7 +710,7 @@ export default function UniversityVerificationModal({
 							href={calcInfo.calculatorUrl}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="px-5 py-2 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+							className="px-5 py-2 bg-ink hover:bg-black text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
 						>
 							<span>פתח מחשבון רשמי</span>
 							<ExternalLink className="h-3 w-3" />

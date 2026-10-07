@@ -232,19 +232,19 @@ export default function DegreeSearchSelector({
 			{/* ========================================================================= */}
 			{/* 1. TOP COMPONENT: SEARCH & EXPANDABLE FILTERS (חיפוש וסינון תארים) */}
 			{/* ========================================================================= */}
-			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-4 sm:p-5 shadow-xs space-y-3 shrink-0">
+			<div className="bg-white border border-line rounded-3xl p-4 sm:p-5 shadow-xs space-y-3 shrink-0">
 				{/* Top Integrated Title Bar */}
-				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-3.5">
+				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-line pb-3.5">
 					<div>
 						<div className="flex items-center gap-2 mb-1">
-							<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+							<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
 								שלב 2 מתוך 4: הגדרת מטרות
 							</span>
 						</div>
-						<h2 className="text-xl sm:text-2xl font-black text-[#222222]">
+						<h2 className="text-xl sm:text-2xl font-bold text-ink">
 							שלב 2: בחירת תארים מבוקשים
 						</h2>
-						<p className="text-xs text-[#66635C] mt-0.5">
+						<p className="text-xs text-ink-2 mt-0.5">
 							בחר את התארים והמוסדות שמעניין אותך לבדוק. סל היעדים שלך מתעדכן מיידית.
 						</p>
 					</div>
@@ -255,16 +255,16 @@ export default function DegreeSearchSelector({
 						onClick={() => setIsBasketOpen(!isBasketOpen)}
 						className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs border ${
 							selectedPrograms.length > 0
-								? 'bg-[#3C3C3C] text-white border-[#3C3C3C] hover:bg-[#2A2A2A]'
-								: 'bg-[#FAF8F5] text-[#44423D] border-[#DDD7CB] hover:bg-[#EFEAE0]'
+								? 'bg-ink text-white border-ink hover:bg-black'
+								: 'bg-paper text-ink-2 border-line-strong hover:bg-line'
 						}`}
 						title={isBasketOpen ? 'סגור את סל התארים' : 'פתח את סל התארים שנבחרו'}
 					>
 						<GraduationCap className="h-4 w-4" />
 						<span>סל תארים שנבחרו</span>
 						<span
-							className={`px-2 py-0.5 rounded-full text-[11px] font-extrabold ${
-								selectedPrograms.length > 0 ? 'bg-white text-black' : 'bg-[#E5DFD4] text-[#44423D]'
+							className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+								selectedPrograms.length > 0 ? 'bg-white text-black' : 'bg-line text-ink-2'
 							}`}
 						>
 							{selectedPrograms.length}
@@ -274,18 +274,18 @@ export default function DegreeSearchSelector({
 
 				{/* Search bar */}
 				<div className="relative">
-					<Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#8A847C]" />
+					<Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-3" />
 					<input
 						type="text"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder="חפש חוג ספציפי (למשל: מדעי המחשב, הנדסת חשמל, ניהול, משפטים, פסיכולוגיה)..."
-						className="w-full bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl pr-12 pl-10 py-3 text-sm font-medium text-[#222222] placeholder-[#8A847C] focus:outline-none focus:ring-2 focus:ring-[#222222]/20 focus:border-[#222222] transition"
+						className="w-full bg-paper border border-line rounded-2xl pr-12 pl-10 py-3 text-sm font-medium text-ink placeholder-ink-3 focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-ink transition"
 					/>
 					{searchQuery && (
 						<button
 							onClick={() => setSearchQuery('')}
-							className="absolute left-3.5 top-1/2 -translate-y-1/2 p-1 text-[#8A847C] hover:text-[#222222] cursor-pointer"
+							className="absolute left-3.5 top-1/2 -translate-y-1/2 p-1 text-ink-3 hover:text-ink cursor-pointer"
 						>
 							<X className="h-4 w-4" />
 						</button>
@@ -300,8 +300,8 @@ export default function DegreeSearchSelector({
 						onClick={() => setIsInstFilterOpen(!isInstFilterOpen)}
 						className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-2 border cursor-pointer ${
 							isInstFilterOpen || selectedInstFilters.length > 0
-								? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
-								: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+								? 'bg-ink border-ink text-white shadow-2xs'
+								: 'bg-paper border-line text-ink-2 hover:border-line-strong hover:text-ink'
 						}`}
 					>
 						<Landmark className="w-3.5 h-3.5" />
@@ -333,8 +333,8 @@ export default function DegreeSearchSelector({
 						onClick={() => setIsDisciplineFilterOpen(!isDisciplineFilterOpen)}
 						className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-2 border cursor-pointer ${
 							isDisciplineFilterOpen || selectedDisciplines.length > 0
-								? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
-								: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+								? 'bg-ink border-ink text-white shadow-2xs'
+								: 'bg-paper border-line text-ink-2 hover:border-line-strong hover:text-ink'
 						}`}
 					>
 						<GraduationCap className="w-3.5 h-3.5" />
@@ -368,7 +368,7 @@ export default function DegreeSearchSelector({
 								setSelectedInstFilters([]);
 								setSelectedDisciplines([]);
 							}}
-							className="text-xs font-semibold text-[#8A847C] hover:text-[#B91C1C] transition cursor-pointer px-2 flex items-center gap-1"
+							className="text-xs font-semibold text-ink-3 hover:text-[#B91C1C] transition cursor-pointer px-2 flex items-center gap-1"
 						>
 							<X className="w-3.5 h-3.5" />
 							<span>איפוס סינונים</span>
@@ -378,16 +378,16 @@ export default function DegreeSearchSelector({
 
 				{/* Expanded Panel: Institution */}
 				{isInstFilterOpen && (
-					<div className="pt-3 border-t border-[#F0EBE1] space-y-2">
+					<div className="pt-3 border-t border-paper-2 space-y-2">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-bold text-[#66635C] block">
+							<span className="text-xs font-bold text-ink-2 block">
 								סינון לפי מוסד (ניתן לבחור מספר מוסדות במקביל):
 							</span>
 							{selectedInstFilters.length > 0 && (
 								<button
 									type="button"
 									onClick={() => setSelectedInstFilters([])}
-									className="text-[11px] text-[#8A847C] hover:text-[#222222] font-semibold cursor-pointer"
+									className="text-[11px] text-ink-3 hover:text-ink font-semibold cursor-pointer"
 								>
 									איפוס לכל המוסדות
 								</button>
@@ -406,8 +406,8 @@ export default function DegreeSearchSelector({
 										onClick={() => handleToggleInstitution(inst.id)}
 										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border cursor-pointer ${
 											isChipSelected
-												? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
-												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+												? 'bg-ink border-ink text-white shadow-2xs'
+												: 'bg-paper border-line text-ink-2 hover:border-line-strong hover:text-ink'
 										}`}
 									>
 										{inst.id !== 'all' && (
@@ -426,16 +426,16 @@ export default function DegreeSearchSelector({
 
 				{/* Expanded Panel: Discipline */}
 				{isDisciplineFilterOpen && (
-					<div className="pt-3 border-t border-[#F0EBE1] space-y-2">
+					<div className="pt-3 border-t border-paper-2 space-y-2">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-bold text-[#66635C] block">
+							<span className="text-xs font-bold text-ink-2 block">
 								סינון לפי תחום דעת (ניתן לבחור מספר תחומים במקביל):
 							</span>
 							{selectedDisciplines.length > 0 && (
 								<button
 									type="button"
 									onClick={() => setSelectedDisciplines([])}
-									className="text-[11px] text-[#8A847C] hover:text-[#222222] font-semibold cursor-pointer"
+									className="text-[11px] text-ink-3 hover:text-ink font-semibold cursor-pointer"
 								>
 									איפוס לכל התחומים
 								</button>
@@ -454,8 +454,8 @@ export default function DegreeSearchSelector({
 										onClick={() => handleToggleDiscipline(disc.id)}
 										className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border cursor-pointer ${
 											isDiscSelected
-												? 'bg-[#3C3C3C] border-[#3C3C3C] text-white shadow-2xs'
-												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:border-[#D5CFC2] hover:text-[#222222]'
+												? 'bg-ink border-ink text-white shadow-2xs'
+												: 'bg-paper border-line text-ink-2 hover:border-line-strong hover:text-ink'
 										}`}
 									>
 										{isDiscSelected && disc.id !== 'all' && (
@@ -474,13 +474,13 @@ export default function DegreeSearchSelector({
 			{/* 2. DEGREE CATALOG: FULL-WIDTH GRID WITH INTERNAL SCROLL */}
 			{/* ========================================================================= */}
 			<div className="w-full flex-1 min-h-0 flex flex-col space-y-2">
-				<div className="flex items-center justify-between text-xs text-[#66635C] font-semibold px-1 shrink-0">
+				<div className="flex items-center justify-between text-xs text-ink-2 font-semibold px-1 shrink-0">
 					{isCatalogLoading ? (
 						<span>טוען את קטלוג התארים...</span>
 					) : (
 						<span>
-							נמצאו <strong className="text-[#222222]">{filteredPrograms.length}</strong> תוכניות לימוד
-							מתאימות ב-<strong className="text-[#1E597B]">{uniqueInstitutionsCount}</strong> מוסדות
+							נמצאו <strong className="text-ink">{filteredPrograms.length}</strong> תוכניות לימוד
+							מתאימות ב-<strong className="text-accent">{uniqueInstitutionsCount}</strong> מוסדות
 						</span>
 					)}
 					<div className="flex items-center gap-3">
@@ -488,7 +488,7 @@ export default function DegreeSearchSelector({
 						<button
 							type="button"
 							onClick={() => setIsBasketOpen(true)}
-							className="text-xs font-bold text-[#1E597B] hover:underline flex items-center gap-1 cursor-pointer"
+							className="text-xs font-bold text-accent hover:underline flex items-center gap-1 cursor-pointer"
 						>
 							<GraduationCap className="w-3.5 h-3.5" />
 							<span>צפה בסל ({selectedPrograms.length})</span>
@@ -508,15 +508,15 @@ export default function DegreeSearchSelector({
 								key={cardKey}
 								className={`p-3 rounded-2xl border transition-all duration-150 flex flex-col justify-between ${
 									selected
-										? 'bg-[#F9F7F2] border-[#3C3C3C] shadow-2xs ring-1 ring-[#3C3C3C]/10'
-										: 'bg-white border-[#E5DFD4] hover:border-[#D5CFC2] hover:shadow-2xs'
+										? 'bg-[#F9F7F2] border-ink shadow-2xs ring-1 ring-ink/10'
+										: 'bg-white border-line hover:border-line-strong hover:shadow-2xs'
 								}`}
 							>
 								{/* Top Line: Field of Study & Compact Action Button */}
 								<div className="flex items-start justify-between gap-2">
 									<div className="min-w-0 flex-1">
 										<h4
-											className="text-xs sm:text-sm font-bold text-[#222222] leading-snug line-clamp-1"
+											className="text-xs sm:text-sm font-bold text-ink leading-snug line-clamp-1"
 											title={item.program.fieldOfStudy}
 										>
 											{item.program.fieldOfStudy}
@@ -528,8 +528,8 @@ export default function DegreeSearchSelector({
 										onClick={() => onToggleProgram(item)}
 										className={`px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0 cursor-pointer ${
 											selected
-												? 'bg-[#EBF4EE] text-[#205739] border border-[#C6DFCE] hover:bg-[#FEE2E2] hover:text-[#991B1B] hover:border-[#FECACA]'
-												: 'bg-[#FAF8F5] text-[#222222] border border-[#E5DFD4] hover:bg-[#3C3C3C] hover:text-white hover:border-[#3C3C3C]'
+												? 'bg-success-soft text-success border border-success/25 hover:bg-[#FEE2E2] hover:text-[#991B1B] hover:border-[#FECACA]'
+												: 'bg-paper text-ink border border-line hover:bg-ink hover:text-white hover:border-ink'
 										}`}
 										title={selected ? 'הסר מסל היעדים' : 'הוסף לסל היעדים'}
 									>
@@ -548,10 +548,10 @@ export default function DegreeSearchSelector({
 								</div>
 
 								{/* Bottom Line: Institution info & Expandable Threshold Button */}
-								<div className="flex items-center justify-between gap-2 mt-2 pt-1.5 border-t border-[#F5F2EB]/90 text-xs">
+								<div className="flex items-center justify-between gap-2 mt-2 pt-1.5 border-t border-paper-2/90 text-xs">
 									<div className="flex items-center gap-1.5 min-w-0">
 										<UniversityLogo institution={item.institutionId} size="xs" showBadge={false} />
-										<span className="text-[#1E597B] font-bold text-[11px] truncate">
+										<span className="text-accent font-bold text-[11px] truncate">
 											{item.institutionName.replace('אוניברסיטת ', '')}
 										</span>
 									</div>
@@ -561,8 +561,8 @@ export default function DegreeSearchSelector({
 										onClick={() => toggleExpandCard(cardKey)}
 										className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold border transition cursor-pointer shrink-0 ${
 											threshold
-												? 'bg-[#FDF6E8] border-[#ECDAB6] text-[#825B15] hover:bg-[#F9ECCF]'
-												: 'bg-[#FAF8F5] border-[#E5DFD4] text-[#66635C] hover:bg-[#F0EBE1]'
+												? 'bg-warning-soft border-warning/30 text-warning hover:bg-[#F9ECCF]'
+												: 'bg-paper border-line text-ink-2 hover:bg-paper-2'
 										}`}
 										title="לחץ להרחבת פרטי סף ודרישות קבלה"
 									>
@@ -577,34 +577,34 @@ export default function DegreeSearchSelector({
 
 								{/* Expandable Admission Details Drawer */}
 								{isExpanded && (
-									<div className="mt-2.5 pt-2.5 border-t border-[#EAE5DA] space-y-1.5 text-xs bg-[#FAF8F5] -mx-3 -mb-3 p-3 rounded-b-2xl animate-in fade-in-50 duration-200">
+									<div className="mt-2.5 pt-2.5 border-t border-line space-y-1.5 text-xs bg-paper -mx-3 -mb-3 p-3 rounded-b-2xl animate-in fade-in-50 duration-200">
 										{threshold && (
-											<div className="flex items-center justify-between text-[#66635C]">
+											<div className="flex items-center justify-between text-ink-2">
 												<span>ציון סף קבלה:</span>
-												<span className="font-extrabold text-[#222222]">{threshold}</span>
+												<span className="font-bold text-ink">{threshold}</span>
 											</div>
 										)}
 										{officialPsychMin(item.program) && (
-											<div className="flex items-center justify-between text-[#66635C]">
+											<div className="flex items-center justify-between text-ink-2">
 												<span>פסיכומטרי מינימלי (רשמי):</span>
-												<span className="font-bold text-[#222222]">{officialPsychMin(item.program)}</span>
+												<span className="font-bold text-ink">{officialPsychMin(item.program)}</span>
 											</div>
 										)}
-										<div className="flex items-center justify-between text-[#66635C]">
+										<div className="flex items-center justify-between text-ink-2">
 											<span>אפיק קבלה:</span>
-											<span className="font-bold text-[#222222]">
+											<span className="font-bold text-ink">
 												{item.program.requiresPsychometric === false ? 'בגרות ישירה בלבד' : 'שקלול בגרות ופסיכומטרי'}
 											</span>
 										</div>
 										{item.program.directBagrutEligible && item.program.directBagrutMinAverage && (
-											<div className="flex items-center justify-between text-[#66635C]">
+											<div className="flex items-center justify-between text-ink-2">
 												<span>קבלה ישירה לבגרות:</span>
-												<span className="font-bold text-[#222222]">{item.program.directBagrutMinAverage} ומעלה</span>
+												<span className="font-bold text-ink">{item.program.directBagrutMinAverage} ומעלה</span>
 											</div>
 										)}
 										{item.program.comments && (
-											<div className="text-[11px] text-[#66635C] bg-white p-2 rounded-lg border border-[#E5DFD4] leading-relaxed">
-												<span className="font-bold text-[#222222] block mb-0.5">הערות ותנאי קבלה:</span>
+											<div className="text-[11px] text-ink-2 bg-white p-2 rounded-lg border border-line leading-relaxed">
+												<span className="font-bold text-ink block mb-0.5">הערות ותנאי קבלה:</span>
 												{item.program.comments}
 											</div>
 										)}
@@ -634,18 +634,18 @@ export default function DegreeSearchSelector({
 					/>
 
 					{/* Drawer Panel */}
-					<div className="relative w-full max-w-md bg-white shadow-2xl border-l border-[#E5DFD4] h-full flex flex-col z-10 p-5 dir-rtl text-right animate-in slide-in-from-right">
+					<div className="relative w-full max-w-md bg-white shadow-2xl border-l border-line h-full flex flex-col z-10 p-5 dir-rtl text-right animate-in slide-in-from-right">
 						{/* Header */}
-						<div className="flex items-center justify-between border-b border-[#EAE5DA] pb-4 shrink-0">
+						<div className="flex items-center justify-between border-b border-line pb-4 shrink-0">
 							<div className="flex items-center gap-2">
-								<div className="p-2 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222]">
-									<GraduationCap className="h-5 w-5 text-blue-700" />
+								<div className="p-2 rounded-xl bg-paper border border-line text-ink">
+									<GraduationCap className="h-5 w-5 text-accent" />
 								</div>
 								<div>
-									<h3 className="text-base font-black text-[#222222]">
+									<h3 className="text-base font-bold text-ink">
 										סל תארים שנבחרו
 									</h3>
-									<span className="text-xs text-[#66635C]">
+									<span className="text-xs text-ink-2">
 										{selectedPrograms.length === 0 ? '0 תארים נבחרו' : `${selectedPrograms.length} תארים בסל היעדים`}
 									</span>
 								</div>
@@ -656,7 +656,7 @@ export default function DegreeSearchSelector({
 									<button
 										type="button"
 										onClick={onClearAll}
-										className="text-xs text-[#9B3327] hover:underline font-semibold cursor-pointer px-2"
+										className="text-xs text-danger hover:underline font-semibold cursor-pointer px-2"
 									>
 										נקה הכל
 									</button>
@@ -664,7 +664,7 @@ export default function DegreeSearchSelector({
 								<button
 									type="button"
 									onClick={() => setIsBasketOpen(false)}
-									className="p-1.5 rounded-xl hover:bg-[#FAF8F5] text-[#66635C] hover:text-[#222222] transition border border-transparent hover:border-[#E5DFD4] cursor-pointer"
+									className="p-1.5 rounded-xl hover:bg-paper text-ink-2 hover:text-ink transition border border-transparent hover:border-line cursor-pointer"
 									title="סגור סל"
 								>
 									<X className="h-5 w-5" />
@@ -674,12 +674,12 @@ export default function DegreeSearchSelector({
 
 						{/* Selected Programs List */}
 						{selectedPrograms.length === 0 ? (
-							<div className="my-auto text-center py-12 px-4 border-2 border-dashed border-[#E5DFD4] rounded-2xl bg-[#FAF8F5] space-y-2">
-								<GraduationCap className="h-8 w-8 text-[#8A847C] mx-auto opacity-60" />
-								<p className="text-xs font-bold text-[#66635C]">
+							<div className="my-auto text-center py-12 px-4 border-2 border-dashed border-line rounded-2xl bg-paper space-y-2">
+								<GraduationCap className="h-8 w-8 text-ink-3 mx-auto opacity-60" />
+								<p className="text-xs font-bold text-ink-2">
 									טרם נבחרו תארים
 								</p>
-								<p className="text-[11px] text-[#8A847C] leading-relaxed max-w-xs mx-auto">
+								<p className="text-[11px] text-ink-3 leading-relaxed max-w-xs mx-auto">
 									לחץ על &quot;+ הוסף&quot; בכרטיסי התארים כדי להוסיף אותם לסל היעדים שלך
 								</p>
 							</div>
@@ -690,20 +690,20 @@ export default function DegreeSearchSelector({
 									return (
 										<div
 											key={target.program.id}
-											className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] hover:border-[#D5CFC2] transition flex items-center justify-between gap-2.5 shadow-2xs group"
+											className="p-3 rounded-2xl bg-paper border border-line hover:border-line-strong transition flex items-center justify-between gap-2.5 shadow-2xs group"
 										>
 											<div className="flex items-center gap-2.5 min-w-0 flex-1">
 												<UniversityLogo institution={target.institutionId} size="xs" shape="circle" />
 												<div className="min-w-0 flex-1">
-													<h5 className="text-xs font-bold text-[#222222] truncate" title={target.program.fieldOfStudy}>
+													<h5 className="text-xs font-bold text-ink truncate" title={target.program.fieldOfStudy}>
 														{target.program.fieldOfStudy}
 													</h5>
 													<div className="flex items-center gap-1.5 mt-0.5">
-														<span className="text-[11px] text-[#1E597B] font-semibold truncate">
+														<span className="text-[11px] text-accent font-semibold truncate">
 															{instInfo?.shortName || target.institutionName.replace('אוניברסיטת ', '')}
 														</span>
 														{target.program.admissionThreshold && (
-															<span className="text-[10px] text-[#825B15] bg-[#FDF6E8] border border-[#ECDAB6] px-1.5 py-0.5 rounded font-bold">
+															<span className="text-[10px] text-warning bg-warning-soft border border-warning/30 px-1.5 py-0.5 rounded font-bold">
 																סף: {target.program.admissionThreshold}
 															</span>
 														)}
@@ -714,7 +714,7 @@ export default function DegreeSearchSelector({
 											<button
 												type="button"
 												onClick={() => onRemoveProgram(target.program.id)}
-												className="p-1.5 rounded-lg text-[#8A847C] hover:text-[#9B3327] hover:bg-[#FEE2E2] transition cursor-pointer shrink-0"
+												className="p-1.5 rounded-lg text-ink-3 hover:text-danger hover:bg-[#FEE2E2] transition cursor-pointer shrink-0"
 												title="הסר מהסל"
 											>
 												<X className="h-4 w-4" />
@@ -726,7 +726,7 @@ export default function DegreeSearchSelector({
 						)}
 
 						{/* Primary Action Button inside the Drawer */}
-						<div className="pt-4 border-t border-[#EAE5DA] space-y-2 mt-auto shrink-0">
+						<div className="pt-4 border-t border-line space-y-2 mt-auto shrink-0">
 							{onProceedToNextStep && (
 								<button
 									type="button"
@@ -737,8 +737,8 @@ export default function DegreeSearchSelector({
 									disabled={selectedPrograms.length === 0}
 									className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 ${
 										selectedPrograms.length > 0
-											? 'bg-[#EA580C] hover:bg-[#D94E07] text-white shadow-xs cursor-pointer active:scale-[0.99]'
-											: 'bg-[#E5DFD4] text-[#88857E] cursor-not-allowed border border-[#DDD7CB]'
+											? 'bg-ink hover:bg-black text-white shadow-xs cursor-pointer active:scale-[0.99]'
+											: 'bg-line text-ink-3 cursor-not-allowed border border-line-strong'
 									}`}
 								>
 									<span>המשך לדוח קבלה אישי ({selectedPrograms.length})</span>
@@ -746,10 +746,10 @@ export default function DegreeSearchSelector({
 								</button>
 							)}
 
-							<div className="flex items-center justify-center gap-1.5 text-[11px] text-[#66635C]">
+							<div className="flex items-center justify-center gap-1.5 text-[11px] text-ink-2">
 								{isLoadedFromDb ? (
 									<>
-										<span className="w-1.5 h-1.5 rounded-full bg-[#205739]" />
+										<span className="w-1.5 h-1.5 rounded-full bg-success" />
 										<span>מסד נתונים מסונכרן (SQLite)</span>
 									</>
 								) : (

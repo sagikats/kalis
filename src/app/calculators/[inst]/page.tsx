@@ -199,13 +199,13 @@ export async function generateMetadata({
 
 function CalculatorLoadingFallback() {
 	return (
-		<div className="min-h-screen bg-[#FAF8F5] text-[#222222] flex flex-col items-center justify-center p-6 space-y-4 dir-rtl" dir="rtl">
-			<div className="p-4 rounded-3xl bg-white border border-[#E5DFD4] text-[#222222] shadow-xs animate-pulse">
-				<Calculator className="h-8 w-8 text-blue-700" />
+		<div className="min-h-screen bg-paper text-ink flex flex-col items-center justify-center p-6 space-y-4 dir-rtl" dir="rtl">
+			<div className="p-4 rounded-3xl bg-white border border-line text-ink shadow-xs animate-pulse">
+				<Calculator className="h-8 w-8 text-accent" />
 			</div>
 			<div className="text-center space-y-1">
-				<h3 className="text-lg font-bold text-[#222222]">טוען מחשבון סכם...</h3>
-				<p className="text-xs text-[#66635C]">טוען את נוסחאות הסכם של האוניברסיטה</p>
+				<h3 className="text-lg font-bold text-ink">טוען מחשבון סכם...</h3>
+				<p className="text-xs text-ink-2">טוען את נוסחאות הסכם של האוניברסיטה</p>
 			</div>
 		</div>
 	);

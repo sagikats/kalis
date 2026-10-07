@@ -153,8 +153,8 @@ export default function UniversityLogo({
 		xs: { px: 22, pad: 'p-0.5', text: 'text-[9px]', nameText: 'text-xs' },
 		sm: { px: 28, pad: 'p-1', text: 'text-[10px]', nameText: 'text-xs font-bold' },
 		md: { px: 36, pad: 'p-1.5', text: 'text-[11px]', nameText: 'text-sm font-bold' },
-		lg: { px: 46, pad: 'p-2', text: 'text-xs', nameText: 'text-base font-black' },
-		xl: { px: 58, pad: 'p-2.5', text: 'text-sm', nameText: 'text-lg font-black' }
+		lg: { px: 46, pad: 'p-2', text: 'text-xs', nameText: 'text-base font-bold' },
+		xl: { px: 58, pad: 'p-2.5', text: 'text-sm', nameText: 'text-lg font-bold' }
 	};
 
 	const shapeClass =
@@ -166,7 +166,7 @@ export default function UniversityLogo({
 		<div className={`inline-flex items-center gap-2 ${className}`}>
 			<div
 				style={{ width: currentSize.px, height: currentSize.px }}
-				className={`${shapeClass} ${currentSize.pad} bg-white border border-[#E5DFD4] shadow-xs flex items-center justify-center shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform duration-200`}
+				className={`${shapeClass} ${currentSize.pad} bg-white border border-line shadow-xs flex items-center justify-center shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform duration-200`}
 				title={meta.fullName}
 			>
 				{/* Official authentic vector emblem */}
@@ -179,14 +179,14 @@ export default function UniversityLogo({
 			</div>
 
 			{showName && (
-				<span className={`${currentSize.nameText} text-[#222222] leading-tight`}>
+				<span className={`${currentSize.nameText} text-ink leading-tight`}>
 					{meta.shortName}
 				</span>
 			)}
 
 			{showBadge && (
 				<span
-					className="text-[9px] font-black px-1.5 py-0.5 rounded border border-[#E5DFD4] bg-[#FAF8F5] text-[#55524B] shrink-0"
+					className="text-[9px] font-bold px-1.5 py-0.5 rounded border border-line bg-paper text-ink-2 shrink-0"
 				>
 					{meta.code}
 				</span>

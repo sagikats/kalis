@@ -122,7 +122,7 @@ export default function RootLayout({
         <script src="https://accounts.google.com/gsi/client" async defer></script>
         <JsonLd />
       </head>
-      <body className="font-sans min-h-full flex flex-col bg-[#FAF8F5] text-[#222222] selection:bg-[#EAE5DB] selection:text-[#222222]">
+      <body className="font-sans min-h-full flex flex-col bg-paper text-ink selection:bg-line selection:text-ink">
         <AuthProvider>
           <Navbar />
           <main className="flex-1 w-full">{children}</main>

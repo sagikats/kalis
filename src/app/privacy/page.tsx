@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
 	return (
-		<main dir="rtl" className="min-h-screen bg-[#FAF8F5] text-[#222222] py-12 px-4 sm:px-6 lg:px-8">
+		<main dir="rtl" className="min-h-screen bg-paper text-ink py-12 px-4 sm:px-6 lg:px-8">
 			<div className="max-w-4xl mx-auto">
 				{/* Breadcrumb & Top Bar */}
 				<div className="mb-8">
 					<Link
 						href="/"
-						className="inline-flex items-center gap-2 text-xs font-bold text-[#66635C] hover:text-[#222222] bg-white px-3.5 py-1.5 rounded-full border border-[#E5DFD4] shadow-2xs transition-colors"
+						className="inline-flex items-center gap-2 text-xs font-bold text-ink-2 hover:text-ink bg-white px-3.5 py-1.5 rounded-full border border-line shadow-2xs transition-colors"
 					>
 						<ArrowRight className="w-3.5 h-3.5" />
 						חזרה לדף הבית
@@ -24,25 +24,25 @@ export default function PrivacyPage() {
 				</div>
 
 				{/* Header Section */}
-				<header className="mb-10 text-center sm:text-right border-b border-[#E5DFD4] pb-8">
-					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ECFDF5] border border-[#A7F3D0] text-[#065F46] text-xs font-bold mb-4">
+				<header className="mb-10 text-center sm:text-right border-b border-line pb-8">
+					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-success-soft border border-success/25 text-success text-xs font-bold mb-4">
 						<ShieldCheck className="w-3.5 h-3.5" />
 						הגנת פרטיות קפדנית
 					</div>
-					<h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#222222] mb-3">
+					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-ink mb-3">
 						מדיניות פרטיות ושמירת נתונים
 					</h1>
-					<p className="text-sm sm:text-base text-[#66635C] max-w-2xl leading-relaxed">
+					<p className="text-sm sm:text-base text-ink-2 max-w-2xl leading-relaxed">
 						אנו מחויבים להגנה מוחלטת על פרטיותך וסודיות ציוניך. מסמך זה מפרט כיצד נשמר המידע, לאילו מטרות, וכיצד מובטחת אי-הפצתו. עודכן לאחרונה: ספטמבר 2026.
 					</p>
 				</header>
 
 				{/* Pledge Banner: Zero Third-Party Sharing */}
-				<div className="mb-8 p-5 sm:p-6 rounded-2xl bg-[#ECFDF5] border border-[#A7F3D0] shadow-xs">
+				<div className="mb-8 p-5 sm:p-6 rounded-2xl bg-success-soft border border-success/25 shadow-xs">
 					<div className="flex items-start gap-3.5">
 						<EyeOff className="w-6 h-6 text-[#059669] shrink-0 mt-0.5" />
 						<div>
-							<h2 className="text-base font-bold text-[#065F46] mb-1.5">
+							<h2 className="text-base font-bold text-success mb-1.5">
 								התחייבות ברזל: אי-הפצה ואי-מסחר בנתוני המשתמש
 							</h2>
 							<p className="text-xs sm:text-sm text-[#047857] leading-relaxed">
@@ -53,11 +53,11 @@ export default function PrivacyPage() {
 				</div>
 
 				{/* Content Sections */}
-				<div className="space-y-8 text-sm leading-relaxed text-[#44423D]">
+				<div className="space-y-8 text-sm leading-relaxed text-ink-2">
 					{/* Section 1: Legal Basis and Voluntary Submission */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<UserCheck className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<UserCheck className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">1. הודעה לפי סעיף 11 לחוק הגנת הפרטיות ומסירת מידע מרצון</h3>
 						</div>
 						<p className="mb-3">
@@ -74,27 +74,27 @@ export default function PrivacyPage() {
 					</section>
 
 					{/* Section 2: Types of Data Collected */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<Database className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<Database className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">2. סוגי המידע הנאספים במערכת</h3>
 						</div>
 						<div className="space-y-3">
-							<div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4]">
-								<h4 className="font-bold text-xs text-[#222222] mb-1">א. מידע חשבון ואימות</h4>
-								<p className="text-xs text-[#66635C]">
+							<div className="p-3.5 rounded-xl bg-paper border border-line">
+								<h4 className="font-bold text-xs text-ink mb-1">א. מידע חשבון ואימות</h4>
+								<p className="text-xs text-ink-2">
 									שם מלא, כתובת דואר אלקטרוני, סיסמה מוצפנת ומספר טלפון (אופציונלי). לכל מועמד מוקצה מזהה מערכת ייעודי לצורכי סנכרון הנתונים בשרת.
 								</p>
 							</div>
-							<div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4]">
-								<h4 className="font-bold text-xs text-[#222222] mb-1">ב. מידע אקדמי וציונים</h4>
-								<p className="text-xs text-[#66635C]">
+							<div className="p-3.5 rounded-xl bg-paper border border-line">
+								<h4 className="font-bold text-xs text-ink mb-1">ב. מידע אקדמי וציונים</h4>
+								<p className="text-xs text-ink-2">
 									ציוני בחינות בגרות (ציונים, יחידות לימוד ומקצועות), ציוני פסיכומטרי (ציון רב-תחומי ודגשים כמותי/מילולי), העדפות זמני לימוד ויעדי תארים שנבחרו.
 								</p>
 							</div>
-							<div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4]">
-								<h4 className="font-bold text-xs text-[#222222] mb-1">ג. נתוני גלישה טכניים (אנונימיים)</h4>
-								<p className="text-xs text-[#66635C]">
+							<div className="p-3.5 rounded-xl bg-paper border border-line">
+								<h4 className="font-bold text-xs text-ink mb-1">ג. נתוני גלישה טכניים (אנונימיים)</h4>
+								<p className="text-xs text-ink-2">
 									כתובות IP וזמני גישה לצורכי אבטחת מידע, מניעת מתקפות סייבר וניטור תקינות השרת, ללא שיוך מסחרי.
 								</p>
 							</div>
@@ -102,9 +102,9 @@ export default function PrivacyPage() {
 					</section>
 
 					{/* Section 3: Information Security */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<Lock className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<Lock className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">3. אבטחת מידע והצפנה</h3>
 						</div>
 						<p className="mb-3">
@@ -124,9 +124,9 @@ export default function PrivacyPage() {
 					</section>
 
 					{/* Section 4: Right to Delete and Inspect */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<Trash2 className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<Trash2 className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">4. זכות העיון, התיקון והזכות למחיקת מידע (&quot;הזכות להישכח&quot;)</h3>
 						</div>
 						<p className="mb-3">
@@ -143,9 +143,9 @@ export default function PrivacyPage() {
 					</section>
 
 					{/* Section 5: Cookies and LocalStorage */}
-					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5DFD4] shadow-xs">
-						<div className="flex items-center gap-2.5 mb-3 text-[#222222]">
-							<HelpCircle className="w-5 h-5 text-[#3C3C3C]" />
+					<section className="bg-white p-6 sm:p-8 rounded-2xl border border-line shadow-xs">
+						<div className="flex items-center gap-2.5 mb-3 text-ink">
+							<HelpCircle className="w-5 h-5 text-ink" />
 							<h3 className="text-lg font-bold">5. עוגיות (Cookies) ואחסון מקומי בדפדפן</h3>
 						</div>
 						<p className="mb-2">
@@ -158,12 +158,12 @@ export default function PrivacyPage() {
 				</div>
 
 				{/* Bottom Navigation Link */}
-				<div className="mt-12 text-center border-t border-[#E5DFD4] pt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-[#66635C]">
-					<Link href="/terms" className="hover:text-[#222222] underline">
+				<div className="mt-12 text-center border-t border-line pt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-ink-2">
+					<Link href="/terms" className="hover:text-ink underline">
 						קרא את תנאי השימוש וכתב הגבלת האחריות
 					</Link>
 					<span>•</span>
-					<Link href="/" className="hover:text-[#222222] underline">
+					<Link href="/" className="hover:text-ink underline">
 						חזרה לדף הראשי
 					</Link>
 				</div>

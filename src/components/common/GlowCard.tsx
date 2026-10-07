@@ -35,7 +35,7 @@ export default function GlowCard({
 			ref={cardRef}
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
-			className={`relative rounded-3xl bg-white border border-[#E7E2D8] hover:border-[#D5CFC2] transition-all duration-300 overflow-hidden group shadow-[0_4px_24px_-4px_rgba(40,30,20,0.04)] hover:shadow-[0_16px_40px_-6px_rgba(40,30,20,0.08)] ${className}`}
+			className={`relative rounded-3xl bg-white border border-line hover:border-line-strong transition-all duration-300 overflow-hidden group shadow-[0_4px_24px_-4px_rgba(40,30,20,0.04)] hover:shadow-[0_16px_40px_-6px_rgba(40,30,20,0.08)] ${className}`}
 		>
 			{/* Very subtle warm ambient hover spotlight */}
 			<div

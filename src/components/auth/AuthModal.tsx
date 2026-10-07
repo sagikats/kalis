@@ -192,32 +192,32 @@ export default function AuthModal() {
 	};
 
 	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#222222]/40 backdrop-blur-sm animate-in fade-in duration-200">
+		<div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40 backdrop-blur-sm animate-in fade-in duration-200">
 			{/* Backdrop click to close */}
 			<div className="absolute inset-0" onClick={closeAuthModal} />
 
 			<div
 				dir="rtl"
-				className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#E5DFD4] overflow-hidden z-10 animate-in zoom-in-95 duration-200"
+				className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-line overflow-hidden z-10 animate-in zoom-in-95 duration-200"
 			>
 				{/* Top Header Decor */}
-				<div className="bg-[#FAF8F5] border-b border-[#E5DFD4] p-6 text-center relative overflow-hidden">
+				<div className="bg-paper border-b border-line p-6 text-center relative overflow-hidden">
 					<button
 						onClick={closeAuthModal}
-						className="absolute top-4 left-4 p-1.5 rounded-full text-[#66635C] hover:text-[#222222] hover:bg-[#E5DFD4]/50 transition-colors cursor-pointer"
+						className="absolute top-4 left-4 p-1.5 rounded-full text-ink-2 hover:text-ink hover:bg-line/50 transition-colors cursor-pointer"
 						aria-label="סגור"
 					>
 						<X className="w-5 h-5" />
 					</button>
 
-					<div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white border border-[#E5DFD4] text-[#222222] shadow-sm mb-3">
+					<div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white border border-line text-ink shadow-sm mb-3">
 						{mode === 'login' ? <LogIn className="w-6 h-6" /> : <UserPlus className="w-6 h-6" />}
 					</div>
 
-					<h3 className="text-xl font-bold text-[#222222] tracking-tight">
+					<h3 className="text-xl font-bold text-ink tracking-tight">
 						{mode === 'login' ? 'ברוכים השבים למתקבלים' : 'הצטרפות לפלטפורמת מתקבלים'}
 					</h3>
-					<p className="text-xs text-[#66635C] mt-1 max-w-xs mx-auto">
+					<p className="text-xs text-ink-2 mt-1 max-w-xs mx-auto">
 						{mode === 'login'
 							? 'התחבר כדי לצפות במסלולים השמורים שלך ולנהל את תוכנית הקבלה'
 							: 'הרשמה מהירה מאפשרת לשמור את המסלולים שלך ולסנכרן את הנתונים'}
@@ -225,7 +225,7 @@ export default function AuthModal() {
 				</div>
 
 				{/* Tabs */}
-				<div className="flex border-b border-[#E5DFD4] bg-[#FAF8F5]/60 p-1">
+				<div className="flex border-b border-line bg-paper/60 p-1">
 					<button
 						type="button"
 						onClick={() => {
@@ -235,8 +235,8 @@ export default function AuthModal() {
 						}}
 						className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer ${
 							mode === 'login'
-								? 'bg-white text-[#222222] shadow-xs'
-								: 'text-[#66635C] hover:text-[#222222]'
+								? 'bg-white text-ink shadow-xs'
+								: 'text-ink-2 hover:text-ink'
 						}`}
 					>
 						<LogIn className="w-4 h-4" />
@@ -251,8 +251,8 @@ export default function AuthModal() {
 						}}
 						className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer ${
 							mode === 'register'
-								? 'bg-white text-[#222222] shadow-xs'
-								: 'text-[#66635C] hover:text-[#222222]'
+								? 'bg-white text-ink shadow-xs'
+								: 'text-ink-2 hover:text-ink'
 						}`}
 					>
 						<UserPlus className="w-4 h-4" />
@@ -263,20 +263,20 @@ export default function AuthModal() {
 				{/* Success State */}
 				{successData ? (
 					<div className="p-8 text-center animate-in zoom-in-95 duration-200">
-						<div className="w-16 h-16 bg-[#EBF4EE] text-[#205739] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#C6DFCE]">
+						<div className="w-16 h-16 bg-success-soft text-success rounded-full flex items-center justify-center mx-auto mb-4 border border-success/25">
 							<CheckCircle2 className="w-8 h-8" />
 						</div>
-						<h4 className="text-lg font-bold text-[#222222] mb-2">
+						<h4 className="text-lg font-bold text-ink mb-2">
 							{mode === 'register' ? 'נרשמת בהצלחה למערכת!' : 'התחברת בהצלחה!'}
 						</h4>
-						<p className="text-xs text-[#8A847C] mt-3">החלון ייסגר כעת אוטומטית...</p>
+						<p className="text-xs text-ink-3 mt-3">החלון ייסגר כעת אוטומטית...</p>
 					</div>
 				) : (
 					/* Form Body */
 					<div className="p-6">
 						{error && (
-							<div className="mb-4 p-3 bg-[#FDF1EE] border border-[#F1CAC1] rounded-xl text-xs text-[#9B3327] flex items-center gap-2 animate-in fade-in">
-								<AlertCircle className="w-4 h-4 shrink-0 text-[#9B3327]" />
+							<div className="mb-4 p-3 bg-danger-soft border border-danger/25 rounded-xl text-xs text-danger flex items-center gap-2 animate-in fade-in">
+								<AlertCircle className="w-4 h-4 shrink-0 text-danger" />
 								<span>{error}</span>
 							</div>
 						)}
@@ -286,12 +286,12 @@ export default function AuthModal() {
 							type="button"
 							onClick={handleGoogleLogin}
 							disabled={isGoogleSubmitting || isSubmitting}
-							className={`w-full py-3 px-4 bg-white hover:bg-[#FAF8F5] border border-[#DDD7CB] hover:border-[#3C3C3C]/50 text-[#222222] font-semibold text-xs sm:text-sm rounded-2xl shadow-2xs transition-all duration-150 flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer ${
+							className={`w-full py-3 px-4 bg-white hover:bg-paper border border-line-strong hover:border-ink/50 text-ink font-semibold text-xs sm:text-sm rounded-2xl shadow-2xs transition-all duration-150 flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer ${
 								isGoogleSubmitting ? 'opacity-70 cursor-wait' : ''
 							}`}
 						>
 							{isGoogleSubmitting ? (
-								<div className="w-4 h-4 border-2 border-[#8A847C] border-t-[#222222] rounded-full animate-spin" />
+								<div className="w-4 h-4 border-2 border-ink-3 border-t-ink rounded-full animate-spin" />
 							) : (
 								<>
 									{/* Official Google 4-color SVG G Logo */}
@@ -321,10 +321,10 @@ export default function AuthModal() {
 						{/* In Register mode: Prominent Terms of Service Checkbox */}
 						{mode === 'register' && (
 							<div
-								className={`mt-3.5 p-3.5 bg-[#FAF8F5] border rounded-2xl transition-all duration-300 ${
+								className={`mt-3.5 p-3.5 bg-paper border rounded-2xl transition-all duration-300 ${
 									termsHighlight
-										? 'border-[#3C3C3C] ring-2 ring-[#3C3C3C]/20 bg-[#F5F1E8]'
-										: 'border-[#E5DFD4]'
+										? 'border-ink ring-2 ring-ink/20 bg-paper-2'
+										: 'border-line'
 								}`}
 							>
 								<label className="flex items-start gap-2.5 cursor-pointer select-none">
@@ -337,14 +337,14 @@ export default function AuthModal() {
 											if (error) setError(null);
 											if (termsHighlight) setTermsHighlight(false);
 										}}
-										className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#DDD7CB] text-[#3C3C3C] focus:ring-[#3C3C3C] accent-[#3C3C3C] cursor-pointer"
+										className="mt-0.5 h-4 w-4 shrink-0 rounded border-line-strong text-ink focus:ring-ink accent-ink cursor-pointer"
 									/>
-									<span className="text-[11px] text-[#55524B] leading-relaxed">
+									<span className="text-[11px] text-ink-2 leading-relaxed">
 										קראתי ואני מאשר/ת את{' '}
 										<Link
 											href="/terms"
 											target="_blank"
-											className="underline text-[#222222] hover:text-black font-bold"
+											className="underline text-ink hover:text-black font-bold"
 										>
 											תנאי השימוש
 										</Link>{' '}
@@ -352,7 +352,7 @@ export default function AuthModal() {
 										<Link
 											href="/privacy"
 											target="_blank"
-											className="underline text-[#222222] hover:text-black font-bold"
+											className="underline text-ink hover:text-black font-bold"
 										>
 											מדיניות הפרטיות
 										</Link>
@@ -364,20 +364,20 @@ export default function AuthModal() {
 
 						{/* Divider */}
 						<div className="my-4 flex items-center gap-3">
-							<div className="flex-1 border-t border-[#E5DFD4]" />
-							<span className="text-[11px] text-[#8A847C] font-medium shrink-0">
+							<div className="flex-1 border-t border-line" />
+							<span className="text-[11px] text-ink-3 font-medium shrink-0">
 								{mode === 'login' ? 'או התחבר באמצעות אימייל' : 'או הרשמה באמצעות אימייל'}
 							</span>
-							<div className="flex-1 border-t border-[#E5DFD4]" />
+							<div className="flex-1 border-t border-line" />
 						</div>
 
 						{/* Email / Password Form */}
 						<form onSubmit={handleSubmit} className="space-y-3.5">
 							{mode === 'register' && (
 								<div>
-									<label className="block text-xs font-bold text-[#222222] mb-1.5">שם מלא</label>
+									<label className="block text-xs font-bold text-ink mb-1.5">שם מלא</label>
 									<div className="relative">
-										<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#8A847C]">
+										<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-ink-3">
 											<User className="w-4 h-4" />
 										</div>
 										<input
@@ -386,16 +386,16 @@ export default function AuthModal() {
 											value={name}
 											onChange={(e) => setName(e.target.value)}
 											placeholder="למשל: דניאל כהן"
-											className="w-full pr-10 pl-4 py-2.5 text-sm bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#222222] focus:bg-white transition-all"
+											className="w-full pr-10 pl-4 py-2.5 text-sm bg-paper border border-line text-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-ink focus:bg-white transition-all"
 										/>
 									</div>
 								</div>
 							)}
 
 							<div>
-								<label className="block text-xs font-bold text-[#222222] mb-1.5">כתובת אימייל</label>
+								<label className="block text-xs font-bold text-ink mb-1.5">כתובת אימייל</label>
 								<div className="relative">
-									<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#8A847C]">
+									<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-ink-3">
 										<Mail className="w-4 h-4" />
 									</div>
 									<input
@@ -404,7 +404,7 @@ export default function AuthModal() {
 										value={email}
 										onChange={(e) => setEmail(e.target.value)}
 										placeholder="your.email@example.com"
-										className="w-full pr-10 pl-4 py-2.5 text-sm bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#222222] focus:bg-white transition-all text-left"
+										className="w-full pr-10 pl-4 py-2.5 text-sm bg-paper border border-line text-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-ink focus:bg-white transition-all text-left"
 										dir="ltr"
 									/>
 								</div>
@@ -412,13 +412,13 @@ export default function AuthModal() {
 
 							<div>
 								<div className="flex items-center justify-between mb-1.5">
-									<label className="text-xs font-bold text-[#222222]">סיסמה</label>
+									<label className="text-xs font-bold text-ink">סיסמה</label>
 									{mode === 'register' && (
-										<span className="text-[10px] text-[#8A847C]">מינימום 6 תווים</span>
+										<span className="text-[10px] text-ink-3">מינימום 6 תווים</span>
 									)}
 								</div>
 								<div className="relative">
-									<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#8A847C]">
+									<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-ink-3">
 										<Lock className="w-4 h-4" />
 									</div>
 									<input
@@ -427,7 +427,7 @@ export default function AuthModal() {
 										value={password}
 										onChange={(e) => setPassword(e.target.value)}
 										placeholder="••••••••"
-										className="w-full pr-10 pl-4 py-2.5 text-sm bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#222222] focus:bg-white transition-all text-left"
+										className="w-full pr-10 pl-4 py-2.5 text-sm bg-paper border border-line text-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-ink focus:bg-white transition-all text-left"
 										dir="ltr"
 									/>
 								</div>
@@ -436,11 +436,11 @@ export default function AuthModal() {
 							{mode === 'register' && (
 								<div>
 									<div className="flex items-center justify-between mb-1.5">
-										<label className="text-xs font-bold text-[#222222]">מספר טלפון</label>
-										<span className="text-[10px] text-[#8A847C]">רשות</span>
+										<label className="text-xs font-bold text-ink">מספר טלפון</label>
+										<span className="text-[10px] text-ink-3">רשות</span>
 									</div>
 									<div className="relative">
-										<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#8A847C]">
+										<div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-ink-3">
 											<Phone className="w-4 h-4" />
 										</div>
 										<input
@@ -448,7 +448,7 @@ export default function AuthModal() {
 											value={phone}
 											onChange={(e) => setPhone(e.target.value)}
 											placeholder="050-1234567"
-											className="w-full pr-10 pl-4 py-2.5 text-sm bg-[#FAF8F5] border border-[#E5DFD4] text-[#222222] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#222222] focus:bg-white transition-all text-left"
+											className="w-full pr-10 pl-4 py-2.5 text-sm bg-paper border border-line text-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-ink focus:bg-white transition-all text-left"
 											dir="ltr"
 										/>
 									</div>
@@ -458,10 +458,10 @@ export default function AuthModal() {
 							<button
 								type="submit"
 								disabled={isSubmitting || isGoogleSubmitting || (mode === 'register' && !agreeToTerms)}
-								className={`w-full mt-2 py-3 px-4 bg-[#3C3C3C] text-white font-bold text-sm rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+								className={`w-full mt-2 py-3 px-4 bg-ink text-white font-bold text-sm rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center gap-2 ${
 									isSubmitting || isGoogleSubmitting || (mode === 'register' && !agreeToTerms)
 										? 'opacity-50 cursor-not-allowed'
-										: 'hover:bg-[#2A2A2A] cursor-pointer'
+										: 'hover:bg-black cursor-pointer'
 								}`}
 							>
 								{isSubmitting ? (
@@ -480,8 +480,8 @@ export default function AuthModal() {
 							</button>
 
 							{/* Security reassurance */}
-							<div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-[#8A847C]">
-								<ShieldCheck className="w-3.5 h-3.5 text-[#205739]" />
+							<div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-ink-3">
+								<ShieldCheck className="w-3.5 h-3.5 text-success" />
 								<span>המידע מאובטח ומוגן. הנתונים לא מועברים לשום גורם שלישי.</span>
 							</div>
 						</form>

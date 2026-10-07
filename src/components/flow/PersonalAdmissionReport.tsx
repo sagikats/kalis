@@ -51,15 +51,15 @@ export default function PersonalAdmissionReport({
 
 	if (analyses.length === 0) {
 		return (
-			<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4">
-				<GraduationCap className="h-12 w-12 text-[#8A847C] mx-auto" />
-				<h3 className="text-lg font-bold text-[#222222]">לא נבחרו תארים להצגה</h3>
-				<p className="text-sm text-[#66635C] max-w-md mx-auto">
+			<div className="text-center py-16 px-6 bg-white rounded-3xl border border-line shadow-xs space-y-4">
+				<GraduationCap className="h-12 w-12 text-ink-3 mx-auto" />
+				<h3 className="text-lg font-bold text-ink">לא נבחרו תארים להצגה</h3>
+				<p className="text-sm text-ink-2 max-w-md mx-auto">
 					כדי לראות דוח קבלה אישי, עליך לבחור לפחות תואר אחד בשלב 2 (בחירת תארים מבוקשים).
 				</p>
 				<button
 					onClick={onAddMorePrograms}
-					className="px-6 py-2.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-bold text-xs rounded-xl shadow-xs transition cursor-pointer"
+					className="px-6 py-2.5 bg-ink hover:bg-black text-white font-bold text-xs rounded-xl shadow-xs transition cursor-pointer"
 				>
 					חזור לבחירת תארים
 				</button>
@@ -70,24 +70,24 @@ export default function PersonalAdmissionReport({
 	return (
 		<div className="space-y-8">
 			{/* Top Hero Stats */}
-			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 shadow-xs space-y-5">
-				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-[#EAE5DA] pb-4">
+			<div className="bg-white border border-line rounded-3xl p-6 shadow-xs space-y-5">
+				<div className="flex items-center justify-between flex-wrap gap-3 border-b border-line pb-4">
 					<div>
 						<div className="flex items-center gap-2 mb-1">
-							<span className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#DDD7CB] text-[#44423D] text-[11px] font-bold shadow-2xs">
+							<span className="px-2.5 py-0.5 rounded-full bg-paper border border-line-strong text-ink-2 text-[11px] font-bold shadow-2xs">
 								שלב 3 מתוך 4: תוצאות קבלה
 							</span>
 						</div>
-						<h2 className="text-2xl sm:text-3xl font-black text-[#222222]">
+						<h2 className="text-2xl sm:text-3xl font-bold text-ink">
 							שלב 3: דוח סיכויי קבלה אישי
 						</h2>
-						<p className="text-xs sm:text-sm text-[#66635C] mt-1">
+						<p className="text-xs sm:text-sm text-ink-2 mt-1">
 							הערכה מבוססת מנועי הסכם הרשמיים לכל התארים שבחרת
 						</p>
 					</div>
 					<button
 						onClick={onAddMorePrograms}
-						className="px-4 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] rounded-xl text-xs font-bold border border-[#E5DFD4] transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+						className="px-4 py-2 bg-paper hover:bg-line text-ink-2 hover:text-ink rounded-xl text-xs font-bold border border-line transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
 					>
 						<span>ערוך סל תארים</span>
 					</button>
@@ -95,39 +95,39 @@ export default function PersonalAdmissionReport({
 
 				{/* Stat Badges */}
 				<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-					<div className="p-3.5 rounded-2xl bg-[#EBF4EE] border border-[#C6DFCE] text-center">
-						<span className="text-[11px] font-bold text-[#205739] block">✅ התקבלת</span>
-						<span className="text-2xl font-black text-[#205739] mt-0.5 block">{counts.accepted}</span>
-						<span className="text-[10px] text-[#205739]/80">עובר את רף הסכם</span>
+					<div className="p-3.5 rounded-2xl bg-success-soft border border-success/25 text-center">
+						<span className="text-[11px] font-bold text-success block">✅ התקבלת</span>
+						<span className="text-2xl font-bold text-success mt-0.5 block">{counts.accepted}</span>
+						<span className="text-[10px] text-success/80">עובר את רף הסכם</span>
 					</div>
 
-					<div className="p-3.5 rounded-2xl bg-[#FDF6E8] border border-[#ECDAB6] text-center">
-						<span className="text-[11px] font-bold text-[#825B15] block">⚠️ חסר תנאי סף</span>
-						<span className="text-2xl font-black text-[#825B15] mt-0.5 block">{counts.missing_requirement}</span>
-						<span className="text-[10px] text-[#825B15]/80">עומד בסכם, לא בתנאי רשמי</span>
+					<div className="p-3.5 rounded-2xl bg-warning-soft border border-warning/30 text-center">
+						<span className="text-[11px] font-bold text-warning block">חסר תנאי סף</span>
+						<span className="text-2xl font-bold text-warning mt-0.5 block">{counts.missing_requirement}</span>
+						<span className="text-[10px] text-warning/80">עומד בסכם, לא בתנאי רשמי</span>
 					</div>
 
-					<div className="p-3.5 rounded-2xl bg-[#FDF1EE] border border-[#F1CAC1] text-center">
-						<span className="text-[11px] font-bold text-[#9B3327] block">❌ טרם התקבלת</span>
-						<span className="text-2xl font-black text-[#9B3327] mt-0.5 block">{counts.not_accepted}</span>
-						<span className="text-[10px] text-[#9B3327]/80">דרוש שיפור נתונים</span>
+					<div className="p-3.5 rounded-2xl bg-danger-soft border border-danger/25 text-center">
+						<span className="text-[11px] font-bold text-danger block">❌ טרם התקבלת</span>
+						<span className="text-2xl font-bold text-danger mt-0.5 block">{counts.not_accepted}</span>
+						<span className="text-[10px] text-danger/80">דרוש שיפור נתונים</span>
 					</div>
 
 					<div className="p-3.5 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-center">
-						<span className="text-[11px] font-bold text-[#453D78] block">🎓 קבלה נפרדת</span>
-						<span className="text-2xl font-black text-[#453D78] mt-0.5 block">{counts.no_threshold}</span>
+						<span className="text-[11px] font-bold text-[#453D78] block">קבלה נפרדת</span>
+						<span className="text-2xl font-bold text-[#453D78] mt-0.5 block">{counts.no_threshold}</span>
 						<span className="text-[10px] text-[#453D78]/80">מיונים / אודישן / ראיון</span>
 					</div>
 				</div>
 
 				{analyses.length > 0 && analyses.every((a) => a.userSekem === 0) && (
-					<div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-start gap-3">
-						<Sparkles className="h-5 w-5 text-[#1E597B] shrink-0 mt-0.5" />
+					<div className="p-4 rounded-2xl bg-paper border border-line flex items-start gap-3">
+						<Sparkles className="h-5 w-5 text-accent shrink-0 mt-0.5" />
 						<div className="space-y-1">
-							<span className="text-xs font-black text-[#1E597B] block">
+							<span className="text-xs font-bold text-accent block">
 								דוח קבלה ראשוני ללא ציון פסיכומטרי
 							</span>
-							<p className="text-[11px] text-[#66635C] leading-relaxed">
+							<p className="text-[11px] text-ink-2 leading-relaxed">
 								סימנת שטרם נבחנת בפסיכומטרי. עבור חוגים שבהם נדרש פסיכומטרי, בשלב 4 (תכנון מסלולים) המערכת תחשב במדויק מהו ציון הפסיכומטרי הנדרש ממך בבחינה הראשונה כדי לסגור את הקבלה!
 							</p>
 						</div>
@@ -139,8 +139,8 @@ export default function PersonalAdmissionReport({
 			{grouped.accepted.length > 0 && (
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<CheckCircle2 className="h-5 w-5 text-[#205739]" />
-						<h3 className="text-base font-black text-[#205739]">
+						<CheckCircle2 className="h-5 w-5 text-success" />
+						<h3 className="text-base font-bold text-success">
 							תארים שהתקבלת אליהם ({grouped.accepted.length})
 						</h3>
 					</div>
@@ -157,8 +157,8 @@ export default function PersonalAdmissionReport({
 			{grouped.missing_requirement.length > 0 && (
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<AlertCircle className="h-5 w-5 text-[#825B15]" />
-						<h3 className="text-base font-black text-[#825B15]">
+						<AlertCircle className="h-5 w-5 text-warning" />
+						<h3 className="text-base font-bold text-warning">
 							עומד/ת בסכם, אבל חסר תנאי סף רשמי ({grouped.missing_requirement.length})
 						</h3>
 					</div>
@@ -176,12 +176,12 @@ export default function PersonalAdmissionReport({
 				<div className="space-y-4">
 					<div className="flex items-center justify-between flex-wrap gap-2">
 						<div className="flex items-center gap-2">
-							<XCircle className="h-5 w-5 text-[#9B3327]" />
-							<h3 className="text-base font-black text-[#9B3327]">
+							<XCircle className="h-5 w-5 text-danger" />
+							<h3 className="text-base font-bold text-danger">
 								תארים שטרם התקבלת אליהם ({grouped.not_accepted.length})
 							</h3>
 						</div>
-						<span className="text-xs text-[#66635C]">
+						<span className="text-xs text-ink-2">
 							לחץ על ״ניתוח פער״ כדי לראות בדיוק מה חסר ואיך לשפר
 						</span>
 					</div>
@@ -199,7 +199,7 @@ export default function PersonalAdmissionReport({
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
 						<HelpCircle className="h-5 w-5 text-[#453D78]" />
-						<h3 className="text-base font-black text-[#453D78]">
+						<h3 className="text-base font-bold text-[#453D78]">
 							תארים עם קבלה נפרדת ({grouped.no_threshold.length})
 						</h3>
 					</div>
@@ -213,16 +213,16 @@ export default function PersonalAdmissionReport({
 			)}
 
 			{/* Legal disclaimer note */}
-			<div className="pt-4 border-t border-[#E5DFD4] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#7E7A73]">
+			<div className="pt-4 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#7E7A73]">
 				<p className="leading-relaxed">
 					* החישובים מבוססים על נוסחאות המוסדות ומהווים כלי עזר והדמיה עצמאית בלבד. הקבלה הסופית והחישוב הקובע נקבעים אך ורק ע״י מוסד הלימוד האקדמי.
 				</p>
 				<div className="flex items-center gap-2.5 shrink-0">
-					<Link href="/terms" target="_blank" className="underline hover:text-[#222222]">
+					<Link href="/terms" target="_blank" className="underline hover:text-ink">
 						תנאי שימוש
 					</Link>
 					<span>•</span>
-					<Link href="/privacy" target="_blank" className="underline hover:text-[#222222]">
+					<Link href="/privacy" target="_blank" className="underline hover:text-ink">
 						מדיניות פרטיות
 					</Link>
 				</div>
@@ -246,20 +246,20 @@ function ProgramReportCard({
 	const isScreenedProgram = Boolean(item.admissionRoutes?.screening);
 
 	const borderStyle = isAccepted
-		? 'border-[#C6DFCE] bg-[#FBFDFB]'
+		? 'border-success/25 bg-[#FBFDFB]'
 		: isMissingRequirement
-		? 'border-[#ECDAB6] bg-[#FDFCF8]'
+		? 'border-warning/30 bg-[#FDFCF8]'
 		: isNoThreshold || isScreening
 		? 'border-[#D2CEEB] bg-[#FAF9FD]'
-		: 'border-[#F1CAC1] bg-[#FDFBFB]';
+		: 'border-danger/25 bg-[#FDFBFB]';
 
 	const badgeStyle = isAccepted
-		? 'text-[#205739] bg-[#EBF4EE] border-[#C6DFCE]'
+		? 'text-success bg-success-soft border-success/25'
 		: isMissingRequirement
-		? 'text-[#825B15] bg-[#FDF6E8] border-[#ECDAB6]'
+		? 'text-warning bg-warning-soft border-warning/30'
 		: isNoThreshold || isScreening
 		? 'text-[#453D78] bg-[#F2F1F8] border-[#D2CEEB]'
-		: 'text-[#9B3327] bg-[#FDF1EE] border-[#F1CAC1]';
+		: 'text-danger bg-danger-soft border-danger/25';
 
 	const blockedByPsychFloor = isMissingRequirement && item.improvementOptions.some((o) => o.id === 'opt-psych-floor');
 
@@ -292,33 +292,33 @@ function ProgramReportCard({
 					<div className="flex items-center gap-3">
 						<UniversityLogo institution={item.target.institutionId} size="md" />
 						<div>
-							<h4 className="text-base font-bold text-[#222222] leading-snug">
+							<h4 className="text-base font-bold text-ink leading-snug">
 								{item.target.program.fieldOfStudy}
 							</h4>
-							<p className="text-xs text-[#66635C] font-semibold mt-0.5">
+							<p className="text-xs text-ink-2 font-semibold mt-0.5">
 								{item.target.institutionName} · {item.target.program.degreeLevel}
 							</p>
 						</div>
 					</div>
-					<span className={`text-xs font-black px-2.5 py-1 rounded-full border shrink-0 ${badgeStyle}`}>
+					<span className={`text-xs font-bold px-2.5 py-1 rounded-full border shrink-0 ${badgeStyle}`}>
 						{badgeText}
 					</span>
 				</div>
 
 				{/* Score Comparison Box */}
 				{!isNoThreshold && (
-					<div className="grid grid-cols-2 gap-2 bg-[#FAF8F5] p-3 rounded-xl border border-[#E5DFD4] text-center text-xs">
+					<div className="grid grid-cols-2 gap-2 bg-paper p-3 rounded-xl border border-line text-center text-xs">
 						<div>
-							<span className="text-[10px] text-[#66635C] block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>
-							<span className="text-base font-black text-[#222222]">{item.userSekem}</span>
+							<span className="text-[10px] text-ink-2 block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>
+							<span className="text-base font-bold text-ink">{item.userSekem}</span>
 						</div>
 						<div>
-							<span className="text-[10px] text-[#66635C] block font-medium">
+							<span className="text-[10px] text-ink-2 block font-medium">
 								{thresholdLabel(item)}
 							</span>
-							<span className="text-base font-black text-[#825B15]">{item.threshold}</span>
+							<span className="text-base font-bold text-warning">{item.threshold}</span>
 							{item.officialThreshold !== undefined && item.officialThreshold !== item.threshold && (
-								<span className="text-[10px] text-[#66635C] block">בסולם המוסד: {item.officialThreshold}</span>
+								<span className="text-[10px] text-ink-2 block">בסולם המוסד: {item.officialThreshold}</span>
 							)}
 							{item.thresholdSource && (() => {
 								const src = describeThresholdSource(item.thresholdSource);
@@ -333,7 +333,7 @@ function ProgramReportCard({
 										{src.label}
 									</a>
 								) : (
-									<span className="text-[10px] text-[#66635C] block">{src.label}</span>
+									<span className="text-[10px] text-ink-2 block">{src.label}</span>
 								);
 							})()}
 						</div>
@@ -357,15 +357,15 @@ function ProgramReportCard({
 
 				{/* Official alternative paths that don't decide the status (Technion short track, near-miss excellent bagrut) */}
 				{item.alternativePaths?.map((path) => (
-					<div key={path.id} className="p-2.5 rounded-xl text-[11px] border bg-[#EFF6FA] border-[#C5DFED] text-[#1E597B] space-y-0.5">
-						<div className="font-black">אפשרות נוספת: {path.title}</div>
+					<div key={path.id} className="p-2.5 rounded-xl text-[11px] border bg-accent-soft border-accent/20 text-accent space-y-0.5">
+						<div className="font-bold">אפשרות נוספת: {path.title}</div>
 						<div className="font-medium leading-relaxed">{path.description}</div>
 					</div>
 				))}
 
 				{/* Prerequisite alerts preview */}
 				{item.missingPrerequisites.length > 0 && (
-					<div className="p-2.5 rounded-xl bg-[#FDF6E8] border border-[#ECDAB6] text-[11px] text-[#825B15] font-medium space-y-1.5">
+					<div className="p-2.5 rounded-xl bg-warning-soft border border-warning/30 text-[11px] text-warning font-medium space-y-1.5">
 						<div className="flex items-center gap-1.5">
 							<AlertCircle className="h-3.5 w-3.5 shrink-0" />
 							<span>חסרים {item.missingPrerequisites.length} תנאי סף: {item.missingPrerequisites.map((p) => p.name).join(', ')}</span>
@@ -388,8 +388,8 @@ function ProgramReportCard({
 				{item.prerequisites
 					.filter((p) => p.unknown)
 					.map((p) => (
-						<div key={p.id} className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD4] text-[11px] text-[#66635C] font-medium leading-relaxed">
-							<span className="font-bold text-[#44423D]">{p.name}:</span> {p.required}. {p.notes}
+						<div key={p.id} className="p-2.5 rounded-xl bg-paper border border-line text-[11px] text-ink-2 font-medium leading-relaxed">
+							<span className="font-bold text-ink-2">{p.name}:</span> {p.required}. {p.notes}
 						</div>
 					))}
 			</div>
@@ -408,14 +408,14 @@ function ProgramReportCard({
 							}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white font-black shadow-xs cursor-pointer"
+							className="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-ink hover:bg-black text-white font-bold shadow-xs cursor-pointer"
 						>
 							<span>הרשמה לאוניברסיטה</span>
 							<ExternalLink className="h-3.5 w-3.5" />
 						</a>
 						<button
 							onClick={() => onViewGap(item.target.program.id)}
-							className="py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] border border-[#E5DFD4] shrink-0 cursor-pointer"
+							className="py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 bg-paper hover:bg-line text-ink border border-line shrink-0 cursor-pointer"
 							title="צפה בפרטי הקבלה המלאים"
 						>
 							<span>פרטים</span>
@@ -426,8 +426,8 @@ function ProgramReportCard({
 						onClick={() => onViewGap(item.target.program.id)}
 						className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer ${
 							!isNoThreshold
-								? 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white shadow-xs'
-								: 'bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#222222] border border-[#E5DFD4]'
+								? 'bg-ink hover:bg-black text-white shadow-xs'
+								: 'bg-paper hover:bg-line text-ink border border-line'
 						}`}
 					>
 						<Sliders className="h-3.5 w-3.5" />

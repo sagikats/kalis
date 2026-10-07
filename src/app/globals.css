@@ -13,6 +13,29 @@
   --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
   /* Every plain `transition-*` utility now decelerates like a settling spring instead of ease-in-out */
   --default-transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /*
+   * Palette: warm paper, near-black ink, ONE accent. Status colors are muted so a page
+   * full of results still reads calm. Use these (bg-paper, text-ink-2, border-line, text-accent…)
+   * instead of new hex values.
+   */
+  --color-paper: #FAF8F5;
+  --color-paper-2: #F3EFE8;
+  --color-surface: #FFFFFF;
+  --color-ink: #1C1B19;
+  --color-ink-2: #55524B;
+  --color-ink-3: #8A857C;
+  --color-line: #E6E1D7;
+  --color-line-strong: #D3CCBF;
+  --color-accent: #1E4E6E;
+  --color-accent-2: #163B54;
+  --color-accent-soft: #EBF1F5;
+  --color-success: #2E6B4E;
+  --color-success-soft: #EAF3EE;
+  --color-warning: #8F6219;
+  --color-warning-soft: #FAF2E3;
+  --color-danger: #A0392F;
+  --color-danger-soft: #FBEDEB;
 }
 
 :root {

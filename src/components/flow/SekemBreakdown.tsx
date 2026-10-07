@@ -31,10 +31,10 @@ const signed = (n: number, d = 2) => `${n > 0 ? '+' : ''}${fmt(Math.round(n * 10
 
 function StatusChip({ status }: { status: SubjectBreakdownItem['status'] }) {
 	const map = {
-		mandatory: { text: 'חובה · נכנס', cls: 'bg-[#EFF6FA] text-[#1E597B] border-[#C5DFED]' },
-		included: { text: 'נכנס לממוצע', cls: 'bg-[#EBF4EE] text-[#205739] border-[#C6DFCE]' },
-		dropped: { text: 'הושמט', cls: 'bg-white text-[#8A847C] border-[#E5DFD4]' },
-		empty: { text: 'אין ציון', cls: 'bg-white text-[#A8A196] border-[#EAE5DA]' }
+		mandatory: { text: 'חובה · נכנס', cls: 'bg-accent-soft text-accent border-accent/20' },
+		included: { text: 'נכנס לממוצע', cls: 'bg-success-soft text-success border-success/25' },
+		dropped: { text: 'הושמט', cls: 'bg-white text-ink-3 border-line' },
+		empty: { text: 'אין ציון', cls: 'bg-white text-ink-3 border-line' }
 	}[status];
 	return <span className={`px-1.5 py-0.5 rounded-md border text-[10px] font-bold text-center leading-tight sm:whitespace-nowrap ${map.cls}`}>{map.text}</span>;
 }
@@ -98,28 +98,28 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 	}, [baseline, current]);
 
 	const hasChanges = !!changes && (changes.edits.length > 0 || changes.returned.length > 0 || changes.left.length > 0 || changes.psychChanged);
-	const deltaCls = (n: number) => (n > 0.005 ? 'text-[#205739]' : n < -0.005 ? 'text-[#9B3327]' : 'text-[#66635C]');
+	const deltaCls = (n: number) => (n > 0.005 ? 'text-success' : n < -0.005 ? 'text-danger' : 'text-ink-2');
 
 	return (
-		<div className={`bg-white border border-[#E5DFD4] rounded-2xl shadow-2xs ${className}`}>
+		<div className={`bg-white border border-line rounded-2xl shadow-2xs ${className}`}>
 			<button
 				type="button"
 				onClick={() => setOpen((v) => !v)}
 				aria-expanded={open}
-				className="w-full flex items-center justify-between gap-3 px-4 py-3 text-right cursor-pointer hover:bg-[#FAF8F5] rounded-2xl transition"
+				className="w-full flex items-center justify-between gap-3 px-4 py-3 text-right cursor-pointer hover:bg-paper rounded-2xl transition"
 			>
 				<span className="flex items-center gap-2 min-w-0">
-					<Calculator className="h-4 w-4 text-[#3C3C3C] shrink-0" />
-					<span className="text-xs sm:text-sm font-black text-[#222222]">{title ?? 'איך חושב הסכם שלך לתואר הזה'}</span>
+					<Calculator className="h-4 w-4 text-ink shrink-0" />
+					<span className="text-xs sm:text-sm font-bold text-ink">{title ?? 'איך חושב הסכם שלך לתואר הזה'}</span>
 				</span>
 				<span className="flex items-center gap-2 shrink-0">
-					<span className="text-[11px] text-[#66635C] hidden sm:inline">
+					<span className="text-[11px] text-ink-2 hidden sm:inline">
 						{counted.length} נכנסו{dropped.length > 0 ? ` · ${dropped.length} הושמטו` : ''}
 					</span>
 					{hasChanges && changes && (changes.returned.length > 0 || changes.left.length > 0) && (
-						<span className="px-1.5 py-0.5 rounded-md bg-[#FDF6E8] border border-[#ECDAB6] text-[#825B15] text-[10px] font-black">השתנה</span>
+						<span className="px-1.5 py-0.5 rounded-md bg-warning-soft border border-warning/30 text-warning text-[10px] font-bold">השתנה</span>
 					)}
-					<ChevronDown className={`h-4 w-4 text-[#66635C] transition-transform ${open ? 'rotate-180' : ''}`} />
+					<ChevronDown className={`h-4 w-4 text-ink-2 transition-transform ${open ? 'rotate-180' : ''}`} />
 				</span>
 			</button>
 
@@ -127,15 +127,15 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 				<div className="px-4 pb-4 space-y-3 text-right">
 					{/* What changed (simulator only) */}
 					{changes && (
-						<div className="rounded-xl border border-[#ECDAB6] bg-[#FDF9F0] p-3 space-y-1.5 text-xs">
-							<div className="flex items-center gap-1.5 font-black text-[#825B15]">
+						<div className="rounded-xl border border-warning/30 bg-[#FDF9F0] p-3 space-y-1.5 text-xs">
+							<div className="flex items-center gap-1.5 font-bold text-warning">
 								<ArrowLeftRight className="h-3.5 w-3.5" />
 								<span>מה השתנה לעומת המצב הנוכחי</span>
 							</div>
 							{!hasChanges ? (
-								<p className="text-[#66635C]">עדיין לא בוצעו שינויים.</p>
+								<p className="text-ink-2">עדיין לא בוצעו שינויים.</p>
 							) : (
-								<ul className="space-y-1 text-[#44423D]">
+								<ul className="space-y-1 text-ink-2">
 									{changes.edits.map((e) => (
 										<li key={e}>• {e}</li>
 									))}
@@ -145,19 +145,19 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 										</li>
 									)}
 									{changes.returned.map((n) => (
-										<li key={`r-${n}`} className="text-[#205739] font-bold">
+										<li key={`r-${n}`} className="text-success font-bold">
 											• {n} חזר לממוצע
 										</li>
 									))}
 									{changes.left.map((n) => (
-										<li key={`l-${n}`} className="text-[#8A847C] font-bold">
+										<li key={`l-${n}`} className="text-ink-3 font-bold">
 											• {n} הושמט מהממוצע
 										</li>
 									))}
 								</ul>
 							)}
 							{hasChanges && (
-								<div className="flex items-center gap-4 pt-1 font-black dir-rtl flex-wrap">
+								<div className="flex items-center gap-4 pt-1 font-bold dir-rtl flex-wrap">
 									<span>
 										ממוצע: <span className={`dir-ltr inline-block ${deltaCls(changes.avgDelta)}`}>{signed(changes.avgDelta)}</span>
 									</span>
@@ -170,8 +170,8 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 					)}
 
 					{/* Subjects */}
-					<div className="rounded-xl border border-[#EAE5DA] overflow-hidden">
-						<div className="grid grid-cols-3 sm:grid-cols-[1fr_auto_auto_auto] gap-x-3 px-3 py-2 bg-[#FAF8F5] text-[10px] font-bold text-[#66635C]">
+					<div className="rounded-xl border border-line overflow-hidden">
+						<div className="grid grid-cols-3 sm:grid-cols-[1fr_auto_auto_auto] gap-x-3 px-3 py-2 bg-paper text-[10px] font-bold text-ink-2">
 							<span className="hidden sm:block">מקצוע</span>
 							<span className="text-center">ציון + בונוס</span>
 							<span className="text-center">בממוצע</span>
@@ -181,14 +181,14 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 							<div key={r.name} className={`border-t border-[#F0ECE4] ${r.status === 'dropped' || r.status === 'empty' ? 'bg-[#FCFBF9]' : ''}`}>
 								{/* Phones: the name gets its own line so narrow columns (simulator) don't cut it */}
 								<div className="grid grid-cols-3 sm:grid-cols-[1fr_auto_auto_auto] gap-x-2 sm:gap-x-3 gap-y-1 items-center px-3 py-2 text-xs">
-									<span className={`col-span-3 sm:col-span-1 min-w-0 sm:truncate font-bold ${r.status === 'dropped' ? 'text-[#8A847C]' : 'text-[#222222]'}`}>
-										{r.name} <span className="font-medium text-[#8A847C]">· {r.units} יח״ל</span>
+									<span className={`col-span-3 sm:col-span-1 min-w-0 sm:truncate font-bold ${r.status === 'dropped' ? 'text-ink-3' : 'text-ink'}`}>
+										{r.name} <span className="font-medium text-ink-3">· {r.units} יח״ל</span>
 									</span>
-									<span className="text-center dir-ltr text-[#44423D] whitespace-nowrap">
+									<span className="text-center dir-ltr text-ink-2 whitespace-nowrap">
 										{r.grade}
-										{r.bonus ? <span className="text-[#205739]"> +{fmt(r.bonus)}</span> : null}
+										{r.bonus ? <span className="text-success"> +{fmt(r.bonus)}</span> : null}
 									</span>
-									<span className={`text-center font-black dir-ltr ${r.status === 'dropped' ? 'text-[#A8A196] line-through' : 'text-[#222222]'}`}>
+									<span className={`text-center font-bold dir-ltr ${r.status === 'dropped' ? 'text-ink-3 line-through' : 'text-ink'}`}>
 										{r.status === 'empty' ? '—' : fmt(r.effective)}
 									</span>
 									<span className="min-w-0 sm:w-[70px] flex justify-center">
@@ -200,7 +200,7 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 												title="למה הושמט?"
 											>
 												<StatusChip status="dropped" />
-												<span className="text-[10px] text-[#1E597B] underline">למה?</span>
+												<span className="text-[10px] text-accent underline">למה?</span>
 											</button>
 										) : (
 											<StatusChip status={r.status} />
@@ -208,32 +208,32 @@ export default function SekemBreakdown({ current, baseline, sekemLabel, bagrutCa
 									</span>
 								</div>
 								{openReason === r.name && r.status === 'dropped' && (
-									<p className="px-3 pb-2 text-[11px] text-[#66635C] leading-relaxed">{dropReason(r, current.bagrutAverage)}</p>
+									<p className="px-3 pb-2 text-[11px] text-ink-2 leading-relaxed">{dropReason(r, current.bagrutAverage)}</p>
 								)}
 							</div>
 						))}
 					</div>
 
 					{/* Totals */}
-					<div className="space-y-1 text-xs text-[#44423D]">
+					<div className="space-y-1 text-xs text-ink-2">
 						<p>
 							<strong>ממוצע בגרות מיטבי: </strong>
-							<span className="dir-ltr inline-block font-black">{fmt(current.bagrutAverage)}</span>
-							<span className="text-[#66635C]"> · נכנסו {countedUnits} יח״ל מתוך {totalUnits}</span>
+							<span className="dir-ltr inline-block font-bold">{fmt(current.bagrutAverage)}</span>
+							<span className="text-ink-2"> · נכנסו {countedUnits} יח״ל מתוך {totalUnits}</span>
 							{bagrutCap !== undefined && current.bagrutAverage >= bagrutCap && (
-								<span className="text-[#825B15]"> · הממוצע מוגבל ל-{bagrutCap} במוסד הזה</span>
+								<span className="text-warning"> · הממוצע מוגבל ל-{bagrutCap} במוסד הזה</span>
 							)}
 						</p>
-						<p className="text-[11px] text-[#66635C] leading-relaxed">
+						<p className="text-[11px] text-ink-2 leading-relaxed">
 							מקצועות חובה תמיד נכנסים. מקצועות בחירה נכנסים רק אם הם מעלים את הממוצע, כל עוד נשארים לפחות 20 יח״ל.
 						</p>
 						<p>
 							<strong>{sekemLabel}: </strong>
-							<span className="dir-ltr inline-block font-black">{current.sekem}</span>
+							<span className="dir-ltr inline-block font-bold">{current.sekem}</span>
 							{psychometricOnly ? (
-								<span className="text-[#66635C]"> · בתואר הזה הקבלה לפי הפסיכומטרי בלבד, והבגרות לא נכנסת לציון</span>
+								<span className="text-ink-2"> · בתואר הזה הקבלה לפי הפסיכומטרי בלבד, והבגרות לא נכנסת לציון</span>
 							) : current.psychometric ? (
-								<span className="text-[#66635C]">
+								<span className="text-ink-2">
 									{' '}
 									· מחושב מהממוצע ({fmt(current.bagrutAverage)}) ומהפסיכומטרי ({current.psychometric}) לפי נוסחת המוסד
 								</span>
