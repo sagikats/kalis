@@ -1536,7 +1536,7 @@ export default function WhatIfSimulator({
 							<span className="text-xs font-medium text-ink-2 block">
 								הסכם בסימולציה
 							</span>
-							<div className="font-serif text-5xl sm:text-6xl font-bold text-ink dir-ltr tabular-nums">
+							<div className="num text-5xl sm:text-6xl font-bold text-ink dir-ltr">
 								{displaySekem.toFixed(isTechnion ? 2 : 1)}
 							</div>
 

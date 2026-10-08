@@ -844,20 +844,20 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   {/* Bagrut Avg */}
                                                   <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
                                                        <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">ממוצע בגרות</span>
-                                                       <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.bagrutAverage}</span>
+                                                       <span className="num text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none">{res.bagrutAverage}</span>
                                                   </div>
 
                                                   {/* General Sekem */}
                                                   <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
                                                        <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול כללי' : 'סכם כללי'}</span>
-                                                       <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.generalSekem}</span>
+                                                       <span className="num text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none">{res.generalSekem}</span>
                                                   </div>
 
                                                   {/* Bar-Ilan sciences score */}
                                                   {res.institutionId === 'bar_ilan' && res.quantitativeSekem !== undefined && (
                                                        <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
                                                             <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">שקלול מדעים</span>
-                                                            <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.quantitativeSekem}</span>
+                                                            <span className="num text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none">{res.quantitativeSekem}</span>
                                                        </div>
                                                   )}
 
@@ -865,7 +865,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   {res.engineeringSekem !== undefined && (
                                                        <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
                                                             <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסה' : 'סכם כמותי/הנדסה'}</span>
-                                                            <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.engineeringSekem}</span>
+                                                            <span className="num text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none">{res.engineeringSekem}</span>
                                                        </div>
                                                   )}
 
@@ -873,7 +873,7 @@ export default function UnifiedCalculator({ initialInstId }: UnifiedCalculatorPr
                                                   {res.managementSekem !== undefined && (
                                                        <div className="py-2 px-2 rounded-xl bg-paper text-center flex flex-col justify-center">
                                                             <span className="text-[10px] text-ink-3 block font-medium leading-tight truncate">{res.institutionId === 'bar_ilan' ? 'שקלול הנדסת תוכנה' : 'התאמה לניהול'}</span>
-                                                            <span className="font-serif text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none tabular-nums">{res.managementSekem}</span>
+                                                            <span className="num text-xl sm:text-2xl font-bold text-ink mt-1 block leading-none">{res.managementSekem}</span>
                                                        </div>
                                                   )}
                                              </div>

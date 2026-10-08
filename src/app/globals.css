@@ -132,6 +132,20 @@ body {
   }
 }
 
+/*
+ * Numbers: one face everywhere — the UI sans, never the serif — with fixed-width digits so
+ * columns line up and a rolling score doesn't jitter. Hierarchy comes from size and weight.
+ */
+.num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+input,
+select {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Large tappable cards sink less — a 0.97 press on a wide card moves too far */
 .press-soft {
   --press-scale: 0.985;

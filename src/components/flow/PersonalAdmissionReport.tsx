@@ -100,7 +100,7 @@ export default function PersonalAdmissionReport({
 								<span aria-hidden="true" className={`h-2 w-2 rounded-full ${stat.dot}`} />
 								{stat.label}
 							</dt>
-							<dd className="mt-2 font-serif text-4xl font-bold text-ink tabular-nums">{stat.value}</dd>
+							<dd className="mt-2 num text-4xl font-bold text-ink">{stat.value}</dd>
 							<dd className="mt-1 text-[11px] text-ink-3">{stat.note}</dd>
 						</div>
 					))}
@@ -291,13 +291,13 @@ function ProgramReportCard({
 					<div className="grid grid-cols-2 gap-2 bg-paper px-4 py-3.5 rounded-xl text-center text-xs">
 						<div>
 							<span className="text-[10px] text-ink-2 block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>
-							<span className="mt-0.5 block font-serif text-2xl font-bold text-ink tabular-nums">{item.userSekem}</span>
+							<span className="mt-0.5 block num text-2xl font-bold text-ink">{item.userSekem}</span>
 						</div>
 						<div>
 							<span className="text-[10px] text-ink-2 block font-medium">
 								{thresholdLabel(item)}
 							</span>
-							<span className="mt-0.5 block font-serif text-2xl font-bold text-ink-2 tabular-nums">{item.threshold}</span>
+							<span className="mt-0.5 block num text-2xl font-bold text-ink-2">{item.threshold}</span>
 							{item.officialThreshold !== undefined && item.officialThreshold !== item.threshold && (
 								<span className="text-[10px] text-ink-2 block">בסולם המוסד: {item.officialThreshold}</span>
 							)}

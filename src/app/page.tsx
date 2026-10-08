@@ -235,7 +235,7 @@ export default function LandingPage() {
         <ol className="mt-14 grid md:grid-cols-3 gap-10 md:gap-8">
           {STEPS.map((step) => (
             <li key={step.n} className="border-t border-ink/80 pt-6">
-              <span className="font-serif text-sm text-ink-3 tabular-nums">{step.n}</span>
+              <span className="num text-sm text-ink-3">{step.n}</span>
               <h3 className="mt-3 text-xl font-semibold text-ink">{step.title}</h3>
               <p className="mt-2.5 text-[15px] leading-relaxed text-ink-2">{step.body}</p>
             </li>
