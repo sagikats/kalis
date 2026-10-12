@@ -307,17 +307,20 @@ export default function AdmissionFlowPage() {
 		}
 	}, [activeStep, step1SubStep, focusedProgramId]);
 
-	// Lock window scroll completely on steps 1 and 2 to guarantee a rigid, static viewport shell
+	// Lock window scroll on steps 1 and 2 — desktop only (sm and up), where those steps are a
+	// fixed-height shell with inner scrolling. On phones the page itself must scroll, so never lock there.
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
-		if (activeStep <= 2) {
-			document.body.style.overflow = 'hidden';
-			document.documentElement.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = '';
-			document.documentElement.style.overflow = '';
-		}
+		const desktop = window.matchMedia('(min-width: 640px)');
+		const apply = () => {
+			const lock = activeStep <= 2 && desktop.matches;
+			document.body.style.overflow = lock ? 'hidden' : '';
+			document.documentElement.style.overflow = lock ? 'hidden' : '';
+		};
+		apply();
+		desktop.addEventListener('change', apply);
 		return () => {
+			desktop.removeEventListener('change', apply);
 			document.body.style.overflow = '';
 			document.documentElement.style.overflow = '';
 		};
