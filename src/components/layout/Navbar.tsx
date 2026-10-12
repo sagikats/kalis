@@ -140,16 +140,16 @@ export default function Navbar() {
                               <div className="flex items-center gap-2">
                                    <button
                                         onClick={() => openAuthModal('login')}
-                                        className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#44423D] hover:text-[#111111] bg-[#EFECE6] hover:bg-[#EAE5DC] border border-[#E0DBD0] rounded-full transition-all cursor-pointer"
+                                        className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-[#44423D] hover:text-[#111111] bg-[#EFECE6] hover:bg-[#EAE5DC] border border-[#E0DBD0] rounded-full transition-all cursor-pointer"
                                    >
-                                        <LogIn className="h-3.5 w-3.5 text-[#66635C]" />
+                                        <LogIn className="hidden sm:block h-3.5 w-3.5 text-[#66635C]" />
                                         <span>התחברות</span>
                                    </button>
                                    <button
                                         onClick={() => openAuthModal('register')}
-                                        className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold text-white bg-[#3C3C3C] hover:bg-[#2A2A2A] rounded-full transition-all shadow-xs cursor-pointer"
+                                        className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs font-bold text-white bg-[#3C3C3C] hover:bg-[#2A2A2A] rounded-full transition-all shadow-xs cursor-pointer"
                                    >
-                                        <UserPlus className="h-3.5 w-3.5" />
+                                        <UserPlus className="hidden sm:block h-3.5 w-3.5" />
                                         <span>הרשמה</span>
                                    </button>
                               </div>
@@ -236,7 +236,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Brand Logo (Appears on the LEFT side in RTL) */}
-                    <Link href="/" className="flex items-center gap-3 group">
+                    <Link href="/" className="flex items-center gap-3 group shrink-0">
                          <KalisLogo size="md" variant="dark" showTagline={true} />
                     </Link>
 
