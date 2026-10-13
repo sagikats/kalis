@@ -39,11 +39,9 @@ import { getUniversityCalculator } from '@/utils/universityCalculators';
 import UniversityVerificationModal from './UniversityVerificationModal';
 import SekemBreakdown from './SekemBreakdown';
 import WhatIfSimulator from './WhatIfSimulator';
-import OfficialRouteDetail, { ROUTE_STATUS_STYLE } from './OfficialRouteDetail';
-import type { OfficialRouteStatus } from '@/modules/optimizer/officialRoutes';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
-import BypassRoutesCard from './BypassRoutesCard';
+import AdmissionOptionsPanel from './AdmissionOptionsPanel';
 import { useAuth } from '@/context/AuthContext';
 
 interface RecommendedTracksViewProps {
@@ -275,19 +273,9 @@ export default function RecommendedTracksView({
 		}
 	};
 
-	// Other official admission routes of this program (bagrut-only, psychometric-only, Technion routes).
-	// Mechina / Open University tracks are not offered until each one is backed by an official source.
+	// Other official admission routes of this program (bagrut-only, psychometric-only, Technion routes),
+	// shown with mechina / Open University in the "אפשרויות קבלה נוספות" panel — information, never a track.
 	const officialRoutes = analysis.officialRoutes ?? [];
-	const bypassTabs: { key: string; label: string; status?: OfficialRouteStatus }[] = officialRoutes.map((r) => ({
-		key: r.id,
-		label: r.tabLabel,
-		status: r.status
-	}));
-	const [activeBypassTab, setActiveBypassTab] = useState<string>('');
-	const currentBypassTab = bypassTabs.some((t) => t.key === activeBypassTab) ? activeBypassTab : bypassTabs[0]?.key;
-	const currentOfficialRoute = officialRoutes.find((r) => r.id === currentBypassTab);
-	const [showMechinaDetails, setShowMechinaDetails] = useState<boolean>(false);
-	const handleToggleMechina = () => setShowMechinaDetails((v) => !v);
 
 	const handlePrint = () => {
 		window.print();
@@ -543,7 +531,13 @@ export default function RecommendedTracksView({
 			{/* TAB 1: RECOMMENDED TRACKS SUMMARY */}
 			{/* ========================================================================= */}
 			{activeTab === 'recommended' && tracks.length === 0 && suggestBypass ? (
-				<BypassRoutesCard calculatorId={analysis.target.calculatorId} institutionName={analysis.target.institutionName} hasMaxTrack={false} />
+				<div className="text-center py-12 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-3 max-w-2xl mx-auto">
+					<AlertTriangle className="h-10 w-10 text-[#8A847C] mx-auto" />
+					<h3 className="text-lg font-bold text-[#222222]">אין מסלול שיפור שמגיע לסף בסכם הרגיל</h3>
+					<p className="text-sm text-[#66635C] leading-relaxed">
+						גם עם פסיכומטרי 800 ושיפור של 6 בגרויות לא מגיעים לסף של התוכנית הזו. הדרכים האחרות להתקבל מפורטות למטה, באפשרויות הקבלה הנוספות.
+					</p>
+				</div>
 			) : activeTab === 'recommended' && (
 				tracks.length === 0 ? (
 					<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
@@ -1418,85 +1412,6 @@ export default function RecommendedTracksView({
 				)}
 			</div>
 
-				{/* ========================================================================= */}
-				{/* OPT-IN BYPASS ROUTES (מכינה קדם-אקדמית & אפיק מעבר מהאוניברסיטה הפתוחה) */}
-				{/* ========================================================================= */}
-				{officialRoutes.length > 0 && analysis.status !== 'accepted' && (
-					<div className="bg-white border border-[#D2CEEB] rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative overflow-hidden">
-						<div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-							<div className="space-y-1.5 max-w-2xl">
-								<div className="flex items-center gap-2 flex-wrap">
-									<span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-[#F2F1F8] text-[#453D78] border border-[#D2CEEB] tracking-wider">
-										{`${officialRoutes.length} אפיקי קבלה רשמיים`}
-									</span>
-								</div>
-								<h4 className="text-lg sm:text-xl font-bold text-[#222222] flex items-center gap-2.5">
-									<UniversityLogo institution={analysis.target.institutionId} size="sm" shape="rounded" />
-									<span>דרכי קבלה נוספות ב{analysis.target.institutionName.replace('אוניברסיטת ', '').replace(/^ה/, '')}</span>
-								</h4>
-								<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
-									{`לתואר הזה יש גם דרכי קבלה רשמיות שאינן הסכם הרגיל: ${officialRoutes.map((r) => r.tabLabel).join(', ')}.`}
-								</p>
-							</div>
-
-							<button
-								type="button"
-								onClick={handleToggleMechina}
-								className={`px-5 py-3 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2 shrink-0 border shadow-sm ${
-									showMechinaDetails
-										? 'bg-white text-[#453D78] border-[#D2CEEB] hover:bg-[#F2F1F8]'
-										: 'bg-[#3C3C3C] hover:bg-[#2A2A2A] text-white border-[#3C3C3C]'
-								}`}
-							>
-								{showMechinaDetails ? (
-									<>
-										<span>הסתר דרכי קבלה נוספות</span>
-										<ChevronUp className="h-4 w-4" />
-									</>
-								) : (
-									<>
-										<GraduationCap className="h-4 w-4" />
-										<span>לכל דרכי הקבלה</span>
-										<ChevronDown className="h-4 w-4" />
-									</>
-								)}
-							</button>
-						</div>
-
-						{/* Expanded Bypass Routes Details */}
-						{showMechinaDetails && bypassTabs.length > 0 && (
-							<div className="relative z-10 pt-4 border-t border-[#E5DFD4] space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-								{/* Tab bar: every way into this degree other than the regular sekem */}
-								{bypassTabs.length > 1 && (
-									<div className="flex items-center gap-2 border-b border-[#E5DFD4] pb-3 overflow-x-auto scrollbar-none">
-										{bypassTabs.map((tab) => (
-											<button
-												key={tab.key}
-												type="button"
-												onClick={() => setActiveBypassTab(tab.key)}
-												className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border whitespace-nowrap shrink-0 cursor-pointer ${
-													currentBypassTab === tab.key
-														? 'bg-[#3C3C3C] text-white border-[#3C3C3C] shadow-xs'
-														: 'bg-white text-[#66635C] border-[#E5DFD4] hover:bg-[#FAF8F5]'
-												}`}
-											>
-												{tab.status && <span className={`w-2 h-2 rounded-full shrink-0 ${ROUTE_STATUS_STYLE[tab.status].dot}`} />}
-												<span>{tab.label}</span>
-											</button>
-										))}
-									</div>
-								)}
-
-								{/* Official route details */}
-								{currentOfficialRoute && <OfficialRouteDetail route={currentOfficialRoute} />}
-							</div>
-						)}
-					</div>
-				)}
-
-				{suggestBypass && tracks.length > 0 && (
-					<BypassRoutesCard calculatorId={analysis.target.calculatorId} institutionName={analysis.target.institutionName} hasMaxTrack={tracks.some((t) => t.id === 'track-max-bagrut')} />
-				)}
 
 				{/* Transition CTA to Personal Builder */}
 				{userProfile && institutionResult && (
@@ -1529,6 +1444,18 @@ export default function RecommendedTracksView({
 				)}
 			</div>
 				)
+			)}
+
+			{/* Every other way into this program — always under the tracks, information only */}
+			{activeTab === 'recommended' && (
+				<AdmissionOptionsPanel
+					key={analysis.target.program.id}
+					officialRoutes={officialRoutes}
+					calculatorId={analysis.target.calculatorId}
+					institutionName={analysis.target.institutionName}
+					programName={analysis.target.program.fieldOfStudy}
+					beyondRegularTracks={Boolean(suggestBypass)}
+				/>
 			)}
 
 			{/* ========================================================================= */}
