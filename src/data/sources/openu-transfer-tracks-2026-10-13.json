@@ -1,0 +1,322 @@
+{
+ "source": "www.openu.ac.il/transfertrack — the Open University transfer-track index and each university page",
+ "collectedAt": "2026-10-13",
+ "method": "Read in the browser pane (pages also return 200 to curl). Track names and URLs are the links on each university page; Bar-Ilan's page is a single track (Faculty of Law). Ariel and Reichman pages return 404 and are not on the index.",
+ "generalRules": {
+  "url": "https://www.openu.ac.il/transfertrack/pages/updates.aspx",
+  "bagrutEligibility": "CHE decision (16.11.2021, 12.7.2022): guaranteed admission through a transfer track only for those who meet all the track's requirements and have eligibility for a bagrut certificate (regardless of bagrut grades), or who started at the OU before 2022-23 and are admitted for 2023-24.",
+  "noPsychometric": "Track pages state admission is based on OU achievements, regardless of bagrut grades and without a psychometric test (e.g. TAU statistics, mathematics; HUJI computer science, electrical engineering).",
+  "english": "Many tracks require an English exemption (Amirnet, or an OU English course) before transferring (e.g. HUJI psychology, management, agriculture).",
+  "passingGrade": "A \"pass\" grade is not accepted for transfer tracks; they require minimum grades."
+ },
+ "tracks": {
+  "tau": [
+   {
+    "name": "הפקולטה למדעי הרוח והפקולטה לאמנויות",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/humanities.aspx"
+   },
+   {
+    "name": "ביה\"ס לקולנוע וטלוויזיה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/cinema.aspx"
+   },
+   {
+    "name": "בית הספר למדעי הפסיכולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/psychology.aspx"
+   },
+   {
+    "name": "בית הספר לכלכלה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/economics.aspx"
+   },
+   {
+    "name": "בית הספר למדע המדינה, ממשל ויחסים בינלאומיים",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/political_science.aspx"
+   },
+   {
+    "name": "החוג לסוציולוגיה ולאנתרופולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/sociology_anthropology.aspx"
+   },
+   {
+    "name": "בית הספר למדעי המחשב",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/computer_science.aspx"
+   },
+   {
+    "name": "הפקולטה למדעי החיים",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/life_science.aspx"
+   },
+   {
+    "name": "בית הספר לפיזיקה ולאסטרונומיה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/physics_astronomy.aspx"
+   },
+   {
+    "name": "בית הספר לכימיה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/chemistry.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/engineering.aspx"
+   },
+   {
+    "name": "החוג לסטטיסטיקה וחקר ביצועים",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/statistics.aspx"
+   },
+   {
+    "name": "ביה\"ס למדעי המתמטיקה",
+    "url": "https://www.openu.ac.il/transfertrack/tel-aviv/pages/mathematics.aspx"
+   }
+  ],
+  "huji": [
+   {
+    "name": "הפקולטה למדעי הרוח",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/humanities.aspx"
+   },
+   {
+    "name": "המחלקה לתקשורת ועיתונאות",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/communication_journalism.aspx"
+   },
+   {
+    "name": "בית הספר לחינוך",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/education.aspx"
+   },
+   {
+    "name": "המחלקה לפסיכולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/psychology.aspx"
+   },
+   {
+    "name": "המחלקה לסוציולוגיה ואנתרופולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/sociology_anthropology.aspx"
+   },
+   {
+    "name": "החוג למדעי המחשב",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/computer_science.aspx"
+   },
+   {
+    "name": "פילוסופיה, כלכלה ומדע המדינה (פכ\"מ)",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/Philo_econo_polit_sci.aspx"
+   },
+   {
+    "name": "החוג למתמטיקה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/mathematics.aspx"
+   },
+   {
+    "name": "המחלקה לסטטיסטיקה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/statistics.aspx"
+   },
+   {
+    "name": "הפקולטה לחקלאות, מזון וסביבה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/agriculture.aspx"
+   },
+   {
+    "name": "החוג לפיסיקה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/physics.aspx"
+   },
+   {
+    "name": "המחלקה לגאוגרפיה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/geography.aspx"
+   },
+   {
+    "name": "בית הספר לעבודה סוציאלית ולרווחה חברתית",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/social_work.aspx"
+   },
+   {
+    "name": "המחלקה לכלכלה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/economics.aspx"
+   },
+   {
+    "name": "החוג למדעי החיים — ביולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/biology.aspx"
+   },
+   {
+    "name": "החוג להנדסת חשמל ומדעי המחשב",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/elecricity_computer.aspx"
+   },
+   {
+    "name": "החוג להנדסת חשמל ופיסיקה יישומית",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/physics_engineering.aspx"
+   },
+   {
+    "name": "המכון למדעי כדור הארץ",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/earth_sciences.aspx"
+   },
+   {
+    "name": "בית הספר למנהל עסקים",
+    "url": "https://www.openu.ac.il/transfertrack/hebrew/pages/management.aspx"
+   }
+  ],
+  "technion": [
+   {
+    "name": "הפקולטה להנדסה אזרחית וסביבתית",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/enviroment_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסת מכונות",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/mechanical_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסת חשמל ומחשבים",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/electrical_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסה כימית",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/chemical_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסת ביוטכנולוגיה ומזון",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/biotechnolog_food.aspx"
+   },
+   {
+    "name": "מסלול הנדסת מחשבים",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/computer_engineering.aspx"
+   },
+   {
+    "name": "מסלול הנדסת חשמל ופיזיקה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/physics_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסת אוירונוטיקה וחלל",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/aerospace_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה למדעי הנתונים וההחלטות",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/industrial_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה למדעי המחשב",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/computer_science.aspx"
+   },
+   {
+    "name": "הפקולטה למדע והנדסה של חומרים",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/materials_engineering.aspx"
+   },
+   {
+    "name": "הפקולטה לביולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/biology.aspx"
+   },
+   {
+    "name": "מגמת אוירונוטיקה/אסטרונוטיקה ופיסיקה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/aero_astro_physics.aspx"
+   },
+   {
+    "name": "תואר דו-חוגי בביולוגיה ובכימיה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/biology_chemistry.aspx"
+   },
+   {
+    "name": "הפקולטה לכימיה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/chemistry.aspx"
+   },
+   {
+    "name": "הפקולטה למתמטיקה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/mathematics.aspx"
+   },
+   {
+    "name": "הפקולטה לפיסיקה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/physics.aspx"
+   },
+   {
+    "name": "הפקולטה להנדסה ביו-רפואית",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/biomedical_engineering.aspx"
+   },
+   {
+    "name": "המסלול למתמטיקה ופיסיקה",
+    "url": "https://www.openu.ac.il/transfertrack/technion/pages/math_physics.aspx"
+   }
+  ],
+  "haifa": [
+   {
+    "name": "הפקולטה למדעי הרוח",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/humanities.aspx"
+   },
+   {
+    "name": "החוג לכלכלה",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/economics.aspx"
+   },
+   {
+    "name": "הפקולטה לחינוך",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/education.aspx"
+   },
+   {
+    "name": "בית הספר לעבודה סוציאלית",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/social_work.aspx"
+   },
+   {
+    "name": "החוג לסיעוד",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/nursing.aspx"
+   },
+   {
+    "name": "החוג למערכות מידע",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/information_systems.aspx"
+   },
+   {
+    "name": "החוג למדעי המחשב",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/computer_science.aspx"
+   },
+   {
+    "name": "החוג למתמטיקה",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/mathematics.aspx"
+   },
+   {
+    "name": "המחלקה לפסיכולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/psychology.aspx"
+   },
+   {
+    "name": "הפקולטה למשפטים",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/law.aspx"
+   },
+   {
+    "name": "לימודים רב-תחומיים במסלול החד-חוגי",
+    "url": "https://www.openu.ac.il/transfertrack/haifa/pages/multidisciplinary_studies.aspx"
+   }
+  ],
+  "bgu": [
+   {
+    "name": "8 מחלקות במדעי הרוח",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/humanities_social_science.aspx"
+   },
+   {
+    "name": "המחלקה לכלכלה",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/economics.aspx"
+   },
+   {
+    "name": "המחלקה לניהול",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/management.aspx"
+   },
+   {
+    "name": "המחלקה לניהול מערכות בריאות",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/health_management.aspx"
+   },
+   {
+    "name": "המחלקה לפסיכולוגיה והתכנית למדעי ההתנהגות",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/psychology_behav.aspx"
+   },
+   {
+    "name": "בית הספר לחינוך",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/education.aspx"
+   },
+   {
+    "name": "הפקולטה למדעי הטבע",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/natural_sciences.aspx"
+   },
+   {
+    "name": "הפקולטה למדעי ההנדסה",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/engineering_studies.aspx"
+   },
+   {
+    "name": "המחלקה לסיעוד",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/nursing.aspx"
+   },
+   {
+    "name": "המחלקה לסוציולוגיה ואנתרופולוגיה",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/sociology_anthropology.aspx"
+   },
+   {
+    "name": "תוכנית מדעי המחשב",
+    "url": "https://www.openu.ac.il/transfertrack/ben-gurion/pages/computer_science.aspx"
+   }
+  ],
+  "bar_ilan": [
+   {
+    "name": "הפקולטה למשפטים",
+    "url": "https://www.openu.ac.il/transfertrack/bar-ilan/pages/default.aspx"
+   }
+  ]
+ }
+}
