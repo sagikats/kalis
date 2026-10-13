@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ExternalLink, GraduationCap, Info, Route } from 'lucide-react';
 import OfficialRouteDetail, { ROUTE_STATUS_STYLE } from './OfficialRouteDetail';
 import type { OfficialRouteInfo, OfficialRouteStatus } from '@/modules/optimizer/officialRoutes';
-import { BYPASS_ROUTES, OPEN_UNIVERSITY_TRACKS, OPEN_UNIVERSITY_CHECKED_AT, OPEN_UNIVERSITY_RULES_URL } from '@/data/bypassRoutes';
-import { getUniversityRegistrationInfo } from '@/utils/universityRegistration';
+import { BYPASS_ROUTES, OPEN_UNIVERSITY_TRACKS, OPEN_UNIVERSITY_CHECKED_AT, OPEN_UNIVERSITY_RULES_URL, MECHINA_INFO, MECHINA_CHECKED_AT, type MechinaInfo } from '@/data/bypassRoutes';
 
 interface AdmissionOptionsPanelProps {
 	/** Official routes of this program other than the regular sekem (bagrut only, psychometric only, …). */
@@ -19,7 +18,7 @@ interface AdmissionOptionsPanelProps {
 
 type OptionTab =
 	| { kind: 'official'; key: string; label: string; status: OfficialRouteStatus; route: OfficialRouteInfo }
-	| { kind: 'mechina'; key: 'mechina'; label: string; url?: string; isAdmissionsPage: boolean }
+	| { kind: 'mechina'; key: 'mechina'; label: string; info: MechinaInfo }
 	| { kind: 'open_university'; key: 'open_university'; label: string; url: string; tracks: { name: string; url: string }[] };
 
 /**
@@ -37,25 +36,19 @@ export default function AdmissionOptionsPanel({
 	const inst = institutionName.split(' - ')[0].split(' (')[0].replace('אוניברסיטת ', '').replace(/^ה/, '');
 	const links = BYPASS_ROUTES[calculatorId] ?? {};
 	const ouTracks = OPEN_UNIVERSITY_TRACKS[calculatorId] ?? [];
-	const admissionsUrl = getUniversityRegistrationInfo(calculatorId, institutionName)?.registrationUrl;
+	const mechina = MECHINA_INFO[calculatorId] ?? null;
 
 	const tabs: OptionTab[] = [
 		...officialRoutes.map((route): OptionTab => ({ kind: 'official', key: route.id, label: route.tabLabel, status: route.status, route })),
-		{
-			kind: 'mechina',
-			key: 'mechina',
-			label: 'מכינה קדם-אקדמית',
-			url: links.mechinaUrl ?? admissionsUrl,
-			isAdmissionsPage: !links.mechinaUrl
-		},
+		...(mechina ? [{ kind: 'mechina', key: 'mechina', label: 'מכינה קדם-אקדמית', info: mechina } as OptionTab] : []),
 		...(links.openUniversityUrl && ouTracks.length > 0
 			? [{ kind: 'open_university', key: 'open_university', label: 'אפיק מעבר מהאו״פ', url: links.openUniversityUrl, tracks: ouTracks } as OptionTab]
 			: [])
 	];
 
 	const [isOpen, setIsOpen] = useState(beyondRegularTracks);
-	const [activeKey, setActiveKey] = useState<string>(tabs[0].key);
-	const active = tabs.find((t) => t.key === activeKey) ?? tabs[0];
+	const [activeKey, setActiveKey] = useState<string>(tabs[0]?.key ?? '');
+	const active = tabs.find((t) => t.key === activeKey) ?? (tabs.length > 0 ? tabs[0] : undefined);
 
 	const linkClass =
 		'inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-[#DDD7CB] text-[#222222] hover:bg-[#FAF8F5] transition';
@@ -75,7 +68,9 @@ export default function AdmissionOptionsPanel({
 					<div className="space-y-1 min-w-0">
 						<h4 className="text-base sm:text-lg font-bold text-[#222222]">אפשרויות קבלה נוספות</h4>
 						<p className="text-xs sm:text-sm text-[#66635C] leading-relaxed">
-							{`${tabs.length} דרכים נוספות להתקבל ל${programName} ב${inst}. זה מידע להשוואה, לא מסלול מומלץ.`}
+							{tabs.length === 0
+								? `לא פורסמו דרכי קבלה נוספות ל${programName} ב${inst}.`
+								: `${tabs.length === 1 ? 'דרך נוספת אחת' : `${tabs.length} דרכים נוספות`} להתקבל ל${programName} ב${inst}. זה מידע להשוואה, לא מסלול מומלץ.`}
 						</p>
 						<div className="flex flex-wrap gap-1.5 pt-1">
 							{tabs.map((t) => (
@@ -103,6 +98,8 @@ export default function AdmissionOptionsPanel({
 							</div>
 						)}
 
+						{active && (
+						<>
 						{/* Option selector */}
 						<div role="tablist" aria-label="בחירת אפשרות קבלה" className="flex items-center gap-2 overflow-x-auto pt-4 pb-1 scrollbar-none">
 							{tabs.map((t) => (
@@ -132,22 +129,24 @@ export default function AdmissionOptionsPanel({
 								<div className="bg-[#FAF8F5] border border-[#E5DFD4] rounded-2xl p-4 sm:p-5 space-y-3 text-right">
 									<h5 className="text-base sm:text-lg font-bold text-[#222222] flex items-center gap-2">
 										<GraduationCap className="h-5 w-5" />
-										מכינה קדם-אקדמית ב{inst}
+										{active.info.title}
 									</h5>
-									<p className="text-sm text-[#44423D] leading-relaxed">
-										לומדים במכינה של האוניברסיטה, ובסוף המכינה הציונים בה משמשים לקבלה במקום ציוני הבגרות.
-									</p>
-									<p className="text-xs text-[#66635C] leading-relaxed">
-										לא כל תואר פתוח דרך המכינה, ולכל תוכנית יש ציון מכינה נדרש משלה. האם {programName} פתוח דרך המכינה ובאיזה ציון — בדף הרשמי.
-									</p>
-									{active.url ? (
-										<a href={active.url} target="_blank" rel="noopener noreferrer" className={linkClass}>
-											<span>{active.isAdmissionsPage ? `אתר הקבלה ב${inst} (מידע על מכינות)` : `אתר המכינה ב${inst}`}</span>
-											<ExternalLink className="h-3.5 w-3.5" />
-										</a>
-									) : (
-										<p className="text-xs text-[#66635C]">לא מצאנו דף מכינה רשמי ב{inst}.</p>
+									<p className="text-sm text-[#44423D] leading-relaxed">{active.info.howItWorks}</p>
+									{active.info.notes.length > 0 && (
+										<ul className="text-xs text-[#44423D] leading-relaxed space-y-1">
+											{active.info.notes.map((n) => (
+												<li key={n}>• {n}</li>
+											))}
+										</ul>
 									)}
+									<p className="text-xs text-[#66635C] leading-relaxed">
+										התנאים ל{programName} — מסלול המכינה המתאים והציון הנדרש — מפורטים בדף הרשמי.
+									</p>
+									<a href={active.info.url} target="_blank" rel="noopener noreferrer" className={linkClass}>
+										<span>לדף הרשמי</span>
+										<ExternalLink className="h-3.5 w-3.5" />
+									</a>
+									<p className="text-[11px] text-[#8A847C]">לפי האתר של {inst}, נבדק ב-{MECHINA_CHECKED_AT}</p>
 								</div>
 							)}
 
@@ -202,7 +201,13 @@ export default function AdmissionOptionsPanel({
 							)}
 						</div>
 
-						{!links.openUniversityUrl && (
+						</>
+						)}
+
+						{!mechina && (
+							<p className="text-[11px] text-[#8A847C]">ב{inst} אין מכינה קדם-אקדמית לתואר ראשון.</p>
+						)}
+						{!(links.openUniversityUrl && ouTracks.length > 0) && (
 							<p className="text-[11px] text-[#8A847C]">לאוניברסיטה הפתוחה אין אפיק מעבר ל{inst}.</p>
 						)}
 					</div>
