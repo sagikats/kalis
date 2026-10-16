@@ -71,6 +71,27 @@ describe('Official admission rules', () => {
 			assert.equal(calculateTechnionSekem(130, 700), calculateTechnionSekem(119, 700));
 		});
 
+		// Source: the official calculator (admissions.technion.ac.il/calculator → technion-calculators-sum.php), 2026-10-16.
+		// Every option that looks technological was run at 5u / 90, with and without math 5u + physics 5u.
+		it('only five technological subjects get the science bonus (+25, +30 in the cluster); the rest get +20', () => {
+			for (const name of ['מדעי המחשב', 'אלקטרוניקה ומחשבים', 'ביוטכנולוגיה', 'מערכות ביוטכנולוגיה', 'מדעי ההנדסה']) {
+				assert.equal(getTechnionBonus(sub(name, 5, 90), false), 25, name);
+				assert.equal(getTechnionBonus(sub(name, 5, 90), true), 30, name);
+			}
+			for (const name of ['אלקטרוניקה', 'אלקטרוניקה כללית ותקשורת', 'יישומיי ביוטכנולוגיה', 'מכניקה הנדסית', 'מערכות תוכנה וחומרה',
+				"ע''ג בתכנון ותכנות", "ע''ג בתכנות מערכות", 'תכנון הנדסי של מבנים', 'תכנון ותכנות מערכות']) {
+				assert.equal(getTechnionBonus(sub(name, 5, 90), false), 20, name);
+				assert.equal(getTechnionBonus(sub(name, 5, 90), true), 20, name);
+			}
+		});
+
+		it('official calculator averages with systems programming 5u: 94.1, and 103.1 with math 5u + physics 5u', () => {
+			const core = (mathUnits: number) => [sub('אנגלית', 4, 85), sub('ספרות', 2, 85), sub('מתמטיקה', mathUnits, 85), sub('תנ"ך', 2, 85),
+				sub('אזרחות', 2, 85), sub('הבעה עברית', 2, 85), sub('היסטוריה', 2, 85)];
+			assert.equal(calculateTechnionOptimalBagrut([...core(4), sub('תכנון ותכנות מערכות', 5, 90)]).average, 94.1);
+			assert.equal(calculateTechnionOptimalBagrut([...core(5), sub('פיזיקה', 5, 90), sub('תכנון ותכנות מערכות', 5, 90)]).average, 103.1);
+		});
+
 		it('math counts double for 4u and 5u', () => {
 			// math 5u 100(+30) weight 10, English 5u 60(+25) weight 5, civics 2u 60 weight 2, history 3u 60 weight 3
 			const subs = [sub('מתמטיקה', 5, 100), sub('אנגלית', 5, 60), sub('אזרחות', 2, 60), sub('היסטוריה', 3, 60)];

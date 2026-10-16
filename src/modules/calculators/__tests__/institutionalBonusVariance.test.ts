@@ -74,19 +74,22 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getBguBonus(me5), 20, 'BGU awards standard +20 elective bonus for Middle Eastern Studies');
 		});
 
-		it('Robotics 5u Bonus: +25 only at Technion (recognized tech subject); +20 at TAU/HUJI/BGU', () => {
+		it('Robotics 5u Bonus: +20 everywhere (not a Technion technological subject)', () => {
 			const rob5 = { name: 'רובוטיקה ומערכות אוטונומיות', units: 5, grade: 90 };
-			assert.equal(getTechnionBonus(rob5, false), 25, 'Technion awards +25 for Robotics');
+			// Robotics is not among the Technion calculator's subjects; only five technological subjects get +25
+			// (official calculator, 2026-10-16 — see officialRules.test.ts)
+			assert.equal(getTechnionBonus(rob5, false), 20, 'Technion: ordinary +20');
 			assert.equal(getTauBonus(rob5), 20, 'TAU: not in the +25 list (go.tau.ac.il)');
 			assert.equal(getHujiBonus(rob5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(rob5), 20, 'BGU: not in the enhanced table (ידיעון תשפ"ז)');
 			assert.equal(getBarIlanBonus(rob5), 20, 'BIU: not in the +25 list (biu.ac.il)');
 		});
 
-		it('System Planning & Programming 5u Bonus: +25 at Technion (+30 in cluster), +20 at TAU/HUJI/BGU', () => {
+		it('System Planning & Programming 5u Bonus: +20 at the Technion, in or out of the cluster; +20 at TAU/HUJI/BGU', () => {
 			const sysProg5 = { name: 'תכנון ותכנות מערכות', units: 5, grade: 90 };
-			assert.equal(getTechnionBonus(sysProg5, false), 25, 'Technion awards +25 for System Planning & Programming');
-			assert.equal(getTechnionBonus(sysProg5, true), 30, 'Technion awards +30 for System Planning & Programming in cluster');
+			// Official Technion calculator, 2026-10-16: "תכנון ותכנות מערכות" 5u 90 -> bonus 20, also with math 5u + physics 5u
+			assert.equal(getTechnionBonus(sysProg5, false), 20, 'Technion: +20');
+			assert.equal(getTechnionBonus(sysProg5, true), 20, 'Technion: +20 even inside the science cluster');
 			assert.equal(getTauBonus(sysProg5), 20, 'TAU: not in the +25 list');
 			assert.equal(getHujiBonus(sysProg5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(sysProg5), 20, 'BGU: not in the enhanced table');

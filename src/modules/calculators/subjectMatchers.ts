@@ -26,7 +26,3 @@ export const isJewishThought = (name: string) => has(name, 'מחשבת ישרא�
 /** Physics / chemistry / biology. */
 export const isCoreScience = (name: string) => isPhysics(name) || isChemistry(name) || isBiology(name);
 
-/** Technological subjects recognized for science/tech bonuses (CS, electronics, software, etc.). */
-export const isTechSubject = (name: string) =>
-	isComputerScience(name) ||
-	has(name, 'אלקטרוניקה', 'ביוטכנולוגיה', 'סייבר', 'רובוטיקה', 'תוכנה', 'תכנות', 'הנדס');
