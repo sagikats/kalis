@@ -42,6 +42,7 @@ import WhatIfSimulator from './WhatIfSimulator';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
 import AdmissionOptionsPanel from './AdmissionOptionsPanel';
+import { describeRequirement } from '@/modules/optimizer/programRequirements';
 import { useAuth } from '@/context/AuthContext';
 
 interface RecommendedTracksViewProps {
@@ -542,7 +543,25 @@ export default function RecommendedTracksView({
 				tracks.length === 0 ? (
 					<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] shadow-xs space-y-4 max-w-2xl mx-auto">
 						<AlertTriangle className="h-12 w-12 text-[#8A847C] mx-auto" />
-						{analysis.status === 'accepted' ? (
+						{analysis.admissionRoutes?.conditionsOnly && analysis.threshold === null ? (
+							<>
+								<h3 className="text-lg font-bold text-[#222222]">
+									{analysis.status === 'accepted' ? 'את/ה עומד/ת בתנאי הקבלה' : 'הקבלה לתואר הזה לפי תנאים, בלי סף סכם'}
+								</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									{analysis.admissionNote}
+								</p>
+								{analysis.status !== 'accepted' && analysis.admissionRoutes.requirements && (
+									<ul className="text-sm text-[#44423D] leading-relaxed text-right space-y-1 max-w-lg mx-auto">
+										{analysis.admissionRoutes.requirements.map((r) => (
+											<li key={r.id}>
+												<strong>{r.title}:</strong> {describeRequirement(r)}
+											</li>
+										))}
+									</ul>
+								)}
+							</>
+						) : analysis.status === 'accepted' ? (
 							<>
 								<h3 className="text-lg font-bold text-[#222222]">אין צורך במסלול שיפור</h3>
 								<p className="text-sm text-[#66635C] leading-relaxed">

@@ -54,6 +54,11 @@ export interface AdmissionRoutes {
           /** URL — date. */
           source: string;
      };
+     /**
+      * Admission by official conditions alone, with no sekem threshold (BGU mathematics: "מתמטיקה 87/5" or one of the
+      * listed alternatives). `requirements` decides the status; `admissionThreshold` is null.
+      */
+     conditionsOnly?: ConditionsOnlyRoute;
      /** Admission on the general psychometric score alone ("או פסיכומטרי X", "קבלה לפי פסיכומטרי"). */
      psychometricOnlyMin?: number;
      /** Admission on the institution's bagrut average alone ("קבלה לפי בגרות בלבד"). */
@@ -86,6 +91,25 @@ export interface AdmissionRoutes {
       * so the generic math/physics estimate no longer applies (even when `requirements` has no subject entry).
       */
      requirementsSource?: string;
+}
+
+export interface ConditionsOnlyRoute {
+     /** The official text worth showing next to the status (quota notes, "both departments", exception policy). */
+     note: string;
+     /** URL — date. */
+     source: string;
+     /**
+      * An official alternative that also needs a sekem minimum, which RequirementOption can't express
+      * (BGU: "סכם כללי 700 + חשיבה כמותית 127 + מתמטיקה 5/75 או 4/85"). When the sekem and `requirement` hold, the
+      * requirement with id `replaces` counts as met.
+      */
+     sekemAlternative?: {
+          sekem: 'general' | 'quantitative';
+          min: number;
+          label: string;
+          replaces: string;
+          requirement: ProgramRequirement;
+     };
 }
 
 /** One way to meet a program requirement: every condition holds, plus passing `exam` when set. */

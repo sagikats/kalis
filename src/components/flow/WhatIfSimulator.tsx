@@ -173,6 +173,8 @@ export default function WhatIfSimulator({
 	const hasOriginalPsych = (userProfile.psychometricGeneral || 0) > 0;
 	const initialPsych = hasOriginalPsych ? userProfile.psychometricGeneral : 600;
 	const threshold = analysis.threshold || 700;
+	/** Admission by official conditions alone (BGU mathematics): no sekem threshold — show the conditions, not a gap. */
+	const isConditionsOnly = Boolean(analysis.admissionRoutes?.conditionsOnly) && analysis.threshold === null;
 	const isTechnion = analysis.target.calculatorId === 'technion';
 
 	// Realistic psychometric ceiling calculated from academic baseline
@@ -760,7 +762,11 @@ export default function WhatIfSimulator({
 				estimatedWeeks: estWeeks,
 				weeklyHours: estHours,
 				feasibility: isAccepted ? 'high' : isMissingRequirement ? 'moderate' : 'challenging',
-				feasibilityExplanation: isAccepted
+				feasibilityExplanation: isConditionsOnly
+					? isAccepted
+						? 'עומד/ת בתנאי הקבלה של התוכנית (אין לה סף סכם).'
+						: `אין לתוכנית סף סכם; חסר תנאי קבלה: ${missingTitles}.`
+					: isAccepted
 					? `הסכם המשוקלל בסימולציה (${currentSekem.toFixed(isTechnion ? 2 : 1)}) עומד בסף הקבלה הנדרש (${threshold.toFixed(isTechnion ? 2 : 1)}).`
 					: isMissingRequirement
 					? `הסכם המשוקלל בסימולציה (${currentSekem.toFixed(isTechnion ? 2 : 1)}) עומד בסף, אבל חסר תנאי סף רשמי: ${missingTitles}.`
@@ -1532,10 +1538,14 @@ export default function WhatIfSimulator({
 								<span className="text-[#8A847C]">
 									בסיס: <strong className="text-[#66635C] font-black">{analysis.userSekem.toFixed(isTechnion ? 2 : 1)}</strong>
 								</span>
-								<span className="text-[#8A847C]">•</span>
-								<span className="text-[#1E597B]">
-									סף נדרש: <strong className="text-[#1E597B] font-black">{threshold.toFixed(isTechnion ? 2 : 1)}</strong>
-								</span>
+								{!isConditionsOnly && (
+									<>
+										<span className="text-[#8A847C]">•</span>
+										<span className="text-[#1E597B]">
+											סף נדרש: <strong className="text-[#1E597B] font-black">{threshold.toFixed(isTechnion ? 2 : 1)}</strong>
+										</span>
+									</>
+								)}
 							</div>
 
 							{/* Gap Notice */}
@@ -1555,14 +1565,18 @@ export default function WhatIfSimulator({
 									</span>
 								) : (
 									<span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#FDF1EE] text-[#9B3327] text-xs font-bold border border-[#F1CAC1]">
-										<span>פער של {Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות לסף הקבלה</span>
+										<span>
+											{isConditionsOnly
+												? `אין סף סכם — חסר תנאי קבלה: ${missingTitles || 'מתמטיקה'}`
+												: `פער של ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות לסף הקבלה`}
+										</span>
 									</span>
 								)}
 							</div>
 						</div>
 
-						{/* Progress Bar Gauge ("כמה אני מתקרב לסף הנדרש עבור התואר") */}
-						<div className="space-y-2.5">
+						{/* Progress Bar Gauge ("כמה אני מתקרב לסף הנדרש עבור התואר") — no gauge without a threshold */}
+						<div className={`space-y-2.5 ${isConditionsOnly ? 'hidden' : ''}`}>
 							<div className="flex items-center justify-between text-xs font-bold text-[#66635C]">
 								<span>{simulatedAnalysis?.admissionRoutes?.screening ? 'מד התקדמות לסף הזימון למיונים:' : 'מד התקדמות לסף הקבלה:'}</span>
 								<span className="text-[#222222] font-black text-sm dir-ltr">{progressPercent}%</span>
@@ -1797,7 +1811,9 @@ export default function WhatIfSimulator({
 							</div>
 						</div>
 						<div className="text-[11px] text-[#8A847C]">
-							{currentSekem >= threshold
+							{isConditionsOnly
+								? 'לתוכנית אין סף סכם'
+								: currentSekem >= threshold
 								? `עובר את הסף ב-${rawGap.toFixed(isTechnion ? 2 : 1)} נקודות`
 								: `נותרו ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נקודות לסף`}
 						</div>
@@ -1824,13 +1840,15 @@ export default function WhatIfSimulator({
 							</span>
 						</div>
 						<div className="text-base sm:text-lg font-black leading-tight">
-							{isScreening ? 'עובר/ת לשלב המיונים' : isAccepted ? 'עובר/ת את הסף 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
+							{isConditionsOnly ? (isAccepted ? 'עומד/ת בתנאי הקבלה' : 'חסר תנאי קבלה') : isScreening ? 'עובר/ת לשלב המיונים' : isAccepted ? 'עובר/ת את הסף 🎉' : isMissingRequirement ? 'עומד בסכם — חסר תנאי סף ⚠️' : 'מתחת לסף הנדרש'}
 						</div>
 						<div className="text-[11px] font-medium opacity-90">
 							{isAccepted
 								? alternativeRouteNote ?? 'עומד בכל תנאי הסף הנדרשים לרישום'
 								: isMissingRequirement
 								? `חסר: ${missingTitles}`
+								: isConditionsOnly
+								? `חסר: ${missingTitles || 'תנאי המתמטיקה'}`
 								: `נדרש שיפור נוסף של ${Math.abs(rawGap).toFixed(isTechnion ? 2 : 1)} נק׳`}
 						</div>
 					</div>

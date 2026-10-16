@@ -36902,7 +36902,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה דו מחלקתי - יזמות וחדשנות)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 600,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 600,
         "mathRequirement": "87/5",
@@ -36919,7 +36919,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -36931,8 +36931,68 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
             },
             {
               "id": "english",
@@ -36967,7 +37027,57 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {
@@ -37052,7 +37162,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה דו מחלקתי - מחלקות הפקולטה למדעי הרוח והחברה)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 600,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 600,
         "mathRequirement": "87/5",
@@ -37069,7 +37179,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -37081,8 +37191,68 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
             },
             {
               "id": "english",
@@ -37117,7 +37287,57 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {
@@ -37349,7 +37569,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה דו מחלקתי - קיימות ושמירת סביבה)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 600,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 600,
         "mathRequirement": "87/5",
@@ -37366,7 +37586,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -37378,8 +37598,68 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
             },
             {
               "id": "english",
@@ -37414,7 +37694,57 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {
@@ -37422,7 +37752,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה חד-מחלקתי - מתמטיקה כללית)",
         "degreeLevel": "תואר ראשון",
         "description": "חד-מחלקתי",
-        "admissionThreshold": 600,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 600,
         "mathRequirement": "87/5",
@@ -37439,7 +37769,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -37451,8 +37781,68 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
             },
             {
               "id": "english",
@@ -37487,7 +37877,57 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {
@@ -37711,7 +38151,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה ראשי - מדעי הטבע)",
         "degreeLevel": "תואר ראשון",
         "description": "ראשי",
-        "admissionThreshold": 600,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 600,
         "mathRequirement": "87/5",
@@ -37728,7 +38168,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -37740,8 +38180,68 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
             },
             {
               "id": "english",
@@ -37776,7 +38276,57 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {
@@ -37784,7 +38334,7 @@
         "fieldOfStudy": "מתמטיקה (מתמטיקה ראשי)",
         "degreeLevel": "תואר ראשון",
         "description": "ראשי",
-        "admissionThreshold": 600,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 600,
         "mathRequirement": "87/5",
@@ -37801,7 +38351,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -37813,8 +38363,68 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
             },
             {
               "id": "english",
@@ -37849,7 +38459,57 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {
@@ -39411,7 +40071,7 @@
         "fieldOfStudy": "סטטיסטיקה וניתוח נתונים (סטטיסטיקה וניתוח נתונים דו מחלקתי - מתמטיקה)",
         "degreeLevel": "תואר ראשון",
         "description": "דו מחלקתי",
-        "admissionThreshold": 680,
+        "admissionThreshold": null,
         "sekemScore": null,
         "psychometricScore": 680,
         "mathRequirement": "5 יחידות 80+ / 4 יחידות 90+",
@@ -39428,7 +40088,7 @@
           "requirements": [
             {
               "id": "math",
-              "title": "מתמטיקה",
+              "title": "מתמטיקה (תנאי הקבלה)",
               "anyOf": [
                 {
                   "bagrut": [
@@ -39440,8 +40100,26 @@
                       "minGrade": 87
                     }
                   ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
                 }
-              ]
+              ],
+              "otherOptions": "או סכם כמותי 630 עם מתמטיקה 4 יח\"ל 80 / 5 יח\"ל 70"
             },
             {
               "id": "english",
@@ -39461,23 +40139,6 @@
           ],
           "bagrutOnlyRequirements": [
             {
-              "id": "math",
-              "title": "מתמטיקה",
-              "anyOf": [
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 87
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "id": "english",
               "title": "רמת אנגלית (בסיסי)",
               "anyOf": [
@@ -39493,7 +40154,45 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — חתכי קבלה סתו תשפ\"ז (2026-10-02)"
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "conditionsOnly": {
+            "note": "הקבלה לצירוף הזה היא לפי תנאי במתמטיקה, בלי סף סכם. יש לעמוד גם בתנאי הקבלה של שתי המחלקות. מ-3.8 המכסה מלאה (\"עצירת קבלות\"), עם רשימת המתנה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "quantitative",
+              "min": 630,
+              "label": "סכם כמותי 630 ומתמטיקה 4 יח\"ל 80 או 5 יח\"ל 70",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-630",
+                "title": "חלופת סכם כמותי 630",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 80
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 70
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
       },
       {

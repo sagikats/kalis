@@ -20,7 +20,7 @@ const ORDER = [
 	// Hebrew University
 	'importHujiThresholds', 'importHujiPrerequisites',
 	// Ben-Gurion
-	'importBguThresholds', 'importBguRequirements', 'importBguEnglishRule',
+	'importBguThresholds', 'importBguRequirements', 'importBguEnglishRule', 'importBguConditionsOnly',
 	// Haifa, Ariel, Bar-Ilan, Reichman
 	'importHaifaThresholds', 'importHaifaWeighting', 'importArielThresholds', 'importBarIlanThresholds', 'importReichmanThresholds',
 	// Medicine at all universities — last: it owns those programs' routes

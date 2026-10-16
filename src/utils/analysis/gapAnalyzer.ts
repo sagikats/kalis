@@ -64,7 +64,7 @@ export interface ProgramGapAnalysis {
 	relevantSekemType: 'general' | 'engineering' | 'management' | 'technion' | 'quantitative' | 'psychometric' | HaifaWeightingType;
 	relevantSekemLabel: string;
 	/** Which official route the status rests on, when accepted. */
-	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut' | 'engineering_score';
+	admissionRoute?: 'sekem' | 'psychometric_only' | 'bagrut_only' | 'excellent_bagrut' | 'engineering_score' | 'conditions';
 	/** One-line explanation when an official route or condition changed the status. */
 	admissionNote?: string;
 	/** Official admission routes of the program, when published. */
@@ -730,6 +730,57 @@ export function analyzeProgramGap(
 					potentialSekemGain: 0
 				});
 			}
+		}
+	}
+
+	// Admission by official conditions alone, no sekem threshold (BGU mathematics): the requirements decide the status.
+	// The official alternative that also needs a sekem minimum stands in for the requirement it replaces.
+	if (routes?.conditionsOnly && threshold === null) {
+		const { note, sekemAlternative: alt } = routes.conditionsOnly;
+		// The core admission condition must actually be met: "unknown" (a section score not entered) can't admit here,
+		// unlike side conditions such as the English level, which stay non-blocking as on every other program.
+		const coreId = alt?.replaces ?? 'math';
+		const coreUnknown = requirementResults.find((r) => r.requirement.id === coreId && !r.met && r.unknown);
+		let blocking = [...unmetRequirements, ...(coreUnknown ? [coreUnknown] : [])];
+		let viaSekem = false;
+		if (alt && blocking.some((r) => r.requirement.id === alt.replaces)) {
+			const sekemValue =
+				alt.sekem === 'quantitative'
+					? institutionRes.quantitativeSekem ?? institutionRes.engineeringSekem ?? 0
+					: institutionRes.generalSekem || 0;
+			const altMet = sekemValue >= alt.min && evaluateProgramRequirements([alt.requirement], profile).every((r) => r.met);
+			if (altMet) {
+				blocking = blocking.filter((r) => r.requirement.id !== alt.replaces);
+				viaSekem = true;
+			}
+		}
+		if (blocking.length === 0) {
+			status = 'accepted';
+			admissionRoute = 'conditions';
+			admissionNote = `עומד/ת בתנאי הקבלה${viaSekem && alt ? ` (בחלופה: ${alt.label})` : ''}. ${note}`;
+			improvementOptions.length = 0;
+		} else {
+			status = 'not_accepted';
+			admissionRoute = undefined;
+			if (coreUnknown && !improvementOptions.some((o) => o.id === `opt-req-${coreId}`)) {
+				const r = coreUnknown.requirement;
+				improvementOptions.unshift({
+					id: `opt-req-${r.id}`,
+					type: 'subject',
+					title: `עמידה בתנאי הקבלה: ${r.title}`,
+					description: `התוכנית מקבלת לפי תנאי: ${describeRequirement(r)}.`,
+					currentValue: describeCurrentForRequirement(r, profile),
+					targetValue: describeRequirement(r),
+					gapAmount: 1,
+					effortLevel: 'medium',
+					estimatedWeeks: 12,
+					potentialSekemGain: 0
+				});
+			}
+			const missingQuant = coreUnknown?.missingSections?.includes('quant')
+				? ' אם יש לך ציון בחלק החשיבה הכמותית, הזנה שלו יכולה לפתוח אפשרות נוספת.'
+				: '';
+			admissionNote = `אין לתואר הזה סף סכם — הקבלה לפי תנאים, ולא מתקיים: ${blocking.map((r) => r.requirement.title).join(', ')}.${missingQuant} ${note}`;
 		}
 	}
 
