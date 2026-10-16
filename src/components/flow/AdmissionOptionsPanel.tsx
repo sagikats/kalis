@@ -34,6 +34,8 @@ export default function AdmissionOptionsPanel({
 	beyondRegularTracks = false
 }: AdmissionOptionsPanelProps) {
 	const inst = institutionName.split(' - ')[0].split(' (')[0].replace('אוניברסיטת ', '').replace(/^ה/, '');
+	// Keeps the definite article for "the site of …" (הטכניון, העברית)
+	const instWithArticle = institutionName.split(' - ')[0].split(' (')[0].replace('אוניברסיטת ', '');
 	const links = BYPASS_ROUTES[calculatorId] ?? {};
 	const ouTracks = OPEN_UNIVERSITY_TRACKS[calculatorId] ?? [];
 	const mechina = MECHINA_INFO[calculatorId] ?? null;
@@ -146,7 +148,7 @@ export default function AdmissionOptionsPanel({
 										<span>לדף הרשמי</span>
 										<ExternalLink className="h-3.5 w-3.5" />
 									</a>
-									<p className="text-[11px] text-[#8A847C]">לפי האתר של {inst}, נבדק ב-{MECHINA_CHECKED_AT}</p>
+									<p className="text-[11px] text-[#8A847C]">לפי האתר של {instWithArticle}, נבדק ב-{active.info.checkedAt ?? MECHINA_CHECKED_AT}</p>
 								</div>
 							)}
 
