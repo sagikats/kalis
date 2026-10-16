@@ -49,6 +49,8 @@ export interface MechinaInfo {
 	/** How this institution uses mechina grades for admission, in its own terms. */
 	howItWorks: string;
 	notes: string[];
+	/** When this entry was last checked, if later than MECHINA_CHECKED_AT. */
+	checkedAt?: string;
 }
 
 export const MECHINA_CHECKED_AT = '13.10.2026';
@@ -56,10 +58,15 @@ export const MECHINA_CHECKED_AT = '13.10.2026';
 /** Per-institution mechina rules, paraphrased from the official pages (see the snapshot for exact quotes). */
 export const MECHINA_INFO: Record<string, MechinaInfo | null> = {
 	technion: {
-		url: 'https://kdam.technion.ac.il/node/52',
+		url: 'https://admissions.technion.ac.il/kabala_from_mechina/',
 		title: 'מכינת הטכניון',
-		howItWorks: 'תעודת סיום המכינה מחליפה את תעודת הבגרות בחישוב ציון הסכם לטכניון — בכל הפקולטות חוץ מרפואה.',
-		notes: ['הקבלה למכינה מותנית בציון באנגלית מהפסיכומטרי או ממבחן אמירנט.']
+		checkedAt: '16.10.2026',
+		howItWorks: 'תעודת המכינה מחליפה רק את תעודת הבגרות: ממוצע המכינה נכנס לסכם במקום ממוצע הבגרות, יחד עם הציון הפסיכומטרי — בכל המסלולים חוץ מרפואה (ותואר כפול עם רפואה), שבהם החישוב שונה.',
+		notes: [
+			'הציון הפסיכומטרי (או SAT / ACT) עדיין נדרש.',
+			'הטכניון מכיר גם במכינות של בן-גוריון (מסלול מדעי-הנדסי או מדעי הטבע, מתמטיקה 5+) ושל בר-אילן (מסלול מדעי-הנדסי, מתשפ"ה). במכינות של העברית ואריאל — בתנאי שעוברים את בחינות הסיום במתמטיקה ובפיזיקה ברמת 5+.',
+			'הקבלה למכינת הטכניון עצמה מותנית בציון באנגלית מהפסיכומטרי או ממבחן אמירנט.'
+		]
 	},
 	huji: {
 		url: 'https://mechina.huji.ac.il/%D7%A7%D7%91%D7%9C%D7%94-%D7%9C%D7%90%D7%95%D7%A0%D7%99%D7%91%D7%A8%D7%A1%D7%99%D7%98%D7%94',
