@@ -1,7 +1,13 @@
 /**
- * Comprehensive 24-Case Benchmark Quality Assurance Suite
- * Validates all 8 Israeli Universities (3 test cases each)
- * Checks institutional calculators, official formula accuracy, and NITE psychometric scaling.
+ * 24-case benchmark suite across the 8 universities (written 2026-09, re-verified 2026-10-16).
+ *
+ * Verification status of each exact value (see src/data/sources/legacy-benchmarks-verification-2026-10-16.json):
+ * - TAU and BGU: run against the live official calculators (scripts/verification/verifyLegacyBenchmarks.ts) — all match.
+ * - Technion: the formula in the official calculator's code (0.5·B + 0.075·P − 19, one decimal).
+ * - HUJI: the official formulas in go.huji.ac.il's data (formulasObj types 1 and 2) — algebraically identical to ours.
+ * - Haifa: the formula on admissions.haifa.ac.il/score-calculation (BT = 10·B − 330; 1:1 → (BT + PC) / 2).
+ * - Ariel: the published formula; the official calculator shows one decimal and we show whole points (open item).
+ * Range checks and "direct bagrut eligible" flags are sanity checks of our own behaviour, not official values.
  */
 
 import { describe, it } from 'node:test';
@@ -42,7 +48,7 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 	// =========================================================================
 	describe('1. Tel Aviv University (TAU)', () => {
 		it('Case 1: Bagrut 107.0 + Psychometric 698 + (5u Math & 5u Phys) -> General 673, Engineering 683, Management 681', () => {
-			// Exact match against official TAU calculator: go.tau.ac.il/he/calculator
+			// Official TAU calculator (go.tau.ac.il), verified 2026-10-16: 673 / 683 / 681
 			const gen = calculateTauGeneralSekem(107.0, 698);
 			const eng = calculateTauEngineeringSekem(107.0, 698, true);
 			const mng = calculateTauManagementSekem(107.0, 698);
@@ -83,6 +89,7 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 			assert.equal(res.directBagrutEligible, false, 'Technion strictly mandates psychometric for STEM');
 		});
 
+		// Formula from the official calculator's code (admissions.technion.ac.il/calculator, form 76), checked 2026-10-16
 		it('Case 2: High Bagrut average (112.0) + Psychometric 680 -> Exact Sekem 88.0', () => {
 			// S = 0.5 * 112.0 + 0.075 * 680 - 19 = 56.0 + 51.0 - 19 = 88.0
 			const sekem = calculateTechnionSekem(112.0, 680);
@@ -132,7 +139,7 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 		});
 
 		it('Case 4: Quantitative Sekem (CS / Natural Sciences): Bagrut 115.0 + Q:135, V:125, E:100 -> Exact Sekem 769', () => {
-			// Verified against BGU live calculator: 2.705 * 135 + 0.715 * 125 + 0.39 * 100 + 6.29 * 115 - 448 = 769.0
+			// BGU live calculator (GetSekemQuantity), verified 2026-10-02 and 2026-10-16: 769
 			const quantSekem = calculateBguQuantitativeSekem(115.0, 135, 125, 100);
 			assert.equal(quantSekem, 769, 'BGU Quantitative Sekem must match official BGU calculator 769');
 		});
@@ -148,10 +155,12 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 		});
 
 		it('Case 2: Bagrut 108.0 + Psychometric 730 -> official weighted score 24.253 (≈692 on 800 scale)', () => {
+			// Equal to the official formulas in go.huji.ac.il's data (formulasObj type 1 = 50/50, type 2 = 30/70), checked 2026-10-16:
+			// type 2: 0.027468921·730 + 0.145461915·108 − 11.50910537 = 24.253
 			// Official HUJI formula: B = 3.963*10.8 - 20.0621 = 22.738; P = 0.032073*730 + 0.3672 = 23.781
 			// 50/50: 1.2422*23.259 - 4.7609 = 24.132; 30/70: 1.2235*23.468 - 4.4598 = 24.253 -> max = 24.253
 			assert.equal(calculateHujiWeightedScore(108.0, 730), 24.253);
-			// 800-scale equivalent: 25.0998 * 24.253 + 83.72 = 692.4 -> 692
+			// 800-scale equivalent (ours, for display only — HUJI publishes the weighted score): 25.0998 * 24.253 + 83.72 = 692.4 -> 692
 			assert.equal(calculateHujiSekem(108.0, 730), 692);
 		});
 
@@ -169,7 +178,7 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 	// =========================================================================
 	describe('5. University of Haifa', () => {
 		it('Case 1: Bagrut 106.0 + Psychometric 640 -> Exact Sekem 685', () => {
-			// BT = 106 * 10 - 330 = 730; Sekem = 0.5 * 730 + 0.5 * 640 = 365 + 320 = 685
+			// Formula on admissions.haifa.ac.il/score-calculation (checked 2026-10-16): BT = 106 * 10 - 330 = 730; (730 + 640) / 2 = 685
 			const sekem = calculateHaifaSekem(106.0, 640);
 			assert.equal(sekem, 685);
 		});
@@ -194,7 +203,8 @@ describe('Comprehensive 24-Case Quality Assurance Suite (All 8 Universities)', (
 	// =========================================================================
 	describe('6. Ariel University', () => {
 		it('Case 1: Bagrut 105.0 + Psychometric 650 -> Exact Sekem 675', () => {
-			// (105 * 6.666 + 650) / 2 = (699.93 + 650) / 2 = 1349.93 / 2 = 674.965 -> 675
+			// Published formula: (105 * 6.666 + 650) / 2 = 674.965 -> 675. The official calculator shows one decimal (≈675.0);
+			// its exact rounding is an open item (USER_TASKS)
 			const sekem = calculateArielSekem(105.0, 650);
 			assert.equal(sekem, 675);
 		});

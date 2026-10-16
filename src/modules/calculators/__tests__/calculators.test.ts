@@ -48,7 +48,7 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 	});
 
 	it('Technion: Exact Sekem formula math', () => {
-		// S = 0.5 * 105.0 + 0.075 * 700 - 19 = 52.5 + 52.5 - 19 = 86.0
+		// Official calculator's formula (admissions.technion.ac.il/calculator), checked 2026-10-16: 0.5·105 + 0.075·700 − 19 = 86.0
 		const sekem = calculateTechnionSekem(105.0, 700);
 		assert.equal(sekem, 86.0);
 	});
@@ -66,6 +66,7 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 	});
 
 	it('TAU: Engineering Sekem matches official formula', () => {
+		// Official TAU calculator (go.tau.ac.il), verified 2026-10-16: engineering 674
 		// Bagrut 105.0, Quant 700, with realit bonus:
 		// step1 = 105 * 9.62 - 349.9 = 660.2; raw = (660.2 + 700) * 0.52 - 43.10 + 10 = 674.2 -> 674
 		const engSekem = calculateTauEngineeringSekem(105.0, 700, true);
@@ -73,7 +74,7 @@ describe('Subagent 3: Institution Calculators & Data Verification', () => {
 	});
 
 	it('BGU: General Sekem formula calculation', () => {
-		// Official BGU live formula: 0.62 * 700 + 5.9 * 105.0 - 330 = 434 + 619.5 - 330 = 723.5 -> 724
+		// BGU live calculator GetSekem(105, 700) = 724, verified 2026-10-16
 		const bguSekem = calculateBguGeneralSekem(105.0, 700);
 		assert.equal(bguSekem, 724);
 	});

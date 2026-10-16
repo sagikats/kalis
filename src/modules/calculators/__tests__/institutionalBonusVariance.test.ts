@@ -1,7 +1,10 @@
 /**
- * Institutional Bonus Variance & Exact Admissions Match Test Suite
- * Validates institutional bonus variations across all 8 Israeli universities
- * and mathematically verifies the candidate's exact profile from BGU live calculator.
+ * Bonus differences between institutions and one BGU profile (written 2026-09, re-verified 2026-10-16):
+ * - BGU sekem values: live BGU calculator (GetSekem / GetSekemQuantity), all match.
+ * - The candidate's BGU and TAU averages (112.5): live official average calculators, both match.
+ * - HUJI bonuses: info.huji.ac.il/reception-components/Bagrut bonus table.
+ * - TAU +20 for other subjects: the TAU calculator's "אחר עם בונוס" row (5u, 90 → +20).
+ * - Technion: official calculator — only five technological subjects get +25 (see officialRules.test.ts).
  */
 
 import { describe, it } from 'node:test';
@@ -117,7 +120,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		});
 
 		it('Quantitative Sekem at Bagrut 112.5 matches BGU live calculator (753)', () => {
-			// Verified 2026-10-02 against …/GetSekemQuantity (Q135 V125 E100, bagrut 112.5) -> 753
+			// Verified 2026-10-02 and 2026-10-16 against …/GetSekemQuantity (Q135 V125 E100, bagrut 112.5) -> 753
 			const quantSekem = calculateBguQuantitativeSekem(
 				112.5,
 				candidatePsych.quant,
@@ -128,7 +131,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		});
 
 		it('Current General Sekem: Exactly 695 at current Bagrut 109.06', () => {
-			// Formula: 0.62 * 616 + 5.9 * 109.06 - 330 = 695.37 -> 695
+			// BGU live calculator GetSekem(109.06, 616) = 695, verified 2026-10-16
 			const genSekem = calculateBguGeneralSekem(109.06, candidatePsych.general);
 			assert.equal(genSekem, 695);
 		});
@@ -142,7 +145,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		});
 
 		it('Optimal Track Target: Minimum Bagrut needed for 750 threshold is 112.0 (NOT 115.0)', () => {
-			// Formula at Bagrut 112.0: 2.705 * 135 + 0.715 * 125 + 0.39 * 100 + 6.29 * 112.0 - 448 = 750.03 -> 750
+			// BGU live calculator GetSekemQuantity(Q135 V125 E100, 112) = 750, verified 2026-10-16
 			const targetSekem = calculateBguQuantitativeSekem(112.0, 135, 125, 100);
 			assert.equal(targetSekem, 750, 'Bagrut 112.0 exactly satisfies 750 admission threshold');
 		});
