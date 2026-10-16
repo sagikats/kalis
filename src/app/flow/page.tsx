@@ -37,6 +37,8 @@ import { BagrutSubjectOption, POPULAR_5U_ELECTIVES } from '@/data/bagrutSubjects
 import { cleanGradeInput, cleanNumberInput } from '@/utils/gradeInputHelper';
 
 import DegreeSearchSelector from '@/components/flow/DegreeSearchSelector';
+import { useInstitutionsCatalog } from '@/hooks/useInstitutionsCatalog';
+import { refreshSelectedTargets } from '@/modules/db/refreshSelectedTargets';
 import PersonalAdmissionReport from '@/components/flow/PersonalAdmissionReport';
 import RecommendedTracksView from '@/components/flow/RecommendedTracksView';
 import TrackRegistrationGate from '@/components/flow/TrackRegistrationGate';
@@ -91,8 +93,14 @@ export default function AdmissionFlowPage() {
 	const [psychEstimateAckKey, setPsychEstimateAckKey] = useState<string>('');
 	const [pendingStepAfterPsychNotice, setPendingStepAfterPsychNotice] = useState<1 | 2 | 3 | 4 | null>(null);
 
-	// Step 2: Target Programs Wishlist
-	const [selectedTargets, setSelectedTargets] = useState<TargetProgramSelection[]>([]);
+	// Step 2: Target Programs Wishlist. Stored picks are snapshots (localStorage); they are re-read from the current
+	// catalog by id so a returning user never sees thresholds from before a data update.
+	const [storedTargets, setSelectedTargets] = useState<TargetProgramSelection[]>([]);
+	const { institutions: currentCatalog } = useInstitutionsCatalog();
+	const selectedTargets = useMemo(
+		() => refreshSelectedTargets(storedTargets, currentCatalog),
+		[storedTargets, currentCatalog]
+	);
 
 	// Step 4: Focused program for deep-dive
 	const [focusedProgramId, setFocusedProgramId] = useState<string | null>(null);
