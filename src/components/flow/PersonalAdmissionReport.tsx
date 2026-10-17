@@ -281,6 +281,10 @@ function ProgramReportCard({
 		? 'חסר פסיכומטרי מינימלי'
 		: isMissingRequirement
 		? 'חסר תנאי סף רשמי'
+		: isScreening && item.entranceExam
+		? item.entranceExam.requiredScore > 0
+			? `נדרש ${item.entranceExam.requiredScore} בבחינת הכניסה`
+			: 'תלוי בבחינת הכניסה'
 		: isScreening
 		? item.threshold === null ? 'עומד בתנאי ההרשמה · מיונים' : `עובר לשלב המיונים (+${item.gap})`
 		: isNoThreshold

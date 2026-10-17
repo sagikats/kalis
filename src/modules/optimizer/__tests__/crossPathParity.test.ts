@@ -52,8 +52,11 @@ function randomProfile(withSections: boolean): UserAcademicProfile {
 	} as UserAcademicProfile;
 }
 
+// Technion architecture / landscape compare an entrance-exam sekem with the threshold, not the regular one — by design
 const programsOf = (instId: string) =>
-	((academicData as any[]).find((i) => i.id === instId)?.programs ?? []).filter((p: any) => !p.notOffered && p.admissionThreshold);
+	((academicData as any[]).find((i) => i.id === instId)?.programs ?? []).filter(
+		(p: any) => !p.notOffered && p.admissionThreshold && !p.admissionRoutes?.entranceExam
+	);
 
 describe('Report, calculator, tracks and simulator use the same score', () => {
 	it('the score the report compares with the threshold equals the track engine / simulator score, for every program', () => {

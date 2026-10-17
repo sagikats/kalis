@@ -568,7 +568,17 @@ export default function RecommendedTracksView({
 									הסכם שלך ({analysis.userSekem}) כבר עובר את הסף ({analysis.threshold}) ואת תנאי הסף שפורסמו לתוכנית הזו.
 								</p>
 							</>
-						) : analysis.admissionRoutes?.screening && analysis.threshold === null ? (
+						) : analysis.entranceExam ? (
+							<>
+								<h3 className="text-lg font-bold text-[#222222]">הקבלה תלויה בבחינת הכניסה</h3>
+								<p className="text-sm text-[#66635C] leading-relaxed">
+									{analysis.admissionNote}
+								</p>
+								<p className="text-xs text-[#8A847C] leading-relaxed">
+									מסלול שיפור בגרויות או פסיכומטרי לא מוצג לתואר הזה, כי החלק המכריע בסכם הוא {analysis.entranceExam.examName}.
+								</p>
+							</>
+												) : analysis.admissionRoutes?.screening && analysis.threshold === null ? (
 							<>
 								<h3 className="text-lg font-bold text-[#222222]">אין סף זימון שמתפרסם מראש</h3>
 								<p className="text-sm text-[#66635C] leading-relaxed">

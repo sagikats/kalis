@@ -4,6 +4,7 @@
  */
 
 import { describe, it } from 'node:test';
+import technionBonusTable from '../../../data/sources/technion-bonus-table-2026-10-17.json';
 import assert from 'node:assert/strict';
 
 import {
@@ -73,8 +74,8 @@ describe('Official admission rules', () => {
 
 		// Source: the official calculator (admissions.technion.ac.il/calculator → technion-calculators-sum.php), 2026-10-16.
 		// Every option that looks technological was run at 5u / 90, with and without math 5u + physics 5u.
-		it('only five technological subjects get the science bonus (+25, +30 in the cluster); the rest get +20', () => {
-			for (const name of ['מדעי המחשב', 'אלקטרוניקה ומחשבים', 'ביוטכנולוגיה', 'מערכות ביוטכנולוגיה', 'מדעי ההנדסה']) {
+		it('only six technological subjects get the science bonus (+25, +30 in the cluster); the rest get +20', () => {
+			for (const name of ['מדעי המחשב', 'אלקטרוניקה ומחשבים', 'ביוטכנולוגיה', 'מערכות ביוטכנולוגיה', 'מדעי ההנדסה', 'בקרת מכונות']) {
 				assert.equal(getTechnionBonus(sub(name, 5, 90), false), 25, name);
 				assert.equal(getTechnionBonus(sub(name, 5, 90), true), 30, name);
 			}
@@ -83,6 +84,31 @@ describe('Official admission rules', () => {
 				assert.equal(getTechnionBonus(sub(name, 5, 90), false), 20, name);
 				assert.equal(getTechnionBonus(sub(name, 5, 90), true), 20, name);
 			}
+		});
+
+		// Every subject on the official calculator's list, run at 5u and 4u (2026-10-17). The two "not on the list"
+		// entries (bonus 0) are skipped: our catalog names don't always match the Technion's, so we keep +20/+10 for them.
+		it('matches the bonus of every subject on the official calculator list (5u and 4u)', () => {
+			for (const r of [...technionBonusTable.electives, ...technionBonusTable.mandatorySection]) {
+				if (r.name.includes('שאינ')) continue;
+				assert.equal(getTechnionBonus(sub(r.name, 5, 90), false), r.bonus5, `${r.name} 5u`);
+				assert.equal(getTechnionBonus(sub(r.name, 4, 90), false), r.bonus4, `${r.name} 4u`);
+			}
+			for (const name of technionBonusTable.clusterMembers_30_with_math5) {
+				assert.equal(getTechnionBonus(sub(name, 5, 90), true), 30, `${name} in the cluster`);
+			}
+			assert.equal(getTechnionBonus(sub('ערבית', 5, 90), true), 25, 'Arabic is not a cluster member');
+		});
+
+		// "מקצוע שאינו מופיע בטבלאות לא יקבל בונוס!" (bonus page) — and the calculator gives "מקצוע אחר שאינו ברשימה" 0
+		it('a subject that is not on the Technion list gets no bonus; catalog names on the list under another name get its bonus', () => {
+			for (const name of ['הגנת סייבר', 'רובוטיקה ומערכות אוטונומיות', 'מדעי המידע והנתונים (Data Science)', 'דיפלומטיה ויחסים בינלאומיים (באנגלית)']) {
+				assert.equal(getTechnionBonus(sub(name, 5, 90), false), 0, name);
+				assert.equal(getTechnionBonus(sub(name, 4, 90), false), 0, name);
+			}
+			assert.equal(getTechnionBonus(sub('צרפתית (מוגבר 5 יח"ל)', 5, 90), false), 20, 'foreign language → שפה זרה');
+			assert.equal(getTechnionBonus(sub('לימודי המזרח התיכון והאסלאם / מזרחנות', 4, 90), false), 10, 'מזרחנות → תולדות הערבים והאיסלאם');
+			assert.equal(getTechnionBonus(sub('אזרחות', 5, 90), false), 20, 'mandatory section');
 		});
 
 		it('official calculator averages with systems programming 5u: 94.1, and 103.1 with math 5u + physics 5u', () => {

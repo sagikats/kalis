@@ -46538,7 +46538,13 @@
               ]
             }
           ],
-          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06",
+          "entranceExam": {
+            "kind": "landscape",
+            "examName": "בחינת הכניסה לאדריכלות נוף",
+            "scaleMax": 123,
+            "source": "https://admissions.technion.ac.il/calculator/ — חישוב סכם לארכיטקטורה / לאדריכלות נוף (2026-10-17)"
+          }
         }
       },
       {
@@ -46619,7 +46625,13 @@
               ]
             }
           ],
-          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06"
+          "requirementsSource": "https://admissions.technion.ac.il/admission-requirements-technion/ ; https://admissions.technion.ac.il/sechem-for-admission/sekem/ ; https://admissions.technion.ac.il/math-knowledge/ ; https://admissions.technion.ac.il/english-exam/ — 2026-10-06",
+          "entranceExam": {
+            "kind": "architecture",
+            "examName": "בחינת הכניסה לארכיטקטורה",
+            "scaleMax": 140,
+            "source": "https://admissions.technion.ac.il/calculator/ — חישוב סכם לארכיטקטורה / לאדריכלות נוף (2026-10-17)"
+          }
         }
       },
       {

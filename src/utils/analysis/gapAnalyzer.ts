@@ -10,6 +10,7 @@ import {
 } from '../../modules/optimizer/programRequirements';
 import { isSameBagrutSubject } from '../../modules/optimizer/solver';
 import { SubjectInput, selectProgramSekem, HAIFA_WEIGHTINGS, HaifaWeightingType } from '../../modules/calculators';
+import { calculateTechnionArchitectureBagrut, calculateTechnionEntranceExamSekem, requiredTechnionEntranceExam } from '../../modules/calculators/technion';
 import { InstitutionSekemResult } from '../calculators/multiCalculator';
 
 /**
@@ -69,6 +70,11 @@ export interface ProgramGapAnalysis {
 	admissionNote?: string;
 	/** Official admission routes of the program, when published. */
 	admissionRoutes?: AdmissionRoutes;
+	/**
+	 * Technion architecture / landscape architecture: the sekem includes an entrance exam, so instead of a verdict the
+	 * report shows the exam score needed. userSekem is then the sekem with an exam score of 0.
+	 */
+	entranceExam?: { examName: string; scaleMax: number; requiredScore: number; bagrutAverage: number; maxSekem: number };
 	/** Official paths that don't decide the status (e.g. Technion "אפיק מקוצר", or a near-miss "בגרות מצוינת"). */
 	alternativePaths?: { id: string; title: string; description: string }[];
 	/** Every official route other than the sekem, described for this applicant (step-4 bypass tabs). */
@@ -411,9 +417,9 @@ export function analyzeProgramGap(
 	const guessed = resolveProgramSekemType(target.calculatorId, target.program.fieldOfStudy);
 	// A sourced program type (e.g. from an official threshold table) overrides the name-based guess
 	const sekemType = target.program.relevantSekemType ?? guessed.type;
-	const sekemLabel = target.program.relevantSekemType ? describeSekemType(target.calculatorId, sekemType) : guessed.label;
+	let sekemLabel = target.program.relevantSekemType ? describeSekemType(target.calculatorId, sekemType) : guessed.label;
 
-	const userSekem = selectProgramSekem(institutionRes, sekemType, target.calculatorId);
+	let userSekem = selectProgramSekem(institutionRes, sekemType, target.calculatorId);
 
 	const isTechnion = target.calculatorId === 'technion';
 
@@ -733,6 +739,48 @@ export function analyzeProgramGap(
 		}
 	}
 
+	// Technion architecture / landscape architecture: their own sekem formula, which includes an entrance exam
+	// (official calculator, forms 73/74). The regular sekem doesn't apply, and the exam score is unknown beforehand,
+	// so the status says what exam score reaches the threshold rather than accepted / not accepted.
+	let entranceExam: ProgramGapAnalysis['entranceExam'];
+	if (routes?.entranceExam && isTechnion && threshold !== null) {
+		const ex = routes.entranceExam;
+		const field = target.program.fieldOfStudy;
+		const d = calculateTechnionArchitectureBagrut(profile.bagrutSubjects as SubjectInput[]).average;
+		const p = profile.psychometricGeneral || 0;
+		improvementOptions.length = 0; // levers computed with the regular formula don't apply here
+		admissionRoute = undefined;
+		sekemLabel = `סכם ${field} (ללא ${ex.examName})`;
+		if (d <= 0 || p <= 0) {
+			userSekem = 0;
+			gap = 0;
+			status = 'not_accepted';
+			admissionNote = `הסכם ל${field} בטכניון מחושב בנוסחה משלו, שכוללת ממוצע בגרות, ציון פסיכומטרי ואת ${ex.examName} — בלי פסיכומטרי אי אפשר לחשב אותו.`;
+		} else {
+			const required = requiredTechnionEntranceExam(ex.kind, d, p, threshold);
+			const maxSekem = calculateTechnionEntranceExamSekem(ex.kind, d, p, ex.scaleMax);
+			userSekem = calculateTechnionEntranceExamSekem(ex.kind, d, p, 0);
+			entranceExam = { examName: ex.examName, scaleMax: ex.scaleMax, requiredScore: Math.max(0, required), bagrutAverage: d, maxSekem };
+			const formulaNote = `בטכניון הסכם ל${field} כולל את ${ex.examName} (סולם 0–${ex.scaleMax}), ובממוצע הבגרות המתמטיקה לא נספרת כפול (הממוצע שלך כאן: ${d}).`;
+			if (unmetRequirements.length > 0) {
+				gap = 0;
+				status = 'missing_requirement';
+				admissionNote = `חסר תנאי סף: ${unmetRequirements.map((r) => r.requirement.title).join(', ')}. ${formulaNote}`;
+			} else if (required > ex.scaleMax) {
+				gap = Math.round((maxSekem - threshold) * 10) / 10;
+				status = 'not_accepted';
+				admissionNote = `גם בציון המרבי ב${ex.examName} (${ex.scaleMax}) הסכם מגיע ל-${maxSekem}, מתחת לסף ${threshold}. ${formulaNote}`;
+			} else {
+				gap = 0;
+				status = 'screening';
+				admissionNote =
+					required <= 0
+						? `הבגרות והפסיכומטרי שלך מגיעים לסף ${threshold} גם בלי נקודות ב${ex.examName}, אבל חובה להיבחן בה. ${formulaNote}`
+						: `כדי להגיע לסף ${threshold} נדרש ציון ${required} לפחות ב${ex.examName}. ${formulaNote}`;
+			}
+		}
+	}
+
 	// Admission by official conditions alone, no sekem threshold (BGU mathematics): the requirements decide the status.
 	// The official alternative that also needs a sekem minimum stands in for the requirement it replaces.
 	if (routes?.conditionsOnly && threshold === null) {
@@ -842,6 +890,7 @@ export function analyzeProgramGap(
 		admissionRoute,
 		admissionNote,
 		admissionRoutes: routes,
+		entranceExam,
 		alternativePaths: alternativePaths.length > 0 ? alternativePaths : undefined,
 		officialRoutes: officialRoutes.length > 0 ? officialRoutes : undefined,
 		thresholdVerified: Boolean(thresholdSource),
