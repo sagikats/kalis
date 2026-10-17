@@ -23,8 +23,10 @@ const ORDER = [
 	'importBguThresholds', 'importBguRequirements', 'importBguEnglishRule',
 	// Haifa, Ariel, Bar-Ilan, Reichman
 	'importHaifaThresholds', 'importHaifaWeighting', 'importArielThresholds', 'importBarIlanThresholds', 'importReichmanThresholds',
-	// Medicine at all universities — last: it owns those programs' routes
-	'importMedicine'
+	// Medicine at all universities: it owns those programs' routes
+	'importMedicine',
+	// Retraining / completion programs closed to high-school graduates: hidden, after everything else
+	'hideNonHighSchoolPrograms'
 ];
 
 for (const name of ORDER) {
