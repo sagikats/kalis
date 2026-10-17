@@ -146,6 +146,54 @@ export function calculateTechnionOptimalBagrut(subjects: CalculatorSubject[]): O
 	};
 }
 
+/**
+ * Architecture and landscape architecture: same bonuses and drops, but math is not doubled
+ * (official calculator, "חישוב סכם לארכיטקטורה" — math 5u is weighted 5, 2026-10-17).
+ */
+export function calculateTechnionArchitectureBagrut(subjects: CalculatorSubject[]): OptimalBagrutResult {
+	const activeSubs = (subjects || []).filter((s) => s.units > 0 && s.grade > 0);
+	const result = computeOptimalAverage(subjects, {
+		isMandatory: isTechnionMandatorySubject,
+		getBonus: (s, included = activeSubs) => getTechnionBonus(s, selectTechnionScienceCluster(included).has(s)),
+		getWeight: (s) => s.units,
+		cap: TECHNION_MAX_AVERAGE,
+		decimals: null,
+		dropReason: 'השמטה חוקית: שקלול המקצוע הוריד את הממוצע האופטימלי'
+	});
+	return { ...result, rawAverage: result.average, average: Math.round(result.average * 10) / 10 };
+}
+
+/**
+ * Entrance-exam sekem formulas, from the official calculator's code (admissions.technion.ac.il/calculator,
+ * Gravity Forms 73 and 74, one decimal), 2026-10-17:
+ *   architecture: 0.7 × (0.1·D + 0.09·P + 15) + 0.3·E          (exam scale 0–140)
+ *   landscape:    0.65 × (0.412·D + 0.08·P − 13) + 0.35·E − 1.5 (exam scale 0–123)
+ */
+const ENTRANCE_EXAM_FORMULA = {
+	architecture: { base: (d: number, p: number) => 0.7 * (0.1 * d + 0.09 * p + 15), examWeight: 0.3 },
+	landscape: { base: (d: number, p: number) => 0.65 * (0.412 * d + 0.08 * p - 13) - 1.5, examWeight: 0.35 }
+} as const;
+
+export type TechnionEntranceExamKind = keyof typeof ENTRANCE_EXAM_FORMULA;
+
+export function calculateTechnionEntranceExamSekem(kind: TechnionEntranceExamKind, bagrutAverage: number, psychometric: number, exam: number): number {
+	const f = ENTRANCE_EXAM_FORMULA[kind];
+	const d = Math.min(TECHNION_MAX_AVERAGE, bagrutAverage);
+	return Math.round((f.base(d, psychometric) + f.examWeight * exam) * 10) / 10;
+}
+
+/** The lowest exam score (to one decimal) whose sekem reaches the threshold; ≤ 0 means any score is enough. */
+export function requiredTechnionEntranceExam(kind: TechnionEntranceExamKind, bagrutAverage: number, psychometric: number, threshold: number): number {
+	const f = ENTRANCE_EXAM_FORMULA[kind];
+	const d = Math.min(TECHNION_MAX_AVERAGE, bagrutAverage);
+	let exam = Math.ceil(((threshold - f.base(d, psychometric)) / f.examWeight) * 10) / 10;
+	// The official result is rounded to one decimal, so a slightly lower exam score can still round up to the threshold
+	while (exam > 0 && calculateTechnionEntranceExamSekem(kind, bagrutAverage, psychometric, Math.round((exam - 0.1) * 10) / 10) >= threshold) {
+		exam = Math.round((exam - 0.1) * 10) / 10;
+	}
+	return exam;
+}
+
 export function calculateTechnionSekem(bagrutAverage: number, psychometric: number): number {
 	if (bagrutAverage <= 0 || psychometric <= 0) return 0;
 	const d = Math.min(TECHNION_MAX_AVERAGE, bagrutAverage);

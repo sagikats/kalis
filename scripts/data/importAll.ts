@@ -14,7 +14,7 @@ import path from 'path';
 const ORDER = [
 	// Technion
 	'importTechnionThresholds', 'importTechnionExcellentBagrut', 'importTechnionMathExam', 'importTechnionGesherHighSchool',
-	'importTechnionShortTrack', 'importTechnionPromotion', 'importTechnionRequirements',
+	'importTechnionShortTrack', 'importTechnionPromotion', 'importTechnionRequirements', 'importTechnionEntranceExam',
 	// Tel Aviv
 	'importTauThresholds', 'importTauRequirements', 'importTauMinPsychometric', 'importTauPrerequisites',
 	// Hebrew University

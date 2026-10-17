@@ -243,6 +243,8 @@ describe('Track rules (docs/TRACKS_REDESIGN.md)', () => {
 					const res = calculateMultiInstitutionSekem(p as any, [CALC[instId]])[0];
 					const a = analyzeProgramGap({ institutionId: instId, institutionName: '', calculatorId: CALC[instId], program: prog }, p, res);
 					if (a.status === 'accepted') continue;
+					// Entrance-exam programs (Technion architecture / landscape) show the exam score needed instead of tracks
+					if (a.entranceExam) continue;
 					const plan = generateTrackPlan(a, p, res);
 					assert.ok(plan.tracks.length > 0 || plan.suggestBypass, `${instId} ${prog.id}: nothing offered`);
 					if (plan.suggestBypass) {

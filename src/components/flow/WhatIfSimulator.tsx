@@ -1525,6 +1525,17 @@ export default function WhatIfSimulator({
 							</div>
 						</div>
 
+						{/* Technion architecture / landscape: the score above the threshold depends on the entrance exam */}
+						{simulatedAnalysis?.entranceExam && (
+							<div className="p-4 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-xs text-[#453D78] leading-relaxed space-y-1">
+								<span className="font-bold block">הסכם לתואר הזה כולל את {simulatedAnalysis.entranceExam.examName}</span>
+								<span className="block">
+									{simulatedAnalysis.status === 'not_accepted'
+										? simulatedAnalysis.admissionNote
+										: `עם הנתונים בסימולציה נדרש ציון ${simulatedAnalysis.entranceExam.requiredScore} לפחות בבחינה (סולם 0–${simulatedAnalysis.entranceExam.scaleMax}). המספר הגדול למטה הוא הסכם הרגיל של הטכניון, שלא חל על התואר הזה.`}
+								</span>
+							</div>
+						)}
 						{/* Live Sekem Score Box */}
 						<div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E5DFD4] text-center space-y-2">
 							<span className="text-xs font-black text-[#66635C] uppercase tracking-wider block">

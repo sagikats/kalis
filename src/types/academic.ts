@@ -37,6 +37,16 @@ export interface AcademicDegree {
  * Official admission routes besides the main threshold, as published by the institution.
  * Only these (never the seed's name-based guesses) may change the admission status.
  */
+export interface EntranceExamRoute {
+     kind: 'architecture' | 'landscape';
+     /** e.g. "בחינת הכניסה לארכיטקטורה". */
+     examName: string;
+     /** Top of the exam's score scale (architecture 0–140, landscape 0–123 — the official calculator). */
+     scaleMax: number;
+     /** URL — date. */
+     source: string;
+}
+
 export interface AdmissionRoutes {
      /** A minimum general psychometric score required in addition to the main threshold ("ובנוסף"). */
      minPsychometric?: number;
@@ -59,6 +69,12 @@ export interface AdmissionRoutes {
       * listed alternatives). `requirements` decides the status; `admissionThreshold` is null.
       */
      conditionsOnly?: ConditionsOnlyRoute;
+     /**
+      * Technion architecture / landscape architecture: the sekem has its own formula that includes an entrance exam
+      * (admissions.technion.ac.il/calculator). The applicant's score can't be known before the exam, so the report shows
+      * the exam score needed to reach the threshold instead of accepted / not accepted.
+      */
+     entranceExam?: EntranceExamRoute;
      /** Admission on the general psychometric score alone ("או פסיכומטרי X", "קבלה לפי פסיכומטרי"). */
      psychometricOnlyMin?: number;
      /** Admission on the institution's bagrut average alone ("קבלה לפי בגרות בלבד"). */

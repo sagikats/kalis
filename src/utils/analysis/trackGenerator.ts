@@ -1113,6 +1113,9 @@ export function generateTrackPlan(
 ): TrackPlanResult {
 	// A screened program (medicine) without a published threshold: there is no score target to plan towards
 	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return { tracks: [], suggestBypass: false };
+	// Technion architecture / landscape: the sekem hinges on an entrance exam — no bagrut/psychometric plan can be built
+	// with the regular formula; the report shows the exam score needed instead
+	if (gapAnalysis.admissionRoutes?.entranceExam && gapAnalysis.entranceExam) return { tracks: [], suggestBypass: false };
 	// Admission by official conditions alone (BGU mathematics): no sekem target — the report lists the conditions instead
 	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.conditionsOnly) return { tracks: [], suggestBypass: false };
 	const plan = generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes);
