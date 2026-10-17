@@ -244,6 +244,8 @@ function ProgramReportCard({
 	const isNoThreshold = item.status === 'no_threshold' || (isScreening && item.threshold === null);
 	/** Medicine-style program: the threshold only invites to MOR / interviews. */
 	const isScreenedProgram = Boolean(item.admissionRoutes?.screening);
+	/** Admission by official conditions alone (BGU mathematics): there is no sekem threshold to compare against. */
+	const isConditionsOnly = Boolean(item.admissionRoutes?.conditionsOnly) && item.threshold === null;
 
 	const borderStyle = isAccepted
 		? 'border-[#C6DFCE] bg-[#FBFDFB]'
@@ -272,6 +274,8 @@ function ProgramReportCard({
 			? 'התקבלת (בגרות מצוינת)'
 			: item.admissionRoute === 'engineering_score'
 			? 'התקבלת (סכם הנדסי)'
+			: item.admissionRoute === 'conditions'
+			? 'עומד/ת בתנאי הקבלה'
 			: `התקבלת (+${item.gap})`
 		: blockedByPsychFloor
 		? 'חסר פסיכומטרי מינימלי'
@@ -281,8 +285,8 @@ function ProgramReportCard({
 		? item.threshold === null ? 'עומד בתנאי ההרשמה · מיונים' : `עובר לשלב המיונים (+${item.gap})`
 		: isNoThreshold
 		? 'קבלה נפרדת'
-		: isScreenedProgram && item.threshold === null
-		? 'לא עומד בתנאי הסף'
+		: (isScreenedProgram || isConditionsOnly) && item.threshold === null
+		? 'לא עומד בתנאי הקבלה'
 		: `פער: ${Math.abs(item.gap)} נק׳`;
 
 	return (
@@ -306,7 +310,7 @@ function ProgramReportCard({
 				</div>
 
 				{/* Score Comparison Box */}
-				{!isNoThreshold && (
+				{!isNoThreshold && !isConditionsOnly && (
 					<div className="grid grid-cols-2 gap-2 bg-[#FAF8F5] p-3 rounded-xl border border-[#E5DFD4] text-center text-xs">
 						<div>
 							<span className="text-[10px] text-[#66635C] block font-medium">הסכם שלך ({item.relevantSekemLabel})</span>

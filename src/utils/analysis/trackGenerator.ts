@@ -1113,6 +1113,8 @@ export function generateTrackPlan(
 ): TrackPlanResult {
 	// A screened program (medicine) without a published threshold: there is no score target to plan towards
 	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.screening) return { tracks: [], suggestBypass: false };
+	// Admission by official conditions alone (BGU mathematics): no sekem target — the report lists the conditions instead
+	if (gapAnalysis.threshold === null && gapAnalysis.admissionRoutes?.conditionsOnly) return { tracks: [], suggestBypass: false };
 	const plan = generateAllPersonalizedTracks(gapAnalysis, userProfile, institutionRes);
 	return { tracks: filterPsychometricOnly(gapAnalysis, userProfile, markScreeningTracks(gapAnalysis, markRequirementOnlyTracks(gapAnalysis, userProfile, plan.tracks))), suggestBypass: plan.suggestBypass };
 }

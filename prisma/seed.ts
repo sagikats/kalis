@@ -169,8 +169,9 @@ async function main() {
 				}
 			}
 
-			// Screened programs (medicine) may have no published threshold — keep them; 0 = no threshold
-			if (parsedThreshold === 0 && !p.admissionRoutes?.screening) continue;
+			// Screened programs (medicine) and condition-only programs (BGU math) may have no published threshold —
+			// keep them; 0 = no threshold
+			if (parsedThreshold === 0 && !p.admissionRoutes?.screening && !p.admissionRoutes?.conditionsOnly) continue;
 
 			let progId = p.id || `prog_${instId}_${programCounter++}`;
 			if (seenIds.has(progId)) {
