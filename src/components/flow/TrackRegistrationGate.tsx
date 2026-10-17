@@ -192,7 +192,7 @@ export default function TrackRegistrationGate({
 						</div>
 						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
 							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-							<span>סימולטור What-If לבניית מסלול אישי</span>
+							<span>סימולטור לבניית מסלול אישי</span>
 						</div>
 						<div className="flex items-center gap-2 text-xs sm:text-sm text-[#44423D] bg-[#FAF8F5] px-3.5 py-2 rounded-xl border border-[#E5DFD4]">
 							<CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />

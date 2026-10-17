@@ -19,7 +19,7 @@ import { ProgramGapAnalysis, ImprovementOption, UserAcademicProfile, thresholdLa
 import { getUniversityRegistrationInfo } from '../../utils/universityRegistration';
 import { InstitutionSekemResult } from '../../utils/calculators/multiCalculator';
 import { SubjectInput } from '../../modules/calculators';
-import WhatIfSimulator from './WhatIfSimulator';
+import ScenarioSimulator from '@/components/simulator/ScenarioSimulator';
 import UniversityLogo from '@/components/common/UniversityLogo';
 import { describeThresholdSource } from '@/utils/sourceLink';
 
@@ -243,9 +243,9 @@ export default function GapAnalysisCard({
 				</div>
 			)}
 
-			{/* Interactive What-If Simulator */}
+			{/* Simulator */}
 			{!isAccepted && userProfile && institutionResult && (
-				<WhatIfSimulator
+				<ScenarioSimulator
 					analysis={analysis}
 					userProfile={userProfile}
 					institutionResult={institutionResult}

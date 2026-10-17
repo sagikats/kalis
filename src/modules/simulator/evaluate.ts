@@ -9,7 +9,7 @@ import type { SubjectInput } from '../calculators';
 import { calculateMultiInstitutionSekem, InstitutionSekemResult } from '../../utils/calculators/multiCalculator';
 import { simulateRealisticSubscores } from '../../utils/calculators/psychometricHelper';
 import { analyzeProgramGap, ProgramGapAnalysis, UserAcademicProfile } from '../../utils/analysis/gapAnalyzer';
-import { evaluateSimulatedSekem } from '../../utils/analysis/trackGenerator';
+import { evaluateSimulatedSekem, RecommendedTrack } from '../../utils/analysis/trackGenerator';
 import { isSameBagrutSubject, isSubjectMatch } from '../optimizer/solver';
 
 export interface ScenarioSubject {
@@ -33,6 +33,8 @@ export interface ScenarioDegreeResult {
 	programId: string;
 	/** The degree's sekem for the simulated state, from its institution's calculator. */
 	currentSekem: number;
+	/** Bagrut average the degree's institution computes for the simulated state. */
+	bagrutAverage: number;
 	/** The degree's admission threshold; null when admission rests on official conditions alone. */
 	targetSekem: number | null;
 	/** Admission analysis of the simulated state (status, official routes and conditions). */
@@ -74,6 +76,37 @@ export function scenarioFromProfile(profile: UserAcademicProfile): ScenarioState
 	}
 	return {
 		psychometric: profile.psychometricGeneral > 0 ? profile.psychometricGeneral : DEFAULT_PSYCHOMETRIC,
+		subjects
+	};
+}
+
+/** A recommended track's targets loaded into the simulator (the user's subjects, improved as the track proposes). */
+export function scenarioFromTrack(
+	profile: UserAcademicProfile,
+	track: Pick<RecommendedTrack, 'targetPsychometric' | 'recommendedSubjectImprovements'>
+): ScenarioState {
+	const base = scenarioFromProfile(profile);
+	const improvements = track.recommendedSubjectImprovements || [];
+	const subjects = base.subjects.map((s) => {
+		const imp = improvements.find((i) => isSameBagrutSubject(i.subjectName, s.name) || isSubjectMatch(i.subjectName, s.name));
+		return imp ? { ...s, units: imp.targetUnits || s.units, grade: imp.targetGrade } : s;
+	});
+	improvements.forEach((imp, idx) => {
+		const exists = base.subjects.some((s) => isSameBagrutSubject(imp.subjectName, s.name) || isSubjectMatch(imp.subjectName, s.name));
+		if (!exists) {
+			subjects.push({
+				id: `track-${idx}-${imp.subjectName}`,
+				name: imp.subjectName,
+				units: imp.targetUnits || 5,
+				grade: imp.targetGrade,
+				originalUnits: 0,
+				originalGrade: 0,
+				isAdded: true
+			});
+		}
+	});
+	return {
+		psychometric: track.targetPsychometric && track.targetPsychometric > 0 ? track.targetPsychometric : base.psychometric,
 		subjects
 	};
 }
@@ -147,7 +180,7 @@ export function evaluateScenario(
 
 	return analyses.map((analysis) => {
 		const { calculatorId, program } = analysis.target;
-		const currentSekem = evaluateSimulatedSekem(
+		const { sekem: currentSekem, bagrutAverage } = evaluateSimulatedSekem(
 			calculatorId,
 			analysis.relevantSekemType,
 			profile,
@@ -157,12 +190,13 @@ export function evaluateScenario(
 			sim.mathGrade,
 			sim.physicsUnits,
 			sim.physicsGrade
-		).sekem;
+		);
 		const institutionRes = institutionResults.get(calculatorId);
 		const simulated = institutionRes ? analyzeProgramGap(analysis.target, sim, institutionRes) : null;
 		return {
 			programId: program.id,
 			currentSekem,
+			bagrutAverage,
 			targetSekem: analysis.threshold,
 			analysis: simulated,
 			entranceExam: simulated?.entranceExam

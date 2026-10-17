@@ -38,7 +38,7 @@ import { getSessionInfo, getSubjectExamSession } from '@/modules/optimizer/calen
 import { getUniversityCalculator } from '@/utils/universityCalculators';
 import UniversityVerificationModal from './UniversityVerificationModal';
 import SekemBreakdown from './SekemBreakdown';
-import WhatIfSimulator from './WhatIfSimulator';
+import ScenarioSimulator from '@/components/simulator/ScenarioSimulator';
 import UniversityLogo from '../common/UniversityLogo';
 import TrackRegistrationGate from './TrackRegistrationGate';
 import AdmissionOptionsPanel from './AdmissionOptionsPanel';
@@ -1555,14 +1555,10 @@ export default function RecommendedTracksView({
 								</div>
 							)}
 
-							{/* Interactive What-If Simulator (needs a published threshold to compare against) */}
-							{analysis.threshold === null ? (
-								<div className="p-4 rounded-2xl bg-[#F2F1F8] border border-[#D2CEEB] text-xs text-[#453D78] font-medium leading-relaxed">
-									לתואר הזה אין סף מספרי שמתפרסם מראש, ולכן אין מה לדמות בסימולטור. {analysis.admissionNote}
-								</div>
-							) : (
-							<WhatIfSimulator
+							{/* Simulator: the user's bagrut on one side, any degrees from the basket on the other */}
+							<ScenarioSimulator
 								analysis={analysis}
+								allAnalyses={allAnalyses}
 								userProfile={userProfile}
 								institutionResult={institutionResult}
 								onApplyScenario={handleApplyScenario}
@@ -1572,7 +1568,6 @@ export default function RecommendedTracksView({
 									setActiveTab('recommended');
 								}}
 							/>
-							)}
 						</div>
 					) : (
 						<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] space-y-4">
