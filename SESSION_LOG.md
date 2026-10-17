@@ -10,6 +10,15 @@
 
 ---
 
+## 🗓️ 2026-10-17 — Claude Code (Opus 5.5) — ✅ נפרס 3231801 (4 בראנצ'ים + תיקון סנכרון קטלוג)
+
+- **מה נפרס:** `fix/stale-selected-targets`, `data/hide-retraining-programs`, `data/bgu-math-conditions` (מהסשן המסועף), `test/verify-legacy-benchmarks` (תיקון בונוס טכנולוגי בטכניון + תיעוד הבדיקות הישנות). importAll ללא שינוי, tsc נקי, 332/332, build עובר. גיבוי: `~/backups/dev_20261017_111109_predeploy.db`.
+- **🐞 תקלה בפריסה הראשונה (e642820):** `syncCatalog` נכשל — טרנזקציה של 5035ms מול ברירת המחדל של Prisma (5000ms) ⇒ "keeping existing catalog": הקוד חדש אבל הקטלוג במסד ישן. health נראה תקין, ולכן **חובה לבדוק בלוג ששורת syncCatalog היא "synced" ולא "Failed"**. תוקן ב-`fix/sync-catalog-timeout` (timeout 120s, maxWait 20s, עדיין הכול-או-כלום) ונפרס שוב (3231801).
+- **אחרי:** syncCatalog: 8 / 811 / 87. ה-API החי: 3 ההסבות notOffered, 7 תוכניות ב"ג conditionsOnly בלי סף. hash נתוני משתמשים זהה לפני ואחרי (users 10 · 49da329c…, profiles 8 · 655f35fe…, preferences 6 · b85b73b6…, saved_tracks 13 · ee3e2845…).
+- worktree `/Users/sagikats/Desktop/kalis-wt-data` של הסשן המסועף לא נמחק.
+
+---
+
 ## 🗓️ 2026-10-07 — Claude Code (Opus 5.5) — סשן עיצוב UI (בראנץ' `ui/apple-design`, מבוסס `main`)
 
 ### ✅ מה נעשה
