@@ -27494,25 +27494,7 @@
         "requiresPsychometric": true,
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
-        "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "english",
-              "title": "רמת אנגלית (בסיסי)",
-              "anyOf": [
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 85
-                    }
-                  ]
-                }
-              ],
-              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
-            }
-          ]
-        },
+        "admissionRoutes": {},
         "notOffered": {
           "note": "הסבת אקדמאים לסיעוד — תוכנית לבעלי תואר אקדמי, לא לבוגרי תיכון.",
           "source": "החלטת מוצר (USER_TASKS 3.1, אושר 2026-10-16): תוכניות הסבה/השלמה אינן פתוחות לבוגרי תיכון"
@@ -36928,6 +36910,56 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
           "requirements": [
             {
               "id": "math",
@@ -37039,57 +37071,7 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-          "conditionsOnly": {
-            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
-            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-            "sekemAlternative": {
-              "sekem": "general",
-              "min": 700,
-              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
-              "replaces": "math",
-              "requirement": {
-                "id": "math-sekem-700",
-                "title": "חלופת סכם 700",
-                "anyOf": [
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 5,
-                        "minGrade": 75
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  },
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 4,
-                        "minGrade": 85
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
         }
       },
       {
@@ -37188,6 +37170,56 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
           "requirements": [
             {
               "id": "math",
@@ -37299,57 +37331,7 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-          "conditionsOnly": {
-            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
-            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-            "sekemAlternative": {
-              "sekem": "general",
-              "min": 700,
-              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
-              "replaces": "math",
-              "requirement": {
-                "id": "math-sekem-700",
-                "title": "חלופת סכם 700",
-                "anyOf": [
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 5,
-                        "minGrade": 75
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  },
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 4,
-                        "minGrade": 85
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
         }
       },
       {
@@ -37595,118 +37577,6 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
-          "requirements": [
-            {
-              "id": "math",
-              "title": "מתמטיקה (תנאי הקבלה)",
-              "anyOf": [
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 87
-                    }
-                  ]
-                },
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 55
-                    }
-                  ],
-                  "psych": [
-                    {
-                      "section": "quant",
-                      "min": 137
-                    }
-                  ]
-                },
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 55
-                    },
-                    {
-                      "subjects": [
-                        "פיזיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 82
-                    }
-                  ],
-                  "psych": [
-                    {
-                      "section": "quant",
-                      "min": 127
-                    }
-                  ]
-                },
-                {
-                  "bagrut": [
-                    {
-                      "subjects": [
-                        "מתמטיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 82
-                    },
-                    {
-                      "subjects": [
-                        "פיזיקה"
-                      ],
-                      "minUnits": 5,
-                      "minGrade": 82
-                    }
-                  ]
-                }
-              ],
-              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
-            },
-            {
-              "id": "english",
-              "title": "רמת אנגלית (בסיסי)",
-              "anyOf": [
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 85
-                    }
-                  ]
-                }
-              ],
-              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
-            }
-          ],
-          "bagrutOnlyRequirements": [
-            {
-              "id": "english",
-              "title": "רמת אנגלית (בסיסי)",
-              "anyOf": [
-                {
-                  "psych": [
-                    {
-                      "section": "english",
-                      "min": 85
-                    }
-                  ]
-                }
-              ],
-              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
-            }
-          ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
           "conditionsOnly": {
             "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה. בתואר דו-מחלקתי יש לעמוד גם בתנאי הקבלה של המחלקה השנייה.",
             "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
@@ -37756,28 +37626,7 @@
                 ]
               }
             }
-          }
-        }
-      },
-      {
-        "id": "prog-bgu-72",
-        "fieldOfStudy": "מתמטיקה (מתמטיקה חד-מחלקתי - מתמטיקה כללית)",
-        "degreeLevel": "תואר ראשון",
-        "description": "חד-מחלקתי",
-        "admissionThreshold": null,
-        "sekemScore": null,
-        "psychometricScore": 600,
-        "mathRequirement": "87/5",
-        "englishRequirement": "בסיסי",
-        "hebrewRequirement": "רמה ה'",
-        "additionalConditions": null,
-        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
-        "registrationStatus": "סגורה",
-        "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Mathematics_degree_1.aspx",
-        "requiresPsychometric": true,
-        "directBagrutEligible": false,
-        "directBagrutMinAverage": null,
-        "admissionRoutes": {
+          },
           "requirements": [
             {
               "id": "math",
@@ -37889,7 +37738,28 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
+        }
+      },
+      {
+        "id": "prog-bgu-72",
+        "fieldOfStudy": "מתמטיקה (מתמטיקה חד-מחלקתי - מתמטיקה כללית)",
+        "degreeLevel": "תואר ראשון",
+        "description": "חד-מחלקתי",
+        "admissionThreshold": null,
+        "sekemScore": null,
+        "psychometricScore": 600,
+        "mathRequirement": "87/5",
+        "englishRequirement": "בסיסי",
+        "hebrewRequirement": "רמה ה'",
+        "additionalConditions": null,
+        "comments": "תנאי קבלה כלליים באוניברסיטה: פסיכומטרי/סכם 600+ או אפיק בגרות משוקלל",
+        "registrationStatus": "סגורה",
+        "url": "http://in.bgu.ac.il/welcome/Pages/degree_1/nature/Mathematics_degree_1.aspx",
+        "requiresPsychometric": true,
+        "directBagrutEligible": false,
+        "directBagrutMinAverage": null,
+        "admissionRoutes": {
           "conditionsOnly": {
             "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
             "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
@@ -37939,7 +37809,119 @@
                 ]
               }
             }
-          }
+          },
+          "requirements": [
+            {
+              "id": "math",
+              "title": "מתמטיקה (תנאי הקבלה)",
+              "anyOf": [
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 87
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 137
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 55
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ],
+                  "psych": [
+                    {
+                      "section": "quant",
+                      "min": 127
+                    }
+                  ]
+                },
+                {
+                  "bagrut": [
+                    {
+                      "subjects": [
+                        "מתמטיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    },
+                    {
+                      "subjects": [
+                        "פיזיקה"
+                      ],
+                      "minUnits": 5,
+                      "minGrade": 82
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "או סכם כללי 700 עם חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 / 4 יח\"ל 85"
+            },
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
+            }
+          ],
+          "bagrutOnlyRequirements": [
+            {
+              "id": "english",
+              "title": "רמת אנגלית (בסיסי)",
+              "anyOf": [
+                {
+                  "psych": [
+                    {
+                      "section": "english",
+                      "min": 85
+                    }
+                  ]
+                }
+              ],
+              "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
+            }
+          ],
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
         }
       },
       {
@@ -38177,6 +38159,56 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
           "requirements": [
             {
               "id": "math",
@@ -38288,57 +38320,7 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-          "conditionsOnly": {
-            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
-            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-            "sekemAlternative": {
-              "sekem": "general",
-              "min": 700,
-              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
-              "replaces": "math",
-              "requirement": {
-                "id": "math-sekem-700",
-                "title": "חלופת סכם 700",
-                "anyOf": [
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 5,
-                        "minGrade": 75
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  },
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 4,
-                        "minGrade": 85
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
         }
       },
       {
@@ -38360,6 +38342,56 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "conditionsOnly": {
+            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "general",
+              "min": 700,
+              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-700",
+                "title": "חלופת סכם 700",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 75
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 85
+                      }
+                    ],
+                    "psych": [
+                      {
+                        "section": "quant",
+                        "min": 127
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
           "requirements": [
             {
               "id": "math",
@@ -38471,57 +38503,7 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-          "conditionsOnly": {
-            "note": "הקבלה למתמטיקה בבן-גוריון היא לפי תנאי במתמטיקה, בלי סף סכם. מ-24.9 המכסה מלאה (\"עצירת קבלות\"), אבל המחלקה ממליצה לעומדים בתנאים להירשם. עם מתמטיקה 4 יח\"ל וחשיבה כמותית 140 ומעלה עוברים לדיון במחלקה.",
-            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-            "sekemAlternative": {
-              "sekem": "general",
-              "min": 700,
-              "label": "סכם כללי 700, חשיבה כמותית 127 ומתמטיקה 5 יח\"ל 75 או 4 יח\"ל 85",
-              "replaces": "math",
-              "requirement": {
-                "id": "math-sekem-700",
-                "title": "חלופת סכם 700",
-                "anyOf": [
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 5,
-                        "minGrade": 75
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  },
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 4,
-                        "minGrade": 85
-                      }
-                    ],
-                    "psych": [
-                      {
-                        "section": "quant",
-                        "min": 127
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
         }
       },
       {
@@ -40097,6 +40079,44 @@
         "directBagrutEligible": false,
         "directBagrutMinAverage": null,
         "admissionRoutes": {
+          "conditionsOnly": {
+            "note": "הקבלה לצירוף הזה היא לפי תנאי במתמטיקה, בלי סף סכם. יש לעמוד גם בתנאי הקבלה של שתי המחלקות. מ-3.8 המכסה מלאה (\"עצירת קבלות\"), עם רשימת המתנה.",
+            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
+            "sekemAlternative": {
+              "sekem": "quantitative",
+              "min": 630,
+              "label": "סכם כמותי 630 ומתמטיקה 4 יח\"ל 80 או 5 יח\"ל 70",
+              "replaces": "math",
+              "requirement": {
+                "id": "math-sekem-630",
+                "title": "חלופת סכם כמותי 630",
+                "anyOf": [
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 4,
+                        "minGrade": 80
+                      }
+                    ]
+                  },
+                  {
+                    "bagrut": [
+                      {
+                        "subjects": [
+                          "מתמטיקה"
+                        ],
+                        "minUnits": 5,
+                        "minGrade": 70
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
           "requirements": [
             {
               "id": "math",
@@ -40166,45 +40186,7 @@
               "otherOptions": "ציון 85+ באמי\"ר / אמיר\"ם (כלל אוניברסיטאי, ידיעון תשפ\"ז)"
             }
           ],
-          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-          "conditionsOnly": {
-            "note": "הקבלה לצירוף הזה היא לפי תנאי במתמטיקה, בלי סף סכם. יש לעמוד גם בתנאי הקבלה של שתי המחלקות. מ-3.8 המכסה מלאה (\"עצירת קבלות\"), עם רשימת המתנה.",
-            "source": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)",
-            "sekemAlternative": {
-              "sekem": "quantitative",
-              "min": 630,
-              "label": "סכם כמותי 630 ומתמטיקה 4 יח\"ל 80 או 5 יח\"ל 70",
-              "replaces": "math",
-              "requirement": {
-                "id": "math-sekem-630",
-                "title": "חלופת סכם כמותי 630",
-                "anyOf": [
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 4,
-                        "minGrade": 80
-                      }
-                    ]
-                  },
-                  {
-                    "bagrut": [
-                      {
-                        "subjects": [
-                          "מתמטיקה"
-                        ],
-                        "minUnits": 5,
-                        "minGrade": 70
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
+          "requirementsSource": "https://apps4cloud.bgu.ac.il/calcprod/ — תנאי קבלה סתו תשפ\"ז, ללא סף סכם (2026-10-16)"
         }
       },
       {
