@@ -45,7 +45,9 @@ async function main() {
 				const data = strip(subj);
 				await tx.bagrutSubject.upsert({ where: { id: subj.id }, create: data, update: data });
 			}
-		});
+			// ~800 program upserts take ~5s on the server; Prisma's default 5s interactive-transaction
+			// timeout rolled the whole sync back on 2026-10-17 (5035 ms). All-or-nothing stays; the limit is raised.
+		}, { maxWait: 20000, timeout: 120000 });
 
 		// Remove programs that left the catalog, unless a user's saved track still points at them
 		const seedIds = new Set(programs.map((p) => p.id));
