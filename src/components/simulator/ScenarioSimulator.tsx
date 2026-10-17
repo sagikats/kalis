@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ArrowRight, Bookmark, BookmarkCheck, Loader2, Plus, RotateCcw, Trash2, CheckCircle2, AlertCircle } from 'lucide-react';
 import type { ProgramGapAnalysis, UserAcademicProfile } from '@/utils/analysis/gapAnalyzer';
 import type { InstitutionSekemResult } from '@/utils/calculators/multiCalculator';
@@ -32,7 +32,7 @@ interface ScenarioSimulatorProps {
 	institutionResult?: InstitutionSekemResult;
 	onApplyScenario?: (customPsych: number, customSubjects: SubjectInput[], simulatedSekem: number) => void;
 	initialTrackToEdit?: RecommendedTrack | null;
-	onSaveCustomTrack?: (track: any) => Promise<void>;
+	onSaveCustomTrack?: (track: Record<string, unknown>) => Promise<void>;
 	onCancelEdit?: () => void;
 }
 
@@ -62,7 +62,9 @@ export default function ScenarioSimulator({
 	const initialScenario = () => (initialTrackToEdit ? scenarioFromTrack(userProfile, initialTrackToEdit) : scenarioFromProfile(userProfile));
 
 	const [scenario, setScenario] = useState<ScenarioState>(initialScenario);
-	const [selectedIds, setSelectedIds] = useState<string[]>([focusedId]);
+	/** Degrees added from the basket, besides the one in focus (which is always shown). */
+	const [addedIds, setAddedIds] = useState<string[]>([]);
+	const selectedIds = useMemo(() => [focusedId, ...addedIds.filter((id) => id !== focusedId)], [focusedId, addedIds]);
 	const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
 
 	const { user, openAuthModal } = useAuth();
@@ -71,17 +73,13 @@ export default function ScenarioSimulator({
 	const [saveError, setSaveError] = useState<string | null>(null);
 
 	// A new track to edit or a changed profile starts the simulation over
-	useEffect(() => {
+	const [startedFrom, setStartedFrom] = useState({ track: initialTrackToEdit, profile: userProfile });
+	if (startedFrom.track !== initialTrackToEdit || startedFrom.profile !== userProfile) {
+		setStartedFrom({ track: initialTrackToEdit, profile: userProfile });
 		setScenario(initialScenario());
 		setSaved(false);
 		setSaveError(null);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialTrackToEdit, userProfile]);
-
-	// The degree in focus is always in the simulator
-	useEffect(() => {
-		setSelectedIds((ids) => (ids.includes(focusedId) ? ids : [focusedId, ...ids]));
-	}, [focusedId]);
+	}
 
 	const basket = useMemo(() => {
 		const list = allAnalyses && allAnalyses.length > 0 ? allAnalyses : [analysis];
@@ -234,9 +232,9 @@ export default function ScenarioSimulator({
 				}
 			}
 			setSaved(true);
-		} catch (err: any) {
+		} catch (err) {
 			console.error('Failed to save custom track:', err);
-			setSaveError(err.message || 'אירעה שגיאה בעת שמירת המסלול');
+			setSaveError((err instanceof Error && err.message) || 'אירעה שגיאה בעת שמירת המסלול');
 		} finally {
 			setIsSaving(false);
 		}
@@ -312,7 +310,7 @@ export default function ScenarioSimulator({
 											type="button"
 											aria-pressed={s.units === u}
 											onClick={() => updateSubject(s.id, { units: u })}
-											className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition cursor-pointer ${
+											className={`px-2 py-0.5 rounded-md text-[11px] font-bold whitespace-nowrap transition cursor-pointer ${
 												s.units === u ? 'bg-[#3C3C3C] text-white' : 'text-[#66635C] hover:text-[#222222]'
 											}`}
 										>
@@ -357,11 +355,11 @@ export default function ScenarioSimulator({
 					</button>
 				</div>
 
-				<div className="order-1 lg:order-none lg:col-span-5 space-y-3 sticky top-0 lg:top-4 z-20 bg-white py-2 lg:py-0">
+				<div className="order-1 lg:order-none lg:col-span-5 space-y-3 sticky top-16 lg:top-20 z-20 bg-white py-2 lg:py-0">
 					{available.length > 0 && (
 						<select
 							value=""
-							onChange={(e) => e.target.value && setSelectedIds((ids) => [...ids, e.target.value])}
+							onChange={(e) => e.target.value && setAddedIds((ids) => [...ids, e.target.value])}
 							className="w-full px-3 py-2.5 rounded-xl border border-[#DDD7CB] bg-[#FAF8F5] text-sm font-bold text-[#222222] cursor-pointer"
 							aria-label="הוסף תואר מהסל לסימולטור"
 						>
@@ -379,7 +377,7 @@ export default function ScenarioSimulator({
 								key={a.target.program.id}
 								analysis={a}
 								result={results[idx]}
-								onRemove={a.target.program.id === focusedId ? undefined : () => setSelectedIds((ids) => ids.filter((id) => id !== a.target.program.id))}
+								onRemove={a.target.program.id === focusedId ? undefined : () => setAddedIds((ids) => ids.filter((id) => id !== a.target.program.id))}
 							/>
 						))}
 					</div>

@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import academicData from '../../../data/academicData.json';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 import { analyzeProgramGap, UserAcademicProfile } from '../../../utils/analysis/gapAnalyzer';
+import type { TargetProgramSelection } from '../../../utils/analysis/gapAnalyzer';
 import { evaluateScenario, scenarioFromProfile, ScenarioState } from '../evaluate';
 
 const CALC_IDS: Record<string, string> = {
@@ -68,14 +69,16 @@ function randomEdit(profile: UserAcademicProfile): ScenarioState {
 	return { psychometric: psych, subjects };
 }
 
+type Program = TargetProgramSelection['program'] & { notOffered?: boolean };
+const catalog = academicData as unknown as { id: string; programs?: Program[] }[];
 const programsOf = (instId: string) =>
-	((academicData as any[]).find((i) => i.id === instId)?.programs ?? []).filter((p: any) => !p.notOffered && p.admissionThreshold);
+	(catalog.find((i) => i.id === instId)?.programs ?? []).filter((p) => !p.notOffered && p.admissionThreshold);
 
 function analysesFor(profile: UserAcademicProfile) {
-	const results = calculateMultiInstitutionSekem(profile as any, Object.values(CALC_IDS));
+	const results = calculateMultiInstitutionSekem(profile, Object.values(CALC_IDS));
 	return Object.entries(CALC_IDS).flatMap(([instId, calculatorId]) => {
 		const res = results.find((r) => r.institutionId === calculatorId)!;
-		return programsOf(instId).map((program: any) =>
+		return programsOf(instId).map((program) =>
 			analyzeProgramGap({ institutionId: instId, institutionName: '', calculatorId, program }, profile, res)
 		);
 	});

@@ -55,19 +55,31 @@ export default function FillSliderCard({
 		if (next !== value) onChange(next);
 	};
 	const fromControl = (e: React.SyntheticEvent) => (e.target as HTMLElement).closest('[data-no-drag]') !== null;
+	const capture = (e: React.PointerEvent<HTMLDivElement>) => {
+		try {
+			e.currentTarget.setPointerCapture(e.pointerId);
+		} catch {
+			// Capture is a nicety (dragging past the card's edge); the drag works without it
+		}
+	};
 
 	const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
 		if (fromControl(e) || e.button > 0) return;
 		const touch = e.pointerType !== 'mouse';
 		drag.current = { id: e.pointerId, x: e.clientX, y: e.clientY, active: !touch, touch };
 		if (!touch) {
-			e.currentTarget.setPointerCapture(e.pointerId);
 			set(valueAt(e.clientX));
+			capture(e);
 		}
 	};
 	const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
 		const d = drag.current;
 		if (!d || d.id !== e.pointerId) return;
+		// The button was released where we didn't hear it: the drag is over
+		if (!d.touch && e.buttons === 0) {
+			drag.current = null;
+			return;
+		}
 		if (!d.active) {
 			const dx = Math.abs(e.clientX - d.x);
 			const dy = Math.abs(e.clientY - d.y);
@@ -77,7 +89,7 @@ export default function FillSliderCard({
 			}
 			if (dx < 6) return;
 			d.active = true;
-			e.currentTarget.setPointerCapture(e.pointerId);
+			capture(e);
 		}
 		set(valueAt(e.clientX));
 	};
@@ -140,7 +152,7 @@ export default function FillSliderCard({
 					<div className={`font-black text-[#222222] truncate ${size === 'lg' ? 'text-base' : 'text-sm'}`}>{label}</div>
 					{hint && <div className="text-[11px] font-medium text-[#66635C]">{hint}</div>}
 					{children && (
-						<div data-no-drag className="flex items-center gap-1.5 pt-0.5 cursor-default">
+						<div data-no-drag className="flex flex-wrap items-center gap-1.5 pt-0.5 cursor-default">
 							{children}
 						</div>
 					)}
