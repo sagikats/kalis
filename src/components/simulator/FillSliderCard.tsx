@@ -9,10 +9,14 @@ interface FillSliderCardProps {
 	max: number;
 	/** Changed or added in the simulator: the card turns green. */
 	changed: boolean;
+	/** The change lowers a degree's sekem: the card turns red. */
+	lowers?: boolean;
 	/** Values below it are a failing grade: the fill turns red and a marker shows the line. */
 	failBelow?: number;
 	/** Small line under the label (e.g. the original grade). */
 	hint?: string;
+	/** Tags under the label (what the change adds to the sekem). */
+	tags?: React.ReactNode;
 	size?: 'md' | 'lg';
 	onChange: (value: number) => void;
 	/** Controls inside the card (units, remove); they don't move the slider. */
@@ -32,8 +36,10 @@ export default function FillSliderCard({
 	min,
 	max,
 	changed,
+	lowers = false,
 	failBelow,
 	hint,
+	tags,
 	size = 'md',
 	onChange,
 	children
@@ -113,8 +119,9 @@ export default function FillSliderCard({
 		e.preventDefault();
 	};
 
-	const fillColor = failing ? 'bg-[#F4D9D3]' : changed ? 'bg-[#CFE7D7]' : 'bg-[#EDE8DE]';
-	const edgeColor = failing ? 'bg-[#B5523F]' : changed ? 'bg-[#2E7A4F]' : 'bg-[#9A938A]';
+	const red = failing || lowers;
+	const fillColor = red ? 'bg-[#F4D9D3]' : changed ? 'bg-[#CFE7D7]' : 'bg-[#EDE8DE]';
+	const edgeColor = red ? 'bg-[#B5523F]' : changed ? 'bg-[#2E7A4F]' : 'bg-[#9A938A]';
 
 	return (
 		<div
@@ -132,7 +139,7 @@ export default function FillSliderCard({
 			onKeyDown={onKeyDown}
 			style={{ touchAction: 'pan-y' }}
 			className={`relative overflow-hidden rounded-2xl border select-none cursor-ew-resize outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#3C3C3C] focus-visible:ring-offset-2 ${
-				changed ? 'border-[#8CC2A0] bg-[#F5FAF6]' : 'border-[#E5DFD4] bg-white'
+				lowers ? 'border-[#E0A597] bg-[#FDF5F3]' : changed ? 'border-[#8CC2A0] bg-[#F5FAF6]' : 'border-[#E5DFD4] bg-white'
 			}`}
 		>
 			{/* The fill, growing from the right edge */}
@@ -151,6 +158,7 @@ export default function FillSliderCard({
 				<div className="min-w-0 space-y-1">
 					<div className={`font-black text-[#222222] truncate ${size === 'lg' ? 'text-base' : 'text-sm'}`}>{label}</div>
 					{hint && <div className="text-[11px] font-medium text-[#66635C]">{hint}</div>}
+					{tags && <div className="flex flex-wrap items-center gap-1">{tags}</div>}
 					{children && (
 						<div data-no-drag className="flex flex-wrap items-center gap-1.5 pt-0.5 cursor-default">
 							{children}
@@ -159,7 +167,7 @@ export default function FillSliderCard({
 				</div>
 				<div
 					className={`shrink-0 font-black tabular-nums dir-ltr ${size === 'lg' ? 'text-4xl' : 'text-2xl'} ${
-						failing ? 'text-[#9B3327]' : changed ? 'text-[#205739]' : 'text-[#222222]'
+						red ? 'text-[#9B3327]' : changed ? 'text-[#205739]' : 'text-[#222222]'
 					}`}
 				>
 					{value}

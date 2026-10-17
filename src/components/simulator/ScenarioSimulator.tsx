@@ -8,6 +8,7 @@ import type { SubjectInput } from '@/modules/calculators';
 import type { RecommendedTrack } from '@/utils/analysis/trackGenerator';
 import { isSameBagrutSubject } from '@/modules/optimizer/solver';
 import {
+	evaluateImpacts,
 	evaluateScenario,
 	isSubjectChanged,
 	scenarioFromProfile,
@@ -20,6 +21,7 @@ import {
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import type { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { useAuth } from '@/context/AuthContext';
+import { resolveInstitutionKey, UNIVERSITIES_META } from '@/components/common/UniversityLogo';
 import FillSliderCard from './FillSliderCard';
 import ProgramResultCard from './ProgramResultCard';
 
@@ -42,6 +44,44 @@ const SUBJECT_MAX = 100;
 const SUBJECT_FAIL_BELOW = 55;
 /** Grade a subject added from the catalog starts at (as in the What-If simulator). */
 const ADDED_SUBJECT_GRADE = 88;
+
+/** A change lowers a degree's sekem (beyond rounding). */
+const lowersAny = (deltas: (number | null)[] | null | undefined) => Boolean(deltas?.some((d) => d !== null && d < -0.005));
+
+/** One tag per degree in the simulator: what the change adds to its sekem. */
+function ImpactTags({ deltas, degrees }: { deltas: (number | null)[] | null | undefined; degrees: ProgramGapAnalysis[] }) {
+	if (!deltas) return null;
+	const institutions = degrees.map((a) => a.target.calculatorId);
+	return (
+		<>
+			{deltas.map((d, i) => {
+				if (d === null) return null;
+				const a = degrees[i];
+				const digits = a.target.calculatorId === 'technion' ? 2 : 1;
+				const rounded = Number(d.toFixed(digits));
+				const text = `${rounded > 0 ? '+' : ''}${rounded.toFixed(digits)}`;
+				const shortName = UNIVERSITIES_META[resolveInstitutionKey(a.target.calculatorId)]?.shortName ?? a.target.institutionName;
+				// Two degrees of the same institution: name the degree too
+				const who = degrees.length === 1
+					? 'לסכם'
+					: institutions.filter((c) => c === a.target.calculatorId).length > 1
+					? `${shortName}, ${a.target.program.fieldOfStudy}`
+					: shortName;
+				const tone = rounded > 0 ? 'bg-[#E3F1E7] text-[#205739]' : rounded < 0 ? 'bg-[#FBE3DE] text-[#9B3327]' : 'bg-[#EFEAE0] text-[#66635C]';
+				return (
+					<span
+						key={a.target.program.id}
+						title={`${a.target.program.fieldOfStudy} — ${a.target.institutionName}`}
+						className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[11px] font-bold max-w-full ${tone}`}
+					>
+						<span className="tabular-nums dir-ltr">{text}</span>
+						<span className="truncate">{who}</span>
+					</span>
+				);
+			})}
+		</>
+	);
+}
 
 const unitOptions = (s: ScenarioSubject) => {
 	const base = isSameBagrutSubject(s.name, 'מתמטיקה') || isSameBagrutSubject(s.name, 'אנגלית') ? [3, 4, 5] : [2, 3, 4, 5];
@@ -93,6 +133,7 @@ export default function ScenarioSimulator({
 	const available = basket.filter((a) => !selectedIds.includes(a.target.program.id));
 
 	const results = useMemo(() => evaluateScenario(shown, userProfile, scenario), [shown, userProfile, scenario]);
+	const impacts = useMemo(() => evaluateImpacts(shown, userProfile, scenario), [shown, userProfile, scenario]);
 	const focusedResult = results.find((r) => r.programId === focusedId) ?? evaluateScenario([analysis], userProfile, scenario)[0];
 
 	const originalPsych = userProfile.psychometricGeneral || 0;
@@ -285,6 +326,8 @@ export default function ScenarioSimulator({
 						max={PSYCHOMETRIC_MAX}
 						changed={originalPsych > 0 ? scenario.psychometric !== originalPsych : true}
 						hint={originalPsych > 0 ? `הציון שלך: ${originalPsych}` : 'עוד אין לך ציון — הסימולציה מתחילה מ-600'}
+						lowers={lowersAny(impacts.psychometric)}
+						tags={impacts.psychometric && <ImpactTags deltas={impacts.psychometric} degrees={shown} />}
 						size="lg"
 						onChange={setPsych}
 					/>
@@ -300,6 +343,8 @@ export default function ScenarioSimulator({
 								max={SUBJECT_MAX}
 								failBelow={SUBJECT_FAIL_BELOW}
 								changed={changed}
+								lowers={lowersAny(impacts.subjects[s.id])}
+								tags={impacts.subjects[s.id] && <ImpactTags deltas={impacts.subjects[s.id]} degrees={shown} />}
 								hint={s.isAdded ? 'מקצוע חדש' : changed ? `במקור: ${s.originalGrade}, ${s.originalUnits} יח״ל` : undefined}
 								onChange={(grade) => updateSubject(s.id, { grade })}
 							>

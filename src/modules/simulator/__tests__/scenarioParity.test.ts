@@ -10,7 +10,7 @@ import academicData from '../../../data/academicData.json';
 import { calculateMultiInstitutionSekem } from '../../../utils/calculators/multiCalculator';
 import { analyzeProgramGap, UserAcademicProfile } from '../../../utils/analysis/gapAnalyzer';
 import type { TargetProgramSelection } from '../../../utils/analysis/gapAnalyzer';
-import { evaluateScenario, scenarioFromProfile, ScenarioState } from '../evaluate';
+import { evaluateImpacts, evaluateScenario, isSubjectChanged, scenarioFromProfile, ScenarioState } from '../evaluate';
 
 const CALC_IDS: Record<string, string> = {
 	'inst-48': 'technion', 'inst-6': 'tau', 'inst-1': 'huji', 'inst-3': 'bgu',
@@ -132,5 +132,48 @@ describe('Simulator scores each degree with its own institution calculator', () 
 		for (const r of evaluateScenario(analyses, profile, scenarioFromProfile(profile))) {
 			assert.ok(r.entranceExam, `${r.programId} has entrance-exam info`);
 		}
+	});
+});
+
+describe('What each change adds to the sekem', () => {
+	it('equals the sekem with every change minus the sekem with that one change undone, for every degree', () => {
+		let compared = 0;
+		for (let i = 0; i < 3; i++) {
+			const profile = randomProfile(i % 2 === 0);
+			const analyses = analysesFor(profile).filter((a) => !a.admissionRoutes?.entranceExam).slice(0, 120);
+			const scenario = randomEdit(profile);
+			const impacts = evaluateImpacts(analyses, profile, scenario);
+			const current = evaluateScenario(analyses, profile, scenario).map((r) => r.currentSekem);
+			for (const s of scenario.subjects.filter(isSubjectChanged)) {
+				const undone = s.isAdded
+					? scenario.subjects.filter((x) => x.id !== s.id)
+					: scenario.subjects.map((x) => (x.id === s.id ? { ...x, grade: x.originalGrade, units: x.originalUnits } : x));
+				const without = evaluateScenario(analyses, profile, { ...scenario, subjects: undone }).map((r) => r.currentSekem);
+				impacts.subjects[s.id].forEach((d, idx) => {
+					assert.ok(Math.abs(d! - (current[idx] - without[idx])) <= 0.01, `${s.name} ${analyses[idx].target.program.fieldOfStudy}`);
+					compared++;
+				});
+			}
+		}
+		assert.ok(compared > 100);
+	});
+
+	it('a lower grade shows a negative impact; an unchanged subject has none', () => {
+		const profile = randomProfile(true);
+		const analyses = analysesFor(profile).filter((a) => a.target.calculatorId === 'technion' && !a.admissionRoutes?.entranceExam).slice(0, 5);
+		const base = scenarioFromProfile(profile);
+		const math = base.subjects.find((s) => s.name === 'מתמטיקה')!;
+		const scenario = { ...base, subjects: base.subjects.map((s) => (s.id === math.id ? { ...s, grade: 56 } : s)) };
+		const impacts = evaluateImpacts(analyses, profile, scenario);
+		assert.ok(impacts.subjects[math.id].every((d) => d! < 0), `math 56: ${impacts.subjects[math.id]}`);
+		assert.equal(Object.keys(impacts.subjects).length, 1);
+		assert.equal(impacts.psychometric, null);
+	});
+
+	it('Technion architecture / landscape: no impact number (the entrance exam decides)', () => {
+		const profile = randomProfile(true);
+		const analyses = analysesFor(profile).filter((a) => a.admissionRoutes?.entranceExam);
+		const impacts = evaluateImpacts(analyses, profile, { ...scenarioFromProfile(profile), psychometric: 790 });
+		assert.ok(impacts.psychometric!.every((d) => d === null));
 	});
 });

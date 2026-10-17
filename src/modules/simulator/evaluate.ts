@@ -180,17 +180,7 @@ export function evaluateScenario(
 
 	return analyses.map((analysis) => {
 		const { calculatorId, program } = analysis.target;
-		const { sekem: currentSekem, bagrutAverage } = evaluateSimulatedSekem(
-			calculatorId,
-			analysis.relevantSekemType,
-			profile,
-			sim.bagrutSubjects,
-			psych,
-			sim.mathUnits,
-			sim.mathGrade,
-			sim.physicsUnits,
-			sim.physicsGrade
-		);
+		const { sekem: currentSekem, bagrutAverage } = degreeSekem(analysis, profile, sim);
 		const institutionRes = institutionResults.get(calculatorId);
 		const simulated = institutionRes ? analyzeProgramGap(analysis.target, sim, institutionRes) : null;
 		return {
@@ -202,4 +192,59 @@ export function evaluateScenario(
 			entranceExam: simulated?.entranceExam
 		};
 	});
+}
+
+/** A degree's sekem for an edited profile, from its institution's calculator. */
+function degreeSekem(analysis: ProgramGapAnalysis, profile: UserAcademicProfile, sim: UserAcademicProfile) {
+	return evaluateSimulatedSekem(
+		analysis.target.calculatorId,
+		analysis.relevantSekemType,
+		profile,
+		sim.bagrutSubjects,
+		sim.psychometricGeneral,
+		sim.mathUnits,
+		sim.mathGrade,
+		sim.physicsUnits,
+		sim.physicsGrade
+	);
+}
+
+export interface ScenarioImpacts {
+	/** What the psychometric change adds to each degree's sekem (null when the psychometric is unchanged). */
+	psychometric: (number | null)[] | null;
+	/** Per changed or added subject (by id): what it adds to each degree's sekem. */
+	subjects: Record<string, (number | null)[]>;
+}
+
+/**
+ * What each change adds to each degree's sekem: the sekem with every change, minus the sekem with this one change
+ * undone (an added subject removed, a changed one back to its original grade and units). Negative when the change
+ * lowers the sekem. Null for a degree whose sekem the entrance exam decides (Technion architecture / landscape).
+ */
+export function evaluateImpacts(
+	analyses: ProgramGapAnalysis[],
+	profile: UserAcademicProfile,
+	scenario: ScenarioState
+): ScenarioImpacts {
+	const applies = analyses.map((a) => !a.admissionRoutes?.entranceExam);
+	const sekems = (state: ScenarioState) => {
+		const sim = scenarioProfile(profile, state);
+		return analyses.map((a, i) => (applies[i] ? degreeSekem(a, profile, sim).sekem : null));
+	};
+	const current = sekems(scenario);
+	const deltas = (without: ScenarioState) =>
+		sekems(without).map((v, i) => (v === null || current[i] === null ? null : Math.round((current[i]! - v) * 100) / 100));
+
+	const startPsych = scenarioFromProfile(profile).psychometric;
+	const psychometric = scenario.psychometric !== startPsych ? deltas({ ...scenario, psychometric: startPsych }) : null;
+
+	const subjects: Record<string, (number | null)[]> = {};
+	for (const s of scenario.subjects) {
+		if (!isSubjectChanged(s)) continue;
+		const undone = s.isAdded
+			? scenario.subjects.filter((x) => x.id !== s.id)
+			: scenario.subjects.map((x) => (x.id === s.id ? { ...x, grade: x.originalGrade, units: x.originalUnits } : x));
+		subjects[s.id] = deltas({ ...scenario, subjects: undone });
+	}
+	return { psychometric, subjects };
 }
