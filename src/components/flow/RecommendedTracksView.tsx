@@ -298,7 +298,7 @@ export default function RecommendedTracksView({
 			{/* Top Header Card */}
 			<div className="bg-white border border-[#E5DFD4] rounded-3xl p-6 sm:p-8 shadow-xs relative space-y-6">
 				{/* Top Meta & Action Toolbar Row */}
-				<div className="relative z-30 flex items-center justify-between gap-4 border-b border-[#EAE5DA] pb-4">
+				<div className={`relative z-30 flex flex-wrap items-center justify-between gap-3 sm:gap-4 ${activeTab === 'custom_builder' ? '' : 'border-b border-[#EAE5DA] pb-4'}`}>
 					<button
 						onClick={onBackToReport}
 						className="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#EAE5DA] text-[#44423D] hover:text-[#222222] font-bold text-xs rounded-xl transition flex items-center gap-1.5 border border-[#E5DFD4] cursor-pointer"
@@ -306,6 +306,57 @@ export default function RecommendedTracksView({
 						<ArrowRight className="h-3.5 w-3.5" />
 						<span>חזור לדוח הקבלה</span>
 					</button>
+
+					{/* View switcher: recommended tracks vs the personal builder */}
+					<div className="order-last w-full sm:order-none sm:w-auto flex items-center gap-1 sm:gap-2 p-1 bg-white rounded-xl border border-[#E5DFD4]">
+						<button
+							type="button"
+							onClick={() => setActiveTab('recommended')}
+							className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
+								activeTab === 'recommended'
+									? 'bg-[#3C3C3C] text-white shadow-xs'
+									: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
+							}`}
+						>
+							<Sparkles className="h-4 w-4 text-inherit" />
+							<span className="whitespace-nowrap">
+							<span className="sm:hidden">מסלולים מומלצים</span>
+							<span className="hidden sm:inline">ריכוז המסלולים המומלץ</span>
+							{tracks.length > 0 ? ` (${tracks.length})` : ''}
+						</span>
+						</button>
+
+						<div className="relative group flex flex-1 sm:flex-none">
+							<button
+								type="button"
+								onClick={() => {
+									setEditingTrack(null);
+									setActiveTab('custom_builder');
+								}}
+								title="בניית מסלול בעצמך"
+								className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
+									activeTab === 'custom_builder'
+										? 'bg-[#3C3C3C] text-white shadow-xs'
+										: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
+								}`}
+							>
+								<Sliders className="h-4 w-4 text-inherit" />
+								<span className="whitespace-nowrap">
+								<span className="sm:hidden">בנייה אישית</span>
+								<span className="hidden sm:inline">מסלול בנייה אישי 🎛️</span>
+							</span>
+								{customScenarioApplied && (
+									<span className="w-2 h-2 rounded-full bg-[#205739]" />
+								)}
+							</button>
+
+							{/* Hover Tooltip Popup */}
+							<div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-[#222222] text-white text-[11px] font-bold rounded-xl shadow-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50 hidden sm:flex items-center gap-1.5 border border-[#3C3C3C]">
+								<span>בניית מסלול בעצמך</span>
+								<div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-[#222222]" />
+							</div>
+						</div>
+					</div>
 
 					<div className="flex items-center gap-2.5 flex-wrap">
 						{onEditPreferences && (
@@ -328,6 +379,8 @@ export default function RecommendedTracksView({
 					</div>
 				</div>
 
+				{activeTab !== 'custom_builder' && (
+				<>
 				{/* Main Hero Content & Gap Summary Widget */}
 				<div className="relative z-20 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
 					<div className="flex-1 min-w-0 space-y-3">
@@ -461,55 +514,9 @@ export default function RecommendedTracksView({
 						psychometricOnly={analysis.relevantSekemType === 'psychometric'}
 					/>
 				)}
+				</>
+				)}
 
-			</div>
-
-			{/* ========================================================================= */}
-			{/* VIEW SWITCHER TABS: RECOMMENDED TRACKS vs PERSONAL BUILDER */}
-			{/* ========================================================================= */}
-			<div className="flex items-center justify-start gap-4 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4] shadow-xs">
-				<div className="flex items-center gap-2 p-1 bg-white rounded-xl border border-[#E5DFD4]">
-					<button
-						type="button"
-						onClick={() => setActiveTab('recommended')}
-						className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
-							activeTab === 'recommended'
-								? 'bg-[#3C3C3C] text-white shadow-xs'
-								: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
-						}`}
-					>
-						<Sparkles className="h-4 w-4 text-inherit" />
-						<span>ריכוז המסלולים המומלץ {tracks.length > 0 ? `(${tracks.length})` : ''}</span>
-					</button>
-
-					<div className="relative group">
-						<button
-							type="button"
-							onClick={() => {
-								setEditingTrack(null);
-								setActiveTab('custom_builder');
-							}}
-							title="בניית מסלול בעצמך"
-							className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs sm:text-sm font-black transition-all cursor-pointer ${
-								activeTab === 'custom_builder'
-									? 'bg-[#3C3C3C] text-white shadow-xs'
-									: 'text-[#66635C] hover:text-[#222222] hover:bg-[#FAF8F5]'
-							}`}
-						>
-							<Sliders className="h-4 w-4 text-inherit" />
-							<span>מסלול בנייה אישי 🎛️</span>
-							{customScenarioApplied && (
-								<span className="w-2 h-2 rounded-full bg-[#205739]" />
-							)}
-						</button>
-
-						{/* Hover Tooltip Popup */}
-						<div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-[#222222] text-white text-[11px] font-bold rounded-xl shadow-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50 flex items-center gap-1.5 border border-[#3C3C3C]">
-							<span>בניית מסלול בעצמך</span>
-							<div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-[#222222]" />
-						</div>
-					</div>
-				</div>
 			</div>
 
 			{/* Save Track Notification Banner */}
@@ -1493,47 +1500,7 @@ export default function RecommendedTracksView({
 			{activeTab === 'custom_builder' && (
 				<div className="space-y-6">
 					{userProfile && institutionResult ? (
-						<div className="bg-white border border-[#E5DFD4] rounded-3xl p-3 sm:p-8 space-y-6 shadow-sm relative overflow-clip">
-							{/* Section Header */}
-							<div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DFD4] pb-5">
-								<div className="space-y-1.5">
-									<div className="flex items-center gap-2.5">
-										<div className="w-9 h-9 rounded-2xl bg-[#FAF8F5] border border-[#E5DFD4] flex items-center justify-center text-[#222222]">
-											<Sliders className="h-5 w-5" />
-										</div>
-										<h3 className="text-xl sm:text-2xl font-bold text-[#222222]">
-											חלונית בניית מסלול אישי 🎛️
-										</h3>
-									</div>
-									<p className="text-xs sm:text-sm text-[#66635C] max-w-2xl">
-										רוצה להרכיב מסלול משלך? בחר תואר, שחק עם סליידר הפסיכומטרי, הוסף או שפר מקצועות בגרות וצפה במידת ההשפעה המדויקת של כל שינוי על הסכם ועל סיכויי הקבלה.
-									</p>
-								</div>
-
-								<div className="flex items-center gap-3 flex-wrap">
-									{/* Degree Selector in Custom Builder */}
-									{allAnalyses && allAnalyses.length > 1 && (
-										<div className="flex items-center gap-2 shrink-0 bg-[#FAF8F5] p-2 rounded-2xl border border-[#E5DFD4]">
-											<span className="text-xs font-bold text-[#66635C] mr-1">תואר לבדיקה:</span>
-											<select
-												value={analysis.target.program.id}
-												onChange={(e) => onSelectProgram?.(e.target.value)}
-												className="bg-white border border-[#E5DFD4] text-xs font-bold text-[#222222] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#222222]"
-											>
-												{allAnalyses.map((a) => {
-													const icon = a.status === 'accepted' ? '✅' : a.status === 'missing_requirement' ? '⚠️' : '❌';
-													return (
-														<option key={a.target.program.id} value={a.target.program.id}>
-															{icon} {a.target.program.fieldOfStudy} ({a.target.institutionName})
-														</option>
-													);
-												})}
-											</select>
-										</div>
-									)}
-								</div>
-							</div>
-
+						<>
 							{/* Notification when custom scenario is applied */}
 							{customScenarioApplied && (
 								<div className="p-4 rounded-2xl bg-[#EBF4EE] border border-[#C6DFCE] text-[#205739] text-xs font-bold flex items-center justify-between gap-2 flex-wrap">
@@ -1568,7 +1535,7 @@ export default function RecommendedTracksView({
 									setActiveTab('recommended');
 								}}
 							/>
-						</div>
+						</>
 					) : (
 						<div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E5DFD4] space-y-4">
 							<Sliders className="h-12 w-12 text-[#8A847C] mx-auto" />
