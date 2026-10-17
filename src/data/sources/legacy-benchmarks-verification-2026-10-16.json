@@ -1,0 +1,182 @@
+{
+ "checkedAt": "2026-10-16",
+ "purpose": "Re-verification of the legacy tests (all_institutions_benchmarks, institutionalBonusVariance, calculators.test) against official sources.",
+ "liveCalculators": {
+  "script": "scripts/verification/verifyLegacyBenchmarks.ts",
+  "bguGeneral_GetSekem": [
+   {
+    "avg": 105,
+    "psych": 650,
+    "official": 692
+   },
+   {
+    "avg": 109.06,
+    "psych": 616,
+    "official": 695
+   },
+   {
+    "avg": 115,
+    "psych": 654,
+    "official": 754
+   },
+   {
+    "avg": 112.5,
+    "psych": 616,
+    "official": 716
+   },
+   {
+    "avg": 105,
+    "psych": 700,
+    "official": 724
+   }
+  ],
+  "bguQuant_GetSekemQuantity_Q135_V125_E100": [
+   {
+    "avg": 115,
+    "official": 769
+   },
+   {
+    "avg": 112.5,
+    "official": 753
+   },
+   {
+    "avg": 112,
+    "official": 750
+   }
+  ],
+  "tau_go.tau.ac.il": [
+   {
+    "avg": 107,
+    "psych": 698,
+    "reali": true,
+    "general": 673,
+    "engineering": 683,
+    "management": 681
+   },
+   {
+    "avg": 107,
+    "psych": 740,
+    "reali": true,
+    "general": 695,
+    "engineering": 705,
+    "management": 710
+   },
+   {
+    "avg": 107,
+    "psych": 698,
+    "reali": false,
+    "engineering": 673
+   },
+   {
+    "avg": 105,
+    "psych": 700,
+    "reali": true,
+    "general": 664,
+    "engineering": 674,
+    "management": 676
+   }
+  ],
+  "averages_candidateProfile": {
+   "bgu_GetBagrutAaverage": 112.5,
+   "tau_Bagrut_T.aspx": 112.5
+  },
+  "allMatchOurs": true
+ },
+ "technion": {
+  "calculatorFormula": {
+   "url": "https://admissions.technion.ac.il/calculator/",
+   "form": "gform_76 (all tracks except architecture/landscape)",
+   "formula": "0.5*average + 0.075*psychometric - 19",
+   "rounding": "1 decimal"
+  },
+  "techSubjectBonus": {
+   "url": "https://admissions.technion.ac.il/wp-content/plugins/technion-calculators/technion-calculators-sum.php",
+   "method": "each option run at 5u/90, without and with math 5u + physics 5u",
+   "plus25_cluster30": [
+    "מדעי המחשב",
+    "אלקטרוניקה ומחשבים",
+    "ביוטכנולוגיה",
+    "מערכות ביוטכנולוגיה",
+    "מדעי ההנדסה"
+   ],
+   "plus20_always": [
+    "אלקטרוניקה",
+    "אלקטרוניקה כללית ותקשורת",
+    "יישומיי ביוטכנולוגיה",
+    "מכניקה הנדסית",
+    "מערכות תוכנה וחומרה",
+    "ע''ג בתכנון ותכנות",
+    "ע''ג בתכנות מערכות",
+    "תכנון הנדסי של מבנים",
+    "תכנון ותכנות מערכות"
+   ],
+   "notInList": [
+    "רובוטיקה",
+    "סייבר"
+   ]
+  },
+  "profiles": [
+   {
+    "subjects": "English 4/85, literature 2/85, math 4/85, Bible 2/85, civics 2/85, expression 2/85, history 2/85, systems programming 5/90",
+    "officialAverage": 94.1,
+    "oursBeforeFix": 95.0
+   },
+   {
+    "subjects": "same with math 5/85 and physics 5/90",
+    "officialAverage": 103.1,
+    "oursBeforeFix": 105.3
+   }
+  ]
+ },
+ "huji": {
+  "formulas": {
+   "url": "https://go.huji.ac.il/jjson/huji.json.gz (formulasObj)",
+   "type1": {
+    "pet": 0.01992054,
+    "avg": 0.24614193,
+    "minus": 16.993402399
+   },
+   "type2": {
+    "pet": 0.027468921,
+    "avg": 0.145461915,
+    "minus": 11.50910537
+   },
+   "note": "Our 50/50 and 30/70 expand to exactly types 1 and 2."
+  },
+  "programWeightingFlags": {
+   "source": "currentYearObj petBagrut_5050 / petBagrut_7030 / pet_verbal / pet_multi / pet_calc",
+   "5050only_calcOnly": 80,
+   "7030only_multiOnly": 4,
+   "both_multiCalc": 83,
+   "both_all": 61,
+   "note": "Matches our relevantSekemType mapping in importHujiThresholds.ts (engineering / quantitative / management / general)."
+  },
+  "bonusTable": {
+   "url": "https://info.huji.ac.il/reception-components/Bagrut",
+   "5u": {
+    "מתמטיקה": 35,
+    "אנגלית, מדעי המחשב, פיסיקה, ביולוגיה, כימיה, היסטוריה, ערבית, אזרחות, ספרות, תנ\"ך, מחשבת ישראל": 25,
+    "כל מקצוע אחר מהרשימה": 20
+   }
+  }
+ },
+ "tau": {
+  "otherSubjectBonus": {
+   "url": "https://ims.tau.ac.il/md/calc/Bagrut_T.aspx",
+   "row": "096 אחר עם בונוס",
+   "units": 5,
+   "grade": 90,
+   "bonus": 20,
+   "average": 100.0,
+   "ours": 100
+  }
+ },
+ "haifa": {
+  "url": "https://admissions.haifa.ac.il/score-calculation/",
+  "quote": "B=BT*10-330 … כאשר השקלול הוא לפי 1:1 BT + PC = ציון סופי / 2"
+ },
+ "ariel": {
+  "status": "open",
+  "note": "The official calculator (pniot.ariel.ac.il) needs personal details, computes server-side and shows one decimal (user runs: 657.5, 673.5); we show whole points. Exact rounding to be pinned with user runs (USER_TASKS)."
+ }
+}

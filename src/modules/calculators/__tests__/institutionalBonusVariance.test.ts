@@ -1,7 +1,10 @@
 /**
- * Institutional Bonus Variance & Exact Admissions Match Test Suite
- * Validates institutional bonus variations across all 8 Israeli universities
- * and mathematically verifies the candidate's exact profile from BGU live calculator.
+ * Bonus differences between institutions and one BGU profile (written 2026-09, re-verified 2026-10-16):
+ * - BGU sekem values: live BGU calculator (GetSekem / GetSekemQuantity), all match.
+ * - The candidate's BGU and TAU averages (112.5): live official average calculators, both match.
+ * - HUJI bonuses: info.huji.ac.il/reception-components/Bagrut bonus table.
+ * - TAU +20 for other subjects: the TAU calculator's "אחר עם בונוס" row (5u, 90 → +20).
+ * - Technion: official calculator — only five technological subjects get +25 (see officialRules.test.ts).
  */
 
 import { describe, it } from 'node:test';
@@ -74,19 +77,22 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getBguBonus(me5), 20, 'BGU awards standard +20 elective bonus for Middle Eastern Studies');
 		});
 
-		it('Robotics 5u Bonus: +25 only at Technion (recognized tech subject); +20 at TAU/HUJI/BGU', () => {
+		it('Robotics 5u Bonus: +20 everywhere (not a Technion technological subject)', () => {
 			const rob5 = { name: 'רובוטיקה ומערכות אוטונומיות', units: 5, grade: 90 };
-			assert.equal(getTechnionBonus(rob5, false), 25, 'Technion awards +25 for Robotics');
+			// Robotics is not among the Technion calculator's subjects; only five technological subjects get +25
+			// (official calculator, 2026-10-16 — see officialRules.test.ts)
+			assert.equal(getTechnionBonus(rob5, false), 20, 'Technion: ordinary +20');
 			assert.equal(getTauBonus(rob5), 20, 'TAU: not in the +25 list (go.tau.ac.il)');
 			assert.equal(getHujiBonus(rob5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(rob5), 20, 'BGU: not in the enhanced table (ידיעון תשפ"ז)');
 			assert.equal(getBarIlanBonus(rob5), 20, 'BIU: not in the +25 list (biu.ac.il)');
 		});
 
-		it('System Planning & Programming 5u Bonus: +25 at Technion (+30 in cluster), +20 at TAU/HUJI/BGU', () => {
+		it('System Planning & Programming 5u Bonus: +20 at the Technion, in or out of the cluster; +20 at TAU/HUJI/BGU', () => {
 			const sysProg5 = { name: 'תכנון ותכנות מערכות', units: 5, grade: 90 };
-			assert.equal(getTechnionBonus(sysProg5, false), 25, 'Technion awards +25 for System Planning & Programming');
-			assert.equal(getTechnionBonus(sysProg5, true), 30, 'Technion awards +30 for System Planning & Programming in cluster');
+			// Official Technion calculator, 2026-10-16: "תכנון ותכנות מערכות" 5u 90 -> bonus 20, also with math 5u + physics 5u
+			assert.equal(getTechnionBonus(sysProg5, false), 20, 'Technion: +20');
+			assert.equal(getTechnionBonus(sysProg5, true), 20, 'Technion: +20 even inside the science cluster');
 			assert.equal(getTauBonus(sysProg5), 20, 'TAU: not in the +25 list');
 			assert.equal(getHujiBonus(sysProg5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(sysProg5), 20, 'BGU: not in the enhanced table');
@@ -114,7 +120,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		});
 
 		it('Quantitative Sekem at Bagrut 112.5 matches BGU live calculator (753)', () => {
-			// Verified 2026-10-02 against …/GetSekemQuantity (Q135 V125 E100, bagrut 112.5) -> 753
+			// Verified 2026-10-02 and 2026-10-16 against …/GetSekemQuantity (Q135 V125 E100, bagrut 112.5) -> 753
 			const quantSekem = calculateBguQuantitativeSekem(
 				112.5,
 				candidatePsych.quant,
@@ -125,7 +131,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		});
 
 		it('Current General Sekem: Exactly 695 at current Bagrut 109.06', () => {
-			// Formula: 0.62 * 616 + 5.9 * 109.06 - 330 = 695.37 -> 695
+			// BGU live calculator GetSekem(109.06, 616) = 695, verified 2026-10-16
 			const genSekem = calculateBguGeneralSekem(109.06, candidatePsych.general);
 			assert.equal(genSekem, 695);
 		});
@@ -139,7 +145,7 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 		});
 
 		it('Optimal Track Target: Minimum Bagrut needed for 750 threshold is 112.0 (NOT 115.0)', () => {
-			// Formula at Bagrut 112.0: 2.705 * 135 + 0.715 * 125 + 0.39 * 100 + 6.29 * 112.0 - 448 = 750.03 -> 750
+			// BGU live calculator GetSekemQuantity(Q135 V125 E100, 112) = 750, verified 2026-10-16
 			const targetSekem = calculateBguQuantitativeSekem(112.0, 135, 125, 100);
 			assert.equal(targetSekem, 750, 'Bagrut 112.0 exactly satisfies 750 admission threshold');
 		});
