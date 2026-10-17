@@ -77,11 +77,11 @@ describe('Institutional Bonus Variance & BGU Exact Matching Suite', () => {
 			assert.equal(getBguBonus(me5), 20, 'BGU awards standard +20 elective bonus for Middle Eastern Studies');
 		});
 
-		it('Robotics 5u Bonus: +20 everywhere (not a Technion technological subject)', () => {
+		it('Robotics 5u Bonus: none at the Technion (not on its list); +20 at TAU/HUJI/BGU', () => {
 			const rob5 = { name: 'רובוטיקה ומערכות אוטונומיות', units: 5, grade: 90 };
-			// Robotics is not among the Technion calculator's subjects; only five technological subjects get +25
-			// (official calculator, 2026-10-16 — see officialRules.test.ts)
-			assert.equal(getTechnionBonus(rob5, false), 20, 'Technion: ordinary +20');
+			// Robotics is not on the Technion's list, and "מקצוע שאינו מופיע בטבלאות לא יקבל בונוס"
+			// (official calculator and bonus page, 2026-10-17 — see officialRules.test.ts)
+			assert.equal(getTechnionBonus(rob5, false), 0, 'Technion: no bonus');
 			assert.equal(getTauBonus(rob5), 20, 'TAU: not in the +25 list (go.tau.ac.il)');
 			assert.equal(getHujiBonus(rob5), 20, 'HUJI: not in the +25 list');
 			assert.equal(getBguBonus(rob5), 20, 'BGU: not in the enhanced table (ידיעון תשפ"ז)');

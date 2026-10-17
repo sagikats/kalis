@@ -100,6 +100,17 @@ describe('Official admission rules', () => {
 			assert.equal(getTechnionBonus(sub('ערבית', 5, 90), true), 25, 'Arabic is not a cluster member');
 		});
 
+		// "מקצוע שאינו מופיע בטבלאות לא יקבל בונוס!" (bonus page) — and the calculator gives "מקצוע אחר שאינו ברשימה" 0
+		it('a subject that is not on the Technion list gets no bonus; catalog names on the list under another name get its bonus', () => {
+			for (const name of ['הגנת סייבר', 'רובוטיקה ומערכות אוטונומיות', 'מדעי המידע והנתונים (Data Science)', 'דיפלומטיה ויחסים בינלאומיים (באנגלית)']) {
+				assert.equal(getTechnionBonus(sub(name, 5, 90), false), 0, name);
+				assert.equal(getTechnionBonus(sub(name, 4, 90), false), 0, name);
+			}
+			assert.equal(getTechnionBonus(sub('צרפתית (מוגבר 5 יח"ל)', 5, 90), false), 20, 'foreign language → שפה זרה');
+			assert.equal(getTechnionBonus(sub('לימודי המזרח התיכון והאסלאם / מזרחנות', 4, 90), false), 10, 'מזרחנות → תולדות הערבים והאיסלאם');
+			assert.equal(getTechnionBonus(sub('אזרחות', 5, 90), false), 20, 'mandatory section');
+		});
+
 		it('official calculator averages with systems programming 5u: 94.1, and 103.1 with math 5u + physics 5u', () => {
 			const core = (mathUnits: number) => [sub('אנגלית', 4, 85), sub('ספרות', 2, 85), sub('מתמטיקה', mathUnits, 85), sub('תנ"ך', 2, 85),
 				sub('אזרחות', 2, 85), sub('הבעה עברית', 2, 85), sub('היסטוריה', 2, 85)];

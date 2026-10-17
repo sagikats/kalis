@@ -15,10 +15,14 @@ import { computeOptimalAverage } from './optimalAverage';
 import {
 	isArabic,
 	isBible,
+	isCivics,
 	isEnglish,
+	isHebrewExpression,
 	isHistory,
+	isJewishThought,
 	isMath
 } from './subjectMatchers';
+import technionBonusTable from '../../data/sources/technion-bonus-table-2026-10-17.json';
 
 const TECHNION_MANDATORY_SUBJECTS = [
 	'מתמטיקה',
@@ -52,8 +56,6 @@ const TECHNION_SCIENCES = ['פיזיקה', 'פיסיקה', 'כימיה', 'ביו
 const TECHNION_TECH_SUBJECTS = ['מדעי המחשב', 'אלקטרוניקה ומחשבים', 'ביוטכנולוגיה', 'מערכות ביוטכנולוגיה', 'מדעי ההנדסה', 'בקרת מכונות'];
 /** Literature in the Technion's mandatory section (5u +25) — not "ספרות התאטרון". */
 const TECHNION_LITERATURE = ['ספרות', 'ספרות עברית'];
-/** On the list, but a 4-unit exam gets no bonus (5u still +20). */
-const TECHNION_NO_4U_BONUS = ['חינוך גופני', 'מדע חישובי'];
 
 const nameParts = (name: string) => name.split('/').map((part) => part.replace(/\([^)]*\)/g, '').trim());
 const partIn = (name: string, list: string[]) => nameParts(name).some((part) => list.includes(part));
@@ -97,19 +99,86 @@ function selectTechnionScienceCluster(subjects: CalculatorSubject[]): Set<Calcul
  * physics/chemistry/biology/recognized tech 5u +25 (+30 inside the science cluster);
  * every other bonus subject at 5u (e.g. civics, Hebrew expression, geography) +20; any bonus subject at 4u +10.
  */
+/**
+ * The elective subjects on the official calculator's list, with their 5u / 4u bonus (snapshot 2026-10-17).
+ * "מקצוע אחר שאינו ברשימה" gets 0 there, and the bonus page says so in writing ("מקצוע שאינו מופיע בטבלאות לא יקבל בונוס"),
+ * so a subject that is neither in the mandatory section nor on this list gets no bonus at the Technion.
+ */
+const TECHNION_ELECTIVES = new Map<string, { bonus5: number; bonus4: number }>(
+	technionBonusTable.electives.filter((r) => !r.name.includes('שאינ')).map((r) => [r.name, { bonus5: r.bonus5, bonus4: r.bonus4 }])
+);
+
+/**
+ * Our catalog's names for subjects that are on the Technion's list under another name (per "/"-separated part,
+ * after dropping "(…)"). A catalog subject with no entry here and no exact match gets no bonus, like the calculator.
+ */
+const TECHNION_ALIASES: Record<string, string> = {
+	'איטלקית': 'שפה זרה', 'אמהרית': 'שפה זרה', 'גרמנית': 'שפה זרה', 'טורקית': 'שפה זרה', 'יפנית': 'שפה זרה',
+	'סינית': 'שפה זרה', 'ספרדית': 'שפה זרה', 'צרפתית': 'שפה זרה', 'רוסית': 'שפה זרה',
+	'אמנות חזותית': 'אמנות',
+	'כלכלה': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'מדעי המדינה וממשל': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'סוציולוגיה': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'מדעי החברה': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'פסיכולוגיה וסוציולוגיה': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'משפטים': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'קרימינולוגיה ומשפטים': "מדעי החברה - חוק ומשפט (שילוב של כלכלה/ מדעי המדינה/ ניהול/ סוציולוגיה וכו')",
+	'כלכלה וניהול': 'מינהל וכלכלה', 'כלכלה ומנהל עסקים': 'מינהל וכלכלה',
+	'לימודי ארץ ישראל וארכיאולוגיה': 'לימודי ארץ ישראל',
+	'לימודי המזרח התיכון והאסלאם': 'תולדות הערבים והאיסלאם (בבתי-ספר יהודיים)',
+	'מזרחנות': 'תולדות הערבים והאיסלאם (בבתי-ספר יהודיים)',
+	'מדעי החקלאות ואגרוטק': 'מדעי החיים והחקלאות',
+	'מדעי כדור הארץ וגיאולוגיה': 'מדעי כדור הארץ',
+	'מוזיקה': 'מוסיקה', 'רסיטל מוזיקה': 'מוסיקה רסיטל',
+	'רסיטל מחול': 'מחול',
+	'מערכות רפואיות': 'מדעי הבריאות',
+	'מערכות תעופה וחלל': 'מערכות תעופה',
+	'ניהול משאבי אנוש וארגון': 'ניהול משאבי אנוש',
+	'ניהול עסקי וחשבונאות': 'חשבונאות',
+	'קולנוע ומדיה': 'אמנות הקולנוע', 'תקשורת וקולנוע': 'אמנות הקולנוע',
+	'תיאטרון': 'אמנות התאטרון', 'ספרות התיאטרון': 'ספרות התאטרון',
+	'תושב"ע': "תושב''ע", 'תושב״ע': "תושב''ע",
+	'תקשורת אלקטרונית וטלקומוניקציה': 'טלקומוניקציה',
+	'תקשורת ורדיו': 'תקשורת', 'אמנות השידור': 'תקשורת',
+	'גאוגרפיה': 'גיאוגרפיה',
+	'עבודת גמר מחקרית': 'עבודת גמר שברשימה'
+};
+
+/** The official 5u / 4u bonus of an elective on the Technion's list, or undefined when it isn't on the list. */
+function technionElectiveBonus(name: string): { bonus5: number; bonus4: number } | undefined {
+	// Official names may hold "(…)" and even "/" ("מדעי החברה - חוק ומשפט (שילוב של כלכלה/ …)") — try the whole name first
+	const whole = TECHNION_ELECTIVES.get(name.trim());
+	if (whole) return whole;
+	let best: { bonus5: number; bonus4: number } | undefined;
+	for (const part of nameParts(name)) {
+		const entry = TECHNION_ELECTIVES.get(part) ?? TECHNION_ELECTIVES.get(TECHNION_ALIASES[part] ?? '');
+		if (entry && (!best || entry.bonus5 > best.bonus5)) best = entry;
+	}
+	return best;
+}
+
+/** Subjects of the calculator's mandatory section that get the ordinary bonus (5u +20, 4u +10). */
+function isTechnionMandatoryOrdinary(name: string): boolean {
+	return isCivics(name) || isHebrewExpression(name) || isJewishThought(name) || name.includes('ידיעת העם') || name.includes('תולדות הערבים') || name.includes('דרוז') || name.includes('נצרות') || name.includes('נוצרית');
+}
+
 export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: boolean): number {
 	if (subject.grade < 60) return 0;
-	const n = subject.name;
+	// Parenthesized notes ("(באנגלית)", "(מוגבר 5 יח״ל)") must not decide the subject
+	const n = subject.name.replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
 
-	if (subject.units >= 5) {
-		if (isMath(n)) return 30;
-		if (isEnglish(n) || partIn(n, TECHNION_LITERATURE) || isBible(n) || isHistory(n) || isArabic(n)) return 25;
-		if (isTechnionScience(n) || isTechnionTechSubject(n)) return hasScienceCluster ? 30 : 25;
-		return 20;
-	}
+	if (subject.units < 4) return 0;
+	const five = subject.units >= 5;
 
-	if (subject.units === 4) return partIn(n, TECHNION_NO_4U_BONUS) ? 0 : 10;
-	return 0;
+	if (isMath(n)) return five ? 30 : 10;
+	if (isEnglish(n) || partIn(n, TECHNION_LITERATURE) || isBible(n) || isHistory(n) || isArabic(n)) return five ? 25 : 10;
+	if (five && (isTechnionScience(n) || isTechnionTechSubject(n))) return hasScienceCluster ? 30 : 25;
+	if (isTechnionMandatoryOrdinary(n)) return five ? 20 : 10;
+
+	// Electives: the official list's bonus; a subject that isn't on the list gets none (like the calculator)
+	const elective = technionElectiveBonus(subject.name);
+	if (!elective) return 0;
+	return five ? elective.bonus5 : elective.bonus4;
 }
 
 /** Math counts double (4u = 8, 5u = 10) for all tracks except architecture. */
