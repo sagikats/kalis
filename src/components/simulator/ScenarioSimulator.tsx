@@ -21,8 +21,9 @@ import {
 import SubjectSelectModal from '@/components/calculator/SubjectSelectModal';
 import type { BagrutSubjectOption } from '@/data/bagrutSubjects';
 import { useAuth } from '@/context/AuthContext';
-import { resolveInstitutionKey, UNIVERSITIES_META } from '@/components/common/UniversityLogo';
 import FillSliderCard from './FillSliderCard';
+import ImpactTags, { lowersAny } from './ImpactTags';
+import ChangesSummary from './ChangesSummary';
 import ProgramResultCard from './ProgramResultCard';
 
 interface ScenarioSimulatorProps {
@@ -44,44 +45,6 @@ const SUBJECT_MAX = 100;
 const SUBJECT_FAIL_BELOW = 55;
 /** Grade a subject added from the catalog starts at (as in the What-If simulator). */
 const ADDED_SUBJECT_GRADE = 88;
-
-/** A change lowers a degree's sekem (beyond rounding). */
-const lowersAny = (deltas: (number | null)[] | null | undefined) => Boolean(deltas?.some((d) => d !== null && d < -0.005));
-
-/** One tag per degree in the simulator: what the change adds to its sekem. */
-function ImpactTags({ deltas, degrees }: { deltas: (number | null)[] | null | undefined; degrees: ProgramGapAnalysis[] }) {
-	if (!deltas) return null;
-	const institutions = degrees.map((a) => a.target.calculatorId);
-	return (
-		<>
-			{deltas.map((d, i) => {
-				if (d === null) return null;
-				const a = degrees[i];
-				const digits = a.target.calculatorId === 'technion' ? 2 : 1;
-				const rounded = Number(d.toFixed(digits));
-				const text = `${rounded > 0 ? '+' : ''}${rounded.toFixed(digits)}`;
-				const shortName = UNIVERSITIES_META[resolveInstitutionKey(a.target.calculatorId)]?.shortName ?? a.target.institutionName;
-				// Two degrees of the same institution: name the degree too
-				const who = degrees.length === 1
-					? 'לסכם'
-					: institutions.filter((c) => c === a.target.calculatorId).length > 1
-					? `${shortName}, ${a.target.program.fieldOfStudy}`
-					: shortName;
-				const tone = rounded > 0 ? 'bg-[#E3F1E7] text-[#205739]' : rounded < 0 ? 'bg-[#FBE3DE] text-[#9B3327]' : 'bg-[#EFEAE0] text-[#66635C]';
-				return (
-					<span
-						key={a.target.program.id}
-						title={`${a.target.program.fieldOfStudy} — ${a.target.institutionName}`}
-						className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[11px] font-bold max-w-full ${tone}`}
-					>
-						<span className="tabular-nums dir-ltr">{text}</span>
-						<span className="truncate">{who}</span>
-					</span>
-				);
-			})}
-		</>
-	);
-}
 
 const unitOptions = (s: ScenarioSubject) => {
 	const base = isSameBagrutSubject(s.name, 'מתמטיקה') || isSameBagrutSubject(s.name, 'אנגלית') ? [3, 4, 5] : [2, 3, 4, 5];
@@ -134,6 +97,10 @@ export default function ScenarioSimulator({
 
 	const results = useMemo(() => evaluateScenario(shown, userProfile, scenario), [shown, userProfile, scenario]);
 	const impacts = useMemo(() => evaluateImpacts(shown, userProfile, scenario), [shown, userProfile, scenario]);
+	// Every change together: each degree's sekem now minus its sekem before any change
+	const startPsych = useMemo(() => scenarioFromProfile(userProfile).psychometric, [userProfile]);
+	const baseline = useMemo(() => evaluateScenario(shown, userProfile, scenarioFromProfile(userProfile)), [shown, userProfile]);
+	const totals = results.map((r, i) => (r.entranceExam ? null : Math.round((r.currentSekem - baseline[i].currentSekem) * 100) / 100));
 	const focusedResult = results.find((r) => r.programId === focusedId) ?? evaluateScenario([analysis], userProfile, scenario)[0];
 
 	const originalPsych = userProfile.psychometricGeneral || 0;
@@ -428,6 +395,21 @@ export default function ScenarioSimulator({
 					</div>
 				</div>
 			</div>
+
+			<ChangesSummary
+				degrees={shown}
+				scenario={scenario}
+				startPsych={startPsych}
+				impacts={impacts}
+				totals={totals}
+				onUndoPsych={() => setPsych(startPsych)}
+				onUndoSubject={(id) => {
+					const s = scenario.subjects.find((x) => x.id === id);
+					if (!s) return;
+					if (s.isAdded) removeSubject(id);
+					else updateSubject(id, { grade: s.originalGrade, units: s.originalUnits });
+				}}
+			/>
 
 			{/* Save / apply (for the degree in focus) */}
 			{(hasChanges || onApplyScenario) && (
