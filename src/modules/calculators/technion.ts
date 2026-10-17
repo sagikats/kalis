@@ -15,10 +15,8 @@ import { computeOptimalAverage } from './optimalAverage';
 import {
 	isArabic,
 	isBible,
-	isCoreScience,
 	isEnglish,
 	isHistory,
-	isLiterature,
 	isMath
 } from './subjectMatchers';
 
@@ -44,20 +42,28 @@ export function isTechnionMandatorySubject(name: string): boolean {
 }
 
 /**
- * The Technion's technological subjects that get the science bonus (5u +25, +30 inside the cluster).
- * Source: the official calculator (admissions.technion.ac.il/calculator, 2026-10-16) — every option whose name
- * looks technological was run at 5 units, grade 90, with and without the cluster. Only these five got 25/30;
- * all others (plain electronics, systems programming, software & hardware systems, engineering mechanics,
- * biotechnology applications, …) got the ordinary +20. Robotics and cyber are not on the Technion's list.
+ * Technion bonus subjects, from the official calculator's full subject list (admissions.technion.ac.il/calculator,
+ * 2026-10-17; snapshot: src/data/sources/technion-bonus-table-2026-10-17.json — every option run at 5u and 4u).
+ * Matching is by exact name per "/"-separated part, ignoring "(…)": substring matching gave +25 to subjects such as
+ * "ע''ג בביולוגיה", "מיקרוביולוגיה", "כימיה טכנולוגית", "פיזיקה מחקרית" and "ספרות התאטרון", which officially get +20.
  */
-const TECHNION_TECH_SUBJECTS = ['מדעי המחשב', 'אלקטרוניקה ומחשבים', 'ביוטכנולוגיה', 'מערכות ביוטכנולוגיה', 'מדעי ההנדסה'];
+const TECHNION_SCIENCES = ['פיזיקה', 'פיסיקה', 'כימיה', 'ביולוגיה'];
+/** Technological subjects with the science bonus (5u +25, +30 inside the cluster). Robotics and cyber are not on the list. */
+const TECHNION_TECH_SUBJECTS = ['מדעי המחשב', 'אלקטרוניקה ומחשבים', 'ביוטכנולוגיה', 'מערכות ביוטכנולוגיה', 'מדעי ההנדסה', 'בקרת מכונות'];
+/** Literature in the Technion's mandatory section (5u +25) — not "ספרות התאטרון". */
+const TECHNION_LITERATURE = ['ספרות', 'ספרות עברית'];
+/** On the list, but a 4-unit exam gets no bonus (5u still +20). */
+const TECHNION_NO_4U_BONUS = ['חינוך גופני', 'מדע חישובי'];
 
-/** Exact match per name part ("ביוטכנולוגיה / מערכות ביוטכנולוגיה" → both parts), ignoring a trailing "(…)". */
+const nameParts = (name: string) => name.split('/').map((part) => part.replace(/\([^)]*\)/g, '').trim());
+const partIn = (name: string, list: string[]) => nameParts(name).some((part) => list.includes(part));
+
 export function isTechnionTechSubject(name: string): boolean {
-	return name
-		.split('/')
-		.map((part) => part.replace(/\([^)]*\)/g, '').trim())
-		.some((part) => TECHNION_TECH_SUBJECTS.includes(part));
+	return partIn(name, TECHNION_TECH_SUBJECTS);
+}
+
+function isTechnionScience(name: string): boolean {
+	return partIn(name, TECHNION_SCIENCES);
 }
 
 /**
@@ -77,8 +83,8 @@ export function detectTechnionScienceCluster(subjects: CalculatorSubject[]): boo
 function selectTechnionScienceCluster(subjects: CalculatorSubject[]): Set<CalculatorSubject> {
 	const eligible = subjects.filter((s) => s.units === 5 && Number.isFinite(s.grade) && s.grade >= 60 && s.grade <= 100);
 	if (!eligible.some((s) => isMath(s.name))) return new Set();
-	const members = eligible.filter((s) => isCoreScience(s.name) || isTechnionTechSubject(s.name));
-	const science = members.filter((s) => isCoreScience(s.name)).sort((a, b) => b.grade - a.grade)[0];
+	const members = eligible.filter((s) => isTechnionScience(s.name) || isTechnionTechSubject(s.name));
+	const science = members.filter((s) => isTechnionScience(s.name)).sort((a, b) => b.grade - a.grade)[0];
 	if (!science) return new Set();
 	const other = members.filter((s) => s !== science).sort((a, b) => b.grade - a.grade)[0];
 	return other ? new Set([science, other]) : new Set();
@@ -97,12 +103,12 @@ export function getTechnionBonus(subject: CalculatorSubject, hasScienceCluster: 
 
 	if (subject.units >= 5) {
 		if (isMath(n)) return 30;
-		if (isEnglish(n) || isLiterature(n) || isBible(n) || isHistory(n) || isArabic(n)) return 25;
-		if (isCoreScience(n) || isTechnionTechSubject(n)) return hasScienceCluster ? 30 : 25;
+		if (isEnglish(n) || partIn(n, TECHNION_LITERATURE) || isBible(n) || isHistory(n) || isArabic(n)) return 25;
+		if (isTechnionScience(n) || isTechnionTechSubject(n)) return hasScienceCluster ? 30 : 25;
 		return 20;
 	}
 
-	if (subject.units === 4) return 10;
+	if (subject.units === 4) return partIn(n, TECHNION_NO_4U_BONUS) ? 0 : 10;
 	return 0;
 }
 
