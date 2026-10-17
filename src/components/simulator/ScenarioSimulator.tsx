@@ -101,11 +101,13 @@ export default function ScenarioSimulator({
 	const startPsych = useMemo(() => scenarioFromProfile(userProfile).psychometric, [userProfile]);
 	const baseline = useMemo(() => evaluateScenario(shown, userProfile, scenarioFromProfile(userProfile)), [shown, userProfile]);
 	const totals = results.map((r, i) => (r.entranceExam ? null : Math.round((r.currentSekem - baseline[i].currentSekem) * 100) / 100));
+	// Without a psychometric score yet the simulation starts from 600; moving off it is a change like any other
+	const psychChanged = scenario.psychometric !== startPsych;
 	const focusedResult = results.find((r) => r.programId === focusedId) ?? evaluateScenario([analysis], userProfile, scenario)[0];
 
 	const originalPsych = userProfile.psychometricGeneral || 0;
 	const changedSubjects = scenario.subjects.filter(isSubjectChanged);
-	const hasChanges = changedSubjects.length > 0 || (originalPsych > 0 && scenario.psychometric !== originalPsych);
+	const hasChanges = changedSubjects.length > 0 || psychChanged;
 
 	const updateSubject = (id: string, patch: Partial<ScenarioSubject>) => {
 		setScenario((s) => ({ ...s, subjects: s.subjects.map((x) => (x.id === id ? { ...x, ...patch } : x)) }));
@@ -291,7 +293,7 @@ export default function ScenarioSimulator({
 						value={scenario.psychometric}
 						min={PSYCHOMETRIC_MIN}
 						max={PSYCHOMETRIC_MAX}
-						changed={originalPsych > 0 ? scenario.psychometric !== originalPsych : true}
+						changed={psychChanged}
 						hint={originalPsych > 0 ? `הציון שלך: ${originalPsych}` : 'עוד אין לך ציון — הסימולציה מתחילה מ-600'}
 						lowers={lowersAny(impacts.psychometric)}
 						tags={impacts.psychometric && <ImpactTags deltas={impacts.psychometric} degrees={shown} />}
